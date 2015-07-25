@@ -1,0 +1,12 @@
+{
+    "display_name": "Scala 2.10.4",
+    "language": "scala",
+    "argv": [
+        "/opt/sparkkernel/bin/sparkkernel",
+        "--profile",
+        "{connection_file}"
+    ],
+    "env": {
+        "SPARK_CONFIGURATION": ""
+    }
+}

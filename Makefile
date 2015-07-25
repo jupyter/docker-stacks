@@ -1,4 +1,4 @@
-.PHONY: build dev help 
+.PHONY: build dev help server
 
 OWNER:=jupyter
 STACK?=
