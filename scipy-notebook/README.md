@@ -4,7 +4,7 @@
 
 * Jupyter Notebook server v3.2.x
 * Conda Python 3.4.x and Python 2.7.x environments
-* pandas, matplotlib, scipy, seaborn, scikit-learn pre-installed
+* pandas, matplotlib, scipy, seaborn, scikit-learn, scikit-image, sympy, cython, patsy, statsmodel, cloudpickle, dill, numba, bokeh pre-installed
 * Options for HTTPS, password auth, and passwordless `sudo`
 
 ## Basic Use
