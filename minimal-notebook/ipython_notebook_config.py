@@ -1,12 +1,14 @@
+# Copyright (c) IPython Development Team.
+# (c) Copyright IBM Corp. 2015
 import subprocess
 import os
 
 PEM_FILE = os.path.join(os.path.dirname(__file__), 'security/notebook.pem')
 
 c = get_config()
-c.NotebookApp.ip = '*'
+c.NotebookApp.ip = os.getenv('INTERFACE', '') or '*'
+c.NotebookApp.port = int(os.getenv('PORT', '') or 8888)
 c.NotebookApp.open_browser = False
-c.NotebookApp.port = 8888
 
 # Set a certificate if USE_HTTPS is set to any value
 if 'USE_HTTPS' in os.environ:
