@@ -1,3 +1,4 @@
+# Copyright (c) Jupyter Development Team.
 FROM debian:jessie
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
@@ -52,7 +53,7 @@ WORKDIR $WORK
 
 # Install Jupyter notebook
 RUN conda install --yes \
-    ipython-notebook==3.2 \
+    'ipython-notebook=3.2*' \
     terminado \
     && conda clean -yt
 
