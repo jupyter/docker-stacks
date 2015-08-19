@@ -3,7 +3,7 @@
 ## What it Gives You
 
 * Jupyter Notebook server v3.2.x
-* Conda R v3.1.x and channel
+* Conda R v3.2.x and channel
 * plyr, devtools, dplyr, ggplot2, tidyr, shiny, rmarkdown, forecast, stringr, rsqlite, reshape2, nycflights13, caret, rcurl, and randomforest pre-installed
 * Options for HTTPS, password auth, and passwordless `sudo`
 
