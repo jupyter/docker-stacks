@@ -1,6 +1,5 @@
-# Copyright (c) IPython Development Team.
-# (c) Copyright IBM Corp. 2015
-FROM jupyter/minimal-notebook
+# Copyright (c) Jupyter Development Team.
+FROM jupyter/minimal-notebook:3.2
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
