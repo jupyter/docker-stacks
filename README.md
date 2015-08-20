@@ -6,7 +6,7 @@ Opinionated stacks of ready-to-run Jupyter applications in Docker.
 
 ## Quick Start
 
-If you already have Docker configured and know exactly what you'd like to run, this one-liner should work in most cases:
+If you're familiar with Docker, have it configured, and know exactly what you'd like to run, this one-liner should work in most cases:
 
 ```
 docker run -d -P jupyter/<your desired stack>
@@ -17,15 +17,15 @@ docker run -d -P jupyter/<your desired stack>
 If this is your first time using Docker or any of the Jupyter projects, do the following to get started.
 
 1. [Install Docker](https://docs.docker.com/installation/) on your host of choice.
-2. Click the folder for your desired stack on GitHub.
-3. Follow the README in that stack.
+2. Click the link for the Docker Hub repo or GitHub source for your desired stack.
+3. Follow the README for that stack.
 
 ## Available Stacks
 
-| Docker Hub repo | GitHub source |
-| --------------- | ------------- |
-| [jupyter/minimal-notebook](https://hub.docker.com/r/jupyter/minimal-notebook/) | [minimal-notebook](./minimal-notebook) |
-| [jupyter/scipy-notebook](https://hub.docker.com/r/jupyter/scipy-notebook/) | [scipy-notebook](./scipy-notebook) |
-| [jupyter/r-notebook](https://hub.docker.com/r/jupyter/r-notebook/) | [r-notebook](./r-notebook) |
-| [jupyter/all-spark-notebook](https://hub.docker.com/r/jupyter/all-spark-notebook/) | [all-spark-notebook](./all-spark-notebook)
-| [jupyter/pyspark-notebook](https://hub.docker.com/r/jupyter/pyspark-notebook/) | [pyspark-notebook](./pyspark-notebook) |
+| Docker Hub repo | GitHub source | Git Branch &rarr; Docker Tag |
+| --------------- | ------------- | ---------------------------- |
+| [jupyter/minimal-notebook](https://hub.docker.com/r/jupyter/minimal-notebook/) | [minimal-notebook](./minimal-notebook) | master &rarr; latest <br /> 3.2.x &rarr; 3.2 |
+| [jupyter/scipy-notebook](https://hub.docker.com/r/jupyter/scipy-notebook/) | [scipy-notebook](./scipy-notebook) | master &rarr; latest <br /> 3.2.x &rarr; 3.2 |
+| [jupyter/r-notebook](https://hub.docker.com/r/jupyter/r-notebook/) | [r-notebook](./r-notebook) | master &rarr; latest <br /> 3.2.x &rarr; 3.2 |
+| [jupyter/all-spark-notebook](https://hub.docker.com/r/jupyter/all-spark-notebook/) | [all-spark-notebook](./all-spark-notebook) | master &rarr; latest <br /> 3.2.x &rarr; 3.2 |
+| [jupyter/pyspark-notebook](https://hub.docker.com/r/jupyter/pyspark-notebook/) | [pyspark-notebook](./pyspark-notebook) | master &rarr; latest <br /> 3.2.x &rarr; 3.2 |
