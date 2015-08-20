@@ -22,6 +22,8 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 
 ## Available Stacks
 
+Note: Branches / tags reflect the version of the primary process in each container (e.g., notebook server). We're still thinking about how to capture versions of installed supporting libraries.
+
 | Docker Hub repo | GitHub source | Git Branch &rarr; Docker Tag |
 | --------------- | ------------- | ---------------------------- |
 | [jupyter/minimal-notebook](https://hub.docker.com/r/jupyter/minimal-notebook/) | [minimal-notebook](./minimal-notebook) | master &rarr; latest <br /> 3.2.x &rarr; 3.2 |
