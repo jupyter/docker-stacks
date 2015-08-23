@@ -1,9 +1,9 @@
-# Copyright (c) IPython Development Team.
-# (c) Copyright IBM Corp. 2015
+# Copyright (c) Jupyter Development Team.
+from jupyter_core.paths import jupyter_data_dir
 import subprocess
 import os
 
-PEM_FILE = os.path.join(os.path.dirname(__file__), 'security/notebook.pem')
+PEM_FILE = os.path.join(jupyter_data_dir(), 'notebook.pem')
 
 c = get_config()
 c.NotebookApp.ip = os.getenv('INTERFACE', '') or '*'
