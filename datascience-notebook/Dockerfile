@@ -10,6 +10,9 @@ RUN apt-get update && \
     gfortran \
     gcc && apt-get clean
 
+# Julia dependencies
+RUN apt-get install -y julia libnettle4 && apt-get clean
+
 
 USER jovyan
 
@@ -75,6 +78,10 @@ RUN conda install --yes \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
     'r-randomforest=4.6*' && conda clean -yt
+
+# IJulia and Julia packages
+RUN julia -e 'Pkg.add("IJulia")'
+RUN julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")'
 
 # Switch back to root so that supervisord runs under that user
 USER root

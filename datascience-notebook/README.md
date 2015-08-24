@@ -1,4 +1,4 @@
-# Jupyter Notebook Scientific Python Stack
+# Jupyter Notebook Data Science Stack
 
 ## What it Gives You
 
