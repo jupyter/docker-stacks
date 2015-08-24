@@ -53,12 +53,12 @@ WORKDIR $WORK
 
 # Install Jupyter notebook
 RUN conda install --yes \
-    'ipython-notebook=3.2*' \
+    'notebook=4.0*' \
     terminado \
     && conda clean -yt
 
 # Configure Jupyter
-RUN ipython profile create
+RUN jupyter notebook --generate-config
 
 # Configure container startup
 EXPOSE 8888
@@ -66,7 +66,7 @@ USER root
 CMD ["supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
 
 # Add local files as late as possible to avoid cache busting
-COPY ipython_notebook_config.py $HOME/.ipython/profile_default/
+COPY jupyter_notebook_config.py $HOME/.jupyter/
 COPY notebook.conf /etc/supervisor/conf.d/
 COPY enable_sudo.sh /usr/local/bin/
-RUN chown $NB_USER:$NB_USER $HOME/.ipython/profile_default/ipython_notebook_config.py
+RUN chown $NB_USER:$NB_USER $HOME/.jupyter/jupyter_notebook_config.py
