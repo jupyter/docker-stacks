@@ -28,7 +28,7 @@ ENV CONDA_DIR /opt/conda
 ENV NB_USER jovyan
 
 # Install conda
-RUN echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
+RUN echo export PATH=$CONDA_DIR/bin:'$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-3.9.1-Linux-x86_64.sh && \
     /bin/bash /Miniconda3-3.9.1-Linux-x86_64.sh -b -p $CONDA_DIR && \
     rm Miniconda3-3.9.1-Linux-x86_64.sh && \
