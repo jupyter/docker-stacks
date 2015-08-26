@@ -1,5 +1,5 @@
 # Copyright (c) Jupyter Development Team.
-FROM jupyter/minimal-notebook:4.0
+FROM jupyter/minimal-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
