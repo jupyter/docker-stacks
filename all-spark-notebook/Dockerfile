@@ -79,10 +79,23 @@ RUN $CONDA_DIR/envs/python2/bin/python \
 # R packages
 RUN conda config --add channels r
 RUN conda install --yes \
-    'r-base=3.1*' \
-    'r-irkernel=0.4*' \
+    'r-base=3.2*' \
     'r-ggplot2=1.0*' \
     'r-rcurl=1.95*' && conda clean -yt
+
+# Issue #17: R downgrades ipython to 3.2.1
+# Workaround until packaging reqs update
+RUN conda install --yes -f 'r-irkernel=0.4*' && conda clean -yt
+RUN conda install --yes \
+    'r-base64enc' \
+    'r-irdisplay' \
+    'r-repr' \
+    'r-rzmq' \
+    'r-evaluate' \
+    'r-jsonlite' \
+    'r-magrittr' \
+    'r-stringi' \
+    'r-uuid' && conda clean -yt
 
 # Scala Spark kernel spec
 RUN mkdir -p $HOME/.ipython/kernels/scala
