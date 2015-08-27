@@ -17,7 +17,6 @@ USER jovyan
 RUN conda config --add channels r
 RUN conda install --yes \
     'r-base=3.2*' \
-    'r-irkernel=0.4*' \
     'r-plyr=1.8*' \
     'r-devtools=1.8*' \
     'r-dplyr=0.4*' \
@@ -33,6 +32,16 @@ RUN conda install --yes \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
     'r-randomforest=4.6*' && conda clean -yt
+
+# Issue #17: R downgrades ipython to 3.2.1
+# Workaround until packaging reqs update
+RUN conda install --yes -f 'r-irkernel=0.4*' && conda clean -yt
+RUN conda install --yes \
+    'r-base64enc' \
+    'r-irdisplay' \
+    'r-repr' \
+    'r-rzmq' \
+    'r-uuid' && conda clean -yt
 
 # Switch back to root so that supervisord runs under that user
 USER root
