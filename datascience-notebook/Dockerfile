@@ -11,14 +11,16 @@ RUN apt-get update && \
     gcc && apt-get clean
 
 # Julia dependencies
-RUN apt-get install -y julia libnettle4 && apt-get clean
-
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    julia \
+    libnettle4 && apt-get clean
 
 USER jovyan
 
-
 # Install Python 3 packages
 RUN conda install --yes \
+    'ipywidgets=4.0*' \
     'pandas=0.16*' \
     'matplotlib=1.4*' \
     'scipy=0.15*' \
@@ -37,7 +39,8 @@ RUN conda install --yes \
 
 # Install Python 2 packages and kernel spec
 RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
-    'ipython=3.2*' \
+    'ipython=4.0*' \
+    'ipywidgets=4.0*' \
     'pandas=0.16*' \
     'matplotlib=1.4*' \
     'scipy=0.15*' \
