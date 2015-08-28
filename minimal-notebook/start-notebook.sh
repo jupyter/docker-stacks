@@ -12,8 +12,5 @@ if [ ! -z "$GRANT_SUDO" ]; then
     echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
 fi
 
-# Run Notebook server as $NB_USER
-su -l $NB_USER << EOF
-cd $WORK
-jupyter notebook
-EOF
+# Start supervisord in foreground, PID1
+exec supervisord -n -c /etc/supervisor/supervisord.conf
