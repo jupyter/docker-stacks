@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-latex-extra \
     texlive-fonts-extra \
     texlive-fonts-recommended \
+    supervisor \
     sudo \
     && apt-get clean
 
@@ -53,4 +54,5 @@ CMD [ "start-notebook.sh" ]
 
 # Add local files as late as possible to avoid cache busting
 COPY start-notebook.sh /usr/local/bin/
+COPY notebook.conf /etc/supervisor/conf.d/
 COPY jupyter_notebook_config.py /etc/skel/.jupyter/
