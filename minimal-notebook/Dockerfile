@@ -27,7 +27,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 # Configure docker environment
 ENV CONDA_DIR /opt/conda
 ENV NB_USER jovyan
-ENV WORK /home/$NB_USER/work
+ENV NB_HOME /home/$NB_USER
+ENV NB_WORK $NB_HOME/work
+ENV WORK $NB_WORK
 ENV PATH $CONDA_DIR/bin:$PATH
 
 # Install conda
