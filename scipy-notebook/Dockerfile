@@ -3,8 +3,6 @@ FROM jupyter/minimal-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
-USER jovyan
-
 # Install Python 3 packages
 RUN conda install --yes \
     'ipywidgets=4.0*' \
@@ -46,7 +44,4 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     && conda clean -yt
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec install-self --user
-
-# Switch back to root so that supervisord runs under that user
-USER root
+    kernelspec install-self

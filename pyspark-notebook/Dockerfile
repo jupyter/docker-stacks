@@ -3,8 +3,6 @@ FROM jupyter/minimal-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
-USER root
-
 # Spark dependencies
 ENV APACHE_SPARK_VERSION 1.4.1
 RUN apt-get -y update && \
@@ -21,8 +19,6 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
     apt-get -y update && \
     apt-get --no-install-recommends -y --force-yes install mesos=0.22.1-1.0.debian78 && \
     apt-get clean
-
-USER jovyan
 
 # Spark and Mesos pointers
 ENV SPARK_HOME /usr/local/spark
@@ -52,7 +48,4 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     && conda clean -yt
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec install-self --user
-
-# Switch back to root so that supervisord runs under that user
-USER root
+    kernelspec install-self

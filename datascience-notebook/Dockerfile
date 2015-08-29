@@ -16,8 +16,6 @@ RUN apt-get update && \
     julia \
     libnettle4 && apt-get clean
 
-USER jovyan
-
 # Install Python 3 packages
 RUN conda install --yes \
     'ipywidgets=4.0*' \
@@ -59,7 +57,7 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     && conda clean -yt
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec install-self --user
+    kernelspec
 
 # R packages
 RUN conda config --add channels r
@@ -85,6 +83,3 @@ RUN conda install --yes \
 # IJulia and Julia packages
 RUN julia -e 'Pkg.add("IJulia")'
 RUN julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")'
-
-# Switch back to root so that supervisord runs under that user
-USER root

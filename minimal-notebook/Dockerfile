@@ -24,8 +24,11 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     sudo \
     && apt-get clean
 
+# Configure docker environment
 ENV CONDA_DIR /opt/conda
 ENV NB_USER jovyan
+ENV WORK /home/$NB_USER/work
+ENV PATH $CONDA_DIR/bin:$PATH
 
 # Install conda
 RUN echo export PATH=$CONDA_DIR/bin:'$PATH' > /etc/profile.d/conda.sh && \
@@ -33,14 +36,6 @@ RUN echo export PATH=$CONDA_DIR/bin:'$PATH' > /etc/profile.d/conda.sh && \
     /bin/bash /Miniconda3-3.9.1-Linux-x86_64.sh -b -p $CONDA_DIR && \
     rm Miniconda3-3.9.1-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --yes conda==3.14.1
-
-# Configure docker environment
-ENV PATH $CONDA_DIR/bin:$PATH
-
-# Setup a work directory rooted in home for ease of volume mounting
-ENV WORK /notebooks
-RUN mkdir -p $WORK && chown root.users $WORK && chmod g+w $WORK
-WORKDIR $WORK
 
 # Install Jupyter notebook
 RUN conda install --yes \
