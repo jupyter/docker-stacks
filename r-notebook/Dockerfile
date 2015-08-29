@@ -17,7 +17,6 @@ USER jovyan
 RUN conda config --add channels r
 RUN conda install --yes \
     'r-base=3.2*' \
-    'r-irkernel=0.4*' \
     'r-plyr=1.8*' \
     'r-devtools=1.8*' \
     'r-dplyr=0.4*' \
@@ -32,7 +31,14 @@ RUN conda install --yes \
     'r-nycflights13=0.1*' \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
-    'r-randomforest=4.6*' && conda clean -yt
+    'r-randomforest=4.6*' \
+    && conda clean -yt
+# Install IRKernel for Notebook 3.2.1 specifically and separately 
+# If this same line gets mixed into the above, conda upgrades the
+# 4.0.x for some reason.
+RUN conda install --yes \
+    'r-irkernel=0.4=r3.2.1_0' \
+    && conda clean -yt
 
 # Switch back to root so that supervisord runs under that user
 USER root

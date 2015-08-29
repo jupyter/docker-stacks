@@ -77,10 +77,16 @@ RUN $CONDA_DIR/envs/python2/bin/python \
 # R packages
 RUN conda config --add channels r
 RUN conda install --yes \
-    'r-base=3.1*' \
-    'r-irkernel=0.4*' \
+    'r-base=3.2*' \
     'r-ggplot2=1.0*' \
-    'r-rcurl=1.95*' && conda clean -yt
+    'r-rcurl=1.95*' \
+    && conda clean -yt
+# Install IRKernel for Notebook 3.2.1 specifically and separately 
+# If this same line gets mixed into the above, conda upgrades the
+# 4.0.x for some reason.
+RUN conda install --yes \
+    'r-irkernel=0.4=r3.2.1_0' \
+    && conda clean -yt
 
 # Scala Spark kernel spec
 RUN mkdir -p $HOME/.ipython/kernels/scala
