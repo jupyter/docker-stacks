@@ -3,6 +3,8 @@ FROM jupyter/minimal-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
+USER root
+
 # Install Python 3 packages
 RUN conda install --yes \
     'ipywidgets=4.0*' \

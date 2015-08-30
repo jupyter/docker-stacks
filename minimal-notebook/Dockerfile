@@ -3,6 +3,8 @@ FROM debian:jessie
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
+USER root
+
 # Install all OS dependencies for fully functional notebook server
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -yq --no-install-recommends \
