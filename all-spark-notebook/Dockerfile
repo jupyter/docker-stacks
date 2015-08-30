@@ -43,8 +43,6 @@ RUN cd /tmp && \
     apt-get remove -y sbt && \
     apt-get clean
 
-USER jovyan
-
 # Spark and Mesos pointers
 ENV SPARK_HOME /usr/local/spark
 ENV R_LIBS_USER $SPARK_HOME/R/lib
@@ -74,7 +72,7 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     && conda clean -yt
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec install-self --user
+    kernelspec install-self
 
 # R packages
 RUN conda config --add channels r
@@ -85,9 +83,5 @@ RUN conda install --yes \
     'r-rcurl=1.95*' && conda clean -yt
 
 # Scala Spark kernel spec
-RUN mkdir -p $HOME/.ipython/kernels/scala
-COPY kernel.json $HOME/.ipython/kernels/scala/
-
-# Switch back to root so that supervisord runs under that user
-USER root
-RUN chown -R $NB_USER:$NB_USER $HOME/.ipython/kernels/scala/
+RUN mkdir -p /usr/local/share/jupyter/kernels/scala
+COPY kernel.json /usr/local/share/jupyter/kernels/scala/

@@ -3,6 +3,8 @@ FROM jupyter/minimal-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
+USER root
+
 # R pre-requisites
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -10,8 +12,6 @@ RUN apt-get update && \
     fonts-dejavu \
     gfortran \
     gcc && apt-get clean
-
-USER jovyan
 
 # R packages
 RUN conda config --add channels r
@@ -33,6 +33,3 @@ RUN conda install --yes \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
     'r-randomforest=4.6*' && conda clean -yt
-
-# Switch back to root so that supervisord runs under that user
-USER root
