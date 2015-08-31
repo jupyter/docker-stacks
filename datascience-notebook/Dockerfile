@@ -59,7 +59,7 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     && conda clean -yt
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec
+    kernelspec install-self
 
 # R packages
 RUN conda config --add channels r
