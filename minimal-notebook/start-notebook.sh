@@ -11,8 +11,7 @@ if [ -z "$user_exists" ] ; then
     useradd -m -s /bin/bash -u ${NB_UID:-1000} $NB_USER
 
     # Setup a work directory rooted in the NB_USER home
-    mkdir -p $NB_WORK
-    chown -R $NB_USER.$NB_USER $NB_HOME
+    mkdir $NB_WORK && chown $NB_USER.$NB_USER $NB_WORK
 
     # Allow NB_USER group to update conda root env
     chown -R root.$NB_USER $CONDA_DIR
