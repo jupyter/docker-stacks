@@ -21,6 +21,7 @@ fi
 # Copy skeleton files if useradd didn't do it (e.g., volume mounted dir
 # residing in NB_HOME prevented it)
 if [ ! -d $NB_HOME/.jupyter ]; then
+    chown $NB_USER.$NB_USER $NB_HOME
     sudo -u jovyan cp -r /etc/skel/. $NB_HOME
 fi
 
