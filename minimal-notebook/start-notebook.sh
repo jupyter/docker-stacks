@@ -16,7 +16,7 @@ if [ -z "$user_exists" ] ; then
 
     # Allow NB_USER group to update conda root env
     chown -R root.$NB_USER $CONDA_DIR
-    chmod g+w $CONDA_DIR
+    chmod -R g+w $CONDA_DIR
 fi
 
 # Copy skeleton files if useradd didn't do it (e.g., volume mounted dir
