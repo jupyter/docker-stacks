@@ -49,6 +49,8 @@ ENV R_LIBS_USER $SPARK_HOME/R/lib
 ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
 
+USER jovyan
+
 # Install Python 3 packages
 RUN conda install --yes \
     'ipywidgets=4.0*' \
@@ -59,7 +61,7 @@ RUN conda install --yes \
     'scikit-learn=0.16*' \
     && conda clean -yt
 
-# Install Python 2 packages and kernel spec
+# Install Python 2 packages
 RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.0*' \
     'ipywidgets=4.0*' \
@@ -70,9 +72,6 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'scikit-learn=0.16*' \
     pyzmq \
     && conda clean -yt
-RUN $CONDA_DIR/envs/python2/bin/python \
-    $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec install-self
 
 # R packages
 RUN conda config --add channels r
@@ -83,5 +82,13 @@ RUN conda install --yes \
     'r-rcurl=1.95*' && conda clean -yt
 
 # Scala Spark kernel spec
-RUN mkdir -p /usr/local/share/jupyter/kernels/scala
-COPY kernel.json /usr/local/share/jupyter/kernels/scala/
+RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
+COPY kernel.json /opt/conda/share/jupyter/kernels/scala/
+
+USER root
+
+# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# switching at runtime.
+RUN $CONDA_DIR/envs/python2/bin/python \
+    $CONDA_DIR/envs/python2/bin/ipython \
+    kernelspec install-self

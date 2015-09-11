@@ -3,7 +3,7 @@ FROM jupyter/minimal-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
-USER root
+USER jovyan
 
 # R pre-requisites
 RUN apt-get update && \
@@ -33,3 +33,5 @@ RUN conda install --yes \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
     'r-randomforest=4.6*' && conda clean -yt
+
+USER root

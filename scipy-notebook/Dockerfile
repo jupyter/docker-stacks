@@ -3,7 +3,7 @@ FROM jupyter/minimal-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
-USER root
+USER jovyan
 
 # Install Python 3 packages
 RUN conda install --yes \
@@ -24,7 +24,7 @@ RUN conda install --yes \
     'bokeh=0.9*' \
     && conda clean -yt
 
-# Install Python 2 packages and kernel spec
+# Install Python 2 packages
 RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.0*' \
     'ipywidgets=4.0*' \
@@ -44,6 +44,11 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'bokeh=0.9*' \
     pyzmq \
     && conda clean -yt
+
+USER root
+
+# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# switching at runtime.
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
     kernelspec install-self
