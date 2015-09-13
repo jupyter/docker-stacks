@@ -10,6 +10,7 @@
 * ggplot2, rcurl preinstalled for R
 * Spark 1.4.1 for use in local mode or to connect to a cluster of Spark workers
 * Mesos client 0.22 binary that can communicate with a Mesos master
+* Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * Options for HTTPS, password auth, and passwordless `sudo`
 
 ## Basic Use

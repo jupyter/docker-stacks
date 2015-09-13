@@ -27,6 +27,8 @@ ENV SPARK_HOME /usr/local/spark
 ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
 
+USER jovyan
+
 # Install Python 3 packages
 RUN conda install --yes \
     'ipywidgets=4.0*' \
@@ -48,6 +50,11 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'scikit-learn=0.16*' \
     pyzmq \
     && conda clean -yt
+
+USER root
+
+# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# switching at runtime.
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
     kernelspec install-self

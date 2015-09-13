@@ -18,6 +18,8 @@ RUN apt-get update && \
     julia \
     libnettle4 && apt-get clean
 
+USER jovyan
+
 # Install Python 3 packages
 RUN conda install --yes \
     'ipywidgets=4.0*' \
@@ -37,7 +39,7 @@ RUN conda install --yes \
     'bokeh=0.9*' \
     && conda clean -yt
 
-# Install Python 2 packages and kernel spec
+# Install Python 2 packages
 RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.0*' \
     'ipywidgets=4.0*' \
@@ -57,11 +59,8 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'bokeh=0.9*' \
     pyzmq \
     && conda clean -yt
-RUN $CONDA_DIR/envs/python2/bin/python \
-    $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec install-self
 
-# R packages
+# R packages including IRKernel which gets installed globally.
 RUN conda config --add channels r
 RUN conda install --yes \
     'r-base=3.2*' \
@@ -82,6 +81,19 @@ RUN conda install --yes \
     'r-rcurl=1.95*' \
     'r-randomforest=4.6*' && conda clean -yt
 
-# IJulia and Julia packages
-RUN julia -e 'Pkg.add("IJulia")'
+# Install IJulia packages as jovyan and then move the kernelspec out
+# to the system share location. Avoids problems with runtime UID change not 
+# taking effect properly on the .local folder in the jovyan home dir.
+RUN julia -e 'Pkg.add("IJulia")' && \
+    mv /home/$NB_USER/.local/share/jupyter/kernels/* $CONDA_DIR/share/jupyter/kernels/ && \
+    chmod -R go+rx $CONDA_DIR/share/jupyter && \
+    rm -rf /home/$NB_USER/.local/share
 RUN julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")'
+
+USER root
+
+# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# switching at runtime.
+RUN $CONDA_DIR/envs/python2/bin/python \
+    $CONDA_DIR/envs/python2/bin/ipython \
+    kernelspec install-self
