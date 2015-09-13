@@ -3,7 +3,7 @@ FROM jupyter/minimal-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
-USER jovyan
+USER root
 
 # R pre-requisites
 RUN apt-get update && \
@@ -12,6 +12,8 @@ RUN apt-get update && \
     fonts-dejavu \
     gfortran \
     gcc && apt-get clean
+
+USER jovyan
 
 # R packages
 RUN conda config --add channels r
