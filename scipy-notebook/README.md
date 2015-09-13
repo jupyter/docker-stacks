@@ -5,6 +5,7 @@
 * Jupyter Notebook server (v4.0.x or v3.2.x, see tag)
 * Conda Python 3.4.x and Python 2.7.x environments
 * pandas, matplotlib, scipy, seaborn, scikit-learn, scikit-image, sympy, cython, patsy, statsmodel, cloudpickle, dill, numba, bokeh pre-installed
+* Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * Options for HTTPS, password auth, and passwordless `sudo`
 
 ## Basic Use

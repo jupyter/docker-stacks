@@ -5,6 +5,7 @@
 * Jupyter Notebook server (v4.0.x or v3.2.x, see tag)
 * Conda Python 3.4.x
 * No preinstalled scientific computing packages
+* Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * Options for HTTPS, password auth, and passwordless `sudo`
 
 ## Basic Use
