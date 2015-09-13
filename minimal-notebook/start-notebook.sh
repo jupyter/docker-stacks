@@ -3,7 +3,7 @@
 # Change UID of jovyan to NB_UID if it does not match
 if [ "$NB_UID" != $(id -u jovyan) ] ; then
     usermod -u $NB_UID $NB_USER
-    chown -R $NB_UID:$NB_UID $CONDA_DIR
+    chown -R $NB_UID $CONDA_DIR
 fi
 
 # Enable sudo if requested
