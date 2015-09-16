@@ -3,6 +3,7 @@ from jupyter_core.paths import jupyter_data_dir
 import subprocess
 import os
 import errno
+import stat
 
 PEM_FILE = os.path.join(jupyter_data_dir(), 'notebook.pem')
 
@@ -27,6 +28,8 @@ if 'USE_HTTPS' in os.environ:
             '-newkey', 'rsa:2048', '-days', '365', '-nodes', '-x509',
             '-subj', '/C=XX/ST=XX/L=XX/O=generated/CN=generated',
             '-keyout', PEM_FILE, '-out', PEM_FILE])
+        # Restrict access to PEM_FILE
+        os.chmod(PEM_FILE, stat.S_IRUSR | stat.S_IWUSR)
     c.NotebookApp.certfile = PEM_FILE
 
 # Set a password if PASSWORD is set
