@@ -11,5 +11,6 @@ if [ ! -z "$GRANT_SUDO" ]; then
     echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
 fi
 
-# Start supervisord in foreground, PID1
-exec supervisord -n -c /etc/supervisor/supervisord.conf
+# Start the notebook server
+exec su $NB_USER -c "env PATH=$PATH jupyter notebook $@"
+
