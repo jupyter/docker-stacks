@@ -9,6 +9,7 @@
 * plyr, devtools, dplyr, ggplot2, tidyr, shiny, rmarkdown, forecast, stringr, rsqlite, reshape2, nycflights13, caret, rcurl, and randomforest pre-installed
 * Julia v0.3.x with Gadfly and RDatasets pre-installed
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
+* [tini](https://github.com/krallin/tini) as the container entrypoint and [start-notebook.sh](../minimal-notebook/start-notebook.sh) as the default command
 * Options for HTTPS, password auth, and passwordless `sudo`
 
 ## Basic Use
