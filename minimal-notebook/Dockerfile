@@ -18,10 +18,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     unzip \
     libsm6 \
     pandoc \
-    texlive-latex-base \
-    texlive-latex-extra \
-    texlive-fonts-extra \
-    texlive-fonts-recommended \
     supervisor \
     sudo \
     && apt-get clean
