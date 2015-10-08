@@ -17,7 +17,7 @@ The following command starts a container with the Notebook server listening for 
 docker run -d -p 8888:8888 jupyter/minimal-notebook
 ```
 
-## Options
+## Docker Options
 
 You may customize the execution of the Docker container and the Notebook server it contains with the following optional arguments.
 
@@ -30,3 +30,7 @@ You may customize the execution of the Docker container and the Notebook server 
 * **(v4.0.x)** `-v /some/host/folder/for/server.pem:/home/jovyan/.local/share/jupyter/notebook.pem` - Mounts a SSL certificate plus key for `USE_HTTPS`. Useful if you have a real certificate for the domain under which you are running the Notebook server.
 * `-e INTERFACE=10.10.10.10` - Configures Jupyter Notebook to listen on the given interface. Defaults to '*', all interfaces, which is appropriate when running using default bridged Docker networking. When using Docker's `--net=host`, you may wish to use this option to specify a particular network interface.
 * `-e PORT=8888` - Configures Jupyter Notebook to listen on the given port. Defaults to 8888, which is the port exposed within the Dockerfile for the image. When using Docker's `--net=host`, you may wish to use this option to specify a particular port.
+
+## Conda Environment
+
+The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. The commands `ipython`, `python`, `pip`, `easy_install`, and `conda` (among others) are available in this environment.

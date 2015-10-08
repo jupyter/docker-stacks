@@ -90,7 +90,7 @@ To use Python 2 in the notebook and on the workers, change the `PYSPARK_PYTHON` 
 
 Of course, all of this can be hidden in an [IPython kernel startup script](http://ipython.org/ipython-doc/stable/development/config.html?highlight=startup#startup-files), but "explicit is better than implicit." :)
 
-## Options
+## Docker Options
 
 You may customize the execution of the Docker container and the Notebook server it contains with the following optional arguments.
 
@@ -103,3 +103,19 @@ You may customize the execution of the Docker container and the Notebook server 
 * **(v4.0.x)** `-v /some/host/folder/for/server.pem:/home/jovyan/.local/share/jupyter/notebook.pem` - Mounts a SSL certificate plus key for `USE_HTTPS`. Useful if you have a real certificate for the domain under which you are running the Notebook server.
 * `-e INTERFACE=10.10.10.10` - Configures Jupyter Notebook to listen on the given interface. Defaults to '*', all interfaces, which is appropriate when running using default bridged Docker networking. When using Docker's `--net=host`, you may wish to use this option to specify a particular network interface.
 * `-e PORT=8888` - Configures Jupyter Notebook to listen on the given port. Defaults to 8888, which is the port exposed within the Dockerfile for the image. When using Docker's `--net=host`, you may wish to use this option to specify a particular port.
+
+## Conda Environments
+
+The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. A second Python 2.x Conda environment exists in `/opt/conda/envs/python2`. You can [switch to the python2 environment](http://conda.pydata.org/docs/using/envs.html#change-environments-activate-deactivate) in a shell by entering the following:
+
+```
+source activate python2
+```
+
+You can return to the default environment with this command:
+
+```
+source deactivate
+```
+
+The commands `ipython`, `python`, `pip`, `easy_install`, and `conda` (among others) are available in both environments.

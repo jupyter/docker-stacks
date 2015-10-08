@@ -17,7 +17,7 @@ The following command starts a container with the Notebook server listening for 
 docker run -d -p 8888:8888 jupyter/r-notebook
 ```
 
-## Options
+## Docker Options
 
 You may customize the execution of the Docker container and the Notebook server it contains with the following optional arguments.
 
