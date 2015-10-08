@@ -52,11 +52,12 @@ os.environ['PYSPARK_PYTHON'] = 'python2'
 This configuration allows your compute cluster to scale with your data.
 
 0. [Deploy Spark on Mesos](http://spark.apache.org/docs/latest/running-on-mesos.html).
-1. Ensure Python 2.x and/or 3.x and any Python libraries you wish to use in your Spark lambda functions are installed on your Spark workers.
-2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
-3. Open a Python 2 or 3 notebook.
-4. Create a `SparkConf` instance in a new notebook pointing to your Mesos master node (or Zookeeper instance) and Spark binary package location.
-5. Create a `SparkContext` using this configuration. 
+1. Configure each slave with [the `--no-switch_user` flag](https://open.mesosphere.com/reference/mesos-slave/) or create the `jovyan` user on every slave node.
+2. Ensure Python 2.x and/or 3.x and any Python libraries you wish to use in your Spark lambda functions are installed on your Spark workers.
+3. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
+4. Open a Python 2 or 3 notebook.
+5. Create a `SparkConf` instance in a new notebook pointing to your Mesos master node (or Zookeeper instance) and Spark binary package location.
+6. Create a `SparkContext` using this configuration. 
 
 For example, the first few cells in a Python 3 notebook might read:
 

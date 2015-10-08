@@ -91,8 +91,9 @@ rdd.takeSample(false, 5)
 This configuration allows your compute cluster to scale with your data.
 
 0. [Deploy Spark on Mesos](http://spark.apache.org/docs/latest/running-on-mesos.html).
-1. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
-2. Follow the language specific instructions below.
+1. Configure each slave with [the `--no-switch_user` flag](https://open.mesosphere.com/reference/mesos-slave/) or create the `jovyan` user on every slave node.
+2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
+3. Follow the language specific instructions below.
 
 ### In a Python Notebook
 
