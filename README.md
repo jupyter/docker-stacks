@@ -20,77 +20,40 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 2. Click the link for the Docker Hub repo or GitHub source for your desired stack.
 3. Follow the README for that stack.
 
-## Available Stacks
+## Stacks, Tags, Versioning, and Progress
 
-Branches / tags reflect the version of the primary process in each container (e.g., notebook server). Currently, GitHub master / Docker latest for Jupyter Notebook containers are equivalent to 4.0.x / 4.0
+* Every folder here on GitHub has an equivalent `jupyter/stack` on Docker Hub. 
+* The `latest` tag in each Docker Hub repository tracks the `master` branch `HEAD` on GitHub. 
+* Additional 12-character tags on Docker Hub refer to git commit SHAs on **GitHub**. 
+* Stack contents (e.g., new library versions) will be updated upon request via PRs against this project.
+* Users looking to remain on older builds should refer to specific git SHA tagged images in their work, not `latest`.
+* Users who want to know the contents of a specific tagged image on Docker Hub can take its tag and use it as a git SHA to inspect the state of this repo at the time of that image build.
+* For legacy reasons, there are two additional tags named `3.2` and `4.0` on Docker Hub which point to images prior to our versioning scheme switch.
 
-| Docker Hub repo | GitHub source | Git Branch &rarr; Docker Tag |
-| --------------- | ------------- | ---------------------------- |
-| [jupyter/minimal-notebook](https://hub.docker.com/r/jupyter/minimal-notebook/) | [minimal-notebook](./minimal-notebook) | master &rarr; latest <br /> 4.0.x &rarr; 4.0 <br /> 3.2.x &rarr; 3.2 |
-| [jupyter/scipy-notebook](https://hub.docker.com/r/jupyter/scipy-notebook/) | [scipy-notebook](./scipy-notebook) | master &rarr; latest <br /> 4.0.x &rarr; 4.0 <br /> 3.2.x &rarr; 3.2 |
-| [jupyter/r-notebook](https://hub.docker.com/r/jupyter/r-notebook/) | [r-notebook](./r-notebook) | master &rarr; latest <br /> 4.0.x &rarr; 4.0 <br /> 3.2.x &rarr; 3.2 |
-| [jupyter/datascience-notebook](https://hub.docker.com/r/jupyter/datascience-notebook/) | [datascience-notebook](./datascience-notebook) | master &rarr; latest <br /> 4.0.x &rarr; 4.0 |
-| [jupyter/all-spark-notebook](https://hub.docker.com/r/jupyter/all-spark-notebook/) | [all-spark-notebook](./all-spark-notebook) | master &rarr; latest <br /> 4.0.x &rarr; 4.0 <br /> 3.2.x &rarr; 3.2 |
-| [jupyter/pyspark-notebook](https://hub.docker.com/r/jupyter/pyspark-notebook/) | [pyspark-notebook](./pyspark-notebook) | master &rarr; latest <br /> 4.0.x &rarr; 4.0 <br /> 3.2.x &rarr; 3.2 |
+## Maintainer Workflow
 
-## Maintainer Workflows
+For PRs that impact the definition of one or more stacks:
 
-N.B. These are point in time instructions, subject to change as we find the best way to publish builds, manage branches, tag versions, etc.
-
-### Triggering a Docker Hub build
-
-At the moment, we have disabled the webhook to notify Docker Hub of commits in this GitHub repo and all links between parent and child docker repositories. (See issue #15.) Follow these steps to manually trigger builds.
-
-After merging changes to `minimal-notebook` on any branch:
-
-1. Visit https://hub.docker.com/r/jupyter/minimal-notebook/builds/.
-2. Click *Trigger a Build*.
-3. Monitor for transient build errors on Docker Hub.
-4. Visit Docker Hub build page for each dependent stack.
-5. Click *Trigger a Build* on each.
-5. Monitor all dependent stack builds for errors on Docker Hub.
-
-After merging changes to any other stack on any branch:
-
-1. Visit the Docker Hub build page for the modified stack.
-2. Click *Trigger a Build*.
-3. Monitor for transient build errors on Docker Hub.
-
-N.B. There's no way to rebuild a specific tag. If there are errors rebuilding a Docker Hub tag associated with a branch unaffected by the GitHub merge, it's OK. The last built image will retain the tag and should be functionally equivalent.
-
-### Backporting fixes from master to a version branch (e.g., 4.0.x)
-
-If the fix is a single commit, git cherry pick it. If it's multiple commits, use rebase. For example, if we have commits on master that we want to put in the `4.0.x` branch:
+1. Pull a PR branch locally.
+2. Try building the affected stack(s).
+3. If everything builds OK locally, merge it.
+4. `ssh -i ~/.ssh/your-github-key build@docker-stacks.cloudet.xyz`
+5. Run these commands on that VM.
 
 ```
-# make sure we're up to date locally
-git co 4.0.x
-git pull origin 4.0.x
-git co master
-git pull origin master
-
-# create a backport branch off *master* and interactively
-# rebase on the version branch
-git co -b 4.0.x-backport
-git rebase -i 4.0.x
-
-# during the rebase ...
-# delete any commits that ONLY belong in master
-# retain any commits that you need to backport
-
-# push backport branch to origin version branch
-git push origin 4.0.x-backport:4.0.x
-
-# cleanup
-git branch -D 4.0.x-backport
+cd docker-stacks
+# make sure we're always on clean master from github
+git fetch origin
+git reset --hard origin/master
+# if this fails, just run it again and again (idempotent)
+make release-all
 ```
 
-### Upgrading to a new major/minor version of a Jupyter project
+When there's a security fix in the Debian base image, do the following in place of the last command:
 
-Our git branch and docker tagging scheme captures the major and minor version of the primary Jupyter project within the stack (e.g., Jupyter Notebook 4.0.x). When a new major or minor release of that project becomes available:
+```
+docker pull debian:jessie
+make release-all DARGS=--no-cache
+```
 
-1. Update the relevant Dockerfiles, README, etc. to install the new version.
-2. Push a new git branch in the form `<major>.<minor>.x` containing those changes.
-3. Add a new branch-to-tag build under `Build Settings` in the affected `jupyter/*` Docker Hub repositories.
-4. Promote the relevant git commits to master.
-5. Manually trigger Docker Hub builds on all affected repositories.
+This will take time as the entire set of stacks will rebuild.
