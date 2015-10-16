@@ -57,7 +57,7 @@ RUN cd /tmp && \
     git clone https://github.com/jupyter-incubator/kernel_gateway.git && \
     cd kernel_gateway && \
     python setup.py sdist && \
-    pip install dist/kernel_gateway-*.tar.gz && \
+    pip install dist/jupyter_kernel_gateway-*.tar.gz && \
     rm -rf /tmp/kernel_gateway
 
 # Configure container startup
