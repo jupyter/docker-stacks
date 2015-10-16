@@ -1,10 +1,16 @@
+# Copyright (c) Jupyter Development Team.
+
 .PHONY: build dev help server
 
 OWNER:=jupyter
-ALL_STACKS:=$(shell find . -type f -name 'Dockerfile' -exec dirname {} \; | sed "s|^\./||")
+# need to list these manually because there's a dependency tree
+ALL_STACKS:=minimal-notebook \
+	r-notebook \
+	scipy-notebook \
+	datascience-notebook \
+	pyspark-notebook \
+	all-spark-notebook
 GIT_MASTER_HEAD_SHA:=$(shell git rev-parse --short=12 --verify HEAD)
-
-
 
 help:
 	@echo
