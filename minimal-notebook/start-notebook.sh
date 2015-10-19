@@ -13,4 +13,3 @@ fi
 
 # Start the notebook server
 exec su $NB_USER -c "env PATH=$PATH jupyter notebook $@"
-
