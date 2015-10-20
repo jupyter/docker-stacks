@@ -17,7 +17,7 @@ docker run -d -P jupyter/<your desired stack>
 If this is your first time using Docker or any of the Jupyter projects, do the following to get started.
 
 1. [Install Docker](https://docs.docker.com/installation/) on your host of choice.
-2. Click the link for the Docker Hub repo or GitHub source for your desired stack.
+2. Open the README in one of the folders in this git repository.
 3. Follow the README for that stack.
 
 ## Stacks, Tags, Versioning, and Progress
