@@ -12,4 +12,4 @@ if [ ! -z "$GRANT_SUDO" ]; then
 fi
 
 # Start the notebook server
-exec su $NB_USER -c "env PATH=$PATH jupyter notebook $@"
+exec su $NB_USER -c "env PATH=$PATH jupyter notebook $*"
