@@ -6,7 +6,7 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 1.4.1
+ENV APACHE_SPARK_VERSION 1.5.1
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
     apt-get clean
@@ -80,6 +80,11 @@ RUN conda install --yes \
     'r-irkernel=0.4*' \
     'r-ggplot2=1.0*' \
     'r-rcurl=1.95*' && conda clean -yt
+
+# WORKAROUND: symlink version of zmq required by latest rzmq back into conda lib
+# https://github.com/jupyter/docker-stacks/issues/55
+RUN ln -s /opt/conda/pkgs/zeromq-4.0.*/lib/libzmq.so.4.* /opt/conda/lib/libzmq.so.4 
+RUN ln -s /opt/conda/pkgs/libsodium-0.4.*/lib/libsodium.so.4.* /opt/conda/lib/libsodium.so.4
 
 # Scala Spark kernel spec
 RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
