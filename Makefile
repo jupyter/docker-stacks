@@ -27,8 +27,9 @@ build/%:
 
 dev/%: ARGS?=
 dev/%: DARGS?=
+dev/%: PORT?=8888
 dev/%:
-	docker run -it --rm -p 8888:8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
+	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
 environment-check:
 	test -e ~/.docker-stacks-builder

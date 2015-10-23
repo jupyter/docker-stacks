@@ -49,6 +49,14 @@ ENV R_LIBS_USER $SPARK_HOME/R/lib
 ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
 
+# R pre-requisites
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libxrender1 \
+    fonts-dejavu \
+    gfortran \
+    gcc && apt-get clean
+
 USER jovyan
 
 # Install Python 3 packages
