@@ -19,7 +19,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
     CODENAME=wheezy && \
     echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
     apt-get -y update && \
-    apt-get --no-install-recommends -y --force-yes install mesos=0.22.1-1.0.debian78 && \
+    apt-get --no-install-recommends -y --force-yes install mesos=0.25.0-0.2.70.debian81 && \
     apt-get clean
 
 # Scala Spark kernel (build and cleanup)
@@ -66,6 +66,7 @@ RUN conda install --yes \
     'matplotlib=1.4*' \
     'scipy=0.15*' \
     'seaborn=0.6*' \
+    'bokeh=0.10*' \
     'scikit-learn=0.16*' \
     && conda clean -yt
 
@@ -77,6 +78,7 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'matplotlib=1.4*' \
     'scipy=0.15*' \
     'seaborn=0.6*' \
+    'bokeh=0.10*' \
     'scikit-learn=0.16*' \
     pyzmq \
     && conda clean -yt
