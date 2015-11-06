@@ -17,6 +17,8 @@ RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
 ENV VERSION 0.25.0
 ENV PKG_RELEASE 0.2.70
 
+RUN apt-get -y install curl
+
 RUN \
   curl -s -O https://downloads.mesosphere.io/master/debian/8/mesos_${VERSION}-${PKG_RELEASE}.debian81_amd64.deb && \
   dpkg --unpack mesos_${VERSION}-${PKG_RELEASE}.debian81_amd64.deb && \
