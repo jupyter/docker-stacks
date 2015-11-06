@@ -14,13 +14,15 @@ RUN wget -qO - http://d3kbcqa49mib13.cloudfront.net/spark-${APACHE_SPARK_VERSION
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
 
 # Mesos dependencies
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
-    DISTRO=debian && \
-    CODENAME=wheezy && \
-    echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
-    apt-get -y update && \
-    apt-get --no-install-recommends -y --force-yes install mesos=0.25.0-0.2.70.debian81 && \
-    apt-get clean
+ENV VERSION 0.25.0
+ENV PKG_RELEASE 0.2.70
+
+RUN \
+  curl -s -O https://downloads.mesosphere.io/master/debian/8/mesos_${VERSION}-${PKG_RELEASE}.debian81_amd64.deb && \
+  dpkg --unpack mesos_${VERSION}-${PKG_RELEASE}.debian81_amd64.deb && \
+  apt-get install -f -y && \
+  rm mesos_${VERSION}-${PKG_RELEASE}.debian81_amd64.deb && \
+  apt-get clean
 
 # Scala Spark kernel (build and cleanup)
 RUN cd /tmp && \
