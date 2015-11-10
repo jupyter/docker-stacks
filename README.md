@@ -31,6 +31,10 @@ Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-st
 * Users looking to remain on older builds should refer to specific git SHA tagged images in their work, not `latest`.
 * Users who want to know the contents of a specific tagged image on Docker Hub can take its tag and use it as a git SHA to inspect the state of this repo at the time of that image build.
 * For legacy reasons, there are two additional tags named `3.2` and `4.0` on Docker Hub which point to images prior to our versioning scheme switch.
+ 
+## Beyond Stacks
+
+If you've got information to share about how to install extensions, libraries, features, packages, etc. beyond what the base stacks provide, please add it to the [Docker Recipes](https://github.com/jupyter/docker-stacks/wiki/Docker-Recipes) page in this repo's wiki.
 
 ## Maintainer Workflow
 
