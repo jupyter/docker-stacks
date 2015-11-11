@@ -6,12 +6,12 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 1.5.1
+ENV APACHE_SPARK_VERSION 1.6.0
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
     apt-get clean
-RUN wget -qO - http://d3kbcqa49mib13.cloudfront.net/spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz | tar -xz -C /usr/local/
-RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
+RUN wget -qO - https://transfer.sh/bwboT/spark-1.6.0-snapshot-bin-2.6.0.tgz | tar -xz -C /usr/local/
+RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-snapshot-bin-2.6.0 spark
 
 # Mesos dependencies
 ENV VERSION 0.25.0
@@ -50,7 +50,7 @@ RUN cd /tmp && \
 # Spark and Mesos pointers
 ENV SPARK_HOME /usr/local/spark
 ENV R_LIBS_USER $SPARK_HOME/R/lib
-ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
+ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.9-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
 
 # R pre-requisites
