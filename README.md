@@ -20,6 +20,10 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 2. Open the README in one of the folders in this git repository.
 3. Follow the README for that stack.
 
+## Tips and Gotchas
+
+* `tini -- start-notebook.sh` is the default Docker entrypoint-plus-command in every notebook stack. If you plan to modify it any way, be sure to check the *Notebook Options* section of your stack's README to understand the consequences.
+
 ## Stacks, Tags, Versioning, and Progress
 
 Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-stacks/tree/9bd33dcc8688):
