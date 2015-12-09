@@ -29,15 +29,10 @@ RUN cd /tmp && \
     git clone https://github.com/ibm-et/spark-kernel.git && \
     apt-get install -yq --force-yes --no-install-recommends sbt && \
     cd spark-kernel && \
-    git checkout 29856a785a && \
-    sbt compile -Xms1024M \
-        -Xmx2048M \
-        -Xss1M \
-        -XX:+CMSClassUnloadingEnabled \
-        -XX:MaxPermSize=1024M && \
-    sbt pack && \
-    mv kernel/target/pack /opt/sparkkernel && \
-    chmod +x /opt/sparkkernel && \
+    git checkout 3905e47815 && \
+    make dist SHELL=/bin/bash && \
+    mv dist/spark-kernel /opt/spark-kernel && \
+    chmod +x /opt/spark-kernel && \
     rm -rf ~/.ivy2 && \
     rm -rf ~/.sbt && \
     rm -rf /tmp/spark-kernel && \
@@ -49,6 +44,7 @@ ENV SPARK_HOME /usr/local/spark
 ENV R_LIBS_USER $SPARK_HOME/R/lib
 ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
+ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info
 
 # R pre-requisites
 RUN apt-get update && \
