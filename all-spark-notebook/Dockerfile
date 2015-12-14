@@ -10,8 +10,11 @@ ENV APACHE_SPARK_VERSION 1.6.0
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
     apt-get clean
-RUN wget -qO - https://transfer.sh/bwboT/spark-1.6.0-snapshot-bin-2.6.0.tgz | tar -xz -C /usr/local/
-RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-snapshot-bin-2.6.0 spark
+RUN curl -s https://transfer.sh/m97CP/spark-1.6.0-snapshot-bin-2.6.0.tgz  | tar -xz -C /usr/local/
+RUN cd /usr/local && ln -s spark-1.6.0-bin-hadoop2.6 spark
+
+ENV SPARK_HOME /usr/local/spark
+ENV SPARK-HOME /usr/local/spark
 
 # Mesos dependencies
 ENV VERSION 0.25.0
@@ -97,7 +100,7 @@ RUN conda install --yes \
 
 # WORKAROUND: symlink version of zmq required by latest rzmq back into conda lib
 # https://github.com/jupyter/docker-stacks/issues/55
-RUN ln -s /opt/conda/pkgs/zeromq-4.0.*/lib/libzmq.so.4.* /opt/conda/lib/libzmq.so.4 
+RUN ln -s /opt/conda/pkgs/zeromq-4.0.*/lib/libzmq.so.4.* /opt/conda/lib/libzmq.so.4
 RUN ln -s /opt/conda/pkgs/libsodium-0.4.*/lib/libsodium.so.4.* /opt/conda/lib/libsodium.so.4
 
 # Scala Spark kernel spec
@@ -111,4 +114,3 @@ USER root
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
     kernelspec install-self
-
