@@ -82,14 +82,9 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
 RUN conda config --add channels r
 RUN conda install --yes \
     'r-base=3.2*' \
-    'r-irkernel=0.4*' \
+    'r-irkernel=0.5*' \
     'r-ggplot2=1.0*' \
     'r-rcurl=1.95*' && conda clean -yt
-
-# WORKAROUND: symlink version of zmq required by latest rzmq back into conda lib
-# https://github.com/jupyter/docker-stacks/issues/55
-RUN ln -s /opt/conda/pkgs/zeromq-4.0.*/lib/libzmq.so.4.* /opt/conda/lib/libzmq.so.4 
-RUN ln -s /opt/conda/pkgs/libsodium-0.4.*/lib/libsodium.so.4.* /opt/conda/lib/libsodium.so.4
 
 # Scala Spark kernel spec
 RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
