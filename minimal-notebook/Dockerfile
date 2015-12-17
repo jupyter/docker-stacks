@@ -23,7 +23,10 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-fonts-extra \
     texlive-fonts-recommended \
     sudo \
+    locales \
     && apt-get clean
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
 
 # Install Tini
 RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.6.0/tini && \
@@ -37,6 +40,9 @@ ENV PATH $CONDA_DIR/bin:$PATH
 ENV SHELL /bin/bash
 ENV NB_USER jovyan
 ENV NB_UID 1000
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 
 # Create jovyan user with UID=1000 and in the 'users' group
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
