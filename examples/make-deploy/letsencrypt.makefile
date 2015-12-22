@@ -9,22 +9,28 @@ letsencrypt:
 	@test -n "$(EMAIL)" || \
 		(echo "ERROR: EMAIL not defined or blank"; exit 1)
 	@docker volume create --name $(SECRETS_VOLUME) > /dev/null
-	-@docker rm letsencrypt 2> /dev/null
-	@docker run -it -p 80:80 --name letsencrypt \
-		-v $(SECRETS_VOLUME):/secrets \
+# Specifying an alternative cert path doesn't work with the --duplicate
+# setting which we want to use for renewal.
+	@docker run -it --rm -p 80:80 \
+		-v $(SECRETS_VOLUME):/etc/letsencrypt \
 		quay.io/letsencrypt/letsencrypt:latest \
 		certonly \
 		--standalone \
 		--standalone-supported-challenges http-01 \
-		--cert-path /secrets/cert.pem \
-		--key-path /secrets/privkey.pem \
-		--chain-path /secrets/chain.pem \
-		--fullchain-path /secrets/fullchain.pem \
 		--agree-tos \
 		--duplicate \
 		--domain '$(FQDN)' \
 		--email '$(EMAIL)'
-	@docker rm letsencrypt > /dev/null
+# The lets encrypt image has an entrypoint so we use the notebook image
+# instead which we know uses tini as the entry and can run arbitrary commands.
+# Here we need to set the permissions so nobody in the proxy container can read
+# the cert and key. Plus we want to symlink the certs into the root of the 
+# /etc/letsencrypt directory so that the FQDN doesn't have to be known later.
+	@docker run -it --rm \
+		-v $(SECRETS_VOLUME):/etc/letsencrypt \
+		$(NOTEBOOK_IMAGE) \
+		bash -c "ln -s /etc/letsencrypt/live/$(FQDN)/* /etc/letsencrypt/ && \
+			find /etc/letsencrypt -type d -exec chmod 755 {} +"
 
 letsencrypt-notebook: PORT?=443
 letsencrypt-notebook: NAME?=notebook
@@ -32,12 +38,10 @@ letsencrypt-notebook: WORK_VOLUME?=$(NAME)-data
 letsencrypt-notebook: SECRETS_VOLUME?=$(NAME)-secrets
 letsencrypt-notebook: DOCKER_ARGS:=-e USE_HTTPS=yes \
 	-e PASSWORD=$(PASSWORD) \
-	-v $(SECRETS_VOLUME):/secrets
-letsencrypt-notebook: PRE_CMD:=chown -R jovyan /secrets; \
- 	chmod 600 /secrets/*;
+	-v $(SECRETS_VOLUME):/etc/letsencrypt
 letsencrypt-notebook: ARGS:=\
-	--NotebookApp.certfile=/secrets/fullchain.pem \
-	--NotebookApp.keyfile=/secrets/privkey.pem
+	--NotebookApp.certfile=/etc/letsencrypt/fullchain.pem \
+	--NotebookApp.keyfile=/etc/letsencrypt/privkey.pem
 letsencrypt-notebook: check
 	@test -n "$(PASSWORD)" || \
 		(echo "ERROR: PASSWORD not defined or blank"; exit 1)
