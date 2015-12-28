@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 # Pick your favorite docker-stacks image
-FROM jupyter/minimal-notebook:latest
+FROM jupyter/minimal-notebook:2d125a7161b5
 
 USER jovyan
 
