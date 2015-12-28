@@ -98,3 +98,4 @@ RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
     kernelspec install-self
 
+USER jovyan

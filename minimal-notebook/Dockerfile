@@ -84,5 +84,5 @@ COPY start-notebook.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
 RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
 
-# Stay as root so that the start-notebook.sh command can properly change 
-# jovyan to a configurable NB_UID and grant sudo if requested
+# Switch back to jovyan to avoid accidental container runs as root
+USER jovyan
