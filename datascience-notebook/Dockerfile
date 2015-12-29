@@ -7,7 +7,6 @@ USER root
 # R pre-requisites
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    libxrender1 \
     fonts-dejavu \
     gfortran \
     gcc && apt-get clean

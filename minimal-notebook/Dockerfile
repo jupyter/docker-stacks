@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-fonts-recommended \
     sudo \
     locales \
+    libxrender1 \
     && apt-get clean
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
