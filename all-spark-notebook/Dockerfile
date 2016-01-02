@@ -49,7 +49,6 @@ ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M -
 # R pre-requisites
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    libxrender1 \
     fonts-dejavu \
     gfortran \
     gcc && apt-get clean
