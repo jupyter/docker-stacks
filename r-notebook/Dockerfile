@@ -34,5 +34,3 @@ RUN conda install --yes \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
     'r-randomforest=4.6*' && conda clean -yt
-
-USER root
