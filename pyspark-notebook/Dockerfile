@@ -32,9 +32,9 @@ USER jovyan
 # Install Python 3 packages
 RUN conda install --yes \
     'ipywidgets=4.0*' \
-    'pandas=0.16*' \
+    'pandas=0.17*' \
     'matplotlib=1.4*' \
-    'scipy=0.15*' \
+    'scipy=0.16*' \
     'seaborn=0.6*' \
     'scikit-learn=0.16*' \
     && conda clean -yt
@@ -43,9 +43,9 @@ RUN conda install --yes \
 RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.0*' \
     'ipywidgets=4.0*' \
-    'pandas=0.16*' \
+    'pandas=0.17*' \
     'matplotlib=1.4*' \
-    'scipy=0.15*' \
+    'scipy=0.16*' \
     'seaborn=0.6*' \
     'scikit-learn=0.16*' \
     pyzmq \
@@ -58,4 +58,6 @@ USER root
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
     kernelspec install-self
+
+USER jovyan
 
