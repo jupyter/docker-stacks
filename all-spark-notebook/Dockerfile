@@ -6,21 +6,28 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 1.5.1
+ENV APACHE_SPARK_VERSION 1.6.0
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
     apt-get clean
-RUN wget -qO - http://d3kbcqa49mib13.cloudfront.net/spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz | tar -xz -C /usr/local/
-RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
+RUN curl -s https://transfer.sh/ipPxf/spark-1.6.0-bin-2.6.0.tgz | tar -xz -C /usr/local/
+RUN cd /usr/local && ln -s spark-1.6.0-bin-hadoop2.6 spark
+
+ENV SPARK_HOME /usr/local/spark
+
 
 # Mesos dependencies
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
-    DISTRO=debian && \
-    CODENAME=wheezy && \
-    echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
-    apt-get -y update && \
-    apt-get --no-install-recommends -y --force-yes install mesos=0.22.1-1.0.debian78 && \
-    apt-get clean
+ENV VERSION 0.25.0
+ENV PKG_RELEASE 0.2.70
+
+RUN apt-get -y install curl
+
+RUN \
+  curl -s -O https://downloads.mesosphere.io/master/debian/8/mesos_${VERSION}-${PKG_RELEASE}.debian81_amd64.deb && \
+  dpkg --unpack mesos_${VERSION}-${PKG_RELEASE}.debian81_amd64.deb && \
+  apt-get install -f -y && \
+  rm mesos_${VERSION}-${PKG_RELEASE}.debian81_amd64.deb && \
+  apt-get clean
 
 # Scala Spark kernel (build and cleanup)
 RUN cd /tmp && \
@@ -42,7 +49,7 @@ RUN cd /tmp && \
 # Spark and Mesos pointers
 ENV SPARK_HOME /usr/local/spark
 ENV R_LIBS_USER $SPARK_HOME/R/lib
-ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.8.2.1-src.zip
+ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.9-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
 ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info
 
@@ -62,6 +69,7 @@ RUN conda install --yes \
     'matplotlib=1.4*' \
     'scipy=0.16*' \
     'seaborn=0.6*' \
+    'bokeh=0.10*' \
     'scikit-learn=0.16*' \
     && conda clean -yt
 
@@ -73,6 +81,7 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     'matplotlib=1.4*' \
     'scipy=0.16*' \
     'seaborn=0.6*' \
+    'bokeh=0.10*' \
     'scikit-learn=0.16*' \
     pyzmq \
     && conda clean -yt
@@ -85,6 +94,14 @@ RUN conda install --yes \
     'r-ggplot2=1.0*' \
     'r-rcurl=1.95*' && conda clean -yt
 
+
+# WORKAROUND: symlink version of zmq required by latest rzmq back into conda lib
+# https://github.com/jupyter/docker-stacks/issues/55
+RUN ln -s /opt/conda/pkgs/zeromq-4.0.*/lib/libzmq.so.4.* /opt/conda/lib/libzmq.so.4
+RUN ln -s /opt/conda/pkgs/libsodium-0.4.*/lib/libsodium.so.4.* /opt/conda/lib/libsodium.so.4
+
+
+
 # Scala Spark kernel spec
 RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
 COPY kernel.json /opt/conda/share/jupyter/kernels/scala/
@@ -96,5 +113,7 @@ USER root
 RUN $CONDA_DIR/envs/python2/bin/python \
     $CONDA_DIR/envs/python2/bin/ipython \
     kernelspec install-self
+
+
 
 USER jovyan
