@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-latex-extra \
     texlive-fonts-extra \
     texlive-fonts-recommended \
+    texlive-generic-recommended \
     sudo \
     locales \
     libxrender1 \
