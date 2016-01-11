@@ -28,16 +28,8 @@ RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.6.0/tini &
 
 # Configure environment
 ENV SHELL /bin/bash
-ENV NB_USER jovyan
+ENV NB_USER nobody
 ENV NB_UID 1000
-
-# Create jovyan user with UID=1000 and in the 'users' group
-# Grant ownership over the home dir, but stick the group as root.
-RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
-    mkdir /home/$NB_USER/work && \
-    mkdir /home/$NB_USER/.jupyter && \
-    mkdir /home/$NB_USER/.local && \
-    chown -R $NB_USER:users /home/$NB_USER
 
 # Install Kernel Gateway
 RUN pip3 install jupyter_kernel_gateway==0.2.0
