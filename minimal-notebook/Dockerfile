@@ -70,7 +70,7 @@ RUN cd /tmp && \
 
 # Install Jupyter notebook as jovyan
 RUN conda install --yes \
-    'notebook=4.0*' \
+    'notebook=4.1*' \
     terminado \
     && conda clean -yt
 
