@@ -38,11 +38,10 @@ RUN pip3 install jupyter_kernel_gateway==0.2.0
 USER $NB_USER
 EXPOSE 8888
 WORKDIR /home/$NB_USER/work
-ENTRYPOINT ["tini", "--"]
-CMD ["/usr/local/bin/start-notebook.sh"]
+ENTRYPOINT ["tini", "--", "jupyter", "kernelgateway"]
+CMD ["--KernelGatewayApp.ip=0.0.0.0"]
 
 # Add local files as late as possible to avoid cache busting
 USER root
-COPY start-notebook.sh /usr/local/bin/
 COPY jupyter_kernel_gateway_config.py /home/$NB_USER/.jupyter/
 RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter

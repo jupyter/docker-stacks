@@ -4,7 +4,7 @@
 * [Jupyter Kernel Gateway](https://github.com/jupyter-incubator/kernel_gateway) that spawns minimal Jupyter Python kernel
 * No preinstalled scientific computing packages
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan`
-* [tini](https://github.com/krallin/tini) as the container entrypoint and [start.sh](./start.sh) as the default command
+* [tini](https://github.com/krallin/tini) as the container entrypoint
 * Options for Port and Ip address
 
 
