@@ -1,7 +1,9 @@
 # Kernel Gateway Stack
 
 ## What it Gives You
+
 * [Jupyter Kernel Gateway](https://github.com/jupyter-incubator/kernel_gateway) that enables programmatic access to kernels
+* Python 3 kernel
 * No preinstalled scientific computing packages
 * [tini](https://github.com/krallin/tini) as the container entrypoint
 
