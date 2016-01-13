@@ -64,3 +64,9 @@ make release-all DARGS=--no-cache
 ```
 
 This will take time as the entire set of stacks will rebuild.
+
+When there's a new stack, do the following **before** trying to `make release-all`:
+
+1. Create a new repo in the `jupyter` org on Docker Hub named after the stack folder in the git repo.
+2. Grant the `stacks` team permission to write to the repo.
+3. Copy/paste the short and long descriptions from one of the other docker-stacks repos on Docker Hub. Modify the appropriate values.

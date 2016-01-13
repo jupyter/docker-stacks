@@ -41,7 +41,8 @@ push/%:
 	docker push $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
 
 refresh/%:
-	docker pull $(OWNER)/$(notdir $@):latest
+# skip if error: a stack might not be on dockerhub yet
+	-docker pull $(OWNER)/$(notdir $@):latest
 
 release-all: environment-check \
 	$(patsubst %,refresh/%, $(ALL_STACKS)) \
@@ -50,4 +51,5 @@ release-all: environment-check \
 	$(patsubst %,push/%, $(ALL_STACKS))
 
 tag/%:
-	docker tag $(OWNER)/$(notdir $@):latest $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
+# always tag the latest build with the git sha
+	docker tag -f $(OWNER)/$(notdir $@):latest $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
