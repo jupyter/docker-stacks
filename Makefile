@@ -1,10 +1,12 @@
 # Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
 
 .PHONY: build dev help server
 
 OWNER:=jupyter
 # need to list these manually because there's a dependency tree
-ALL_STACKS:=minimal-notebook \
+ALL_STACKS:=minimal-kernel \
+	minimal-notebook \
 	r-notebook \
 	scipy-notebook \
 	datascience-notebook \
