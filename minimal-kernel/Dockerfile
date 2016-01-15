@@ -8,6 +8,7 @@ USER root
 # Install all OS dependencies for fully functional notebook server
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -yq --no-install-recommends \
+    python3-setuptools \
     python3-zmq \
     && apt-get clean
 
@@ -29,14 +30,12 @@ RUN useradd -m -s /bin/bash -N -u $KG_UID $KG_USER
 RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
         build-essential \
-        python3-dev \
-        python3-setuptools && \
+        python3-dev && \
     easy_install3 pip && \
     pip install jupyter_kernel_gateway==0.2.0 && \
     apt-get remove --purge -y \
         build-essential \
-        python3-dev \
-        python3-setuptools && \
+        python3-dev && \
     apt-get autoremove -y && \
     apt-get clean
 
