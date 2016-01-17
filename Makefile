@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-.PHONY: build dev help server
+.PHONY: build-all help environment-check release-all
 
 OWNER:=jupyter
 # need to list these manually because there's a dependency tree
@@ -26,6 +26,8 @@ help:
 build/%: DARGS?=
 build/%:
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
+
+build-all: $(patsubst %,build/%, $(ALL_STACKS))
 
 dev/%: ARGS?=
 dev/%: DARGS?=
