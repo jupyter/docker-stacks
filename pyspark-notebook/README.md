@@ -2,7 +2,7 @@
 
 ## What it Gives You
 
-* Jupyter Notebook 4.0.x
+* Jupyter Notebook 4.1.x
 * Conda Python 3.x and Python 2.7.x environments
 * pyspark, pandas, matplotlib, scipy, seaborn, scikit-learn pre-installed
 * Spark 1.5.1 for use in local mode or to connect to a cluster of Spark workers
