@@ -33,7 +33,7 @@ RUN apt-get update && \
         build-essential \
         python3-dev && \
     easy_install3 pip && \
-    pip install jupyter_kernel_gateway==0.2.0 && \
+    pip install jupyter_kernel_gateway==0.3.1 && \
     apt-get remove --purge -y \
         build-essential \
         python3-dev && \
@@ -43,8 +43,8 @@ RUN apt-get update && \
 # Configure container startup
 EXPOSE 8888
 WORKDIR /tmp
-ENTRYPOINT ["tini", "--", "jupyter", "kernelgateway"]
-CMD ["--KernelGatewayApp.ip=0.0.0.0"]
+ENTRYPOINT ["tini", "--"]
+CMD ["jupyter", "kernelgateway", "--KernelGatewayApp.ip=0.0.0.0"]
 
 # Run container as jovyan
 USER jovyan
