@@ -3,7 +3,7 @@
 
 .PHONY: build help release
 
-REPO:=jupyter/ubuntu_14_04_locale_fix:latest
+REPO:=jupyter/ubuntu_14_04_locale_fix
 
 help:
 	@echo 'make build release'
