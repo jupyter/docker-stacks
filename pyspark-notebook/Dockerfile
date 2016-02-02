@@ -52,13 +52,11 @@ RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
     pyzmq \
     && conda clean -yt
 
-USER root
-
-# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
-# switching at runtime.
-RUN $CONDA_DIR/envs/python2/bin/python \
-    $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec install-self
-
-USER jovyan
-
+# Install Python 2 kernel spec into the Python 3 conda environment which
+# runs the notebook server
+RUN bash -c '. activate python2 && \
+    python -m ipykernel.kernelspec --prefix=$CONDA_DIR && \
+    . deactivate'
+# Set PYSPARK_HOME in the python2 spec
+RUN sed -i '$ d' $CONDA_DIR/share/jupyter/kernels/python2/kernel.json && \
+    echo ', "env": {"PYSPARK_PYTHON": "/opt/conda/envs/python2/bin/python"} }' >> $CONDA_DIR/share/jupyter/kernels/python2/kernel.json
