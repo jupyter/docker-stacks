@@ -6,6 +6,9 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
 USER root
 
+# Util to help with kernel spec later
+RUN apt-get -y update && apt-get -y install jq
+
 # Spark dependencies
 ENV APACHE_SPARK_VERSION 1.5.1
 RUN apt-get -y update && \
@@ -96,5 +99,7 @@ RUN bash -c '. activate python2 && \
     python -m ipykernel.kernelspec --prefix=$CONDA_DIR && \
     . deactivate'
 # Set PYSPARK_HOME in the python2 spec
-RUN sed -i '$ d' $CONDA_DIR/share/jupyter/kernels/python2/kernel.json && \
-    echo ', "env": {"PYSPARK_PYTHON": "/opt/conda/envs/python2/bin/python"} }' >> $CONDA_DIR/share/jupyter/kernels/python2/kernel.json
+RUN jq --arg v "$CONDA_DIR/envs/python2/bin/python" \
+        '.["env"]["PYSPARK_PYTHON"]=$v' \
+        $CONDA_DIR/share/jupyter/kernels/python2/kernel.json > /tmp/kernel.json && \
+        mv /tmp/kernel.json $CONDA_DIR/share/jupyter/kernels/python2/kernel.json
