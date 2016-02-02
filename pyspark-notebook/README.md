@@ -27,7 +27,7 @@ This configuration is nice for using Spark on small, local data.
 2. Open a Python 2 or 3 notebook.
 3. Create a `SparkContext` configured for local mode.
 
-For example, the first few cells in a Python 3 notebook might read:
+For example, the first few cells in the notebook might read:
 
 ```python
 import pyspark
@@ -36,15 +36,6 @@ sc = pyspark.SparkContext('local[*]')
 # do something to prove it works
 rdd = sc.parallelize(range(1000))
 rdd.takeSample(False, 5)
-```
-
-In a Python 2 notebook, prefix the above with the following code to ensure the local workers use Python 2 as well.
-
-```python
-import os
-os.environ['PYSPARK_PYTHON'] = 'python2'
-
-# include pyspark cells from above here ...
 ```
 
 ## Connecting to a Spark Cluster on Mesos
@@ -58,7 +49,7 @@ This configuration allows your compute cluster to scale with your data.
     * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
 4. Open a Python 2 or 3 notebook.
 5. Create a `SparkConf` instance in a new notebook pointing to your Mesos master node (or Zookeeper instance) and Spark binary package location.
-6. Create a `SparkContext` using this configuration. 
+6. Create a `SparkContext` using this configuration.
 
 For example, the first few cells in a Python 3 notebook might read:
 
@@ -73,7 +64,7 @@ conf = pyspark.SparkConf()
 # point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
 conf.setMaster("mesos://10.10.10.10:5050")
 # point to spark binary package in HDFS or on local filesystem on all slave
-# nodes (e.g., file:///opt/spark/spark-1.5.1-bin-hadoop2.6.tgz) 
+# nodes (e.g., file:///opt/spark/spark-1.5.1-bin-hadoop2.6.tgz)
 conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-1.5.1-bin-hadoop2.6.tgz")
 # set other options as desired
 conf.set("spark.executor.memory", "8g")
