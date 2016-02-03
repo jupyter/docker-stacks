@@ -10,11 +10,15 @@ USER root
 RUN apt-get -y update && apt-get -y install jq
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 1.5.1
+ENV APACHE_SPARK_VERSION 1.6.0
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
     apt-get clean
-RUN wget -qO - http://d3kbcqa49mib13.cloudfront.net/spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz | tar -xz -C /usr/local/
+RUN cd /tmp && \
+        wget -q http://d3kbcqa49mib13.cloudfront.net/spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz && \
+        echo "439fe7793e0725492d3d36448adcd1db38f438dd1392bffd556b58bb9a3a2601 *spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz" | sha256sum -c - && \
+        tar xzf spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz -C /usr/local && \
+        rm spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
 
 # Mesos dependencies
@@ -29,17 +33,18 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
 # Scala Spark kernel (build and cleanup)
 RUN cd /tmp && \
     echo deb http://dl.bintray.com/sbt/debian / > /etc/apt/sources.list.d/sbt.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv 99E82A75642AC823 && \
     apt-get update && \
-    git clone https://github.com/ibm-et/spark-kernel.git && \
+    git clone https://github.com/apache/incubator-toree.git && \
     apt-get install -yq --force-yes --no-install-recommends sbt && \
-    cd spark-kernel && \
-    git checkout 3905e47815 && \
+    cd incubator-toree && \
+    git checkout 846292233c && \
     make dist SHELL=/bin/bash && \
-    mv dist/spark-kernel /opt/spark-kernel && \
-    chmod +x /opt/spark-kernel && \
+    mv dist/toree-kernel /opt/toree-kernel && \
+    chmod +x /opt/toree-kernel && \
     rm -rf ~/.ivy2 && \
     rm -rf ~/.sbt && \
-    rm -rf /tmp/spark-kernel && \
+    rm -rf /tmp/incubator-toree && \
     apt-get remove -y sbt && \
     apt-get clean
 
