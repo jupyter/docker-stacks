@@ -6,6 +6,9 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
 USER root
 
+# Util to help with kernel spec later
+RUN apt-get -y update && apt-get -y install jq
+
 # Spark dependencies
 ENV APACHE_SPARK_VERSION 1.5.1
 RUN apt-get -y update && \
@@ -90,12 +93,13 @@ RUN conda install --yes \
 RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
 COPY kernel.json /opt/conda/share/jupyter/kernels/scala/
 
-USER root
-
-# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
-# switching at runtime.
-RUN $CONDA_DIR/envs/python2/bin/python \
-    $CONDA_DIR/envs/python2/bin/ipython \
-    kernelspec install-self
-
-USER jovyan
+# Install Python 2 kernel spec into the Python 3 conda environment which
+# runs the notebook server
+RUN bash -c '. activate python2 && \
+    python -m ipykernel.kernelspec --prefix=$CONDA_DIR && \
+    . deactivate'
+# Set PYSPARK_HOME in the python2 spec
+RUN jq --arg v "$CONDA_DIR/envs/python2/bin/python" \
+        '.["env"]["PYSPARK_PYTHON"]=$v' \
+        $CONDA_DIR/share/jupyter/kernels/python2/kernel.json > /tmp/kernel.json && \
+        mv /tmp/kernel.json $CONDA_DIR/share/jupyter/kernels/python2/kernel.json
