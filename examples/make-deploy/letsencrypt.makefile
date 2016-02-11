@@ -1,36 +1,48 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
+# BE CAREFUL when using Docker engine <1.10 because running a container with
+# `--rm` option while mounting a docker volume may wipe out the volume.
+# See issue: https://github.com/docker/docker/issues/17907
+
+# Use letsencrypt production server by default to get a real cert.
+# Use CERT_SERVER=--staging to hit the staging server (not a real cert).
+
 letsencrypt: NAME?=notebook
 letsencrypt: SECRETS_VOLUME?=$(NAME)-secrets
+letsencrypt: TMP_CONTAINER?=$(NAME)-tmp
+letsencrypt: CERT_SERVER?=
 letsencrypt:
 	@test -n "$(FQDN)" || \
 		(echo "ERROR: FQDN not defined or blank"; exit 1)
 	@test -n "$(EMAIL)" || \
 		(echo "ERROR: EMAIL not defined or blank"; exit 1)
 	@docker volume create --name $(SECRETS_VOLUME) > /dev/null
-# Specifying an alternative cert path doesn't work with the --duplicate
-# setting which we want to use for renewal.
-	@docker run -it --rm -p 80:80 \
+	@docker run -it -p 80:80 \
+		--name=$(TMP_CONTAINER) \
 		-v $(SECRETS_VOLUME):/etc/letsencrypt \
 		quay.io/letsencrypt/letsencrypt:latest \
 		certonly \
+		$(CERT_SERVER) \
+		--keep-until-expiring \
 		--standalone \
 		--standalone-supported-challenges http-01 \
 		--agree-tos \
-		--duplicate \
 		--domain '$(FQDN)' \
-		--email '$(EMAIL)'
-# The lets encrypt image has an entrypoint so we use the notebook image
-# instead which we know uses tini as the entry and can run arbitrary commands.
-# Here we need to set the permissions so nobody in the proxy container can read
-# the cert and key. Plus we want to symlink the certs into the root of the 
-# /etc/letsencrypt directory so that the FQDN doesn't have to be known later.
-	@docker run -it --rm \
+		--email '$(EMAIL)'; \
+		docker rm -f $(TMP_CONTAINER) > /dev/null
+# The letsencrypt image has an entrypoint, so we use the notebook image
+# instead so we can run arbitrary commands.
+# Here we set the permissions so nobody can read the cert and key.
+# We also symlink the certs into the root of the /etc/letsencrypt
+# directory so that the FQDN doesn't have to be known later.
+	@docker run -it \
+		--name=$(TMP_CONTAINER) \
 		-v $(SECRETS_VOLUME):/etc/letsencrypt \
 		$(NOTEBOOK_IMAGE) \
 		bash -c "ln -s /etc/letsencrypt/live/$(FQDN)/* /etc/letsencrypt/ && \
-			find /etc/letsencrypt -type d -exec chmod 755 {} +"
+			find /etc/letsencrypt -type d -exec chmod 755 {} +"; \
+			docker rm -f $(TMP_CONTAINER) > /dev/null
 
 letsencrypt-notebook: PORT?=443
 letsencrypt-notebook: NAME?=notebook

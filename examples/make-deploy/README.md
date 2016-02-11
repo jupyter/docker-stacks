@@ -2,7 +2,7 @@ This folder contains a Makefile and a set of supporting files demonstrating how 
 
 ## Prerequisites
 
-* make 3.81+ 
+* make 3.81+
     * Ubuntu users: Be aware of [make 3.81 defect 483086](https://bugs.launchpad.net/ubuntu/+source/make-dfsg/+bug/483086) which exists in 14.04 LTS but is fixed in 15.04+
 * docker-machine 0.5.0+
 * docker 1.9.0+
@@ -59,7 +59,11 @@ make letsencrypt-notebook
 
 The first command creates a Docker volume named after the notebook container with a `-secrets` suffix. It then runs the `letsencrypt` client with a slew of options (one of which has you automatically agreeing to the Let's Encrypt Terms of Service, see the Makefile). The second command mounts the secrets volume and configures Jupyter to use the full-chain certificate and private key.
 
-Be aware: Let's Encrypt has a pretty [low rate limit per domain](https://community.letsencrypt.org/t/public-beta-rate-limits/4772/3) at the moment. Don't exhaust your requests playing around!
+Be aware: Let's Encrypt has a pretty [low rate limit per domain](https://community.letsencrypt.org/t/public-beta-rate-limits/4772/3) at the moment.  You can avoid exhausting your limit by testing against the Let's Encrypt staging servers.  To hit their staging servers, set the environment variable `CERT_SERVER=--staging`.
+
+```
+make letsencrypt FQDN=host.mydomain.com EMAIL=myemail@somewhere.com CERT_SERVER=--staging
+```
 
 Also, keep in mind Let's Encrypt certificates are short lived: 90 days at the moment. You'll need to manually setup a cron job to run the renewal steps at the moment. (You can reuse the first command above.)
 
