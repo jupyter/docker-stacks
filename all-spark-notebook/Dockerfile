@@ -66,23 +66,23 @@ USER jovyan
 
 # Install Python 3 packages
 RUN conda install --yes \
-    'ipywidgets=4.0*' \
+    'ipywidgets=4.1*' \
     'pandas=0.17*' \
-    'matplotlib=1.4*' \
-    'scipy=0.16*' \
-    'seaborn=0.6*' \
-    'scikit-learn=0.16*' \
+    'matplotlib=1.5*' \
+    'scipy=0.17*' \
+    'seaborn=0.7*' \
+    'scikit-learn=0.17*' \
     && conda clean -yt
 
-# Install Python 2 packages
+# Install Python 2 packages and kernel spec
 RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
-    'ipython=4.0*' \
-    'ipywidgets=4.0*' \
+    'ipython=4.1*' \
+    'ipywidgets=4.1*' \
     'pandas=0.17*' \
-    'matplotlib=1.4*' \
-    'scipy=0.16*' \
-    'seaborn=0.6*' \
-    'scikit-learn=0.16*' \
+    'matplotlib=1.5*' \
+    'scipy=0.17*' \
+    'seaborn=0.7*' \
+    'scikit-learn=0.17*' \
     pyzmq \
     && conda clean -yt
 
