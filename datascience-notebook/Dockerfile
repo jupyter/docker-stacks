@@ -20,6 +20,11 @@ RUN apt-get update && \
     julia \
     libnettle4 && apt-get clean
 
+# libav-tools for matplotlib anim
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libav-tools && \
+    apt-get clean
+
 USER jovyan
 
 # Install Python 3 packages
@@ -87,7 +92,7 @@ RUN conda install --yes \
     'r-randomforest=4.6*' && conda clean -yt
 
 # Install IJulia packages as jovyan and then move the kernelspec out
-# to the system share location. Avoids problems with runtime UID change not 
+# to the system share location. Avoids problems with runtime UID change not
 # taking effect properly on the .local folder in the jovyan home dir.
 RUN julia -e 'Pkg.add("IJulia")' && \
     mv /home/$NB_USER/.local/share/jupyter/kernels/* $CONDA_DIR/share/jupyter/kernels/ && \
