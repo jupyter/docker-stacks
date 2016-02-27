@@ -20,22 +20,21 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 2. Open the README in one of the folders in this git repository.
 3. Follow the README for that stack.
 
-## Tips and Gotchas
-
-* `tini -- start-notebook.sh` is the default Docker entrypoint-plus-command in every notebook stack. If you plan to modify it any way, be sure to check the *Notebook Options* section of your stack's README to understand the consequences.
-* Check the [Docker recipes wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-Recipes) attached to this project for information about extending and deploying the Docker images defined here. Add to the wiki if you have relevant information.
-
 ## Stacks, Tags, Versioning, and Progress
 
 Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-stacks/tree/9bd33dcc8688):
 
-* Every folder here on GitHub has an equivalent `jupyter/<stack name>` on Docker Hub. 
-* The `latest` tag in each Docker Hub repository tracks the `master` branch `HEAD` reference on GitHub. 
-* Any 12-character image tag on Docker Hub refers to a git commit SHA here on GitHub. 
+* Every folder here on GitHub has an equivalent `jupyter/<stack name>` on Docker Hub.
+* The `latest` tag in each Docker Hub repository tracks the `master` branch `HEAD` reference on GitHub.
+* Any 12-character image tag on Docker Hub refers to a git commit SHA here on GitHub. See the [Docker build history wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) for a table of build details.
 * Stack contents (e.g., new library versions) will be updated upon request via PRs against this project.
 * Users looking to remain on older builds should refer to specific git SHA tagged images in their work, not `latest`.
-* Users who want to know the contents of a specific tagged image on Docker Hub can take its tag and use it as a git SHA to inspect the state of this repo at the time of that image build.
 * For legacy reasons, there are two additional tags named `3.2` and `4.0` on Docker Hub which point to images prior to our versioning scheme switch.
+
+## Other Tips
+
+* `tini -- start-notebook.sh` is the default Docker entrypoint-plus-command in every notebook stack. If you plan to modify it any way, be sure to check the *Notebook Options* section of your stack's README to understand the consequences.
+* Check the [Docker recipes wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-Recipes) attached to this project for information about extending and deploying the Docker images defined here. Add to the wiki if you have relevant information.
 
 ## Maintainer Workflow
 
