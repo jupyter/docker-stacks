@@ -48,7 +48,7 @@ RUN conda install --yes \
     && conda clean -yt
 
 # Install Python 2 packages
-RUN conda create -p $CONDA_DIR/envs/python2 python=2.7 \
+RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.1*' \
     'ipywidgets=4.1*' \
     'pandas=0.17*' \
