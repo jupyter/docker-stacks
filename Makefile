@@ -46,6 +46,8 @@ refresh/%:
 # skip if error: a stack might not be on dockerhub yet
 	-docker pull $(OWNER)/$(notdir $@):latest
 
+refresh-all: $(patsubst %,refresh/%, $(ALL_STACKS))
+
 release-all: environment-check \
 	$(patsubst %,refresh/%, $(ALL_STACKS)) \
 	$(patsubst %,build/%, $(ALL_STACKS)) \
