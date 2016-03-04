@@ -70,11 +70,11 @@ RUN cd /tmp && \
     echo "9ea57c0fdf481acf89d816184f969b04bc44dea27b258c4e86b1e3a25ff26aa0 *Miniconda3-3.19.0-Linux-x86_64.sh" | sha256sum -c - && \
     /bin/bash Miniconda3-3.19.0-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-3.19.0-Linux-x86_64.sh && \
-    $CONDA_DIR/bin/conda install --yes conda==3.19.1 && \
+    $CONDA_DIR/bin/conda install --quiet --yes conda==3.19.1 && \
     conda clean -tipsy
 
 # Install Jupyter notebook as jovyan
-RUN conda install --yes \
+RUN conda install --quiet --yes \
     'notebook=4.1*' \
     terminado \
     && conda clean -tipsy
