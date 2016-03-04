@@ -45,7 +45,7 @@ RUN conda install --yes \
     'numba=0.23*' \
     'bokeh=0.11*' \
     'h5py=2.5*' \
-    && conda clean -yt
+    && conda clean -tipsy
 
 # Install Python 2 packages
 RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
@@ -67,7 +67,7 @@ RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'bokeh=0.11*' \
     'h5py=2.5*' \
     'pyzmq' \
-    && conda clean -yt
+    && conda clean -tipsy
 
 # R packages including IRKernel which gets installed globally.
 RUN conda config --add channels r
@@ -89,7 +89,7 @@ RUN conda install --yes \
     'r-nycflights13=0.1*' \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
-    'r-randomforest=4.6*' && conda clean -yt
+    'r-randomforest=4.6*' && conda clean -tipsy
 
 # Install IJulia packages as jovyan and then move the kernelspec out
 # to the system share location. Avoids problems with runtime UID change not
