@@ -45,7 +45,7 @@ RUN conda install --yes \
     'scipy=0.17*' \
     'seaborn=0.7*' \
     'scikit-learn=0.17*' \
-    && conda clean -yt
+    && conda clean -tipsy
 
 # Install Python 2 packages and kernel spec
 RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
@@ -57,7 +57,7 @@ RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'seaborn=0.7*' \
     'scikit-learn=0.17*' \
     pyzmq \
-    && conda clean -yt
+    && conda clean -tipsy
 
 # Install Python 2 kernel spec into the Python 3 conda environment which
 # runs the notebook server
