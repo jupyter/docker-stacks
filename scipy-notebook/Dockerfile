@@ -31,7 +31,7 @@ RUN conda install --yes \
     'numba=0.23*' \
     'bokeh=0.11*' \
     'h5py=2.5*' \
-    && conda clean -yt
+    && conda clean -tipsy
 
 # Install Python 2 packages
 RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
@@ -53,7 +53,7 @@ RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'bokeh=0.11*' \
     'h5py=2.5*' \
     'pyzmq' \
-    && conda clean -yt
+    && conda clean -tipsy
 
 USER root
 

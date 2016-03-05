@@ -72,7 +72,7 @@ RUN conda install --yes \
     'scipy=0.17*' \
     'seaborn=0.7*' \
     'scikit-learn=0.17*' \
-    && conda clean -yt
+    && conda clean -tipsy
 
 # Install Python 2 packages and kernel spec
 RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
@@ -84,7 +84,7 @@ RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'seaborn=0.7*' \
     'scikit-learn=0.17*' \
     pyzmq \
-    && conda clean -yt
+    && conda clean -tipsy
 
 # R packages
 RUN conda config --add channels r
@@ -92,7 +92,7 @@ RUN conda install --yes \
     'r-base=3.2*' \
     'r-irkernel=0.5*' \
     'r-ggplot2=1.0*' \
-    'r-rcurl=1.95*' && conda clean -yt
+    'r-rcurl=1.95*' && conda clean -tipsy
 
 # Scala Spark kernel spec
 RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
