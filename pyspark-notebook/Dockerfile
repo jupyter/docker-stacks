@@ -24,7 +24,7 @@ RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
 # Mesos dependencies
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
     DISTRO=debian && \
-    CODENAME=wheezy && \
+    CODENAME=jessie && \
     echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
     apt-get -y update && \
     apt-get --no-install-recommends -y --force-yes install mesos=0.22.1-1.0.debian78 && \
