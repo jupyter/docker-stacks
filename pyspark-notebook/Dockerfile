@@ -22,6 +22,10 @@ RUN cd /tmp && \
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
 
 # Mesos dependencies
+# Currently, Mesos is not available from Debian Jessie.
+# So, we are installing it from Debian Wheezy. Once it
+# becomes available for Debian Jessie. We should switch
+# over to using that instead.
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
     DISTRO=debian && \
     CODENAME=wheezy && \
