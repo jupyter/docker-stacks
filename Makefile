@@ -45,6 +45,7 @@ push/%:
 refresh/%:
 # skip if error: a stack might not be on dockerhub yet
 	-docker pull $(OWNER)/$(notdir $@):latest
+	-docker pull $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
 
 refresh-all: $(patsubst %,refresh/%, $(ALL_STACKS))
 
