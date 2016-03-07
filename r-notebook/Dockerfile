@@ -17,7 +17,7 @@ USER jovyan
 
 # R packages
 RUN conda config --add channels r
-RUN conda install --yes \
+RUN conda install --quiet --yes \
     'r-base=3.2*' \
     'r-irkernel=0.5*' \
     'r-plyr=1.8*' \

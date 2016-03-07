@@ -42,7 +42,7 @@ ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
 USER jovyan
 
 # Install Python 3 packages
-RUN conda install --yes \
+RUN conda install --quiet --yes \
     'ipywidgets=4.1*' \
     'pandas=0.17*' \
     'matplotlib=1.5*' \
@@ -52,7 +52,7 @@ RUN conda install --yes \
     && conda clean -tipsy
 
 # Install Python 2 packages and kernel spec
-RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 \
+RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.1*' \
     'ipywidgets=4.1*' \
     'pandas=0.17*' \
