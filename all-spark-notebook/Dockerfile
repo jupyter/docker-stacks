@@ -7,7 +7,7 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 USER root
 
 # Util to help with kernel spec later
-RUN apt-get -y update && apt-get -y install jq
+RUN apt-get -y update && apt-get -y install jq && apt-get clean
 
 # Spark dependencies
 ENV APACHE_SPARK_VERSION 1.6.0
