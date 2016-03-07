@@ -38,7 +38,7 @@ Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-st
 
 ## Maintainer Workflow
 
-For PRs that impact the definition of one or more stacks:
+**For PRs that impact the definition of one or more stacks:**
 
 1. Pull a PR branch locally.
 2. Try building the affected stack(s).
@@ -55,7 +55,9 @@ git reset --hard origin/master
 make release-all
 ```
 
-When there's a security fix in the Debian base image, do the following in place of the last command:
+When `make release-all` successfully pushes the last of its images to Docker Hub (currently `jupyter/all-spark-notebook`), Docker Hub invokes [the webhook](https://github.com/jupyter/docker-stacks/blob/master/internal/docker-stacks-webhook/) which updates the [Docker build history](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) wiki page.
+
+**When there's a security fix in the Debian base image, do the following in place of the last command:**
 
 ```
 docker pull debian:jessie
@@ -64,7 +66,7 @@ make release-all DARGS=--no-cache
 
 This will take time as the entire set of stacks will rebuild.
 
-When there's a new stack, do the following **before** trying to `make release-all`:
+**When there's a new stack, do the following before trying to `make release-all`:**
 
 1. Create a new repo in the `jupyter` org on Docker Hub named after the stack folder in the git repo.
 2. Grant the `stacks` team permission to write to the repo.
