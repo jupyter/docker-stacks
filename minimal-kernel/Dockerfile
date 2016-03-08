@@ -13,7 +13,8 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     python3-setuptools \
     python3-zmq \
-    && apt-get clean
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Tini
 RUN python3 -c 'from urllib.request import urlretrieve; \
@@ -40,7 +41,8 @@ RUN apt-get update && \
         build-essential \
         python3-dev && \
     apt-get autoremove -y && \
-    apt-get clean
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Configure container startup
 EXPOSE 8888
