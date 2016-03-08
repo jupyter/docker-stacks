@@ -73,8 +73,8 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     && conda clean -tipsy
 
 # R packages including IRKernel which gets installed globally.
-RUN conda config --add channels r
-RUN conda install --quiet --yes \
+RUN conda config --add channels r && \
+    conda install --quiet --yes \
     'rpy2=2.7*' \
     'r-base=3.2*' \
     'r-irkernel=0.5*' \
