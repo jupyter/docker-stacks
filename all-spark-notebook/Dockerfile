@@ -36,25 +36,6 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Scala Spark kernel (build and cleanup)
-RUN cd /tmp && \
-    echo deb http://dl.bintray.com/sbt/debian / > /etc/apt/sources.list.d/sbt.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv 99E82A75642AC823 && \
-    apt-get update && \
-    git clone https://github.com/apache/incubator-toree.git && \
-    apt-get install -yq --force-yes --no-install-recommends sbt && \
-    cd incubator-toree && \
-    git checkout 846292233c && \
-    make dist SHELL=/bin/bash && \
-    mv dist/toree-kernel /opt/toree-kernel && \
-    chmod +x /opt/toree-kernel && \
-    rm -rf ~/.ivy2 && \
-    rm -rf ~/.sbt && \
-    rm -rf /tmp/incubator-toree && \
-    apt-get remove -y sbt && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 # Spark and Mesos pointers
 ENV SPARK_HOME /usr/local/spark
 ENV R_LIBS_USER $SPARK_HOME/R/lib
@@ -102,9 +83,9 @@ RUN conda install --quiet --yes \
     'r-ggplot2=1.0*' \
     'r-rcurl=1.95*' && conda clean -tipsy
 
-# Scala Spark kernel spec
-RUN mkdir -p /opt/conda/share/jupyter/kernels/scala
-COPY kernel.json /opt/conda/share/jupyter/kernels/scala/
+# Toree kernel
+RUN pip install toree==0.1.0.dev4
+RUN jupyter toree install --user --kernel_name='Apache_Toree'
 
 # Install Python 2 kernel spec into the Python 3 conda environment which
 # runs the notebook server
