@@ -1,5 +1,4 @@
-from jupyter/datascience-notebook
-
+FROM  jupyter/datascience-notebook
 
 ONBUILD COPY requirements.txt /home/jovyan/work
 
