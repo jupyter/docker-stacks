@@ -59,10 +59,7 @@ When `make release-all` successfully pushes the last of its images to Docker Hub
 
 **When there's a security fix in the Debian base image, do the following in place of the last command:**
 
-```
-docker pull debian:jessie
-make release-all DARGS=--no-cache
-```
+Update the `debian:jessie` SHA in the most-base images (e.g., minimal-notebook, minimal-kernel). Submit it as a regular PR and go through the build process.
 
 This will take time as the entire set of stacks will rebuild.
 
