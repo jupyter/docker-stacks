@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     bzip2 \
     unzip \
     libsm6 \
+    hdf5-tools \
     pandoc \
     texlive-latex-base \
     texlive-latex-extra \
