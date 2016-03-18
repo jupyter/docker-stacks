@@ -22,17 +22,13 @@ RUN cd /tmp && \
         rm spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
 
-# Mesos dependencies
-# Currently, Mesos is not available from Debian Jessie.
-# So, we are installing it from Debian Wheezy. Once it
-# becomes available for Debian Jessie. We should switch
-# over to using that instead.
+# Install mesos client
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
     DISTRO=debian && \
-    CODENAME=wheezy && \
+    CODENAME=jessie && \
     echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
     apt-get -y update && \
-    apt-get --no-install-recommends -y --force-yes install mesos=0.22.1-1.0.debian78 && \
+    apt-get --no-install-recommends -y --force-yes install mesos=0.25.0-0.2.70.debian81 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
