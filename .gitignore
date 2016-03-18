@@ -61,3 +61,5 @@ target/
 
 # Mac OS X
 .DS_Store
+
+dockerspawner

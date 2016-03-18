@@ -12,6 +12,11 @@ ALL_STACKS:=minimal-kernel \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook
+
+ALL_SINGLEUSERS:=$(shell echo $(ALL_STACKS) | sed "s/ /\n/g" | grep notebook | sed s/notebook/singleuser/g)
+
+ALL_IMAGES:=$(ALL_STACKS) $(ALL_SINGLEUSERS)
+
 GIT_MASTER_HEAD_SHA:=$(shell git rev-parse --short=12 --verify HEAD)
 
 help:
@@ -27,7 +32,10 @@ build/%: DARGS?=
 build/%:
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
 
-build-all: $(patsubst %,build/%, $(ALL_STACKS))
+build/%-singleuser: build/%-notebook
+	./internal/build-singleuser $(OWNER)/$*-notebook $(OWNER)/$*-singleuser
+
+build-all: $(patsubst %,build/%, $(ALL_IMAGES))
 
 dev/%: ARGS?=
 dev/%: DARGS?=
@@ -42,18 +50,18 @@ push/%:
 	docker push $(OWNER)/$(notdir $@):latest
 	docker push $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
 
+push-all: $(patsubst %,push/%, $(ALL_IMAGES))
+
 refresh/%:
 # skip if error: a stack might not be on dockerhub yet
 	-docker pull $(OWNER)/$(notdir $@):latest
 
-refresh-all: $(patsubst %,refresh/%, $(ALL_STACKS))
+refresh-all: $(patsubst %,refresh/%, $(ALL_IMAGES))
 
-release-all: environment-check \
-	$(patsubst %,refresh/%, $(ALL_STACKS)) \
-	$(patsubst %,build/%, $(ALL_STACKS)) \
-	$(patsubst %,tag/%, $(ALL_STACKS)) \
-	$(patsubst %,push/%, $(ALL_STACKS))
+release-all: environment-check refresh-all build-all tag-all push-all
 
 tag/%:
 # always tag the latest build with the git sha
 	docker tag -f $(OWNER)/$(notdir $@):latest $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
+
+tag-all: $(patsubst %,tag/%, $(ALL_IMAGES))

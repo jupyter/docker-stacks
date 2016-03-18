@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Build a singleuser image for JupyterHub from a given stack
+# Usage:
+# ./build-singleuser jupyter/scipy-notebook my-singleuser-image
+
+set -e
+
+# get dockerspawner
+if [[ ! -d dockerspawner ]]; then
+  git clone https://github.com/jupyter/dockerspawner
+else
+  cd dockerspawner
+  git pull
+  cd -
+fi
+
+base="$1"
+name="$2"
+if [[ -z "$base" || -z "$name" ]]; then
+  echo "Usage: build-singleuser [base image] [destination image]" >&2
+  exit 1
+fi
+echo "building $name from $base"
+
+singleuser=dockerspawner/singleuser
+# copy single-user stack
+sed -i "s@^FROM.*\$@FROM $base@" "$singleuser/Dockerfile"
+docker build -t "$name" "$singleuser"
+echo "built $name"
