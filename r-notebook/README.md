@@ -1,3 +1,5 @@
+![docker pulls](https://img.shields.io/docker/pulls/jupyter/r-notebook.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/r-notebook.svg)
+
 # Jupyter Notebook R Stack
 
 ## What it Gives You
