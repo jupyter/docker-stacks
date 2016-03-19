@@ -1,3 +1,5 @@
+![docker pulls](https://img.shields.io/docker/pulls/jupyter/minimal-notebook.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/minimal-notebook.svg)
+
 # Minimal Jupyter Notebook Stack
 
 ## What it Gives You
