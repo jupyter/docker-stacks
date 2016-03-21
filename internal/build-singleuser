@@ -5,13 +5,14 @@
 
 set -e
 
+V="0.2.0"
 # get dockerspawner
 if [[ ! -d dockerspawner ]]; then
-  git clone https://github.com/jupyter/dockerspawner
-else
-  cd dockerspawner
-  git pull
-  cd -
+  tgz="dockerspawner.tar.gz"
+  wget -N https://github.com/jupyter/dockerspawner/archive/$V.tar.gz -O $tgz
+  echo "8af14608ad30df4dfcced7c7be508d336d485d9c31af965dc84c5e882e19dfe4 *$tgz" | shasum -a 256 -c - || (echo "shasum mismatch $(shasum -a 256 $tgz)" && exit -1)
+  tar -xzf $tgz
+  mv dockerspawner-$V dockerspawner
 fi
 
 base="$1"

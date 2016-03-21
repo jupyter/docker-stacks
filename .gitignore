@@ -63,3 +63,4 @@ target/
 .DS_Store
 
 dockerspawner
+dockerspawner.tar.gz
