@@ -1,3 +1,5 @@
+![docker pulls](https://img.shields.io/docker/pulls/jupyter/minimal-kernel.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/minimal-kernel.svg)
+
 # Kernel Gateway Stack
 
 ## What it Gives You

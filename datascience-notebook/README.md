@@ -1,3 +1,5 @@
+![docker pulls](https://img.shields.io/docker/pulls/jupyter/datascience-notebook.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/datascience-notebook.svg)
+
 # Jupyter Notebook Data Science Stack
 
 ## What it Gives You
