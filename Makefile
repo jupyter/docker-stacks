@@ -29,11 +29,12 @@ help:
 	@echo '     tag/<stack-dirname> - tags the latest stack image with the HEAD git SHA'
 
 build/%: DARGS?=
-build/%:
-	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
 
 build/%-singleuser: build/%-notebook
 	./internal/build-singleuser $(OWNER)/$*-notebook $(OWNER)/$*-singleuser
+
+build/%:
+	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
 
 build-all: $(patsubst %,build/%, $(ALL_IMAGES))
 
