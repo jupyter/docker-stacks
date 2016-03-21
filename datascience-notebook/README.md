@@ -56,3 +56,13 @@ source deactivate
 ```
 
 The commands `ipython`, `python`, `pip`, `easy_install`, and `conda` (among others) are available in both environments.
+
+
+## JupyterHub
+
+To use this stack with [JupyterHub](https://jupyterhub.readthedocs.org) and [DockerSpawner](https://github.com/jupyter/dockerspawner),
+set
+
+```python
+c.DockerSpawner.container_image = 'jupyter/datascience-singleuser'
+```

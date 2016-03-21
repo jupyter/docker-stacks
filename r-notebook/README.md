@@ -37,3 +37,13 @@ You may customize the execution of the Docker container and the Notebook server 
 * `-e GRANT_SUDO=yes` - Gives the `jovyan` user passwordless `sudo` capability. Useful for installing OS packages. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adding `jovyan` to sudoers.) **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
 * `-v /some/host/folder/for/work:/home/jovyan/work` - Host mounts the default working directory on the host to preserve work even when the container is destroyed and recreated (e.g., during an upgrade).
 * `-v /some/host/folder/for/server.pem:/home/jovyan/.local/share/jupyter/notebook.pem` - Mounts a SSL certificate plus key for `USE_HTTPS`. Useful if you have a real certificate for the domain under which you are running the Notebook server.
+
+
+## JupyterHub
+
+To use this stack with [JupyterHub](https://jupyterhub.readthedocs.org) and [DockerSpawner](https://github.com/jupyter/dockerspawner),
+set
+
+```python
+c.DockerSpawner.container_image = 'jupyter/r-singleuser'
+```

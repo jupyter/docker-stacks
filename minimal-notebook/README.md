@@ -41,3 +41,13 @@ You may customize the execution of the Docker container and the Notebook server 
 ## Conda Environment
 
 The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. The commands `ipython`, `python`, `pip`, `easy_install`, and `conda` (among others) are available in this environment.
+
+
+## JupyterHub
+
+To use this stack with [JupyterHub](https://jupyterhub.readthedocs.org) and [DockerSpawner](https://github.com/jupyter/dockerspawner),
+set
+
+```python
+c.DockerSpawner.container_image = 'jupyter/minimal-singleuser'
+```
