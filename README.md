@@ -26,6 +26,8 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-stacks/tree/9bd33dcc8688):
 
 * Every folder here on GitHub has an equivalent `jupyter/<stack name>` on Docker Hub.
+* Each `*-notebook` stack also has a corresponding `*-singleuser` stack,
+  for use with [JupyterHub](https://jupyterhub.readthedocs.org).
 * The `latest` tag in each Docker Hub repository tracks the `master` branch `HEAD` reference on GitHub.
 * Any 12-character image tag on Docker Hub refers to a git commit SHA here on GitHub. See the [Docker build history wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) for a table of build details.
 * Stack contents (e.g., new library versions) will be updated upon request via PRs against this project.
