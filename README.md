@@ -21,6 +21,12 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 2. Open the README in one of the folders in this git repository.
 3. Follow the README for that stack.
 
+## A visual overview of stacks
+
+Here's a diagram of the `FROM` relationships between all of the images defined in this project:
+
+[![Image inheritance diagram](internal/inherit-diagram.png)](http://interactive.blockdiag.com/?compression=deflate&src=eJyNjrEOgkAQRHu-4kLt9UaCkc7e0hizwELWW_bI3VGg8d8FCxMR0XLfzLxszrYwJUGtbpFS1hFKgEBWVKpa64IDCsmQlFhBx-FcWQmerjjE65Fn6siQI6dxiTmBbC7oPeHusM_iUxI9G3qrGhJqgLXYgLm1ZvUiBp0gj6ppZ9z5gtp-gWhPUjN2Ht2o-KyXEGCgKAX-5BPZ3D_uy_XHtO19C84ssolmbgLM-h_6pro_AAFCq-Y)
+
 ## Stacks, Tags, Versioning, and Progress
 
 Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-stacks/tree/9bd33dcc8688):
@@ -71,7 +77,3 @@ This will take time as the entire set of stacks will rebuild.
 1. Create a new repo in the `jupyter` org on Docker Hub named after the stack folder in the git repo.
 2. Grant the `stacks` team permission to write to the repo.
 3. Copy/paste the short and long descriptions from one of the other docker-stacks repos on Docker Hub. Modify the appropriate values.
-
-Here's a diagram of the `FROM` relationships between all of the images defined in this project:
-
-[![Image inheritance diagram](internal/inherit-diagram.png)](http://interactive.blockdiag.com/?compression=deflate&src=eJyNjrEOgkAQRHu-4kLt9UaCkc7e0hizwELWW_bI3VGg8d8FCxMR0XLfzLxszrYwJUGtbpFS1hFKgEBWVKpa64IDCsmQlFhBx-FcWQmerjjE65Fn6siQI6dxiTmBbC7oPeHusM_iUxI9G3qrGhJqgLXYgLm1ZvUiBp0gj6ppZ9z5gtp-gWhPUjN2Ht2o-KyXEGCgKAX-5BPZ3D_uy_XHtO19C84ssolmbgLM-h_6pro_AAFCq-Y)
