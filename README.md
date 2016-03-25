@@ -71,3 +71,7 @@ This will take time as the entire set of stacks will rebuild.
 1. Create a new repo in the `jupyter` org on Docker Hub named after the stack folder in the git repo.
 2. Grant the `stacks` team permission to write to the repo.
 3. Copy/paste the short and long descriptions from one of the other docker-stacks repos on Docker Hub. Modify the appropriate values.
+
+Here's a diagram of the `FROM` relationships between all of the images defined in this project:
+
+[![Image inheritance diagram](internal/inherit-diagram.png)](http://interactive.blockdiag.com/?compression=deflate&src=eJyNjrEOgkAQRHu-4kLt9UaCkc7e0hizwELWW_bI3VGg8d8FCxMR0XLfzLxszrYwJUGtbpFS1hFKgEBWVKpa64IDCsmQlFhBx-FcWQmerjjE65Fn6siQI6dxiTmBbC7oPeHusM_iUxI9G3qrGhJqgLXYgLm1ZvUiBp0gj6ppZ9z5gtp-gWhPUjN2Ht2o-KyXEGCgKAX-5BPZ3D_uy_XHtO19C84ssolmbgLM-h_6pro_AAFCq-Y)
