@@ -1,0 +1,13 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
+version: "2"
+
+services:
+  consul:
+    image: progrium/consul
+    restart: always
+    hostname: consul
+    ports:
+      - "${CONSUL_IP}:8500:8500"
+    command: "-server -bootstrap"
