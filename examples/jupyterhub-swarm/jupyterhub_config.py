@@ -45,6 +45,10 @@ c.JupyterHub.ssl_cert = os.environ['SSL_CERT']
 c.JupyterHub.authenticator_class = 'oauthenticator.GitHubOAuthenticator'
 c.GitHubOAuthenticator.oauth_callback_url = os.environ['OAUTH_CALLBACK_URL']
 
+# Store database on volume mounted inside container at DATA_VOLUME_MOUNT
+data_dir = os.environ.get('DATA_VOLUME_MOUNT', '/data')
+c.JupyterHub.db_url = 'sqlite:///{}/jupyterhub.sqlite'.format(data_dir)
+
 # whitlelist allowed and admin users
 c.Authenticator.whitelist = whitelist = set()
 c.Authenticator.admin_users = admin = set()

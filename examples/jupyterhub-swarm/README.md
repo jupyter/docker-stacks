@@ -231,6 +231,14 @@ Configure JupyterHub and build it into a Docker image.
 	./build.sh
 	```
 
+1. Create a data volume for the JupyterHub database.
+
+  ```
+  eval "$(docker-machine env jupyterhub-manager)"
+
+  docker volume create --name jupyterhub-data
+  ```
+
 1. Pull the single-user Jupyter notebook container image to each Swarm node.  Even though the image would be pulled to the node when a new container is spawned on that node, JupyterHub may timeout if it's a big image, so it's better to do it beforehand.
 
   ```

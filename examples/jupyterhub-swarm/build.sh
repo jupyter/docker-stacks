@@ -5,4 +5,4 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Build the JupyterHub image
-docker-compose -f "$DIR/jupyterhub.yml" build
+docker-compose -f "$DIR/jupyterhub.yml" build --force-rm

@@ -8,13 +8,16 @@ services:
     build: .
     image: jtyberg/jupyterhub
     container_name: jupyterhub
-    volumes: # bind volumes from the host
+    volumes:
+      # bind volumes from the host
       # JupyterHub TLS cert and key
       - "/etc/letsencrypt:/etc/letsencrypt:ro"
       # Docker TLS certs and Docker binary (so we can launch containers
       # on Swarm cluster from within JupyterHub container)
       - "/etc/docker:/etc/docker:ro"
       - "/usr/local/bin/docker:/usr/local/bin/docker:ro"
+      # data volume
+      - "data:${DATA_VOLUME_MOUNT}"
     networks:
       - default
     ports:
@@ -34,6 +37,11 @@ services:
     command: >
       jupyterhub -f /srv/jupyterhub/jupyterhub_config.py
       --log-level=DEBUG
+
+volumes:
+  data:
+    external:
+      name: ${DATA_VOLUME}
 
 networks:
   default:

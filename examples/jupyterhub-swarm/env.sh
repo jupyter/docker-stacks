@@ -13,6 +13,12 @@ export OAUTH_CALLBACK_URL="${OAUTH_CALLBACK_URL:=}"
 # Name of Docker overlay network
 export DOCKER_NETWORK_NAME="${DOCKER_NETWORK_NAME:=jupyterhub-network}"
 
+# Name of JupyterHub data volume
+export DATA_VOLUME="${DATA_VOLUME:=jupyterhub-data}"
+
+# Container data volume mount point
+export DATA_VOLUME_MOUNT="${DATA_VOLUME_MOUNT:=/data}"
+
 # Notebook server container image
 export DOCKER_CONTAINER_IMAGE="${DOCKER_CONTAINER_IMAGE:=jupyter/singleuser:latest}"
 
