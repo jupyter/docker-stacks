@@ -29,4 +29,4 @@ fi
 
 # Pass the DOCKER_HOST
 DOCKER_HOST=$(docker-machine ip $SWARM_MANAGER):3376 \
-  exec docker-compose -f jupyterhub.yml up -d
+  exec docker-compose -f jupyterhub.yml "$@"

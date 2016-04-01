@@ -19,10 +19,17 @@ c.DockerSpawner.network_name = network_name
 # Pass the network name as argument to spawned containers
 c.DockerSpawner.extra_host_config = { 'network_mode': network_name }
 c.DockerSpawner.extra_start_kwargs = { 'network_mode': network_name }
+# Mount username volume to notebook directory
+c.DockerSpawner.volumes = { '{username}': '/home/jovyan/work' }
+c.DockerSpawner.extra_create_kwargs = { 'volume_driver': 'convoy' }
+# Remove containers once they are stopped
+c.DockerSpawner.remove_containers = True
 # Specify paths to certificate and key used to authenticate to remote Docker
 # daemon (specified by DOCKER_HOST) over HTTPS
 c.DockerSpawner.tls_cert = os.environ['DOCKER_TLS_CERT']
 c.DockerSpawner.tls_key = os.environ['DOCKER_TLS_KEY']
+# Do not provision user containers to the JupyterHub host
+# c.DockerSpawner.environment = { 'constraint:node!=jupyterhub-manager': None }
 c.DockerSpawner.debug = True
 
 # User containers will access hub by container name on the Docker network
