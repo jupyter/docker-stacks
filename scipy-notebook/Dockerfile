@@ -18,6 +18,7 @@ USER jovyan
 RUN conda install --quiet --yes \
     'ipywidgets=4.1*' \
     'pandas=0.17*' \
+    'numexpr=2.5*' \
     'matplotlib=1.5*' \
     'scipy=0.17*' \
     'seaborn=0.7*' \
@@ -39,6 +40,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.1*' \
     'ipywidgets=4.1*' \
     'pandas=0.17*' \
+    'numexpr=2.5*' \
     'matplotlib=1.5*' \
     'scipy=0.17*' \
     'seaborn=0.7*' \
