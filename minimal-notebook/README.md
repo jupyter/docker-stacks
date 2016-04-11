@@ -27,7 +27,7 @@ You can pass [Jupyter command line options](http://jupyter.readthedocs.org/en/la
 docker run -d -p 8888:8888 jupyter/minimal-notebook start-notebook.sh --NotebookApp.base_url=/some/path
 ```
 
-You can sidestep the `start-notebook.sh` script entirely by specifying a command other than `start-notebook.sh`. If you do, the `NB_USER` and `GRANT_SUDO` features documented below will not work. See the Docker Options section for details.
+You can sidestep the `start-notebook.sh` script entirely by specifying a command other than `start-notebook.sh`. If you do, the `NB_UID` and `GRANT_SUDO` features documented below will not work. See the Docker Options section for details.
 
 ## Docker Options
 
