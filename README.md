@@ -32,8 +32,6 @@ Here's a diagram of the `FROM` relationships between all of the images defined i
 Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-stacks/tree/9bd33dcc8688):
 
 * Every folder here on GitHub has an equivalent `jupyter/<stack name>` on Docker Hub.
-* Each `*-notebook` stack also has a corresponding `*-singleuser` stack,
-  for use with [JupyterHub](https://jupyterhub.readthedocs.org).
 * The `latest` tag in each Docker Hub repository tracks the `master` branch `HEAD` reference on GitHub.
 * Any 12-character image tag on Docker Hub refers to a git commit SHA here on GitHub. See the [Docker build history wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) for a table of build details.
 * Stack contents (e.g., new library versions) will be updated upon request via PRs against this project.
@@ -42,7 +40,8 @@ Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-st
 
 ## Other Tips
 
-* `tini -- start-notebook.sh` is the default Docker entrypoint-plus-command in every notebook stack. If you plan to modify it any way, be sure to check the *Notebook Options* section of your stack's README to understand the consequences.
+* `tini -- start-notebook.sh` is the default Docker entrypoint-plus-command in every notebook stack. If you plan to modify it in any way, be sure to check the *Notebook Options* section of your stack's README to understand the consequences.
+* Every notebook stack is compatible with [JupyterHub](https://jupyterhub.readthedocs.org) 0.5.  When running with JupyterHub, you must override the Docker run command to point to the [start-singleuser.sh](minimal-notebook/start-singleuser.sh) script, which starts a single-user instance of the Notebook server.  See each stack's README for instructions on running with JupyterHub.
 * Check the [Docker recipes wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-Recipes) attached to this project for information about extending and deploying the Docker images defined here. Add to the wiki if you have relevant information.
 
 ## Maintainer Workflow

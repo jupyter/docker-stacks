@@ -11,6 +11,7 @@
 * Mesos client 0.22 binary that can communicate with a Mesos master
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * [tini](https://github.com/krallin/tini) as the container entrypoint and [start-notebook.sh](../minimal-notebook/start-notebook.sh) as the default command
+* A [start-singleuser.sh](../minimal-notebook/start-singleuser.sh) script for use as an alternate command that runs a single-user instance of the Notebook server, as required by [JupyterHub](#JupyterHub)
 * Options for HTTPS, password auth, and passwordless `sudo`
 
 ## Basic Use
@@ -136,9 +137,14 @@ The commands `ipython`, `python`, `pip`, `easy_install`, and `conda` (among othe
 
 ## JupyterHub
 
-To use this stack with [JupyterHub](https://jupyterhub.readthedocs.org) and [DockerSpawner](https://github.com/jupyter/dockerspawner),
-set
+[JupyterHub](https://jupyterhub.readthedocs.org) requires a single-user instance of the Jupyter Notebook server per user.   To use this stack with JupyterHub and [DockerSpawner](https://github.com/jupyter/dockerspawner), you must specify the container image name and override the default container run command in your `jupyterhub_config.py`:
 
 ```python
-c.DockerSpawner.container_image = 'jupyter/pyspark-singleuser'
+# Spawn user containers from this image
+c.DockerSpawner.container_image = 'jupyter/pyspark-notebook'
+
+# Have the Spawner override the Docker run command
+c.DockerSpawner.extra_create_kwargs.update({
+	'command': '/usr/local/bin/start-singleuser.sh'
+})
 ```

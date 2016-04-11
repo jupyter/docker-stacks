@@ -9,6 +9,7 @@
 * plyr, devtools, dplyr, ggplot2, tidyr, shiny, rmarkdown, forecast, stringr, rsqlite, reshape2, nycflights13, caret, rcurl, and randomforest pre-installed
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * [tini](https://github.com/krallin/tini) as the container entrypoint and [start-notebook.sh](../minimal-notebook/start-notebook.sh) as the default command
+* A [start-singleuser.sh](../minimal-notebook/start-singleuser.sh) script for use as an alternate command that runs a single-user instance of the Notebook server, as required by [JupyterHub](#JupyterHub)
 * Options for HTTPS, password auth, and passwordless `sudo`
 
 ## Basic Use
@@ -43,9 +44,14 @@ You may customize the execution of the Docker container and the Notebook server 
 
 ## JupyterHub
 
-To use this stack with [JupyterHub](https://jupyterhub.readthedocs.org) and [DockerSpawner](https://github.com/jupyter/dockerspawner),
-set
+[JupyterHub](https://jupyterhub.readthedocs.org) requires a single-user instance of the Jupyter Notebook server per user.   To use this stack with JupyterHub and [DockerSpawner](https://github.com/jupyter/dockerspawner), you must specify the container image name and override the default container run command in your `jupyterhub_config.py`:
 
 ```python
-c.DockerSpawner.container_image = 'jupyter/r-singleuser'
+# Spawn user containers from this image
+c.DockerSpawner.container_image = 'jupyter/r-notebook'
+
+# Have the Spawner override the Docker run command
+c.DockerSpawner.extra_create_kwargs.update({
+	'command': '/usr/local/bin/start-singleuser.sh'
+})
 ```
