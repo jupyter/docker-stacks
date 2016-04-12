@@ -25,7 +25,7 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 
 Here's a diagram of the `FROM` relationships between all of the images defined in this project:
 
-[![Image inheritance diagram](internal/inherit-diagram.png)](http://interactive.blockdiag.com/?compression=deflate&src=eJyNjrEOgkAQRHu-4kLt9UaCkc7e0hizwELWW_bI3VGg8d8FCxMR0XLfzLxszrYwJUGtbpFS1hFKgEBWVKpa64IDCsmQlFhBx-FcWQmerjjE65Fn6siQI6dxiTmBbC7oPeHusM_iUxI9G3qrGhJqgLXYgLm1ZvUiBp0gj6ppZ9z5gtp-gWhPUjN2Ht2o-KyXEGCgKAX-5BPZ3D_uy_XHtO19C84ssolmbgLM-h_6pro_AAFCq-Y)
+[![Image inheritance diagram](internal/inherit-diagram.png)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFzDELwjAQhuG9vyJ0trtYKnZzdxSRS3OVM9dcSOJQxf9u41BoEVzf77nTLJ01BDf1KpSSQOgSJBKnGuUlpACU6mkx2MOD07UXlyI9cZq3ubfqzKCRm9KgJnC7O8ZIeDgd2_JSF19R7dVAjgbgyklCLWI3c7EYHHJ-tTb5Lnbkx7lktSzZGEgwVXQdLuSvf-Gv8GP0EOzCrVt2wFyt5fsDQc9zBA)
 
 ## Stacks, Tags, Versioning, and Progress
 
