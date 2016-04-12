@@ -13,9 +13,7 @@ ALL_STACKS:=minimal-kernel \
 	pyspark-notebook \
 	all-spark-notebook
 
-ALL_SINGLEUSERS:=$(shell echo $(ALL_STACKS) | sed "s/ /\n/g" | grep notebook | sed s/notebook/singleuser/g)
-
-ALL_IMAGES:=$(ALL_STACKS) $(ALL_SINGLEUSERS)
+ALL_IMAGES:=$(ALL_STACKS)
 
 GIT_MASTER_HEAD_SHA:=$(shell git rev-parse --short=12 --verify HEAD)
 
@@ -29,9 +27,6 @@ help:
 	@echo '     tag/<stack-dirname> - tags the latest stack image with the HEAD git SHA'
 
 build/%: DARGS?=
-
-build/%-singleuser: build/%-notebook
-	./internal/build-singleuser $(OWNER)/$*-notebook $(OWNER)/$*-singleuser
 
 build/%:
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
