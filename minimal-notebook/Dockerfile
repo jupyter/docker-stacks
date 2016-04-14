@@ -82,6 +82,9 @@ RUN conda install --quiet --yes \
     terminado \
     && conda clean -tipsy
 
+# Install JupyterHub to get the jupyterhub-singleuser startup script
+RUN pip install 'jupyterhub==0.5'
+
 USER root
 
 # Configure container startup as root
@@ -91,7 +94,10 @@ ENTRYPOINT ["tini", "--"]
 CMD ["start-notebook.sh"]
 
 # Add local files as late as possible to avoid cache busting
+# Start notebook server
 COPY start-notebook.sh /usr/local/bin/
+# Start single-user notebook server for use with JupyterHub
+COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
 RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
 

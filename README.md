@@ -25,15 +25,13 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 
 Here's a diagram of the `FROM` relationships between all of the images defined in this project:
 
-[![Image inheritance diagram](internal/inherit-diagram.png)](http://interactive.blockdiag.com/?compression=deflate&src=eJyNjrEOgkAQRHu-4kLt9UaCkc7e0hizwELWW_bI3VGg8d8FCxMR0XLfzLxszrYwJUGtbpFS1hFKgEBWVKpa64IDCsmQlFhBx-FcWQmerjjE65Fn6siQI6dxiTmBbC7oPeHusM_iUxI9G3qrGhJqgLXYgLm1ZvUiBp0gj6ppZ9z5gtp-gWhPUjN2Ht2o-KyXEGCgKAX-5BPZ3D_uy_XHtO19C84ssolmbgLM-h_6pro_AAFCq-Y)
+[![Image inheritance diagram](internal/inherit-diagram.png)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFzDELwjAQhuG9vyJ0trtYKnZzdxSRS3OVM9dcSOJQxf9u41BoEVzf77nTLJ01BDf1KpSSQOgSJBKnGuUlpACU6mkx2MOD07UXlyI9cZq3ubfqzKCRm9KgJnC7O8ZIeDgd2_JSF19R7dVAjgbgyklCLWI3c7EYHHJ-tTb5Lnbkx7lktSzZGEgwVXQdLuSvf-Gv8GP0EOzCrVt2wFyt5fsDQc9zBA)
 
 ## Stacks, Tags, Versioning, and Progress
 
 Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-stacks/tree/9bd33dcc8688):
 
 * Every folder here on GitHub has an equivalent `jupyter/<stack name>` on Docker Hub.
-* Each `*-notebook` stack also has a corresponding `*-singleuser` stack,
-  for use with [JupyterHub](https://jupyterhub.readthedocs.org).
 * The `latest` tag in each Docker Hub repository tracks the `master` branch `HEAD` reference on GitHub.
 * Any 12-character image tag on Docker Hub refers to a git commit SHA here on GitHub. See the [Docker build history wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) for a table of build details.
 * Stack contents (e.g., new library versions) will be updated upon request via PRs against this project.
@@ -42,7 +40,8 @@ Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-st
 
 ## Other Tips
 
-* `tini -- start-notebook.sh` is the default Docker entrypoint-plus-command in every notebook stack. If you plan to modify it any way, be sure to check the *Notebook Options* section of your stack's README to understand the consequences.
+* `tini -- start-notebook.sh` is the default Docker entrypoint-plus-command in every notebook stack. If you plan to modify it in any way, be sure to check the *Notebook Options* section of your stack's README to understand the consequences.
+* Every notebook stack is compatible with [JupyterHub](https://jupyterhub.readthedocs.org) 0.5.  When running with JupyterHub, you must override the Docker run command to point to the [start-singleuser.sh](minimal-notebook/start-singleuser.sh) script, which starts a single-user instance of the Notebook server.  See each stack's README for instructions on running with JupyterHub.
 * Check the [Docker recipes wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-Recipes) attached to this project for information about extending and deploying the Docker images defined here. Add to the wiki if you have relevant information.
 
 ## Maintainer Workflow
