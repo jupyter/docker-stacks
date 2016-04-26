@@ -16,7 +16,7 @@ USER jovyan
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
-    'ipywidgets=4.1*' \
+    'ipywidgets=5.0*' \
     'pandas=0.17*' \
     'numexpr=2.5*' \
     'matplotlib=1.5*' \
@@ -34,11 +34,13 @@ RUN conda install --quiet --yes \
     'bokeh=0.11*' \
     'h5py=2.5*' \
     && conda clean -tipsy
+# Activate ipywidgets extension in the environment that runs the notebook server
+RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
 # Install Python 2 packages
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
-    'ipython=4.1*' \
-    'ipywidgets=4.1*' \
+    'ipython=4.2*' \
+    'ipywidgets=5.0*' \
     'pandas=0.17*' \
     'numexpr=2.5*' \
     'matplotlib=1.5*' \
