@@ -74,6 +74,7 @@ RUN cd /tmp && \
     /bin/bash Miniconda3-3.19.0-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-3.19.0-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --quiet --yes conda==3.19.1 && \
+    $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     conda clean -tipsy
 
 # Install Jupyter notebook as jovyan
