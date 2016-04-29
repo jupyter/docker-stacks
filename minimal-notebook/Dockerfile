@@ -78,7 +78,7 @@ RUN cd /tmp && \
 
 # Install Jupyter notebook as jovyan
 RUN conda install --quiet --yes \
-    'notebook=4.1*' \
+    'notebook=4.2*' \
     terminado \
     && conda clean -tipsy
 
