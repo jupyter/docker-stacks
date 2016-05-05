@@ -4,7 +4,7 @@
 
 ## What it Gives You
 
-* Jupyter Notebook 4.1.x
+* Jupyter Notebook 4.2.x
 * Conda R v3.2.x and channel
 * plyr, devtools, dplyr, ggplot2, tidyr, shiny, rmarkdown, forecast, stringr, rsqlite, reshape2, nycflights13, caret, rcurl, and randomforest pre-installed
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
