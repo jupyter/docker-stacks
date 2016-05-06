@@ -10,7 +10,7 @@ USER root
 RUN apt-get -y update && apt-get -y install jq && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 1.6.0
+ENV APACHE_SPARK_VERSION 1.6.1
 RUN apt-get -y update && \
     apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
     apt-get clean && \
