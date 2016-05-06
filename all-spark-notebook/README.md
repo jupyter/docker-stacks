@@ -161,37 +161,17 @@ head(filter(df, df$Petal_Width > 0.2))
 ### In an Apache Toree (Scala) Notebook
 
 0. Open a terminal via *New -> Terminal* in the notebook interface.
-1. Add information about your cluster to the Scala kernel spec file in `~/.local/share/jupyter/kernels/apache_toree/kernel.json`. (See below.)
+1. Add information about your cluster to the `SPARK_OPTS` environment variable when running the container.
 2. Open an Apache Toree (Scala) notebook.
 3. Use the pre-configured `SparkContext` in variable `sc`.
 
-The Apache Toree kernel automatically creates a `SparkContext` when it starts based on configuration information from its command line arguments and environments. Therefore, you must add it to the Toree kernel spec file. You cannot, at present, configure it yourself within a notebook.
+The Apache Toree kernel automatically creates a `SparkContext` when it starts based on configuration information from its command line arguments and environment variables. You can pass information about your Mesos cluster via the `SPARK_OPTS` environment variable when you spawn a container.
 
-For instance, a kernel spec file with information about a Mesos master, Spark binary location in HDFS, and an executor option appears here:
+For instance, to pass information about a Mesos master, Spark binary location in HDFS, and an executor options, you could start the container like so:
 
-```
-{
-  "codemirror_mode": "scala",
-  "display_name": "Apache_Toree",
-  "language_info": {
-    "name": "scala"
-  },
-  "argv": [
-    "/home/jovyan/.local/share/jupyter/kernels/apache_toree/bin/run.sh",
-    "--profile",
-    "{connection_file}"
-  ],
-  "env": {
-    "CAPTURE_STANDARD_ERR": "true",
-    "SPARK_HOME": "/usr/local/spark",
-    "SEND_EMPTY_OUTPUT": "false",
-    "SPARK_OPTS": "--master=mesos://10.10.10.10:5050 --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info --spark.executor.memory=8g --spark.executor.uri=hdfs://10.10.10.10/spark/spark-1.6.0-bin-hadoop2.6.tgz",
-    "CAPTURE_STANDARD_OUT": "true",
-    "PYTHONPATH": "/usr/local/spark/python:/usr/local/spark/python/lib/py4j-0.9-src.zip",
-    "MAX_INTERPRETER_THREADS": "16"
-  }
-}
-```
+`docker run -d -p 8888:8888 -e SPARK_OPTS '--master=mesos://10.10.10.10:5050 \
+    --spark.executor.uri=hdfs://10.10.10.10/spark/spark-1.6.0-bin-hadoop2.6.tgz \
+    --spark.executor.memory=8g' jupyter/all-spark-notebook`
 
 Note that this is the same information expressed in a notebook in the Python case above. Once the kernel spec has your cluster information, you can test your cluster in an Apache Toree notebook like so:
 
