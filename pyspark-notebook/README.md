@@ -97,7 +97,7 @@ Connection to Spark Cluster on Standalone Mode requires the following set of ste
 
 ## Notebook Options
 
-You can pass [Jupyter command line options](http://jupyter.readthedocs.org/en/latest/config.html#command-line-arguments) through the [`start-notebook.sh` command](https://github.com/jupyter/docker-stacks/blob/master/minimal-notebook/start-notebook.sh#L15) when launching the container. For example, to set the base URL of the notebook server you might do the following:
+You can pass [Jupyter command line options](http://jupyter.readthedocs.io/en/latest/projects/config.html#command-line-options-for-configuration) through the [`start-notebook.sh` command](https://github.com/jupyter/docker-stacks/blob/master/minimal-notebook/start-notebook.sh#L15) when launching the container. For example, to set the base URL of the notebook server you might do the following:
 
 ```
 docker run -d -p 8888:8888 jupyter/pyspark-notebook start-notebook.sh --NotebookApp.base_url=/some/path
