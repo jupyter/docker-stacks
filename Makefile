@@ -6,6 +6,7 @@
 OWNER:=jupyter
 # need to list these manually because there's a dependency tree
 ALL_STACKS:=minimal-kernel \
+	base-notebook \
 	minimal-notebook \
 	r-notebook \
 	scipy-notebook \
