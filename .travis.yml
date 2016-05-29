@@ -8,4 +8,4 @@ before_install:
     - make refresh-all
 
 script:
-    - make build-all
+    - make build-test-all
