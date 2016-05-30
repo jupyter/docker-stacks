@@ -49,7 +49,7 @@ USER jovyan
 # Setup jovyan home directory
 RUN mkdir /home/$NB_USER/work && \
     mkdir /home/$NB_USER/.jupyter && \
-    mkdir /home/$NB_USER/.local && \
+    mkdir -p -m 700 /home/$NB_USER/.local/share/jupyter && \
     echo "cacert=/etc/ssl/certs/ca-certificates.crt" > /home/$NB_USER/.curlrc
 
 # Install conda as jovyan
