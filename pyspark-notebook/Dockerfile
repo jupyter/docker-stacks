@@ -69,6 +69,9 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'scikit-learn=0.17*' \
     pyzmq \
     && conda clean -tipsy
+# Add shortcuts to distinguish pip for python2 and python3 envs
+RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
+    ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
 
 # Install Python 2 kernel spec into the Python 3 conda environment which
 # runs the notebook server

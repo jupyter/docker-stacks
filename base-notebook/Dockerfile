@@ -35,6 +35,7 @@ ENV PATH $CONDA_DIR/bin:$PATH
 ENV SHELL /bin/bash
 ENV NB_USER jovyan
 ENV NB_UID 1000
+ENV HOME /home/$NB_USER
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
@@ -49,7 +50,7 @@ USER jovyan
 # Setup jovyan home directory
 RUN mkdir /home/$NB_USER/work && \
     mkdir /home/$NB_USER/.jupyter && \
-    mkdir /home/$NB_USER/.local && \
+    mkdir -p -m 700 /home/$NB_USER/.local/share/jupyter && \
     echo "cacert=/etc/ssl/certs/ca-certificates.crt" > /home/$NB_USER/.curlrc
 
 # Install conda as jovyan
@@ -69,7 +70,7 @@ RUN conda install --quiet --yes \
     && conda clean -tipsy
 
 # Install JupyterHub to get the jupyterhub-singleuser startup script
-RUN pip install 'jupyterhub==0.5'
+RUN pip --no-cache-dir install 'jupyterhub==0.5'
 
 USER root
 
