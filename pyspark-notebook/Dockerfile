@@ -6,9 +6,6 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
 USER root
 
-# Util to help with kernel spec later
-RUN apt-get -y update && apt-get -y install jq && apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Spark dependencies
 ENV APACHE_SPARK_VERSION 1.6.1
 RUN apt-get -y update && \
@@ -53,6 +50,7 @@ RUN conda install --quiet --yes \
     'scipy=0.17*' \
     'seaborn=0.7*' \
     'scikit-learn=0.17*' \
+    jq \
     && conda clean -tipsy
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
