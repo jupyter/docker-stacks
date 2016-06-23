@@ -94,12 +94,12 @@ RUN echo "[ODBC Data Sources]" >> ~/.odbc.ini && \
     echo "Driver           = /home/jovyan/odbcdriver/lib/libtdsodbc.so" >> ~/.odbc.ini && \
     echo "Trace            = No" >> ~/.odbc.ini && \
     echo "TraceFile        = /home/jovyan/prodms.log" >> ~/.odbc.ini && \
-    echo "Server           = MachineIPAddress >> ~/.odbc.ini && \
-    echo "Host             = MachineHostName >> ~/.odbc.ini && \
+    echo "Server           = MachineIPAddress" >> ~/.odbc.ini && \
+    echo "Host             = MachineHostName" >> ~/.odbc.ini && \
     echo "Port             = MachineDBPort" >> ~/.odbc.ini && \
     echo "Database         = DatabaseInstanceName" >> ~/.odbc.ini && \
     echo "UID              = DatabaseUserName" >> ~/.odbc.ini && \
-    echo "PWD              = DatabasePassword >> ~/.odbc.ini && \
+    echo "PWD              = DatabasePassword" >> ~/.odbc.ini && \
     echo "Protocol         =" >> ~/.odbc.ini && \
     echo "ReadOnly         = No" >> ~/.odbc.ini && \
     echo "RowVersioning    = No" >> ~/.odbc.ini && \
