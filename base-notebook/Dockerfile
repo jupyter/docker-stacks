@@ -64,6 +64,11 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     conda clean -tipsy
 
+# Fix the graphing issue with ggplot2
+# from: https://github.com/jupyter/docker-stacks/issues/210
+RUN mkdir -p $CONDA_DIR/conda-meta && \
+    echo "jpeg 8*" >> $CONDA_DIR/conda-meta/pinned
+
 # Install Jupyter notebook as jovyan
 RUN conda install --quiet --yes \
     'notebook=4.2*' \
