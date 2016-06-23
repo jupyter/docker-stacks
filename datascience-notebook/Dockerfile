@@ -27,15 +27,18 @@ RUN apt-get update && \
 
 USER jovyan
 
+# R packages including IRKernel which gets installed globally.
+RUN conda config --add channels r && \
+    conda install --quiet --yes \
+    'r-base=3.2*' 
+
 # Fix the version of rpy2 since the 2.7 is broken.
 # Note that there is a bug with rpy2 where the %R and %%R don't work.
 # We need an newer version not yet available on the default for conda to fix this.
 RUN conda install -c bioconda rpy2=2.7.8
 
 # R packages including IRKernel which gets installed globally.
-RUN conda config --add channels r && \
-    conda install --quiet --yes \
-    'r-base=3.2*' \
+RUN conda install --quiet --yes \
     'r-irkernel=0.5*' \
     'r-plyr=1.8*' \
     'r-devtools=1.9*' \
