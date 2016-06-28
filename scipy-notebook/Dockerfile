@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-USER jovyan
+USER $NB_USER
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
@@ -69,4 +69,4 @@ USER root
 # switching at runtime.
 RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
 
-USER jovyan
+USER $NB_USER

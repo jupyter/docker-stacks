@@ -42,10 +42,10 @@ ENV LANGUAGE en_US.UTF-8
 
 # Create jovyan user with UID=1000 and in the 'users' group
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
-    mkdir -p /opt/conda && \
-    chown jovyan /opt/conda
+    mkdir -p $CONDA_DIR && \
+    chown $NB_USER $CONDA_DIR
 
-USER jovyan
+USER $NB_USER
 
 # Setup jovyan home directory
 RUN mkdir /home/$NB_USER/work && \
@@ -87,4 +87,4 @@ COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
 RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
 
 # Switch back to jovyan to avoid accidental container runs as root
-USER jovyan
+USER $NB_USER
