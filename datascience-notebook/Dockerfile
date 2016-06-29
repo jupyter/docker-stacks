@@ -80,6 +80,7 @@ julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")' && julia -F -e '
 # Add odbc drivers to the install
 RUN cd /home/jovyan && \
     wget ftp://ftp.freetds.org/pub/freetds/stable/freetds-patched.tar.gz && \
+    echo "8dbcc50fd1cc3bc9aeab85667bd3516d16c9891381b92cf53eb5547bc8299323  freetds-patched.tar.gz" | sha256sum -c - && \
     tar xvzf freetds-patched.tar.gz && \
     cd /home/jovyan/freetds-1.00.6 && \
     ./configure --prefix=/home/jovyan/odbcdriver && \
