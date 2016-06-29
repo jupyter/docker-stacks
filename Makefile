@@ -3,6 +3,9 @@
 
 .PHONY: build-all help environment-check release-all
 
+# Use bash for inline if-statements in test target
+SHELL:=bash
+
 OWNER:=jupyter
 # need to list these manually because there's a dependency tree
 ALL_STACKS:=base-notebook \

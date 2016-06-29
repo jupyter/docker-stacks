@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-USER jovyan
+USER $NB_USER
 
 # Fix the ipywidgets since the base image has an older version of ipywidgets.
 # The older version works with the Python2 instance but not the Python3 instance.
@@ -28,7 +28,7 @@ RUN conda install --quiet --yes \
     'seaborn=0.7*' \
     'scikit-learn=0.17*' \
     'scikit-image=0.11*' \
-    'sympy=0.7*' \
+    'sympy=1.0*' \
     'cython=0.23*' \
     'patsy=0.4*' \
     'statsmodels=0.6*' \
@@ -52,7 +52,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'seaborn=0.7*' \
     'scikit-learn=0.17*' \
     'scikit-image=0.11*' \
-    'sympy=0.7*' \
+    'sympy=1.0*' \
     'cython=0.23*' \
     'patsy=0.4*' \
     'statsmodels=0.6*' \
@@ -73,4 +73,4 @@ USER root
 # switching at runtime.
 RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
 
-USER jovyan
+USER $NB_USER

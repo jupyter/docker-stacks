@@ -28,7 +28,7 @@ RUN apt-get update && \
     libnettle4 && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-USER jovyan
+USER $NB_USER
 
 # R packages including IRKernel which gets installed globally.
 RUN conda config --add channels r && \
@@ -68,14 +68,13 @@ RUN R -e 'install.packages(c("ggthemes", "RODBC", "sendmailR", "tis"), repos="ht
 # to the system share location. Avoids problems with runtime UID change not
 # taking effect properly on the .local folder in the jovyan home dir.
 RUN julia -e 'Pkg.add("IJulia")' && \
-    mv /home/$NB_USER/.local/share/jupyter/kernels/* $CONDA_DIR/share/jupyter/kernels/ && \
-    chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf /home/$NB_USER/.local/share
+    mv /home/$NB_USER/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
+    chmod -R go+rx $CONDA_DIR/share/jupyter
 
 # Show Julia where conda libraries are
 # Add essential packages
-RUN echo 'push!(Sys.DL_LOAD_PATH, "/opt/conda/lib")' > /home/$NB_USER/.juliarc.jl && \
-julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")' && julia -F -e 'Pkg.add("HDF5")'
+RUN echo "push!(Sys.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" > /home/$NB_USER/.juliarc.jl && \
+    julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")' && julia -F -e 'Pkg.add("HDF5")'
 
 # Add odbc drivers to the install
 RUN cd /home/jovyan && \
