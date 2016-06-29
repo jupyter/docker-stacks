@@ -57,8 +57,8 @@ RUN conda install --quiet --yes \
     'r-nycflights13=0.1*' \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
-    'r-dbi=*' \
-    'r-scales=*' \
+    'r-dbi=0.3*' \
+    'r-scales=0.3*' \
     'r-randomforest=4.6*' && conda clean -tipsy
 
 # Install additional non-conda R packages
