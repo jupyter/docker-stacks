@@ -79,9 +79,9 @@ RUN echo "push!(Sys.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" > /home/$NB_USER/.juliarc
 # Add odbc drivers to the install
 RUN cd /home/jovyan && \
     wget ftp://ftp.freetds.org/pub/freetds/stable/freetds-1.00.9.tar.gz && \
-    echo "dcd5e7589f955ced31269de63fb554562806da0133cb7f930b117588313eaf18  freetds-1.00.9.tar.gz" | sha256sum -c - && \
-    tar xvzf freetds-patched.tar.gz && \
-    cd /home/jovyan/freetds-1.00.6 && \
+    echo "dcd5e7589f955ced31269de63fb554562806da0133cb7f930b117588313eaf18 freetds-1.00.9.tar.gz" | sha256sum -c - && \
+    tar xvzf freetds-1.00.9.tar.gz && \
+    cd /home/jovyan/freetds-1.00.9 && \
     ./configure --prefix=/home/jovyan/odbcdriver && \
     make && \
     make install
