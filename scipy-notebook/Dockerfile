@@ -14,9 +14,13 @@ RUN apt-get update && \
 
 USER $NB_USER
 
+# Fix the ipywidgets since the base image has an older version of ipywidgets.
+# The older version works with the Python2 instance but not the Python3 instance.
+# Installing a newer version allows the widgets to work with both Python versions.
+RUN conda install -c conda-forge ipywidgets=5.1.5
+
 # Install Python 3 packages
 RUN conda install --quiet --yes \
-    'ipywidgets=5.1*' \
     'pandas=0.17*' \
     'numexpr=2.5*' \
     'matplotlib=1.5*' \
