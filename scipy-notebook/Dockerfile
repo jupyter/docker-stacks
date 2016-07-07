@@ -17,7 +17,7 @@ USER $NB_USER
 # Install Python 3 packages
 RUN conda install --quiet --yes \
     'ipywidgets=5.1*' \
-    'pandas=0.17*' \
+    'pandas=0.18*' \
     'numexpr=2.5*' \
     'matplotlib=1.5*' \
     'scipy=0.17*' \
@@ -41,7 +41,7 @@ RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.2*' \
     'ipywidgets=5.1*' \
-    'pandas=0.17*' \
+    'pandas=0.18*' \
     'numexpr=2.5*' \
     'matplotlib=1.5*' \
     'scipy=0.17*' \
