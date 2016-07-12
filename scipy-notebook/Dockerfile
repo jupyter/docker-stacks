@@ -15,6 +15,8 @@ RUN apt-get update && \
 USER $NB_USER
 
 # Install Python 3 packages
+# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
+# use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
     'ipywidgets=5.1*' \
     'pandas=0.18*' \
@@ -32,12 +34,15 @@ RUN conda install --quiet --yes \
     'dill=0.2*' \
     'numba=0.23*' \
     'bokeh=0.11*' \
-    'h5py=2.5*' \
-    && conda clean -tipsy
+    'h5py=2.5*' && \
+    conda remove --quiet --yes --force qt pyqt && \
+    conda clean -tipsy
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
 # Install Python 2 packages
+# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
+# use notebook-friendly backends in these images
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipython=4.2*' \
     'ipywidgets=5.1*' \
@@ -57,8 +62,9 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'numba=0.23*' \
     'bokeh=0.11*' \
     'h5py=2.5*' \
-    'pyzmq' \
-    && conda clean -tipsy
+    'pyzmq' && \
+    conda remove -n python2 --quiet --yes --force qt pyqt && \
+    conda clean -tipsy
 # Add shortcuts to distinguish pip for python2 and python3 envs
 RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
     ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
