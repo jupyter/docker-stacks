@@ -22,9 +22,9 @@ USER $NB_USER
 # R packages
 RUN conda config --add channels r && \
     conda install --quiet --yes \
-    'r-base=3.2*' \
-    'r-irkernel=0.5*' \
-    'r-ggplot2=1.0*' \
+    'r-base=3.3*' \
+    'r-irkernel=0.6*' \
+    'r-ggplot2=2.1*' \
     'r-rcurl=1.95*' && conda clean -tipsy
 
 # Apache Toree kernel
