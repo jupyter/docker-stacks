@@ -1,3 +1,8 @@
+#Analytics-Dojo Docker Stacks
+
+This repository contains customized version of the docker-stacks repository.  We thank the jupyter team for the amazing work in creating them. 
+
+
 # docker-stacks
 
 [![Build Status](https://travis-ci.org/jupyter/docker-stacks.svg?branch=master)](https://travis-ci.org/jupyter/docker-stacks)
