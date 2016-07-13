@@ -6,7 +6,7 @@
 
 * Jupyter Notebook 4.2.x
 * Conda Python 3.x and Python 2.7.x environments
-* Conda R 3.2.x environment
+* Conda R 3.3.x environment
 * Scala 2.10.x
 * pyspark, pandas, matplotlib, scipy, seaborn, scikit-learn pre-installed for Python
 * ggplot2, rcurl preinstalled for R
