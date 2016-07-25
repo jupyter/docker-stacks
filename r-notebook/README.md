@@ -25,13 +25,13 @@ docker run -d -p 8888:8888 jupyter/r-notebook
 You can pass [Jupyter command line options](http://jupyter.readthedocs.io/en/latest/projects/config.html#command-line-options-for-configuration) through the [`start-notebook.sh` command](https://github.com/jupyter/docker-stacks/blob/master/minimal-notebook/start-notebook.sh#L15) when launching the container. For example, to set a password hashed using `IPython.lib.passwd()` to secure the notebook server:
 
 ```
-docker run -d -p 8888:8888 jupyter/minimal-notebook start-notebook.sh --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
+docker run -d -p 8888:8888 jupyter/r-notebook start-notebook.sh --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
 ```
 
 Or to set the base URL of the notebook server:
 
 ```
-docker run -d -p 8888:8888 jupyter/minimal-notebook start-notebook.sh --NotebookApp.base_url=/some/path
+docker run -d -p 8888:8888 jupyter/r-notebook start-notebook.sh --NotebookApp.base_url=/some/path
 ```
 
 You can sidestep the `start-notebook.sh` script entirely by specifying a command other than `start-notebook.sh`. If you do, the `NB_UID` and `GRANT_SUDO` features documented below will not work. See the Docker Options section for details.
