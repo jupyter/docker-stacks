@@ -62,6 +62,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'numba=0.23*' \
     'bokeh=0.11*' \
     'h5py=2.5*' \
+    'sqlalchemy=1.0*' \
     'pyzmq' && \
     conda remove -n python2 --quiet --yes --force qt pyqt && \
     conda clean -tipsy
