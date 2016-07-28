@@ -9,6 +9,7 @@ USER root
 # libav-tools for matplotlib anim
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libav-tools && \
+    apt-get install -y --no-install-recommends libmysqlclient-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -34,9 +35,15 @@ RUN conda install --quiet --yes \
     'dill=0.2*' \
     'numba=0.23*' \
     'bokeh=0.11*' \
+    'sqlalchemy=1.0*' \
     'h5py=2.5*' && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy
+
+# Install mysqlclient for python 3 not by conda which couldn't find proper package
+# name by pip instead.
+RUN pip install -q --no-cache-dir mysqlclient==1.3.7
+
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
@@ -63,6 +70,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'bokeh=0.11*' \
     'h5py=2.5*' \
     'sqlalchemy=1.0*' \
+    'MySQL-python=1.2*' \
     'pyzmq' && \
     conda remove -n python2 --quiet --yes --force qt pyqt && \
     conda clean -tipsy
