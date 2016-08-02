@@ -43,28 +43,30 @@ Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-st
 * `tini -- start-notebook.sh` is the default Docker entrypoint-plus-command in every notebook stack. If you plan to modify it in any way, be sure to check the *Notebook Options* section of your stack's README to understand the consequences.
 * Every notebook stack is compatible with [JupyterHub](https://jupyterhub.readthedocs.org) 0.5.  When running with JupyterHub, you must override the Docker run command to point to the [start-singleuser.sh](base-notebook/start-singleuser.sh) script, which starts a single-user instance of the Notebook server.  See each stack's README for instructions on running with JupyterHub.
 * Check the [Docker recipes wiki page](https://github.com/jupyter/docker-stacks/wiki/Docker-Recipes) attached to this project for information about extending and deploying the Docker images defined here. Add to the wiki if you have relevant information.
-* All stacks that derive from minimal notebook have the the conda jpeg package pinned to version 8 until https://github.com/jupyter/docker-stacks/issues/210 is resolved upstream.
+* All stacks that derive from minimal-notebook have the conda jpeg package pinned to version 8 until https://github.com/jupyter/docker-stacks/issues/210 is resolved upstream.
 
 ## Maintainer Workflow
 
-**For PRs that impact the definition of one or more stacks:**
+**For PRs that impact the definition of one or more stacks, do the following:**
 
-1. Pull a PR branch locally.
-2. Try building the affected stack(s).
-3. If everything builds OK locally, merge it.
-4. `ssh -i ~/.ssh/your-github-key build@docker-stacks.cloudet.xyz`
-5. Run these commands on that VM.
+1. Make sure Travis is green.
+2. Merge the PR.
+3. `ssh -i ~/.ssh/your-github-key build@docker-stacks.cloudet.xyz`
+4. Run these commands on that VM.
 
 ```
+# join the shared tmux session
+tmux a
 cd docker-stacks
 # make sure we're always on clean master from github
 git fetch origin
 git reset --hard origin/master
-# if this fails, just run it again and again (idempotent)
-make release-all
+# retry on failure up to 10 times with a (60 * iteration)
+# second delay in-between
+make retry/release-all
 ```
 
-When `make release-all` successfully pushes the last of its images to Docker Hub (currently `jupyter/all-spark-notebook`), Docker Hub invokes [the webhook](https://github.com/jupyter/docker-stacks/blob/master/internal/docker-stacks-webhook/) which updates the [Docker build history](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) wiki page.
+When `make retry/release-all` successfully pushes the last of its images to Docker Hub (currently `jupyter/all-spark-notebook`), Docker Hub invokes [the webhook](https://github.com/jupyter/docker-stacks/blob/master/internal/docker-stacks-webhook/) which updates the [Docker build history](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) wiki page.
 
 **When there's a security fix in the Debian base image, do the following in place of the last command:**
 
@@ -72,8 +74,15 @@ Update the `debian:jessie` SHA in the most-base images (e.g., base-notebook). Su
 
 This will take time as the entire set of stacks will rebuild.
 
-**When there's a new stack, do the following before trying to `make release-all`:**
+**When there's a new stack, do the following before trying to `make rety/release-all`:**
 
 1. Create a new repo in the `jupyter` org on Docker Hub named after the stack folder in the git repo.
 2. Grant the `stacks` team permission to write to the repo.
 3. Copy/paste the short and long descriptions from one of the other docker-stacks repos on Docker Hub. Modify the appropriate values.
+
+**When there's a new maintainer, do the following:**
+
+1. Add the GitHub user to the Jupyter org, *Docker image maintainers* team.
+2. Get the GitHub user's public key from https://github.com/<USERNAME>.keys.
+3. `ssh -i ~/.ssh/your-github-key build@docker-stacks.cloudet.xyz`
+4. Add the user's public key to `~/.ssh/authorized_keys` with his/her GitHub username as the comment after the key.

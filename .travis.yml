@@ -4,8 +4,5 @@ sudo: required
 services:
     - docker
 
-before_install:
-    - make refresh-all
-
 script:
     - make build-test-all
