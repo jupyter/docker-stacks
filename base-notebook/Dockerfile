@@ -78,13 +78,15 @@ RUN pip --no-cache-dir install 'jupyterhub==0.5'
 
 USER root
 
-# Configure container startup as root
 EXPOSE 8888
 WORKDIR /home/$NB_USER/work
+
+# Configure container startup
 ENTRYPOINT ["tini", "--"]
-CMD ["start-notebook.sh"]
+CMD ["start-jupyter.sh", "notebook"]
 
 # Add local files as late as possible to avoid cache busting
+COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
