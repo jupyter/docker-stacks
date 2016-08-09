@@ -11,7 +11,7 @@ Small base image for defining your own stack
 * No preinstalled scientific computing packages
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * [tini](https://github.com/krallin/tini) as the container entrypoint and [start-notebook.sh](./start-notebook.sh) as the default command
-* A [start-singleuser.sh](../minimal-notebook/start-singleuser.sh) script for use as an alternate command that runs a single-user instance of the Notebook server, as required by [JupyterHub](#JupyterHub)
+* A [start-singleuser.sh](./start-singleuser.sh) script for use as an alternate command that runs a single-user instance of the Notebook server, as required by [JupyterHub](#JupyterHub)
 * Options for HTTPS, password auth, and passwordless `sudo`
 
 ## Basic Use
@@ -24,7 +24,7 @@ docker run -d -p 8888:8888 jupyter/base-notebook
 
 ## Notebook Options
 
-You can pass [Jupyter command line options](http://jupyter.readthedocs.org/en/latest/config.html#command-line-arguments) through the [`start-notebook.sh` command](https://github.com/jupyter/docker-stacks/blob/master/minimal-notebook/start-notebook.sh#L15) when launching the container. For example, to set a password hashed using `IPython.lib.passwd()` to secure the notebook server:
+You can pass [Jupyter command line options](http://jupyter.readthedocs.org/en/latest/config.html#command-line-arguments) through the [`start-notebook.sh` command](./start-notebook.sh#L17) when launching the container. For example, to set a password hashed using `IPython.lib.passwd()` to secure the notebook server:
 
 ```
 docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
@@ -60,7 +60,7 @@ The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/en
 
 ```python
 # Spawn user containers from this image
-c.DockerSpawner.container_image = 'jupyter/minimal-notebook'
+c.DockerSpawner.container_image = 'jupyter/base-notebook'
 
 # Have the Spawner override the Docker run command
 c.DockerSpawner.extra_create_kwargs.update({
