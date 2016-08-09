@@ -1,1 +1,0 @@
-The Dockerfile in this folder serves as a base image for the `jupyter/notebook` image which comes from the master branch of https://github.com/jupyter/notebook. It's not used in the stacks here. See https://github.com/jupyter/docker-stacks/pull/108 for why it exists.

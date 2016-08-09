@@ -20,11 +20,14 @@ ALL_IMAGES:=$(ALL_STACKS)
 
 GIT_MASTER_HEAD_SHA:=$(shell git rev-parse --short=12 --verify HEAD)
 
+RETRIES:=10
+
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 	@echo "jupyter/docker-stacks"
 	@echo "====================="
-	@echo "Replace % with a stack directory name (e.g., make build/minimal-notebook)\n"
+	@echo "Replace % with a stack directory name (e.g., make build/minimal-notebook)"
+	@echo
 	@grep -E '^[a-zA-Z0-9_%/-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 build/%: DARGS?=
@@ -32,7 +35,7 @@ build/%: ## build the latest image for a stack
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
 
 build-all: $(ALL_IMAGES:%=build/%) ## build all stacks
-build-test-all: $(foreach I,$(ALL_IMAGES),build/$(I) test/$(I) )
+build-test-all: $(foreach I,$(ALL_IMAGES),build/$(I) test/$(I) ) ## build and test all stacks
 
 dev/%: ARGS?=
 dev/%: DARGS?=
@@ -61,6 +64,15 @@ release-all: environment-check \
 	tag-all \
 	push-all 
 release-all: ## build, test, tag, and push all stacks
+
+retry/%:
+	@for i in $$(seq 1 $(RETRIES)); do \
+        make $(notdir $@) ; \
+		if [[ $$? == 0 ]]; then exit 0; fi; \
+		echo "Sleeping for $$((i * 60))s before retry" ; \
+		sleep $$((i * 60)) ; \
+    done
+	exit 1
 
 tag/%: ##tag the latest stack image with the HEAD git SHA
 	docker tag -f $(OWNER)/$(notdir $@):latest $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)

@@ -34,9 +34,11 @@ RUN conda install --quiet --yes \
     'dill=0.2*' \
     'numba=0.23*' \
     'bokeh=0.11*' \
+    'sqlalchemy=1.0*' \
     'h5py=2.5*' && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy
+
 # Activate ipywidgets extension in the environment that runs the notebook server
 RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 
@@ -62,6 +64,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'numba=0.23*' \
     'bokeh=0.11*' \
     'h5py=2.5*' \
+    'sqlalchemy=1.0*' \
     'pyzmq' && \
     conda remove -n python2 --quiet --yes --force qt pyqt && \
     conda clean -tipsy
