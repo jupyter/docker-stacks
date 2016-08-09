@@ -60,7 +60,7 @@ The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/en
 
 ```python
 # Spawn user containers from this image
-c.DockerSpawner.container_image = 'jupyter/minimal-notebook'
+c.DockerSpawner.container_image = 'jupyter/base-notebook'
 
 # Have the Spawner override the Docker run command
 c.DockerSpawner.extra_create_kwargs.update({
