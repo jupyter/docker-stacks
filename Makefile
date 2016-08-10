@@ -62,17 +62,16 @@ release-all: environment-check \
 	refresh-all \
 	build-test-all \
 	tag-all \
-	push-all 
+	push-all
 release-all: ## build, test, tag, and push all stacks
 
 retry/%:
 	@for i in $$(seq 1 $(RETRIES)); do \
-        make $(notdir $@) ; \
+		make $(notdir $@) ; \
 		if [[ $$? == 0 ]]; then exit 0; fi; \
 		echo "Sleeping for $$((i * 60))s before retry" ; \
 		sleep $$((i * 60)) ; \
-    done
-	exit 1
+	done ; exit 1
 
 tag/%: ##tag the latest stack image with the HEAD git SHA
 	docker tag -f $(OWNER)/$(notdir $@):latest $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)

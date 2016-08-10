@@ -62,6 +62,7 @@ RUN cd /tmp && \
     rm Miniconda3-4.1.11-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
+    $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
 
 # Temporary workaround for https://github.com/jupyter/docker-stacks/issues/210
