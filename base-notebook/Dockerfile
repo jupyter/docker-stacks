@@ -83,7 +83,7 @@ WORKDIR /home/$NB_USER/work
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
-CMD ["start-jupyter.sh", "notebook"]
+CMD ["start-notebook.sh"]
 
 # Add local files as late as possible to avoid cache busting
 COPY start.sh /usr/local/bin/
