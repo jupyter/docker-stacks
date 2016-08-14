@@ -19,7 +19,7 @@ Small image for working in the notebook and installing your own libraries
 
 The following command starts a container with the Notebook server listening for HTTP connections on port 8888 without authentication configured.
 
-```
+```bash
 docker run -d -p 8888:8888 jupyter/minimal-notebook
 ```
 
@@ -43,7 +43,7 @@ You can sidestep the `start-notebook.sh` script and run your own commands in the
 
 ## Docker Options
 
-You may customize the execution of the Docker container and the Notebook server it contains with the following optional arguments.
+You may customize the execution of the Docker container and the command it is running with the following optional arguments.
 
 * `-e PASSWORD="YOURPASS"` - Configures Jupyter Notebook to require the given plain-text password. Should be combined with `USE_HTTPS` on untrusted networks. **Note** that this option is not as secure as passing a pre-hashed password on the command line as shown above.
 * `-e USE_HTTPS=yes` - Configures Jupyter Notebook to accept encrypted HTTPS connections. If a `pem` file containing a SSL certificate and key is not provided (see below), the container will generate a self-signed certificate for you.
@@ -61,7 +61,7 @@ If you have your key and certificate(s) as separate files, you must concatenate 
 For additional information about using SSL, see the following:
 
 * The [docker-stacks/examples](https://github.com/jupyter/docker-stacks/tree/master/examples) for information about how to use [Let's Encrypt](https://letsencrypt.org/) certificates when you run these stacks on a publicly visible domain.
-* The [jupyter_notebook_config.py](jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
+* The [jupyter_notebook_config.py](../base-notebook/jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
 * The [Jupyter Notebook documentation](http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#using-ssl-for-encrypted-communication) for best practices about running a public notebook server in general, most of which are encoded in this image.
 
 ## Conda Environment

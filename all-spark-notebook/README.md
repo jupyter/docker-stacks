@@ -18,12 +18,11 @@
 * A [start.sh](../base-notebook/start.sh) script useful for running alternative commands in the container (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 * Options for HTTPS, password auth, and passwordless `sudo`
 
-
 ## Basic Use
 
 The following command starts a container with the Notebook server listening for HTTP connections on port 8888 without authentication configured.
 
-```
+```bash
 docker run -d -p 8888:8888 jupyter/all-spark-notebook
 ```
 
@@ -37,7 +36,7 @@ This configuration is nice for using Spark on small, local data.
 1. Open a Python 2 or 3 notebook.
 2. Create a `SparkContext` configured for local mode.
 
-For example, the first few cells in a notebook might read:
+For example, the first few cells in the notebook might read:
 
 ```python
 import pyspark
@@ -88,9 +87,9 @@ This configuration allows your compute cluster to scale with your data.
 
 0. [Deploy Spark on Mesos](http://spark.apache.org/docs/latest/running-on-mesos.html).
 1. Configure each slave with [the `--no-switch_user` flag](https://open.mesosphere.com/reference/mesos-slave/) or create the `jovyan` user on every slave node.
-2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
+2. Ensure any libraries you wish to use in your Spark lambda functions are installed on your Spark workers.
+3. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
     * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
-3. Follow the language specific instructions below.
 
 ### In a Python Notebook
 
@@ -112,7 +111,7 @@ conf = pyspark.SparkConf()
 conf.setMaster("mesos://10.10.10.10:5050")
 # point to spark binary package in HDFS or on local filesystem on all slave
 # nodes (e.g., file:///opt/spark/spark-1.6.0-bin-hadoop2.6.tgz)
-conf.set("spark.executor.uri", "hdfs://10.10.10.10/spark/spark-1.6.0-bin-hadoop2.6.tgz")
+conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-1.6.0-bin-hadoop2.6.tgz")
 # set other options as desired
 conf.set("spark.executor.memory", "8g")
 conf.set("spark.core.connection.ack.wait.timeout", "1200")
@@ -184,12 +183,13 @@ println(sc.master)
 val rdd = sc.parallelize(0 to 99999999)
 rdd.sum()
 ```
-## Connecting to a Spark Cluster on Standalone Mode
 
-Connection to Spark Cluster on Standalone Mode requires the following set of steps:
+## Connecting to a Spark Cluster in Standalone Mode
 
-0. Verify that the docker image (check the Dockerfile) and the Spark Cluster which is being deployed, run the same version of Spark.
-1. [Deploy Spark on Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).
+Connection to Spark Cluster in Standalone Mode requires the following set of steps:
+
+0. Verify that the docker image (check the Dockerfile) and the Spark Cluster run the same version of Spark.
+1. [Deploy Spark in Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).
 2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
     * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
 3. The language specific instructions are almost same as mentioned above for Mesos, only the master url would now be something like spark://10.10.10.10:7077
@@ -214,7 +214,7 @@ You can sidestep the `start-notebook.sh` script and run your own commands in the
 
 ## Docker Options
 
-You may customize the execution of the Docker container and the Notebook server it contains with the following optional arguments.
+You may customize the execution of the Docker container and the command it is running with the following optional arguments.
 
 * `-e PASSWORD="YOURPASS"` - Configures Jupyter Notebook to require the given plain-text password. Should be combined with `USE_HTTPS` on untrusted networks. **Note** that this option is not as secure as passing a pre-hashed password on the command line as shown above.
 * `-e USE_HTTPS=yes` - Configures Jupyter Notebook to accept encrypted HTTPS connections. If a `pem` file containing a SSL certificate and key is not provided (see below), the container will generate a self-signed certificate for you.
@@ -233,7 +233,7 @@ If you have your key and certificate(s) as separate files, you must concatenate 
 For additional information about using SSL, see the following:
 
 * The [docker-stacks/examples](https://github.com/jupyter/docker-stacks/tree/master/examples) for information about how to use [Let's Encrypt](https://letsencrypt.org/) certificates when you run these stacks on a publicly visible domain.
-* The [jupyter_notebook_config.py](jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
+* The [jupyter_notebook_config.py](../base-notebook/jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
 * The [Jupyter Notebook documentation](http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#using-ssl-for-encrypted-communication) for best practices about running a public notebook server in general, most of which are encoded in this image.
 
 ## Conda Environments
