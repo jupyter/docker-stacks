@@ -7,14 +7,18 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 1.6.1
-RUN apt-get -y update && \
-    apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
+ENV APACHE_SPARK_VERSION 2.0.0
+
+# Temporarily add jessie backports to get openjdk 8, but then remove that source
+RUN echo 'deb http://ftp.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list && \
+    apt-get -y update && \
+    apt-get install -y --no-install-recommends openjdk-8-jre-headless && \
+    rm /etc/apt/sources.list.d/jessie-backports.list && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 RUN cd /tmp && \
         wget -q http://d3kbcqa49mib13.cloudfront.net/spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz && \
-        echo "09f3b50676abc9b3d1895773d18976953ee76945afa72fa57e6473ce4e215970 *spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz" | sha256sum -c - && \
+        echo "e17d9da4b3ac463ea3ce42289f2a71cefb479d154b1ffd00310c7d7ab207aa2c *spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz" | sha256sum -c - && \
         tar xzf spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz -C /usr/local && \
         rm spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6.tgz
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop2.6 spark
@@ -35,7 +39,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
 
 # Spark and Mesos config
 ENV SPARK_HOME /usr/local/spark
-ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.9-src.zip
+ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.1-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
 ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info
 
