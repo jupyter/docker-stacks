@@ -12,7 +12,7 @@ ALL_STACKS:=base-notebook \
 	minimal-notebook \
 	r-notebook \
 	scipy-notebook \
-  tensorflow-notebook \
+	tensorflow-notebook \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook
