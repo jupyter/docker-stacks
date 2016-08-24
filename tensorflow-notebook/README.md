@@ -18,7 +18,7 @@ docker run -d -p 8888:8888 jupyter/tensorflow-notebook
 
 ## Tensorflow Single Machine Mode
 
-As distributed tensorflow is still immature, we currently only provide the single machine mode. Will add the distributed one soon.
+As distributed tensorflow is still immature, we currently only provide the single machine mode.
 
 ```
 import tensorflow as tf
