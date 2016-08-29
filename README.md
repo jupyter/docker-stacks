@@ -21,3 +21,11 @@ If you run into
 License
 -------
 Please check the individual directories regarding the licensing.  Because this project incorporates materials from different project, the subdirectories had different required attribuiton and licensing. 
+
+
+
+syllabus/Technology-Fundamentals.docx
+presentations/01_introduction.pptx
+
+git filter-branch --index-filter 'git rm -r --cached --ignore-unmatch presentations/01_introduction.pptx' -f HEAD
+
