@@ -6,6 +6,9 @@
 *checkpoint.ipynb
 
 
+privatenotebooks
+privatedata
+
 __pycache__/
 *.py[cod]
 
