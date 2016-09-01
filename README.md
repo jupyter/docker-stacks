@@ -24,8 +24,10 @@ If you reboot and later find that the container is not running, you can start it
 
 If you enter the wrong file path:
 
-```docker stop analyticsdojo
-      docker rm analyticsdojo```
+```
+docker stop analyticsdojo
+docker rm analyticsdojo```
+
 Then rerun the command. 
 
 This will launch a container (called analyticsdojo) and share the appropriate directory with the container.  This will allow the container to easily share files and notebooks with the operating system.
