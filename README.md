@@ -26,7 +26,8 @@ If you enter the wrong file path:
 
 ```
 docker stop analyticsdojo
-docker rm analyticsdojo```
+docker rm analyticsdojo 
+```
 
 Then rerun the command. 
 
