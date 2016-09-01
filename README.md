@@ -35,6 +35,8 @@ This will launch a container (called analyticsdojo) and share the appropriate di
 
 If everything is working correctly then  [http://localhost:8888/](http://localhost:8888/) will show the root directory of this repository in the Jupyter console.
 
+[Imgur](http://i.imgur.com/0Jqvh56.png)
+
 License
 -------
 Please check the individual directories regarding the licensing.  Because this project incorporates materials from different project, the subdirectories had different required attribuiton and licensing. 
