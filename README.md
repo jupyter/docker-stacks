@@ -22,7 +22,15 @@ docker run -d -p 8888:8888  -e GRANT_SUDO=yes  --name analyticsdojo  -v //C//Use
 If you reboot and later find that the container is not running, you can start it from the command line with 
 ```docker start analyticsdojo```
 
+If you enter the wrong file path:
+
+```docker stop analyticsdojo
+      docker rm analyticsdojo```
+Then rerun the command. 
+
 This will launch a container (called analyticsdojo) and share the appropriate directory with the container.  This will allow the container to easily share files and notebooks with the operating system.
+
+If everything is working correctly then  [http://localhost:8888/](http://localhost:8888/) will show the root directory of this repository.
 
 License
 -------
