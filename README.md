@@ -17,7 +17,7 @@ docker run -d -p 8888:8888  -e GRANT_SUDO=yes  --name analyticsdojo  -v /Users/j
 ```
 On a Windows machine, it might be the following:
 ```
-docker run -d -p 8888:8888  -e GRANT_SUDO=yes  --name analyticsdojo  -v //C//Users/jkuruzovich/materials/analyticsdojo:/home/jovyan/work jupyter/datascience-notebook start-notebook.sh
+docker run -d -p 8888:8888  -e GRANT_SUDO=yes  --name analyticsdojo  -v /C//Users/jkuruzovich/materials/analyticsdojo:/home/jovyan/work jupyter/datascience-notebook start-notebook.sh
 ```
 If you reboot and later find that the container is not running, you can start it from the command line with 
 ```docker start analyticsdojo```
