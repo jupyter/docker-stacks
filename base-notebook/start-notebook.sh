@@ -4,4 +4,4 @@
 
 set -e
 
-start.sh jupyter notebook $*
+. /usr/local/bin/start.sh jupyter notebook $*
