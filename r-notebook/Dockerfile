@@ -35,4 +35,5 @@ RUN conda config --add channels r && \
     'r-nycflights13=0.2*' \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
+    'r-crayon=1.3*' \
     'r-randomforest=4.6*' && conda clean -tipsy
