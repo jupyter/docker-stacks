@@ -15,6 +15,7 @@ if [ $UID == 0 ] ; then
     # Enable sudo if requested
     if [ ! -z "$GRANT_SUDO" ]; then
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
+        echo Defaults secure_path="/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/sudoers.d/conda_securepath
     fi
 
     # Exec the command as NB_USER
