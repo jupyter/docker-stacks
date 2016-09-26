@@ -76,7 +76,7 @@ RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
 
 # Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
-RUN $CONDA_DIR/envs/$ENV_NAME/bin/python -c "import matplotlib.pyplot"
+RUN $CONDA_DIR/envs/python2/bin/python -c "import matplotlib.pyplot"
 
 # Configure ipython kernel to use matplotlib inline backend by default
 RUN mkdir -p $HOME/.ipython/profile_default/startup
