@@ -19,7 +19,7 @@ Small base image for defining your own stack
 
 The following command starts a container with the Notebook server listening for HTTP connections on port 8888 without authentication configured.
 
-```
+```bash
 docker run -d -p 8888:8888 jupyter/base-notebook
 ```
 
@@ -61,7 +61,7 @@ If you have your key and certificate(s) as separate files, you must concatenate 
 For additional information about using SSL, see the following:
 
 * The [docker-stacks/examples](https://github.com/jupyter/docker-stacks/tree/master/examples) for information about how to use [Let's Encrypt](https://letsencrypt.org/) certificates when you run these stacks on a publicly visible domain.
-* The [jupyter_notebook_config.py](jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
+* The [jupyter_notebook_config.py](./jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
 * The [Jupyter Notebook documentation](http://jupyter-notebook.readthedocs.io/en/latest/public_server.html#using-ssl-for-encrypted-communication) for best practices about running a public notebook server in general, most of which are encoded in this image.
 
 ## Conda Environment
