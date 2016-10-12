@@ -21,7 +21,7 @@ USER $NB_USER
 RUN conda config --add channels r && \
     conda install --quiet --yes \
     'r-base=3.3.1 1' \
-    'r-irkernel=0.6*' \
+    'r-irkernel=0.7*' \
     'r-plyr=1.8*' \
     'r-devtools=1.11*' \
     'r-dplyr=0.4*' \
