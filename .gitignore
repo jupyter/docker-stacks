@@ -14,7 +14,8 @@ __pycache__/
 
 # C extensions
 *.so
-
+*.RData
+*.RHistory
 # Distribution / packaging
 .Python
 env/
