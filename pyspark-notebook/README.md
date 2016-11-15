@@ -1,4 +1,4 @@
-![docker pulls](https://img.shields.io/docker/pulls/jupyter/pyspark-notebook.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/pyspark-notebook.svg)
+![docker pulls](https://img.shields.io/docker/pulls/jupyter/pyspark-notebook.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/pyspark-notebook.svg) [![](https://images.microbadger.com/badges/image/jupyter/pyspark-notebook.svg)](https://microbadger.com/images/jupyter/pyspark-notebook "jupyter/pyspark-notebook image metadata")
 
 # Jupyter Notebook Python, Spark, Mesos Stack
 

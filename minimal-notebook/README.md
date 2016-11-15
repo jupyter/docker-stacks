@@ -1,4 +1,4 @@
-![docker pulls](https://img.shields.io/docker/pulls/jupyter/minimal-notebook.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/minimal-notebook.svg)
+![docker pulls](https://img.shields.io/docker/pulls/jupyter/minimal-notebook.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/minimal-notebook.svg) [![](https://images.microbadger.com/badges/image/jupyter/minimal-notebook.svg)](https://microbadger.com/images/jupyter/minimal-notebook "jupyter/minimal-notebook image metadata")
 
 # Minimal Jupyter Notebook Stack
 
