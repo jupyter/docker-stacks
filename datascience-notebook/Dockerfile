@@ -15,7 +15,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Julia dependencies
-RUN apt-get update && \
+RUN echo "deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu trusty main" > /etc/apt/sources.list.d/julia.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3D3D3ACC && \
+    apt-get update && \
     apt-get install -y --no-install-recommends \
     julia \
     libnettle4 && apt-get clean && \
