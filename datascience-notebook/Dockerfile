@@ -15,7 +15,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Julia dependencies
-RUN apt-get update && \
+RUN echo "deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu trusty main" > /etc/apt/sources.list.d/julia.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3D3D3ACC && \
+    apt-get update && \
     apt-get install -y --no-install-recommends \
     julia \
     libnettle4 && apt-get clean && \
@@ -56,5 +58,8 @@ RUN julia -e 'Pkg.add("IJulia")' && \
 
 # Show Julia where conda libraries are
 # Add essential packages
-RUN echo "push!(Sys.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" > /home/$NB_USER/.juliarc.jl && \
+RUN echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" > /home/$NB_USER/.juliarc.jl && \
     julia -e 'Pkg.add("Gadfly")' && julia -e 'Pkg.add("RDatasets")' && julia -F -e 'Pkg.add("HDF5")'
+
+# Precompile Julia pakcages
+RUN julia -e 'using IJulia' && julia -e 'using Gadfly' && julia -e 'using RDatasets'&& julia -e 'using HDF5'
