@@ -1,5 +1,6 @@
-# Copyright (c) Jupyter Development Team.
-# Distributed under the terms of the Apache v2 License.
+# Copyright (c) IBM Corporation 2016 
+# Distributed under the terms of the Apache V2 License,
+# https://opensource.org/licenses/Apache-2.0 
 
 # Ubuntu image 
 FROM ppc64le/ubuntu:trusty
