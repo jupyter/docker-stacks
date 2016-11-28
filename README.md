@@ -28,14 +28,23 @@ If you enter the wrong file path:
 docker stop analyticsdojo
 docker rm analyticsdojo 
 ```
+Then rerun the command.
 
-Then rerun the command. 
+
+ 
 
 This will launch a container (called analyticsdojo) and share the appropriate directory with the container.  This will allow the container to easily share files and notebooks with the operating system.
 
 If everything is working correctly then  [http://localhost:8888/](http://localhost:8888/) will show the root directory of this repository in the Jupyter console.
 
 ![Console](http://i.imgur.com/0Jqvh56.png)
+
+
+
+To launch the Spark notebook, follow a similar command:
+```
+docker run -d -p 8888:8888  -e GRANT_SUDO=yes  --name analyticsdojo_pyspark  -v /Users/jasonkuruzovich/githubdesktop/materials/analyticsdojo:/home/jovyan/work jupyter/pyspark-notebook  start-notebook.sh
+```
 
 License
 -------
