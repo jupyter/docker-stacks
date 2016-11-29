@@ -8,7 +8,7 @@ USER root
 
 # libav-tools for matplotlib anim
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libav-tools python-pip python-dev build-essential && \
+    apt-get install -y --no-install-recommends libav-tools && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
