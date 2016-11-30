@@ -38,8 +38,8 @@ RUN conda install --quiet --yes \
     'sqlalchemy=1.0*' \
     'hdf5=1.8.17' \
     'h5py=2.6*' \
-    'vincent=0.4.4*' \
-    'beautifulsoup4=4.5.1*' \
+    'vincent=0.4.*' \
+    'beautifulsoup4=4.5.*' \
     'xlrd'  && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy
@@ -73,8 +73,8 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'h5py=2.6*' \
     'sqlalchemy=1.0*' \
     'pyzmq' \
-    'vincent=0.4.4*' \
-    'beautifulsoup4=4.5.1*' \
+    'vincent=0.4.*' \
+    'beautifulsoup4=4.5.*' \
     'xlrd' && \
     conda remove -n python2 --quiet --yes --force qt pyqt && \
     conda clean -tipsy
