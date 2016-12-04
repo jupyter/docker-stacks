@@ -53,27 +53,24 @@ rdd.takeSample(False, 5)
 
 0. Run the container as shown above.
 1. Open a R notebook.
-2. Initialize `sparkR` for local mode.
-3. Initialize `sparkRSQL`.
+2. Initialize a `sparkR` session for local mode.
 
 For example, the first few cells in a R notebook might read:
 
 ```
 library(SparkR)
 
-sc <- sparkR.init("local[*]")
-sqlContext <- sparkRSQL.init(sc)
+as <- sparkR.session("local[*]")
 
 # do something to prove it works
-data(iris)
-df <- createDataFrame(sqlContext, iris)
+df <- as.DataFrame(iris)
 head(filter(df, df$Petal_Width > 0.2))
 ```
 
-### In an Apache Toree (Scala) Notebook
+### In an Apache Toree - Scala Notebook
 
 0. Run the container as shown above.
-1. Open an Apache Toree (Scala) notebook.
+1. Open an Apache Toree - Scala notebook.
 2. Use the pre-configured `SparkContext` in variable `sc`.
 
 For example:
@@ -147,25 +144,24 @@ library(SparkR)
 # point to spark binary package in HDFS or on local filesystem on all slave
 # nodes (e.g., file:///opt/spark/spark-2.0.2-bin-hadoop2.7.tgz) in sparkEnvir
 # set other options in sparkEnvir
-sc <- sparkR.init("mesos://10.10.10.10:5050", sparkEnvir=list(
+sc <- sparkR.session("mesos://10.10.10.10:5050", sparkEnvir=list(
     spark.executor.uri="hdfs://10.10.10.10/spark/spark-2.0.2-bin-hadoop2.7.tgz",
     spark.executor.memory="8g"
     )
 )
-sqlContext <- sparkRSQL.init(sc)
 
 # do something to prove it works
 data(iris)
-df <- createDataFrame(sqlContext, iris)
+df <- as.DataFrame(iris)
 head(filter(df, df$Petal_Width > 0.2))
 ```
 
-### In an Apache Toree (Scala) Notebook
+### In an Apache Toree - Scala Notebook
 
 0. Open a terminal via *New -> Terminal* in the notebook interface.
 1. Add information about your cluster to the `SPARK_OPTS` environment variable when running the container.
-2. Open an Apache Toree (Scala) notebook.
-3. Use the pre-configured `SparkContext` in variable `sc`.
+2. Open an Apache Toree - Scala notebook.
+3. Use the pre-configured `SparkContext` in variable `sc` or `SparkSession` in variable `spark`.
 
 The Apache Toree kernel automatically creates a `SparkContext` when it starts based on configuration information from its command line arguments and environment variables. You can pass information about your Mesos cluster via the `SPARK_OPTS` environment variable when you spawn a container.
 
@@ -223,7 +219,7 @@ You may customize the execution of the Docker container and the Notebook server 
 * `-e GRANT_SUDO=yes` - Gives the `jovyan` user passwordless `sudo` capability. Useful for installing OS packages. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adding `jovyan` to sudoers.) **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
 * `-v /some/host/folder/for/work:/home/jovyan/work` - Host mounts the default working directory on the host to preserve work even when the container is destroyed and recreated (e.g., during an upgrade).
 * `-v /some/host/folder/for/server.pem:/home/jovyan/.local/share/jupyter/notebook.pem` - Mounts a SSL certificate plus key for `USE_HTTPS`. Useful if you have a real certificate for the domain under which you are running the Notebook server.
-* `-p 4040:4040` - Opens the port for the [Spark Monitoring and Instrumentation UI](http://spark.apache.org/docs/latest/monitoring.html). Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/all-spark-notebook`
+* `-p 4040:4040` - Opens the port for the [Spark Monitoring and Instrumentation UI](http://spark.apache.org/docs/latest/monitoring.html). Note every new Spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/all-spark-notebook`
 
 ## SSL Certificates
 
