@@ -93,7 +93,12 @@ COPY mplimporthook.py $HOME/.ipython/profile_default/startup/
 USER root
 
 # Install Python 2 kernel spec globally to avoid permission problems when NB_UID
-# switching at runtime.
-RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
+# switching at runtime and to allow the notebook server running out of the root
+# environment to find it. Also, activate the python2 environment upon kernel
+# launch.
+RUN pip install kernda --no-cache && \
+    $CONDA_DIR/envs/python2/bin/python -m ipykernel install && \
+    kernda -o -y /usr/local/share/jupyter/kernels/python2/kernel.json && \
+    pip uninstall kernda -y
 
 USER $NB_USER
