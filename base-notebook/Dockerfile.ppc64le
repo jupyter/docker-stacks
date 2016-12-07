@@ -12,41 +12,30 @@ USER root
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -yq --no-install-recommends \
-    wget \
-    curl  \
-    bzip2  \
+RUN apt-get update && apt-get -yq dist-upgrade \
+ && apt-get install -yq --no-install-recommends \
+    build-essential \
+    bzip2 \
     ca-certificates \
-    sudo   \
-    locales \
-    git  \
-    bison \
-    byacc  \
-    cpp     \
-    csh \
-    make \
     cmake \
-    zip    \
-    build-essential  \
-    ksh \
-    binutils   \
+    git \
+    locales \
+    sudo \
+    wget \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN echo "LANGUAGE=en_US.UTF-8" >> /etc/environment
-RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
-RUN echo "LC_TYPE=en_US.UTF-8" >> /etc/environment
-RUN locale-gen en_US en_US.UTF-8 hu_HU hu_HU.UTF-8
-RUN dpkg-reconfigure locales
+RUN echo "LANGUAGE=en_US.UTF-8" >> /etc/default/locale
+RUN echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
+RUN echo "LC_TYPE=en_US.UTF-8" >> /etc/default/locale
+RUN locale-gen en_US en_US.UTF-8
 
-
-#build and install Tini
+#build and install Tini for ppc64le
 RUN wget https://github.com/krallin/tini/archive/v0.10.0.tar.gz && \
     tar zxvf v0.10.0.tar.gz && \
     rm -rf v0.10.0.tar.gz
 WORKDIR tini-0.10.0/
 RUN cmake . && make install
-RUN ls -al
 RUN mv ./tini /usr/local/bin/tini  && \
     chmod +x /usr/local/bin/tini
 WORKDIR ..
@@ -77,42 +66,29 @@ RUN mkdir /home/$NB_USER/work && \
 # Install conda as jovyan
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
-    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-ppc64le.sh && \
-    /bin/bash Miniconda3-latest-Linux-ppc64le.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-latest-Linux-ppc64le.sh && \
-    $CONDA_DIR/bin/conda install --quiet --yes conda  && \
+    wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-ppc64le.sh && \
+    /bin/bash Miniconda3-4.2.12-Linux-ppc64le.sh -f -b -p $CONDA_DIR && \
+    rm -rf Miniconda3-4.2.12-Linux-ppc64le.sh && \
+    $CONDA_DIR/bin/conda install --quiet --yes conda=4.2.12  && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
-# no such option auto_update_conda on ppc64le 
-#    $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
+    $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
 
 # Temporary workaround for https://github.com/jupyter/docker-stacks/issues/210
 # Stick with jpeg 8 to avoid problems with R packages
 RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 
-RUN conda install conda-build && \
-    conda update conda  && \
-    conda update conda-build && \
-    conda install python=3.5
-
 # Install Jupyter notebook as jovyan
-##----------------------------------------------
-RUN pip install --upgrade pip
-RUN pip install notebook
-
-###-----------------------------------------------------------------
-# Install JupyterHub to get the jupyterhub-singleuser startup script
-RUN pip --no-cache-dir install 'jupyterhub==0.5'
-
-# Show the list of installed packages
-RUN conda list
+RUN yes | pip install --upgrade pip
+RUN yes | pip install --quiet --no-cache-dir \
+    'notebook==4.2.*' \
+    jupyterhub==0.7 
 
 USER root
 
 EXPOSE 8888
 WORKDIR /home/$NB_USER/work
 RUN echo "ALL            ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers
-RUN cat /etc/sudoers
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
@@ -122,8 +98,6 @@ CMD ["start-notebook.sh"]
 COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 COPY start-singleuser.sh /usr/local/bin/
-RUN  chmod 755 /usr/local/bin/start*.sh
-
 COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
 RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
 
