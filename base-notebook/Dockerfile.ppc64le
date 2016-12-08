@@ -1,6 +1,5 @@
 # Copyright (c) IBM Corporation 2016 
-# Distributed under the terms of the Apache V2 License,
-# https://opensource.org/licenses/Apache-2.0 
+# Distributed under the terms of the Modified BSD License.
 
 # Ubuntu image 
 FROM ppc64le/ubuntu:trusty

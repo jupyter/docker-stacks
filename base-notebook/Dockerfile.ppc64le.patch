@@ -1,11 +1,9 @@
---- Dockerfile	2016-12-07 14:36:13.998198003 -0500
-+++ Dockerfile.ppc64le	2016-12-07 14:35:24.928197537 -0500
-@@ -1,36 +1,44 @@
+--- Dockerfile	2016-12-08 12:23:10.288198002 -0500
++++ Dockerfile.ppc64le	2016-12-08 12:25:01.518197999 -0500
+@@ -1,36 +1,43 @@
 -# Copyright (c) Jupyter Development Team.
--# Distributed under the terms of the Modified BSD License.
 +# Copyright (c) IBM Corporation 2016 
-+# Distributed under the terms of the Apache V2 License,
-+# https://opensource.org/licenses/Apache-2.0 
+ # Distributed under the terms of the Modified BSD License.
  
 -# Debian Jessie image released 2016 May 03.
 -FROM debian@sha256:32a225e412babcd54c0ea777846183c61003d125278882873fb2bc97f9057c51
@@ -64,7 +62,7 @@
  
  # Configure environment
  ENV CONDA_DIR /opt/conda
-@@ -58,11 +66,10 @@
+@@ -58,11 +65,10 @@
  # Install conda as jovyan
  RUN cd /tmp && \
      mkdir -p $CONDA_DIR && \
@@ -80,7 +78,7 @@
      $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
      $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
      conda clean -tipsy
-@@ -72,15 +79,16 @@
+@@ -72,15 +78,16 @@
  RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
  
  # Install Jupyter notebook as jovyan

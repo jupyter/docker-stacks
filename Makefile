@@ -38,12 +38,12 @@ help:
 	@grep -E '^[a-zA-Z0-9_%/-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 arch_patch/%: ## apply hardware architecture specific patches to the Dockerfile
-	if [ -e ./$(notdir $@)/Dockerfile.orig ]; then \
-		cp -f ./$(notdir $@)/Dockerfile.orig ./$(notdir $@)/Dockerfile;\
-	else\
-		cp -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.orig;\
-	fi;\
 	if [ -e ./$(notdir $@)/Dockerfile.$(ARCH).patch ]; then \
+		if [ -e ./$(notdir $@)/Dockerfile.orig ]; then \
+               		cp -f ./$(notdir $@)/Dockerfile.orig ./$(notdir $@)/Dockerfile;\
+		else\
+                	cp -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.orig;\
+		fi;\
 		patch -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.$(ARCH).patch; \
 	fi
 
