@@ -7,8 +7,8 @@
 * Jupyter Notebook 4.2.x
 * Conda Python 3.x and Python 2.7.x environments
 * pyspark, pandas, matplotlib, scipy, seaborn, scikit-learn pre-installed
-* Spark 1.6.0 for use in local mode or to connect to a cluster of Spark workers
-* Mesos client 0.22 binary that can communicate with a Mesos master
+* Spark 2.0.2 with Hadoop 2.7 for use in local mode or to connect to a cluster of Spark workers
+* Mesos client 0.25 binary that can communicate with a Mesos master
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * [tini](https://github.com/krallin/tini) as the container entrypoint and [start-notebook.sh](../base-notebook/start-notebook.sh) as the default command
 * A [start-singleuser.sh](../base-notebook/start-singleuser.sh) script useful for running a single-user instance of the Notebook server, as required by JupyterHub
@@ -68,8 +68,8 @@ conf = pyspark.SparkConf()
 # point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
 conf.setMaster("mesos://10.10.10.10:5050")
 # point to spark binary package in HDFS or on local filesystem on all slave
-# nodes (e.g., file:///opt/spark/spark-1.6.0-bin-hadoop2.6.tgz)
-conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-1.6.0-bin-hadoop2.6.tgz")
+# nodes (e.g., file:///opt/spark/spark-2.0.2-bin-hadoop2.7.tgz)
+conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-2.0.2-bin-hadoop2.7.tgz")
 # set other options as desired
 conf.set("spark.executor.memory", "8g")
 conf.set("spark.core.connection.ack.wait.timeout", "1200")
@@ -124,7 +124,7 @@ You may customize the execution of the Docker container and the Notebook server 
 * `-e GRANT_SUDO=yes` - Gives the `jovyan` user passwordless `sudo` capability. Useful for installing OS packages. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adding `jovyan` to sudoers.) **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
 * `-v /some/host/folder/for/work:/home/jovyan/work` - Host mounts the default working directory on the host to preserve work even when the container is destroyed and recreated (e.g., during an upgrade).
 * `-v /some/host/folder/for/server.pem:/home/jovyan/.local/share/jupyter/notebook.pem` - Mounts a SSL certificate plus key for `USE_HTTPS`. Useful if you have a real certificate for the domain under which you are running the Notebook server.
-* `-p 4040:4040` - Opens the port for the [Spark Monitoring and Instrumentation UI](http://spark.apache.org/docs/latest/monitoring.html). Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`
+* `-p 4040:4040` - Opens the default port for the [Spark Monitoring and Instrumentation UI](http://spark.apache.org/docs/latest/monitoring.html). Note every new Spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.) by default, and it might be necessary to open multiple ports using a command like `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`. You can also control the port Spark uses for its web UI with the `spark.ui.port` config option.
 
 ## SSL Certificates
 

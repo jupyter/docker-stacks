@@ -64,3 +64,4 @@ target/
 
 dockerspawner
 dockerspawner.tar.gz
+*.orig
