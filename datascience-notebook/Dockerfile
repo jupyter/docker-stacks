@@ -54,7 +54,7 @@ RUN conda config --add channels r && \
 RUN julia -e 'Pkg.add("IJulia")' && \
     mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf $HOME/.local
+    rm -rf $HOME/.local/share/jupyter/kernels/julia*
 
 # Show Julia where conda libraries are
 # Add essential packages
