@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 # Debian Jessie image released 2016 May 03.
-FROM debian@sha256:32a225e412babcd54c0ea777846183c61003d125278882873fb2bc97f9057c51
+FROM debian@sha256:f7062cf040f67f0c26ff46b3b44fe036c29468a7e69d8170f37c57f2eec1261b
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
@@ -58,11 +58,10 @@ RUN mkdir /home/$NB_USER/work && \
 # Install conda as jovyan
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.1.11-Linux-x86_64.sh && \
-    echo "efd6a9362fc6b4085f599a881d20e57de628da8c1a898c08ec82874f3bad41bf *Miniconda3-4.1.11-Linux-x86_64.sh" | sha256sum -c - && \
-    /bin/bash Miniconda3-4.1.11-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-4.1.11-Linux-x86_64.sh && \
-    $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-x86_64.sh && \
+    echo "c59b3dd3cad550ac7596e0d599b91e75d88826db132e4146030ef471bb434e9a *Miniconda3-4.2.12-Linux-x86_64.sh" | sha256sum -c - && \
+    /bin/bash Miniconda3-4.2.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda3-4.2.12-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
@@ -71,9 +70,9 @@ RUN cd /tmp && \
 # Stick with jpeg 8 to avoid problems with R packages
 RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
 
-# Install Jupyter notebook as jovyan
+# Install Jupyter Notebook and Hub
 RUN conda install --quiet --yes \
-    'notebook=4.2*' \
+    'notebook=4.3*' \
     jupyterhub=0.7 \
     && conda clean -tipsy
 
