@@ -20,12 +20,11 @@ RUN apt-get update && \
 USER $NB_USER
 
 # R packages
-# Pin r-base to a specific build number for https://github.com/jupyter/docker-stacks/issues/210#issuecomment-246081809
 RUN conda config --add channels r && \
     conda install --quiet --yes \
-    'r-base=3.3.1 1' \
+    'r-base=3.3.2' \
     'r-irkernel=0.7*' \
-    'r-ggplot2=2.1*' \
+    'r-ggplot2=2.2*' \
     'r-rcurl=1.95*' && conda clean -tipsy
 
 # Apache Toree kernel
