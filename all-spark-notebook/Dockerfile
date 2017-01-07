@@ -31,3 +31,7 @@ RUN conda config --add channels r && \
 # Apache Toree kernel
 RUN pip --no-cache-dir install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz
 RUN jupyter toree install --sys-prefix
+
+# Spylon-kernel
+RUN pip --no-cache-dir install metakernel spylon findspark spylon-kernel
+RUN python -m spylon_kernel install --sys-prefix
