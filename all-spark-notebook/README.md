@@ -8,11 +8,12 @@
 * Jupyter Notebook 4.3.x
 * Conda Python 3.x and Python 2.7.x environments
 * Conda R 3.3.x environment
-* Scala 2.10.x
+* Scala 2.11.x
 * pyspark, pandas, matplotlib, scipy, seaborn, scikit-learn pre-installed for Python
 * ggplot2, rcurl preinstalled for R
 * Spark 2.0.2 with Hadoop 2.7 for use in local mode or to connect to a cluster of Spark workers
 * Mesos client 0.25 binary that can communicate with a Mesos master
+* spylon-kernel
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * [tini](https://github.com/krallin/tini) as the container entrypoint and [start-notebook.sh](../base-notebook/start-notebook.sh) as the default command
 * A [start-singleuser.sh](../base-notebook/start-singleuser.sh) script useful for running a single-user instance of the Notebook server, as required by JupyterHub
@@ -75,6 +76,19 @@ head(filter(df, df$Petal_Width > 0.2))
 2. Use the pre-configured `SparkContext` in variable `sc`.
 
 For example:
+
+```
+val rdd = sc.parallelize(0 to 999)
+rdd.takeSample(false, 5)
+```
+
+### In spylon-kernel - Scala Notebook
+
+0. Run the container as shown above.
+1. Open a spylon-kernel notebook
+2. Lazily instantiate the sparkcontext by just running any cell without magics
+
+For example
 
 ```
 val rdd = sc.parallelize(0 to 999)
