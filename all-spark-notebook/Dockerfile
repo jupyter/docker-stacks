@@ -33,5 +33,5 @@ RUN pip --no-cache-dir install https://dist.apache.org/repos/dist/dev/incubator/
 RUN jupyter toree install --sys-prefix
 
 # Spylon-kernel
-RUN pip --no-cache-dir install "spylon-kernel==0.1.1"
+RUN pip --no-cache-dir install "spylon-kernel==0.1.2"
 RUN python -m spylon_kernel install --sys-prefix
