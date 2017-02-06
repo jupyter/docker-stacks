@@ -74,7 +74,7 @@ Update the `debian:jessie` SHA in the most-base images (e.g., base-notebook). Su
 
 This will take time as the entire set of stacks will rebuild.
 
-**When there's a new stack, do the following before trying to `make rety/release-all`:**
+**When there's a new stack, do the following before trying to `make retry/release-all`:**
 
 1. Create a new repo in the `jupyter` org on Docker Hub named after the stack folder in the git repo.
 2. Grant the `stacks` team permission to write to the repo.
