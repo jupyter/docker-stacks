@@ -33,13 +33,10 @@ RUN conda config --add channels r && \
     'r-irkernel=0.7*' \
     'r-plyr=1.8*' \
     'r-devtools=1.12*' \
-    'r-dplyr=0.5*' \
-    'r-ggplot2=2.2*' \
-    'r-tidyr=0.6*' \
+    'r-tidyverse=1.0*' \
     'r-shiny=0.14*' \
     'r-rmarkdown=1.2*' \
     'r-forecast=7.3*' \
-    'r-stringr=1.1*' \
     'r-rsqlite=1.1*' \
     'r-reshape2=1.4*' \
     'r-nycflights13=0.2*' \
