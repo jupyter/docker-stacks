@@ -19,23 +19,23 @@ USER $NB_USER
 # use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
     'nomkl' \
-    'ipywidgets=5.2*' \
+    'ipywidgets=6.0*' \
     'pandas=0.19*' \
     'numexpr=2.6*' \
     'matplotlib=1.5*' \
-    'scipy=0.17*' \
+    'scipy=0.19*' \
     'seaborn=0.7*' \
     'scikit-learn=0.18*' \
-    'scikit-image=0.11*' \
+    'scikit-image=0.12*' \
     'sympy=1.0*' \
-    'cython=0.23*' \
+    'cython=0.25*' \
     'patsy=0.4*' \
     'statsmodels=0.6*' \
-    'cloudpickle=0.1*' \
+    'cloudpickle=0.2*' \
     'dill=0.2*' \
-    'numba=0.23*' \
-    'bokeh=0.11*' \
-    'sqlalchemy=1.0*' \
+    'numba=0.31*' \
+    'bokeh=0.12*' \
+    'sqlalchemy=1.1*' \
     'hdf5=1.8.17' \
     'h5py=2.6*' \
     'vincent=0.4.*' \
@@ -68,7 +68,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'cloudpickle=0.1*' \
     'dill=0.2*' \
     'numba=0.23*' \
-    'bokeh=0.11*' \
+    'bokeh=0.12*' \
     'hdf5=1.8.17' \
     'h5py=2.6*' \
     'sqlalchemy=1.0*' \
