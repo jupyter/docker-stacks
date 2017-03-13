@@ -52,26 +52,26 @@ RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
 # use notebook-friendly backends in these images
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'nomkl' \
-    'ipython=4.2*' \
-    'ipywidgets=5.2*' \
+    'ipython=5.3*' \
+    'ipywidgets=6.0*' \
     'pandas=0.19*' \
     'numexpr=2.6*' \
     'matplotlib=1.5*' \
-    'scipy=0.17*' \
+    'scipy=0.19*' \
     'seaborn=0.7*' \
-    'scikit-learn=0.17*' \
-    'scikit-image=0.11*' \
+    'scikit-learn=0.18*' \
+    'scikit-image=0.12*' \
     'sympy=1.0*' \
-    'cython=0.23*' \
+    'cython=0.25*' \
     'patsy=0.4*' \
-    'statsmodels=0.6*' \
-    'cloudpickle=0.1*' \
+    'statsmodels=0.8*' \
+    'cloudpickle=0.2*' \
     'dill=0.2*' \
-    'numba=0.23*' \
+    'numba=0.31*' \
     'bokeh=0.12*' \
     'hdf5=1.8.17' \
     'h5py=2.6*' \
-    'sqlalchemy=1.0*' \
+    'sqlalchemy=1.1*' \
     'pyzmq' \
     'vincent=0.4.*' \
     'beautifulsoup4=4.5.*' \
