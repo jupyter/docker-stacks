@@ -30,7 +30,7 @@ RUN conda install --quiet --yes \
     'sympy=1.0*' \
     'cython=0.25*' \
     'patsy=0.4*' \
-    'statsmodels=0.6*' \
+    'statsmodels=0.8*' \
     'cloudpickle=0.2*' \
     'dill=0.2*' \
     'numba=0.31*' \
