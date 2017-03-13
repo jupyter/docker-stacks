@@ -22,7 +22,7 @@ RUN conda install --quiet --yes \
     'ipywidgets=6.0*' \
     'pandas=0.19*' \
     'numexpr=2.6*' \
-    'matplotlib=1.5*' \
+    'matplotlib=2.0*' \
     'scipy=0.19*' \
     'seaborn=0.7*' \
     'scikit-learn=0.18*' \
@@ -56,7 +56,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'ipywidgets=6.0*' \
     'pandas=0.19*' \
     'numexpr=2.6*' \
-    'matplotlib=1.5*' \
+    'matplotlib=2.0*' \
     'scipy=0.19*' \
     'seaborn=0.7*' \
     'scikit-learn=0.18*' \
