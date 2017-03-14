@@ -69,8 +69,8 @@ RUN cd /tmp && \
 
 # Install Jupyter Notebook and Hub
 RUN conda install --quiet --yes \
-    'notebook=4.3*' \
-    jupyterhub=0.7 \
+    'notebook=4.4.*' \
+    'jupyterhub=0.7.*' \
     && conda clean -tipsy
 
 USER root
