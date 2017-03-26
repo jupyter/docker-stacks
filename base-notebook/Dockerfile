@@ -74,6 +74,8 @@ RUN conda install --quiet --yes \
     'jupyterlab=0.17.*' \
     && conda clean -tipsy
 
+RUN jupyter serverextension enable --py jupyterlab --sys-prefix
+
 USER root
 
 EXPOSE 8888
