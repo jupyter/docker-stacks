@@ -21,6 +21,6 @@ before_install:
 script:
     - make build/base-notebook
 
-# TODO: make this a make target to save all images
+# TODO: make this a make target to save all images, if it works
 before_cache:
     - docker save $(docker history -q jupyter/base-notebook:latest | grep -v '<missing>') | gzip > ${CACHE_FILE_BASE}
