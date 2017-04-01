@@ -23,4 +23,4 @@ script:
 
 # TODO: make this a make target to save all images
 before_cache:
-    - docker save jupyter/base-notebook:latest | gzip > ${CACHE_FILE_BASE}
+    - docker save $(docker history -q jupyter/base-notebook:latest | grep -v '<missing>') | gzip > ${CACHE_FILE_BASE}
