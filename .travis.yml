@@ -17,7 +17,7 @@ before_install:
   - make layers-from-cache
 
 script:
-  - make test-build-all
+  - make build-test-all
 
 before_cache:
   - make cached-layers
