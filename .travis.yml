@@ -16,7 +16,7 @@ cache:
 
 before_install:
   - mkdir -p $CACHE_DIR
-  - if [ -f ${CACHE_FILE_BASE} ]; then gunizip -c ${CACHE_FILE_BASE} | docker load; fi
+  - if [ -f ${CACHE_FILE_BASE} ]; then gunzip -c ${CACHE_FILE_BASE} | docker load; fi
 
 script:
     - make build/base-notebook
