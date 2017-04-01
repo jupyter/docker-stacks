@@ -56,7 +56,7 @@ cached-layers/%:
 	mkdir -p $(CACHE_DIR)
 	docker save $$(docker history -q $(OWNER)/$(notdir $@):latest | grep -v '<missing>') | gzip > $(CACHE_DIR)/$(notdir $@).tar.gz
 
-cached-layers: $(ALL_IMAGES:%=cache/%) ## cache all stacks in tarballs
+cached-layers: $(ALL_IMAGES:%=cached-layers/%) ## cache all stacks in tarballs
 
 dev/%: ARGS?=
 dev/%: DARGS?=
@@ -67,7 +67,7 @@ dev/%: ## run a foreground container for a stack
 layers-from-cache/%:
 	-gunzip -c $(CACHE_DIR)/$(notdir $@).tar.gz | docker load
 
-layers-from-cache: $(ALL_IMAGES:%=cache/%) ## load all layers from cached tarballs
+layers-from-cache: $(ALL_IMAGES:%=layers-from-cache/%) ## load all layers from cached tarballs
 
 push/%: ## push the latest and HEAD git SHA tags for a stack to Docker Hub
 	docker push $(OWNER)/$(notdir $@):latest
