@@ -1,8 +1,25 @@
 language: generic
 
 sudo: required
+
 services:
     - docker
 
+env:
+  global:
+    - CACHE_DIR=$HOME/.cache/docker
+    - CACHE_FILE_BASE=$CACHE_DIR/base-notebook.tar.gz
+
+cache:
+  directories:
+    - $CACHE_DIR
+
+before_install:
+  - mkdir -p $CACHE_DIR
+  - if [ -f ${CACHE_FILE_BASE} ]; then gunizip -c ${CACHE_FILE_BASE} | docker load; fi
+
 script:
-    - make build-test-all
+    - make build/base-notebook
+
+after_success:
+    - docker save build/base-notebook:latest | gzip > ${CACHE_FILE_BASE}
