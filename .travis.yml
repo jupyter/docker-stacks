@@ -8,19 +8,20 @@ services:
 env:
   global:
     - CACHE_DIR=$HOME/.cache/docker
-    - CACHE_FILE_BASE=$CACHE_DIR/base-notebook.tar.gz
 
 cache:
   directories:
     - $CACHE_DIR
 
 before_install:
-  - mkdir -p $CACHE_DIR
-  - if [ -f ${CACHE_FILE_BASE} ]; then gunzip -c ${CACHE_FILE_BASE} | docker load; fi
+  - make layers-from-cache
 
 script:
-    - make build/base-notebook
+  - make test-build-all
 
-# TODO: make this a make target to save all images, if it works
 before_cache:
-    - docker save $(docker history -q jupyter/base-notebook:latest | grep -v '<missing>') | gzip > ${CACHE_FILE_BASE}
+  - make cached-layers
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then make tag-all retry/push-all; fi
+

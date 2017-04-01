@@ -1,19 +1,17 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-.PHONY: build-all help environment-check release-all
-
 # Use bash for inline if-statements in test target
 SHELL:=bash
-
+# Project name
 OWNER:=jupyter
-# need to list these manually because there's a dependency tree
+# Target architecture
 ARCH:=$(shell uname -m)
-
+# Order of image builds
 ifeq ($(ARCH),ppc64le)
-ALL_STACKS:=base-notebook 
+ALL_IMAGES:=base-notebook
 else
-ALL_STACKS:=base-notebook \
+ALL_IMAGES:=base-notebook \
 	minimal-notebook \
 	r-notebook \
 	scipy-notebook \
@@ -22,12 +20,12 @@ ALL_STACKS:=base-notebook \
 	pyspark-notebook \
 	all-spark-notebook
 endif
-
-ALL_IMAGES:=$(ALL_STACKS)
-
+# Current git commit SHA, used to tag release images
 GIT_MASTER_HEAD_SHA:=$(shell git rev-parse --short=12 --verify HEAD)
-
+# Number of retries when using the retry/* target prefix
 RETRIES:=10
+# Where to cache docker images between CI runs
+CACHE_DIR?=.cache
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -54,33 +52,28 @@ build/%: ## build the latest image for a stack
 build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
 
+cached-layers/%:
+	mkdir -p $(CACHE_DIR)
+	docker save $$(docker history -q $(OWNER)/$(notdir $@):latest | grep -v '<missing>') | gzip > $(CACHE_DIR)/$(notdir $@).tar.gz
+
+cached-layers: $(ALL_IMAGES:%=cache/%) ## cache all stacks in tarballs
+
 dev/%: ARGS?=
 dev/%: DARGS?=
 dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
-environment-check:
-	test -e ~/.docker-stacks-builder
+layers-from-cache/%:
+	-gunzip -c $(CACHE_DIR)/$(notdir $@).tar.gz | docker load
+
+layers-from-cache: $(ALL_IMAGES:%=cache/%) ## load all layers from cached tarballs
 
 push/%: ## push the latest and HEAD git SHA tags for a stack to Docker Hub
 	docker push $(OWNER)/$(notdir $@):latest
 	docker push $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
 
 push-all: $(ALL_IMAGES:%=push/%) ## push all stacks
-
-refresh/%: ## pull the latest image from Docker Hub for a stack
-# skip if error: a stack might not be on dockerhub yet
-	-docker pull $(OWNER)/$(notdir $@):latest
-
-refresh-all: $(ALL_IMAGES:%=refresh/%) ## refresh all stacks
-
-release-all: environment-check \
-	refresh-all \
-	build-test-all \
-	tag-all \
-	push-all
-release-all: ## build, test, tag, and push all stacks
 
 retry/%:
 	@for i in $$(seq 1 $(RETRIES)); do \
