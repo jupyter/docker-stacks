@@ -52,11 +52,9 @@ build/%: ## build the latest image for a stack
 build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
 
-cached-layers/%:
+cached-layers: ## save all layers to a cached tarball
 	mkdir -p $(CACHE_DIR)
-	docker save $$(docker history -q $(OWNER)/$(notdir $@):latest | grep -v '<missing>') | gzip > $(CACHE_DIR)/$(notdir $@).tar.gz
-
-cached-layers: $(ALL_IMAGES:%=cached-layers/%) ## cache all stacks in tarballs
+	docker save $$($(foreach I,$(ALL_IMAGES),docker history -q $(OWNER)/$(I):latest | grep -v '<missing>' &&) echo) | gzip > $(CACHE_DIR)/images.tar.gz
 
 dev/%: ARGS?=
 dev/%: DARGS?=
@@ -64,10 +62,8 @@ dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
-layers-from-cache/%:
-	-gunzip -c $(CACHE_DIR)/$(notdir $@).tar.gz | docker load
-
-layers-from-cache: $(ALL_IMAGES:%=layers-from-cache/%) ## load all layers from cached tarballs
+layers-from-cache: ## load all layers from a cached tarball
+	-gunzip -c $(CACHE_DIR)/images.tar.gz | docker load
 
 push/%: ## push the latest and HEAD git SHA tags for a stack to Docker Hub
 	docker push $(OWNER)/$(notdir $@):latest

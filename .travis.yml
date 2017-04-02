@@ -14,14 +14,12 @@ cache:
     - $CACHE_DIR
 
 before_install:
+  # load cached layers if they exist
   - make layers-from-cache
 
 script:
-  - make build-test-all
-
-before_cache:
-  - make cached-layers
+  # don't cache if the build fails
+  - make build-test-all cached-layers
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then make tag-all retry/push-all; fi
-
