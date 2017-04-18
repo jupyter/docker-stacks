@@ -72,6 +72,7 @@ push-all: $(ALL_IMAGES:%=push/%) ## push all stacks
 refresh/%: ## pull the latest image from Docker Hub for a stack
 # skip if error: a stack might not be on dockerhub yet
 	-docker pull $(OWNER)/$(notdir $@):latest
+	-docker pull $(OWNER)/$(notdir $@):$(GIT_MASTER_HEAD_SHA)
 
 refresh-all: $(ALL_IMAGES:%=refresh/%) ## refresh all stacks
 
