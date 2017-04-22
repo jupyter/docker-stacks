@@ -6,7 +6,7 @@ Small base image for defining your own stack
 
 ## What it Gives You
 
-* Minimally-functional Jupyter Notebook 4.3.x (e.g., no pandoc for document conversion)
+* Minimally-functional Jupyter Notebook 5.0.x (e.g., no pandoc for document conversion)
 * Miniconda Python 3.x
 * No preinstalled scientific computing packages
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`

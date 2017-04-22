@@ -4,7 +4,7 @@
 
 ## What it Gives You
 
-* Jupyter Notebook 4.3.x
+* Jupyter Notebook 5.0.x
 * Conda Python 3.x and Python 2.7.x environments
 * pandas, matplotlib, scipy, seaborn, scikit-learn, scikit-image, sympy, cython, patsy, statsmodel, cloudpickle, dill, numba, bokeh pre-installed
 * Conda R v3.3.x and channel

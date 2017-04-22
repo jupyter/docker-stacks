@@ -4,7 +4,7 @@
 
 ## What it Gives You
 
-* Jupyter Notebook 4.3.x
+* Jupyter Notebook 5.0.x
 * Conda R v3.3.x and channel
 * plyr, devtools, shiny, rmarkdown, forecast, rsqlite, reshape2, nycflights13, caret, rcurl, and randomforest pre-installed
 * The [tidyverse](https://github.com/tidyverse/tidyverse) R packages are also installed, including ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, lubridate, and broom
