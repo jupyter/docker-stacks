@@ -30,7 +30,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
     CODENAME=jessie && \
     echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
     apt-get -y update && \
-    apt-get --no-install-recommends -y --force-yes install mesos=0.25.0-0.2.70.debian81 && \
+    apt-get --no-install-recommends -y --force-yes install mesos=1.2\* && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
