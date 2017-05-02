@@ -53,7 +53,6 @@ USER $NB_USER
 
 # Setup jovyan home directory
 RUN mkdir /home/$NB_USER/work && \
-    mkdir /home/$NB_USER/.jupyter && \
     echo "cacert=/etc/ssl/certs/ca-certificates.crt" > /home/$NB_USER/.curlrc
 
 # Install conda as jovyan
@@ -87,8 +86,7 @@ CMD ["start-notebook.sh"]
 COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 COPY start-singleuser.sh /usr/local/bin/
-COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
-RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
+COPY jupyter_notebook_config.py /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_USER
