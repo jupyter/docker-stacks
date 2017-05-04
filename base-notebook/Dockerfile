@@ -87,6 +87,7 @@ COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
+RUN chown -R $NB_USER:users /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_USER
