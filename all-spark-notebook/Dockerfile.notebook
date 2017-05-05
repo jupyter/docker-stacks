@@ -1,0 +1,52 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+FROM birdstar/pyspark-notebook
+
+MAINTAINER Jupyter Project <jupyter@googlegroups.com>
+
+USER root
+
+# RSpark config
+ENV R_LIBS_USER $SPARK_HOME/R/lib
+
+# R pre-requisites
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    fonts-dejavu \
+    gfortran \
+    gcc && apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+USER $NB_USER
+
+# R packages
+RUN conda config --add channels r && \
+    conda install --quiet --yes \
+    'r-base=3.3.2' \
+    'r-irkernel=0.7*' \
+    'r-ggplot2=2.2*' \
+    'r-rcurl=1.95*' && conda clean -tipsy
+
+# Apache Toree kernel
+RUN pip --no-cache-dir install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz
+RUN jupyter toree install --sys-prefix
+
+# Spylon-kernel
+RUN conda install --quiet --yes 'spylon-kernel=0.2*'
+RUN python -m spylon_kernel install --sys-prefix
+
+# install the kernel gateway
+#RUN pip install jupyter_kernel_gateway==1.1.2
+#RUN conda install -c conda-forge jupyter_kernel_gateway
+
+#ADD . /src
+RUN pip install "git+https://github.com/birdstar/kernel_gateway_demos.git#egg=nb2kg&subdirectory=nb2kg" && \
+    jupyter serverextension enable --py nb2kg --sys-prefix
+
+# Run with remote kernel managers
+CMD ["jupyter", "notebook", \
+     "--NotebookApp.ip=0.0.0.0", \
+     "--NotebookApp.port=9898", \
+     "--NotebookApp.session_manager_class=nb2kg.managers.SessionManager", \
+     "--NotebookApp.kernel_manager_class=nb2kg.managers.RemoteKernelManager", \
+     "--NotebookApp.kernel_spec_manager_class=nb2kg.managers.RemoteKernelSpecManager"]
