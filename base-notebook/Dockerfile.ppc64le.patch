@@ -1,5 +1,5 @@
---- Dockerfile	2017-05-09 06:09:42.429671387 -0400
-+++ Dockerfile.ppc64le	2017-05-11 12:42:57.959823673 -0400
+--- Dockerfile	2017-05-11 12:59:30.006182756 -0400
++++ Dockerfile.ppc64le	2017-05-11 12:59:57.326632865 -0400
 @@ -1,37 +1,43 @@
 -# Copyright (c) Jupyter Development Team.
 +# Copyright (c) IBM Corporation 2016 
@@ -90,7 +90,7 @@
 +RUN yes | pip install --quiet --no-cache-dir \
 +    'notebook==5.0.*' \
 +    'jupyterhub==0.7.*' \
-+    'jupyterlab=0.18.*'
++    'jupyterlab==0.18.*'
  
  USER root
  

@@ -78,7 +78,7 @@ RUN yes | pip install --upgrade pip
 RUN yes | pip install --quiet --no-cache-dir \
     'notebook==5.0.*' \
     'jupyterhub==0.7.*' \
-    'jupyterlab=0.18.*'
+    'jupyterlab==0.18.*'
 
 USER root
 
