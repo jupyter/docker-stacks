@@ -1,5 +1,5 @@
 --- Dockerfile	2017-05-09 06:09:42.429671387 -0400
-+++ Dockerfile.ppc64le	2017-05-09 06:09:42.429671387 -0400
++++ Dockerfile.ppc64le	2017-05-11 12:42:57.959823673 -0400
 @@ -1,37 +1,43 @@
 -# Copyright (c) Jupyter Development Team.
 +# Copyright (c) IBM Corporation 2016 
@@ -63,7 +63,7 @@
  
  # Configure environment
  ENV CONDA_DIR /opt/conda
-@@ -59,25 +65,29 @@
+@@ -59,25 +65,26 @@
  # Install conda as jovyan
  RUN cd /tmp && \
      mkdir -p $CONDA_DIR && \
@@ -85,15 +85,12 @@
 -    'jupyterhub=0.7.*' \
 -    'jupyterlab=0.18.*' \
 -    && conda clean -tipsy
-+# Temporary workaround for https://github.com/jupyter/docker-stacks/issues/210
-+# Stick with jpeg 8 to avoid problems with R packages
-+RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
-+
-+# Install Jupyter notebook as jovyan
++# Install Jupyter notebook and Hub
 +RUN yes | pip install --upgrade pip
 +RUN yes | pip install --quiet --no-cache-dir \
-+    'notebook==4.2.*' \
-+    jupyterhub==0.7 
++    'notebook==5.0.*' \
++    'jupyterhub==0.7.*' \
++    'jupyterlab=0.18.*'
  
  USER root
  
