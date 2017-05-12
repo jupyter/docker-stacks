@@ -1,12 +1,13 @@
---- Dockerfile	2016-12-08 12:23:10.288198002 -0500
-+++ Dockerfile.ppc64le	2016-12-08 12:25:01.518197999 -0500
-@@ -1,36 +1,43 @@
+--- Dockerfile	2017-05-11 12:59:30.006182756 -0400
++++ Dockerfile.ppc64le	2017-05-11 12:59:57.326632865 -0400
+@@ -1,37 +1,43 @@
 -# Copyright (c) Jupyter Development Team.
 +# Copyright (c) IBM Corporation 2016 
  # Distributed under the terms of the Modified BSD License.
  
--# Debian Jessie image released 2016 May 03.
--FROM debian@sha256:32a225e412babcd54c0ea777846183c61003d125278882873fb2bc97f9057c51
+-# Debian Jessie debootstrap from 2017-02-27
+-# https://github.com/docker-library/official-images/commit/aa5973d0c918c70c035ec0746b8acaec3a4d7777
+-FROM debian@sha256:52af198afd8c264f1035206ca66a5c48e602afb32dc912ebf9e9478134601ec4
 +# Ubuntu image 
 +FROM ppc64le/ubuntu:trusty
  
@@ -62,15 +63,14 @@
  
  # Configure environment
  ENV CONDA_DIR /opt/conda
-@@ -58,11 +65,10 @@
+@@ -59,25 +65,26 @@
  # Install conda as jovyan
  RUN cd /tmp && \
      mkdir -p $CONDA_DIR && \
--    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.1.11-Linux-x86_64.sh && \
--    echo "efd6a9362fc6b4085f599a881d20e57de628da8c1a898c08ec82874f3bad41bf *Miniconda3-4.1.11-Linux-x86_64.sh" | sha256sum -c - && \
--    /bin/bash Miniconda3-4.1.11-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
--    rm Miniconda3-4.1.11-Linux-x86_64.sh && \
--    $CONDA_DIR/bin/conda install --quiet --yes conda==4.1.11 && \
+-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-x86_64.sh && \
+-    echo "c59b3dd3cad550ac7596e0d599b91e75d88826db132e4146030ef471bb434e9a *Miniconda3-4.2.12-Linux-x86_64.sh" | sha256sum -c - && \
+-    /bin/bash Miniconda3-4.2.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+-    rm Miniconda3-4.2.12-Linux-x86_64.sh && \
 +    wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-ppc64le.sh && \
 +    /bin/bash Miniconda3-4.2.12-Linux-ppc64le.sh -f -b -p $CONDA_DIR && \
 +    rm -rf Miniconda3-4.2.12-Linux-ppc64le.sh && \
@@ -78,18 +78,19 @@
      $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
      $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
      conda clean -tipsy
-@@ -72,15 +78,16 @@
- RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
  
- # Install Jupyter notebook as jovyan
+-# Install Jupyter Notebook and Hub
 -RUN conda install --quiet --yes \
--    'notebook=4.2*' \
--    jupyterhub=0.7 \
+-    'notebook=5.0.*' \
+-    'jupyterhub=0.7.*' \
+-    'jupyterlab=0.18.*' \
 -    && conda clean -tipsy
++# Install Jupyter notebook and Hub
 +RUN yes | pip install --upgrade pip
 +RUN yes | pip install --quiet --no-cache-dir \
-+    'notebook==4.2.*' \
-+    jupyterhub==0.7 
++    'notebook==5.0.*' \
++    'jupyterhub==0.7.*' \
++    'jupyterlab==0.18.*'
  
  USER root
  

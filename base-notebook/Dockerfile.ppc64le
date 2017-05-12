@@ -73,15 +73,12 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
 
-# Temporary workaround for https://github.com/jupyter/docker-stacks/issues/210
-# Stick with jpeg 8 to avoid problems with R packages
-RUN echo "jpeg 8*" >> /opt/conda/conda-meta/pinned
-
-# Install Jupyter notebook as jovyan
+# Install Jupyter notebook and Hub
 RUN yes | pip install --upgrade pip
 RUN yes | pip install --quiet --no-cache-dir \
-    'notebook==4.2.*' \
-    jupyterhub==0.7 
+    'notebook==5.0.*' \
+    'jupyterhub==0.7.*' \
+    'jupyterlab==0.18.*'
 
 USER root
 
