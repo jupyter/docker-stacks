@@ -26,7 +26,7 @@ RUN echo "deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu trusty m
 USER $NB_USER
 
 # R packages including IRKernel which gets installed globally.
-RUN conda config --add channels r && \
+RUN conda config --system --add channels r && \
     conda install --quiet --yes \
     'rpy2=2.8*' \
     'r-base=3.3.2' \

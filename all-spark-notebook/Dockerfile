@@ -20,7 +20,7 @@ RUN apt-get update && \
 USER $NB_USER
 
 # R packages
-RUN conda config --add channels r && \
+RUN conda config --system --add channels r && \
     conda install --quiet --yes \
     'r-base=3.3.2' \
     'r-irkernel=0.7*' \
@@ -32,5 +32,6 @@ RUN pip --no-cache-dir install https://dist.apache.org/repos/dist/dev/incubator/
 RUN jupyter toree install --sys-prefix
 
 # Spylon-kernel
-RUN conda install --quiet --yes 'spylon-kernel=0.2*'
+RUN conda install --quiet --yes 'spylon-kernel=0.2*' && \
+    conda clean -tipsy
 RUN python -m spylon_kernel install --sys-prefix
