@@ -4,12 +4,14 @@
 
 set -e
 
+mkdir -p -m 700 /home/$NB_USER/.local/share/jupyter
+
 # Handle special flags if we're root
 if [ $UID == 0 ] ; then
     # Change UID of NB_USER to NB_UID if it does not match
     if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
         usermod -u $NB_UID $NB_USER
-        chown -R $NB_UID $CONDA_DIR .
+        chown -R $NB_USER. $CONDA_DIR /home/$NB_USER/.local .
     fi
 
     # Enable sudo if requested
