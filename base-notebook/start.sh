@@ -12,6 +12,11 @@ if [ $UID == 0 ] ; then
         chown -R $NB_UID $CONDA_DIR .
     fi
 
+    # Change GID of NB_USER to NB_GID if NB_GID is passed as a parameter
+    if [ "$NB_GID" ] ; then
+        groupmod -g $NB_GID -o $(id -g -n $NB_USER)
+    fi
+
     # Enable sudo if requested
     if [ ! -z "$GRANT_SUDO" ]; then
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
