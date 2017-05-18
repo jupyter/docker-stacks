@@ -48,4 +48,6 @@ COPY ./profile_mesos/ ~/.ipython/profile_mesos/
 
 COPY ./profile_mesos2/ ~/.ipython/profile_mesos2/
 
-ENTRYPOINT ["tini", "--", "start-singleuser.sh"]
+ENTRYPOINT ["tini", "--"]
+
+CMD ["start-singleuser.sh"]
