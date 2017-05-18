@@ -40,13 +40,9 @@ RUN jupyter nbextension install --sys-prefix --py ipyparallel  &&\
     jupyter nbextension enable --sys-prefix --py ipyparallel  &&\
     jupyter serverextension enable --sys-prefix --py ipyparallel
 
-RUN ipython profile create --parallel --profile=mesos
+COPY profile /tmp/profile
 
-RUN ipython profile create --parallel --profile=mesos2
-
-COPY ./profile_mesos/ ~/.ipython/profile_mesos/
-
-COPY ./profile_mesos2/ ~/.ipython/profile_mesos2/
+RUN /tmp/profile/create_profile.sh -f /tmp/profile/profiles
 
 ENTRYPOINT ["tini", "--"]
 
