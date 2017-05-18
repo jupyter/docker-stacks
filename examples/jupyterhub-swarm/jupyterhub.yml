@@ -1,0 +1,49 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
+version: "2"
+
+services:
+  hub:
+    build: .
+    image: jtyberg/jupyterhub
+    container_name: jupyterhub
+    volumes:
+      # bind volumes from the host
+      # JupyterHub TLS cert and key
+      - "/etc/letsencrypt:/etc/letsencrypt:ro"
+      # Docker TLS certs and Docker binary (so we can launch containers
+      # on Swarm cluster from within JupyterHub container)
+      - "/etc/docker:/etc/docker:ro"
+      - "/usr/local/bin/docker:/usr/local/bin/docker:ro"
+      # data volume
+      - "data:${DATA_VOLUME_MOUNT}"
+    networks:
+      - default
+    ports:
+      - "443:443"
+    environment:
+      "constraint:node==jupyterhub-manager":
+      DOCKER_NETWORK_NAME: ${DOCKER_NETWORK_NAME}
+      DOCKER_CONTAINER_IMAGE: ${DOCKER_CONTAINER_IMAGE}
+      DOCKER_HOST: ${DOCKER_HOST}
+      DOCKER_TLS_CERT: "/etc/docker/server.pem"
+      DOCKER_TLS_KEY: "/etc/docker/server-key.pem"
+      SSL_KEY: "/etc/letsencrypt/privkey.pem"
+      SSL_CERT: "/etc/letsencrypt/cert.pem"
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      OAUTH_CALLBACK_URL: ${OAUTH_CALLBACK_URL}
+    command: >
+      jupyterhub -f /srv/jupyterhub/jupyterhub_config.py
+      --log-level=DEBUG
+
+volumes:
+  data:
+    external:
+      name: ${DATA_VOLUME}
+
+networks:
+  default:
+    external:
+      name: ${DOCKER_NETWORK_NAME}
