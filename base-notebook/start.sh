@@ -9,7 +9,12 @@ if [ $UID == 0 ] ; then
     # Change UID of NB_USER to NB_UID if it does not match
     if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
         usermod -u $NB_UID $NB_USER
-        chown -R $NB_UID $CONDA_DIR .
+        chown -R $NB_UID $CONDA_DIR
+    fi
+
+    # Change GID of NB_USER to NB_GID if NB_GID is passed as a parameter
+    if [ "$NB_GID" ] ; then
+        groupmod -g $NB_GID -o $(id -g -n $NB_USER)
     fi
 
     # Enable sudo if requested
