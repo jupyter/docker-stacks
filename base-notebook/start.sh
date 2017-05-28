@@ -9,7 +9,11 @@ if [ $UID == 0 ] ; then
     # Change UID of NB_USER to NB_UID if it does not match
     if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
         usermod -u $NB_UID $NB_USER
-        chown -R $NB_UID $CONDA_DIR
+        for d in "$CONDA_DIR" "$JULIA_PKGDIR"; do
+            if [[ ! -z "$d" && -d "$d" ]]; then
+                chown -R $NB_UID "$d"
+            fi
+        done
     fi
 
     # Change GID of NB_USER to NB_GID if NB_GID is passed as a parameter
