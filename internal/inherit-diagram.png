@@ -49,15 +49,15 @@
   <path d="M 320 260 L 320 272" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="320,279 316,272 324,272 320,279" stroke="rgb(0,0,0)" />
   <path d="M 128 320 L 128 340" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 128 340 L 320 340" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 320 340 L 320 352" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="320,359 316,352 324,352 320,359" stroke="rgb(0,0,0)" />
-  <path d="M 128 320 L 128 340" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 128 340 L 512 340" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 512 340 L 512 352" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="512,359 508,352 516,352 512,359" stroke="rgb(0,0,0)" />
   <path d="M 128 320 L 128 352" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="128,359 124,352 132,352 128,359" stroke="rgb(0,0,0)" />
+  <path d="M 128 320 L 128 340" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 340 L 320 340" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 320 340 L 320 352" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="320,359 316,352 324,352 320,359" stroke="rgb(0,0,0)" />
   <path d="M 128 400 L 128 432" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="128,439 124,432 132,432 128,439" stroke="rgb(0,0,0)" />
   <path d="M 512 400 L 512 432" fill="none" stroke="rgb(0,0,0)" />
