@@ -71,5 +71,5 @@ RUN julia -e 'Pkg.init()' && \
     # move kernelspec out of home \
     mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf $HOME/.local
+    rm -rf $HOME/.local/share/jupyter/kernels/julia*
 
