@@ -9,7 +9,9 @@ if [ $UID == 0 ] ; then
     # Change UID of NB_USER to NB_UID if it does not match
     if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
         usermod -u $NB_UID $NB_USER
-        for d in "$CONDA_DIR" "$JULIA_PKGDIR"; do
+        # Careful: $HOME might resolve to /root depending on how the
+        # container is started. Use the $NB_USER home path explicitly.
+        for d in "$CONDA_DIR" "$JULIA_PKGDIR" "/home/$NB_USER"; do
             if [[ ! -z "$d" && -d "$d" ]]; then
                 chown -R $NB_UID "$d"
             fi
