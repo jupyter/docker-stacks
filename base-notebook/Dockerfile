@@ -52,9 +52,8 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
 
 USER $NB_USER
 
-# Setup jovyan home directory
-RUN mkdir /home/$NB_USER/work && \
-    echo "cacert=/etc/ssl/certs/ca-certificates.crt" > /home/$NB_USER/.curlrc
+# Setup work directory for backward-compatibility
+RUN mkdir /home/$NB_USER/work
 
 # Install conda as jovyan
 RUN cd /tmp && \
@@ -77,7 +76,7 @@ RUN conda install --quiet --yes \
 USER root
 
 EXPOSE 8888
-WORKDIR /home/$NB_USER/work
+WORKDIR $HOME
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
