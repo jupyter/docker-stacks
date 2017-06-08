@@ -1,8 +1,25 @@
 language: generic
 
 sudo: required
+
 services:
     - docker
 
+env:
+  global:
+    - CACHE_DIR=$HOME/.cache/docker
+
+cache:
+  directories:
+    - $CACHE_DIR
+
+before_install:
+  # load cached layers if they exist
+  - make layers-from-cache
+
 script:
-    - make build-test-all
+  # don't cache if the build fails
+  - make build-test-all cached-layers
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then make tag-all retry/push-all; fi
