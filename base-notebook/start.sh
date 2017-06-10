@@ -25,6 +25,8 @@ if [ $UID == 0 ] ; then
 
     # Enable sudo if requested
     if [ ! -z "$GRANT_SUDO" ]; then
+        # Ensure includedir sudoers.d is not commented
+        sed -i -E 's|^#(includedir /etc/sudoers.d.*)|\1|g' /etc/sudoers
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
     fi
 
