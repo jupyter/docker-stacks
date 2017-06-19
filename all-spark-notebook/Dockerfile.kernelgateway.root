@@ -56,6 +56,12 @@ RUN python -m spylon_kernel install --sys-prefix
 RUN pip install jupyter_kernel_gateway==1.1.2
 #RUN conda install -c conda-forge jupyter_kernel_gateway
 
+## Add spark magic kernel to kg for livy support
+RUN pip install sparkmagic
+RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
+RUN jupyter-kernelspec install /opt/conda/lib/python3.5/site-packages/sparkmagic/kernels/sparkkernel —name livy-scala
+RUN jupyter-kernelspec install /opt/conda/lib/python3.5/site-packages/sparkmagic/kernels/pysparkkernel —name livy-pyspark
+
 # run kernel gateway on container start, not notebook server
 EXPOSE 9999
 CMD ["jupyter", "kernelgateway", "--KernelGatewayApp.ip=0.0.0.0", "--KernelGatewayApp.port=9999"]
