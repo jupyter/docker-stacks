@@ -7,8 +7,8 @@
 * Jupyter Notebook 5.0.x
 * Conda Python 3.x and Python 2.7.x environments
 * pyspark, pandas, matplotlib, scipy, seaborn, scikit-learn pre-installed
-* Spark 2.1.0 with Hadoop 2.7 for use in local mode or to connect to a cluster of Spark workers
-* Mesos client 0.25 binary that can communicate with a Mesos master
+* Spark 2.1.1 with Hadoop 2.7 for use in local mode or to connect to a cluster of Spark workers
+* Mesos client 1.2 binary that can communicate with a Mesos master
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * [tini](https://github.com/krallin/tini) as the container entrypoint and [start-notebook.sh](../base-notebook/start-notebook.sh) as the default command
 * A [start-singleuser.sh](../base-notebook/start-singleuser.sh) script useful for running a single-user instance of the Notebook server, as required by JupyterHub
