@@ -70,8 +70,8 @@ conf = pyspark.SparkConf()
 # point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
 conf.setMaster("mesos://10.10.10.10:5050")
 # point to spark binary package in HDFS or on local filesystem on all slave
-# nodes (e.g., file:///opt/spark/spark-2.0.2-bin-hadoop2.7.tgz)
-conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-2.0.2-bin-hadoop2.7.tgz")
+# nodes (e.g., file:///opt/spark/spark-2.1.1-bin-hadoop2.7.tgz)
+conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-2.1.1-bin-hadoop2.7.tgz")
 # set other options as desired
 conf.set("spark.executor.memory", "8g")
 conf.set("spark.core.connection.ack.wait.timeout", "1200")
