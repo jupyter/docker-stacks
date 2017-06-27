@@ -24,6 +24,7 @@ RUN conda install --quiet --yes \
     'r-base=3.3.2' \
     'r-irkernel=0.7*' \
     'r-ggplot2=2.2*' \
+    'r-sparklyr=0.5*' \
     'r-rcurl=1.95*' && conda clean -tipsy
 
 # Apache Toree kernel
