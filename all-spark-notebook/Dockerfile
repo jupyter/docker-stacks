@@ -20,8 +20,7 @@ RUN apt-get update && \
 USER $NB_USER
 
 # R packages
-RUN conda config --system --add channels r && \
-    conda install --quiet --yes \
+RUN conda install --quiet --yes \
     'r-base=3.3.2' \
     'r-irkernel=0.7*' \
     'r-ggplot2=2.2*' \
