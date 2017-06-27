@@ -63,8 +63,10 @@ RUN cd /tmp && \
     echo "c1c15d3baba15bf50293ae963abef853 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
+    $CONDA_DIR/bin/conda config --system --prepend channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
+    $CONDA_DIR/bin/conda config --system --set show_channel_urls true && \
+    $CONDA_DIR/bin/conda update --all && \
     conda clean -tipsy
 
 # Install Jupyter Notebook and Hub
