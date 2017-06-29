@@ -55,22 +55,25 @@ USER $NB_USER
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work
 
-# Install conda as jovyan
+# Install conda as jovyan and check the md5 sum provided on the download site
+ENV MINICONDA_VERSION 4.3.21
 RUN cd /tmp && \
     mkdir -p $CONDA_DIR && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-x86_64.sh && \
-    echo "c59b3dd3cad550ac7596e0d599b91e75d88826db132e4146030ef471bb434e9a *Miniconda3-4.2.12-Linux-x86_64.sh" | sha256sum -c - && \
-    /bin/bash Miniconda3-4.2.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-4.2.12-Linux-x86_64.sh && \
-    $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    echo "c1c15d3baba15bf50293ae963abef853 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    $CONDA_DIR/bin/conda config --system --prepend channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
+    $CONDA_DIR/bin/conda config --system --set show_channel_urls true && \
+    $CONDA_DIR/bin/conda update --all && \
     conda clean -tipsy
 
 # Install Jupyter Notebook and Hub
 RUN conda install --quiet --yes \
     'notebook=5.0.*' \
     'jupyterhub=0.7.*' \
-    'jupyterlab=0.18.*' \
+    'jupyterlab=0.24.*' \
     && conda clean -tipsy
 
 USER root
