@@ -47,42 +47,55 @@ Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-st
 
 ## Maintainer Workflow
 
-**For PRs that impact the definition of one or more stacks, do the following:**
+**To build new images on Docker Cloud and publish them to the Docker Hub registry, do the following:**
 
-1. Make sure Travis is green.
+1. Make sure Travis is green for a PR.
 2. Merge the PR.
-3. `ssh -i ~/.ssh/your-github-key build@docker-stacks.cloudet.xyz`
-4. Run these commands on that VM.
-
-```
-# join the shared tmux session
-tmux a
-cd docker-stacks
-# make sure we're always on clean master from github
-git fetch origin
-git reset --hard origin/master
-# retry on failure up to 10 times with a (60 * iteration)
-# second delay in-between
-make retry/release-all
-```
-
-When `make retry/release-all` successfully pushes the last of its images to Docker Hub (currently `jupyter/all-spark-notebook`), Docker Hub invokes [the webhook](https://github.com/jupyter/docker-stacks/blob/master/internal/docker-stacks-webhook/) which updates the [Docker build history](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) wiki page.
+3. Monitor the Docker Cloud build status for each of the stacks, starting with [jupyter/base-notebook](https://cloud.docker.com/app/jupyter/repository/docker/jupyter/base-notebook/general) and ending with [jupyter/all-spark-notebook](https://cloud.docker.com/app/jupyter/repository/docker/jupyter/all-spark-notebook/general).
+    * See the stack hierarchy diagram for the current, complete build order.
+4. Manually click the retry button next to any build that fails to resume that build and any dependent builds.
+5. Avoid merging another PR to master until all outstanding builds complete.
+    * There's no way at present to propagate the git SHA to build through the Docker Cloud build trigger API. Every build trigger works off of master HEAD.
 
 **When there's a security fix in the Debian base image, do the following in place of the last command:**
 
-Update the `debian:jessie` SHA in the most-base images (e.g., base-notebook). Submit it as a regular PR and go through the build process.
+Update the `debian:jessie` SHA in the most-base images (e.g., base-notebook). Submit it as a regular PR and go through the build process. Expect the build to take a while to complete: every image layer will rebuild.
 
-This will take time as the entire set of stacks will rebuild.
+**When there's a new stack definition, do the following before merging the PR with the new stack:**
 
-**When there's a new stack, do the following before trying to `make retry/release-all`:**
-
-1. Create a new repo in the `jupyter` org on Docker Hub named after the stack folder in the git repo.
-2. Grant the `stacks` team permission to write to the repo.
-3. Copy/paste the short and long descriptions from one of the other docker-stacks repos on Docker Hub. Modify the appropriate values.
+1. Ensure the PR includes an update to the stack overview diagram in the top-level README.
+    * The source of the diagram is included in the alt-text of the image. Visit that URL to make edits.
+2. Ensure the PR updates the Makefile which is used to build the stacks in order on Travis CI.
+3. Create a new repoistory in the `jupyter` org on Docker Cloud named after the stack folder in the git repo.
+4. Grant the `stacks` team permission to write to the repo.
+5. Click *Builds* and then *Configure Automated Builds* for the repository.
+6. Select `jupyter/docker-stacks` as the source repository.
+7. Choose *Build on Docker Cloud's infrastructure using a Small node* unless you have reason to believe a bigger host is required.
+8. Update the *Build Context* in the default build rule to be `/<name-of-the-stack>`.
+9. Toggle *Autobuild* to disabled unless the stack is a new root stack (e.g., like `jupyter/base-notebook`).
+10. If the new stack depends on the build of another stack in the hierarchy:
+    1. Hit *Save* and then click *Configure Automated Builds*.
+    2. At the very bottom, add a build trigger named *Stack hierarchy trigger*.
+    3. Copy the build trigger URL.
+    4. Visit the parent repository *Builds* page and click *Configure Automated Builds*.
+    5. Add the URL you copied to the *NEXT_BUILD_TRIGGERS* environment variable comma separated list of URLs, creating that environment variable if it does not already exist.
+    6. Hit *Save*.
+11. If the new stack should trigger other dependent builds:
+    1. Add an environment variable named *NEXT_BUILD_TRIGGERS*.
+    2. Copy the build trigger URLs from the dependent builds into the *NEXT_BUILD_TRIGGERS* comma separated list of URLs.
+    3. Hit *Save*.
+12. Adjust other *NEXT_BUILD_TRIGGERS* values as needed so that the build order matches that in the stack hierarchy diagram.
 
 **When there's a new maintainer, do the following:**
 
-1. Add the GitHub user to the Jupyter org, *Docker image maintainers* team.
-2. Get the GitHub user's public key from https://github.com/<USERNAME>.keys.
-3. `ssh -i ~/.ssh/your-github-key build@docker-stacks.cloudet.xyz`
-4. Add the user's public key to `~/.ssh/authorized_keys` with his/her GitHub username as the comment after the key.
+1. Visit https://cloud.docker.com/app/jupyter/team/stacks/users
+2. Add the new maintainer user name.
+
+**If automated builds have got you down, do the following:**
+
+1. Clone this repository.
+2. Check out the git SHA you want to build and publish.
+3. `docker login` with your Docker Hub/Cloud credentials.
+4. Run `make retry/release-all`.
+
+When `make retry/release-all` successfully pushes the last of its images to Docker Hub (currently `jupyter/all-spark-notebook`), Docker Hub invokes [the webhook](https://github.com/jupyter/docker-stacks/blob/master/internal/docker-stacks-webhook/) which updates the [Docker build history](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history) wiki page.
