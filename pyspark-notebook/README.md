@@ -7,7 +7,7 @@
 * Jupyter Notebook 5.0.x
 * Conda Python 3.x and Python 2.7.x environments
 * pyspark, pandas, matplotlib, scipy, seaborn, scikit-learn pre-installed
-* Spark 2.1.1 with Hadoop 2.7 for use in local mode or to connect to a cluster of Spark workers
+* Spark 2.2.0 with Hadoop 2.7 for use in local mode or to connect to a cluster of Spark workers
 * Mesos client 1.2 binary that can communicate with a Mesos master
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
 * [tini](https://github.com/krallin/tini) as the container entrypoint and [start-notebook.sh](../base-notebook/start-notebook.sh) as the default command
@@ -70,8 +70,8 @@ conf = pyspark.SparkConf()
 # point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
 conf.setMaster("mesos://10.10.10.10:5050")
 # point to spark binary package in HDFS or on local filesystem on all slave
-# nodes (e.g., file:///opt/spark/spark-2.1.1-bin-hadoop2.7.tgz)
-conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-2.1.1-bin-hadoop2.7.tgz")
+# nodes (e.g., file:///opt/spark/spark-2.2.0-bin-hadoop2.7.tgz)
+conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-2.2.0-bin-hadoop2.7.tgz")
 # set other options as desired
 conf.set("spark.executor.memory", "8g")
 conf.set("spark.core.connection.ack.wait.timeout", "1200")
@@ -202,7 +202,7 @@ c.DockerSpawner.container_image = 'jupyter/pyspark-notebook'
 
 # Have the Spawner override the Docker run command
 c.DockerSpawner.extra_create_kwargs.update({
-	'command': '/usr/local/bin/start-singleuser.sh'
+    'command': '/usr/local/bin/start-singleuser.sh'
 })
 ```
 
