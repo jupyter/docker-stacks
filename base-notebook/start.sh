@@ -5,7 +5,7 @@
 set -e
 
 # Handle special flags if we're root
-if [ $UID == 0 ] ; then
+if [ $(id -u) == 0 ] ; then
     # Change UID of NB_USER to NB_UID if it does not match
     if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
         echo "Set user UID to: $NB_UID"
