@@ -6,6 +6,9 @@ set -e
 
 # Handle special flags if we're root
 if [ $(id -u) == 0 ] ; then
+    # Handle username change. Since this is cheap, do this unconditionally
+    usermod -d /home/$NB_USER -l $NB_USER jovyan
+
     # Change UID of NB_USER to NB_UID if it does not match
     if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
         echo "Set user UID to: $NB_UID"
