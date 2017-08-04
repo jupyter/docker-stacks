@@ -19,7 +19,8 @@ echo create ipython profile
 
 sudo chown -R ${USER} ~/.ipython
 
-sudo -E PATH="${CONDA_DIR}/bin:$PATH" -u $USER $CONDA_DIR/bin/jupyterhub-singleuser \
+sudo -E PATH="${CONDA_DIR}/bin:$PATH" -E CONDA_ENVS_PATH="${HOME}/envs:${CONDA_DIR}/envs" \
+  -u $USER $CONDA_DIR/bin/jupyterhub-singleuser \
   --port=8888 \
   --ip=0.0.0.0 \
   --user=$JPY_USER \

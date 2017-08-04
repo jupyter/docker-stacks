@@ -24,7 +24,7 @@ do
         f)
             profiles=`cat ${OPTARG}`
             ;;
-        \?)                     
+        \?)
             ;;
     esac
 done
