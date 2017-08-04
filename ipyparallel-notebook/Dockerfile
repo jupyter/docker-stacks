@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-FROM jupyter/scipy-notebook
+FROM jupyterhub/systemuser
 
 USER root
 
@@ -10,8 +10,6 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo "deb http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list && \
     echo "deb-src http://mirrors.163.com/debian/ jessie main non-free contrib" >>/etc/apt/sources.list && \
     echo "deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list
-
-USER $NB_USER
 
 # update pip source
 RUN mkdir -p ~/.pip && \
@@ -42,8 +40,8 @@ RUN jupyter nbextension install --sys-prefix --py ipyparallel  &&\
 
 COPY profile /tmp/profile
 
-RUN /tmp/profile/create_profile.sh -f /tmp/profile/profiles
+COPY systemuser.sh /usr/local/bin/start-systemuser.sh
 
 ENTRYPOINT ["tini", "--"]
 
-CMD ["start-singleuser.sh"]
+CMD ["sh", "/usr/local/bin/start-systemuser.sh"]

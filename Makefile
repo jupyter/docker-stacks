@@ -6,7 +6,7 @@
 # Use bash for inline if-statements in test target
 SHELL:=bash
 
-OWNER:=jupyter
+OWNER:=registry.fxdayu.com
 # need to list these manually because there's a dependency tree
 ARCH:=$(shell uname -m)
 

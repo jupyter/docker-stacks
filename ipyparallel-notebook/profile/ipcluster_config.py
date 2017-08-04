@@ -14,7 +14,10 @@ c.MarathonLauncher.marathon_master_url = os.environ.get("MARATHON_MASTER_URL",
                                                         'http://192.168.0.100:8080')
 # Marathon application group. These needs to be unique per a cluster so if you have multiple users deploying clusters
 # make sure they choose their own application group.
-c.MarathonLauncher.marathon_app_group = "/".join([group.format(username=user, profile=profile)])
+group = group.format(username=user, profile=profile)
+group = group if group.endswith('/') else group + '/'
+
+c.MarathonLauncher.marathon_app_group = group
 
 # Resonable defaults
 c.IPClusterStart.controller_launcher_class = 'ipyparallel_mesos.launcher.MarathonControllerLauncher'
@@ -33,21 +36,21 @@ c.MarathonLauncher.engine_docker_image = \
 
 # Optional
 # Amount of memory (in megabytes) to limit the docker container. NOTE: if your engine uses more the this, the docker container will be killed by the kernel without warning.
-c.MarathonLauncher.engine_memory = os.environ.get("IPYPARALLEL_ENGINE_MEMORY", 512)
+c.MarathonLauncher.engine_memory = int(os.environ.get("IPYPARALLEL_ENGINE_MEMORY", 512))
 # Amount of memory (in megabytes) to limit the docker container. NOTE: if your engine uses more the this, the docker container will be killed by the kernel without warning.
-c.MarathonLauncher.controller_memory = os.environ.get("IPYPARALLEL_CONTROLLER_MEMORY", 512)
+c.MarathonLauncher.controller_memory = int(os.environ.get("IPYPARALLEL_CONTROLLER_MEMORY", 512))
 # The port the controller exposes for clients and engines to retrive connection information. Note, if there are multiple users on the same cluster this will need to be changed
 c.MarathonLauncher.controller_config_port = '1235'
 
-c.MarathonLauncher.engine_docker_env = {
+c.MarathonLauncher.engine_docker_env.update({
     "PYTHONPATH": "/data/site-packages:$PYTHONPATH"
-}
+})
 
 if home:
-    c.MarathonLauncher.engine_docker_volumes = [
+    c.MarathonLauncher.engine_docker_volumes.extend([
         {
             "HostPath": "/".join([home, user, "work"]),
             "ContainerPath": lib,
             "Mode": "ro"
         }
-    ]
+    ])
