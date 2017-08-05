@@ -44,6 +44,7 @@ RUN $CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
 RUN jupyter nbextension install --sys-prefix --py ipyparallel  &&\
     jupyter nbextension enable --sys-prefix --py ipyparallel  &&\
     jupyter serverextension enable --sys-prefix --py ipyparallel &&\
+    jupyter contrib nbextension install --sys-prefix && \
     jupyter nbextensions_configurator enable --sys-prefix &&\
     jupyter nbextensions_configurator enable --system
 
