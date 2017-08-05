@@ -20,9 +20,9 @@ echo "[install]" >> ~/.pip/pip.conf && \
 echo "trusted-host=mirrors.aliyun.com" >> ~/.pip/pip.conf
 
 # update conda settings
-RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ && \
-conda config --set show_channel_urls yes && \
-conda config --add allow-softlinks False
+RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ --system && \
+conda config --set show_channel_urls yes --system && \
+conda config --add allow-softlinks False --system
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
