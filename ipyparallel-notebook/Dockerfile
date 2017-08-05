@@ -33,12 +33,12 @@ conda config --add allow-softlinks False --system
 # Install Python 3 packages
 RUN conda install --quiet --yes \
     'ipyparallel=6.0.*' \
-    'nb_conda'
+    'nb_conda' \
     && conda clean -tipsy
 
 # Install Python 2 packages
 RUN $CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
-    'ipyparallel=6.0.*'
+    'ipyparallel=6.0.*' \
     && conda clean -tipsy
 
 RUN jupyter nbextension install --sys-prefix --py ipyparallel  &&\
