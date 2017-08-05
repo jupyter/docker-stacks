@@ -19,8 +19,14 @@ echo "" >> ~/.pip/pip.conf && \
 echo "[install]" >> ~/.pip/pip.conf && \
 echo "trusted-host=mirrors.aliyun.com" >> ~/.pip/pip.conf
 
+# activate ipyparallel-mesos
+RUN pip install git+git://github.com/xingetouzi/ipyparallel-mesos.git && \
+pip install jupyter_contrib_nbextensions && \
+pip install jupyter_nbextensions_configurator
+
 # update conda settings
-RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ --system && \
+RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ --system && \
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ --system && \
 conda config --set show_channel_urls yes --system && \
 conda config --add allow-softlinks False --system
 
@@ -34,11 +40,6 @@ RUN conda install --quiet --yes \
 RUN $CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
     'ipyparallel=6.0.*'
     && conda clean -tipsy
-
-# activate ipyparallel-mesos
-RUN pip install git+git://github.com/xingetouzi/ipyparallel-mesos.git && \
-pip install jupyter_contrib_nbextensions && \
-pip install jupyter_nbextensions_configurator
 
 RUN jupyter nbextension install --sys-prefix --py ipyparallel  &&\
     jupyter nbextension enable --sys-prefix --py ipyparallel  &&\
