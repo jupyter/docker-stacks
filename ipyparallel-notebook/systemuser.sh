@@ -4,7 +4,7 @@ if getent passwd ${USER_ID} > /dev/null ; then
   echo "${USER} (${USER_ID}) exists"
 else
   echo "Creating user ${USER} (${USER_ID})"
-  useradd -u ${USER_ID} -m ${HOME} -s $SHELL ${USER}
+  useradd -u ${USER_ID} -m -d ${HOME} -s $SHELL ${USER}
 fi
 
 notebook_arg=""
