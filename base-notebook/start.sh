@@ -27,7 +27,7 @@ if [ $(id -u) == 0 ] ; then
     fi
 
     # Enable sudo if requested
-    if [ ! -z "$GRANT_SUDO" ]; then
+    if [ "$GRANT_SUDO" == "1" ]; then
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
     fi
 
@@ -35,6 +35,15 @@ if [ $(id -u) == 0 ] ; then
     echo "Execute the command as $NB_USER"
     exec su $NB_USER -c "env PATH=$PATH $*"
 else
+  if [[ ! -z "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
+      echo 'Container must be run as root to set $NB_UID'
+  fi
+  if [[ ! -z "$NB_GID" && "$NB_GID" != "$(id -g)" ]]; then
+      echo 'Container must be run as root to set $NB_GID'
+  fi
+  if [[ "$GRANT_SUDO" == "1" ]]; then
+      echo 'Container must be run as root to grant sudo permissions'
+  fi
     # Exec the command
     echo "Execute the command"
     exec $*
