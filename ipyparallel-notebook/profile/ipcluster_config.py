@@ -7,7 +7,6 @@ profile = profile[profile.find("_") + 1:]
 user = os.environ.get("JPY_USER")
 group = os.environ.get("MARATHON_IPYPARALLEL_APP_GROUP_FORMAT")
 home = os.environ.get("HOST_HOME_DIR")
-lib = os.environ.get("IPYPARALLEL_LIB_DIR", "/data/site-packages")
 
 # url with port to a marathon master
 c.MarathonLauncher.marathon_master_url = os.environ.get("MARATHON_MASTER_URL",
@@ -34,23 +33,27 @@ c.MarathonLauncher.engine_docker_image = \
     os.environ.get("IPYPARALLEL_ENGINE_DOCKER_IMAGE") or \
     'registry.fxdayu.com/ipyparallel-marathon-engine:1.0'
 
-# Optional
-# Amount of memory (in megabytes) to limit the docker container. NOTE: if your engine uses more the this, the docker container will be killed by the kernel without warning.
-c.MarathonLauncher.engine_memory = int(os.environ.get("IPYPARALLEL_ENGINE_MEMORY", 512))
-# Amount of memory (in megabytes) to limit the docker container. NOTE: if your engine uses more the this, the docker container will be killed by the kernel without warning.
+# Optional Amount of memory (in megabytes) to limit the docker container. NOTE: if your engine uses more the this,
+# the docker container will be killed by the kernel without warning.
+c.MarathonLauncher.engine_memory = int(os.environ.get("IPYPARALLEL_ENGINE_MEMORY", 1024))
+# Amount of memory (in megabytes) to limit the docker container. NOTE: if your engine uses more the this, the docker
+# container will be killed by the kernel without warning.
 c.MarathonLauncher.controller_memory = int(os.environ.get("IPYPARALLEL_CONTROLLER_MEMORY", 512))
-# The port the controller exposes for clients and engines to retrive connection information. Note, if there are multiple users on the same cluster this will need to be changed
+# The port the controller exposes for clients and engines to retrive connection information. Note, if there are
+# multiple users on the same cluster this will need to be changed
 c.MarathonLauncher.controller_config_port = '1235'
 
-c.MarathonLauncher.engine_docker_env.update({
-    "PYTHONPATH": "/data/site-packages:$PYTHONPATH"
-})
+c.MarathonLauncher.engine_docker_env_keep.extends([
+    "CONDA_ENVS_PATH",
+    "CONDA_DEFAULT_PATH",
+    "USER",
+    "USER_ID",
+])
 
 if home:
     c.MarathonLauncher.engine_docker_volumes.extend([
         {
-            "HostPath": "/".join([home, user, "work"]),
-            "ContainerPath": lib,
-            "Mode": "ro"
+            "HostPath": os.path.join(home, user),
+            "ContainerPath": os.path.join(home, user),
         }
     ])
