@@ -28,7 +28,7 @@ pip install jupyter_nbextensions_configurator
 RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ --system && \
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ --system && \
 conda config --set show_channel_urls yes --system && \
-conda config --add allow-softlinks False --system
+conda config --set allow_softlinks False --system
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
