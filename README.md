@@ -59,7 +59,7 @@ Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-st
 
 **When there's a security fix in the Debian base image, do the following in place of the last command:**
 
-Update the `debian:jessie` SHA in the most-base images (e.g., base-notebook). Submit it as a regular PR and go through the build process. Expect the build to take a while to complete: every image layer will rebuild.
+Update the `debian:stretch` SHA in the most-base images (e.g., base-notebook). Submit it as a regular PR and go through the build process. Expect the build to take a while to complete: every image layer will rebuild.
 
 **When there's a new stack definition, do the following before merging the PR with the new stack:**
 
