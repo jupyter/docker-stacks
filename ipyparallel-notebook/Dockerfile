@@ -57,4 +57,4 @@ CMD ["sh", "/usr/local/bin/start-systemuser.sh"]
 # install all extra packages at last to ensure cache works well
 COPY ./requirements.txt /opt/requirements.txt
 
-RUN pip install && ${CONDA_DIR}/envs/python2/bin/pip install -r /opt/requirements.txt
+RUN pip install -r /opt/requirements.txt && ${CONDA_DIR}/envs/python2/bin/pip install -r /opt/requirements.txt
