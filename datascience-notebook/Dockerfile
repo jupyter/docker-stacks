@@ -17,19 +17,8 @@ RUN apt-get update && \
 # Julia dependencies
 # install Julia packages in /opt/julia instead of $HOME
 ENV JULIA_PKGDIR=/opt/julia
-
-RUN echo "deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu trusty main" > /etc/apt/sources.list.d/julia.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3D3D3ACC && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-    julia \
-    libnettle4 && apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    # Show Julia where conda libraries are \
-    echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /usr/etc/julia/juliarc.jl && \
-    # Create JULIA_PKGDIR \
-    mkdir $JULIA_PKGDIR && \
-    chown -R $NB_USER:users $JULIA_PKGDIR
+RUN mkdir $JULIA_PKGDIR && \
+    chown $NB_USER:users $JULIA_PKGDIR
 
 USER $NB_USER
 
@@ -52,6 +41,20 @@ RUN conda config --system --add channels r && \
     'r-rcurl=1.95*' \
     'r-crayon=1.3*' \
     'r-randomforest=4.6*' && conda clean -tipsy
+
+# install julia binary
+RUN V2=0.6; V3=0.6.0; \
+    SHA256=3a27ea78b06f46701dc4274820d9853789db205bce56afdc7147f7bd6fa83e41; \
+    wget --quiet https://julialang-s3.julialang.org/bin/linux/x64/$V2/julia-$V3-linux-x86_64.tar.gz && \
+    echo "$SHA256 *julia-$V3-linux-x86_64.tar.gz" | sha256sum -c - && \
+    tar -xzf julia-0.6.0-linux-x86_64.tar.gz && \
+    rm julia-$V3-linux-x86_64.tar.gz && \
+    mv julia-*/* $JULIA_PKGDIR/ && \
+    chown -R $NB_USER:users $JULIA_PKGDIR && \
+    # Show Julia where conda libraries are \
+    echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> $JULIA_PKGDIR/etc/julia/juliarc.jl
+
+ENV PATH $JULIA_PKGDIR/bin:$PATH
 
 # Add Julia packages
 # Install IJulia as jovyan and then move the kernelspec out
