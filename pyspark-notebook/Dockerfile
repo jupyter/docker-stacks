@@ -27,12 +27,18 @@ RUN cd /tmp && \
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
 
 # Mesos dependencies
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
+# FIXME: remove jessie-backports and update CODENAME=stretch
+# when there's a mesos .deb for stretch
+RUN echo 'deb http://cdn-fastly.deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
     DISTRO=debian && \
-    CODENAME=stretch && \
+    CODENAME=jessie && \
     echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
     apt-get -y update && \
-    apt-get --no-install-recommends -y --force-yes install mesos=1.2\* && \
+    apt-get --no-install-recommends -y --force-yes install \
+      systemd && \
+      mesos=1.2\* && \
+    rm /etc/apt/sources.list.d/jessie-backports.list && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
