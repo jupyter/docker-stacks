@@ -20,8 +20,7 @@ echo "[install]" >> ~/.pip/pip.conf && \
 echo "trusted-host=mirrors.aliyun.com" >> ~/.pip/pip.conf
 
 # activate ipyparallel-mesos
-RUN pip install git+git://github.com/xingetouzi/ipyparallel-mesos.git && \
-pip install jupyter_contrib_nbextensions && \
+RUN pip install jupyter_contrib_nbextensions && \
 pip install jupyter_nbextensions_configurator
 
 # update conda settings
