@@ -57,9 +57,9 @@ Starting with [git commit SHA 9bd33dcc8688](https://github.com/jupyter/docker-st
 5. Avoid merging another PR to master until all outstanding builds complete.
     * There's no way at present to propagate the git SHA to build through the Docker Cloud build trigger API. Every build trigger works off of master HEAD.
 
-**When there's a security fix in the Debian base image, do the following in place of the last command:**
+**When there's a security fix in the Ubuntu base image, do the following in place of the last command:**
 
-Update the `debian:jessie` SHA in the most-base images (e.g., base-notebook). Submit it as a regular PR and go through the build process. Expect the build to take a while to complete: every image layer will rebuild.
+Update the `ubuntu:16.04` SHA in the most-base images (e.g., base-notebook). Submit it as a regular PR and go through the build process. Expect the build to take a while to complete: every image layer will rebuild.
 
 **When there's a new stack definition, do the following before merging the PR with the new stack:**
 
