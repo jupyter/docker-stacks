@@ -6,7 +6,7 @@
 ## What it Gives You
 
 * Jupyter Notebook 4.3.x
-* Conda Python 3.x and Python 2.7.x environments
+* Conda Python 3.x environment
 * Conda R 3.3.x environment
 * Scala 2.11.x
 * pyspark, pandas, matplotlib, scipy, seaborn, scikit-learn pre-installed for Python
@@ -270,32 +270,18 @@ For additional information about using SSL, see the following:
 * The [Jupyter Notebook documentation](https://jupyter-notebook.readthedocs.io/en/latest/public_server.html#using-ssl-for-encrypted-communication) for best practices about running a public notebook server in general, most of which are encoded in this image.
 
 
-
 ## Conda Environments
 
-The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. A second Python 2.x Conda environment exists in `/opt/conda/envs/python2`. You can [switch to the python2 environment](http://conda.pydata.org/docs/using/envs.html#change-environments-activate-deactivate) in a shell by entering the following:
+The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. 
+
+The commands `jupyter`, `ipython`, `python`, `pip`, and `conda` (among others) are available in both environments. For convenience, you can install packages into either environment regardless of what environment is currently active using commands like the following:
 
 ```
-source activate python2
-```
-
-You can return to the default environment with this command:
-
-```
-source deactivate
-```
-
-The commands `jupyter`, `ipython`, `python`, `pip`, `easy_install`, and `conda` (among others) are available in both environments. For convenience, you can install packages into either environment regardless of what environment is currently active using commands like the following:
-
-```
-# install a package into the python2 environment
-pip2 install some-package
-conda install -n python2 some-package
-
 # install a package into the default (python 3.x) environment
-pip3 install some-package
-conda install -n python3 some-package
+pip install some-package
+conda install some-package
 ```
+
 
 ## Alternative Commands
 
