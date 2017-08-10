@@ -16,7 +16,7 @@ fi
 echo create ipython profile
 
 #create default ipython profile
-fxdayu create_profile
+${CONDA_DIR}/bin/fxdayu create_profile
 ${CONDA_DIR}/envs/python2/bin/fxdayu create_profile
 
 sudo chown -R ${USER} ${HOME}/.ipython
