@@ -54,10 +54,6 @@ RUN jupyter nbextension install --sys-prefix --py ipyparallel  &&\
     jupyter nbextensions_configurator enable --sys-prefix &&\
     jupyter nbextensions_configurator enable --system
 
-RUN wget -O ta-lib.tar.gz http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
-tar -xzf ta-lib.tar.gz &&\
-cd ta-lib && ./configure --prefix=/usr && make && make install && cd ..
-
 ENTRYPOINT ["tini", "--"]
 
 CMD ["sh", "/usr/local/bin/start-systemuser.sh"]
