@@ -1,0 +1,15 @@
+[submodule "submodule/fxdayu_data"]
+	path = submodule/fxdayu_data
+	url = https://github.com/xingetouzi/fxdayu_data.git
+[submodule "submodule/rqalpha-mod-fxdayu-source"]
+	path = submodule/rqalpha-mod-fxdayu-source
+	url = https://github.com/xingetouzi/rqalpha-mod-fxdayu-source.git
+[submodule "submodule/rqalpha-mod-optimization"]
+	path = submodule/rqalpha-mod-optimization
+	url = https://github.com/xingetouzi/rqalpha-mod-optimization.git
+[submodule "submodule/rqalpha"]
+	path = submodule/rqalpha
+	url = https://github.com/xingetouzi/rqalpha.git
+[submodule "submodule/ipyparallel-mesos.git"]
+	path = submodule/ipyparallel-mesos.git
+	url = https://github.com/xingetouzi/ipyparallel-mesos.git

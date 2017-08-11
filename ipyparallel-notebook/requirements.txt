@@ -1,3 +1,4 @@
+git+https://github.com/xingetouzi/rqalpha.git
 git+https://github.com/xingetouzi/fxdayu_data.git
 git+https://github.com/xingetouzi/rqalpha-mod-fxdayu-source.git
 git+https://github.com/xingetouzi/rqalpha-mod-optimization.git

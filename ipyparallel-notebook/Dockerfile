@@ -4,6 +4,8 @@ FROM jupyterhub/systemuser
 
 USER root
 
+WORKDIR /opt
+
 # update apt-get source with 163
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo "deb http://mirrors.163.com/debian/ jessie main non-free contrib" >/etc/apt/sources.list && \
@@ -65,6 +67,10 @@ COPY systemuser.sh /usr/local/bin/start-systemuser.sh
 # install all extra packages at last to ensure cache works well
 COPY ./requirements.txt /opt/requirements.txt
 
-ARG EXTRA_MODULE_VERSION=2
-
 RUN pip install -r /opt/requirements.txt && ${CONDA_DIR}/envs/python2/bin/pip install -r /opt/requirements.txt
+
+COPY ./submodule /opt/submodule
+
+RUN cd /opt/submodule && \
+ls -F1 | sed 's/\///g' | xargs -I {} bash -c "cd {} && pip install --force-reinstall ." && \
+cd ..
