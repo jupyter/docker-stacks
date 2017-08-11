@@ -25,13 +25,19 @@ RUN conda install --quiet --yes \
     'r-irkernel=0.7*' \
     'r-ggplot2=2.2*' \
     'r-sparklyr=0.5*' \
-    'r-rcurl=1.95*' && conda clean -tipsy
+    'r-rcurl=1.95*' && \
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR
 
 # Apache Toree kernel
-RUN pip --no-cache-dir install https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz
-RUN jupyter toree install --sys-prefix
+RUN pip install --no-cache-dir \
+    https://dist.apache.org/repos/dist/dev/incubator/toree/0.2.0/snapshots/dev1/toree-pip/toree-0.2.0.dev1.tar.gz \
+    && \
+    jupyter toree install --sys-prefix && \
+    fix-permissions $CONDA_DIR
 
 # Spylon-kernel
 RUN conda install --quiet --yes 'spylon-kernel=0.4*' && \
-    conda clean -tipsy
-RUN python -m spylon_kernel install --sys-prefix
+    conda clean -tipsy && \
+    python -m spylon_kernel install --sys-prefix && \
+    fix-permissions $CONDA_DIR

@@ -33,25 +33,34 @@ RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.10.0/tini 
     chmod +x /usr/local/bin/tini
 
 # Configure environment
-ENV CONDA_DIR /opt/conda
-ENV PATH $CONDA_DIR/bin:$PATH
-ENV SHELL /bin/bash
-ENV NB_USER jovyan
-ENV NB_UID 1000
-ENV HOME /home/$NB_USER
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+ENV CONDA_DIR=/opt/conda \
+    SHELL=/bin/bash \
+    NB_USER=jovyan \
+    NB_UID=1000 \
+    NB_OWNER_GROUP=user-writable \
+    NB_OWNER_GID=10000 \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8
+ENV PATH=$CONDA_DIR/bin:$PATH \
+    HOME=/home/$NB_USER
 
+ADD fix-permissions /usr/local/bin/fix-permissions
 # Create jovyan user with UID=1000 and in the 'users' group
+# and the user-writable group, which owns all of the
+# files we want users to write (/home/jovyan, packages)
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     mkdir -p $CONDA_DIR && \
-    chown $NB_USER $CONDA_DIR
+    chown $NB_USER $CONDA_DIR && \
+    groupadd -g $NB_OWNER_GID $NB_OWNER_GROUP && \
+    usermod -G $NB_OWNER_GROUP $NB_USER && \
+    fix-permissions /home/$NB_USER
 
 USER $NB_USER
 
 # Setup work directory for backward-compatibility
-RUN mkdir /home/$NB_USER/work
+RUN mkdir /home/$NB_USER/work && \
+    fix-permissions /home/$NB_USER
 
 # Install conda as jovyan and check the md5 sum provided on the download site
 ENV MINICONDA_VERSION 4.3.21
@@ -65,14 +74,16 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     $CONDA_DIR/bin/conda config --system --set show_channel_urls true && \
     $CONDA_DIR/bin/conda update --all && \
-    conda clean -tipsy
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR
 
 # Install Jupyter Notebook and Hub
 RUN conda install --quiet --yes \
     'notebook=5.0.*' \
     'jupyterhub=0.7.*' \
     'jupyterlab=0.27.*' \
-    && conda clean -tipsy
+    && conda clean -tipsy && \
+    fix-permissions $CONDA_DIR
 
 USER root
 
@@ -88,7 +99,7 @@ COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
-RUN chown -R $NB_USER:users /etc/jupyter/
+RUN fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_USER

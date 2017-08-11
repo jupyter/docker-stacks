@@ -32,4 +32,6 @@ RUN conda install --quiet --yes \
     'r-caret=6.0*' \
     'r-rcurl=1.95*' \
     'r-crayon=1.3*' \
-    'r-randomforest=4.6*' && conda clean -tipsy
+    'r-randomforest=4.6*' && \
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR

@@ -4,5 +4,7 @@ FROM jupyter/scipy-notebook
 
 MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
-# Install Python 3 Tensorflow
-RUN conda install --quiet --yes 'tensorflow=1.0*'
+# Install Tensorflow
+RUN conda install --quiet --yes 'tensorflow=1.0*' && \
+    conda clean -tipsy && \
+    fix-permissions $CONDA_DIR
