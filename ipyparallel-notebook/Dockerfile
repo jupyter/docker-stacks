@@ -43,7 +43,7 @@ conda config --set allow_softlinks False --system
 # Install Python 3 packages
 RUN conda install --quiet --yes \
     'ipyparallel=6.0.*' \
-    'nb_conda' \
+    'nb_conda'
 
 # Create Python 2 and Install Python 2 packages
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 && \
