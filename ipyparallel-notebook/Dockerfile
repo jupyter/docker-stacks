@@ -42,27 +42,15 @@ conda config --set allow_softlinks False --system
 RUN conda install --quiet --yes \
     'ipyparallel=6.0.*' \
     'nb_conda' \
-    && conda clean -tipsy
 
 # Create Python 2 and Install Python 2 packages
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 && \
 $CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
     'ipyparallel=6.0.*' \
-    && conda clean -tipsy
 
 # Add shortcuts to distinguish pip for python2 and python3 envs
 RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
     ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
-
-# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
-# switching at runtime and to allow the notebook server running out of the root
-# environment to find it. Also, activate the python2 environment upon kernel
-# launch.
-
-RUN pip install kernda --no-cache && \
-    $CONDA_DIR/envs/python2/bin/python -m ipykernel install && \
-    kernda -o -y /usr/local/share/jupyter/kernels/python2/kernel.json && \
-    pip uninstall kernda -y
 
 RUN jupyter nbextension install --sys-prefix --py ipyparallel  &&\
     jupyter nbextension enable --sys-prefix --py ipyparallel  &&\
