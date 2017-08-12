@@ -44,10 +44,25 @@ RUN conda install --quiet --yes \
     'nb_conda' \
     && conda clean -tipsy
 
-# Install Python 2 packages
-RUN $CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
+# Create Python 2 and Install Python 2 packages
+RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 && \
+$CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
     'ipyparallel=6.0.*' \
     && conda clean -tipsy
+
+# Add shortcuts to distinguish pip for python2 and python3 envs
+RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
+    ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
+
+# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
+# switching at runtime and to allow the notebook server running out of the root
+# environment to find it. Also, activate the python2 environment upon kernel
+# launch.
+
+RUN pip install kernda --no-cache && \
+    $CONDA_DIR/envs/python2/bin/python -m ipykernel install && \
+    kernda -o -y /usr/local/share/jupyter/kernels/python2/kernel.json && \
+    pip uninstall kernda -y
 
 RUN jupyter nbextension install --sys-prefix --py ipyparallel  &&\
     jupyter nbextension enable --sys-prefix --py ipyparallel  &&\
@@ -65,10 +80,15 @@ COPY systemuser.sh /usr/local/bin/start-systemuser.sh
 # install all extra packages at last to ensure cache works well
 COPY ./requirements.txt /opt/requirements.txt
 
-RUN pip install -r /opt/requirements.txt && ${CONDA_DIR}/envs/python2/bin/pip install -r /opt/requirements.txt
+RUN pip install --no-cache -q -r /opt/requirements.txt && ${CONDA_DIR}/envs/python2/bin/pip install --no-cache -q -r /opt/requirements.txt
 
 COPY ./submodule /opt/submodule
 
 RUN cd /opt/submodule && \
-ls -F1 | sed 's/\///g' | xargs -I {} bash -c "cd {} && pip install --force-reinstall ." && \
+ls -F1 | sed 's/\///g' | xargs -I {} bash -c "echo {} && cd {} && pip install --no-cache -q --force-reinstall ." && \
 cd ..
+
+RUN conda remove --quiet --yes --force qt pyqt && \
+    conda clean -tipsy && \
+    ${CONDAIR}/env/python2/bin/conda remove --quiet --yes --force qt pyqt && \
+    ${CONDAIR}/env/python2/bin/conda clean -tipsy
