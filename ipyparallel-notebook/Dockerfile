@@ -15,7 +15,7 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo "deb-src http://mirrors.163.com/debian/ jessie main non-free contrib" >>/etc/apt/sources.list && \
     echo "deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list
 
-RUN apt-get update --fix-missing && apt-get install gcc g++ build-essential -y
+RUN apt-get update --fix-missing && apt-get install git gcc g++ build-essential -y
 
 # TA-lib dependencies
 RUN wget -O ta-lib.tar.gz http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
