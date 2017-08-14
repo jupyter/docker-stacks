@@ -48,7 +48,7 @@ RUN conda install --quiet --yes \
 # Create Python 2 and Install Python 2 packages
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 && \
 $CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
-    'ipyparallel=6.0.*' \
+    'ipyparallel=6.0.*'
 
 # Add shortcuts to distinguish pip for python2 and python3 envs
 RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
