@@ -72,7 +72,7 @@ COPY ./requirements.txt /opt/requirements.txt
 
 RUN pip install --no-cache -q -r /opt/requirements.txt && \
 ${CONDA_DIR}/envs/python2/bin/pip install --no-cache -q -r /opt/requirements.txt && \
-pip install --no-cahce -q TA-lib && \
+pip install --no-cache -q TA-lib && \
 ${CONDA_DIR}/envs/python2/bin/pip install --no-cache -q TA-lib
 
 COPY ./submodule /opt/submodule
