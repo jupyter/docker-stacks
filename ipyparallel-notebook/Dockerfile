@@ -43,12 +43,15 @@ conda config --set allow_softlinks False --system
 # Install Python 3 packages
 RUN conda install --quiet --yes \
     'ipyparallel=6.0.*' \
-    'nb_conda'
+    'anaconda' \
+    'pandas=0.19.*'
 
 # Create Python 2 and Install Python 2 packages
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 && \
 $CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
-    'ipyparallel=6.0.*'
+    'ipyparallel=6.0.*' \
+    'anaconda' \
+    'pandas=0.19.*'
 
 # Add shortcuts to distinguish pip for python2 and python3 envs
 RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
@@ -70,10 +73,12 @@ COPY systemuser.sh /usr/local/bin/start-systemuser.sh
 # install all extra packages at last to ensure cache works well
 COPY ./requirements.txt /opt/requirements.txt
 
-RUN pip install --no-cache -q -r /opt/requirements.txt && \
-${CONDA_DIR}/envs/python2/bin/pip install --no-cache -q -r /opt/requirements.txt && \
-pip install --no-cache -q TA-lib && \
-${CONDA_DIR}/envs/python2/bin/pip install --no-cache -q TA-lib
+ARG PIP_EXTRA
+
+RUN pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt && \
+${CONDA_DIR}/envs/python2/bin/pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt && \
+pip install --no-cache ${PIP_EXTRA} TA-lib && \
+${CONDA_DIR}/envs/python2/bin/pip install --no-cache ${PIP_EXTRA} TA-lib
 
 COPY ./submodule /opt/submodule
 
