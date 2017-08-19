@@ -1,21 +1,17 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-FROM jupyterhub/systemuser
+
+FROM jupyter/scipy-notebook
 
 USER root
+
+RUN userdel $NB_USER && rm -rf /home/$NB_USER
 
 WORKDIR /opt
 
 ENV CONDA_DIR /opt/conda
 
-# update apt-get source with 163
-RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
-    echo "deb http://mirrors.163.com/debian/ jessie main non-free contrib" >/etc/apt/sources.list && \
-    echo "deb http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list && \
-    echo "deb-src http://mirrors.163.com/debian/ jessie main non-free contrib" >>/etc/apt/sources.list && \
-    echo "deb-src http://mirrors.163.com/debian/ jessie-proposed-updates main non-free contrib" >>/etc/apt/sources.list
-
-RUN apt-get update --fix-missing && apt-get install git gcc g++ build-essential -y
+# RUN apt-get update --fix-missing && apt-get install git gcc g++ build-essential -y
 
 # TA-lib dependencies
 RUN wget -O ta-lib.tar.gz http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz && \
@@ -35,23 +31,49 @@ RUN pip install jupyter_contrib_nbextensions && \
 pip install jupyter_nbextensions_configurator
 
 # update conda settings
-RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ --system && \
+RUN rm /opt/conda/.condarc && \
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/ --system && \
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ --system && \
 conda config --set show_channel_urls yes --system && \
 conda config --set allow_softlinks False --system
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
-    'ipyparallel=6.0.*' \
-    'anaconda' \
-    'pandas=0.19.*'
+    'ipyparallel=6.0.*'
 
 # Create Python 2 and Install Python 2 packages
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 && \
-$CONDA_DIR/envs/python2/bin/conda install --quiet --yes \
-    'ipyparallel=6.0.*' \
-    'anaconda' \
-    'pandas=0.19.*'
+# Install Python 2 packages
+# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
+# use notebook-friendly backends in these images
+RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
+    'nomkl' \
+    'ipython=5.3*' \
+    'ipywidgets=6.0*' \
+    'pandas=0.19*' \
+    'numexpr=2.6*' \
+    'matplotlib=2.0*' \
+    'scipy=0.19*' \
+    'seaborn=0.7*' \
+    'scikit-learn=0.18*' \
+    'scikit-image=0.12*' \
+    'sympy=1.0*' \
+    'cython=0.25*' \
+    'patsy=0.4*' \
+    'statsmodels=0.8*' \
+    'cloudpickle=0.2*' \
+    'dill=0.2*' \
+    'numba=0.31*' \
+    'bokeh=0.12*' \
+    'hdf5=1.8.17' \
+    'h5py=2.6*' \
+    'sqlalchemy=1.1*' \
+    'pyzmq' \
+    'vincent=0.4.*' \
+    'beautifulsoup4=4.5.*' \
+    'xlrd' \
+    'ipyparallel=6.0.*' && \
+    conda remove -n python2 --quiet --yes --force qt pyqt && \
+    conda clean -tipsy
 
 # Add shortcuts to distinguish pip for python2 and python3 envs
 RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
@@ -75,18 +97,19 @@ COPY ./requirements.txt /opt/requirements.txt
 
 ARG PIP_EXTRA
 
-RUN pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt && \
-${CONDA_DIR}/envs/python2/bin/pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt && \
-pip install --no-cache ${PIP_EXTRA} TA-lib && \
+RUN pip install --no-cache ${PIP_EXTRA} TA-lib && \
 ${CONDA_DIR}/envs/python2/bin/pip install --no-cache ${PIP_EXTRA} TA-lib
+
+RUN pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt && \
+RUN ${CONDA_DIR}/envs/python2/bin/pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt
 
 COPY ./submodule /opt/submodule
 
 RUN cd /opt/submodule && \
-ls -F1 | sed 's/\///g' | xargs -I {} bash -c "echo {} && cd {} && pip install --no-cache -q --force-reinstall ." && \
+ls -F1 | sed 's/\///g' | xargs -I {} bash -c "echo {} && cd {} && pip --no-cache install -q --force-reinstall ." && \
 cd ..
 
 RUN conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy && \
-    ${CONDAIR}/env/python2/bin/conda remove --quiet --yes --force qt pyqt && \
-    ${CONDAIR}/env/python2/bin/conda clean -tipsy
+    ${CONDA_DIR}/env/python2/bin/conda remove --quiet --yes --force qt pyqt && \
+    ${CONDA_DIR}/env/python2/bin/conda clean -tipsy
