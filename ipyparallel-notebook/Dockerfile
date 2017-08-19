@@ -100,7 +100,8 @@ ARG PIP_EXTRA
 RUN pip install --no-cache ${PIP_EXTRA} TA-lib && \
 ${CONDA_DIR}/envs/python2/bin/pip install --no-cache ${PIP_EXTRA} TA-lib
 
-RUN pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt && \
+RUN pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt
+
 RUN ${CONDA_DIR}/envs/python2/bin/pip install --no-cache ${PIP_EXTRA} -r /opt/requirements.txt
 
 COPY ./submodule /opt/submodule
