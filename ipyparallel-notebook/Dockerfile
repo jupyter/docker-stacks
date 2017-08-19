@@ -71,7 +71,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 \
     'vincent=0.4.*' \
     'beautifulsoup4=4.5.*' \
     'xlrd' \
-    'ipyparallel=6.0.*' && \
+    'ipyparallel=6.0.*'
 
 # Add shortcuts to distinguish pip for python2 and python3 envs
 RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
