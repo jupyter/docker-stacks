@@ -107,6 +107,3 @@ COPY ./submodule /opt/submodule
 RUN cd /opt/submodule && \
 ls -F1 | sed 's/\///g' | xargs -I {} bash -c "echo {} && cd {} && pip --no-cache install -q --force-reinstall ." && \
 cd ..
-
-RUN ${CONDA_DIR}/envs/python2/bin/conda remove --quiet --yes --force qt pyqt && \
-    ${CONDA_DIR}/envs/python2/bin/conda clean -tipsy
