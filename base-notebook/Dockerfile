@@ -37,8 +37,7 @@ ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
     NB_USER=jovyan \
     NB_UID=1000 \
-    NB_OWNER_GROUP=user-writable \
-    NB_OWNER_GID=10000 \
+    NB_GID=100 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
@@ -51,10 +50,9 @@ ADD fix-permissions /usr/local/bin/fix-permissions
 # files we want users to write (/home/jovyan, packages)
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     mkdir -p $CONDA_DIR && \
-    chown $NB_USER $CONDA_DIR && \
-    groupadd -g $NB_OWNER_GID $NB_OWNER_GROUP && \
-    usermod -G $NB_OWNER_GROUP $NB_USER && \
-    fix-permissions /home/$NB_USER
+    chown $NB_USER:$NB_GID $CONDA_DIR && \
+    fix-permissions $HOME && \
+    fix-permissions $CONDA_DIR
 
 USER $NB_USER
 
@@ -65,7 +63,6 @@ RUN mkdir /home/$NB_USER/work && \
 # Install conda as jovyan and check the md5 sum provided on the download site
 ENV MINICONDA_VERSION 4.3.21
 RUN cd /tmp && \
-    mkdir -p $CONDA_DIR && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     echo "c1c15d3baba15bf50293ae963abef853 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
@@ -73,7 +70,7 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda config --system --prepend channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     $CONDA_DIR/bin/conda config --system --set show_channel_urls true && \
-    $CONDA_DIR/bin/conda update --all && \
+    $CONDA_DIR/bin/conda update --all --quiet --yes && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
 
