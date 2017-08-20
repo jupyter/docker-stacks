@@ -65,3 +65,5 @@ target/
 dockerspawner
 dockerspawner.tar.gz
 *.orig
+
+.idea/

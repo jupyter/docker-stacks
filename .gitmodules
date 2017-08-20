@@ -1,0 +1,15 @@
+[submodule "ipyparallel-notebook/submodule/fxdayu_data"]
+	path = ipyparallel-notebook/submodule/fxdayu_data
+	url = https://github.com/xingetouzi/fxdayu_data.git
+[submodule "ipyparallel-notebook/submodule/rqalpha-mod-fxdayu-source"]
+	path = ipyparallel-notebook/submodule/rqalpha-mod-fxdayu-source
+	url = https://github.com/xingetouzi/rqalpha-mod-fxdayu-source.git
+[submodule "ipyparallel-notebook/submodule/rqalpha-mod-optimization"]
+	path = ipyparallel-notebook/submodule/rqalpha-mod-optimization
+	url = https://github.com/xingetouzi/rqalpha-mod-optimization.git
+[submodule "ipyparallel-notebook/submodule/rqalpha"]
+	path = ipyparallel-notebook/submodule/rqalpha
+	url = https://github.com/xingetouzi/rqalpha.git
+[submodule "ipyparallel-notebook/submodule/ipyparallel-mesos"]
+	path = ipyparallel-notebook/submodule/ipyparallel-mesos
+	url = https://github.com/xingetouzi/ipyparallel-mesos.git
