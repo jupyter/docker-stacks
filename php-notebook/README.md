@@ -8,7 +8,7 @@ PHP stack based on official [Base Jupyter Notebook Stack](https://github.com/jup
 
 * Minimally-functional Jupyter Notebook 5.0.x (e.g., no pandoc for document conversion)
 * PHP 7.0
-* (Jupyter-PHP)[https://github.com/Litipk/Jupyter-PHP] kernel
+* [Jupyter-PHP](https://github.com/Litipk/Jupyter-PHP) kernel
 * Miniconda Python 3.x
 * No preinstalled scientific computing packages
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
