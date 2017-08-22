@@ -127,7 +127,13 @@ The `start.sh` script supports the same features as the default `start-notebook.
 docker run -it --rm jupyter/minimal-notebook start.sh ipython
 ```
 
-This script is particularly useful when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, and `jupyter lab`.
+Or, to run JupyterLab instead of the classic notebook, run the following:
+
+```
+docker run -it --rm -p 8888:8888 jupyter/minimal-notebook start.sh jupyter lab
+```
+
+This script is particularly useful when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.
 
 ### Others
 
