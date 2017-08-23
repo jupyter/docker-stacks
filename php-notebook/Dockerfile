@@ -6,12 +6,17 @@ MAINTAINER Jupyter Project <jupyter@googlegroups.com>
 
 USER root
 
-# PHP 7.0
+RUN echo "deb http://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list && \
+    wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    php7.0 php7.0-cli php7.0-common php7.0-mbstring php7.0-gd php7.0-intl php7.0-xml php7.0-mysql php7.0-mcrypt php7.0-zip \
-    php-pear php7.0-dev \
-    pkg-config
+        php7.0 php7.0-cli php7.0-common php7.0-mbstring php7.0-gd php7.0-intl php7.0-xml php7.0-mysql php7.0-mcrypt php7.0-zip php-pear php7.0-dev pkg-config \
+        libzmq3-dev \
+    && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 
 # Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&\
@@ -19,13 +24,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php composer-setup.php &&\
     php -r "unlink('composer-setup.php');" &&\
     mv composer.phar /usr/local/bin/composer
-
-# ZMQ
-RUN echo "deb http://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/ ./" >> /etc/apt/sources.list && \
-    wget https://download.opensuse.org/repositories/network:/messaging:/zeromq:/release-stable/Debian_9.0/Release.key -O- | sudo apt-key add && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-    libzmq3-dev
 
 # ZMQ PHP binding
 RUN sudo pecl install zmq-beta -v
@@ -37,7 +35,3 @@ RUN cd /tmp && \
     wget https://litipk.github.io/Jupyter-PHP-Installer/dist/jupyter-php-installer.phar && \
     chmod +x jupyter-php-installer.phar && \
     ./jupyter-php-installer.phar install -vv
-
-# clean
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
