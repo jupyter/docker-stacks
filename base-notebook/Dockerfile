@@ -71,7 +71,7 @@ RUN cd /tmp && \
 RUN conda install --quiet --yes \
     'notebook=5.0.*' \
     'jupyterhub=0.7.*' \
-    'jupyterlab=0.26.*' \
+    'jupyterlab=0.27.*' \
     && conda clean -tipsy
 
 USER root
