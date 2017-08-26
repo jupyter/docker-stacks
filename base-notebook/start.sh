@@ -21,6 +21,9 @@ if [ $(id -u) == 0 ] ; then
                 chown -R $NB_UID "$d"
             fi
         done
+    elif [[ -d /home/$NB_USER/work && $(stat -c %U /home/$NB_USER/work) != "$NB_USER" ]]; then
+      echo "Change ownership of /home/$NB_USER/work from $(stat -c %U /home/$NB_USER/work) to $NB_USER"
+      chown -R $NB_UID /home/$NB_USER
     fi
 
     # Change GID of NB_USER to NB_GID if NB_GID is passed as a parameter
