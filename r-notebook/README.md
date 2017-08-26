@@ -90,19 +90,6 @@ For additional information about using SSL, see the following:
 
 ## Alternative Commands
 
-### start-singleuser.sh
-
-[JupyterHub](https://jupyterhub.readthedocs.io) requires a single-user instance of the Jupyter Notebook server per user.   To use this stack with JupyterHub and [DockerSpawner](https://github.com/jupyter/dockerspawner), you must specify the container image name and override the default container run command in your `jupyterhub_config.py`:
-
-```python
-# Spawn user containers from this image
-c.DockerSpawner.container_image = 'jupyter/r-notebook'
-
-# Have the Spawner override the Docker run command
-c.DockerSpawner.extra_create_kwargs.update({
-	'command': '/usr/local/bin/start-singleuser.sh'
-})
-```
 
 ### start.sh
 
