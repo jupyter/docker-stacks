@@ -131,13 +131,13 @@ c.DockerSpawner.extra_create_kwargs.update({
 The `start.sh` script supports the same features as the default `start-notebook.sh` script (e.g., `GRANT_SUDO`), but allows you to specify an arbitrary command to execute. For example, to run the text-based `ipython` console in a container, do the following:
 
 ```
-docker run -it --rm jupyter/minimal-notebook start.sh ipython
+docker run -it --rm jupyter/tensorflow-notebook start.sh ipython
 ```
 
 Or, to run JupyterLab instead of the classic notebook, run the following:
 
 ```
-docker run -it --rm -p 8888:8888 jupyter/minimal-notebook start.sh jupyter lab
+docker run -it --rm -p 8888:8888 jupyter/tensorflow-notebook start.sh jupyter lab
 ```
 
 This script is particularly useful when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.
