@@ -42,13 +42,14 @@ RUN conda install --quiet --yes \
     'beautifulsoup4=4.5.*' \
     'xlrd'  && \
     conda remove --quiet --yes --force qt pyqt && \
-    conda clean -tipsy
-
-# Activate ipywidgets extension in the environment that runs the notebook server
-RUN jupyter nbextension enable --py widgetsnbextension --sys-prefix
+    conda clean -tipsy && \
+    # Activate ipywidgets extension in the environment that runs the notebook server
+    jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
+    fix-permissions $CONDA_DIR
 
 # Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
-RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot"
+RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
+    fix-permissions /home/$NB_USER
 
 USER $NB_USER
