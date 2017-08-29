@@ -5,7 +5,7 @@
 ## What it Gives You
 
 * Everything in [Scipy Notebook](https://github.com/jupyter/docker-stacks/tree/master/scipy-notebook)
-* Tensorflow for Python 2.7 and 3.5 (without GPU support)
+* Tensorflow for Python 3.x (without GPU support)
 
 ## Basic Use
 
