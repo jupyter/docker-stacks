@@ -19,7 +19,7 @@ USER $NB_USER
 # use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
     'nomkl' \
-    'ipywidgets=6.0*' \
+    'ipywidgets=7.0*' \
     'pandas=0.19*' \
     'numexpr=2.6*' \
     'matplotlib=2.0*' \
