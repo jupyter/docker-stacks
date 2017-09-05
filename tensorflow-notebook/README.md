@@ -5,7 +5,7 @@
 ## What it Gives You
 
 * Everything in [Scipy Notebook](https://github.com/jupyter/docker-stacks/tree/master/scipy-notebook)
-* Tensorflow for Python 3.x (without GPU support)
+* Tensorflow and Keras for Python 3.x (without GPU support)
 
 ## Basic Use
 
