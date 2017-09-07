@@ -6,13 +6,26 @@ set -e
 
 # Handle special flags if we're root
 if [ $(id -u) == 0 ] ; then
-    # Switch to the root of the container in case we start adjusting paths
-    # that impact the default working directory
-    cd /
 
     # Handle username change. Since this is cheap, do this unconditionally
     echo "Set username to: $NB_USER"
-    usermod -m -d /home/$NB_USER -l $NB_USER jovyan
+    usermod -d /home/$NB_USER -l $NB_USER jovyan
+
+    # handle home and working directory if the username changed
+    if [[ "$NB_USER" != "jovyan" ]]; then
+        # changing username, make sure homedir exists
+        # (it could be mounted, and we shouldn't create it if it already exists)
+        if [[ ! -e "/home/$NB_USER" ]]; then
+            echo "Relocating home dir to /home/$NB_USER"
+            mv /home/jovyan "/home/$NB_USER"
+        fi
+        # if workdir is in /home/jovyan, cd to /home/$NB_USER
+        if [[ "$PWD/" == "/home/jovyan/"* ]]; then
+            newcwd="/home/$NB_USER/${PWD:13}"
+            echo "Setting CWD to $newcwd"
+            cd "$newcwd"
+        fi
+    fi
 
     # Change UID of NB_USER to NB_UID if it does not match
     if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
@@ -31,9 +44,6 @@ if [ $(id -u) == 0 ] ; then
         echo "Granting $NB_USER sudo access"
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
     fi
-
-    # Switch to the user's home directory after adjusting any paths
-    cd /home/$NB_USER
 
     # Exec the command as NB_USER
     echo "Execute the command: $*"
