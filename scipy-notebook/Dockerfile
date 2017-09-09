@@ -50,7 +50,7 @@ RUN conda install --quiet --yes \
 
 RUN git clone https://github.com/PAIR-code/facets.git
 WORKDIR facets
-RUN jupyter nbextension install --py facets-dist/ --sys-prefix
+RUN jupyter nbextension install facets-dist/ --sys-prefix
 
 # Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
