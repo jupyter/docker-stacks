@@ -81,14 +81,14 @@
  
 -# Install Jupyter Notebook and Hub
 -RUN conda install --quiet --yes \
--    'notebook=5.0.*' \
+-    'notebook=5.1.*' \
 -    'jupyterhub=0.7.*' \
 -    'jupyterlab=0.18.*' \
 -    && conda clean -tipsy
 +# Install Jupyter notebook and Hub
 +RUN yes | pip install --upgrade pip
 +RUN yes | pip install --quiet --no-cache-dir \
-+    'notebook==5.0.*' \
++    'notebook==5.1.*' \
 +    'jupyterhub==0.7.*' \
 +    'jupyterlab==0.18.*'
  

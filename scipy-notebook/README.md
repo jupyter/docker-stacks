@@ -4,7 +4,7 @@
 
 ## What it Gives You
 
-* Jupyter Notebook 5.0.x
+* Jupyter Notebook 5.1.x
 * Conda Python 3.x environment
 * pandas, matplotlib, scipy, seaborn, scikit-learn, scikit-image, sympy, cython, patsy, statsmodel, cloudpickle, dill, numba, bokeh, vincent, beautifulsoup, xlrd pre-installed
 * Unprivileged user `jovyan` (uid=1000, configurable, see options) in group `users` (gid=100) with ownership over `/home/jovyan` and `/opt/conda`
