@@ -76,7 +76,7 @@ RUN cd /tmp && \
 # Install Jupyter Notebook and Hub
 RUN conda install --quiet --yes \
     'notebook=5.1.*' \
-    'jupyterhub=0.7.*' \
+    'jupyterhub=0.8.*' \
     'jupyterlab=0.27.*' \
     && conda clean -tipsy && \
     fix-permissions $CONDA_DIR
