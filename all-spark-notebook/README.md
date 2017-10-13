@@ -5,7 +5,7 @@
 
 ## What it Gives You
 
-* Jupyter Notebook 5.1.x
+* Jupyter Notebook 5.2.x
 * Conda Python 3.x environment
 * Conda R 3.3.x environment
 * Scala 2.11.x
