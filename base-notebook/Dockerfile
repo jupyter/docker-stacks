@@ -77,7 +77,7 @@ RUN cd /tmp && \
 RUN conda install --quiet --yes \
     'notebook=5.2.*' \
     'jupyterhub=0.8.*' \
-    'jupyterlab=0.27.*' \
+    'jupyterlab=0.28.*' \
     && conda clean -tipsy && \
     fix-permissions $CONDA_DIR
 
