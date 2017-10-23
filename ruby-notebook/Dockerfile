@@ -28,34 +28,20 @@ RUN git clone https://github.com/zeromq/czmq /root/czmq && \
     make install && \
     rm -rf /root/czmq
 
+ENV RUBY_VERSION 2.4.1
+ENV ZEROMQ_VERSION 4.2.1
+
+RUN conda config --add channels conda-forge
+RUN conda install -y \
+      ruby="$RUBY_VERSION" \
+      zeromq="$ZEROMQ_VERSION"
+
 # skip installing gem documentation
 RUN mkdir -p /usr/local/etc \
   && { \
     echo 'install: --no-document'; \
     echo 'update: --no-document'; \
   } >> /usr/local/etc/gemrc
-
-ENV RUBY_VERSION 2.4.1
-
-RUN conda config --add channels conda-forge
-RUN conda install -y ruby="$RUBY_VERSION"
-
-# install bundler based on docker-library/ruby
-ENV BUNDLER_VERSION 1.14.5
-
-RUN gem install bundler --version "$BUNDLER_VERSION"
-
-# install things globally, for great justice
-# and don't create ".bundle" in all our apps
-ENV GEM_HOME /usr/local/bundle
-ENV BUNDLE_PATH="$GEM_HOME" \
-  BUNDLE_BIN="$GEM_HOME/bin" \
-  BUNDLE_SILENCE_ROOT_WARNING=1 \
-  BUNDLE_APP_CONFIG="$GEM_HOME"
-ENV PATH $BUNDLE_BIN:$PATH
-RUN mkdir -p "$GEM_HOME" "$BUNDLE_BIN" \
-  && chmod 777 "$GEM_HOME" "$BUNDLE_BIN"
-
 
 # install iruby & register to jupyter kernelspec
 RUN gem install cztop
