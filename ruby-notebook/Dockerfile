@@ -28,7 +28,7 @@ RUN git clone https://github.com/zeromq/czmq /root/czmq && \
     make install && \
     rm -rf /root/czmq
 
-ENV RUBY_VERSION 2.4.1
+ENV RUBY_VERSION 2.4.2
 ENV ZEROMQ_VERSION 4.2.1
 
 RUN conda config --add channels conda-forge
