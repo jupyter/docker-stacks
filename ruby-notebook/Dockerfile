@@ -41,7 +41,7 @@ RUN mkdir -p /usr/local/etc \
   && { \
     echo 'install: --no-document'; \
     echo 'update: --no-document'; \
-  } >> /usr/local/etc/gemrc
+  } >> ~/.gemrc
 
 # install iruby & register to jupyter kernelspec
 RUN gem install cztop
