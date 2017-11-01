@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 FROM jupyter/scipy-notebook
 
-MAINTAINER Jupyter Project <jupyter@googlegroups.com>
+LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 # Install Tensorflow
 RUN conda install --quiet --yes \

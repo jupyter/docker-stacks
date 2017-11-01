@@ -5,7 +5,7 @@
 # https://github.com/docker-library/official-images/commit/0ea9b38b835ffb656c497783321632ec7f87b60c
 FROM ubuntu@sha256:84c334414e2bfdcae99509a6add166bbb4fa4041dc3fa6af08046a66fed3005f
 
-MAINTAINER Jupyter Project <jupyter@googlegroups.com>
+LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 USER root
 
