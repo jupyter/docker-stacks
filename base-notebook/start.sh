@@ -39,6 +39,14 @@ if [ $(id -u) == 0 ] ; then
         groupmod -g $NB_GID -o $(id -g -n $NB_USER)
     fi
 
+    # Grant permissions on home and in /opt/conda to $NB_USER
+    if [ "$NB_UID" != $(id -u $NB_USER) -o "$NB_GID" ] ; then
+	echo "Granting permissions to $NB_USER on /home/$NB_USER and /opt/conda"
+        CURRENT_GID=${NB_GID:-$(id -g $NB_USER)}
+	chown -R $NB_UID:$CURRENT_GID /home/$NB_USER
+	chown -R $NB_UID:$CURRENT_GID /opt/conda
+    fi
+
     # Enable sudo if requested
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
         echo "Granting $NB_USER sudo access"
