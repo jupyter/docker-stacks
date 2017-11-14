@@ -36,7 +36,7 @@ RUN . /etc/os-release && \
 USER $NB_USER
 
 # R packages including IRKernel which gets installed globally.
-RUN conda config --system --add channels r && \
+RUN conda config --system --append channels r && \
     conda install --quiet --yes \
     'rpy2=2.8*' \
     'r-base=3.3.2' \
