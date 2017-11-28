@@ -5,6 +5,6 @@ sudo: required
 services:
     - docker
 install:
-    - pip install pytest docker
+    - pip install docker pytest requests
 script:
     - make build-test-all
