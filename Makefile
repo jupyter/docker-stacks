@@ -54,15 +54,8 @@ dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
+test/%:
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
 
-
-test/%: ## run a stack container, check for jupyter server liveliness
-	@-docker rm -f iut
-	@docker run -d --name iut $(OWNER)/$(notdir $@)
-	@for i in $$(seq 0 9); do \
-		sleep $$i; \
-		docker exec iut bash -c 'wget http://localhost:8888 -O- | grep -i jupyter'; \
-		if [[ $$? == 0 ]]; then exit 0; fi; \
-	done ; exit 1
-
-test-all: $(ALL_IMAGES:%=test/%) ## test all stacks
+test/base-notebook: ## test supported options in the base notebook
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test base-notebook/test

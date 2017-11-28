@@ -1,8 +1,10 @@
-language: generic
-
+language: python
+python:
+    - 3.6
 sudo: required
 services:
     - docker
-
+install:
+    - pip install pytest docker
 script:
     - make build-test-all
