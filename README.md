@@ -10,6 +10,17 @@ Opinionated stacks of ready-to-run Jupyter applications in Docker.
 If you're familiar with Docker, have it configured, and know exactly what you'd like to run, this one-liner should work in most cases:
 
 ```
+# Foreground mode:
+# -ti: pseudo-TTY+STDIN open.
+# -rm: remove the container on exit.
+# -p: publish port to the host
+
+docker run -ti --rm -p 8888:8888 jupyter/<your desired stack>:<git-sha-tag>
+
+# Bagkground mode:
+# -d: detach, run container in background.
+# -P: Publish all exposed ports to random ports
+
 docker run -d -P jupyter/<your desired stack>:<git-sha-tag>
 ```
 
