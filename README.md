@@ -34,6 +34,16 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 3. Follow the README for that stack.
 
 ## Visual Overview
+[Click here for commented build history, with reference to SHA values.](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history)
+
+* base-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/base-notebook), [SHA list](https://hub.docker.com/r/jupyter/base-notebook/tags/)
+* minimal-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/minimal-notebook), [SHA list](https://hub.docker.com/r/jupyter/minimal-notebook/tags/)
+* scipy-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/scipy-notebook), [SHA list](https://hub.docker.com/r/jupyter/scipy-notebook/tags/)
+* r-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/r-notebook), [SHA list](https://hub.docker.com/r/jupyter/r-notebook/tags/)
+* tensorflow-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/tensorflow-notebook), [SHA list](https://hub.docker.com/r/jupyter/tensorflow-notebook/tags/)
+* datascience-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/datascience-notebook), [SHA list](https://hub.docker.com/r/jupyter/datascience-notebook/tags/)
+* pyspark-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/pyspark-notebook), [SHA list](https://hub.docker.com/r/jupyter/pyspark-notebook/tags/)
+* all-spark-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook), [SHA list](https://hub.docker.com/r/jupyter/all-spark-notebook/tags/)
 
 Here's a diagram of the `FROM` relationships between all of the images defined in this project:
 
