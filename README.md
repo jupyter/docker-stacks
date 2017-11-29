@@ -14,13 +14,14 @@ If you're familiar with Docker, have it configured, and know exactly what you'd 
 # -ti: pseudo-TTY+STDIN open.
 # -rm: remove the container on exit.
 # -p: publish port to the host
-
 docker run -ti --rm -p 8888:8888 jupyter/<your desired stack>:<git-sha-tag>
+
+# And mount current directory into 'work' directory in image
+docker run -ti --rm -p 8888:8888 -v "$PWD":/home/jovyan/work jupyter/<your desired stack>:<git-sha-tag>
 
 # Bagkground mode:
 # -d: detach, run container in background.
 # -P: Publish all exposed ports to random ports
-
 docker run -d -P jupyter/<your desired stack>:<git-sha-tag>
 ```
 
