@@ -47,7 +47,12 @@ if [ $(id -u) == 0 ] ; then
 
     # Exec the command as NB_USER
     echo "Execute the command: $*"
-    exec su $NB_USER -c "env PATH=$PATH $*"
+    if [ $# -eq 0 ]; then
+        echo "No arguments supplied"
+        sudo -H -u $NB_USER bash -c 'env; PATH=$PATH; bash'
+    else
+        exec su $NB_USER -c "env PATH=$PATH $*"
+    fi
 else
   if [[ ! -z "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
       echo 'Container must be run as root to set $NB_UID'
