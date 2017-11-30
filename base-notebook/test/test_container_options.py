@@ -21,7 +21,7 @@ def test_unsigned_ssl(container, http_client):
     """Container should generate a self-signed SSL certificate
     and notebook server should use it to enable HTTPS.
     """
-    c = container.run(
+    container.run(
         environment=['GEN_CERT=yes']
     )
     # NOTE: The requests.Session backing the http_client fixture  does not retry
@@ -34,32 +34,68 @@ def test_unsigned_ssl(container, http_client):
     assert 'login_submit' in resp.text
 
 
-@pytest.mark.skip('placeholder')
-def test_uid_change():
-    pass
+def test_uid_change(container):
+    """Container should change the UID of the default user."""
+    c = container.run(
+        tty=True,
+        user='root',
+        environment=['NB_UID=1010'],
+        command=['start.sh', 'id && touch /opt/conda/test-file']
+    )
+    # usermod is slow so give it some time
+    c.wait(timeout=120)
+    assert 'uid=1010(jovyan)' in c.logs(stdout=True).decode('utf-8')
+
+
+def test_gid_change(container):
+    """Container should change the GID of the default user."""
+    c = container.run(
+        tty=True,
+        user='root',
+        environment=['NB_GID=110'],
+        command=['start.sh', 'id']
+    )
+    c.wait(timeout=10)
+    assert 'gid=110(users)' in c.logs(stdout=True).decode('utf-8')
+
+
+def test_sudo(container):
+    """Container should grant passwordless sudo to the default user."""
+    c = container.run(
+        tty=True,
+        user='root',
+        environment=['GRANT_SUDO=yes'],
+        command=['start.sh', 'sudo', 'id']
+    )
+    rv = c.wait(timeout=10)
+    assert rv == 0
+    assert 'uid=0(root)' in c.logs(stdout=True).decode('utf-8')
+
+
+def test_group_add(container):
+    """Container should run with the specified uid, gid, and secondary
+    group, but retain unprivileged access to the conda path.
+    """
+    c = container.run(
+        user='1010:1010',
+        group_add=['users'],
+        command=['start.sh', 'bash', '-c', 'id && touch /opt/conda/test-file']
+    )
+    rv = c.wait(timeout=5)
+    assert rv == 0
+    assert 'uid=1010 gid=1010 groups=1010,100(users)' in c.logs(stdout=True).decode('utf-8')
 
 
 @pytest.mark.skip('placeholder')
-def test_gid_change():
-    pass
-
-
-@pytest.mark.skip('placeholder')
-def test_group_add():
-    pass
-
-
-@pytest.mark.skip('placeholder')
-def test_sudo():
-    pass
-
-
-@pytest.mark.skip('placeholder')
-def test_host_mount():
+def test_host_mount(container):
+    """Container should start the notebook server properly when
+    the user home directory is host mounted.
+    """
     pass
 
 
 @pytest.mark.skip('placeholder')
 def test_alt_command():
+    """Container should launch an alternative command."""
     pass
 

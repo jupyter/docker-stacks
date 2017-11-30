@@ -75,10 +75,10 @@ class TrackedContainer(object):
         self.container = self.docker_client.containers.run(self.image_name, **all_kwargs)
         return self.container
 
-    def kill(self):
-        """Kills the tracked docker container."""
+    def remove(self):
+        """Kills and removes the tracked docker container."""
         if self.container:
-            self.container.kill()
+            self.container.remove(force=True)
 
 
 @pytest.fixture(scope='function')
@@ -92,10 +92,9 @@ def container(docker_client, image_name):
         docker_client,
         image_name,
         detach=True,
-        auto_remove=False,
         ports={
             '8888/tcp': 8888
         }
     )
     yield container
-    container.kill()
+    container.remove()
