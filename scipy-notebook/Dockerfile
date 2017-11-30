@@ -48,6 +48,8 @@ RUN conda install --quiet --yes \
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
     # Also activate ipywidgets extension for JupyterLab
     jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
+    npm cache clean && \
+    rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     fix-permissions $CONDA_DIR
 
 # Install facets which does not have a pip or conda package at the moment
