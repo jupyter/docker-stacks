@@ -71,31 +71,42 @@ def test_sudo(container):
     assert rv == 0
     assert 'uid=0(root)' in c.logs(stdout=True).decode('utf-8')
 
-
-def test_group_add(container):
+@pytest.mark.dev
+def test_group_add(container, tmpdir):
     """Container should run with the specified uid, gid, and secondary
-    group, but retain unprivileged access to the conda path.
+    group.
     """
     c = container.run(
         user='1010:1010',
         group_add=['users'],
-        command=['start.sh', 'bash', '-c', 'id && touch /opt/conda/test-file']
+        command=['start.sh', 'id']
     )
     rv = c.wait(timeout=5)
     assert rv == 0
     assert 'uid=1010 gid=1010 groups=1010,100(users)' in c.logs(stdout=True).decode('utf-8')
 
-
-@pytest.mark.skip('placeholder')
-def test_host_mount(container):
+@pytest.mark.dev
+def test_host_mount(container, tmpdir):
     """Container should start the notebook server properly when
     the user home directory is host mounted.
     """
-    pass
+    path = tmpdir.mkdir('home').join('test.sh')
+    path.write('''\
+    #!/bin/bash
+    echo "test content" > test.txt
+    cat test.txt
+    ''')
+    path.chmod(0o755)
 
-
-@pytest.mark.skip('placeholder')
-def test_alt_command():
-    """Container should launch an alternative command."""
-    pass
+    c = container.run(
+        volumes={
+            path.dirname: {'bind': '/home/jovyan', 'mode': 'rw'},
+        },
+        command=['start.sh', '/home/jovyan/test.sh']
+    )
+    rv = c.wait(timeout=5)
+    stdout = c.logs(stdout=True).decode('utf-8')
+    print(stdout)
+    assert rv == 0
+    assert 'test content' in stdout
 
