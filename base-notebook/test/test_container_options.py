@@ -90,23 +90,25 @@ def test_host_mount(container, tmpdir):
     """Container should start the notebook server properly when
     the user home directory is host mounted.
     """
-    path = tmpdir.mkdir('home').join('test.sh')
-    path.write('''\
+    home = tmpdir.mkdir('home')
+    home.chmod(0o777)
+
+    script = home.join('test.sh')
+    script.write('''\
     #!/bin/bash
     echo "test content" > test.txt
     cat test.txt
     ''')
-    path.chmod(0o755)
+    script.chmod(0o755)
 
     c = container.run(
         volumes={
-            path.dirname: {'bind': '/home/jovyan', 'mode': 'rw'},
+            home.strpath: {'bind': '/home/jovyan', 'mode': 'rw'},
         },
         command=['start.sh', '/home/jovyan/test.sh']
     )
     rv = c.wait(timeout=5)
     stdout = c.logs(stdout=True).decode('utf-8')
-    print(stdout)
     assert rv == 0
     assert 'test content' in stdout
 
