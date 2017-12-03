@@ -45,13 +45,22 @@ if [ $(id -u) == 0 ] ; then
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
     fi
 
-    # Exec the command as NB_USER
+    # Exec the command as NB_USER or root
     echo "Execute the command: $*"
-    if [ $# -eq 0 ]; then
-        echo "No arguments supplied"
-        sudo -H -u $NB_USER bash -c 'env; PATH=$PATH; bash'
+    if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
+        if [ $# -eq 0 ]; then
+            echo "No arguments supplied"
+            sudo -H -u $NB_USER bash -c 'env; PATH=$PATH; bash'
+        else
+            exec su $NB_USER -c "env PATH=$PATH $*"
+        fi
     else
-        exec su $NB_USER -c "env PATH=$PATH $*"
+        if [ $# -eq 0 ]; then
+            echo "No arguments supplied"
+            bash -c 'env; PATH=$PATH; bash'
+        else
+            env PATH=$PATH $*
+        fi
     fi
 else
   if [[ ! -z "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
