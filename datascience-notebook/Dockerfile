@@ -18,17 +18,19 @@ RUN apt-get update && \
 # Julia dependencies
 # install Julia packages in /opt/julia instead of $HOME
 ENV JULIA_PKGDIR=/opt/julia
+ENV JULIA_VERSION=0.6.0
 
-RUN . /etc/os-release && \
-    echo "deb http://ppa.launchpad.net/staticfloat/juliareleases/ubuntu $VERSION_CODENAME main" > /etc/apt/sources.list.d/julia.list && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3D3D3ACC && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-    julia && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    # Show Julia where conda libraries are \
-    echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /usr/etc/julia/juliarc.jl && \
+RUN mkdir /opt/julia-${JULIA_VERSION} && \
+    cd /tmp && \
+    wget -q https://julialang.s3.amazonaws.com/bin/linux/x64/`echo $JULIA_VERSION | cut -d. -f 1,2`/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
+    echo "3a27ea78b06f46701dc4274820d9853789db205bce56afdc7147f7bd6fa83e41 *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    tar xzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C /opt/julia-${JULIA_VERSION} --strip-components=1 && \
+    rm /tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz
+RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
+
+# Show Julia where conda libraries are \
+RUN mkdir /etc/julia && \
+    echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /etc/julia/juliarc.jl && \
     # Create JULIA_PKGDIR \
     mkdir $JULIA_PKGDIR && \
     chown $NB_USER $JULIA_PKGDIR && \
@@ -78,4 +80,3 @@ RUN julia -e 'Pkg.init()' && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
     rm -rf $HOME/.local && \
     fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
-
