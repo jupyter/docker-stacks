@@ -54,6 +54,9 @@ dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
+test-reqs: # install libraries required to run the integration tests
+	pip install -r requirements-test.txt
+
 test/%:
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
 
