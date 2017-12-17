@@ -5,6 +5,6 @@ sudo: required
 services:
     - docker
 install:
-    - make test-env
+    - make test-reqs
 script:
     - make build-test-all
