@@ -71,7 +71,6 @@ def test_sudo(container):
     assert rv == 0
     assert 'uid=0(root)' in c.logs(stdout=True).decode('utf-8')
 
-@pytest.mark.dev
 def test_group_add(container, tmpdir):
     """Container should run with the specified uid, gid, and secondary
     group.
@@ -84,31 +83,3 @@ def test_group_add(container, tmpdir):
     rv = c.wait(timeout=5)
     assert rv == 0
     assert 'uid=1010 gid=1010 groups=1010,100(users)' in c.logs(stdout=True).decode('utf-8')
-
-@pytest.mark.dev
-def test_host_mount(container, tmpdir):
-    """Container should start the notebook server properly when
-    the user home directory is host mounted.
-    """
-    home = tmpdir.mkdir('home')
-    home.chmod(0o777)
-
-    script = home.join('test.sh')
-    script.write('''\
-    #!/bin/bash
-    echo "test content" > test.txt
-    cat test.txt
-    ''')
-    script.chmod(0o755)
-
-    c = container.run(
-        volumes={
-            home.strpath: {'bind': '/home/jovyan', 'mode': 'rw'},
-        },
-        command=['start.sh', '/home/jovyan/test.sh']
-    )
-    rv = c.wait(timeout=5)
-    stdout = c.logs(stdout=True).decode('utf-8')
-    assert rv == 0
-    assert 'test content' in stdout
-
