@@ -77,9 +77,10 @@ RUN cd /tmp && \
 RUN conda install --quiet --yes \
     'notebook=5.2.*' \
     'jupyterhub=0.8.*' \
-    'jupyterlab=0.29.*' \
+    'jupyterlab=0.30.*' \
     && conda clean -tipsy && \
-    jupyter labextension install @jupyterlab/hub-extension@^0.6.0 && \
+    jupyter labextension install @jupyterlab/hub-extension@^0.7.0 && \
+    npm cache clean && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     fix-permissions $CONDA_DIR
 

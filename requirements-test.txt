@@ -1,0 +1,3 @@
+docker
+pytest
+requests
