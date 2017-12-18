@@ -1,8 +1,10 @@
-language: generic
-
+language: python
+python:
+    - 3.6
 sudo: required
 services:
     - docker
-
+install:
+    - make test-reqs
 script:
     - make build-test-all

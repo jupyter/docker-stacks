@@ -33,8 +33,8 @@ if [ $(id -u) == 0 ] ; then
         usermod -u $NB_UID $NB_USER
     fi
 
-    # Change GID of NB_USER to NB_GID if NB_GID is passed as a parameter
-    if [ "$NB_GID" ] ; then
+    # Change GID of NB_USER to NB_GID if it does not match
+    if [ "$NB_GID" != $(id -g $NB_USER) ] ; then
         echo "Set $NB_USER GID to: $NB_GID"
         groupmod -g $NB_GID -o $(id -g -n $NB_USER)
     fi
