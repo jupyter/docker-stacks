@@ -41,8 +41,7 @@ ENV CONDA_DIR=/opt/conda \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
-ENV PATH=$CONDA_DIR/bin:$PATH \
-    HOME=/home/$NB_USER
+ENV HOME=/home/$NB_USER
 
 ADD fix-permissions /usr/local/bin/fix-permissions
 # Create jovyan user with UID=1000 and in the 'users' group
@@ -96,6 +95,8 @@ WORKDIR $HOME
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
+CMD [".", "/opt/conda/etc/profile.d/conda.sh"]
+CMD ["conda", "activate", "base"]
 CMD ["start-notebook.sh"]
 
 # Add local files as late as possible to avoid cache busting
@@ -103,6 +104,7 @@ COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
+COPY /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
 RUN fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
