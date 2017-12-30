@@ -24,7 +24,7 @@ def test_unsigned_ssl(container, http_client):
     container.run(
         environment=['GEN_CERT=yes']
     )
-    # NOTE: The requests.Session backing the http_client fixture  does not retry
+    # NOTE: The requests.Session backing the http_client fixture does not retry
     # properly while the server is booting up. An SSL handshake error seems to
     # abort the retry logic. Forcing a long sleep for the moment until I have
     # time to dig more.
@@ -40,7 +40,7 @@ def test_uid_change(container):
         tty=True,
         user='root',
         environment=['NB_UID=1010'],
-        command=['start.sh', 'id && touch /opt/conda/test-file']
+        command=['start.sh', 'bash', '-c', 'id && touch /opt/conda/test-file']
     )
     # usermod is slow so give it some time
     c.wait(timeout=120)

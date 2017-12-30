@@ -7,9 +7,25 @@ Opinionated stacks of ready-to-run Jupyter applications in Docker.
 
 ## Quick Start
 
-If you're familiar with Docker, have it configured, and know exactly what you'd like to run, this one-liner should work in most cases:
+If you're familiar with Docker, have it configured, and know exactly what you'd like to run, one of these commands should get you up and running:
 
 ```
+# Run an ephemeral Jupyter Notebook server in a Docker container in the terminal foreground.
+# Note that any work saved in the container will be lost when it is destroyed with this config.
+# -ti: pseudo-TTY+STDIN open.
+# -rm: remove the container on exit.
+# -p: publish port to the host
+docker run -ti --rm -p 8888:8888 jupyter/<your desired stack>:<git-sha-tag>
+
+# Run a Jupyter Notebook server in a Docker container in the terminal foreground.
+# Any files written to ~/work in the container will be saved to the current working
+# directory on the host.
+docker run -ti --rm -p 8888:8888 -v "$PWD":/home/jovyan/work jupyter/<your desired stack>:<git-sha-tag>
+
+# Run an ephemeral Jupyter Notebook server in a Docker container in the background.
+# Note that any work saved in the container will be lost when it is destroyed with this config.
+# -d: detach, run container in background.
+# -P: Publish all exposed ports to random ports
 docker run -d -P jupyter/<your desired stack>:<git-sha-tag>
 ```
 
@@ -26,6 +42,19 @@ If this is your first time using Docker or any of the Jupyter projects, do the f
 Here's a diagram of the `FROM` relationships between all of the images defined in this project:
 
 [![Image inheritance diagram](internal/inherit-diagram.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFzTEPgjAQhuHdX9Gws5sQjGzujsaYKxzmQrlr2msMGv-71K0srO_3XGud9NNA8DSfgzESCFlBSdi0xkvQAKTNugw4QnL6GIU10hvX-Zh7Z24OLLq2SjaxpvP10lX35vCf6pOxELFmUbQiUz4oQhYzMc3gCrRt2cWe_FKosmSjyFHC6OS1AwdQWCtyj7sfh523_BI9hKlQ25YdOFdv5fcH0kiEMA)
+
+[Click here for a commented build history of each image, with references to tag/SHA values.](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history)
+
+The following are quick-links to READMEs about each image and their Docker image tags on Docker Cloud:
+
+* base-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/base-notebook), [SHA list](https://hub.docker.com/r/jupyter/base-notebook/tags/)
+* minimal-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/minimal-notebook), [SHA list](https://hub.docker.com/r/jupyter/minimal-notebook/tags/)
+* scipy-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/scipy-notebook), [SHA list](https://hub.docker.com/r/jupyter/scipy-notebook/tags/)
+* r-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/r-notebook), [SHA list](https://hub.docker.com/r/jupyter/r-notebook/tags/)
+* tensorflow-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/tensorflow-notebook), [SHA list](https://hub.docker.com/r/jupyter/tensorflow-notebook/tags/)
+* datascience-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/datascience-notebook), [SHA list](https://hub.docker.com/r/jupyter/datascience-notebook/tags/)
+* pyspark-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/pyspark-notebook), [SHA list](https://hub.docker.com/r/jupyter/pyspark-notebook/tags/)
+* all-spark-notebook: [README](https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook), [SHA list](https://hub.docker.com/r/jupyter/all-spark-notebook/tags/)
 
 ## Stacks, Tags, Versioning, and Progress
 
