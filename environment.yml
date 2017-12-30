@@ -1,0 +1,13 @@
+name: docker-stacks
+channels:
+  - conda-forge
+dependencies:
+- python=3.6
+- pytest
+- requests
+- sphinx>=1.6
+- sphinx_rtd_theme
+- pip:
+  - docker
+  - jupyter_alabaster_theme
+  - recommonmark==0.4.0

@@ -54,10 +54,10 @@ dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
-test-reqs: # install libraries required to run the integration tests
-	pip install -r requirements-test.txt
+dev-env: # install libraries required to build docs and run tests
+	conda env create -f environment.yml
 
-test/%:
+test/%: ## run tests against a stack
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
 
 test/base-notebook: ## test supported options in the base notebook
