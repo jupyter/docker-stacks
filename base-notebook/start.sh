@@ -4,6 +4,13 @@
 
 set -e
 
+# Exec the specified command or fall back on bash
+if [ $# -eq 0 ]; then
+    cmd=bash
+else
+    cmd=$*
+fi
+
 # Handle special flags if we're root
 if [ $(id -u) == 0 ] ; then
 
@@ -45,34 +52,22 @@ if [ $(id -u) == 0 ] ; then
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
     fi
 
-    # Exec the command as NB_USER or root
-    echo "Execute the command: $*"
-    if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
-        if [ $# -eq 0 ]; then
-            echo "No arguments supplied"
-            sudo -H -u $NB_USER bash -c 'env; PATH=$PATH; bash'
-        else
-            exec su $NB_USER -c "env PATH=$PATH $*"
-        fi
-    else
-        if [ $# -eq 0 ]; then
-            echo "No arguments supplied"
-            bash -c 'env; PATH=$PATH; bash'
-        else
-            env PATH=$PATH $*
-        fi
-    fi
+    # Exec the command as NB_USER with the PATH and the rest of
+    # the environment preserved
+    echo "Executing the command: $cmd"
+    exec sudo -E -H -u $NB_USER PATH=$PATH $cmd
 else
-  if [[ ! -z "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
-      echo 'Container must be run as root to set $NB_UID'
-  fi
-  if [[ ! -z "$NB_GID" && "$NB_GID" != "$(id -g)" ]]; then
-      echo 'Container must be run as root to set $NB_GID'
-  fi
-  if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
-      echo 'Container must be run as root to grant sudo permissions'
-  fi
-    # Exec the command
-    echo "Execute the command: $*"
-    exec $*
+    if [[ ! -z "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
+        echo 'Container must be run as root to set $NB_UID'
+    fi
+    if [[ ! -z "$NB_GID" && "$NB_GID" != "$(id -g)" ]]; then
+        echo 'Container must be run as root to set $NB_GID'
+    fi
+    if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
+        echo 'Container must be run as root to grant sudo permissions'
+    fi
+
+    # Execute the command
+    echo "Executing the command: $cmd"
+    exec $cmd
 fi
