@@ -71,6 +71,19 @@ def test_sudo(container):
     assert rv == 0
     assert 'uid=0(root)' in c.logs(stdout=True).decode('utf-8')
 
+
+def test_sudo_path(container):
+    """Container should include /opt/conda/bin in the sudo secure_path."""
+    c = container.run(
+        tty=True,
+        user='root',
+        environment=['GRANT_SUDO=yes'],
+        command=['start.sh', 'sudo', 'jupyter', '--version']
+    )
+    rv = c.wait(timeout=10)
+    assert rv == 0
+
+
 def test_group_add(container, tmpdir):
     """Container should run with the specified uid, gid, and secondary
     group.
