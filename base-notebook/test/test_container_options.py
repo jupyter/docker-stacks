@@ -78,10 +78,11 @@ def test_sudo_path(container):
         tty=True,
         user='root',
         environment=['GRANT_SUDO=yes'],
-        command=['start.sh', 'sudo', 'jupyter', '--version']
+        command=['start.sh', 'sudo', 'which', 'jupyter']
     )
     rv = c.wait(timeout=10)
     assert rv == 0
+    assert c.logs(stdout=True).decode('utf-8').rstrip().endswith('/opt/conda/bin/jupyter')
 
 
 def test_group_add(container, tmpdir):
