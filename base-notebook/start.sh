@@ -48,8 +48,9 @@ if [ $(id -u) == 0 ] ; then
 
     # Enable sudo if requested
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
-        echo "Granting $NB_USER sudo access"
+        echo "Granting $NB_USER sudo access and appending $CONDA_DIR/bin to sudo PATH"
         echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
+        sed -ri "s#Defaults\s+secure_path=\"([^\"]+)\"#Defaults secure_path=\"\1:$CONDA_DIR/bin\"#" /etc/sudoers
     fi
 
     # Exec the command as NB_USER with the PATH and the rest of
