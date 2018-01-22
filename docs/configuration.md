@@ -2,7 +2,7 @@
 
 ## Notebook Options
 
-The Docker container executes a [`start-notebook.sh` script](./start-notebook.sh) script by default. The `start-notebook.sh` script handles the `NB_UID`, `NB_GID` and `GRANT_SUDO` features documented in the next section, and then executes the `jupyter notebook`.
+The Docker container executes a `start-notebook.sh` script script by default. The `start-notebook.sh` script handles the `NB_UID`, `NB_GID` and `GRANT_SUDO` features documented in the next section, and then executes the `jupyter notebook`.
 
 You can pass [Jupyter command line options](https://jupyter.readthedocs.io/en/latest/projects/jupyter-command.html) through the `start-notebook.sh` script when launching the container. For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token, run the following:
 
@@ -101,9 +101,9 @@ You can bypass the provided scripts and specify your an arbitrary start command.
 
 ## Image Specifics
 
-## Spark and PySpark
+### Spark and PySpark
 
-### Using Spark Local Mode
+#### Using Spark Local Mode
 
 This configuration is nice for using Spark on small, local data.
 
@@ -166,9 +166,9 @@ To use Python 2 in the notebook and on the workers, change the `PYSPARK_PYTHON` 
 
 Of course, all of this can be hidden in an [IPython kernel startup script](http://ipython.org/ipython-doc/stable/development/config.html?highlight=startup#startup-files), but "explicit is better than implicit." :)
 
-## Connecting to a Spark Cluster on Standalone Mode
+#### Connecting to a Spark Cluster in Standalone Mode
 
-Connection to Spark Cluster on Standalone Mode requires the following set of steps:
+Connection to Spark Cluster in Standalone Mode requires the following set of steps:
 
 0. Verify that the docker image (check the Dockerfile) and the Spark Cluster which is being deployed, run the same version of Spark.
 1. [Deploy Spark on Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).

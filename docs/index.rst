@@ -9,7 +9,7 @@ Jupyter Docker Stacks are a set of ready-to-run Docker images containing Jupyter
    :maxdepth: 1
 
    using
-   features
+   configuration
    contributing
 
 Quick Start
@@ -18,19 +18,19 @@ Quick Start
 The examples below may help you get started if you have Docker installed, know which Docker image you want to use, and want to launch a single Jupyter Notebook server in a container. The other pages in this documentation describe additional uses and features in detail.::
 
     # Run a Jupyter Notebook server in a Docker container started
-    # from the jupyter/scipy-notebook image built from Git commit 27ba573.
+    # from the jupyter/scipy-notebook image built from Git commit 2c80cf3537ca.
     # All files saved in the container are lost when the notebook server exits.
     # -ti: pseudo-TTY+STDIN open, so the logs appear in the terminal
     # -rm: remove the container on exit
     # -p: publish the notebook port 8888 as port 8888 on the host
-    docker run -ti --rm -p 8888:8888 jupyter/scipy-notebook:27ba573
+    docker run -ti --rm -p 8888:8888 jupyter/scipy-notebook:2c80cf3537ca
 
     # Run a Jupyter Notebook server in a Docker container started from the
-    # jupyter/r-notebook image built from Git commit cf1a3aa.
+    # jupyter/r-notebook image built from Git commit e5c5a7d3e52d.
     # All files written to ~/work in the container are saved to the
     # current working on the host and persist even when the notebook server
     # exits.
-    docker run -ti --rm -p 8888:8888 -v "$PWD":/home/jovyan/work jupyter/r-notebook:cf1a3aa
+    docker run -ti --rm -p 8888:8888 -v "$PWD":/home/jovyan/work jupyter/r-notebook:e5c5a7d3e52d
 
     # Run a Jupyter Notebook server in a background Docker container started
     # from the latest jupyter/all-spark-notebook image available on the local
