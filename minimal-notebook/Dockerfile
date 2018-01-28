@@ -1,7 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-FROM jupyter/base-notebook
+ARG TAG_POSTFIX=
+FROM jupyter/base-notebook:latest${TAG_POSTFIX}
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
