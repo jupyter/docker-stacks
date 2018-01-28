@@ -34,5 +34,10 @@ fi
 if [ ! -z "$JPY_HUB_API_URL" ]; then
   NOTEBOOK_ARGS="--hub-api-url=$JPY_HUB_API_URL $NOTEBOOK_ARGS"
 fi
+if [ ! -z "$JUPYTERHUB_ENABLE_LAB" ]; then
+  NOTEBOOK_BIN="jupyter labhub"
+else
+  NOTEBOOK_BIN=jupyterhub-singleuser
+fi
 
-. /usr/local/bin/start.sh jupyterhub-singleuser $NOTEBOOK_ARGS $@
+. /usr/local/bin/start.sh $NOTEBOOK_BIN $NOTEBOOK_ARGS $@
