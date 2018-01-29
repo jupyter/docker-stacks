@@ -138,7 +138,15 @@ You must refer to git-SHA image tags when stability and reproducibility are impo
 
 ### Community Stacks
 
+The core stacks are just a tiny sample of what's possible when combining Jupyter with other technologies. We encourage members of the Jupyter community to create their own stacks based on the core images and link them below.
+
+*Nothing here yet!*
+
+See the [contributing guide](contributing#Community-Stacks) for information about how to create your own Jupyter Docker Stack.
+
 ## Running a Container
+
+
 
 ### Using the Docker Command Line
 
