@@ -34,7 +34,7 @@ fi
 if [ ! -z "$JPY_HUB_API_URL" ]; then
   NOTEBOOK_ARGS="--hub-api-url=$JPY_HUB_API_URL $NOTEBOOK_ARGS"
 fi
-if [ ! -z "$JUPYTERHUB_ENABLE_LAB" ]; then
+if [ ! -z "$JUPYTER_ENABLE_LAB" ]; then
   NOTEBOOK_BIN="jupyter labhub"
 else
   NOTEBOOK_BIN=jupyterhub-singleuser
