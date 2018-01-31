@@ -17,6 +17,10 @@ if [ $(id -u) == 0 ] ; then
     # Handle username change. Since this is cheap, do this unconditionally
     echo "Set username to: $NB_USER"
     usermod -d /home/$NB_USER -l $NB_USER jovyan
+    
+    # Handle case where provisioned storage does not have the correct permissions by default
+    # Ex: default NFS/EFS (no auto-uid/gid)
+    chown $NB_UID:$NB_GID /home/$NB_USER
 
     # handle home and working directory if the username changed
     if [[ "$NB_USER" != "jovyan" ]]; then
