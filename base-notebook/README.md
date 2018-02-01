@@ -29,6 +29,12 @@ Take note of the authentication token included in the notebook startup log messa
 
 The Docker container executes a [`start-notebook.sh` script](./start-notebook.sh) script by default. The `start-notebook.sh` script handles the `NB_UID`, `NB_GID` and `GRANT_SUDO` features documented in the next section, and then executes the `jupyter notebook`.
 
+You can launch [JupyterLab](https://github.com/jupyterlab/jupyterlab) by setting `JUPYTER_ENABLE_LAB`:
+
+```
+docker run -it --rm -e JUPYTER_ENABLE_LAB=1 --rm -p 8888:8888 jupyter/base-notebook
+```
+
 You can pass [Jupyter command line options](https://jupyter.readthedocs.io/en/latest/projects/jupyter-command.html) through the `start-notebook.sh` script when launching the container. For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token, run the following:
 
 ```
