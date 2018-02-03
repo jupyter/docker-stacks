@@ -65,7 +65,7 @@ if [ $(id -u) == 0 ] ; then
     # Exec the command as NB_USER with the PATH and the rest of
     # the environment preserved
     echo "Executing the command: $cmd"
-    exec sudo -E -H -u $NB_USER PATH=$PATH $cmd
+    exec sudo -E -H -u $NB_USER PATH=$PATH PYTHONPATH=$PYTHONPATH $cmd
 else
     if [[ ! -z "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
         echo 'Container must be run as root to set $NB_UID'
