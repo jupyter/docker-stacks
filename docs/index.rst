@@ -15,27 +15,12 @@ Jupyter Docker Stacks are a set of ready-to-run Docker images containing Jupyter
 Quick Start
 -----------
 
-The examples below may help you get started if you have Docker installed, know which Docker image you want to use, and want to launch a single Jupyter Notebook server in a container. The other pages in this documentation describe additional uses and features in detail.::
+The two examples below may help you get started if you `have Docker installed <https://docs.docker.com/install/>`_, know :doc:`which Docker image <using>` you want to use, and want to launch a single Jupyter Notebook server in a container. The other pages in this documentation describe additional uses and features in detail.
 
-    # Run a Jupyter Notebook server in a Docker container started
-    # from the jupyter/scipy-notebook image built from Git commit 2c80cf3537ca.
-    # All files saved in the container are lost when the notebook server exits.
-    # -ti: pseudo-TTY+STDIN open, so the logs appear in the terminal
-    # -rm: remove the container on exit
-    # -p: publish the notebook port 8888 as port 8888 on the host
-    docker run -ti --rm -p 8888:8888 jupyter/scipy-notebook:2c80cf3537ca
+**Example 1:** This command pulls the `jupyter/scipy-notebook` image tagged `2c80cf3537ca` from Docker Hub if it is not already present on the local host. It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888. The server logs appear in the terminal and include a URL to the notebook server. The container remains intact for restart after notebook server exit.::
 
-    # Run a Jupyter Notebook server in a Docker container started from the
-    # jupyter/r-notebook image built from Git commit e5c5a7d3e52d.
-    # All files written to ~/work in the container are saved to the
-    # current working on the host and persist even when the notebook server
-    # exits.
-    docker run -ti --rm -p 8888:8888 -v "$PWD":/home/jovyan/work jupyter/r-notebook:e5c5a7d3e52d
+    docker run -p 8888:8888 jupyter/scipy-notebook:2c80cf3537ca
 
-    # Run a Jupyter Notebook server in a background Docker container started
-    # from the latest jupyter/all-spark-notebook image available on the local
-    # machine or Docker Cloud. All files saved in the container are lost
-    # when the container is destroyed.
-    # -d: detach, run container in background.
-    # -P: Publish all exposed ports to random ports
-    docker run -d -P jupyter/all-spark-notebook:latest
+**Example 2:** This command pulls the `jupyter/r-notebook` image tagged `e5c5a7d3e52d` from Docker Hub if it is not already present on the local host. It then starts an *ephemeral* container running a Jupyter Notebook server and exposes the server on host port 10000. The command mounts the current working directory on the host as `/home/jovyan/work` in the container. The container is destroyed after notebook server exit, but any files written to `~/work` in the container remain intact on the host.::
+
+    docker run --rm -p 10000:8888 -v "$PWD":/home/jovyan/work jupyter/r-notebook:e5c5a7d3e52d
