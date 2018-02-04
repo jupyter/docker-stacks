@@ -5,6 +5,6 @@ sudo: required
 services:
     - docker
 install:
-    - make test-reqs
+    - make dev-env
 script:
     - make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"
