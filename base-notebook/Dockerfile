@@ -3,7 +3,8 @@
 
 # Ubuntu 16.04 (xenial) from 2017-07-23
 # https://github.com/docker-library/official-images/commit/0ea9b38b835ffb656c497783321632ec7f87b60c
-FROM ubuntu@sha256:84c334414e2bfdcae99509a6add166bbb4fa4041dc3fa6af08046a66fed3005f
+ARG BASE=ubuntu@sha256:84c334414e2bfdcae99509a6add166bbb4fa4041dc3fa6af08046a66fed3005f
+FROM ${BASE}
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 

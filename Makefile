@@ -42,8 +42,12 @@ arch_patch/%: ## apply hardware architecture specific patches to the Dockerfile
 	fi
 
 build/%: DARGS?=
+ifeq ($(GPU),1)
+build/%: TAG_POSTFIX?=-gpu
+build/%: BARGS?=--build-arg BASE=nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04 --build-arg TAG_POSTFIX=$(TAG_POSTFIX)
+endif
 build/%: ## build the latest image for a stack
-	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
+	docker build $(BARGS) $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest$(TAG_POSTFIX) ./$(notdir $@)
 
 build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
