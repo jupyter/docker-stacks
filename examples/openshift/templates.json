@@ -23,8 +23,8 @@
 	},
 	{
 	    "name": "NOTEBOOK_PASSWORD",
-	    "value": "",
-	    "required": true
+	    "from": "[a-f0-9]{32}",
+	    "generate": "expression"
 	}
     ],
     "objects": [
