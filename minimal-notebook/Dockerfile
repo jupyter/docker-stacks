@@ -32,4 +32,4 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # Switch back to jovyan to avoid accidental container runs as root
-USER $NB_USER
+USER $NB_UID
