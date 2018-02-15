@@ -47,9 +47,12 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 ADD fix-permissions /usr/local/bin/fix-permissions
 # Create jovyan user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
+# Make /etc/passwd and /etc/group writable so can add entries
+# for uid/gid when container run as arbitrarily assigned uid.
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     mkdir -p $CONDA_DIR && \
     chown $NB_USER:$NB_GID $CONDA_DIR && \
+    chmod g+w /etc/passwd /etc/group && \
     fix-permissions $HOME && \
     fix-permissions $CONDA_DIR
 
@@ -90,13 +93,15 @@ EXPOSE 8888
 WORKDIR $HOME
 
 # Configure container startup
-ENTRYPOINT ["tini", "--"]
+ENTRYPOINT ["container-entrypoint"]
 CMD ["start-notebook.sh"]
 
 # Add local files as late as possible to avoid cache busting
 COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 COPY start-singleuser.sh /usr/local/bin/
+COPY container-entrypoint /usr/local/bin/
+COPY fix-passwd-entry /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
 RUN fix-permissions /etc/jupyter/
 
