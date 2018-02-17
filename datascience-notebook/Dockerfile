@@ -58,7 +58,8 @@ RUN conda config --system --append channels r && \
     'r-crayon=1.3*' \
     'r-randomforest=4.6*' && \
     conda clean -tipsy && \
-    fix-permissions $CONDA_DIR
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 # Add Julia packages
 # Install IJulia as jovyan and then move the kernelspec out
