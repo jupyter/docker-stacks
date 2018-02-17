@@ -26,7 +26,7 @@ if [ $(id -u) == 0 ] ; then
     fi
 
     # Change ownership of the conda directory so packages can be modified on a running container
-    if [[ "$CHOWN_CONDA_PATH" == "1" || "$CHOWN_CONDA_PATH" == 'yes' ]]; then
+    if [[ "$CHOWN_CONDA_DIR" == "1" || "$CHOWN_CONDA_DIR" == 'yes' ]]; then
         echo "Changing ownership of $CONDA_DIR to $NB_UID:$NB_GID"
         chown -R $NB_UID:$NB_GID $CONDA_DIR
     fi
