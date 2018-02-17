@@ -17,12 +17,18 @@ if [ $(id -u) == 0 ] ; then
     # Handle username change. Since this is cheap, do this unconditionally
     echo "Set username to: $NB_USER"
     usermod -d /home/$NB_USER -l $NB_USER jovyan
-    
+
     # Handle case where provisioned storage does not have the correct permissions by default
     # Ex: default NFS/EFS (no auto-uid/gid)
     if [[ "$CHOWN_HOME" == "1" || "$CHOWN_HOME" == 'yes' ]]; then
         echo "Changing ownership of /home/$NB_USER to $NB_UID:$NB_GID"
         chown $NB_UID:$NB_GID /home/$NB_USER
+    fi
+
+    # Change ownership of the conda directory so packages can be modified on a running container
+    if [[ "$CHOWN_CONDA_DIR" == "1" || "$CHOWN_CONDA_DIR" == 'yes' ]]; then
+        echo "Changing ownership of $CONDA_DIR to $NB_UID:$NB_GID"
+        chown -R $NB_UID:$NB_GID $CONDA_DIR
     fi
 
     # handle home and working directory if the username changed
@@ -60,7 +66,7 @@ if [ $(id -u) == 0 ] ; then
     fi
 
     # Add $CONDA_DIR/bin to sudo secure_path
-    sed -ri "s#Defaults\s+secure_path=\"([^\"]+)\"#Defaults secure_path=\"\1:$CONDA_DIR/bin\"#" /etc/sudoers
+    sed -r "s#Defaults\s+secure_path=\"([^\"]+)\"#Defaults secure_path=\"\1:$CONDA_DIR/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
 
     # Exec the command as NB_USER with the PATH and the rest of
     # the environment preserved

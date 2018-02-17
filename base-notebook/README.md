@@ -27,7 +27,7 @@ Take note of the authentication token included in the notebook startup log messa
 
 ## Notebook Options
 
-The Docker container executes a [`start-notebook.sh` script](./start-notebook.sh) script by default. The `start-notebook.sh` script handles the `NB_UID`, `NB_GID` and `GRANT_SUDO` features documented in the next section, and then executes the `jupyter notebook`.
+The Docker container executes a [`start-notebook.sh` script](./start-notebook.sh) script by default. The `start-notebook.sh` script handles the `NB_UID`, `NB_GID`, `GRANT_SUDO`, `CHOWN_HOME` and `CHOWN_CONDA_DIR` features documented in the next section, and then executes the `jupyter notebook`.
 
 You can launch [JupyterLab](https://github.com/jupyterlab/jupyterlab) by setting `JUPYTER_ENABLE_LAB`:
 
@@ -63,6 +63,8 @@ You may customize the execution of the Docker container and the command it is ru
 * `-e NB_UID=1000` - Specify the uid of the `jovyan` user. Useful to mount host volumes with specific file ownership. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adjusting the user id.)
 * `-e NB_GID=100` - Specify the gid of the `jovyan` user. Useful to mount host volumes with specific file ownership. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adjusting the group id.)
 * `-e GRANT_SUDO=yes` - Gives the `jovyan` user passwordless `sudo` capability. Useful for installing OS packages. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adding `jovyan` to sudoers.) **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
+* `-e CHOWN_HOME=yes` - If you change the default `NB_UID` and use network attached storage (NFS/EFS), it be desirable to set the ownership of all existing files.
+* `-e CHOWN_CONDA_DIR=yes` - If you change the default `NB_UID`, this option additionally changes the ownership of `CONDA_DIR` so that conda operations such as installing packages can be performed.
 * `-v /some/host/folder/for/work:/home/jovyan/work` - Mounts a host machine directory as folder in the container. Useful when you want to preserve notebooks and other work even after the container is destroyed. **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
 * `--group-add users` - use this argument if you are also specifying
   a specific user id to launch the container (`-u 5000`), rather than launching the container as root and relying on NB_UID and NB_GID to set the user and group.
@@ -100,7 +102,7 @@ For additional information about using SSL, see the following:
 
 ## Conda Environments
 
-The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. 
+The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`.
 
 The commands `jupyter`, `ipython`, `python`, `pip`, and `conda` (among others) are available in both environments. For convenience, you can install packages into either environment regardless of what environment is currently active using commands like the following:
 
@@ -132,4 +134,3 @@ This script is particularly useful when you derive a new Dockerfile from this im
 ### Others
 
 You can bypass the provided scripts and specify your an arbitrary start command. If you do, keep in mind that certain features documented above will not function (e.g., `GRANT_SUDO`).
-
