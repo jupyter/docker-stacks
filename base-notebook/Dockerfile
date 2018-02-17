@@ -53,7 +53,7 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     fix-permissions $HOME && \
     fix-permissions $CONDA_DIR
 
-USER $NB_USER
+USER $NB_UID
 
 # Setup work directory for backward-compatibility
 RUN mkdir /home/$NB_USER/work && \
@@ -105,4 +105,4 @@ COPY jupyter_notebook_config.py /etc/jupyter/
 RUN fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
-USER $NB_USER
+USER $NB_UID

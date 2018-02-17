@@ -36,7 +36,7 @@ RUN mkdir /etc/julia && \
     chown $NB_USER $JULIA_PKGDIR && \
     fix-permissions $JULIA_PKGDIR
 
-USER $NB_USER
+USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
 RUN conda config --system --append channels r && \

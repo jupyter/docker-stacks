@@ -19,7 +19,7 @@ RUN apt-get update && \
     gcc && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-USER $NB_USER
+USER $NB_UID
 
 # R packages
 RUN conda install --quiet --yes \
