@@ -55,7 +55,7 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     mkdir -p $CONDA_DIR && \
     chown $NB_USER $CONDA_DIR
 
-USER $NB_USER
+USER $NB_UID
 
 # Setup jovyan home directory
 RUN mkdir /home/$NB_USER/work && \
@@ -98,4 +98,4 @@ COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
 RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
 
 # Switch back to jovyan to avoid accidental container runs as root
-USER $NB_USER
+USER $NB_UID
