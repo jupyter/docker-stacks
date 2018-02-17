@@ -15,7 +15,7 @@
 NB_UID=`id -u`
 NB_GID=`id -g`
 
-if [ $NB_UID -ge 100000 ]; then
+if [ $NB_GID -eq 0 -a $NB_UID -ge 100000 ]; then
     cat /etc/passwd | sed -e "s/^jovyan:/nayvoj:/" > /tmp/passwd
     echo "jovyan:x:$NB_UID:$NB_GID:,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
     cat /tmp/passwd > /etc/passwd
