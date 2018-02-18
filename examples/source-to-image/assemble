@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -eo pipefail
+
+# Copy injected files to correct place in 'work' directory.
+
+cp -Rf /tmp/src/. /home/$NB_USER/work
+
+rm -rf /tmp/src
+
+# Install any Python modules. If we find an 'environment.yml' file we
+# assume we should use 'conda' to install packages. If 'requirements.txt'
+# use 'pip' instead. Ensure we are in the 'work' directory so relative
+# directory paths in these files resolve okay if installing packages
+# from subdirectories.
+
+if [ -f /home/$NB_USER/work/environment.yml ]; then
+    (cd /home/$NB_USER/work && conda env update --name root --file environment.yml)
+    conda clean -tipsy
+else
+    if [ -f /home/$NB_USER/work/requirements.txt ]; then
+        (cd /home/$NB_USER/work && pip --no-cache-dir install -r requirements.txt)
+    fi
+fi
+
+# Remove any 'environment.yml' or 'requirements.txt' file when done in
+# case we are producing an image which will in turn be used as an S2I
+# builder image.
+
+rm -f /home/$NB_USER/work/environment.yml
+rm -f /home/$NB_USER/work/requirements.txt
+
+# Fix up permissions on home directory and Python installation so that
+# everything is still writable by 'users' group.
+
+fix-permissions $CONDA_DIR
+fix-permissions /home/$NB_USER
