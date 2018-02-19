@@ -27,7 +27,7 @@
                 },
                 {
                     "name": "BUILDER_SCRIPTS",
-                    "value": "https://raw.githubusercontent.com/jupyter/docker-stacks/source-to-image/examples/source-to-image",
+                    "value": "https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image",
                     "required": true
                 },
                 {

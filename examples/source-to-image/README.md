@@ -18,7 +18,7 @@ As an example of how S2I can be used to create a custom image with a bundled set
 
 ```
 s2i build \
-  --scripts-url https://raw.githubusercontent.com/jupyter/docker-stacks/source-to-image/examples/source-to-image \
+  --scripts-url https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image \
   --context-dir docs/source/examples/Notebook \
   https://github.com/jupyter/notebook \
   jupyter/minimal-notebook:latest \
@@ -116,7 +116,7 @@ Integration with OpenShift
 The OpenShift platform provides integrated support for S2I type builds. Templates are provided for using the S2I build mechanism with the scripts in this directory. To load the templates run:
 
 ```
-oc create -f https://raw.githubusercontent.com/jupyter/docker-stacks/source-to-image/examples/source-to-image/templates.json
+oc create -f https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image/templates.json
 ```
 
 This will create the templates:
