@@ -4,6 +4,16 @@ set -x
 
 set -eo pipefail
 
+# Remove any 'environment.yml' or 'requirements.txt' files which may
+# have been carried over from the base image so we don't reinstall
+# packages which have already been installed. This could occur where
+# an S2I build was used to create a new base image with pre-installed
+# Python packages, with the new image then subsequently being used as a
+# S2I builder base image.
+
+rm -f /home/$NB_USER/work/environment.yml
+rm -f /home/$NB_USER/work/requirements.txt
+
 # Copy injected files to correct place in 'work' directory.
 
 cp -Rf /tmp/src/. /home/$NB_USER/work
@@ -24,13 +34,6 @@ else
         (cd /home/$NB_USER/work && pip --no-cache-dir install -r requirements.txt)
     fi
 fi
-
-# Remove any 'environment.yml' or 'requirements.txt' file when done in
-# case we are producing an image which will in turn be used as an S2I
-# builder image.
-
-rm -f /home/$NB_USER/work/environment.yml
-rm -f /home/$NB_USER/work/requirements.txt
 
 # Fix up permissions on home directory and Python installation so that
 # everything is still writable by 'users' group.
