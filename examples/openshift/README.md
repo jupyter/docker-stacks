@@ -133,10 +133,8 @@ You can upload notebooks and other files using the web interface of the notebook
 oc set volume dc/mynotebook --add \
       --type=pvc --claim-size=1Gi --claim-mode=ReadWriteOnce \
       --claim-name mynotebook-data --name data \
-      --mount-path /home/jovyan/work
+      --mount-path /home/jovyan
 ```
-
-When you upload any notebooks or data files, place them under the ``work`` directory.
 
 When you have deleted the notebook instance, if using a persistent volume, you will need to delete it in a separate step.
 
@@ -158,7 +156,7 @@ The ``data`` field of the config map contains Python code used as the ``jupyter_
 If you are using a persistent volume, you can also create a configuration file at:
 
 ```
-/home/jovyan/work/.jupyter/jupyter_notebook_config.py
+/home/jovyan/.jupyter/jupyter_notebook_config.py
 ```
 
 This will be merged at the end of the configuration from the config map.
@@ -207,7 +205,7 @@ This will trigger a new deployment so ensure you have downloaded any work if not
 If using a persistent volume, you could instead setup a password in the file:
 
 ```
-/home/jovyan/work/.jupyter/jupyter_notebook_config.py
+/home/jovyan/.jupyter/jupyter_notebook_config.py
 ```
 
 as per guidelines in:
