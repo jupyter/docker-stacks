@@ -11,27 +11,25 @@ set -eo pipefail
 # Python packages, with the new image then subsequently being used as a
 # S2I builder base image.
 
-rm -f /home/$NB_USER/work/environment.yml
-rm -f /home/$NB_USER/work/requirements.txt
+rm -f /home/$NB_USER/environment.yml
+rm -f /home/$NB_USER/requirements.txt
 
-# Copy injected files to correct place in 'work' directory.
+# Copy injected files to target directory.
 
-cp -Rf /tmp/src/. /home/$NB_USER/work
+cp -Rf /tmp/src/. /home/$NB_USER
 
 rm -rf /tmp/src
 
 # Install any Python modules. If we find an 'environment.yml' file we
 # assume we should use 'conda' to install packages. If 'requirements.txt'
-# use 'pip' instead. Ensure we are in the 'work' directory so relative
-# directory paths in these files resolve okay if installing packages
-# from subdirectories.
+# use 'pip' instead.
 
-if [ -f /home/$NB_USER/work/environment.yml ]; then
-    (cd /home/$NB_USER/work && conda env update --name root --file environment.yml)
+if [ -f /home/$NB_USER/environment.yml ]; then
+    conda env update --name root --file /home/$NB_USER/environment.yml
     conda clean -tipsy
 else
-    if [ -f /home/$NB_USER/work/requirements.txt ]; then
-        (cd /home/$NB_USER/work && pip --no-cache-dir install -r requirements.txt)
+    if [ -f /home/$NB_USER/requirements.txt ]; then
+        pip --no-cache-dir install -r /home/$NB_USER/requirements.txt
     fi
 fi
 

@@ -1,4 +1,10 @@
-This example provides scripts for building custom Jupyter Notebook images containing notebooks, data files, and with Python packages required by the notebooks already installed. The scripts provided work with the Source-to-Image tool and you can create the images from the command line on your own computer. It provides similar capabilities to ``mybinder.org`` but without the complexity of having to setup any special infrastructure. Templates are also provided to enable running builds in OpenShift, as well as deploying the resulting image to make it available.
+This example provides scripts for building custom Jupyter Notebook images containing notebooks, data files, and with Python packages required by the notebooks already installed. The scripts provided work with the Source-to-Image tool and you can create the images from the command line on your own computer. Templates are also provided to enable running builds in OpenShift, as well as deploying the resulting image to OpenShift to make it available.
+
+The build scripts, when used with the Source-to-Image tool, provide similar capabilities to ``repo2docker``. When builds are run under OpenShift with the supplied templates, it provides similar capabilities to ``mybinder.org``, but where notebook instances are deployed in your existing OpenShift project and JupyterHub is not required.
+
+For separate examples of using JupyterHub with OpenShift, see the project:
+
+* https://github.com/jupyter-on-openshift/jupyterhub-quickstart
 
 Source-to-Image Project
 -----------------------
@@ -55,7 +61,7 @@ Executing the command: jupyter notebook
         http://localhost:8888/?token=04646d5c5e928da75842cd318d4a3c5aa1f942fc5964323a
 ```
 
-Open your browser on the URL displayed, browse to the ``work`` folder through the Jupyter Notebook web interface and you will find the notebooks from the Git repository and can work with them.
+Open your browser on the URL displayed, and you will find the notebooks from the Git repository and can work with them.
 
 The S2I Builder Scripts
 -----------------------
@@ -66,25 +72,25 @@ Using the ``--scripts-url`` option, the builder scripts can be hosted on any HTT
 
 The builder scripts in this directory of this repository are ``assemble`` and ``run`` and are provided as examples of what can be done. You can use the scripts as is, or create your own.
 
-The supplied ``assemble`` script performs a few key steps. These are:
+The supplied ``assemble`` script performs a few key steps.
+
+The first steps copy files into the location they need to be when the image is run, from the directory where they are initially placed by the ``s2i`` command.
 
 ```
-cp -Rf /tmp/src/. /home/$NB_USER/work
+cp -Rf /tmp/src/. /home/$NB_USER
 
 rm -rf /tmp/src
 ```
 
-The first steps copy files into the location they need to be when the image is run, from the directory where they are initially placed by the ``s2i`` command.
-
 The next steps are:
 
 ```
-if [ -f /home/$NB_USER/work/environment.yml ]; then
-    (cd /home/$NB_USER/work && conda env update --name root --file environment.yml)
+if [ -f /home/$NB_USER/environment.yml ]; then
+    conda env update --name root --file /home/$NB_USER/environment.yml
     conda clean -tipsy
 else
-    if [ -f /home/$NB_USER/work/requirements.txt ]; then
-        (cd /home/$NB_USER/work && pip --no-cache-dir install -r requirements.txt)
+    if [ -f /home/$NB_USER/requirements.txt ]; then
+        pip --no-cache-dir install -r /home/$NB_USER/requirements.txt
     fi
 fi
 ```
