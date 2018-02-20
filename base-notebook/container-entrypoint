@@ -1,0 +1,15 @@
+#!/bin/bash
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
+# Add entries to /etc/passwd and /etc/group if being run as user ID
+# other than which the image has specified by the USER statement.
+
+fix-passwd-entry
+
+# Run 'tini' as a mini supervisor. This will manage the actual
+# application process, passing on signals received by the container, and
+# also reaping zombie processes. Must use 'exec' so that it inherits
+# process ID 1 of the container.
+
+exec tini -- "$@"

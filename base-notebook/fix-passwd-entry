@@ -1,0 +1,28 @@
+#!/bin/bash
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
+# By default the image would run as user ID 1000. If the user is run as
+# an arbitrarily assigned user ID by the container platform it will be
+# much higher and the lack of entries in /etc/passwd and /etc/group can
+# cause failure of any Python code which doesn't tolerate having no
+# entries for uid/gid. Assume that if running with larger uid that we
+# need to add entries into the respective files for that user. Have the
+# check be greater than 100000 to allow room in case custom images
+# derived from this image were adding additional explict users/groups of
+# their own.
+
+NB_UID=`id -u`
+NB_GID=`id -g`
+
+if [ $NB_GID -eq 0 -a $NB_UID -ge 100000 ]; then
+    cat /etc/passwd | sed -e "s/^jovyan:/nayvoj:/" > /tmp/passwd
+    echo "jovyan:x:$NB_UID:$NB_GID:,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
+    cat /tmp/passwd > /etc/passwd
+    rm /tmp/passwd
+
+    id -G | grep -q -w $NB_UID; STATUS=$?
+    if [ $STATUS -eq 0 ]; then
+        echo "jovyan:x:$NB_UID:" >> /etc/group
+    fi
+fi
