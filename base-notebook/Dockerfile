@@ -70,17 +70,17 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     $CONDA_DIR/bin/conda config --system --set show_channel_urls true && \
     $CONDA_DIR/bin/conda update --all --quiet --yes && \
-    conda clean -tipsy && \
+    $CONDA_DIR/bin/conda clean -tipsy && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
 # Install Jupyter Notebook and Hub
-RUN conda install --quiet --yes \
-    'notebook=5.2.*' \
+RUN $CONDA_DIR/bin/conda install --quiet --yes \
+    'notebook=5.4.*' \
     'jupyterhub=0.8.*' \
     'jupyterlab=0.31.*' \
-    && conda clean -tipsy && \
+    && $CONDA_DIR/bin/conda clean -tipsy && \
     jupyter labextension install @jupyterlab/hub-extension@^0.8.0 && \
     npm cache clean && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
@@ -95,7 +95,7 @@ WORKDIR $HOME
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
-CMD [".", "/opt/conda/etc/profile.d/conda.sh"]
+CMD [".", "$CONDA_DIR/etc/profile.d/conda.sh"]
 CMD ["conda", "activate", "base"]
 CMD ["start-notebook.sh"]
 
