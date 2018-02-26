@@ -41,8 +41,7 @@ ENV CONDA_DIR=/opt/conda \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
-ENV PATH=$CONDA_DIR/bin:$PATH \
-    HOME=/home/$NB_USER
+ENV HOME=/home/$NB_USER
 
 ADD fix-permissions /usr/local/bin/fix-permissions
 # Create jovyan user with UID=1000 and in the 'users' group
@@ -61,27 +60,27 @@ RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER
 
 # Install conda as jovyan and check the md5 sum provided on the download site
-ENV MINICONDA_VERSION 4.3.30
+ENV MINICONDA_VERSION 4.4.10
 RUN cd /tmp && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "0b80a152332a4ce5250f3c09589c7a81 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    echo "bec6203dbb2f53011e974e9bf4d46e93 *Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda config --system --prepend channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     $CONDA_DIR/bin/conda config --system --set show_channel_urls true && \
     $CONDA_DIR/bin/conda update --all --quiet --yes && \
-    conda clean -tipsy && \
+    $CONDA_DIR/bin/conda clean -tipsy && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
 # Install Jupyter Notebook and Hub
-RUN conda install --quiet --yes \
-    'notebook=5.2.*' \
+RUN $CONDA_DIR/bin/conda install --quiet --yes \
+    'notebook=5.4.*' \
     'jupyterhub=0.8.*' \
     'jupyterlab=0.31.*' \
-    && conda clean -tipsy && \
+    && $CONDA_DIR/bin/conda clean -tipsy && \
     jupyter labextension install @jupyterlab/hub-extension@^0.8.0 && \
     npm cache clean && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
@@ -96,6 +95,8 @@ WORKDIR $HOME
 
 # Configure container startup
 ENTRYPOINT ["tini", "--"]
+CMD [".", "$CONDA_DIR/etc/profile.d/conda.sh"]
+CMD ["conda", "activate", "base"]
 CMD ["start-notebook.sh"]
 
 # Add local files as late as possible to avoid cache busting
@@ -103,6 +104,7 @@ COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 COPY start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
+COPY /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
 RUN fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
