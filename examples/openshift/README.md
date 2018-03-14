@@ -124,6 +124,17 @@ To delete the notebook instance, run ``oc delete`` using a label selector for th
 oc delete all,configmap --selector app=mynotebook
 ```
 
+Enabling Jupyter Lab Interface
+------------------------------
+
+To enable the Jupyter Lab interface for a deployed notebook set the ``JUPYTER_ENABLE_LAB`` environment variable.
+
+```
+oc set env dc/mynotebook JUPYTER_ENABLE_LAB=true
+```
+
+Setting the environment variable will trigger a new deployment and the Jupyter Lab interface will be enabled.
+
 Adding Persistent Storage
 -------------------------
 
