@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-xetex \
     vim \
     unzip \
-    nc \
+    net \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
