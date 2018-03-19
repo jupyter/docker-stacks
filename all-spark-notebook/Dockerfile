@@ -23,7 +23,6 @@ USER $NB_UID
 
 # R packages
 RUN conda install --quiet --yes \
-    'tornado<5' \
     'r-base=3.4.1' \
     'r-irkernel=0.8*' \
     'r-ggplot2=2.2*' \

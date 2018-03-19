@@ -18,9 +18,7 @@ RUN apt-get update && \
 USER $NB_UID
 
 # R packages
-# Force tornado<5 for #589
 RUN conda install --quiet --yes \
-    'tornado<5' \
     'r-base=3.4.1' \
     'r-irkernel=0.8*' \
     'r-plyr=1.8*' \

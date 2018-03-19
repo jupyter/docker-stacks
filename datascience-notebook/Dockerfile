@@ -42,7 +42,6 @@ USER $NB_UID
 RUN conda config --system --append channels r && \
     conda install --quiet --yes \
     'rpy2=2.8*' \
-    'tornado<5' \
     'r-base=3.4.1' \
     'r-irkernel=0.8*' \
     'r-plyr=1.8*' \
