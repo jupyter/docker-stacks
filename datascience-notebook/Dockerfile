@@ -4,6 +4,10 @@ FROM jupyter/scipy-notebook
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
+# Set when building on Travis so that certain long-running build steps can
+# be skipped to shorten build time.
+ARG TEST_ONLY_BUILD
+
 USER root
 
 # R pre-requisites
@@ -65,13 +69,16 @@ RUN conda config --system --append channels r && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# Add Julia packages
+# Add Julia packages. Only add HDF5 if this is not a test-only build since
+# it takes roughly half the entire build time of all of the images on Travis
+# to add this one package and often causes Travis to timeout.
+#
 # Install IJulia as jovyan and then move the kernelspec out
 # to the system share location. Avoids problems with runtime UID change not
 # taking effect properly on the .local folder in the jovyan home dir.
 RUN julia -e 'Pkg.init()' && \
     julia -e 'Pkg.update()' && \
-    julia -e 'Pkg.add("HDF5")' && \
+    (test $TEST_ONLY_BUILD || julia -e 'Pkg.add("HDF5")') && \
     julia -e 'Pkg.add("Gadfly")' && \
     julia -e 'Pkg.add("RDatasets")' && \
     julia -e 'Pkg.add("IJulia")' && \
