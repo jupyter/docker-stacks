@@ -17,9 +17,11 @@ docker run -it --rm -p 8888:8888 jupyter/tensorflow-notebook
 
 Take note of the authentication token included in the notebook startup log messages. Include it in the URL you visit to access the Notebook server or enter it in the Notebook login form.
 
-## Tensorflow Single Machine Mode
+## Tensorflow Machine Mode
 
-As distributed tensorflow is still immature, we currently only provide the single machine mode.
+Tensorflow can use single machine, or distributed mode.
+
+Single machine mode:
 
 ```
 import tensorflow as tf
@@ -27,6 +29,21 @@ import tensorflow as tf
 hello = tf.Variable('Hello World!')
 
 sess = tf.Session()
+init = tf.global_variables_initializer()
+
+sess.run(init)
+sess.run(hello)
+```
+
+Distributed mode:
+
+```
+import tensorflow as tf
+
+hello = tf.Variable('Hello Distributed World!')
+
+server = tf.train.Server.create_local_server()
+sess = tf.Session(server.target)
 init = tf.global_variables_initializer()
 
 sess.run(init)
@@ -99,7 +116,7 @@ For additional information about using SSL, see the following:
 
 ## Conda Environments
 
-The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. 
+The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`.
 
 The commands `jupyter`, `ipython`, `python`, `pip`, and `conda` (among others) are available in both environments. For convenience, you can install packages into either environment regardless of what environment is currently active using commands like the following:
 
