@@ -1,44 +1,46 @@
 # Options and Configuration
 
+When launched as Docker containers, all of the Jupyter Docker Stacks start a Jupyter Notebook server by default. They do so by executing a `start-notebook.sh` script which configures the internal container environment and then runs `jupyter notebook $*`, passing it any command line arguments received.
+
+This page describes the options supported by the startup script as well as how to bypass it to run alternative commands.
+
 ## Notebook Options
 
-The Docker container executes a `start-notebook.sh` script script by default. The `start-notebook.sh` script handles the `NB_UID`, `NB_GID` and `GRANT_SUDO` features documented in the next section, and then executes the `jupyter notebook`.
-
-You can pass [Jupyter command line options](https://jupyter.readthedocs.io/en/latest/projects/jupyter-command.html) through the `start-notebook.sh` script when launching the container. For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token, run the following:
+You can pass [Jupyter command line options](https://jupyter.readthedocs.io/en/latest/projects/jupyter-command.html) to the `start-notebook.sh` script when launching the container. For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token, you can run the following:
 
 ```
 docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
 ```
 
-For example, to set the base URL of the notebook server, run the following:
+For example, to set the base URL of the notebook server, you can run the following:
 
 ```
 docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.base_url=/some/path
 ```
 
-For example, to disable all authentication mechanisms (which is not a recommended practice):
+For example, to ignore best practice and disable all authentication, you can run the following:
 
 ```
 docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.token=''
 ```
 
-You can sidestep the `start-notebook.sh` script and run your own commands in the container. See the *Alternative Commands* section later in this document for more information.
-
 ## Docker Options
 
-You may customize the execution of the Docker container and the command it is running with the following optional arguments.
+You may instruct the `start-notebook.sh` script to customize the container environment before launching
+the notebook server. You do so by passing arguments to the `docker run` command.
 
-* `-e GEN_CERT=yes` - Generates a self-signed SSL certificate and configures Jupyter Notebook to use it to accept encrypted HTTPS connections.
-* `-e NB_UID=1000` - Specify the uid of the `jovyan` user. Useful to mount host volumes with specific file ownership. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adjusting the user id.)
-* `-e NB_GID=100` - Specify the gid of the `jovyan` user. Useful to mount host volumes with specific file ownership. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adjusting the group id.)
-* `-e GRANT_SUDO=yes` - Gives the `jovyan` user passwordless `sudo` capability. Useful for installing OS packages. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su jovyan` after adding `jovyan` to sudoers.) **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
+* `-e NB_USER=jovyan` - Instructs the startup script to change the default container username from `jovyan` to the provided value. Causes the script to rename the `jovyan` user home folder.
+* `-e NB_UID=1000` - Instructs the startup script to switch the numeric user ID of `$NB_USER` to the given value. This feature is useful when mounting host volumes with specific owner permissions. For this option to take effect, you must run the container with `--user root`. (The startup script will `su $NB_USER` after adjusting the  user ID.)
+* `-e NB_GID=100` - Instructs the startup script to change the numeric group ID of the `$NB_USER` to the given value. This feature is useful when mounting host volumes with specific group permissions. For this option to take effect, you must run the container with `--user root`. (The startup script will `su $NB_USER` after adjusting the group ID.)
+* `-e CHOWN_HOME=yes` - Instructs the startup script to recursively change the `$NB_USER` home directory owner and group to the current value of `$NB_UID` and `$NB_GID`. This change will take effect even if the user home directory is mounted from the host using `-v` as described below.
+* `-e GRANT_SUDO=yes` - Instructs the startup script to grant the `NB_USER` user passwordless `sudo` capability. You do **not** need too this option to allow the user to `conda` or `pip` install additional packages. This option is useful, however, when you wish to give `$NB_USER` the ability to install OS packages with `apt` or modify other root-owned files in the container. For this option to take effect, you must run the container with `--user root`. (The `start-notebook.sh` script will `su $NB_USER` after adding `$NB_USER` to sudoers.) **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
+* `-e GEN_CERT=yes` - Instructs the startup script to generates a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
 * `-v /some/host/folder/for/work:/home/jovyan/work` - Mounts a host machine directory as folder in the container. Useful when you want to preserve notebooks and other work even after the container is destroyed. **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
-* `--group-add users` - use this argument if you are also specifying
-  a specific user id to launch the container (`-u 5000`), rather than launching the container as root and relying on *NB_UID* and *NB_GID* to set the user and group.
+* `-user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`. You can use these arguments as alternatives to setting `$NB_UID` and `$NB_GID`.
 
 ## SSL Certificates
 
-You may mount SSL key and certificate files into a container and configure Jupyter Notebook to use them to accept HTTPS connections. For example, to mount a host folder containing a `notebook.key` and `notebook.crt`:
+You may mount SSL key and certificate files into a container and configure Jupyter Notebook to use them to accept HTTPS connections. For example, to mount a host folder containing a `notebook.key` and `notebook.crt` and use them, you might run the following:
 
 ```
 docker run -d -p 8888:8888 \
@@ -65,23 +67,11 @@ For additional information about using SSL, see the following:
 * The [jupyter_notebook_config.py](jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
 * The [Jupyter Notebook documentation](https://jupyter-notebook.readthedocs.io/en/latest/public_server.html#securing-a-notebook-server) for best practices about securing a public notebook server in general.
 
-## Conda Environments
-
-The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. The `/opt/conda/bin` directory is part of the default `jovyan` user's `$PATH`. That directory is also whitelisted for use in `sudo` commands by the `start.sh` script.
-
-The `jovyan` user has full read/write access to the `/opt/conda` directory. You can use either `conda` or `pip` to install new packages without any additional permissions.
-
-```
-# install a package into the default (python 3.x) environment
-pip install some-package
-conda install some-package
-```
-
 ## Alternative Commands
 
 ### start.sh
 
-The `start.sh` script supports the same features as the default `start-notebook.sh` script (e.g., `GRANT_SUDO`), but allows you to specify an arbitrary command to execute. For example, to run the text-based `ipython` console in a container, do the following:
+The `start-notebook.sh` script actually inherits most of its option handling capability from a more generic `start.sh` script. The `start.sh` script supports all of the features described above, but allows you to specify an arbitrary command to execute. For example, to run the text-based `ipython` console in a container, do the following:
 
 ```
 docker run -it --rm jupyter/base-notebook start.sh ipython
@@ -97,21 +87,29 @@ This script is particularly useful when you derive a new Dockerfile from this im
 
 ### Others
 
-You can bypass the provided scripts and specify your an arbitrary start command. If you do, keep in mind that certain features documented above will not function (e.g., `GRANT_SUDO`).
+You can bypass the provided scripts and specify your an arbitrary start command. If you do, keep in mind that features supported by the `start.sh` script and its kin will not function (e.g., `GRANT_SUDO`).
 
-## Image Specifics
+## Conda Environments
 
-### Spark and PySpark
+The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. The `/opt/conda/bin` directory is part of the default `jovyan` user's `$PATH`. That directory is also whitelisted for use in `sudo` commands by the `start.sh` script.
 
-#### Using Spark Local Mode
+The `jovyan` user has full read/write access to the `/opt/conda` directory. You can use either `conda` or `pip` to install new packages without any additional permissions.
 
-This configuration is nice for using Spark on small, local data.
+```
+# install a package into the default (python 3.x) environment
+pip install some-package
+conda install some-package
+```
 
-0. Run the container as shown above.
-2. Open a Python 2 or 3 notebook.
-3. Create a `SparkContext` configured for local mode.
+## Apache Spark
 
-For example, the first few cells in the notebook might read:
+The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images support the use of Apache Spark in Python, R, and Scala notebooks. The following sections provide some examples of how to get started using them.
+
+### Using Spark Local Mode
+
+Spark local mode is useful for experimentation on small data when you do not have a Spark cluster available.
+
+#### In a Python Notebook
 
 ```python
 import pyspark
@@ -122,20 +120,54 @@ rdd = sc.parallelize(range(1000))
 rdd.takeSample(False, 5)
 ```
 
+#### In a R Notebook
+
+```r
+library(SparkR)
+
+as <- sparkR.session("local[*]")
+
+# do something to prove it works
+df <- as.DataFrame(iris)
+head(filter(df, df$Petal_Width > 0.2))
+```
+
+#### In a Spylon Kernel Scala Notebook
+
+Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark options in a `%%init_spark` magic cell.
+
+```python
+%%init_spark
+# Configure Spark to use a local master
+launcher.master = "local[*]"
+```
+
+```scala
+// Now run Scala code that uses the initialized SparkContext in sc
+val rdd = sc.parallelize(0 to 999)
+rdd.takeSample(false, 5)
+```
+
+#### In an Apache Toree Scala Notebook
+
+Apache Toree instantiates a local `SparkContext` for you in variable `sc` when the kernel starts.
+
+```scala
+val rdd = sc.parallelize(0 to 999)
+rdd.takeSample(false, 5)
+```
+
 ### Connecting to a Spark Cluster on Mesos
 
 This configuration allows your compute cluster to scale with your data.
 
 0. [Deploy Spark on Mesos](http://spark.apache.org/docs/latest/running-on-mesos.html).
-1. Configure each slave with [the `--no-switch_user` flag](https://open.mesosphere.com/reference/mesos-slave/) or create the `jovyan` user on every slave node.
-2. Ensure Python 2.x and/or 3.x and any Python libraries you wish to use in your Spark lambda functions are installed on your Spark workers.
-3. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
+1. Configure each slave with [the `--no-switch_user` flag](https://open.mesosphere.com/reference/mesos-slave/) or create the `$NB_USER` account on every slave node.
+2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
     * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
-4. Open a Python 2 or 3 notebook.
-5. Create a `SparkConf` instance in a new notebook pointing to your Mesos master node (or Zookeeper instance) and Spark binary package location.
-6. Create a `SparkContext` using this configuration.
+3. Follow the language specific instructions below.
 
-For example, the first few cells in a Python 3 notebook might read:
+#### In a Python Notebook
 
 ```python
 import os
@@ -149,7 +181,7 @@ conf = pyspark.SparkConf()
 conf.setMaster("mesos://10.10.10.10:5050")
 # point to spark binary package in HDFS or on local filesystem on all slave
 # nodes (e.g., file:///opt/spark/spark-2.2.0-bin-hadoop2.7.tgz)
-conf.set("spark.executor.uri", "hdfs://10.122.193.209/spark/spark-2.2.0-bin-hadoop2.7.tgz")
+conf.set("spark.executor.uri", "hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz")
 # set other options as desired
 conf.set("spark.executor.memory", "8g")
 conf.set("spark.core.connection.ack.wait.timeout", "1200")
@@ -162,13 +194,68 @@ rdd = sc.parallelize(range(100000000))
 rdd.sumApprox(3)
 ```
 
-To use Python 2 in the notebook and on the workers, change the `PYSPARK_PYTHON` environment variable to point to the location of the Python 2.x interpreter binary. If you leave this environment variable unset, it defaults to `python`.
+#### In a R Notebook
 
-Of course, all of this can be hidden in an [IPython kernel startup script](http://ipython.org/ipython-doc/stable/development/config.html?highlight=startup#startup-files), but "explicit is better than implicit." :)
+```r
+library(SparkR)
 
-#### Connecting to a Spark Cluster in Standalone Mode
+# Point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
+# Point to spark binary package in HDFS or on local filesystem on all slave
+# nodes (e.g., file:///opt/spark/spark-2.2.0-bin-hadoop2.7.tgz) in sparkEnvir
+# Set other options in sparkEnvir
+sc <- sparkR.session("mesos://10.10.10.10:5050", sparkEnvir=list(
+    spark.executor.uri="hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz",
+    spark.executor.memory="8g"
+    )
+)
 
-Connection to Spark Cluster in Standalone Mode requires the following set of steps:
+# do something to prove it works
+data(iris)
+df <- as.DataFrame(iris)
+head(filter(df, df$Petal_Width > 0.2))
+```
+
+#### In a Spylon Kernel Scala Notebook
+
+```python
+%%init_spark
+# Configure the location of the mesos master and spark distribution on HDFS
+launcher.master = "mesos://10.10.10.10:5050"
+launcher.conf.spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz
+```
+
+```scala
+// Now run Scala code that uses the initialized SparkContext in sc
+val rdd = sc.parallelize(0 to 999)
+rdd.takeSample(false, 5)
+```
+
+#### In an Apache Toree Scala Notebook
+
+The Apache Toree kernel automatically creates a `SparkContext` when it starts based on configuration information from its command line arguments and environment variables. You can pass information about your Mesos cluster via the `SPARK_OPTS` environment variable when you spawn a container.
+
+For instance, to pass information about a Mesos master, Spark binary location in HDFS, and an executor options, you could start the container like so:
+
+```
+docker run -d -p 8888:8888 -e SPARK_OPTS='--master=mesos://10.10.10.10:5050 \
+    --spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz \
+    --spark.executor.memory=8g' jupyter/all-spark-notebook
+```
+
+Note that this is the same information expressed in a notebook in the Python case above. Once the kernel spec has your cluster information, you can test your cluster in an Apache Toree notebook like so:
+
+```scala
+// should print the value of --master in the kernel spec
+println(sc.master)
+
+// do something to prove it works
+val rdd = sc.parallelize(0 to 99999999)
+rdd.sum()
+```
+
+### Connecting to a Spark Cluster on Standalone Mode
+
+Connection to Spark Cluster on Standalone Mode requires the following set of steps:
 
 0. Verify that the docker image (check the Dockerfile) and the Spark Cluster which is being deployed, run the same version of Spark.
 1. [Deploy Spark on Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).

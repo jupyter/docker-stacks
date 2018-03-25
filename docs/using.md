@@ -22,7 +22,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 `jupyter/base-notebook` is a small image supporting the [options common across all core stacks](configuration.html). It is the basis for all other stacks.
 
 * Minimally-functional Jupyter Notebook server (e.g., no [pandoc](https://pandoc.org/) for saving notebooks as PDFs)
-* [Miniconda](https://conda.io/miniconda.html) Python 3.x
+* [Miniconda](https://conda.io/miniconda.html) Python 3.x in `/opt/conda`
 * No preinstalled scientific computing packages
 * Unprivileged user `jovyan` (`uid=1000`, configurable, see options) in group `users` (`gid=100`) with ownership over the `/home/jovyan` and `/opt/conda` paths
 * `tini` as the container entrypoint and a `start-notebook.sh` script as the default command
@@ -251,7 +251,7 @@ notebook
 
 ### Using Binder
 
-[Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control. You can use any of the Jupyter Docker Stack images as a basis for a Binder-compatible Dockerfile. See the [docker-stacks example](https://mybinder.readthedocs.io/en/latest/sample_repos.html#using-a-docker-image-from-the-jupyter-docker-stacks-repository) and [Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/dockerfile.html) sections in the [Binder documentation](https://mybinder.readthedocs.io/en/latest/index.html) for instructions.
+[Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control. You can use any of the Jupyter Docker Stacks images as a basis for a Binder-compatible Dockerfile. See the [docker-stacks example](https://mybinder.readthedocs.io/en/latest/sample_repos.html#using-a-docker-image-from-the-jupyter-docker-stacks-repository) and [Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/dockerfile.html) sections in the [Binder documentation](https://mybinder.readthedocs.io/en/latest/index.html) for instructions.
 
 ### Using JupyterHub
 
