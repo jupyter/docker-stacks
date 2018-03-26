@@ -140,5 +140,4 @@ The core stacks are just a tiny sample of what's possible when combining Jupyter
 
 *Nothing here yet! You can be the first!*
 
-See the [contributing guide](contributing#Community-Stacks) for information about how to create your own Jupyter Docker Stack.
-
+See the [contributing guide](contributing/stacks) for information about how to create your own Jupyter Docker Stack.
