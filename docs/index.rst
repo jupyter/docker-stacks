@@ -16,7 +16,8 @@ The two examples below may help you get started if you `have Docker installed <h
 
     docker run --rm -p 10000:8888 -v "$PWD":/home/jovyan/work jupyter/r-notebook:e5c5a7d3e52d
 
-**Table of Contents**
+Table of Contents
+-----------------
 
 .. toctree::
    :maxdepth: 2
