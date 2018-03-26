@@ -1,5 +1,4 @@
 docker
-jupyter_alabaster_theme
 pytest
 recommonmark==0.4.0
 requests

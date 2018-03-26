@@ -1,19 +1,17 @@
-# Users Guide
+# Selecting an Image
 
 Using one of the Jupyter Docker Stacks requires two choices:
 
 1. Which Docker image you wish to use
 2. How you wish to start Docker containers from that image
 
-This section provides details about the available images and runtimes.
+This section provides details about the first.
 
-## Selecting an Image
-
-### Core Stacks
+## Core Stacks
 
 The Jupyter team maintains a set of Docker image definitions in the [https://github.com/jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository. The following sections describe these images including their contents, relationships, and versioning strategy.
 
-#### jupyter/base-notebook
+### jupyter/base-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/base-notebook)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/base-notebook/Dockerfile)
@@ -30,7 +28,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * A `start.sh` script useful for running alternative commands in the container (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 * Options for a self-signed HTTPS certificate and passwordless sudo
 
-#### jupyter/minimal-notebook
+### jupyter/minimal-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/minimal-notebook)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/minimal-notebook/Dockerfile)
@@ -42,7 +40,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * [Pandoc](http://pandoc.org) and [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 * [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [jed](https://www.jedsoft.org/jed/), [vim](http://www.vim.org/), and unzip
 
-#### jupyter/r-notebook
+### jupyter/r-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/r-notebook)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/r-notebook/Dockerfile)
@@ -56,7 +54,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * [tidyverse](https://www.tidyverse.org/) packages, including [ggplot2](http://ggplot2.org/), [dplyr](http://dplyr.tidyverse.org/), [tidyr](http://tidyr.tidyverse.org/), [readr](http://readr.tidyverse.org/), [purrr](http://purrr.tidyverse.org/), [tibble](http://tibble.tidyverse.org/), [stringr](http://stringr.tidyverse.org/), [lubridate](http://lubridate.tidyverse.org/), and [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) from [conda-forge](https://conda-forge.github.io/feedstocks)
 * [plyr](https://cran.r-project.org/web/packages/plyr/index.html), [devtools](https://cran.r-project.org/web/packages/devtools/index.html), [shiny](https://shiny.rstudio.com/), [rmarkdown](http://rmarkdown.rstudio.com/), [forecast](https://cran.r-project.org/web/packages/forecast/forecast.pdf), [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html), [reshape2](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf), [nycflights13](https://cran.r-project.org/web/packages/nycflights13/index.html), [caret](http://topepo.github.io/caret/index.html), [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html), and [randomforest](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf) packages from [conda-forge](https://conda-forge.github.io/feedstocks)
 
-#### jupyter/scipy-notebook
+### jupyter/scipy-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/scipy-notebook)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/scipy-notebook/Dockerfile)
@@ -69,7 +67,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/) for interactive visualizations in Python notebooks
 * [Facets](https://github.com/PAIR-code/facets) for visualizing machine learning datasets
 
-#### jupyter/tensorflow-notebook
+### jupyter/tensorflow-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/tensorflow-notebook)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/tensorflow-notebook/Dockerfile)
@@ -80,7 +78,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * Everything in `jupyter/scipy-notebook` and its ancestor images
 * [tensorflow](https://www.tensorflow.org/) and [keras](https://keras.io/) machine learning libraries
 
-#### jupyter/datascience-notebook
+### jupyter/datascience-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/datascience-notebook)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/datascience-notebook/Dockerfile)
@@ -93,7 +91,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebooks
 * [HDF5](https://github.com/JuliaIO/HDF5.jl), [Gadfly](http://gadflyjl.org/stable/), and [RDatasets](https://github.com/johnmyleswhite/RDatasets.jl) packages
 
-#### jupyter/pyspark-notebook
+### jupyter/pyspark-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/pyspark-notebook)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/pyspark-notebook/Dockerfile)
@@ -105,7 +103,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * [Apache Spark](https://spark.apache.org/) with Hadoop binaries
 * [Mesos](http://mesos.apache.org/) client libraries
 
-#### jupyter/all-spark-notebook
+### jupyter/all-spark-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/all-spark-notebook/Dockerfile)
@@ -118,17 +116,17 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * [Apache Toree](https://toree.apache.org/) and [spylon-kernel](https://github.com/maxpoint/spylon-kernel) to support Scala code in Jupyter notebooks
 * [ggplot2](http://ggplot2.org/), [sparklyr](http://spark.rstudio.com/), and [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html) packages
 
-#### Image Relationships
+### Image Relationships
 
 The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles). Any given image inherits the complete content of all ancestor images pointing to it.
 
-[![Image inheritance diagram](images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFzTEPgjAQhuHdX9Gws5sQjGzujsaYKxzmQrlr2msMGv-71K0srO_3XGud9NNA8DSfgzESCFlBSdi0xkvQAKTNugw4QnL6GIU10hvX-Zh7Z24OLLq2SjaxpvP10lX35vCf6pOxELFmUbQiUz4oQhYzMc3gCrRt2cWe_FKosmSjyFHC6OS1AwdQWCtyj7sfh523_BI9hKlQ25YdOFdv5fcH0kiEMA)
+[![Image inheritance diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFzTEPgjAQhuHdX9Gws5sQjGzujsaYKxzmQrlr2msMGv-71K0srO_3XGud9NNA8DSfgzESCFlBSdi0xkvQAKTNugw4QnL6GIU10hvX-Zh7Z24OLLq2SjaxpvP10lX35vCf6pOxELFmUbQiUz4oQhYzMc3gCrRt2cWe_FKosmSjyFHC6OS1AwdQWCtyj7sfh523_BI9hKlQ25YdOFdv5fcH0kiEMA)
 
-#### Builds
+### Builds
 
 Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on Travis CI. These images are for testing purposes only and are not saved for use. When pull requests merge to master, all images rebuild on Docker Cloud and become available to `docker pull` from Docker Hub.
 
-#### Versioning
+### Versioning
 
 The `latest` tag in each Docker Hub repository tracks the master branch `HEAD` reference on GitHub. `latest` is a moving target, by definition, and will have backward-incompatible changes regularly.
 
@@ -136,7 +134,7 @@ Every image on Docker Hub also receives a 12-character tag which corresponds wit
 
 You must refer to git-SHA image tags when stability and reproducibility are important in your work. (e.g. `FROM jupyter/scipy-notebook:7c45ec67c8e7`, `docker run -it --rm jupyter/scipy-notebook:7c45ec67c8e7`). You should only use `latest` when a one-off container instance is acceptable (e.g., you want to briefly try a new library in a notebook).
 
-### Community Stacks
+## Community Stacks
 
 The core stacks are just a tiny sample of what's possible when combining Jupyter with other technologies. We encourage members of the Jupyter community to create their own stacks based on the core images and link them below.
 
@@ -144,119 +142,3 @@ The core stacks are just a tiny sample of what's possible when combining Jupyter
 
 See the [contributing guide](contributing#Community-Stacks) for information about how to create your own Jupyter Docker Stack.
 
-## Running a Container
-
-### Using the Docker CLI
-
-You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command line interface](https://docs.docker.com/engine/reference/commandline/cli/). There are numerous ways to configure containers using the CLI. The following are a couple common patterns.
-
-**Example 1** This command pulls the `jupyter/scipy-notebook` image tagged `2c80cf3537ca` from Docker Hub if it is not already present on the local host. It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888. The server logs appear in the terminal and include a URL to the notebook server.
-
-```
-docker run -p 8888:8888 jupyter/scipy-notebook:2c80cf3537ca
-
-Executing the command: jupyter notebook
-[I 15:33:00.567 NotebookApp] Writing notebook server cookie secret to /home/jovyan/.local/share/jupyter/runtime/notebook_cookie_secret
-[W 15:33:01.084 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
-[I 15:33:01.150 NotebookApp] JupyterLab alpha preview extension loaded from /opt/conda/lib/python3.6/site-packages/jupyterlab
-[I 15:33:01.150 NotebookApp] JupyterLab application directory is /opt/conda/share/jupyter/lab
-[I 15:33:01.155 NotebookApp] Serving notebooks from local directory: /home/jovyan
-[I 15:33:01.156 NotebookApp] 0 active kernels
-[I 15:33:01.156 NotebookApp] The Jupyter Notebook is running at:
-[I 15:33:01.157 NotebookApp] http://[all ip addresses on your system]:8888/?token=112bb073331f1460b73768c76dffb2f87ac1d4ca7870d46a
-[I 15:33:01.157 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[C 15:33:01.160 NotebookApp]
-
-    Copy/paste this URL into your browser when you connect for the first time,
-    to login with a token:
-        http://localhost:8888/?token=112bb073331f1460b73768c76dffb2f87ac1d4ca7870d46a
-```
-
-Pressing `Ctrl-C` shuts down the notebook server but leaves the container intact on disk for later restart or permanent deletion using commands like the following:
-
-```
-# list containers
-docker ps -a
-CONTAINER ID        IMAGE                   COMMAND                  CREATED    STATUS                      PORTS               NAMES
-d67fe77f1a84        jupyter/base-notebook   "tini -- start-noteb…"   44 seconds ago    Exited (0) 39 seconds ago                       cocky_mirzakhani
-
-# start the stopped container
-docker start -a d67fe77f1a84
-Executing the command: jupyter notebook
-[W 16:45:02.020 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
-...
-
-# remove the stopped container
-docker rm d67fe77f1a84
-d67fe77f1a84
-```
-
-**Example 2** This command pulls the `jupyter/r-notebook` image tagged `e5c5a7d3e52d` from Docker Hub if it is not already present on the local host. It then starts a container running a Jupyter Notebook server and exposes the server on host port 10000. The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the the correct host port (10000).
-
-```
-docker run --rm -p 10000:8888 -v "$PWD":/home/jovyan/work jupyter/r-notebook:e5c5a7d3e52d
-
-Executing the command: jupyter notebook
-[I 19:31:09.573 NotebookApp] Writing notebook server cookie secret to /home/jovyan/.local/share/jupyter/runtime/notebook_cookie_secret
-[W 19:31:11.930 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
-[I 19:31:12.085 NotebookApp] JupyterLab alpha preview extension loaded from /opt/conda/lib/python3.6/site-packages/jupyterlab
-[I 19:31:12.086 NotebookApp] JupyterLab application directory is /opt/conda/share/jupyter/lab
-[I 19:31:12.117 NotebookApp] Serving notebooks from local directory: /home/jovyan
-[I 19:31:12.117 NotebookApp] 0 active kernels
-[I 19:31:12.118 NotebookApp] The Jupyter Notebook is running at:
-[I 19:31:12.119 NotebookApp] http://[all ip addresses on your system]:8888/?token=3b8dce890cb65570fb0d9c4a41ae067f7604873bd604f5ac
-[I 19:31:12.120 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[C 19:31:12.122 NotebookApp]
-
-    Copy/paste this URL into your browser when you connect for the first time,
-    to login with a token:
-        http://localhost:8888/?token=3b8dce890cb65570fb0d9c4a41ae067f7604873bd604f5ac
-```
-
-Pressing `Ctrl-C` shuts down the notebook server and immediately destroys the Docker container. Files written to `~/work` in the container remain touched. Any other changes made in the container are lost.
-
-**Example 3** This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Docker Hub if an image tagged `latest` is not already present on the local host. It then starts a container named `notebook` running a JupyterLab server and exposes the server on a randomly selected port. 
-
-```
-docker run -d -P --name notebook jupyter/all-spark-notebook
-```
-
-The assigned port and notebook server token are visible using other Docker commands.
-
-```
-# get the random host port assigned to the container port 8888
-docker port notebook 8888
-0.0.0.0:32769
-
-# get the notebook token from the logs
-docker logs --tail 3 notebook
-    Copy/paste this URL into your browser when you connect for the first time,
-    to login with a token:
-        http://localhost:8888/?token=15914ca95f495075c0aa7d0e060f1a78b6d94f70ea373b00
-```
-
-Together, the URL to visit on the host machine to access the server in this case is http://localhost:32769?token=15914ca95f495075c0aa7d0e060f1a78b6d94f70ea373b00.
-
-The container runs in the background until stopped and/or removed by additional Docker commands.
-
-```
-# stop the container
-docker stop notebook
-notebook
-
-# remove the container permanently
-docker rm notebook
-notebook
-```
-
-### Using Binder
-
-[Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control. You can use any of the Jupyter Docker Stacks images as a basis for a Binder-compatible Dockerfile. See the [docker-stacks example](https://mybinder.readthedocs.io/en/latest/sample_repos.html#using-a-docker-image-from-the-jupyter-docker-stacks-repository) and [Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/dockerfile.html) sections in the [Binder documentation](https://mybinder.readthedocs.io/en/latest/index.html) for instructions.
-
-### Using JupyterHub
-
-You can configure JupyterHub to launcher Docker containers from the Jupyter Docker Stacks images. If you've been following the [Zero to JupyterHub with Kubernetes](http://zero-to-jupyterhub.readthedocs.io/en/latest/) guide, see the [Use an existing Docker image](http://zero-to-jupyterhub.readthedocs.io/en/latest/user-environment.html#use-an-existing-docker-image) section for details. If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://github.com/jupyterhub/dockerspawner#picking-or-building-a-docker-image) instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner) instead.
-
-### Using Other Tools and Services
-
-You can use the Jupyter Docker Stacks with any Docker-compatible technology (e.g., [Docker Compose](https://docs.docker.com/compose/), [docker-py](https://github.com/docker/docker-py), your favorite cloud container service). See the documentation of the tool, library, or service for details about how to reference, configure, and launch containers from these images.
