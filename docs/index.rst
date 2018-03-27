@@ -1,7 +1,11 @@
 Jupyter Docker Stacks
 =====================
 
-Jupyter Docker Stacks are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools. You can use a stack image to start a personal Jupyter Notebook server in a local Docker container, to run JupyterLab servers for a team using JupyterHub, to write your own project Dockerfile, and so on.
+Jupyter Docker Stacks are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools. You can use a stack image to do any of the following (and more):
+
+* Start a personal Jupyter Notebook server in a local Docker container
+* Run JupyterLab servers for a team using JupyterHub
+* Write your own project Dockerfile
 
 Quick Start
 -----------

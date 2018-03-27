@@ -18,12 +18,6 @@ For example, to set the base URL of the notebook server, you can run the followi
 docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.base_url=/some/path
 ```
 
-For example, to ignore best practice and disable all authentication, you can run the following:
-
-```
-docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.token=''
-```
-
 ## Docker Options
 
 You may instruct the `start-notebook.sh` script to customize the container environment before launching
