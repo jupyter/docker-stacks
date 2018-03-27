@@ -1,8 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-.PHONY: help test
+.PHONY: docs help test
 
-# Use bash for inline if-statements in test target
+# Use bash for inline if-statements in arch_patch target
 SHELL:=bash
 OWNER:=jupyter
 ARCH:=$(shell uname -m)
@@ -54,10 +54,13 @@ dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
-test-reqs: # install libraries required to run the integration tests
-	pip install -r requirements-test.txt
+dev-env: ## install libraries required to build docs and run tests
+	pip install -r requirements-dev.txt
 
-test/%:
+docs: ## build HTML documentation
+	make -C docs html
+
+test/%: ## run tests against a stack
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
 
 test/base-notebook: ## test supported options in the base notebook
