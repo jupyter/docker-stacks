@@ -29,7 +29,7 @@ RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERS
 
 # Mesos dependencies
 RUN . /etc/os-release && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
+    apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv E56151BF && \
     DISTRO=$ID && \
     CODENAME=$VERSION_CODENAME && \
     echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" > /etc/apt/sources.list.d/mesosphere.list && \
