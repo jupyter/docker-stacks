@@ -43,8 +43,7 @@ RUN mkdir /etc/julia && \
 USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
-RUN conda config --system --append channels r && \
-    conda install --quiet --yes \
+RUN conda install --quiet --yes \
     'rpy2=2.8*' \
     'r-base=3.4.1' \
     'r-irkernel=0.8*' \
