@@ -11,6 +11,22 @@ else
     cmd=$*
 fi
 
+for f in /usr/local/bin/start-notebook.d/*; do
+  case "$f" in
+    *.sh)
+      echo "$0: running $f"; . "$f"
+      ;;
+    *)
+      if [ -x $f ]; then
+        echo "$0: running $f"
+        $f
+      else
+        echo "$0: ignoring $f"
+      fi
+      ;;
+  esac
+  echo
+done
 # Handle special flags if we're root
 if [ $(id -u) == 0 ] ; then
 
