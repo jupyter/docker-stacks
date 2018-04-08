@@ -77,13 +77,11 @@ RUN cd /tmp && \
     fix-permissions /home/$NB_USER
 
 # Install Jupyter Notebook and Hub
-# Issue #589: Force tornado < 5.0 until various zmq dependencies are resolved upstream
 RUN conda install --quiet --yes \
     'notebook=5.4.*' \
     'jupyterhub=0.8.*' \
-    'jupyterlab=0.31.*' \
-    'tornado=4.*' \
-    && conda clean -tipsy && \
+    'jupyterlab=0.31.*' && \
+    conda clean -tipsy && \
     jupyter labextension install @jupyterlab/hub-extension@^0.8.0 && \
     npm cache clean && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
