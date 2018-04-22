@@ -37,6 +37,7 @@ Table of Contents
    :caption: Contributor Guide
 
    contributing/packages
+   contributing/features
    contributing/recipes
    contributing/tests
    contributing/stacks
