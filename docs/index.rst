@@ -31,6 +31,7 @@ Table of Contents
    using/running
    using/common
    using/specifics
+   using/recipes
 
 .. toctree::
    :maxdepth: 2

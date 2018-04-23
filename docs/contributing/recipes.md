@@ -1,1 +1,1 @@
-# Documented Recipes
+# New Recipes
