@@ -1,10 +1,10 @@
 # New Features
 
-We review contributions of new features (e.g., new packages, new scripts, new flags) to the project Dockerfiles in an attempt to balance the value of the images to the Jupyter community with the cost of maintaining the images over time. Roughly speaking, we think about the following when considering additions to the core stacks:
+We review contributions of new features (e.g., new packages, new scripts, new flags) to the core stacks in an attempt to balance the value of the images to the Jupyter community with the cost of maintaining the images over time. Roughly speaking, we think about the following when considering additions:
 
 * *Usefulness to Jupyter users* - Is the feature generally applicable across domains? Does it work with Jupyter Notebook, JupyterLab, JupyterHub, etc.?
-* *Fit with the image purpose* - Does the feature match the theme of the stack in which it will be added? Would it fit better in a new stack?
-* *Complexity of build / runtime configuration* - How many lines of code does the feature require in one of the Dockerfiles or startup scripts? Does it require new scipts entirely?
+* *Fit with the image purpose* - Does the feature match the theme of the stack in which it will be added? Would it fit better in a new, community stack?
+* *Complexity of build / runtime configuration* - How many lines of code does the feature require in one of the Dockerfiles or startup scripts? Does it require new scripts entirely? Do users need to adjust how they use the images?
 * *Impact on image metrics* - How many bytes does the feature and its dependencies add to the image(s)? How many minutes do they add to the build time?
 * *Ability to support the addition* - Can existing maintainers answer user questions and address future build issues? Are the contributors interested in helping with long-term maintenance? Can we write tests to ensure the feature continues to work over time?
 

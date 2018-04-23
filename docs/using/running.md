@@ -9,7 +9,7 @@ This section provides details about the second.
 
 ## Using the Docker CLI
 
-You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command line interface](https://docs.docker.com/engine/reference/commandline/cli/). There are numerous ways to configure containers using the CLI. The following are a couple common patterns.
+You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command line interface](https://docs.docker.com/engine/reference/commandline/cli/). There are numerous ways to configure containers using the CLI. The following are some common patterns.
 
 **Example 1** This command pulls the `jupyter/scipy-notebook` image tagged `2c80cf3537ca` from Docker Hub if it is not already present on the local host. It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888. The server logs appear in the terminal and include a URL to the notebook server.
 
