@@ -49,7 +49,7 @@ RUN conda install --quiet --yes \
     # Also activate ipywidgets extension for JupyterLab
     jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.33.1 && \
     jupyter labextension install jupyterlab_bokeh@^0.4.0 && \
-    npm cache clean && \
+    npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     rm -rf /home/$NB_USER/.node-gyp && \
