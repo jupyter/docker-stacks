@@ -83,7 +83,7 @@ RUN conda install --quiet --yes \
     'jupyterlab=0.31.*' && \
     conda clean -tipsy && \
     jupyter labextension install @jupyterlab/hub-extension@^0.8.0 && \
-    npm cache clean && \
+    npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
