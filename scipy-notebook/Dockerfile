@@ -26,7 +26,7 @@ RUN conda install --quiet --yes \
     'scipy=0.19*' \
     'seaborn=0.7*' \
     'scikit-learn=0.19*' \
-    'scikit-image=0.12*' \
+    'scikit-image=0.13*' \
     'sympy=1.0*' \
     'cython=0.25*' \
     'patsy=0.4*' \
