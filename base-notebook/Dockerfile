@@ -80,9 +80,9 @@ RUN cd /tmp && \
 RUN conda install --quiet --yes \
     'notebook=5.4.*' \
     'jupyterhub=0.8.*' \
-    'jupyterlab=0.31.*' && \
+    'jupyterlab=0.32.*' && \
     conda clean -tipsy && \
-    jupyter labextension install @jupyterlab/hub-extension@^0.8.0 && \
+    jupyter labextension install @jupyterlab/hub-extension@^0.8.1 && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /home/$NB_USER/.cache/yarn && \
