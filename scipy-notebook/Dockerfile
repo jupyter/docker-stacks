@@ -25,8 +25,8 @@ RUN conda install --quiet --yes \
     'matplotlib=2.0*' \
     'scipy=0.19*' \
     'seaborn=0.7*' \
-    'scikit-learn=0.18*' \
-    'scikit-image=0.12*' \
+    'scikit-learn=0.19*' \
+    'scikit-image=0.13*' \
     'sympy=1.0*' \
     'cython=0.25*' \
     'patsy=0.4*' \
