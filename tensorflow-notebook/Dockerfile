@@ -36,6 +36,7 @@ RUN pip install influxdb
 RUN pip install pyreadline
 RUN conda install --quiet --yes \
     'numpy' \
+    'cx_Oracle=6.0*' \
     'matplotlib' \
     'pandas' \
     'scipy' \
@@ -51,5 +52,5 @@ RUN conda install --quiet --yes \
     'PyYAML' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR 
-RUN pip install gym
-RUN apt-get install python-opengl
+#RUN pip install gym
+#RUN apt-get install python-opengl
