@@ -51,8 +51,5 @@ RUN conda install --quiet --yes \
     'PyYAML' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR 
-    conda clean -tipsy && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
 RUN pip install gym
 RUN apt-get install python-opengl
