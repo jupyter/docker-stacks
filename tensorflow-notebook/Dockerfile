@@ -4,10 +4,28 @@ FROM jupyter/scipy-notebook
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
+
+USER $NB_USER
+
 # Install Tensorflow
+RUN pip install influxdb
+RUN pip install pyreadline
 RUN conda install --quiet --yes \
-    'tensorflow=1.3*' \
-    'keras=2.0*' && \
+    'numpy' \
+    'matplotlib' \
+    'pandas' \
+    'scipy' \
+    'seaborn' \
+    'scikit-learn' \
+    'scikit-image' \
+    'tensorflow' \
+    'keras' \
+    'plotly' \
+    'quandl' \
+    'tweepy' \
+    'textblob' \
+    'PyYAML' && \
     conda clean -tipsy && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions $CONDA_DIR
+#RUN pip install gym
+#RUN apt-get install python-opengl
