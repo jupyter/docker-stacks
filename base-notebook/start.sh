@@ -40,7 +40,7 @@ if [ $(id -u) == 0 ] ; then
     # Ex: default NFS/EFS (no auto-uid/gid)
     if [[ "$CHOWN_HOME" == "1" || "$CHOWN_HOME" == 'yes' ]]; then
         echo "Changing ownership of /home/$NB_USER to $NB_UID:$NB_GID"
-        chown -R $NB_UID:$NB_GID /home/$NB_USER
+        chown $NB_UID:$NB_GID /home/$NB_USER
     fi
 
     # handle home and working directory if the username changed
