@@ -28,7 +28,7 @@ Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8
 
 ## Using spark-packages.org
 
-If you'd like to use packages from spark-packages.org, see [https://gist.github.com/parente/c95fdaba5a9a066efaab](https://gist.github.com/parente/c95fdaba5a9a066efaab) for an example of how to specify the package identifier in the environment before creating a SparkContext.
+If you'd like to use packages from [spark-packages.org](https://spark-packages.org/), see [https://gist.github.com/parente/c95fdaba5a9a066efaab](https://gist.github.com/parente/c95fdaba5a9a066efaab) for an example of how to specify the package identifier in the environment before creating a SparkContext.
 
 Ref: [https://github.com/jupyter/docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43)
 
@@ -37,10 +37,6 @@ Ref: [https://github.com/jupyter/docker-stacks/issues/43](https://github.com/jup
 See the README for the simple automation here [https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy](https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy) which includes steps for requesting and renewing a Let's Encrypt certificate.
 
 Ref: [https://github.com/jupyter/docker-stacks/issues/78](https://github.com/jupyter/docker-stacks/issues/78)
-
-## Add Incubating Dashboard, Declarative Widget, Content Management Extensions
-
-Create a new Dockerfile like the one shown in this gist: [https://gist.github.com/parente/0d735d93cb81a582d635](https://gist.github.com/parente/0d735d93cb81a582d635). Switch the base stack image to whichever you please (e.g., `FROM jupyter/datascience-notebook`, `FROM jupyter/pyspark-notebook`).
 
 ## Using `pip install` in a Child Docker image
 

@@ -2,16 +2,16 @@
 
 We review contributions of new features (e.g., new packages, new scripts, new flags) to the core stacks in an attempt to balance the value of the images to the Jupyter community with the cost of maintaining the images over time. Roughly speaking, we think about the following when considering additions:
 
-* *Usefulness to Jupyter users* - Is the feature generally applicable across domains? Does it work with Jupyter Notebook, JupyterLab, JupyterHub, etc.?
-* *Fit with the image purpose* - Does the feature match the theme of the stack in which it will be added? Would it fit better in a new, community stack?
-* *Complexity of build / runtime configuration* - How many lines of code does the feature require in one of the Dockerfiles or startup scripts? Does it require new scripts entirely? Do users need to adjust how they use the images?
-* *Impact on image metrics* - How many bytes does the feature and its dependencies add to the image(s)? How many minutes do they add to the build time?
-* *Ability to support the addition* - Can existing maintainers answer user questions and address future build issues? Are the contributors interested in helping with long-term maintenance? Can we write tests to ensure the feature continues to work over time?
+* **Usefulness to Jupyter users**: Is the feature generally applicable across domains? Does it work with Jupyter Notebook, JupyterLab, JupyterHub, etc.?
+* **Fit with the image purpose**: Does the feature match the theme of the stack in which it will be added? Would it fit better in a new, community stack?
+* **Complexity of build / runtime configuration**: How many lines of code does the feature require in one of the Dockerfiles or startup scripts? Does it require new scripts entirely? Do users need to adjust how they use the images?
+* **Impact on image metrics**: How many bytes does the feature and its dependencies add to the image(s)? How many minutes do they add to the build time?
+* **Ability to support the addition**: Can existing maintainers answer user questions and address future build issues? Are the contributors interested in helping with long-term maintenance? Can we write tests to ensure the feature continues to work over time?
 
-Follow the process below to suggest a new feature for inclusion in one of the core stacks:
+Please follow the process below to suggest a new feature for inclusion in one of the core stacks:
 
-1. Open a GitHub issue describing the feature you'd like to contribute.
-2. Discuss whether the addition makes sense in [one of the core stacks](../using/selecting.html#Core-Stacks), as a [recipe in the documentation](recipes.html), as a [community stack](stacks.html), or as something else entirely.
+1. [Open a GitHub issue](https://github.com/jupyter/docker-stacks/issues) describing the feature you'd like to contribute.
+2. Discuss with the maintainers whether the addition makes sense in [one of the core stacks](../using/selecting.html#Core-Stacks), as a [recipe in the documentation](recipes.html), as a [community stack](stacks.html), or as something else entirely.
 
 If there's agreement that the feature belongs in one or more of the core stacks:
 

@@ -1,8 +1,8 @@
 # Package Updates
 
-We welcome all contributions that update packages already included in the project Dockerfiles. Follow the process below to update a package version:
+We welcome all contributions that update packages already included in the project Dockerfiles. Please follow the process below to update a package version:
 
-1. Locate the Dockerfile containing the library you wish to update.
+1. Locate the Dockerfile containing the library you wish to update (e.g., [base-notebook/Dockerfile](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile), [scipy-notebook/Dockerfile](https://github.com/jupyter/docker-stacks/blob/master/scipy-notebook/Dockerfile))
 2. Adjust the version number for the package.
     * We prefer to pin the major and minor version number of packages so as to minimize rebuild side-effects when users submit pull requests (PRs). For example, you'll find the Jupyter Notebook package, `notebook`, installed using conda with  `notebook=5.4.*`.
 3. Try to build the image locally (`make image/somestack-notebook`) before submitting a pull request.
