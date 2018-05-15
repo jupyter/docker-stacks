@@ -42,6 +42,11 @@ if [ $(id -u) == 0 ] ; then
         echo "Changing ownership of /home/$NB_USER to $NB_UID:$NB_GID"
         chown $NB_UID:$NB_GID /home/$NB_USER
     fi
+    if [ ! -z "$CHOWN_EXTRA" ]; then
+        for extra_dir in $(echo $CHOWN_EXTRA | tr ',' ' '); do
+            chown $NB_UID:$NB_GID $extra_dir
+        done
+    fi
 
     # handle home and working directory if the username changed
     if [[ "$NB_USER" != "jovyan" ]]; then
