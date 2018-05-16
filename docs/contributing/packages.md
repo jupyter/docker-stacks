@@ -10,6 +10,6 @@ Please follow the process below to update a package version:
 ```
 make image/somestack-notebook
 ```
-4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)  (PR) with your changes.
+4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with your changes.
 5. Watch for Travis to report a build success or failure for your PR on GitHub.
 6. Discuss changes with the maintainers and address any build issues. Version conflicts are the most common problem. You may need to upgrade additional packages to fix build failures.
