@@ -1,6 +1,6 @@
 # Package Updates
 
-We welcome all contributions that update packages already included in the project Dockerfiles. 
+We are actively seeking pull requests which update packages already included in the project Dockerfiles. This is a great way for first-time contributors to participate in developing docker-stacks.
 
 Please follow the process below to update a package version:
 
