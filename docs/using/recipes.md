@@ -1,42 +1,6 @@
 # Contributed Recipes
 
-Users sometimes share interesting ways of using the Jupyter Docker Stacks. We encourage users to [contribute these recipes](../contributing/recipes.html) to the documentation in case they prove useful to other members of the community. The sections below capture this knowledge.
-
-## Add RISE
-
-@pdonorio said:
-
-> There is a great repo called [RISE](https://github.com/damianavila/RISE) which allow via extension to create live slideshows of your notebooks, with no conversion, adding javascript Reveal.js.
-
-> I like it a lot, and find my self often adding this feature on top of your official images.
-
-```
-# Add Live slideshows with RISE
-RUN conda install -c damianavila82 rise
-```
-
-Ref: [https://github.com/jupyter/docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43), updated 2018-04-22 to use `conda`
-
-## Running behind a nginx proxy
-
-Sometimes it is useful to run the Jupyter instance behind a nginx proxy, for instance:
-
-- you would prefer to access the notebook at a server URL with a path (`https://example.com/jupyter`) rather than a port (`https://example.com:8888`)
-- you may have many different services in addition to Jupyter running on the same server, and want to nginx to help improve server performance in manage the connections
-
-Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.  You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.  Then just download the files at that gist and run `docker-compose up -d` to test it out.  Customize the `nginx.conf` file to set the desired paths and add other services.
-
-## Using spark-packages.org
-
-If you'd like to use packages from [spark-packages.org](https://spark-packages.org/), see [https://gist.github.com/parente/c95fdaba5a9a066efaab](https://gist.github.com/parente/c95fdaba5a9a066efaab) for an example of how to specify the package identifier in the environment before creating a SparkContext.
-
-Ref: [https://github.com/jupyter/docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43)
-
-## Let's Encrypt a Notebook server
-
-See the README for the simple automation here [https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy](https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy) which includes steps for requesting and renewing a Let's Encrypt certificate.
-
-Ref: [https://github.com/jupyter/docker-stacks/issues/78](https://github.com/jupyter/docker-stacks/issues/78)
+Users sometimes share interesting ways of using the Jupyter Docker Stacks. We encourage users to [contribute these recipes](../contributing/recipes.html) to the documentation in case they prove useful to other members of the community by submitting a pull request to `docs/using/recipes.md`. The sections below capture this knowledge.
 
 ## Using `pip install` in a Child Docker image
 
@@ -55,28 +19,57 @@ Then build a new image.
 docker build --rm -t jupyter/my-datascience-notebook .
 ```
 
-Ref: [https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
+Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
 
-## Use with JupyterHub's dockerspawner
+## Add a Python 2.x environment
 
-@jtyberg contributed [https://github.com/jupyter/docker-stacks/pull/185](https://github.com/jupyter/docker-stacks/pull/185)
+Python 2.x was removed from all images on August 10th, 2017, starting in tag `cc9feab481f7`. You can add a Python 2.x environment by defining your own Dockerfile inheriting from one of the images like so:
 
-Originally, @quanghoc asked:
+```
+# Choose your desired base image
+FROM jupyter/scipy-notebook:latest
 
-> How does this [docker-stacks] work with dockerspawner?
+# Create a Python 2.x environment using conda including at least the ipython kernel
+# and the kernda utility. Add any additional packages you want available for use
+# in a Python 2 notebook to the first line here (e.g., pandas, matplotlib, etc.)
+RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 ipython ipykernel kernda && \
+    conda clean -tipsy
 
-@minrk replied:
+USER root
 
-> ... in most cases for use with DockerSpawner, given any image that already has a notebook stack set up, you would only need to add:
+# Create a global kernelspec in the image and modify it so that it properly activates
+# the python2 conda environment.
+RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install && \
+$CONDA_DIR/envs/python2/bin/kernda -o -y /usr/local/share/jupyter/kernels/python2/kernel.json
 
-> 1. install the jupyterhub-singleuser script (for the right Python)
-> 2. change the command to launch the single-user server
+USER $NB_USER
+```
 
-> Swapping out the `FROM` line in the `jupyterhub/singleuser` Dockerfile should be enough for most cases.
+Ref: [https://github.com/jupyter/docker-stacks/issues/440](https://github.com/jupyter/docker-stacks/issues/440)
 
-Ref: [https://github.com/jupyter/docker-stacks/issues/124](https://github.com/jupyter/docker-stacks/issues/124)
+## Run JupyterLab
 
-## Use xgboost
+JupyterLab is preinstalled as a notebook extension starting in tag [c33a7dc0eece](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history).
+
+Run jupyterlab using a command such as `docker run -it --rm -p 8888:8888 jupyter/datascience-notebook start.sh jupyter lab`
+
+## Let's Encrypt a Notebook server
+
+See the README for the simple automation here [https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy](https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy) which includes steps for requesting and renewing a Let's Encrypt certificate.
+
+Ref: [https://github.com/jupyter/docker-stacks/issues/78](https://github.com/jupyter/docker-stacks/issues/78)
+
+## Slideshows with Jupyter and RISE
+
+[RISE](https://github.com/damianavila/RISE) allows via extension to create live slideshows of your notebooks, with no conversion, adding javascript Reveal.js:
+
+```
+# Add Live slideshows with RISE
+RUN conda install -c damianavila82 rise
+```
+Credit: [Paolo D.](https://github.com/pdonorio) based on [docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43)
+
+## xgboost
 
 You need to install conda's gcc for Python xgboost to work properly. Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0.
 
@@ -88,9 +81,55 @@ pip install xgboost
 import xgboost
 ```
 
+## Running behind a nginx proxy
+
+Sometimes it is useful to run the Jupyter instance behind a nginx proxy, for instance:
+
+- you would prefer to access the notebook at a server URL with a path (`https://example.com/jupyter`) rather than a port (`https://example.com:8888`)
+- you may have many different services in addition to Jupyter running on the same server, and want to nginx to help improve server performance in manage the connections
+
+Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.  You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.  Then just download the files at that gist and run `docker-compose up -d` to test it out.  Customize the `nginx.conf` file to set the desired paths and add other services.
+
+## Host volume mounts and notebook errors
+
+If you are mounting a host directory as `/home/jovyan/work` in your container and you receive permission errors or connection errors when you create a notebook, be sure that the `jovyan` user (UID=1000 by default) has read/write access to the directory on the host. Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the [Common Features, Docker Options section](../using/common.html#Docker-Options)
+
+Ref: [https://github.com/jupyter/docker-stacks/issues/199](https://github.com/jupyter/docker-stacks/issues/199)
+
+## JuptyerHub
+
+We also have contributed recipes for using JupyterHub.
+
+### Use JupyterHub's dockerspawner
+
+In most cases for use with DockerSpawner, given any image that already has a notebook stack set up, you would only need to add:
+
+1. install the jupyterhub-singleuser script (for the right Python) 
+2. change the command to launch the single-user server
+
+Swapping out the `FROM` line in the `jupyterhub/singleuser` Dockerfile should be enough for most cases.
+
+Credit: [Justin Tyberg](https://github.com/jtyberg), [quanghoc](https://github.com/quanghoc), and [Min RK](https://github.com/minrk) based on [docker-stacks/issues/124](https://github.com/jupyter/docker-stacks/issues/124) and [docker-stacks/pull/185](https://github.com/jupyter/docker-stacks/pull/185)
+
+### Containers with a specific version of JupyterHub
+
+To use a specific version of JupyterHub, the version of `jupyterhub` in your image should match the version in the Hub itself.
+
+```
+FROM  jupyter/base-notebook:5ded1de07260
+RUN pip install jupyterhub==0.8.0b1
+```
+
+Credit: [MinRK](https://github.com/jupyter/docker-stacks/issues/423#issuecomment-322767742)
+
+
 Ref: [https://github.com/jupyter/docker-stacks/issues/177](https://github.com/jupyter/docker-stacks/issues/177)
 
-## Using PySpark with AWS S3
+## Spark
+
+A few suggestions have been made regarding using Docker Stacks with spark.
+
+### Using PySpark with AWS S3
 
 ```
 import os
@@ -114,7 +153,7 @@ df = sqlContext.read.parquet("s3://myBucket/myKey")
 
 Ref: [https://github.com/jupyter/docker-stacks/issues/127](https://github.com/jupyter/docker-stacks/issues/127)
 
-## Using Local Spark JARs
+### Using Local Spark JARs
 
 ```
 import os
@@ -132,21 +171,13 @@ ssc.start()
 
 Ref: [https://github.com/jupyter/docker-stacks/issues/154](https://github.com/jupyter/docker-stacks/issues/154)
 
-## Host volume mounts and notebook errors
+### Using spark-packages.org
 
-If you are mounting a host directory as `/home/jovyan/work` in your container and you receive permission errors or connection errors when you create a notebook, be sure that the `jovyan` user (UID=1000 by default) has read/write access to the directory on the host. Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the [Common Features, Docker Options section](../using/common.html#Docker-Options)
+If you'd like to use packages from [spark-packages.org](https://spark-packages.org/), see [https://gist.github.com/parente/c95fdaba5a9a066efaab](https://gist.github.com/parente/c95fdaba5a9a066efaab) for an example of how to specify the package identifier in the environment before creating a SparkContext.
 
-Ref: [https://github.com/jupyter/docker-stacks/issues/199](https://github.com/jupyter/docker-stacks/issues/199)
+Ref: [https://github.com/jupyter/docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43)
 
-## Run JupyterLab
-
-JupyterLab is preinstalled as a notebook extension starting in tag [c33a7dc0eece](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history).
-
-You can try jupyterlab using a command like `docker run -it --rm -p 8888:8888 jupyter/datascience-notebook start.sh jupyter lab`
-
-## Use jupyter/all-spark-notebooks with an existing Spark/YARN cluster
-
-Courtesy of @britishbadger:
+### Use jupyter/all-spark-notebooks with an existing Spark/YARN cluster
 
 ```
 FROM jupyter/all-spark-notebook
@@ -210,43 +241,4 @@ RUN jupyter toree install --sys-prefix --spark_opts="--master yarn --deploy-mode
 USER $NB_USER
 ```
 
-Ref: [https://github.com/jupyter/docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
-
-## Use containers with a specific version of JupyterHub
-
-The fix is to make sure that the same version of `jupyterhub` is installed in your image as the Hub itself.
-
-In general, this is enough:
-
-```
-FROM  jupyter/base-notebook:5ded1de07260
-RUN pip install jupyterhub==0.8.0b1
-```
-
-Ref: [https://github.com/jupyter/docker-stacks/issues/423#issuecomment-322767742](https://github.com/jupyter/docker-stacks/issues/423#issuecomment-322767742)
-
-## Add a Python 2.x environment
-
-Python 2.x was removed from all images on August 10th, 2017, starting in tag `cc9feab481f7`. You can add a Python 2.x environment by defining your own Dockerfile inheriting from one of the images like so:
-
-```
-# Choose your desired base image
-FROM jupyter/scipy-notebook:latest
-
-# Create a Python 2.x environment using conda including at least the ipython kernel
-# and the kernda utility. Add any additional packages you want available for use
-# in a Python 2 notebook to the first line here (e.g., pandas, matplotlib, etc.)
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 ipython ipykernel kernda && \
-    conda clean -tipsy
-
-USER root
-
-# Create a global kernelspec in the image and modify it so that it properly activates
-# the python2 conda environment.
-RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install && \
-$CONDA_DIR/envs/python2/bin/kernda -o -y /usr/local/share/jupyter/kernels/python2/kernel.json
-
-USER $NB_USER
-```
-
-Ref: [https://github.com/jupyter/docker-stacks/issues/440](https://github.com/jupyter/docker-stacks/issues/440)
+Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
