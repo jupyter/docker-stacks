@@ -40,11 +40,11 @@ if [ $(id -u) == 0 ] ; then
     # Ex: default NFS/EFS (no auto-uid/gid)
     if [[ "$CHOWN_HOME" == "1" || "$CHOWN_HOME" == 'yes' ]]; then
         echo "Changing ownership of /home/$NB_USER to $NB_UID:$NB_GID"
-        chown $NB_UID:$NB_GID /home/$NB_USER
+        chown $CHOWN_HOME_OPTS $NB_UID:$NB_GID /home/$NB_USER
     fi
     if [ ! -z "$CHOWN_EXTRA" ]; then
         for extra_dir in $(echo $CHOWN_EXTRA | tr ',' ' '); do
-            chown $NB_UID:$NB_GID $extra_dir
+            chown $CHOWN_EXTRA_OPTS $NB_UID:$NB_GID $extra_dir
         done
     fi
 
