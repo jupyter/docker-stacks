@@ -1,3 +1,7 @@
+[![Google Group](https://img.shields.io/badge/-Google%20Group-lightgrey.svg)](https://groups.google.com/forum/#!forum/jupyter)
+![Read the Docs](https://img.shields.io/readthedocs/jupyter-docker-stacks.svg)
+[![](https://images.microbadger.com/badges/version/jupyter/base-notebook.svg)](https://microbadger.com/images/jupyter/base-notebook "Get your own version badge on microbadger.com")
+
 # Jupyter Docker Stacks
 
 Jupyter Docker Stacks are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools.
