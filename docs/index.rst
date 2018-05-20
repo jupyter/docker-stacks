@@ -31,12 +31,14 @@ Table of Contents
    using/running
    using/common
    using/specifics
+   using/recipes
 
 .. toctree::
    :maxdepth: 2
    :caption: Contributor Guide
 
    contributing/packages
+   contributing/features
    contributing/recipes
    contributing/tests
    contributing/stacks

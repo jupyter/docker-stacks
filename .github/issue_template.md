@@ -1,6 +1,6 @@
-Hi! Thanks for using Jupyter's docker-stacks images.
+Hi! Thanks for using the Jupyter Docker Stacks.
 
-If you are requesting a library upgrade or addition in one of the existing images, please state the desired library name and version here and disregard the remaining sections.
+If you are looking to contribute to the images, please see the [Contributor's Guide] (http://jupyter-docker-stacks.readthedocs.io/en/latest/#) in the documentation for our preferred processes.
 
 If you are reporting an issue with one of the existing images, please answer the questions below to help us troubleshoot the problem. Please be as thorough as possible.
 
