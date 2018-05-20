@@ -7,4 +7,5 @@ services:
 install:
     - make dev-env
 script:
+    - make docs
     - make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"
