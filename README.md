@@ -2,8 +2,7 @@
 
 Jupyter Docker Stacks are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools.
 
-Quick Start
------------
+## Quick Start
 
 The two examples below may help you get started if you [have Docker installed](https://docs.docker.com/install/) know [which Docker image](http://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use, and want to launch a single Jupyter Notebook server in a container.
 
@@ -17,13 +16,11 @@ The [User Guide on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/) de
 
     docker run --rm -p 10000:8888 -v "$PWD":/home/jovyan/work jupyter/r-notebook:e5c5a7d3e52d
 
-Contributing
-------------
+## Contributing
 
 Please see the [Contributor Guide on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/) for information about how to contribute package updates, recipes features, tests, and community maintained stacks.
 
-Resources
----------
+## Resources
 
 * [Documentation on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/)
 * [Issue Tracker on GitHub](https://github.com/jupyter/docker-stacks)
