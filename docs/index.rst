@@ -53,6 +53,6 @@ Table of Contents
    :maxdepth: 2
    :caption: Getting Help
 
-   Jupyter Docker Stacks issue tracker <https://github.com/jupyter/docker-stacks>
-   Jupyter mailing list <https://groups.google.com/forum/#!forum/jupyter>
-   Jupyter website <https://jupyter.org>
+   Jupyter Docker Stacks Issue Tracker <https://github.com/jupyter/docker-stacks>
+   Jupyter Google Group <https://groups.google.com/forum/#!forum/jupyter>
+   Jupyter Website <https://jupyter.org>
