@@ -45,6 +45,12 @@ Table of Contents
 
 .. toctree::
    :maxdepth: 2
+   :caption: Maintainer Guide
+
+   maintaining/tasks
+
+.. toctree::
+   :maxdepth: 2
    :caption: Getting Help
 
    Jupyter Docker Stacks issue tracker <https://github.com/jupyter/docker-stacks>
