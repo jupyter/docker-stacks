@@ -1,9 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# Ubuntu 16.04 (xenial) from 2018-02-28
-# https://github.com/docker-library/official-images/commit/8728671fdca3dfc029be4ab838ab5315aa125181
-FROM ubuntu:xenial-20180228@sha256:e348fbbea0e0a0e73ab0370de151e7800684445c509d46195aef73e090a49bd6
+# Ubuntu 18.04 (bionic) from 2018-04-26
+# https://github.com/docker-library/official-images/commit/aac6a45b9eb2bffb8102353c350d341a410fb169
+FROM ubuntu:bionic-20180426@sha256:c8c275751219dadad8fa56b3ac41ca6cb22219ff117ca98fe82b42f24e1ba64e
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 

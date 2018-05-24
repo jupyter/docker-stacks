@@ -6,9 +6,9 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 USER root
 
-# libav-tools for matplotlib anim
+# ffmpeg for matplotlib anim
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libav-tools && \
+    apt-get install -y --no-install-recommends ffmpeg && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
