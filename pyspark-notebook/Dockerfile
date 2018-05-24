@@ -25,9 +25,10 @@ RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERS
 # Mesos dependencies
 # Install from the Xenial Mesosphere repository since there does not (yet)
 # exist a Bionic repository and the dependencies seem to be compatible for now.
+COPY mesos.key /tmp/
 RUN apt-get -y update && \
     apt-get install --no-install-recommends -y gnupg && \
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv E56151BF && \
+    apt-key add /tmp/mesos.key && \
     echo "deb http://repos.mesosphere.io/ubuntu xenial main" > /etc/apt/sources.list.d/mesosphere.list && \
     apt-get -y update && \
     apt-get --no-install-recommends -y install mesos=1.2\* && \
