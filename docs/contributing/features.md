@@ -1,6 +1,6 @@
 # New Features
 
-Thank you for contributing to docker-stacks! We review pull requests of new features (e.g., new packages, new scripts, new flags) to balance the value of the images to the Jupyter community with the cost of maintaining the images over time.
+Thank you for contributing to the Jupyter Docker Stacks! We review pull requests of new features (e.g., new packages, new scripts, new flags) to balance the value of the images to the Jupyter community with the cost of maintaining the images over time.
 
 ## Suggesting a New Feature
 
