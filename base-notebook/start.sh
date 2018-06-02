@@ -96,8 +96,8 @@ else
         # container runs as. Check that the user has an entry in the passwd
         # file and if not add an entry. Also add a group file entry if the
         # uid has its own distinct group but there is no entry.
-	whoami &> /dev/null || STATUS=$? && true
-	if [[ "$STATUS" != "0" ]]; then
+        whoami &> /dev/null || STATUS=$? && true
+        if [[ "$STATUS" != "0" ]]; then
             if [[ -w /etc/passwd ]]; then
                 echo "Adding passwd file entry for $(id -u)"
                 cat /etc/passwd | sed -e "s/^jovyan:/nayvoj:/" > /tmp/passwd
@@ -110,13 +110,13 @@ else
                     echo "jovyan:x:$(id -u):" >> /etc/group
                 fi
             else
-                echo 'Container must be run with group root to update passwd file'
+                echo 'Container must be run with group "root" to update passwd file'
             fi
         fi
 
         # Warn if the user isn't going to be able to write files to $HOME.
         if [[ ! -w /home/jovyan ]]; then
-            echo 'Container must be run with group users to update files'
+            echo 'Container must be run with group "users" to update files'
         fi
     else
         # Warn if looks like user want to override uid/gid but hasn't
