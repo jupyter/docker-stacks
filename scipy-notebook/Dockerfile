@@ -6,9 +6,9 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 USER root
 
-# libav-tools for matplotlib anim
+# ffmpeg for matplotlib anim
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libav-tools && \
+    apt-get install -y --no-install-recommends ffmpeg && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -18,7 +18,7 @@ USER $NB_UID
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
-    'blas=*=openblas' \
+    'blas=1.1*=openblas' \
     'ipywidgets=7.2*' \
     'pandas=0.22*' \
     'numexpr=2.6*' \
