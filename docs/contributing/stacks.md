@@ -1,13 +1,13 @@
 # Community Stacks
 
-We love to see the community create and share new Jupyter Docker images. We've created a [cookiecutter project](https://github.com/jupyter/cookiecutter-docker-stacks) and the documentation below as one way to get started defining, building, and sharing your Jupyter environments in Docker. If you choose to follow these steps, you will:
+We love to see the community create and share new Jupyter Docker images. We've put together a [cookiecutter project](https://github.com/jupyter/cookiecutter-docker-stacks) and the documentation below to help you get started defining, building, and sharing your Jupyter environments in Docker. Following these steps will:
 
 1. Setup a project on GitHub containing a Dockerfile based on either the `jupyter/base-notebook` or `jupyter/minimal-notebook` image.
 2. Configure Travis CI to build and test your image when users submit pull requests to your repository.
 3. Configure Docker Cloud to build and host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.html#community-stacks) in this documentation to include your image.
 
-This approach mirrors how we build and share the core stack images. Again, it just one of many approaches you might choose to take to share your creations.
+This approach mirrors how we build and share the core stack images. Feel free to follow it or pave your own path!
 
 ## Creating a Project
 
