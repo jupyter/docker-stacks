@@ -18,7 +18,7 @@ USER $NB_UID
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
-    'blas=1.1*=openblas' \
+    'conda-forge::blas=*=openblas' \
     'ipywidgets=7.2*' \
     'pandas=0.22*' \
     'numexpr=2.6*' \
