@@ -81,7 +81,7 @@ Next, link your GitHub project to Travis CI to build your Docker image whenever 
 
 Now, configure Docker Cloud to build your stack image and push it to Docker Hub repository whenever you merge a GitHub pull request to the master branch of your project.
 
-1. Visit https://cloud.docker.com/ and login.
+1. Visit [https://cloud.docker.com/](https://cloud.docker.com/) and login.
 2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter.
 3. Click *Create repository*.
 4. Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter.
