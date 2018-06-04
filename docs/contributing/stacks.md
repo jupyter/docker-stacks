@@ -67,15 +67,17 @@ git push -u origin master
 
 Next, link your GitHub project to Travis CI to build your Docker image whenever you or someone else submits a pull request.
 
-1. Visit [https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI)
-2. Follow the instructions to add the Travis CI application to your GitHub account.
+1. Visit [https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI) and follow the instructions to add the Travis CI application to your GitHub account.
 3. Visit [https://travis-ci.org](https://travis-ci.org).
-4. Click the + symbol on the left side.
+4. Click the + symbol at the top of the left sidebar.
+    ![Travis sidebar with plus button screenshot](../_static/travis-plus-repo.png)
 5. Locate your project repository either in your primary user account or in one of the organizations to which you belong.
 6. Click the toggle to enable builds for the project repository.
-7. Click the *Settings* button for that repository.
-8. Enable *Build only if .travis.yml is present* and *Build pushed pull requests*.
-9. Disable *Build pushed branches*.
+7. Click the **Settings** button for that repository.
+    ![Travis enable build toggle screenshot](../_static/travis-enable-build.png)
+8. Enable **Build only if .travis.yml is present** and **Build pushed pull requests**.
+    ![Travis build settings screenshot](../_static/travis-build-settings.png)
+9. Disable **Build pushed branches**.
 
 ## Configuring Docker Cloud
 
@@ -83,26 +85,27 @@ Now, configure Docker Cloud to build your stack image and push it to Docker Hub 
 
 1. Visit [https://cloud.docker.com/](https://cloud.docker.com/) and login.
 2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter.
-3. Click *Create repository*.
+    ![Docker account selection screenshot](../_static/docker-org-select.png)
+3. Scroll to the bottom of the page and click **Create repository**.
 4. Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter.
+    ![Docker image name and description screenshot](../_static/docker-repo-name.png)
 5. Enter a description for your image.
-6. Click *GitHub* under the *Build Settings* and follow the prompts to connect your account if it is not already connected.
+6. Click **GitHub** under the **Build Settings** and follow the prompts to connect your account if it is not already connected.
 7. Select the GitHub organization and repository containing your image definition from the dropdowns.
-8. Click the *Create and Build* button.
+    ![Docker from GitHub automated build screenshot](../_static/docker-github-settings.png)
+8. Click the **Create and Build** button.
 
 ## Defining Your Image
 
 Make edits the Dockerfile in your project to add third-party libraries and configure Jupyter applications. Refer to the Dockerfiles for the core stacks (e.g., [jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/blob/master/datascience-notebook/Dockerfile)) to get a feel for what's possible and best practices.
 
-[Submit pull requests]((https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) to your project repository on GitHub. Ensure your image builds properly on Travis before merging to master. Refer to Docker Cloud for builds of your master branch that you can `docker pull`.
+[Submit pull requests](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) to your project repository on GitHub. Ensure your image builds properly on Travis before merging to master. Refer to Docker Cloud for builds of your master branch that you can `docker pull`.
 
 ## Sharing Your Image
 
 Finally, if you'd like to add a link to your project to this documentation site, please do the following:
 
-0. Clone ths [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
-1. Open the `docs/using/selecting.md` source file.
-2. Locate the *Community Stacks* section.
+1. Clone ths [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
+2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section.
 3. Add a bullet with a link to your project and a short description of what your Docker image contains.
-4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with your changes.
-5. Discuss changes with the maintainers and address any formatting or content issues.
+4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with your changes. Maintainers will respond and work with you to address any formatting or content issues.
