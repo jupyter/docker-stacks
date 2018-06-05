@@ -166,5 +166,7 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
+# -- Extension configuration -------------------------------------------------
 
-
+# Anchors are often dynamic
+linkcheck_anchors = False
