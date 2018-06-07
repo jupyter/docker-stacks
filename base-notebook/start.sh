@@ -94,8 +94,7 @@ else
         # User is not attempting to override user/group via environment
         # variables, but they could still have overridden the uid/gid that
         # container runs as. Check that the user has an entry in the passwd
-        # file and if not add an entry. Also add a group file entry if the
-        # uid has its own distinct group but there is no entry.
+        # file and if not add an entry.
         whoami &> /dev/null || STATUS=$? && true
         if [[ "$STATUS" != "0" ]]; then
             if [[ -w /etc/passwd ]]; then
@@ -104,11 +103,6 @@ else
                 echo "jovyan:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
                 cat /tmp/passwd > /etc/passwd
                 rm /tmp/passwd
-                id -G -n 2>/dev/null | grep -q -w $(id -u) || STATUS=$? && true
-                if [[ "$STATUS" != "0" && "$(id -g)" == "0" ]]; then
-                    echo "Adding group file entry for $(id -u)"
-                    echo "jovyan:x:$(id -u):" >> /etc/group
-                fi
             else
                 echo 'Container must be run with group "root" to update passwd file'
             fi
