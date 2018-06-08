@@ -2,7 +2,7 @@
 
 Users sometimes share interesting ways of using the Jupyter Docker Stacks. We encourage users to [contribute these recipes](../contributing/recipes.html) to the documentation in case they prove useful to other members of the community by submitting a pull request to `docs/using/recipes.md`. The sections below capture this knowledge.
 
-## Using `pip install` in a Child Docker image
+## Using `pip install` or `conda install` in a Child Docker image
 
 Create a new Dockerfile like the one shown below. 
 
@@ -17,6 +17,33 @@ Then build a new image.
 
 ```bash
 docker build --rm -t jupyter/my-datascience-notebook .
+```
+
+To use a requirements.txt file, first create your `requirements.txt` file
+with the listing of packages desired.  Next, create a new Dockerfile like the one shown below.
+
+```dockerfile
+# Start from a core stack version
+FROM jupyter/datascience-notebook:9f9e5ca8fe5a
+# Install from requirements.txt file
+COPY requirements.txt /tmp/
+RUN pip install --requirement /tmp/requirements.txt && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+COPY . /tmp/
+```
+
+For conda, the Dockerfile is similar:
+
+```dockerfile
+# Start from a core stack version
+FROM jupyter/datascience-notebook:9f9e5ca8fe5a
+# Install from requirements.txt file
+COPY requirements.txt /tmp/
+RUN conda install --yes --file /tmp/requirements.txt && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+COPY . /tmp/
 ```
 
 Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
