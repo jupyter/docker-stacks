@@ -30,7 +30,6 @@ COPY requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
-COPY . /tmp/
 ```
 
 For conda, the Dockerfile is similar:
@@ -43,7 +42,6 @@ COPY requirements.txt /tmp/
 RUN conda install --yes --file /tmp/requirements.txt && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
-COPY . /tmp/
 ```
 
 Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
