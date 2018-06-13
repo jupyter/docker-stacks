@@ -24,6 +24,11 @@ The [User Guide on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/) de
 
 Please see the [Contributor Guide on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/) for information about how to contribute package updates, recipes, features, tests, and community maintained stacks.
 
+## Alternatives
+
+* [jupyter/repo2docker](https://github.com/jupyter/repo2docker) - Turn git repositories into Jupyter enabled Docker Images
+* [jupyter-on-openshift/jupyter-notebooks](https://github.com/jupyter-on-openshift/jupyter-notebooks) - OpenShift compatible S2I builder for basic notebook images
+
 ## Resources
 
 * [Documentation on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/)
