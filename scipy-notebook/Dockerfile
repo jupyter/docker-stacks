@@ -20,17 +20,17 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'conda-forge::blas=*=openblas' \
     'ipywidgets=7.2*' \
-    'pandas=0.22*' \
+    'pandas=0.23*' \
     'numexpr=2.6*' \
-    'matplotlib=2.1*' \
-    'scipy=1.0*' \
+    'matplotlib=2.2*' \
+    'scipy=1.1*' \
     'seaborn=0.8*' \
     'scikit-learn=0.19*' \
-    'scikit-image=0.13*' \
+    'scikit-image=0.14*' \
     'sympy=1.1*' \
     'cython=0.28*' \
     'patsy=0.5*' \
-    'statsmodels=0.8*' \
+    'statsmodels=0.9*' \
     'cloudpickle=0.5*' \
     'dill=0.2*' \
     'numba=0.38*' \
