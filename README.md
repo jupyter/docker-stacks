@@ -26,7 +26,8 @@ Please see the [Contributor Guide on ReadTheDocs](http://jupyter-docker-stacks.r
 
 ## Alternatives
 
-* [jupyter/repo2docker](https://github.com/jupyter/repo2docker) - Turn git repositories into Jupyter enabled Docker Images
+* [jupyter/repo2docker](https://github.com/jupyter/repo2docker) - Turn git repositories into Jupyter-enabled Docker Images
+* [openshift/source-to-image](https://github.com/openshift/source-to-image) - A tool for building/building artifacts from source and injecting into docker images
 * [jupyter-on-openshift/jupyter-notebooks](https://github.com/jupyter-on-openshift/jupyter-notebooks) - OpenShift compatible S2I builder for basic notebook images
 
 ## Resources
