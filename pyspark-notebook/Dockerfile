@@ -7,7 +7,7 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 2.3.0
+ENV APACHE_SPARK_VERSION 2.3.1
 ENV HADOOP_VERSION 2.7
 
 RUN apt-get -y update && \
@@ -17,7 +17,7 @@ RUN apt-get -y update && \
 
 RUN cd /tmp && \
         wget -q http://apache.claz.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
-        echo "258683885383480BA01485D6C6F7DC7CFD559C1584D6CEB7A3BBCF484287F7F57272278568F16227BE46B4F92591768BA3D164420D87014A136BF66280508B46 *spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" | sha512sum -c - && \
+        echo "dc3a97f3d99791d363e4f70a622b84d6e313bd852f6fdbc777d31eab44cbc112ceeaa20f7bf835492fb654f48ae57e9969f93d3b0e6ec92076d1c5e1b40b4696 *spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" | sha512sum -c - && \
         tar xzf spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -C /usr/local --owner root --group root --no-same-owner && \
         rm spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
@@ -38,7 +38,7 @@ RUN apt-get -y update && \
 
 # Spark and Mesos config
 ENV SPARK_HOME /usr/local/spark
-ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.6-src.zip
+ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.7-src.zip
 ENV MESOS_NATIVE_LIBRARY /usr/local/lib/libmesos.so
 ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info
 
