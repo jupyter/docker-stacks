@@ -56,7 +56,9 @@ def test_gid_change(container):
         command=['start.sh', 'id']
     )
     c.wait(timeout=10)
-    assert 'gid=110(users)' in c.logs(stdout=True).decode('utf-8')
+    logs = c.logs(stdout=True).decode('utf-8')
+    assert 'gid=100(users)' in logs
+    assert 'groups=110(jovyan)' in logs
 
 
 def test_sudo(container):
