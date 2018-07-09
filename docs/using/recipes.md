@@ -121,7 +121,7 @@ If you are mounting a host directory as `/home/jovyan/work` in your container an
 
 Ref: [https://github.com/jupyter/docker-stacks/issues/199](https://github.com/jupyter/docker-stacks/issues/199)
 
-## JuptyerHub
+## JupyterHub
 
 We also have contributed recipes for using JupyterHub.
 
