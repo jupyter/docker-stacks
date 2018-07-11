@@ -92,6 +92,9 @@ RUN conda install --quiet --yes \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
+# Initialize configuration file
+RUN jupyter notebook --generate-config
+
 USER root
 
 EXPOSE 8888
