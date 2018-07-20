@@ -89,7 +89,7 @@ if [ $(id -u) == 0 ] ; then
     # Exec the command as NB_USER with the PATH and the rest of
     # the environment preserved
     echo "Executing the command: $cmd"
-    exec sudo -E -H -u $NB_USER PATH=$PATH PYTHONPATH=$PYTHONPATH $cmd
+    exec sudo -E -H -u $NB_USER PATH=$PATH XDG_CACHE_HOME=/home/$NB_USER/.cache PYTHONPATH=$PYTHONPATH $cmd
 else
     if [[ "$NB_UID" == "$(id -u jovyan)" && "$NB_GID" == "$(id -g jovyan)" ]]; then
         # User is not attempting to override user/group via environment
