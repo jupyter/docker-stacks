@@ -3,4 +3,3 @@ pytest
 recommonmark==0.4.0
 requests
 sphinx>=1.6
-sphinx_rtd_theme
