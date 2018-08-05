@@ -70,11 +70,12 @@ if [ $(id -u) == 0 ] ; then
         usermod -u $NB_UID $NB_USER
     fi
 
-    # Add NB_USER to NB_GID if it's not the default group
+    # Set NB_USER primary gid to NB_GID (after making the group).  Set
+    # supplementary gids to NB_GID and 100.
     if [ "$NB_GID" != $(id -g $NB_USER) ] ; then
         echo "Add $NB_USER to group: $NB_GID"
-        groupadd -g $NB_GID -o $NB_USER
-        usermod -a -G $NB_GID $NB_USER
+        groupadd -g $NB_GID -o ${NB_GROUP:-${NB_USER}}
+        usermod -g $NB_GID -a -G $NB_GID,100 $NB_USER
     fi
 
     # Enable sudo if requested

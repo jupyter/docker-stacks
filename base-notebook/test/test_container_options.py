@@ -57,8 +57,8 @@ def test_gid_change(container):
     )
     c.wait(timeout=10)
     logs = c.logs(stdout=True).decode('utf-8')
-    assert 'gid=100(users)' in logs
-    assert 'groups=100(users),110(jovyan)' in logs
+    assert 'gid=110(jovyan)' in logs
+    assert 'groups=110(jovyan),100(users)' in logs
 
 
 def test_sudo(container):
