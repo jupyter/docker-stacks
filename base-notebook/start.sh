@@ -36,6 +36,7 @@ elif umask $NB_UMASK; then
     echo "umask changed to $NB_UMASK"
 else
     echo "Invalid umask value. Read 'man umask'"
+fi
 
 # Handle special flags if we're root
 if [ $(id -u) == 0 ] ; then
