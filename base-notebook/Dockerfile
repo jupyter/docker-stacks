@@ -32,6 +32,7 @@ ENV CONDA_DIR=/opt/conda \
     NB_USER=jovyan \
     NB_UID=1000 \
     NB_GID=100 \
+    NB_UMASK=0022 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
