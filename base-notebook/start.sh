@@ -27,17 +27,6 @@ for f in /usr/local/bin/start-notebook.d/*; do
   esac
   echo
 done
-
-# Modify umask if set with flag
-if [[ "$NB_UMASK" == "0022" ]]; then
-    echo "Using default umask $NB_UMASK"
-elif umask $NB_UMASK; then
-    echo "umask $NB_UMASK" >> /home/jovyan/.bashrc
-    echo "umask changed to $NB_UMASK"
-else
-    echo "Invalid umask value. Read 'man umask'"
-fi
-
 # Handle special flags if we're root
 if [ $(id -u) == 0 ] ; then
 

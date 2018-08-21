@@ -39,8 +39,4 @@ if 'GEN_CERT' in os.environ:
     c.NotebookApp.certfile = pem_file
 
 # Change default umask if set using flag
-if 'NB_UMASK' in os.environ:
-    try:
-        os.umask(int(os.environ['NB_UMASK'], 8))
-    except:
-        raise
+os.umask(int(os.environ['NB_UMASK'], 8))
