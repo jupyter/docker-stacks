@@ -29,8 +29,8 @@ for f in /usr/local/bin/start-notebook.d/*; do
 done
 
 # Modify umask if set with flag
-if [[ -z $NB_UMASK ]]; then
-    echo "Using default umask: ${umask}"
+if [[ "$NB_UMASK" == "0022" ]]; then
+    echo "Using default umask $NB_UMASK"
 elif umask $NB_UMASK; then
     echo "umask $NB_UMASK" >> /home/jovyan/.bashrc
     echo "umask changed to $NB_UMASK"
