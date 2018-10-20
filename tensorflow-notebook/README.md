@@ -1,4 +1,4 @@
-![docker pulls](https://img.shields.io/docker/pulls/jupyter/tensorflow-notebook.svg) ![docker stars](https://img.shields.io/docker/stars/jupyter/tensorflow-notebook.svg) [![](https://images.microbadger.com/badges/image/jupyter/tensorflow-notebook.svg)](https://microbadger.com/images/jupyter/tensorflow-notebook "jupyter/tensorflow-notebook image metadata")
+[![docker pulls](https://img.shields.io/docker/pulls/jupyter/tensorflow-notebook.svg)](https://hub.docker.com/r/jupyter/tensorflow-notebook/) [![docker stars](https://img.shields.io/docker/stars/jupyter/tensorflow-notebook.svg)](https://hub.docker.com/r/jupyter/tensorflow-notebook/) [![image metadata](https://images.microbadger.com/badges/image/jupyter/tensorflow-notebook.svg)](https://microbadger.com/images/jupyter/tensorflow-notebook "jupyter/tensorflow-notebook image metadata")
 
 # Jupyter Notebook Deep Learning Stack
 
