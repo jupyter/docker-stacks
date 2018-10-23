@@ -17,7 +17,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/base-notebook/Dockerfile)
 | [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
-`jupyter/base-notebook` is a small image supporting the [options common across all core stacks](configuration.html). It is the basis for all other stacks.
+`jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.html). It is the basis for all other stacks.
 
 * Minimally-functional Jupyter Notebook server (e.g., no [pandoc](https://pandoc.org/) for saving notebooks as PDFs)
 * [Miniconda](https://conda.io/miniconda.html) Python 3.x in `/opt/conda`
