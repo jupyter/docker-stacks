@@ -267,3 +267,26 @@ USER $NB_USER
 ```
 
 Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
+
+# Run jupyterlab inside an already secured environment (i.e., with no token)
+
+(Adapted from [issue 728](https://github.com/jupyter/docker-stacks/issues/728))
+
+The default security is very good. There are use cases, encouraged by
+containers, where the jupyter container and the system it runs within, lie
+inside the security boundary. In these use cases it is convenient to launch the
+server without a password or token. In this case, you should use the `start.sh`
+script to launch the server with no token:
+
+For jupyterlab:
+
+```
+docker run jupyter/base-notebook:6d2a05346196 start.sh jupyter lab --LabApp.token=''
+```
+
+For jupyter classic:
+```
+docker run jupyter/base-notebook:6d2a05346196 start.sh jupyter notebook --NotebookApp.token=''
+```
+
+
