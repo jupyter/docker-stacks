@@ -8,5 +8,5 @@ install:
     - make dev-env
 script:
     - set -e
-    - make test/docs docs
+    - make test/docs docs -d
     - make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"
