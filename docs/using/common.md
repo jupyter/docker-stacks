@@ -35,6 +35,13 @@ the notebook server. You do so by passing arguments to the `docker run` command.
 * `-v /some/host/folder/for/work:/home/jovyan/work` - Mounts a host machine directory as folder in the container. Useful when you want to preserve notebooks and other work even after the container is destroyed. **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
 * `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`. You can use these arguments as alternatives to setting `$NB_UID` and `$NB_GID`.
 
+### Startup Hooks
+
+If you require additional customizations to the runtime behavior of the
+notebook server then you should add shell scripts into the folder
+`/usr/local/bin/before-notebook.d/` inside the container. These scripts
+will be sourced at runtime before the notebook server launches.
+
 ## SSL Certificates
 
 You may mount SSL key and certificate files into a container and configure Jupyter Notebook to use them to accept HTTPS connections. For example, to mount a host folder containing a `notebook.key` and `notebook.crt` and use them, you might run the following:
