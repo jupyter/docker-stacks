@@ -268,7 +268,7 @@ USER $NB_USER
 
 Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
 
-# Run jupyterlab inside an already secured environment (i.e., with no token)
+## Run Jupyter Notebook/Lab inside an already secured environment (i.e., with no token)
 
 (Adapted from [issue 728](https://github.com/jupyter/docker-stacks/issues/728))
 
@@ -288,5 +288,3 @@ For jupyter classic:
 ```
 docker run jupyter/base-notebook:6d2a05346196 start.sh jupyter notebook --NotebookApp.token=''
 ```
-
-
