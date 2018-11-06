@@ -22,6 +22,7 @@ RUN apt-get update && \
 
 # Julia dependencies
 # install Julia packages in /opt/julia instead of $HOME
+ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.0.0
 
