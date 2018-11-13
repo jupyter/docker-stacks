@@ -61,7 +61,7 @@ docs: ## build HTML documentation
 	make -C docs html
 
 test/docs: ## check links in Sphinx documentation
-	make -C docs linkcheck
+	make -C docs
 
 test/%: ## run tests against a stack
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
