@@ -106,6 +106,7 @@
 				]
                             }
                         ],
+                        "automountServiceAccountToken": false,
                         "securityContext": {
                             "supplementalGroups": [
                                 100
