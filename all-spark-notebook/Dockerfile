@@ -27,7 +27,7 @@ RUN conda install --quiet --yes \
     'r-base=3.4.1' \
     'r-irkernel=0.8*' \
     'r-ggplot2=2.2*' \
-    'r-sparklyr=0.9.3' \
+    'r-sparklyr=0.9*' \
     'r-rcurl=1.95*' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR && \
