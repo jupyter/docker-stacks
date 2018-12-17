@@ -13,7 +13,6 @@ ENV HADOOP_VERSION 2.7
 
 RUN apt-get -y update && \
     apt-get install --no-install-recommends -y openjdk-8-jre-headless ca-certificates-java && \
-    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 RUN cd /tmp && \
@@ -34,7 +33,6 @@ RUN apt-get -y update && \
     apt-get -y update && \
     apt-get --no-install-recommends -y install mesos=1.2\* && \
     apt-get purge --auto-remove -y gnupg && \
-    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Spark and Mesos config
