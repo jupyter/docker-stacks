@@ -37,10 +37,16 @@ the notebook server. You do so by passing arguments to the `docker run` command.
 
 ### Startup Hooks
 
-If you require additional customizations to the runtime behavior of the
-notebook server then you should add shell scripts into the folder
-`/usr/local/bin/before-notebook.d/` inside the container. These scripts
-will be sourced at runtime before the notebook server launches.
+You can further customize the container environment by adding shell scripts (`*.sh`) to be sourced
+or executables (`chmod +x`) to be run to the paths below:
+
+* `/usr/local/bin/start-notebook.d/` - handled before any of the standard options noted above
+  are applied
+* `/usr/local/bin/before-notebook.d/` - handled after all o the standard options noted above are
+  applied and just before the notebook server launches
+
+See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
+script for execution details.
 
 ## SSL Certificates
 
