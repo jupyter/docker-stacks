@@ -146,4 +146,4 @@ The core stacks are just a tiny sample of what's possible when combining Jupyter
 
 * [csharp-notebook is a community Jupyter Docker Stack image. Try C# in Jupyter Notebooks. ](https://github.com/tlinnet/csharp-notebook). The image includes more than 200 Jupyter Notebooks with example C# code and can readily be tried online via mybinder.org. Click here to launch [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master).
 
-See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.
+See the [contributing guide](../contributing/stacks.html) for information about how to create your own Jupyter Docker Stack.
