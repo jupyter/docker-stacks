@@ -37,3 +37,6 @@ if 'GEN_CERT' in os.environ:
     # Restrict access to the file
     os.chmod(pem_file, stat.S_IRUSR | stat.S_IWUSR)
     c.NotebookApp.certfile = pem_file
+
+# Change default umask if set using flag
+os.umask(int(os.environ['NB_UMASK'], 8))
