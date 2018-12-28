@@ -42,7 +42,7 @@ or executables (`chmod +x`) to be run to the paths below:
 
 * `/usr/local/bin/start-notebook.d/` - handled before any of the standard options noted above
   are applied
-* `/usr/local/bin/before-notebook.d/` - handled after all o the standard options noted above are
+* `/usr/local/bin/before-notebook.d/` - handled after all of the standard options noted above are
   applied and just before the notebook server launches
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
