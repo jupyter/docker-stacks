@@ -3,4 +3,4 @@
 ARG TAG=17aba6048f44
 FROM jupyter/base-notebook:$TAG
 ENV TAG=$TAG
-COPY README.ipynb .
+COPY binder/README.ipynb .
