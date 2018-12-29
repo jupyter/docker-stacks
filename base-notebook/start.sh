@@ -109,8 +109,8 @@ else
         # variables, but they could still have overridden the uid/gid that
         # container runs as. Check that the user has an entry in the passwd
         # file and if not add an entry.
-        whoami &> /dev/null || STATUS=$? && true
-        if [[ -n "$STATUS" && "$STATUS" != "0" ]]; then
+        STATUS=0 && whoami &> /dev/null || STATUS=$? && true
+        if [[ "$STATUS" != "0" ]]; then
             if [[ -w /etc/passwd ]]; then
                 echo "Adding passwd file entry for $(id -u)"
                 cat /etc/passwd | sed -e "s/^jovyan:/nayvoj:/" > /tmp/passwd
