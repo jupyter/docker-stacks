@@ -42,7 +42,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 
 * Everything in `jupyter/base-notebook`
 * [Pandoc](http://pandoc.org) and [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [jed](https://www.jedsoft.org/jed/), [vim](http://www.vim.org/), and unzip
+* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [jed](https://www.jedsoft.org/jed/), [nano](https://www.nano-editor.org/), and unzip
 
 ### jupyter/r-notebook
 
