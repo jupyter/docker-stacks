@@ -40,6 +40,7 @@ run-hooks /usr/local/bin/start-notebook.d
 
 # Handle special flags if we're root
 if [ $(id -u) == 0 ] ; then
+    run-hooks /usr/local/bin/start-notebook-root.d
 
     # Only attempt to change the jovyan username if it exists
     if id jovyan &> /dev/null ; then
@@ -102,9 +103,11 @@ if [ $(id -u) == 0 ] ; then
     # Exec the command as NB_USER with the PATH and the rest of
     # the environment preserved
     run-hooks /usr/local/bin/before-notebook.d
+    run-hooks /usr/local/bin/before-notebook-root.d
     echo "Executing the command: ${cmd[@]}"
-    exec sudo -E -H -u $NB_USER PATH=$PATH XDG_CACHE_HOME=/home/$NB_USER/.cache PYTHONPATH=${PYTHONPATH:-} "${cmd[@]}"
+    exec sudo -E -H -u $NB_USER PATH=$PATH XDG_CACHE_HOME=/home/$NB_USER/.cache PYTHONPATH=${PYTHONPATH:-} bash "$BASH_SOURCE" "${cmd[@]}"
 else
+    run-hooks /usr/local/bin/start-notebook-user.d
     if [[ "$NB_UID" == "$(id -u jovyan)" && "$NB_GID" == "$(id -g jovyan)" ]]; then
         # User is not attempting to override user/group via environment
         # variables, but they could still have overridden the uid/gid that
@@ -146,6 +149,7 @@ else
 
     # Execute the command
     run-hooks /usr/local/bin/before-notebook.d
+    run-hooks /usr/local/bin/before-notebook-user.d
     echo "Executing the command: ${cmd[@]}"
     exec "${cmd[@]}"
 fi
