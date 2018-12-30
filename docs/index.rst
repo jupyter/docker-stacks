@@ -10,7 +10,7 @@ Jupyter Docker Stacks are a set of ready-to-run Docker images containing Jupyter
 Quick Start
 -----------
 
-You can try a `recent build of the jupyter/base-notebook image on mybinder.org <https://mybinder.org/v2/gh/jupyter/docker-stacks/master>`_ by simply clicking the preceding link. Otherwise, the two examples below may help you get started if you `have Docker installed <https://docs.docker.com/install/>`_, know :doc:`which Docker image <using/selecting>` you want to use, and want to launch a single Jupyter Notebook server in a container.
+You can try a `recent build of the jupyter/base-notebook image on mybinder.org <https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb>`_ by simply clicking the preceding link. Otherwise, the two examples below may help you get started if you `have Docker installed <https://docs.docker.com/install/>`_, know :doc:`which Docker image <using/selecting>` you want to use, and want to launch a single Jupyter Notebook server in a container.
 
 The other pages in this documentation describe additional uses and features in detail.
 
