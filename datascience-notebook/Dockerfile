@@ -46,7 +46,7 @@ USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
-    'rpy2=2.8*' \
+    'rpy2=2.9*' \
     'r-base=3.5.1' \
     'r-irkernel=0.8*' \
     'r-plyr=1.8*' \
