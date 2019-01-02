@@ -32,8 +32,8 @@ run-hooks () {
                 fi
                 ;;
         esac
-    echo "$0: done running hooks in $1"
     done
+    echo "$0: done running hooks in $1"
 }
 
 run-hooks /usr/local/bin/start-notebook.d
