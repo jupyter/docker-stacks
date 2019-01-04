@@ -22,6 +22,7 @@ RUN apt-get update && apt-get -yq dist-upgrade \
     bzip2 \
     ca-certificates \
     sudo \
+    gosu \
     locales \
     fonts-liberation \
  && rm -rf /var/lib/apt/lists/*

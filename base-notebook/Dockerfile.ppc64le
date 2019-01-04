@@ -20,6 +20,7 @@ RUN apt-get update && apt-get -yq dist-upgrade \
     git \
     locales \
     sudo \
+    gosu \
     wget \
     && \
     rm -rf /var/lib/apt/lists/*
