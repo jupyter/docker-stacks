@@ -12,6 +12,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-dejavu \
     tzdata \
+    r-cran-rodbc \
     gfortran \
     gcc && \
     rm -rf /var/lib/apt/lists/*
