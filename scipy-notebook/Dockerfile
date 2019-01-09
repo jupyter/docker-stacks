@@ -19,7 +19,7 @@ USER $NB_UID
 # use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
     'conda-forge::blas=*=openblas' \
-    'ipywidgets=7.2*' \
+    'ipywidgets=7.4*' \
     'pandas=0.23*' \
     'numexpr=2.6*' \
     'matplotlib=2.2*' \
