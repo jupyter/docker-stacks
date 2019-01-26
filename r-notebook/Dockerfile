@@ -12,6 +12,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-dejavu \
     tzdata \
+    unixodbc \
+    unixodbc-dev \
+    r-cran-rodbc \
     gfortran \
     gcc && \
     rm -rf /var/lib/apt/lists/*
@@ -21,6 +24,8 @@ USER $NB_UID
 # R packages
 RUN conda install --quiet --yes \
     'r-base=3.5.1' \
+    'r-rodbc=1.3*' \
+    'unixodbc=2.3.*' \
     'r-irkernel=0.8*' \
     'r-plyr=1.8*' \
     'r-devtools=1.13*' \
