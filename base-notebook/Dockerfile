@@ -110,7 +110,11 @@ CMD ["start-notebook.sh"]
 # Add local files as late as possible to avoid cache busting
 COPY scripts/* /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
-RUN fix-permissions /etc/jupyter/
+RUN fix-permissions /etc/jupyter/ && \
+    ln -t /usr/local/bin/ -s \
+      $CONDA_DIR/bin/conda \
+      $CONDA_DIR/bin/pip \
+      $CONDA_DIR/bin/python
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
