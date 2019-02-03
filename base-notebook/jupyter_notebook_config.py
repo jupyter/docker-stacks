@@ -26,6 +26,17 @@ if 'GEN_CERT' in os.environ:
             pass
         else:
             raise
+
+    # Generate an openssl.cnf file to set the distinguished name
+    cnf_file = os.path.join(os.getenv('CONDA_DIR', '/usr/lib'), 'ssl', 'openssl.cnf')
+    if not os.path.isfile(cnf_file):
+        with open(cnf_file, 'w') as fh:
+            fh.write('''\
+[req]
+distinguished_name = req_distinguished_name
+[req_distinguished_name]
+''')
+
     # Generate a certificate if one doesn't exist on disk
     subprocess.check_call(['openssl', 'req', '-new',
                            '-newkey', 'rsa:2048',
