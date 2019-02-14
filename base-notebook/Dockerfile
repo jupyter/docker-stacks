@@ -51,7 +51,7 @@ RUN groupadd wheel -g 11 && \
     chown $NB_USER:$NB_GID $CONDA_DIR && \
     chmod g+w /etc/passwd && \
     fix-permissions $HOME && \
-    fix-permissions $CONDA_DIR
+    fix-permissions "$(dirname $CONDA_DIR)"
 
 USER $NB_UID
 
