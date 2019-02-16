@@ -1,0 +1,102 @@
+--- Dockerfile	2017-05-11 12:59:30.006182756 -0400
++++ Dockerfile.ppc64le	2017-05-11 12:59:57.326632865 -0400
+@@ -1,37 +1,43 @@
+-# Copyright (c) Jupyter Development Team.
++# Copyright (c) IBM Corporation 2016 
+ # Distributed under the terms of the Modified BSD License.
+ 
+-# Debian Jessie debootstrap from 2017-02-27
+-# https://github.com/docker-library/official-images/commit/aa5973d0c918c70c035ec0746b8acaec3a4d7777
+-FROM debian@sha256:52af198afd8c264f1035206ca66a5c48e602afb32dc912ebf9e9478134601ec4
++# Ubuntu image 
++FROM ppc64le/ubuntu:trusty
+ 
+-MAINTAINER Jupyter Project <jupyter@googlegroups.com>
++MAINTAINER Ilsiyar Gaynutdinov <ilsiyar_gaynutdinov@ru.ibm.com>
+ 
+ USER root
+ 
+ # Install all OS dependencies for notebook server that starts but lacks all
+ # features (e.g., download as all possible file formats)
+ ENV DEBIAN_FRONTEND noninteractive
+-RUN REPO=http://cdn-fastly.deb.debian.org \
+- && echo "deb $REPO/debian jessie main\ndeb $REPO/debian-security jessie/updates main" > /etc/apt/sources.list \
+- && apt-get update && apt-get -yq dist-upgrade \
++RUN apt-get update && apt-get -yq dist-upgrade \
+  && apt-get install -yq --no-install-recommends \
+-    wget \
++    build-essential \
+     bzip2 \
+     ca-certificates \
+-    sudo \
++    cmake \
++    git \
+     locales \
+- && apt-get clean \
+- && rm -rf /var/lib/apt/lists/*
+-
+-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+-    locale-gen
++    sudo \
++    wget \
++    && apt-get clean && \
++    rm -rf /var/lib/apt/lists/*
+ 
+-# Install Tini
+-RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.10.0/tini && \
+-    echo "1361527f39190a7338a0b434bd8c88ff7233ce7b9a4876f3315c22fce7eca1b0 *tini" | sha256sum -c - && \
+-    mv tini /usr/local/bin/tini && \
++RUN echo "LANGUAGE=en_US.UTF-8" >> /etc/default/locale
++RUN echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
++RUN echo "LC_TYPE=en_US.UTF-8" >> /etc/default/locale
++RUN locale-gen en_US en_US.UTF-8
++
++#build and install Tini for ppc64le
++RUN wget https://github.com/krallin/tini/archive/v0.10.0.tar.gz && \
++    tar zxvf v0.10.0.tar.gz && \
++    rm -rf v0.10.0.tar.gz
++WORKDIR tini-0.10.0/
++RUN cmake . && make install
++RUN mv ./tini /usr/local/bin/tini  && \
+     chmod +x /usr/local/bin/tini
++WORKDIR ..
+ 
+ # Configure environment
+ ENV CONDA_DIR /opt/conda
+@@ -59,25 +65,26 @@
+ # Install conda as jovyan
+ RUN cd /tmp && \
+     mkdir -p $CONDA_DIR && \
+-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-x86_64.sh && \
+-    echo "c59b3dd3cad550ac7596e0d599b91e75d88826db132e4146030ef471bb434e9a *Miniconda3-4.2.12-Linux-x86_64.sh" | sha256sum -c - && \
+-    /bin/bash Miniconda3-4.2.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+-    rm Miniconda3-4.2.12-Linux-x86_64.sh && \
++    wget https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-ppc64le.sh && \
++    /bin/bash Miniconda3-4.2.12-Linux-ppc64le.sh -f -b -p $CONDA_DIR && \
++    rm -rf Miniconda3-4.2.12-Linux-ppc64le.sh && \
++    $CONDA_DIR/bin/conda install --quiet --yes conda=4.2.12  && \
+     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
+     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
+     conda clean -tipsy
+ 
+-# Install Jupyter Notebook and Hub
+-RUN conda install --quiet --yes \
+-    'notebook=5.2.*' \
+-    'jupyterhub=0.7.*' \
+-    'jupyterlab=0.18.*' \
+-    && conda clean -tipsy
++# Install Jupyter notebook and Hub
++RUN yes | pip install --upgrade pip
++RUN yes | pip install --quiet --no-cache-dir \
++    'notebook==5.2.*' \
++    'jupyterhub==0.7.*' \
++    'jupyterlab==0.18.*'
+ 
+ USER root
+ 
+ EXPOSE 8888
+ WORKDIR /home/$NB_USER/work
++RUN echo "ALL            ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers
+ 
+ # Configure container startup
+ ENTRYPOINT ["tini", "--"]
