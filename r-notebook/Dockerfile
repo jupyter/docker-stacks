@@ -28,7 +28,7 @@ RUN conda install --quiet --yes \
     'unixodbc=2.3.*' \
     'r-irkernel=0.8*' \
     'r-plyr=1.8*' \
-    'r-devtools=1.13*' \
+    'r-devtools=2.0*' \
     'r-tidyverse=1.2*' \
     'r-shiny=1.2*' \
     'r-rmarkdown=1.11*' \
@@ -46,3 +46,6 @@ RUN conda install --quiet --yes \
     'r-hexbin=1.27*' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
+
+# Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
+RUN echo "TAR=/bin/tar" > $HOME/.Renviron
