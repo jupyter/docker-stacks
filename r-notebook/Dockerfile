@@ -19,6 +19,9 @@ RUN apt-get update && \
     gcc && \
     rm -rf /var/lib/apt/lists/*
 
+# Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
+RUN ln -s /bin/tar /bin/gtar
+
 USER $NB_UID
 
 # R packages
@@ -46,6 +49,3 @@ RUN conda install --quiet --yes \
     'r-hexbin=1.27*' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
-
-# Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
-RUN echo "TAR=/bin/tar" > $HOME/.Renviron
