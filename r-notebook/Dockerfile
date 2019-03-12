@@ -19,6 +19,9 @@ RUN apt-get update && \
     gcc && \
     rm -rf /var/lib/apt/lists/*
 
+# Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
+RUN ln -s /bin/tar /bin/gtar
+
 USER $NB_UID
 
 # R packages
@@ -28,7 +31,7 @@ RUN conda install --quiet --yes \
     'unixodbc=2.3.*' \
     'r-irkernel=0.8*' \
     'r-plyr=1.8*' \
-    'r-devtools=1.13*' \
+    'r-devtools=2.0*' \
     'r-tidyverse=1.2*' \
     'r-shiny=1.2*' \
     'r-rmarkdown=1.11*' \
