@@ -45,10 +45,7 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
 ADD fix-permissions /usr/local/bin/fix-permissions
 
 # Enable prompt color in the skeleton .bashrc before creating the default NB_USER
-# and in the default bash.bashrc for the case where the user home directory gets
-# overridden.
-RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc && \
-    sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/bash.bashrc
+RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc
 
 # Create NB_USER wtih name jovyan user with UID=1000 and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
