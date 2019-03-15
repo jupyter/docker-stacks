@@ -11,10 +11,22 @@ ${COMMIT_MSG}
 ## R Packages
 
 \`\`\`
+$(docker run --rm ${IMAGE_NAME} R --version)
+\`\`\`
+
+\`\`\`
 $(docker run --rm ${IMAGE_NAME} R --silent -e 'installed.packages(.Library)[, c(1,3)]')
 \`\`\`
 
 ## Python Packages
+
+\`\`\`
+$(docker run --rm ${IMAGE_NAME} python --version)
+\`\`\`
+
+\`\`\`
+$(docker run --rm ${IMAGE_NAME} conda info)
+\`\`\`
 
 \`\`\`
 $(docker run --rm ${IMAGE_NAME} conda list)

@@ -11,16 +11,32 @@ ${COMMIT_MSG}
 ## Julia Packages
 
 \`\`\`
+$(docker run --rm ${IMAGE_NAME} julia -E 'using InteractiveUtils; versioninfo()')
+\`\`\`
+
+\`\`\`
 $(docker run --rm ${IMAGE_NAME} julia -E 'import Pkg; Pkg.status()')
 \`\`\`
 
 ## Python Packages
 
 \`\`\`
+$(docker run --rm ${IMAGE_NAME} python --version)
+\`\`\`
+
+\`\`\`
+$(docker run --rm ${IMAGE_NAME} conda info)
+\`\`\`
+
+\`\`\`
 $(docker run --rm ${IMAGE_NAME} conda list)
 \`\`\`
 
 ## R Packages
+
+\`\`\`
+$(docker run --rm ${IMAGE_NAME} R --version)
+\`\`\`
 
 \`\`\`
 $(docker run --rm ${IMAGE_NAME} R --silent -e 'installed.packages(.Library)[, c(1,3)]')
