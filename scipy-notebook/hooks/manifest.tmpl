@@ -1,5 +1,5 @@
 cat << EOF > "$MANIFEST_FILE"
-* Build datetime: $(date -u +%FT%TZ)
+* Build datetime: ${BUILD_TIMESTAMP}
 * DockerHub build code: ${BUILD_CODE}
 * Docker image: ${DOCKER_REPO}:${GIT_SHA_TAG}
 * Git commit SHA: [${SOURCE_COMMIT}](https://github.com/jupyter/docker-stacks/commit/${SOURCE_COMMIT})
@@ -9,6 +9,14 @@ ${COMMIT_MSG}
 \`\`\`
 
 ## Python Packages
+
+\`\`\`
+$(docker run --rm ${IMAGE_NAME} python --version)
+\`\`\`
+
+\`\`\`
+$(docker run --rm ${IMAGE_NAME} conda info)
+\`\`\`
 
 \`\`\`
 $(docker run --rm ${IMAGE_NAME} conda list)

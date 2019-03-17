@@ -8,11 +8,13 @@ docker tag $IMAGE_NAME $DOCKER_REPO:$GIT_SHA_TAG
 docker push $DOCKER_REPO:$GIT_SHA_TAG
 
 # Create a working directory.
+BUILD_TIMESTAMP=$(date -u +%FT%TZ)
 WORKDIR=$(mktemp -d)
 GIT_URI="git@github.com:jupyter/docker-stacks.wiki.git"
 GIT_SANDBOX="${WORKDIR}/docker-stacks.wiki"
 IMAGE_SHORT_NAME=$(basename $DOCKER_REPO)
-MANIFEST_FILE="${GIT_SANDBOX}/manifests/${IMAGE_SHORT_NAME}-${SOURCE_COMMIT:0:12}.md"
+MANIFEST_FILE="${GIT_SANDBOX}/manifests/${IMAGE_SHORT_NAME}-${GIT_SHA_TAG}.md"
+INDEX_FILE="${GIT_SANDBOX}/Home.md"
 
 # Configure git so it can push back to GitHub.
 eval $(ssh-agent -s)
@@ -29,6 +31,7 @@ popd
 # Render the build manifest template.
 mkdir -p $(dirname "$MANIFEST_FILE")
 source hooks/manifest.tmpl
+source hooks/index.tmpl
 
 # Push the wiki update back to GitHub.
 pushd "$GIT_SANDBOX"
