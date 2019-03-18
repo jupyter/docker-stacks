@@ -11,7 +11,7 @@ ${COMMIT_MSG}
 ## Apache Spark
 
 \`\`\`
-$(docker run --rm ${IMAGE_NAME} spark-submit --version 2>&1)
+$(docker run --rm ${IMAGE_NAME} bash -c '$SPARK_HOME/bin/spark-submit --version')
 \`\`\`
 
 ## Python Packages
