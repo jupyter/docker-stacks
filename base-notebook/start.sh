@@ -55,6 +55,7 @@ if [ $(id -u) == 0 ] ; then
     fi
     if [ ! -z "$CHOWN_EXTRA" ]; then
         for extra_dir in $(echo $CHOWN_EXTRA | tr ',' ' '); do
+            echo "Changing ownership of ${extra_dir} to $NB_UID:$NB_GID"
             chown $CHOWN_EXTRA_OPTS $NB_UID:$NB_GID $extra_dir
         done
     fi
