@@ -39,5 +39,5 @@ Please see the [Contributor Guide on ReadTheDocs](http://jupyter-docker-stacks.r
 
 * [Documentation on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/)
 * [Issue Tracker on GitHub](https://github.com/jupyter/docker-stacks)
-* [Jupyter Google Group](https://groups.google.com/forum/#!forum/jupyter)
+* [Jupyter Discourse Q&A](https://discourse.jupyter.org/c/questions)
 * [Jupyter Website](https://jupyter.org)
