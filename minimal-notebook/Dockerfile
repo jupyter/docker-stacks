@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     texlive-latex-base \
     texlive-latex-extra \
     texlive-xetex \
+    tzdata \
     unzip \
     nano \
     && rm -rf /var/lib/apt/lists/*
