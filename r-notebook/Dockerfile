@@ -11,7 +11,6 @@ USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-dejavu \
-    tzdata \
     unixodbc \
     unixodbc-dev \
     r-cran-rodbc \

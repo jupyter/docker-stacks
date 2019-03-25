@@ -15,7 +15,6 @@ RUN fix-permissions $R_LIBS_USER
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-dejavu \
-    tzdata \
     gfortran \
     gcc && \
     rm -rf /var/lib/apt/lists/*
