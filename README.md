@@ -5,7 +5,7 @@
 
 # Jupyter Docker Stacks
 
-Jupyter Docker Stacks are a set of ready-to-run Docker images containing Jupyter applications and interactive computing tools.
+Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter) containing Jupyter applications and interactive computing tools.
 
 ## Quick Start
 
@@ -41,3 +41,4 @@ Please see the [Contributor Guide on ReadTheDocs](http://jupyter-docker-stacks.r
 * [Issue Tracker on GitHub](https://github.com/jupyter/docker-stacks)
 * [Jupyter Discourse Q&A](https://discourse.jupyter.org/c/questions)
 * [Jupyter Website](https://jupyter.org)
+* [Images on DockerHub](https://hub.docker.com/u/jupyter)
