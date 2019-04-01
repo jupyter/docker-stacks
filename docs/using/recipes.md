@@ -207,7 +207,29 @@ A few suggestions have been made regarding using Docker Stacks with spark.
 
 ### Using PySpark with AWS S3
 
+Using Spark session for hadoop 2.7.3
+
+```py
+import os
+# !ls /usr/local/spark/jars/hadoop* # to figure out what version of hadoop
+os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
+
+import pyspark
+myAccessKey = input() 
+mySecretKey = input()
+
+spark = pyspark.sql.SparkSession.builder \
+        .master("local[*]") \
+        .config("spark.hadoop.fs.s3a.access.key", myAccessKey) \
+        .config("spark.hadoop.fs.s3a.secret.key", mySecretKey) \
+        .getOrCreate()
+
+df = spark.read.parquet("s3://myBucket/myKey")
 ```
+
+Using Spark context for hadoop 2.6.0
+
+```py
 import os
 os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages com.amazonaws:aws-java-sdk:1.10.34,org.apache.hadoop:hadoop-aws:2.6.0 pyspark-shell'
 
