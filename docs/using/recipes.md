@@ -121,6 +121,57 @@ If you are mounting a host directory as `/home/jovyan/work` in your container an
 
 Ref: [https://github.com/jupyter/docker-stacks/issues/199](https://github.com/jupyter/docker-stacks/issues/199)
 
+## Manpage installation
+
+Most containers, including our Ubuntu base image, ship without manpages installed to save space. You can use the following dockerfile to inherit from one of our images to enable manpages:
+
+```dockerfile
+# Choose your desired base image
+ARG BASE_CONTAINER=jupyter/datascience-notebook:latest
+FROM $BASE_CONTAINER
+
+USER root
+
+# Remove the manpage blacklist, install man, install docs
+RUN rm /etc/dpkg/dpkg.cfg.d/excludes \
+    && apt-get update \
+    && dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install -yq --no-install-recommends --reinstall man \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Workaround for a mandb bug, should be fixed in mandb > 2.8.5
+# https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
+RUN echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/man" >> /etc/manpath.config \
+    && echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/share/man" >> /etc/manpath.config \
+    && mandb
+
+USER $NB_UID
+```
+
+Adding the documentation on top of an existing singleuser image wastes a lot of space and requires reinstalling every system package, which can take additional time and bandwidth; the `datascience-notebook` image has been shown to grow by almost 3GB when adding manapages in this way. Enabling manpages in the base Ubuntu layer prevents this container bloat:
+
+```Dockerfile
+# Ubuntu 18.04 (bionic) from 2018-05-26
+# https://github.com/docker-library/official-images/commit/aac6a45b9eb2bffb8102353c350d341a410fb169
+ARG BASE_CONTAINER=ubuntu:bionic-20180526@sha256:c8c275751219dadad8fa56b3ac41ca6cb22219ff117ca98fe82b42f24e1ba64e
+FROM $BASE_CONTAINER
+
+ENV DEBIAN_FRONTEND noninteractive
+# Remove the manpage blacklist, install man, install docs
+RUN rm /etc/dpkg/dpkg.cfg.d/excludes \
+    && apt-get update \
+    && dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install -yq --no-install-recommends --reinstall man \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Workaround for a mandb bug, should be fixed in mandb > 2.8.5
+# https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
+RUN echo "MANPATH_MAP /opt/conda/bin /opt/conda/man" >> /etc/manpath.config \
+    && echo "MANPATH_MAP /opt/conda/bin /opt/conda/share/man" >> /etc/manpath.config
+```
+
+Be sure to check the current base image in `base-notebook` before building.
+
 ## JupyterHub
 
 We also have contributed recipes for using JupyterHub.
