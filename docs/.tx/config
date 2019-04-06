@@ -1,0 +1,27 @@
+[main]
+host = https://www.transifex.com
+
+[jupyter-docker-stacks-1.using]
+file_filter = locale/<lang>/LC_MESSAGES/using.po
+source_file = _build/gettext/using.pot
+source_lang = en
+type = PO
+
+[jupyter-docker-stacks-1.maintaining]
+file_filter = locale/<lang>/LC_MESSAGES/maintaining.po
+source_file = _build/gettext/maintaining.pot
+source_lang = en
+type = PO
+
+[jupyter-docker-stacks-1.index]
+file_filter = locale/<lang>/LC_MESSAGES/index.po
+source_file = _build/gettext/index.pot
+source_lang = en
+type = PO
+
+[jupyter-docker-stacks-1.contributing]
+file_filter = locale/<lang>/LC_MESSAGES/contributing.po
+source_file = _build/gettext/contributing.pot
+source_lang = en
+type = PO
+
