@@ -7,7 +7,7 @@ Thank you for contributing to the Jupyter Docker Stacks! We review pull requests
 Please follow the process below to suggest a new feature for inclusion in one of the core stacks:
 
 1. [Open a GitHub issue](https://github.com/jupyter/docker-stacks/issues) describing the feature you'd like to contribute.
-2. Discuss with the maintainers whether the addition makes sense in [one of the core stacks](../using/selecting.html#Core-Stacks), as a [recipe in the documentation](recipes.html), as a [community stack](stacks.html), or as something else entirely.
+2. Discuss with the maintainers whether the addition makes sense in [one of the core stacks](../using/selecting.md#Core-Stacks), as a [recipe in the documentation](recipes.md), as a [community stack](stacks.md), or as something else entirely.
 
 ## Selection Criteria
 
