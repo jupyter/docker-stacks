@@ -1,27 +1,27 @@
 [main]
 host = https://www.transifex.com
 
-[jupyter-docker-stacks-1.using]
+[jupyter-docker-stacks-1.using-po--master]
 file_filter = locale/<lang>/LC_MESSAGES/using.po
-source_file = _build/gettext/using.pot
+source_file = locale/en/LC_MESSAGES/using.po
 source_lang = en
 type = PO
 
-[jupyter-docker-stacks-1.maintaining]
+[jupyter-docker-stacks-1.maintaining-po--master]
 file_filter = locale/<lang>/LC_MESSAGES/maintaining.po
-source_file = _build/gettext/maintaining.pot
+source_file = locale/en/LC_MESSAGES/maintaining.pot
 source_lang = en
 type = PO
 
-[jupyter-docker-stacks-1.index]
+[jupyter-docker-stacks-1.index-po--master]
 file_filter = locale/<lang>/LC_MESSAGES/index.po
-source_file = _build/gettext/index.pot
+source_file = locale/en/LC_MESSAGES/index.pot
 source_lang = en
 type = PO
 
-[jupyter-docker-stacks-1.contributing]
+[jupyter-docker-stacks-1.contributing-po--master]
 file_filter = locale/<lang>/LC_MESSAGES/contributing.po
-source_file = _build/gettext/contributing.pot
+source_file = locale/en/LC_MESSAGES/contributing.pot
 source_lang = en
 type = PO
 
