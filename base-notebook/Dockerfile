@@ -101,7 +101,7 @@ RUN conda install --quiet --yes 'tini=0.18.0' && \
 RUN conda install --quiet --yes \
     'notebook=5.7.8' \
     'jupyterhub=0.9.6' \
-    'jupyterlab=0.35.4' && \
+    'jupyterlab=0.35.5' && \
     conda clean -tipsy && \
     jupyter labextension install @jupyterlab/hub-extension@^0.12.0 && \
     npm cache clean --force && \
