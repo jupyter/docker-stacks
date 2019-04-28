@@ -1,10 +1,15 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
+########################################
+# Stage 1
+#
+# Operating System stage taking an Official base and adding the minimal pieces to set us up for a basic Jupyter container
+
 # Ubuntu 18.04 (bionic) from 2018-05-26
 # https://github.com/docker-library/official-images/commit/aac6a45b9eb2bffb8102353c350d341a410fb169
 ARG BASE_CONTAINER=ubuntu:bionic-20180526@sha256:c8c275751219dadad8fa56b3ac41ca6cb22219ff117ca98fe82b42f24e1ba64e
-FROM $BASE_CONTAINER
+FROM $BASE_CONTAINER as base
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 ARG NB_USER="jovyan"
@@ -59,6 +64,14 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions $HOME && \
     fix-permissions "$(dirname $CONDA_DIR)"
 
+########################################
+# Stage 2
+#
+# This stage takes an OS base layer and builds in the miniconda package and Jupyter libraries.
+# RUN commands in this stage should only impact the `$CONDA_DIR` and `/home/$NB_USER` directories.
+
+FROM base as miniconda 
+
 USER $NB_UID
 
 # Setup work directory for backward-compatibility
@@ -110,7 +123,23 @@ RUN conda install --quiet --yes \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-USER root
+########################################
+# Stage 3
+# 
+# Copies the `$CONDA_DIR` and  `/home/$NB_USER` directories from the miniconda stage back into a fresh copy of the base stage
+
+FROM base  
+
+ENV CONDA_DIR=/opt/conda 
+ENV PATH=$CONDA_DIR/bin:$PATH \
+    MINICONDA_VERSION=$MINICONDA_VERSION \
+    CONDA_VERSION=$CONDA_VERSION \
+    JUPYTER=$CONDA_DIR/bin/jupyter
+
+USER $NB_UID
+
+COPY --chown=$NB_GUID:$NB_UID --from=miniconda $CONDA_DIR $CONDA_DIR
+COPY --chown=$NB_GUID:$NB_UID --from=miniconda $HOME $HOME
 
 EXPOSE 8888
 WORKDIR $HOME
