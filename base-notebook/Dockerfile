@@ -136,10 +136,10 @@ ENV PATH=$CONDA_DIR/bin:$PATH \
     CONDA_VERSION=$CONDA_VERSION \
     JUPYTER=$CONDA_DIR/bin/jupyter
 
-USER $NB_UID
+USER root
 
-COPY --chown=$NB_GUID:$NB_UID --from=miniconda $CONDA_DIR $CONDA_DIR
-COPY --chown=$NB_GUID:$NB_UID --from=miniconda $HOME $HOME
+COPY --chown=1000:100 --from=miniconda $CONDA_DIR $CONDA_DIR
+COPY --chown=1000:100 --from=miniconda $HOME $HOME
 
 EXPOSE 8888
 WORKDIR $HOME
