@@ -24,6 +24,11 @@ RUN apt-get update && apt-get -yq dist-upgrade \
     sudo \
     locales \
     fonts-liberation \
+    ##
+    nano \
+    wget \
+    git \
+    ##
  && rm -rf /var/lib/apt/lists/*
 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
@@ -112,6 +117,10 @@ RUN conda install --quiet --yes \
     fix-permissions /home/$NB_USER
 
 USER root
+
+###
+RUN conda install -c bioconda blast
+###
 
 EXPOSE 8888
 WORKDIR $HOME
