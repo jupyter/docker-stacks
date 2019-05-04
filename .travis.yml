@@ -8,23 +8,24 @@ services:
 
 jobs:
   include:    
-    - stage: install
-      script:
+    - stage: test-pr
+      install:
       - pip install --upgrade pip
       - make dev-env
-    - stage: test
       script:
       - set -e
       - if [ $(make n-docs-diff) -ne 0 ]; then make docs; fi;
       - if [ $(make n-other-diff) -ne 0 ]; then make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"; fi;
-    - stage: pushback
+    - stage: push-tx
+      install:
+      - pip install --upgrade pip
+      - make dev-env
       script: 
       - if [ $(make n-docs-diff) -ne 0 ]; then make tx-en; fi;
 
 stages:
-    - install
-    - test
-    - name: pushback
+    - test-pr
+    - name: push-tx
       if: branch = master
 
 env:
