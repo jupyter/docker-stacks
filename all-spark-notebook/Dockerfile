@@ -28,7 +28,7 @@ RUN conda install --quiet --yes \
     'r-ggplot2=3.1*' \
     'r-sparklyr=0.9*' \
     'r-rcurl=1.95*' && \
-    conda clean --all -y && \
+    conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
@@ -43,7 +43,7 @@ RUN pip install --no-cache-dir \
 
 # Spylon-kernel
 RUN conda install --quiet --yes 'spylon-kernel=0.4*' && \
-    conda clean --all -y && \
+    conda clean --all -f -y && \
     python -m spylon_kernel install --sys-prefix && \
     rm -rf /home/$NB_USER/.local && \
     fix-permissions $CONDA_DIR && \

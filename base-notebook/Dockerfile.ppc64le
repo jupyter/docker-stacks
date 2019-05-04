@@ -71,7 +71,7 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda install --quiet --yes conda=4.2.12  && \
     $CONDA_DIR/bin/conda config --system --add channels conda-forge && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
-    conda clean --all -y
+    conda clean --all -f -y
 
 # Install Jupyter notebook and Hub
 RUN yes | pip install --upgrade pip

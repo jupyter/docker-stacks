@@ -58,7 +58,7 @@ FROM jupyter/scipy-notebook:latest
 # and the kernda utility. Add any additional packages you want available for use
 # in a Python 2 notebook to the first line here (e.g., pandas, matplotlib, etc.)
 RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 ipython ipykernel kernda && \
-    conda clean --all -y
+    conda clean --all -f -y
 
 USER root
 
