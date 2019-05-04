@@ -45,6 +45,6 @@ USER $NB_UID
 
 # Install pyarrow
 RUN conda install --quiet -y 'pyarrow' && \
-    conda clean -tipsy && \
+    conda clean --all -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
