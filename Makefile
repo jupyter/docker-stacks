@@ -66,6 +66,24 @@ n-docs-diff: ## number of docs/ files changed since branch from master
 n-other-diff: ## number of files outside docs/ changed since branch from master
 	@git diff --name-only master...HEAD -- ':!docs/' | wc -l | awk '{print $$1}'
 
+tx-en: ## rebuild en locale strings and push to master
+	git config --global user.email "travis@travis-ci.org"
+	git config --global user.name "Travis CI"
+
+	git checkout master
+
+	pushd docs
+	make clean gettext
+	sphinx-intl build -p _build/gettext -l en
+	popd
+
+	git add docs/locale/en
+	git commit -m "Update en source strings for $$TRAVIS_COMMIT"
+
+	git remote add origin-tx https://$${GH_TOKEN}@github.com/jupyter/docker-stacks.git
+	git push -u origin-tx master
+
+
 test/%: ## run tests against a stack
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
 
