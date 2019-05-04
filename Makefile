@@ -60,6 +60,12 @@ dev-env: ## install libraries required to build docs and run tests
 docs: ## build HTML documentation
 	make -C docs html
 
+n-docs-diff: ## number of docs/ files changed since branch from master
+	@git diff --name-only master...HEAD -- docs/ | wc -l | awk '{print $$1}'
+
+n-other-diff: ## number of files outside docs/ changed since branch from master
+	@git diff --name-only master...HEAD -- ':!docs/' | wc -l | awk '{print $$1}'
+
 test/%: ## run tests against a stack
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
 
