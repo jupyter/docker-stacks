@@ -62,7 +62,7 @@ docs: ## build HTML documentation
 	make -C docs html
 
 n-docs-diff: ## number of docs/ files changed since branch from master
-	@git diff --name-only $(DIFF_RANGE) -- docs/ | wc -l | awk '{print $$1}'
+	@git diff --name-only $(DIFF_RANGE) -- docs/ ':!docs/locale' | wc -l | awk '{print $$1}'
 
 
 n-other-diff: ## number of files outside docs/ changed since branch from master
