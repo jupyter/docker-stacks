@@ -24,7 +24,8 @@ jobs:
       - if [ $(make n-docs-diff) -ne 0 ]; then make tx-en; fi;
 
 stages:
-    - test-pr
+    - name: test-pr
+      if: type = pull_request
     - name: push-tx
       if: type = push AND branch = master
 
