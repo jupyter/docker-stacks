@@ -26,7 +26,7 @@ jobs:
 stages:
     - test-pr
     - name: push-tx
-      if: branch = master
+      if: type = push AND branch = master
 
 env:
   global:
