@@ -77,7 +77,7 @@ tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
 	@cd docs && sphinx-intl update -p _build/gettext -l en
 
 	@git add docs/locale/en
-	@git commit -m "Update en source strings for $$TRAVIS_COMMIT"
+	@git commit -m "[ci skip] Update en source strings (build: $$TRAVIS_JOB_NUMBER)"
 
 	@git remote add origin-tx https://$${GH_TOKEN}@github.com/jupyter/docker-stacks.git
 	@git push -u origin-tx master
