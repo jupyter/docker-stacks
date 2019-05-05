@@ -98,7 +98,7 @@ This script is particularly useful when you derive a new Dockerfile from this im
 
 ### Others
 
-You can bypass the provided scripts and specify your an arbitrary start command. If you do, keep in mind that features supported by the `start.sh` script and its kin will not function (e.g., `GRANT_SUDO`).
+You can bypass the provided scripts and specify an arbitrary start command. If you do, keep in mind that features supported by the `start.sh` script and its kin will not function (e.g., `GRANT_SUDO`).
 
 ## Conda Environments
 
