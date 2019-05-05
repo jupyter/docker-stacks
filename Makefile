@@ -6,6 +6,7 @@
 SHELL:=bash
 OWNER:=jupyter
 ARCH:=$(shell uname -m)
+DIFF_RANGE?=master...HEAD
 
 # Need to list the images in build dependency order
 ifeq ($(ARCH),ppc64le)
@@ -61,10 +62,11 @@ docs: ## build HTML documentation
 	make -C docs html
 
 n-docs-diff: ## number of docs/ files changed since branch from master
-	@git diff --name-only master...HEAD -- docs/ | wc -l | awk '{print $$1}'
+	@git diff --name-only $(DIFF_RANGE) -- docs/ | wc -l | awk '{print $$1}'
+
 
 n-other-diff: ## number of files outside docs/ changed since branch from master
-	@git diff --name-only master...HEAD -- ':!docs/' | wc -l | awk '{print $$1}'
+	@git diff --name-only $(DIFF_RANGE) -- ':!docs/' | wc -l | awk '{print $$1}'
 
 tx-en: ## rebuild en locale strings and push to master
 	git config --global user.email "travis@travis-ci.org"

@@ -21,7 +21,7 @@ jobs:
       - pip install --upgrade pip
       - make dev-env
       script: 
-      - if [ $(make n-docs-diff) -ne 0 ]; then make tx-en; fi;
+      - if [ $(make n-docs-diff DIFF_RANGE=$TRAVIS_COMMIT_RANGE) -ne 0 ]; then make tx-en; fi;
 
 stages:
     - name: test-pr
