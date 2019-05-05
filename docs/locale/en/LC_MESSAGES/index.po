@@ -1,78 +1,77 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2018- Project Jupyter
-# This file is distributed under the same license as the docker-stacks package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+# This file is distributed under the same license as the docker-stacks
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-21 17:25-0400\n"
+"POT-Creation-Date: 2019-05-05 19:53-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
 
-# 85291a2c92d440a089cf156fba58b86a
-#: ../../index.rst:32 ../../index.rst:32
+# 22f1bd46933144e092bf92e3af4c6f4f
+#: ../../index.rst:32
 msgid "User Guide"
-msgstr "User Guide"
+msgstr ""
 
-# e4a3fd32059d4486b6b0f3a6fb5065b5
-#: ../../index.rst:42 ../../index.rst:42
+# f35d75046f8c42ae8cab58d826154823
+#: ../../index.rst:42
 msgid "Contributor Guide"
-msgstr "Contributor Guide"
+msgstr ""
 
-# 45de48c8617d4ebe83b7ff7141295836
-#: ../../index.rst:53 ../../index.rst:53
+# a737afe726cd49c4986d75b7d74eeed3
+#: ../../index.rst:54
 msgid "Maintainer Guide"
-msgstr "Maintainer Guide"
+msgstr ""
 
-# aa99c4562d8d4cb3abfea375470e8af3
-#: ../../index.rst:59 ../../index.rst:59
+# 9cd216fa91ef40bbb957373faaf93732
+#: ../../index.rst:60
 msgid "Getting Help"
-msgstr "Getting Help"
+msgstr ""
 
-# 76df09037a6147c8a85be8ef14c15532
+# a0aa0bcd999c4c5e96cc57fd77780f96
 #: ../../index.rst:2
 msgid "Jupyter Docker Stacks"
-msgstr "Jupyter Docker Stacks"
+msgstr ""
 
-# b3fb253184e64174b26a2da73f221cc1
+# 5d06f458dc524214b2c97e865dd2dc81
 #: ../../index.rst:4
 msgid ""
 "Jupyter Docker Stacks are a set of ready-to-run Docker images containing "
-"Jupyter applications and interactive computing tools. You can use a stack "
-"image to do any of the following (and more):"
+"Jupyter applications and interactive computing tools. You can use a stack"
+" image to do any of the following (and more):"
 msgstr ""
-"Jupyter Docker Stacks are a set of ready-to-run Docker images containing "
-"Jupyter applications and interactive computing tools. You can use a stack "
-"image to do any of the following (and more):"
 
-# 8cd55fb113a049e7be445b21084df7ea
+# c69f151c806e4cdf9bebda05b06c760e
 #: ../../index.rst:6
 msgid "Start a personal Jupyter Notebook server in a local Docker container"
-msgstr "Start a personal Jupyter Notebook server in a local Docker container"
+msgstr ""
 
-# 285fa13bed8547b4af0cfc480adf4861
+# b26271409ab743b2a349b3a8ca95233e
 #: ../../index.rst:7
 msgid "Run JupyterLab servers for a team using JupyterHub"
-msgstr "Run JupyterLab servers for a team using JupyterHub"
+msgstr ""
 
-# a49d31cedd4946ea98d7a4c720340d84
+# 4d60f4325fff4ffcad12703a4b9d6781
 #: ../../index.rst:8
 msgid "Write your own project Dockerfile"
-msgstr "Write your own project Dockerfile"
+msgstr ""
 
-# 0aff0df2e46a44b4bc8070545e83c42c
+# 78b0d31eb6e9462888eef92e6a84cdb7
 #: ../../index.rst:11
 msgid "Quick Start"
-msgstr "Quick Start"
+msgstr ""
 
-# 3262accd283140058db73005072be200
+# d4c0e237dbe74e0d9afbf2b2f0e219c8
 #: ../../index.rst:13
 msgid ""
 "You can try a `recent build of the jupyter/base-notebook image on "
@@ -83,89 +82,56 @@ msgid ""
 ":doc:`which Docker image <using/selecting>` you want to use, and want to "
 "launch a single Jupyter Notebook server in a container."
 msgstr ""
-"You can try a `recent build of the jupyter/base-notebook image on "
-"mybinder.org <https://mybinder.org/v2/gh/jupyter/docker-"
-"stacks/master?filepath=README.ipynb>`_ by simply clicking the preceding "
-"link. Otherwise, the two examples below may help you get started if you "
-"`have Docker installed <https://docs.docker.com/install/>`_, know "
-":doc:`which Docker image <using/selecting>` you want to use, and want to "
-"launch a single Jupyter Notebook server in a container."
 
-# 9e4094e8de264e20bca0af8f6cf888b7
+# 051ed23ef62e41058a7c889604f96035
 #: ../../index.rst:15
 msgid ""
-"The other pages in this documentation describe additional uses and features "
-"in detail."
+"The other pages in this documentation describe additional uses and "
+"features in detail."
 msgstr ""
-"The other pages in this documentation describe additional uses and features "
-"in detail."
 
-# 8b75310f2eaa4aac95d9387e0a4db9e8
+# e91f3b62a1b54166b966be6d7a4f061e
 #: ../../index.rst:17
 msgid ""
 "**Example 1:** This command pulls the ``jupyter/scipy-notebook`` image "
-"tagged ``17aba6048f44`` from Docker Hub if it is not already present on the "
-"local host. It then starts a container running a Jupyter Notebook server and"
-" exposes the server on host port 8888. The server logs appear in the "
-"terminal. Visiting ``http://<hostname>:8888/?token=<token>`` in a browser "
-"loads the Jupyter Notebook dashboard page, where ``hostname`` is the name of"
-" the computer running docker and ``token`` is the secret token printed in "
-"the console. The container remains intact for restart after the notebook "
-"server exits.::"
+"tagged ``17aba6048f44`` from Docker Hub if it is not already present on "
+"the local host. It then starts a container running a Jupyter Notebook "
+"server and exposes the server on host port 8888. The server logs appear "
+"in the terminal. Visiting ``http://<hostname>:8888/?token=<token>`` in a "
+"browser loads the Jupyter Notebook dashboard page, where ``hostname`` is "
+"the name of the computer running docker and ``token`` is the secret token"
+" printed in the console. The container remains intact for restart after "
+"the notebook server exits.::"
 msgstr ""
-"**Example 1:** This command pulls the ``jupyter/scipy-notebook`` image "
-"tagged ``17aba6048f44`` from Docker Hub if it is not already present on the "
-"local host. It then starts a container running a Jupyter Notebook server and"
-" exposes the server on host port 8888. The server logs appear in the "
-"terminal. Visiting ``http://<hostname>:8888/?token=<token>`` in a browser "
-"loads the Jupyter Notebook dashboard page, where ``hostname`` is the name of"
-" the computer running docker and ``token`` is the secret token printed in "
-"the console. The container remains intact for restart after the notebook "
-"server exits.::"
 
-# 9e0229c99f404aceb7e517387ae88365
+# e04140e6cd8442f7a6f347d88224f591
 #: ../../index.rst:21
 msgid ""
-"**Example 2:** This command performs the same operations as **Example 1**, "
-"but it exposes the server on host port 10000 instead of port 8888. Visiting "
-"``http://<hostname>:10000/?token=<token>`` in a browser loads JupyterLab, "
-"where ``hostname`` is the name of the computer running docker and ``token`` "
-"is the secret token printed in the console.::"
+"**Example 2:** This command performs the same operations as **Example "
+"1**, but it exposes the server on host port 10000 instead of port 8888. "
+"Visiting ``http://<hostname>:10000/?token=<token>`` in a browser loads "
+"JupyterLab, where ``hostname`` is the name of the computer running docker"
+" and ``token`` is the secret token printed in the console.::"
 msgstr ""
-"**Example 2:** This command performs the same operations as **Example 1**, "
-"but it exposes the server on host port 10000 instead of port 8888. Visiting "
-"``http://<hostname>:10000/?token=<token>`` in a browser loads JupyterLab, "
-"where ``hostname`` is the name of the computer running docker and ``token`` "
-"is the secret token printed in the console.::"
 
-# 02c25d3f0abe48348100dd878c243a75
+# 1c3229680cf44a5bb2d8450602bfcf7d
 #: ../../index.rst:25
 msgid ""
-"**Example 3:** This command pulls the ``jupyter/datascience-notebook`` image"
-" tagged ``9b06df75e445`` from Docker Hub if it is not already present on the"
-" local host. It then starts an *ephemeral* container running a Jupyter "
-"Notebook server and exposes the server on host port 10000. The command "
-"mounts the current working directory on the host as ``/home/jovyan/work`` in"
-" the container. The server logs appear in the terminal. Visiting "
-"``http://<hostname>:10000/?token=<token>`` in a browser loads JupyterLab, "
-"where ``hostname`` is the name of the computer running docker and ``token`` "
-"is the secret token printed in the console. Docker destroys the container "
-"after notebook server exit, but any files written to ``~/work`` in the "
-"container remain intact on the host.::"
+"**Example 3:** This command pulls the ``jupyter/datascience-notebook`` "
+"image tagged ``9b06df75e445`` from Docker Hub if it is not already "
+"present on the local host. It then starts an *ephemeral* container "
+"running a Jupyter Notebook server and exposes the server on host port "
+"10000. The command mounts the current working directory on the host as "
+"``/home/jovyan/work`` in the container. The server logs appear in the "
+"terminal. Visiting ``http://<hostname>:10000/?token=<token>`` in a "
+"browser loads JupyterLab, where ``hostname`` is the name of the computer "
+"running docker and ``token`` is the secret token printed in the console. "
+"Docker destroys the container after notebook server exit, but any files "
+"written to ``~/work`` in the container remain intact on the host.::"
 msgstr ""
-"**Example 3:** This command pulls the ``jupyter/datascience-notebook`` image"
-" tagged ``9b06df75e445`` from Docker Hub if it is not already present on the"
-" local host. It then starts an *ephemeral* container running a Jupyter "
-"Notebook server and exposes the server on host port 10000. The command "
-"mounts the current working directory on the host as ``/home/jovyan/work`` in"
-" the container. The server logs appear in the terminal. Visiting "
-"``http://<hostname>:10000/?token=<token>`` in a browser loads JupyterLab, "
-"where ``hostname`` is the name of the computer running docker and ``token`` "
-"is the secret token printed in the console. Docker destroys the container "
-"after notebook server exit, but any files written to ``~/work`` in the "
-"container remain intact on the host.::"
 
-# 1bc0c7d54cd343d689362047c0b00122
+# 3ac1a41d185844b1b43315a4cc74efc8
 #: ../../index.rst:30
 msgid "Table of Contents"
-msgstr "Table of Contents"
+msgstr ""
+

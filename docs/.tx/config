@@ -9,19 +9,19 @@ type = PO
 
 [jupyter-docker-stacks-1.maintaining-po--master]
 file_filter = locale/<lang>/LC_MESSAGES/maintaining.po
-source_file = locale/en/LC_MESSAGES/maintaining.pot
+source_file = locale/en/LC_MESSAGES/maintaining.po
 source_lang = en
 type = PO
 
 [jupyter-docker-stacks-1.index-po--master]
 file_filter = locale/<lang>/LC_MESSAGES/index.po
-source_file = locale/en/LC_MESSAGES/index.pot
+source_file = locale/en/LC_MESSAGES/index.po
 source_lang = en
 type = PO
 
 [jupyter-docker-stacks-1.contributing-po--master]
 file_filter = locale/<lang>/LC_MESSAGES/contributing.po
-source_file = locale/en/LC_MESSAGES/contributing.pot
+source_file = locale/en/LC_MESSAGES/contributing.po
 source_lang = en
 type = PO
 
