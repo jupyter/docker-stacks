@@ -13,12 +13,10 @@ Spark local mode is useful for experimentation on small data when you do not hav
 #### In a Python Notebook
 
 ```python
-import pyspark
-sc = pyspark.SparkContext('local[*]')
-
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("SimpleApp").getOrCreate()
 # do something to prove it works
-rdd = sc.parallelize(range(1000))
-rdd.takeSample(False, 5)
+spark.sql('SELECT "Test" as c1').show()
 ```
 
 #### In a R Notebook

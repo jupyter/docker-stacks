@@ -1,6 +1,6 @@
 # Contributed Recipes
 
-Users sometimes share interesting ways of using the Jupyter Docker Stacks. We encourage users to [contribute these recipes](../contributing/recipes.html) to the documentation in case they prove useful to other members of the community by submitting a pull request to `docs/using/recipes.md`. The sections below capture this knowledge.
+Users sometimes share interesting ways of using the Jupyter Docker Stacks. We encourage users to [contribute these recipes](../contributing/recipes.md) to the documentation in case they prove useful to other members of the community by submitting a pull request to `docs/using/recipes.md`. The sections below capture this knowledge.
 
 ## Using `pip install` or `conda install` in a Child Docker image
 

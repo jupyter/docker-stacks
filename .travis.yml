@@ -1,12 +1,44 @@
+dist: xenial
 language: python
 python:
-    - 3.6
+    - 3.7
 sudo: required
 services:
     - docker
-install:
-    - make dev-env
-script:
-    - set -e
-    - make test/docs docs
-    - make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"
+
+jobs:
+  include:    
+    - stage: diff-test
+      install:
+      - pip install --upgrade pip
+      - make dev-env
+      script:
+      - set -e
+      - if [ $(make n-docs-diff) -ne 0 ]; then make docs; fi;
+      - if [ $(make n-other-diff) -ne 0 ]; then make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"; fi;
+    - stage: push-tx
+      install:
+      - pip install --upgrade pip
+      - make dev-env
+      script: 
+      - if [ $(make n-docs-diff DIFF_RANGE=$TRAVIS_COMMIT_RANGE) -ne 0 ]; then make tx-en; fi;
+    - stage: full-test
+      install:
+      - pip install --upgrade pip
+      - make dev-env
+      script:
+      - set -e
+      - make docs
+      - make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"
+
+stages:
+    - name: diff-test
+      if: type = pull_request
+    - name: push-tx
+      if: type = push AND branch = master
+    - name: full-test
+      if: type = cron AND branch = master
+
+env:
+  global:
+    secure: JDQKgB1laaenzmEGI9gduwK/iS0030qsl62njJg3jib0R8wxBi2OeetEdoGl9m4NFsqqnp0OO7nm4rzGfuwjL1A38flSlXOTxhjm/hvo3vmnqVu5lDcdk9+IRkafnfd3Dyd86tLxRVETOqZwCLmdNkB2fmQII8du5IIqbJuUGp8DrG7kVMf3NBr9rjkZRfByQrgG4s1NXuT61VvpWMPJAOhcrImuHBheVJDEV0U3n6Xavd7Wo+pAHrHU8exvYTZ1IzZMbHc6K0iC/NpCHcH9+9DAeLDk/q1aDNqbTExnQevOHZzNqgHC2qFOlN4jfy/TLYLpLXtUismneBBqVSK3iZso3Vqy2BRXWgouI+Tt+08ffocy9XPwEzSwkgPgDlFVUikPOy5imwjpDb13RMIyMY4CKlSOdQx2rH2kPkZ0MJJPcki3KGuGl3qRvqyblMn+lZvjAu6WVLZfo7EtcxsQ0ZZxbAbGoUVl27FHg+UvIfC0I3wEcZIp7oED47Q8s0MdCijD3AwkRPvx/iyp3J0A42su7kkOooFcmUItEIqegQJ4Aki1FBv2i5vHmBobClktytZceLsKvzCeLjMpL9HcUVfUaJDKRwtUYIozpYeBnac+E6J1s6glcqLrXIHWez8N6SzokBa6SPqdtODdzzk5OJupByub6CYWsRXvxIQ7/wI=

@@ -1,0 +1,4 @@
+#!/bin/bash
+if [[ "$COMMIT_MSG" = *"skip ci"* || "$COMMIT_MSG" = *"ci skip"* ]]; then
+    exit 1;
+fi

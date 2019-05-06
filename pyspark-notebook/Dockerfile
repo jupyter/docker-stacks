@@ -8,7 +8,7 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 2.4.1
+ENV APACHE_SPARK_VERSION 2.4.2
 ENV HADOOP_VERSION 2.7
 
 RUN apt-get -y update && \
@@ -17,7 +17,7 @@ RUN apt-get -y update && \
 
 RUN cd /tmp && \
         wget -q http://mirrors.ukfast.co.uk/sites/ftp.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
-        echo "360A7B57290537C5EB3570C70D0D0B9580C4F9DB8D0FA9746C3BBB6544BBB8F629901582968955ACEB5649CB9D66C2D524971E4E3EF34C35D96F02FF6DBA4D72 *spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" | sha512sum -c - && \
+        echo "16E3F803214923E3FD7D04B64D79E4B810E6E4A2723961443D09982FC104BA1A08DF029CE573633DCA7056340FA26B771EAFBDD3B5CEA14C1F01081D84575F02 *spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" | sha512sum -c - && \
         tar xzf spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -C /usr/local --owner root --group root --no-same-owner && \
         rm spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark

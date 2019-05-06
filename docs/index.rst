@@ -43,9 +43,10 @@ Table of Contents
    :maxdepth: 2
    :caption: Contributor Guide
 
-   contributing/issues 
+   contributing/issues
    contributing/packages
    contributing/recipes
+   contributing/translations
    contributing/tests
    contributing/features
    contributing/stacks

@@ -4,7 +4,7 @@ We greatly appreciate pull requests that extend the automated tests that vet the
 
 ## How the Tests Work
 
-Travis executes `make build-test-all` against every pull request submitted to the `jupyter/docker-stacks` repository. The `make` command builds every docker image. After building each image, the `make` command executes `pytest` to run both image-specific tests like those in [base-notebook/test/](https://github.com/jupyter/docker-stacks/tree/master/base-notebook/test) and common tests defined in [test/](https://github.com/jupyter/docker-stacks/tree/master/test). Both kinds of tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/fixture.html) defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/master/conftest.py) file at the root of the projects.
+Travis executes `make build-test-all` against pull requests submitted to the `jupyter/docker-stacks` repository. This `make` command builds every docker image. After building each image, the `make` command executes `pytest` to run both image-specific tests like those in [base-notebook/test/](https://github.com/jupyter/docker-stacks/tree/master/base-notebook/test) and common tests defined in [test/](https://github.com/jupyter/docker-stacks/tree/master/test). Both kinds of tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/fixture.html) defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/master/conftest.py) file at the root of the projects.
 
 ## Contributing New Tests
 

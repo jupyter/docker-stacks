@@ -79,6 +79,7 @@ RUN cd /tmp && \
     $CONDA_DIR/bin/conda config --system --set show_channel_urls true && \
     $CONDA_DIR/bin/conda install --quiet --yes conda="${CONDA_VERSION%.*}.*" && \
     $CONDA_DIR/bin/conda update --all --quiet --yes && \
+    conda list python | grep '^python ' | tr -s ' ' | cut -d '.' -f 1,2 | sed 's/$/.*/' >> $CONDA_DIR/conda-meta/pinned && \
     conda clean --all -f -y && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
@@ -100,7 +101,7 @@ RUN conda install --quiet --yes 'tini=0.18.0' && \
 RUN conda install --quiet --yes \
     'notebook=5.7.8' \
     'jupyterhub=0.9.6' \
-    'jupyterlab=0.35.4' && \
+    'jupyterlab=0.35.5' && \
     conda clean --all -f -y && \
     jupyter labextension install @jupyterlab/hub-extension@^0.12.0 && \
     npm cache clean --force && \

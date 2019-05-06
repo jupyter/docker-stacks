@@ -21,7 +21,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/base-notebook/Dockerfile)
 | [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
-`jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.html). It is the basis for all other stacks.
+`jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.md). It is the basis for all other stacks.
 
 * Minimally-functional Jupyter Notebook server (e.g., no [pandoc](https://pandoc.org/) for saving notebooks as PDFs)
 * [Miniconda](https://conda.io/miniconda.html) Python 3.x in `/opt/conda`
@@ -148,4 +148,4 @@ The core stacks are just a tiny sample of what's possible when combining Jupyter
 
 * [education-notebook is a community Jupyter Docker Stack image](https://github.com/umsi-mads/education-notebook). The image includes nbgrader and RISE on top of the datascience-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
 
-See the [contributing guide](../contributing/stacks.html) for information about how to create your own Jupyter Docker Stack.
+See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.

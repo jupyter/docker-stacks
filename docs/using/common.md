@@ -75,7 +75,7 @@ In either case, Jupyter Notebook expects the key and certificate to be a base64 
 For additional information about using SSL, see the following:
 
 * The [docker-stacks/examples](https://github.com/jupyter/docker-stacks/tree/master/examples) for information about how to use [Let's Encrypt](https://letsencrypt.org/) certificates when you run these stacks on a publicly visible domain.
-* The [jupyter_notebook_config.py](jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
+* The [jupyter_notebook_config.py](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
 * The [Jupyter Notebook documentation](https://jupyter-notebook.readthedocs.io/en/latest/public_server.html#securing-a-notebook-server) for best practices about securing a public notebook server in general.
 
 ## Alternative Commands
@@ -98,7 +98,7 @@ This script is particularly useful when you derive a new Dockerfile from this im
 
 ### Others
 
-You can bypass the provided scripts and specify your an arbitrary start command. If you do, keep in mind that features supported by the `start.sh` script and its kin will not function (e.g., `GRANT_SUDO`).
+You can bypass the provided scripts and specify an arbitrary start command. If you do, keep in mind that features supported by the `start.sh` script and its kin will not function (e.g., `GRANT_SUDO`).
 
 ## Conda Environments
 
