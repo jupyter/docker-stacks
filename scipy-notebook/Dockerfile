@@ -44,7 +44,7 @@ RUN conda install --quiet --yes \
     'protobuf=3.7.*' \
     'xlrd'  && \
     conda remove --quiet --yes --force qt pyqt && \
-    conda clean -tipsy && \
+    conda clean --all -f -y && \
     # Activate ipywidgets extension in the environment that runs the notebook server
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
     # Also activate ipywidgets extension for JupyterLab
