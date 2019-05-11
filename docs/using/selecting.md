@@ -142,8 +142,6 @@ You must refer to git-SHA image tags when stability and reproducibility are impo
 
 The core stacks are just a tiny sample of what's possible when combining Jupyter with other technologies. We encourage members of the Jupyter community to create their own stacks based on the core images and link them below.
 
-*This list only has 2 examples. You can be the next!*
-
 * [csharp-notebook is a community Jupyter Docker Stack image. Try C# in Jupyter Notebooks](https://github.com/tlinnet/csharp-notebook). The image includes more than 200 Jupyter Notebooks with example C# code and can readily be tried online via mybinder.org. Click here to launch [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master).
 
 * [education-notebook is a community Jupyter Docker Stack image](https://github.com/umsi-mads/education-notebook). The image includes nbgrader and RISE on top of the datascience-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
