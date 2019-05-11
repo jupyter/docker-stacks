@@ -148,4 +148,12 @@ The core stacks are just a tiny sample of what's possible when combining Jupyter
 
 * [education-notebook is a community Jupyter Docker Stack image](https://github.com/umsi-mads/education-notebook). The image includes nbgrader and RISE on top of the datascience-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
 
+* __crosscompass/ihaskell-notebook__
+
+  [Source on GitHub](https://github.com/jamesdbrock/ihaskell-notebook)
+  | [Dockerfile commit history](https://github.com/jamesdbrock/ihaskell-notebook/commits/master/Dockerfile)
+  | [Docker Hub image tags](https://hub.docker.com/r/crosscompass/ihaskell-notebook/tags)
+
+  `crosscompass/ihaskell-notebook` is based on [IHaskell](https://github.com/gibiansky/IHaskell). Includes popular packages and example notebooks.
+
 See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.
