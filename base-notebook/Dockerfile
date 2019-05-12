@@ -100,7 +100,7 @@ RUN conda install --quiet --yes 'tini=0.18.0' && \
 # files across image layers when the permissions change
 RUN conda install --quiet --yes \
     'notebook=5.7.8' \
-    'jupyterhub=0.9.6' \
+    'jupyterhub=1.0.0' \
     'jupyterlab=0.35.5' && \
     conda clean --all -f -y && \
     jupyter labextension install @jupyterlab/hub-extension@^0.12.0 && \
