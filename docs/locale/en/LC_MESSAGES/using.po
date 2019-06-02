@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-11 14:42+0000\n"
+"POT-Creation-Date: 2019-06-02 00:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
+"Generated-By: Babel 2.7.0\n"
 
 # 7c56c3891bd94336b21fc82d5aeab6ae
 #: ../../using/common.md:1
@@ -1362,8 +1362,30 @@ msgstr ""
 msgid "Apache Spark"
 msgstr ""
 
-# ec077f84f7394baba4071d0d8a9c9dbf
+# 433d8d99798649029dafd444253567b4
 #: ../../using/specifics.md:7
+msgid "Specific Docker Image Options"
+msgstr ""
+
+# 70083fc71521409895897387117748bc
+#: ../../using/specifics.md:8
+msgid ""
+"-p 4040:4040 - The jupyter/pyspark-notebook and jupyter/all-spark-"
+"notebook images open SparkUI (Spark Monitoring and Instrumentation UI) at"
+" default port 4040, this option map 4040 port inside docker container to "
+"4040 port on host machine . Note every new spark context that is created "
+"is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it "
+"might be necessary to open multiple ports. For example: docker run -d -p "
+"8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook"
+msgstr ""
+
+# 2449b18de82e4d129cbd49e52ce9e522
+#: ../../using/specifics.md:10
+msgid "Usage Examples"
+msgstr ""
+
+# ec077f84f7394baba4071d0d8a9c9dbf
+#: ../../using/specifics.md:12
 msgid ""
 "The jupyter/pyspark-notebook and jupyter/all-spark-notebook images "
 "support the use of Apache Spark in Python, R, and Scala notebooks. The "
@@ -1372,12 +1394,12 @@ msgid ""
 msgstr ""
 
 # ca35b3b020914e2eb2e877199a90d4a4
-#: ../../using/specifics.md:9
+#: ../../using/specifics.md:14
 msgid "Using Spark Local Mode"
 msgstr ""
 
 # 15a0171869f3437481b9dfb2aec3db00
-#: ../../using/specifics.md:11
+#: ../../using/specifics.md:16
 msgid ""
 "Spark local mode is useful for experimentation on small data when you do "
 "not have a Spark cluster available."
@@ -1385,24 +1407,24 @@ msgstr ""
 
 # 2c5367b84e444a1aa504910b22ba1454
 # 09d8b02687704d368a670cb243e299fb
-#: ../../using/specifics.md:13 ../../using/specifics.md:69
+#: ../../using/specifics.md:18 ../../using/specifics.md:74
 msgid "In a Python Notebook"
 msgstr ""
 
 # 2b5c49ea60184570a8b50622140c22e1
 # 192add33e94844f080ae03254899e2ee
-#: ../../using/specifics.md:22 ../../using/specifics.md:96
+#: ../../using/specifics.md:27 ../../using/specifics.md:101
 msgid "In a R Notebook"
 msgstr ""
 
 # 80cedeb3b4514de792dba8e03b1c8774
 # 5f3159414ddc427699709ddef740d6fd
-#: ../../using/specifics.md:34 ../../using/specifics.md:117
+#: ../../using/specifics.md:39 ../../using/specifics.md:122
 msgid "In a Spylon Kernel Scala Notebook"
 msgstr ""
 
 # 07c9256c669b488aaa2df48676d5a188
-#: ../../using/specifics.md:36
+#: ../../using/specifics.md:41
 #, python-format
 msgid ""
 "Spylon kernel instantiates a SparkContext for you in variable sc after "
@@ -1411,34 +1433,34 @@ msgstr ""
 
 # aeec453983524d3ab59f7241cf8bac7b
 # 472a48e72aaf46ca86a89e1598595045
-#: ../../using/specifics.md:50 ../../using/specifics.md:132
+#: ../../using/specifics.md:55 ../../using/specifics.md:137
 msgid "In an Apache Toree Scala Notebook"
 msgstr ""
 
 # 762d164260cd4938b5f9556b29b0e171
-#: ../../using/specifics.md:52
+#: ../../using/specifics.md:57
 msgid ""
 "Apache Toree instantiates a local SparkContext for you in variable sc "
 "when the kernel starts."
 msgstr ""
 
 # 8da1ef6876324b61885c5dec2c6a9cbf
-#: ../../using/specifics.md:59
+#: ../../using/specifics.md:64
 msgid "Connecting to a Spark Cluster on Mesos"
 msgstr ""
 
 # 4926e921fbd24baba9888b3f08cf4f51
-#: ../../using/specifics.md:61
+#: ../../using/specifics.md:66
 msgid "This configuration allows your compute cluster to scale with your data."
 msgstr ""
 
 # e8c29961728146a28c6581966a2d2341
-#: ../../using/specifics.md:63
+#: ../../using/specifics.md:68
 msgid "Deploy Spark on Mesos."
 msgstr ""
 
 # 1838d7f4481246538ca4ffe89e02ff4d
-#: ../../using/specifics.md:64
+#: ../../using/specifics.md:69
 msgid ""
 "Configure each slave with the --no-switch_user flag or create the "
 "$NB_USER account on every slave node."
@@ -1446,7 +1468,7 @@ msgstr ""
 
 # d4ee49cc6cb547389ed3228e74a4a67c
 # 4b8c4c1e7ea441f1af4b4e0fbed73888
-#: ../../using/specifics.md:65 ../../using/specifics.md:161
+#: ../../using/specifics.md:70 ../../using/specifics.md:166
 msgid ""
 "Run the Docker container with --net=host in a location that is network "
 "addressable by all of your Spark workers. (This is a Spark networking "
@@ -1455,7 +1477,7 @@ msgstr ""
 
 # 9a026387155e46fa8e4e1ea3f00d3a63
 # 68e479d8f50e4685a0fb5de56a978347
-#: ../../using/specifics.md:66 ../../using/specifics.md:162
+#: ../../using/specifics.md:71 ../../using/specifics.md:167
 msgid ""
 "NOTE: When using --net=host, you must also use the flags --pid=host -e "
 "TINI_SUBREAPER=true. See https://github.com/jupyter/docker-"
@@ -1463,12 +1485,12 @@ msgid ""
 msgstr ""
 
 # 16c4327879294075a64b4329f972321c
-#: ../../using/specifics.md:67
+#: ../../using/specifics.md:72
 msgid "Follow the language specific instructions below."
 msgstr ""
 
 # 929575857ae647aebbcb721af39bdd7e
-#: ../../using/specifics.md:134
+#: ../../using/specifics.md:139
 msgid ""
 "The Apache Toree kernel automatically creates a SparkContext when it "
 "starts based on configuration information from its command line arguments"
@@ -1478,7 +1500,7 @@ msgid ""
 msgstr ""
 
 # 3e3d5ec9fa554e75989856139938f4f8
-#: ../../using/specifics.md:136
+#: ../../using/specifics.md:141
 msgid ""
 "For instance, to pass information about a Mesos master, Spark binary "
 "location in HDFS, and an executor options, you could start the container "
@@ -1486,7 +1508,7 @@ msgid ""
 msgstr ""
 
 # fa8494a4dde544109b9f6f49ac28178f
-#: ../../using/specifics.md:144
+#: ../../using/specifics.md:149
 msgid ""
 "Note that this is the same information expressed in a notebook in the "
 "Python case above. Once the kernel spec has your cluster information, you"
@@ -1494,31 +1516,31 @@ msgid ""
 msgstr ""
 
 # da5d5d861e914df98df9dba50fb3d66a
-#: ../../using/specifics.md:155
+#: ../../using/specifics.md:160
 msgid "Connecting to a Spark Cluster in Standalone Mode"
 msgstr ""
 
 # 79db0ba4244a4701aa8dfe0053d5579c
-#: ../../using/specifics.md:157
+#: ../../using/specifics.md:162
 msgid ""
 "Connection to Spark Cluster on Standalone Mode requires the following set"
 " of steps:"
 msgstr ""
 
 # 2c728588b6df4753a0c08f969364a79a
-#: ../../using/specifics.md:159
+#: ../../using/specifics.md:164
 msgid ""
 "Verify that the docker image (check the Dockerfile) and the Spark Cluster"
 " which is being deployed, run the same version of Spark."
 msgstr ""
 
 # d5a341bb44524a8cb33f086803daaf63
-#: ../../using/specifics.md:160
+#: ../../using/specifics.md:165
 msgid "Deploy Spark in Standalone Mode."
 msgstr ""
 
 # 3c781f06114240e28dcdb0c40a5d5cf5
-#: ../../using/specifics.md:163
+#: ../../using/specifics.md:168
 msgid ""
 "The language specific instructions are almost same as mentioned above for"
 " Mesos, only the master url would now be something like "
@@ -1526,24 +1548,24 @@ msgid ""
 msgstr ""
 
 # 85baa5bd4ed5426b96dad49dacfab9cb
-#: ../../using/specifics.md:165
+#: ../../using/specifics.md:170
 msgid "Tensorflow"
 msgstr ""
 
 # 4249b4b266fc4aeeb85dc8386ab60592
-#: ../../using/specifics.md:167
+#: ../../using/specifics.md:172
 msgid ""
 "The jupyter/tensorflow-notebook image supports the use of Tensorflow in "
 "single machine or distributed mode."
 msgstr ""
 
 # 68fba23f7cd94702a9dead3c51719206
-#: ../../using/specifics.md:169
+#: ../../using/specifics.md:174
 msgid "Single Machine Mode"
 msgstr ""
 
 # d4b74babe01d4a3a86c46844a737151b
-#: ../../using/specifics.md:183
+#: ../../using/specifics.md:188
 msgid "Distributed Mode"
 msgstr ""
 
