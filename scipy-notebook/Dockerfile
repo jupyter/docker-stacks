@@ -19,7 +19,7 @@ USER $NB_UID
 # use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
     'conda-forge::blas=*=openblas' \
-    'ipywidgets=7.4*' \
+    'ipywidgets=7.5*' \
     'pandas=0.24*' \
     'numexpr=2.6*' \
     'matplotlib=3.0*' \
@@ -50,7 +50,7 @@ RUN conda install --quiet --yes \
     # Also activate ipywidgets extension for JupyterLab
     # Check this URL for most recent compatibilities
     # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.38.1 && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^1.0.0 && \
     jupyter labextension install jupyterlab_bokeh@0.6.3 && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
