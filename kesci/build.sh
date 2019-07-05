@@ -1,0 +1,8 @@
+(cd .. && DARGS="--build-arg BASE_CONTAINER=ubuntu:18.04 --build-arg NB_USER=kesci" make OWNER=klabteam build/base-notebook)
+(cd .. && DARGS="--build-arg BASE_CONTAINER=klabteam/base-notebook --build-arg NB_USER=kesci" make OWNER=klabteam build/minimal-notebook)
+(cd .. && DARGS="--build-arg BASE_CONTAINER=klabteam/minimal-notebook --build-arg NB_USER=kesci" make OWNER=klabteam build/scipy-notebook)
+(cd .. && DARGS="--build-arg BASE_CONTAINER=klabteam/minimal-notebook --build-arg NB_USER=kesci" make OWNER=klabteam build/r-notebook)
+(cd .. && DARGS="--build-arg BASE_CONTAINER=klabteam/scipy-notebook --build-arg NB_USER=kesci" make OWNER=klabteam build/tensorflow-notebook)
+(cd .. && DARGS="--build-arg BASE_CONTAINER=klabteam/scipy-notebook --build-arg NB_USER=kesci" make OWNER=klabteam build/datascience-notebook)
+(cd .. && DARGS="--build-arg BASE_CONTAINER=klabteam/scipy-notebook --build-arg NB_USER=kesci" make OWNER=klabteam build/pyspark-notebook)
+(cd .. && DARGS="--build-arg BASE_CONTAINER=klabteam/pyspark-notebook --build-arg NB_USER=kesci" make OWNER=klabteam build/all-spark-notebook)
