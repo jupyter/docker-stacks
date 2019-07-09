@@ -15,8 +15,6 @@ RUN apt-get update && \
 USER $NB_UID
 
 # Install Python 3 packages
-# Remove pyqt and qt pulled in for matplotlib since we're only ever going to
-# use notebook-friendly backends in these images
 RUN conda install --quiet --yes \
     'conda-forge::blas=*=openblas' \
     'ipywidgets=7.4*' \
@@ -43,7 +41,6 @@ RUN conda install --quiet --yes \
     'beautifulsoup4=4.7.*' \
     'protobuf=3.7.*' \
     'xlrd'  && \
-    conda remove --quiet --yes --force qt pyqt && \
     conda clean --all -f -y && \
     # Activate ipywidgets extension in the environment that runs the notebook server
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
