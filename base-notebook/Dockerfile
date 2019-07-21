@@ -101,9 +101,9 @@ RUN conda install --quiet --yes 'tini=0.18.0' && \
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 RUN conda install --quiet --yes \
-    'notebook=5.7.8' \
+    'notebook=6.0.0' \
     'jupyterhub=1.0.0' \
-    'jupyterlab=1.0.1' && \
+    'jupyterlab=1.0.2' && \
     conda clean --all -f -y && \
     npm cache clean --force && \
     jupyter notebook --generate-config && \
