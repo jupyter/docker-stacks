@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-02 00:19+0000\n"
+"POT-Creation-Date: 2019-07-27 14:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1340,8 +1340,21 @@ msgid ""
 "packages and example notebooks."
 msgstr ""
 
-# f9f4ef31795249d9bf2a752dfbb27a8f
+# 9af612ef9b1847e9a537228c2d3bc77d
 #: ../../using/selecting.md:157
+msgid "Try it on binder:"
+msgstr ""
+
+# d514a88096544a2ca92ceaf14b1323eb
+#: ../../using/selecting.md:159
+msgid ""
+"java-notebook is a community Jupyter Docker Stack image. The image "
+"includes IJava kernel on top of the minimal-notebook image. Click here to"
+" launch it on ."
+msgstr ""
+
+# f9f4ef31795249d9bf2a752dfbb27a8f
+#: ../../using/selecting.md:161
 msgid ""
 "See the contributing guide for information about how to create your own "
 "Jupyter Docker Stack."
