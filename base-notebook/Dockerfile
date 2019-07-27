@@ -68,7 +68,7 @@ RUN mkdir /home/$NB_USER/work && \
 
 # Install conda as jovyan and check the md5 sum provided on the download site
 ENV MINICONDA_VERSION=4.6.14 \
-    CONDA_VERSION=4.7.5
+    CONDA_VERSION=4.7.10
 
 RUN cd /tmp && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
@@ -103,7 +103,7 @@ RUN conda install --quiet --yes 'tini=0.18.0' && \
 RUN conda install --quiet --yes \
     'notebook=6.0.0' \
     'jupyterhub=1.0.0' \
-    'jupyterlab=1.0.2' && \
+    'jupyterlab=1.0.4' && \
     conda clean --all -f -y && \
     npm cache clean --force && \
     jupyter notebook --generate-config && \
