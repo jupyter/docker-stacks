@@ -38,7 +38,8 @@ head(filter(df, df$Petal_Width > 0.2))
 
 #### In a Spylon Kernel Scala Notebook
 
-Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark options in a `%%init_spark` magic cell.
+Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
+options in a `%%init_spark` magic cell.
 
 ```python
 %%init_spark
@@ -61,15 +62,18 @@ val rdd = sc.parallelize(0 to 999)
 rdd.takeSample(false, 5)
 ```
 
-### Connecting to a Spark Cluster on Mesos
+### Connecting to a Spark Cluster in Standalone Mode
 
-This configuration allows your compute cluster to scale with your data.
+Connection to Spark Cluster on Standalone Mode requires the following set of steps:
 
-0. [Deploy Spark on Mesos](http://spark.apache.org/docs/latest/running-on-mesos.html).
-1. Configure each slave with [the `--no-switch_user` flag](https://open.mesosphere.com/reference/mesos-slave/) or create the `$NB_USER` account on every slave node.
-2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
-    * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
-3. Follow the language specific instructions below.
+0. Verify that the docker image (check the Dockerfile) and the Spark Cluster which is being
+   deployed, run the same version of Spark.
+1. [Deploy Spark in Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).
+2. Run the Docker container with `--net=host` in a location that is network addressable by all of
+   your Spark workers. (This is a [Spark networking
+   requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
+    * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e
+      TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
 
 #### In a Python Notebook
 
@@ -81,8 +85,8 @@ os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
 import pyspark
 conf = pyspark.SparkConf()
 
-# point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
-conf.setMaster("mesos://10.10.10.10:5050")
+# Point to spark master
+conf.setMaster("spark://10.10.10.10:7070")
 # point to spark binary package in HDFS or on local filesystem on all slave
 # nodes (e.g., file:///opt/spark/spark-2.2.0-bin-hadoop2.7.tgz)
 conf.set("spark.executor.uri", "hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz")
@@ -103,12 +107,12 @@ rdd.sumApprox(3)
 ```r
 library(SparkR)
 
-# Point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
-# Point to spark binary package in HDFS or on local filesystem on all slave
+# Point to spark master
+# Point to spark binary package in HDFS or on local filesystem on all worker
 # nodes (e.g., file:///opt/spark/spark-2.2.0-bin-hadoop2.7.tgz) in sparkEnvir
 # Set other options in sparkEnvir
-sc <- sparkR.session("mesos://10.10.10.10:5050", sparkEnvir=list(
-    spark.executor.uri="hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz",
+sc <- sparkR.session("spark://10.10.10.10:7070", sparkEnvir=list(
+    spark.executor.uri="hdfs://10.10.10.10/spark/spark-2.4.3-bin-hadoop2.7.tgz",
     spark.executor.memory="8g"
     )
 )
@@ -123,9 +127,9 @@ head(filter(df, df$Petal_Width > 0.2))
 
 ```python
 %%init_spark
-# Configure the location of the mesos master and spark distribution on HDFS
-launcher.master = "mesos://10.10.10.10:5050"
-launcher.conf.spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz
+# Point to spark master
+launcher.master = "spark://10.10.10.10:7070"
+launcher.conf.spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.4.3-bin-hadoop2.7.tgz
 ```
 
 ```scala
@@ -136,17 +140,22 @@ rdd.takeSample(false, 5)
 
 #### In an Apache Toree Scala Notebook
 
-The Apache Toree kernel automatically creates a `SparkContext` when it starts based on configuration information from its command line arguments and environment variables. You can pass information about your Mesos cluster via the `SPARK_OPTS` environment variable when you spawn a container.
+The Apache Toree kernel automatically creates a `SparkContext` when it starts based on configuration
+information from its command line arguments and environment variables. You can pass information
+about your cluster via the `SPARK_OPTS` environment variable when you spawn a container.
 
-For instance, to pass information about a Mesos master, Spark binary location in HDFS, and an executor options, you could start the container like so:
+For instance, to pass information about a standalone Spark master, Spark binary location in HDFS,
+and an executor options, you could start the container like so:
 
 ```
-docker run -d -p 8888:8888 -e SPARK_OPTS='--master=mesos://10.10.10.10:5050 \
-    --spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz \
+docker run -d -p 8888:8888 -e SPARK_OPTS='--master=spark://10.10.10.10:7070 \
+    --spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.4.3-bin-hadoop2.7.tgz \
     --spark.executor.memory=8g' jupyter/all-spark-notebook
 ```
 
-Note that this is the same information expressed in a notebook in the Python case above. Once the kernel spec has your cluster information, you can test your cluster in an Apache Toree notebook like so:
+Note that this is the same information expressed in a notebook in the Python case above. Once the
+kernel spec has your cluster information, you can test your cluster in an Apache Toree notebook like
+so:
 
 ```scala
 // should print the value of --master in the kernel spec
@@ -157,19 +166,10 @@ val rdd = sc.parallelize(0 to 99999999)
 rdd.sum()
 ```
 
-### Connecting to a Spark Cluster in Standalone Mode
-
-Connection to Spark Cluster on Standalone Mode requires the following set of steps:
-
-0. Verify that the docker image (check the Dockerfile) and the Spark Cluster which is being deployed, run the same version of Spark.
-1. [Deploy Spark in Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).
-2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
-    * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
-3. The language specific instructions are almost same as mentioned above for Mesos, only the master url would now be something like spark://10.10.10.10:7077
-
 ## Tensorflow
 
-The `jupyter/tensorflow-notebook` image supports the use of [Tensorflow](https://www.tensorflow.org/) in single machine or distributed mode.
+The `jupyter/tensorflow-notebook` image supports the use of
+[Tensorflow](https://www.tensorflow.org/) in single machine or distributed mode.
 
 ### Single Machine Mode
 
