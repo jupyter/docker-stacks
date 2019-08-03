@@ -2,6 +2,21 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
+# This script can be executed as either a user or as root.  If it's
+# executed as root, then it does the basic setup and re-executes it as
+# a user, so that user-specific setup can also be done if any (this
+# would mainly be in the form of user hooks).
+
+# Default hook directories:
+# - start-notebook is before this script runs
+# - before-notebook is right before the Jupyter commmand is executed
+# /usr/local/bin/start-notebook.d/     - BOTH user and root, backwards compat
+# /usr/local/bin/start-notebook-root.d/
+# /usr/local/bin/start-notebook-user.d/
+# /usr/local/bin/before-notebook.d/    - BOTH user and root, backwards compat
+# /usr/local/bin/before-notebook-root.d/
+# /usr/local/bin/before-notebook-user.d/
+
 set -e
 
 # Exec the specified command or fall back on bash

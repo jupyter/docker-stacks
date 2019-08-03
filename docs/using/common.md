@@ -40,12 +40,15 @@ the notebook server. You do so by passing arguments to the `docker run` command.
 ## Startup Hooks
 
 You can further customize the container environment by adding shell scripts (`*.sh`) to be sourced
-or executables (`chmod +x`) to be run to the paths below:
+or executables (`chmod +x`) to be run to the paths below.  To understand the order of the hooks, note that the setup is divided into two parts: root-mode setup and user-mode setup.  If you start as root, it runs both.  If you start as a user, it runs only the user-mode setup.
 
-* `/usr/local/bin/start-notebook.d/` - handled before any of the standard options noted above
-  are applied
-* `/usr/local/bin/before-notebook.d/` - handled after all of the standard options noted above are
-  applied and just before the notebook server launches
+* `/usr/local/bin/start-notebook-root.d/` - Run before any of the standard options are applied, only if running as root.
+* `/usr/local/bin/before-notebook-root.d/` - Run after all of the standard setup and just before switching from root to the user.
+* `/usr/local/bin/start-notebook-user.d/` - Run as the user's ID, before any of the user mode setup.  This is run whether you start the container as the user or as root.
+* `/usr/local/bin/before-notebook-user.d/` - Run right before the user notebook server is launched.
+
+* `/usr/local/bin/start-notebook.d/` - For backwards compatibility, similar to above.  If starting as root it will run before **both** root and the user.  If starting the container as a user, it is run only once.
+* `/usr/local/bin/before-notebook.d/` - For backwards compatibility, similar to above.  Run after all of the standard options noted above are applied: If running as root, right before switching to the user.  If running as a user, run just before the notebook server launches (as a user).
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
 script for execution details.
