@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-27 14:32+0000\n"
+"POT-Creation-Date: 2019-08-03 03:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,8 +188,16 @@ msgid ""
 "than change command line parameters."
 msgstr ""
 
-# bb82e70358e7452d86eb1b8e971fbf27
+# fe40b3a059e54a53a7a5fde86441ae72
 #: ../../using/common.md:36
+msgid ""
+"-e RESTARTABLE=yes - Runs Jupyter in a loop so that quitting Jupyter does"
+" not cause the container to exit.  This may be useful when you need to "
+"install extensions that require restarting Jupyter."
+msgstr ""
+
+# bb82e70358e7452d86eb1b8e971fbf27
+#: ../../using/common.md:37
 msgid ""
 "-v /some/host/folder/for/work:/home/jovyan/work - Mounts a host machine "
 "directory as folder in the container. Useful when you want to preserve "
@@ -200,7 +208,7 @@ msgid ""
 msgstr ""
 
 # 403f8e6101534bc0951bf5bb0b03c5a0
-#: ../../using/common.md:37
+#: ../../using/common.md:38
 msgid ""
 "--user 5000 --group-add users - Launches the container with a specific "
 "user ID and adds that user to the users group so that it can modify files"
@@ -209,12 +217,12 @@ msgid ""
 msgstr ""
 
 # 565fbbe944ed4e68a5e202eaf07d1402
-#: ../../using/common.md:39
+#: ../../using/common.md:40
 msgid "Startup Hooks"
 msgstr ""
 
 # 70f6f3501e1b43d3a95e200c39eef8d2
-#: ../../using/common.md:41
+#: ../../using/common.md:42
 msgid ""
 "You can further customize the container environment by adding shell "
 "scripts (*.sh) to be sourced or executables (chmod +x) to be run to the "
@@ -222,14 +230,14 @@ msgid ""
 msgstr ""
 
 # bdc8d9262aea4329b09bac1deb92d6da
-#: ../../using/common.md:44
+#: ../../using/common.md:45
 msgid ""
 "/usr/local/bin/start-notebook.d/ - handled before any of the standard "
 "options noted above are applied"
 msgstr ""
 
 # 786fba9678e24e3ba5ded6536dc0492a
-#: ../../using/common.md:46
+#: ../../using/common.md:47
 msgid ""
 "/usr/local/bin/before-notebook.d/ - handled after all of the standard "
 "options noted above are applied and just before the notebook server "
@@ -237,19 +245,19 @@ msgid ""
 msgstr ""
 
 # 5903b6a921cb42a9a8b6db0e9592769c
-#: ../../using/common.md:49
+#: ../../using/common.md:50
 msgid ""
 "See the run-hooks function in the jupyter/base-notebook start.sh script "
 "for execution details."
 msgstr ""
 
 # ffb01f3597d1453bb0299e9a4a888757
-#: ../../using/common.md:52
+#: ../../using/common.md:53
 msgid "SSL Certificates"
 msgstr ""
 
 # 7b1a34debd094e02930aa7197377b691
-#: ../../using/common.md:54
+#: ../../using/common.md:55
 msgid ""
 "You may mount SSL key and certificate files into a container and "
 "configure Jupyter Notebook to use them to accept HTTPS connections. For "
@@ -258,14 +266,14 @@ msgid ""
 msgstr ""
 
 # e496d62ce1b7489eabf40a55471247b4
-#: ../../using/common.md:64
+#: ../../using/common.md:65
 msgid ""
 "Alternatively, you may mount a single PEM file containing both the key "
 "and certificate. For example:"
 msgstr ""
 
 # 6ada67b7d1a34f59ad235d7e49e6a298
-#: ../../using/common.md:73
+#: ../../using/common.md:74
 msgid ""
 "In either case, Jupyter Notebook expects the key and certificate to be a "
 "base64 encoded text file. The certificate file or PEM may contain one or "
@@ -273,43 +281,43 @@ msgid ""
 msgstr ""
 
 # c908965cf0084fc2b276b50b47b87d18
-#: ../../using/common.md:75
+#: ../../using/common.md:76
 msgid "For additional information about using SSL, see the following:"
 msgstr ""
 
 # 11ef89b3d17b4bcf827e73a7ebb13756
-#: ../../using/common.md:77
+#: ../../using/common.md:78
 msgid ""
 "The docker-stacks/examples for information about how to use Let's Encrypt"
 " certificates when you run these stacks on a publicly visible domain."
 msgstr ""
 
 # 4a42ccc5b624431bbacdc8c1d5624fb4
-#: ../../using/common.md:78
+#: ../../using/common.md:79
 msgid ""
 "The jupyter_notebook_config.py file for how this Docker image generates a"
 " self-signed certificate."
 msgstr ""
 
 # 95d9c3081fa34def82e309c53ef2147b
-#: ../../using/common.md:79
+#: ../../using/common.md:80
 msgid ""
 "The Jupyter Notebook documentation for best practices about securing a "
 "public notebook server in general."
 msgstr ""
 
 # 9950b2e426414111ad46c6ba1e9d29bb
-#: ../../using/common.md:81
+#: ../../using/common.md:82
 msgid "Alternative Commands"
 msgstr ""
 
 # 2e90717352804ebd8086eef378fa411d
-#: ../../using/common.md:83
+#: ../../using/common.md:84
 msgid "start.sh"
 msgstr ""
 
 # 11637ea03062425e94964f2c70ed8676
-#: ../../using/common.md:85
+#: ../../using/common.md:86
 msgid ""
 "The start-notebook.sh script actually inherits most of its option "
 "handling capability from a more generic start.sh script. The start.sh "
@@ -319,12 +327,12 @@ msgid ""
 msgstr ""
 
 # ad0be3e8095e4394afb367e9e56e1ca5
-#: ../../using/common.md:91
+#: ../../using/common.md:92
 msgid "Or, to run JupyterLab instead of the classic notebook, run the following:"
 msgstr ""
 
 # 3d92501fb3b940b385ee986095610391
-#: ../../using/common.md:97
+#: ../../using/common.md:98
 msgid ""
 "This script is particularly useful when you derive a new Dockerfile from "
 "this image and install additional Jupyter applications with subcommands "
@@ -332,12 +340,12 @@ msgid ""
 msgstr ""
 
 # ff1b1af310d54eedb852dc5eff7a4f7e
-#: ../../using/common.md:99
+#: ../../using/common.md:100
 msgid "Others"
 msgstr ""
 
 # 127ffe0a552b4dafaa77d173883350d7
-#: ../../using/common.md:101
+#: ../../using/common.md:102
 msgid ""
 "You can bypass the provided scripts and specify an arbitrary start "
 "command. If you do, keep in mind that features supported by the start.sh "
@@ -345,12 +353,12 @@ msgid ""
 msgstr ""
 
 # 1d8bc4b15c3044b3932e0df72dd694a7
-#: ../../using/common.md:103
+#: ../../using/common.md:104
 msgid "Conda Environments"
 msgstr ""
 
 # 97935ba423ed4a8787f9895f00015e4b
-#: ../../using/common.md:105
+#: ../../using/common.md:106
 msgid ""
 "The default Python 3.x Conda environment resides in /opt/conda. The "
 "/opt/conda/bin directory is part of the default jovyan user's $PATH. That"
@@ -359,7 +367,7 @@ msgid ""
 msgstr ""
 
 # a8fe459cc9ff43b3b2f31efd4587f145
-#: ../../using/common.md:107
+#: ../../using/common.md:108
 msgid ""
 "The jovyan user has full read/write access to the /opt/conda directory. "
 "You can use either conda or pip to install new packages without any "
