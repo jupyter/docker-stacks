@@ -24,10 +24,11 @@ USER $NB_UID
 # R packages
 RUN conda install --quiet --yes \
     'r-base=3.6.1' \
-    'r-irkernel=1.0*' \
     'r-ggplot2=3.2*' \
+    'r-irkernel=1.0*' \
+    'r-rcurl=1.95*' \
     'r-sparklyr=1.0*' \
-    'r-rcurl=1.95*' && \
+    && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
