@@ -18,28 +18,28 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'conda-forge::blas=*=openblas' \
     'ipywidgets=7.5*' \
-    'pandas=0.24*' \
+    'pandas=0.25*' \
     'numexpr=2.6*' \
     'matplotlib-base=3.1.*' \
-    'scipy=1.2*' \
+    'scipy=1.3*' \
     'seaborn=0.9*' \
-    'scikit-learn=0.20*' \
-    'scikit-image=0.14*' \
-    'sympy=1.3*' \
+    'scikit-learn=0.21*' \
+    'scikit-image=0.15*' \
+    'sympy=1.4*' \
     'cython=0.29*' \
     'patsy=0.5*' \
-    'statsmodels=0.9*' \
-    'cloudpickle=0.8*' \
-    'dill=0.2*' \
-    'dask=1.1.*' \
-    'numba=0.42*' \
-    'bokeh=1.0*' \
+    'statsmodels=0.10*' \
+    'cloudpickle=1.2*' \
+    'dill=0.3*' \
+    'dask=2.2.*' \
+    'numba=0.45*' \
+    'bokeh=1.3*' \
     'sqlalchemy=1.3*' \
     'hdf5=1.10*' \
     'h5py=2.9*' \
     'vincent=0.4.*' \
-    'beautifulsoup4=4.7.*' \
-    'protobuf=3.7.*' \
+    'beautifulsoup4=4.8.*' \
+    'protobuf=3.9.*' \
     'xlrd'  && \
     conda clean --all -f -y && \
     # Activate ipywidgets extension in the environment that runs the notebook server
