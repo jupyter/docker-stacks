@@ -45,26 +45,27 @@ USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
-    'rpy2=2.9*' \
     'r-base=3.6.1' \
-    'r-irkernel=1.0*' \
-    'r-plyr=1.8*' \
-    'r-devtools=2.1*' \
-    'r-tidyverse=1.2*' \
-    'r-shiny=1.3*' \
-    'r-rmarkdown=1.14*' \
-    'r-forecast=8.7*' \
-    'r-rsqlite=2.1*' \
-    'r-reshape2=1.4*' \
-    'r-nycflights13=1.0*' \
     'r-caret=6.0*' \
-    'r-rcurl=1.95*' \
     'r-crayon=1.3*' \
-    'r-randomforest=4.6*' \
+    'r-devtools=2.1*' \
+    'r-forecast=8.7*' \
+    'r-hexbin=1.27*' \
     'r-htmltools=0.3*' \
-    'r-sparklyr=1.0*' \
     'r-htmlwidgets=1.3*' \
-    'r-hexbin=1.27*' && \
+    'r-irkernel=1.0*' \
+    'r-nycflights13=1.0*' \
+    'r-plyr=1.8*' \
+    'r-randomforest=4.6*' \
+    'r-rcurl=1.95*' \
+    'r-reshape2=1.4*' \
+    'r-rmarkdown=1.14*' \
+    'r-rsqlite=2.1*' \
+    'r-shiny=1.3*' \
+    'r-sparklyr=1.0*' \
+    'r-tidyverse=1.2*' \
+    'rpy2=2.9*' \
+    && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
