@@ -79,7 +79,7 @@ RUN conda install --quiet --yes \
 # taking effect properly on the .local folder in the jovyan home dir.
 RUN julia -e 'import Pkg; Pkg.update()' && \
     (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
-    julia -e "using Pkg; pkg\"add Gadfly RDatasets IJulia InstantiateFromURL\"; pkg\"precompile\"" && \ 
+    julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \ 
     # move kernelspec out of home \
     mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
