@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-05 19:53-0400\n"
+"POT-Creation-Date: 2019-09-02 01:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
+"Generated-By: Babel 2.7.0\n"
 
 # 99bff7d6e014436daac99d7d6c9bccf0
 #: ../../maintaining/tasks.md:1
@@ -319,9 +319,9 @@ msgstr ""
 msgid "Visit https://readthedocs.org/dashboard/import/manual/"
 msgstr ""
 
-# a798b8e31be7408d9301187ff3e3ef69
+# 596b5f7d6f19482588e7f34f202526c5
 #: ../../maintaining/tasks.md:71
-msgid "Enter jupyter-docker-stacks-<lang> for the project name."
+msgid "Enter jupyter-docker-stacks-language_abbreviation for the project name."
 msgstr ""
 
 # 2869b2f7a89c428f903e3695dd511e9a
@@ -370,4 +370,8 @@ msgstr ""
 #: ../../maintaining/tasks.md:82
 msgid "Click Add."
 msgstr ""
+
+# a798b8e31be7408d9301187ff3e3ef69
+#~ msgid "Enter jupyter-docker-stacks-<lang> for the project name."
+#~ msgstr ""
 

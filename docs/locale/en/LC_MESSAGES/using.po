@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-03 03:19+0000\n"
+"POT-Creation-Date: 2019-09-02 01:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1361,8 +1361,16 @@ msgid ""
 " launch it on ."
 msgstr ""
 
-# f9f4ef31795249d9bf2a752dfbb27a8f
+# e5b3d27fa68b47d4a2c02c7a039d7daf
 #: ../../using/selecting.md:161
+msgid ""
+"sage-notebook is a community Jupyter Docker Stack image with the sagemath"
+" kernel on top of the minimal-notebook image. Click here to launch it on "
+"."
+msgstr ""
+
+# f9f4ef31795249d9bf2a752dfbb27a8f
+#: ../../using/selecting.md:163
 msgid ""
 "See the contributing guide for information about how to create your own "
 "Jupyter Docker Stack."
