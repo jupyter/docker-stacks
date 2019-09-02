@@ -158,4 +158,6 @@ The core stacks are just a tiny sample of what's possible when combining Jupyter
 
 * [java-notebook is a community Jupyter Docker Stack image](https://github.com/jbindinga/java-notebook). The image includes [IJava](https://github.com/SpencerPark/IJava) kernel on top of the minimal-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jbindinga/java-notebook/master).
 
+* [sage-notebook](https://github.com/sharpTrick/sage-notebook) is a community Jupyter Docker Stack image with the [sagemath](https://sagemath.org) kernel on top of the minimal-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master).
+
 See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.
