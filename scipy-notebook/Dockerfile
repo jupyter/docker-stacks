@@ -30,6 +30,7 @@ RUN conda install --quiet --yes \
     'numba=0.45*' \
     'numexpr=2.6*' \
     'pandas=0.25*' \
+    'pandas-datareader=0.7*' \
     'patsy=0.5*' \
     'protobuf=3.9.*' \
     'scikit-image=0.15*' \
