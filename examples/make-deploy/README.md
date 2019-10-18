@@ -46,7 +46,7 @@ make notebook NAME=your-notebook PORT=9001 WORK_VOLUME=our-work
 
 ### How do I run over HTTPS?
 
-Instead of `make notebook`, run `make self-signed-notebook PASSWORD=your_desired_password`. This target gives you a notebook wtih a self-signed certificate.
+Instead of `make notebook`, run `make self-signed-notebook PASSWORD=your_desired_password`. This target gives you a notebook with a self-signed certificate.
 
 ### That self-signed certificate is a pain. Let's Encrypt?
 
