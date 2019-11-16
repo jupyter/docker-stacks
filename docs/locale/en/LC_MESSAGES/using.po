@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-02 01:29+0000\n"
+"POT-Creation-Date: 2019-11-16 22:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -389,46 +389,80 @@ msgid ""
 "below capture this knowledge."
 msgstr ""
 
+# 7447af86f4f3438ba413a7e9cc9764e5
+#: ../../using/recipes.md:8
+msgid "Using sudo within a container"
+msgstr ""
+
+# ed8292c31667424184fe7515a30f79cd
+#: ../../using/recipes.md:10
+msgid ""
+"Password authentication is disabled for the NB_USER (e.g., jovyan). This "
+"choice was made to avoid distributing images with a weak default password"
+" that users ~might~ will forget to change before running a container on a"
+" publicly accessible host."
+msgstr ""
+
+# d22ae301bebb4857b866359ddbfb7e53
+#: ../../using/recipes.md:14
+msgid ""
+"You can grant the within-container NB_USER passwordless sudo access by "
+"adding -e GRANT_SUDO=yes and --user root to your Docker command line or "
+"appropriate container orchestrator config."
+msgstr ""
+
+# f75300183d66418d958651b713e3c81e
+#: ../../using/recipes.md:18
+msgid "For example:"
+msgstr ""
+
+# 909f17eb57bc4e4e8df8216423d9c008
+#: ../../using/recipes.md:24
+msgid ""
+"You should only enable sudo if you trust the user and/or if the container"
+" is running on an isolated host."
+msgstr ""
+
 # 5b38bd48b58242788cc8b581b575241a
-#: ../../using/recipes.md:5
+#: ../../using/recipes.md:27
 msgid "Using pip install or conda install in a Child Docker image"
 msgstr ""
 
 # cfb1a65ed1a4453e8b3355f1c0c23b1c
-#: ../../using/recipes.md:7
+#: ../../using/recipes.md:29
 msgid "Create a new Dockerfile like the one shown below."
 msgstr ""
 
 # 3ab615dc6fb6425d954cae4ce14f08b9
-#: ../../using/recipes.md:16
+#: ../../using/recipes.md:38
 msgid "Then build a new image."
 msgstr ""
 
-# 7ed4a7919dfd446c817c64a7e420e95e
-#: ../../using/recipes.md:22
+# c35347a79a2e4a7faffe139767808965
+#: ../../using/recipes.md:44
 msgid ""
 "To use a requirements.txt file, first create your requirements.txt file "
-"with the listing of packages desired.  Next, create a new Dockerfile like"
-" the one shown below."
+"with the listing of packages desired. Next, create a new Dockerfile like "
+"the one shown below."
 msgstr ""
 
 # f2f035925d764425b9999b19d36c1d30
-#: ../../using/recipes.md:35
+#: ../../using/recipes.md:57
 msgid "For conda, the Dockerfile is similar:"
 msgstr ""
 
 # fd2320ac3001480992ab2dd80285467b
-#: ../../using/recipes.md:47
+#: ../../using/recipes.md:69
 msgid "Ref: docker-stacks/commit/79169618d571506304934a7b29039085e77db78c"
 msgstr ""
 
 # 179407610520450ea0e4b566eac8ec96
-#: ../../using/recipes.md:49
+#: ../../using/recipes.md:72
 msgid "Add a Python 2.x environment"
 msgstr ""
 
 # 19bf98219e344b80b68fbf7f3aa68ec6
-#: ../../using/recipes.md:51
+#: ../../using/recipes.md:74
 msgid ""
 "Python 2.x was removed from all images on August 10th, 2017, starting in "
 "tag cc9feab481f7. You can add a Python 2.x environment by defining your "
@@ -436,36 +470,36 @@ msgid ""
 msgstr ""
 
 # be4f7d9b615d490c87cc6393ed0fabf2
-#: ../../using/recipes.md:73
+#: ../../using/recipes.md:98
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/440"
 msgstr ""
 
 # 747e87a9067b4870bad5aa335ab39f7d
-#: ../../using/recipes.md:75
+#: ../../using/recipes.md:101
 msgid "Run JupyterLab"
 msgstr ""
 
 # e062399bbaee4f1eb3ab48dcc60289b8
-#: ../../using/recipes.md:77
+#: ../../using/recipes.md:103
 msgid ""
 "JupyterLab is preinstalled as a notebook extension starting in tag "
 "c33a7dc0eece."
 msgstr ""
 
 # 7c0f192d197143698dd371fff8fa3ceb
-#: ../../using/recipes.md:79
+#: ../../using/recipes.md:106
 msgid ""
 "Run jupyterlab using a command such as docker run -it --rm -p 8888:8888 "
 "jupyter/datascience-notebook start.sh jupyter lab"
 msgstr ""
 
 # e7842069e6ce432b9f1a12271e0ddc24
-#: ../../using/recipes.md:81
+#: ../../using/recipes.md:109
 msgid "Let's Encrypt a Notebook server"
 msgstr ""
 
 # 4c00785b93734066b349b42b23c312af
-#: ../../using/recipes.md:83
+#: ../../using/recipes.md:111
 msgid ""
 "See the README for the simple automation here https://github.com/jupyter"
 "/docker-stacks/tree/master/examples/make-deploy which includes steps for "
@@ -473,53 +507,53 @@ msgid ""
 msgstr ""
 
 # c386f5913a78475487e9f12c76af9032
-#: ../../using/recipes.md:85
+#: ../../using/recipes.md:115
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/78"
 msgstr ""
 
 # dd297c8f73a44707bf02064434a50a47
-#: ../../using/recipes.md:87
+#: ../../using/recipes.md:118
 msgid "Slideshows with Jupyter and RISE"
 msgstr ""
 
 # a1834343ae3045ea962e0efc80f69443
-#: ../../using/recipes.md:89
+#: ../../using/recipes.md:120
 msgid ""
 "RISE allows via extension to create live slideshows of your notebooks, "
 "with no conversion, adding javascript Reveal.js:"
 msgstr ""
 
 # 6e0c67b18d3546a9ab024c5663aa8f90
-#: ../../using/recipes.md:95
+#: ../../using/recipes.md:128
 msgid "Credit: Paolo D. based on docker-stacks/issues/43"
 msgstr ""
 
 # 6bf66d68f2e5439b8403c0dd8ded40c5
-#: ../../using/recipes.md:97
+#: ../../using/recipes.md:131
 msgid "xgboost"
 msgstr ""
 
 # ce204678c3af4aa9a0fb55bb6de7554b
-#: ../../using/recipes.md:99
+#: ../../using/recipes.md:133
 msgid ""
 "You need to install conda's gcc for Python xgboost to work properly. "
 "Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0."
 msgstr ""
 
 # a9bc4b88bd3d4bc1a7832f31677c298a
-#: ../../using/recipes.md:109
+#: ../../using/recipes.md:144
 msgid "Running behind a nginx proxy"
 msgstr ""
 
 # ca7763a5a35a47bd9fb29ae9d00feab3
-#: ../../using/recipes.md:111
+#: ../../using/recipes.md:146
 msgid ""
 "Sometimes it is useful to run the Jupyter instance behind a nginx proxy, "
 "for instance:"
 msgstr ""
 
 # dd58dbc3b08744a0b9415448d3bdbba6
-#: ../../using/recipes.md:113
+#: ../../using/recipes.md:148
 msgid ""
 "you would prefer to access the notebook at a server URL with a path "
 "(https://example.com/jupyter) rather than a port "
@@ -527,30 +561,30 @@ msgid ""
 msgstr ""
 
 # a5129fb6e2b042f5b8161ed5318123f9
-#: ../../using/recipes.md:114
+#: ../../using/recipes.md:150
 msgid ""
 "you may have many different services in addition to Jupyter running on "
 "the same server, and want to nginx to help improve server performance in "
 "manage the connections"
 msgstr ""
 
-# 56f2354437c74650a70bd154647eed26
-#: ../../using/recipes.md:116
+# cffd649e66ae4efb8122522e465ce3e3
+#: ../../using/recipes.md:153
 msgid ""
-"Here is a quick example NGINX configuration to get started.  You'll need "
-"a server, a .crt and .key file for your server, and docker & docker-"
-"compose installed.  Then just download the files at that gist and run "
-"docker-compose up -d to test it out.  Customize the nginx.conf file to "
-"set the desired paths and add other services."
+"Here is a quick example NGINX configuration to get started. You'll need a"
+" server, a .crt and .key file for your server, and docker & docker-"
+"compose installed. Then just download the files at that gist and run "
+"docker-compose up -d to test it out. Customize the nginx.conf file to set"
+" the desired paths and add other services."
 msgstr ""
 
 # 7ba37cfc11224013a862d6519168acd0
-#: ../../using/recipes.md:118
+#: ../../using/recipes.md:158
 msgid "Host volume mounts and notebook errors"
 msgstr ""
 
 # 0fc6706374ee4a5d98517ec02ee24a03
-#: ../../using/recipes.md:120
+#: ../../using/recipes.md:160
 msgid ""
 "If you are mounting a host directory as /home/jovyan/work in your "
 "container and you receive permission errors or connection errors when you"
@@ -561,17 +595,17 @@ msgid ""
 msgstr ""
 
 # a6c910ab798b43ee91c0af160a3aadb6
-#: ../../using/recipes.md:122
+#: ../../using/recipes.md:166
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/199"
 msgstr ""
 
 # 908924a0b4fa44d79fbca1413a0fb296
-#: ../../using/recipes.md:124
+#: ../../using/recipes.md:169
 msgid "Manpage installation"
 msgstr ""
 
 # 7fc6566074ee4ba3a4e579437d7f151d
-#: ../../using/recipes.md:126
+#: ../../using/recipes.md:171
 msgid ""
 "Most containers, including our Ubuntu base image, ship without manpages "
 "installed to save space. You can use the following dockerfile to inherit "
@@ -579,7 +613,7 @@ msgid ""
 msgstr ""
 
 # fb4a0f5bc3534bd9bb8909ce6512f4dd
-#: ../../using/recipes.md:151
+#: ../../using/recipes.md:197
 msgid ""
 "Adding the documentation on top of an existing singleuser image wastes a "
 "lot of space and requires reinstalling every system package, which can "
@@ -589,125 +623,125 @@ msgid ""
 msgstr ""
 
 # 84b7fb0b5fd748ecba457f867a0e30bf
-#: ../../using/recipes.md:173
+#: ../../using/recipes.md:222
 msgid "Be sure to check the current base image in base-notebook before building."
 msgstr ""
 
 # 5764b06de0d941a585e5107f313235f4
-#: ../../using/recipes.md:175
+#: ../../using/recipes.md:224
 msgid "JupyterHub"
 msgstr ""
 
 # af0ca920391b419b805ae3809388fcf2
-#: ../../using/recipes.md:177
+#: ../../using/recipes.md:226
 msgid "We also have contributed recipes for using JupyterHub."
 msgstr ""
 
 # fbff97a16a2a4a53a69dd2d1c7dfbe91
-#: ../../using/recipes.md:179
+#: ../../using/recipes.md:228
 msgid "Use JupyterHub's dockerspawner"
 msgstr ""
 
 # 81e1dbb4c1c34f4c9e88630adff3d1e9
-#: ../../using/recipes.md:181
+#: ../../using/recipes.md:230
 msgid ""
 "In most cases for use with DockerSpawner, given any image that already "
 "has a notebook stack set up, you would only need to add:"
 msgstr ""
 
 # 837b7a2dac01402e8cd2cc398bd5d785
-#: ../../using/recipes.md:183
+#: ../../using/recipes.md:233
 msgid "install the jupyterhub-singleuser script (for the right Python)"
 msgstr ""
 
 # d9816cb5ae2041e2a5fde9cdfb91262f
-#: ../../using/recipes.md:184
+#: ../../using/recipes.md:234
 msgid "change the command to launch the single-user server"
 msgstr ""
 
 # 8b1bc94531e7490fbaa012f5c4a257bd
-#: ../../using/recipes.md:186
+#: ../../using/recipes.md:236
 msgid ""
 "Swapping out the FROM line in the jupyterhub/singleuser Dockerfile should"
 " be enough for most cases."
 msgstr ""
 
 # ce864521fffa4c89b7584d24296515d5
-#: ../../using/recipes.md:188
+#: ../../using/recipes.md:239
 msgid ""
 "Credit: Justin Tyberg, quanghoc, and Min RK based on docker-"
 "stacks/issues/124 and docker-stacks/pull/185"
 msgstr ""
 
 # 6a5d92e7b071449686d148be90544e64
-#: ../../using/recipes.md:190
+#: ../../using/recipes.md:244
 msgid "Containers with a specific version of JupyterHub"
 msgstr ""
 
 # 091b62f4a91c4d87b92554795a00744c
-#: ../../using/recipes.md:192
+#: ../../using/recipes.md:246
 msgid ""
 "To use a specific version of JupyterHub, the version of jupyterhub in "
 "your image should match the version in the Hub itself."
 msgstr ""
 
 # 67db6ce9d62f499a9d9aaf675a86cddc
-#: ../../using/recipes.md:199
+#: ../../using/recipes.md:254
 msgid "Credit: MinRK"
 msgstr ""
 
 # d4613cff20a140cbbbacc84ada8fcd87
-#: ../../using/recipes.md:202
+#: ../../using/recipes.md:256
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/177"
 msgstr ""
 
 # 19439bd85c2946bb89f385651f8283dc
-#: ../../using/recipes.md:204
+#: ../../using/recipes.md:259
 msgid "Spark"
 msgstr ""
 
 # 975c96d6a0b843dfabd889c753671c93
-#: ../../using/recipes.md:206
+#: ../../using/recipes.md:261
 msgid "A few suggestions have been made regarding using Docker Stacks with spark."
 msgstr ""
 
 # 9c295c93db724e5fb11a8f870f805f41
-#: ../../using/recipes.md:208
+#: ../../using/recipes.md:263
 msgid "Using PySpark with AWS S3"
 msgstr ""
 
 # dc4059d42eaa495f8ebca84ebc91ac09
-#: ../../using/recipes.md:210
+#: ../../using/recipes.md:265
 msgid "Using Spark session for hadoop 2.7.3"
 msgstr ""
 
 # d2c12e3525bf4d9ca518fef02c4a79d3
-#: ../../using/recipes.md:230
+#: ../../using/recipes.md:285
 msgid "Using Spark context for hadoop 2.6.0"
 msgstr ""
 
 # 59f08373c7354fa4bb5b7c10441b5d69
-#: ../../using/recipes.md:252
+#: ../../using/recipes.md:307
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/127"
 msgstr ""
 
 # c32dccc031664268983f72ed7927beff
-#: ../../using/recipes.md:254
+#: ../../using/recipes.md:310
 msgid "Using Local Spark JARs"
 msgstr ""
 
 # 19614ffa973f49bab235cb5ac9cdf259
-#: ../../using/recipes.md:270
+#: ../../using/recipes.md:326
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/154"
 msgstr ""
 
 # fc70801958a34e5aa578388147a8a1fb
-#: ../../using/recipes.md:272
+#: ../../using/recipes.md:329
 msgid "Using spark-packages.org"
 msgstr ""
 
 # 031b9633ca0849e9a9035f4fa5ec2d29
-#: ../../using/recipes.md:274
+#: ../../using/recipes.md:331
 msgid ""
 "If you'd like to use packages from spark-packages.org, see "
 "https://gist.github.com/parente/c95fdaba5a9a066efaab for an example of "
@@ -716,34 +750,34 @@ msgid ""
 msgstr ""
 
 # 08c4d39ccfa84551af78867ab37d3f18
-#: ../../using/recipes.md:276
+#: ../../using/recipes.md:336
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/43"
 msgstr ""
 
 # 285d9bf0eefb480386dfdcd55fd76ef5
-#: ../../using/recipes.md:278
+#: ../../using/recipes.md:339
 msgid "Use jupyter/all-spark-notebooks with an existing Spark/YARN cluster"
 msgstr ""
 
 # 1b1c743d85d542989f6a8f2c97a588d3
-#: ../../using/recipes.md:342
+#: ../../using/recipes.md:403
 msgid "Credit: britishbadger from docker-stacks/issues/369"
 msgstr ""
 
 # 06d2e360eccb489abeeebada6c0b41eb
-#: ../../using/recipes.md:344
+#: ../../using/recipes.md:406
 msgid ""
 "Run Jupyter Notebook/Lab inside an already secured environment (i.e., "
 "with no token)"
 msgstr ""
 
 # 42dd63565c4a4f67825f675972554d34
-#: ../../using/recipes.md:346
+#: ../../using/recipes.md:408
 msgid "(Adapted from issue 728)"
 msgstr ""
 
 # 8af2ceb1414f46e1802681695b5917f8
-#: ../../using/recipes.md:348
+#: ../../using/recipes.md:410
 msgid ""
 "The default security is very good. There are use cases, encouraged by "
 "containers, where the jupyter container and the system it runs within, "
@@ -753,27 +787,27 @@ msgid ""
 msgstr ""
 
 # 7476a6d5eae74ecaae966e56390c096e
-#: ../../using/recipes.md:354
+#: ../../using/recipes.md:415
 msgid "For jupyterlab:"
 msgstr ""
 
 # f2efc5a0ba6b4c53b2047cc5f22bdbaa
-#: ../../using/recipes.md:360
+#: ../../using/recipes.md:421
 msgid "For jupyter classic:"
 msgstr ""
 
 # 158396013982441e9e62402c499dfb11
-#: ../../using/recipes.md:365
+#: ../../using/recipes.md:427
 msgid "Enable nbextension spellchecker for markdown (or any other nbextension)"
 msgstr ""
 
 # 8ccfbcb4264f48d0b6709fe81aa0a86d
-#: ../../using/recipes.md:367
+#: ../../using/recipes.md:429
 msgid "NB: this works for classic notebooks only"
 msgstr ""
 
 # 78ba1c20de2445fb9b76ec6202e4d794
-#: ../../using/recipes.md:380
+#: ../../using/recipes.md:443
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/675"
 msgstr ""
 
@@ -1600,5 +1634,28 @@ msgstr ""
 
 # 5e06096348924f51881d05f984e91381
 #~ msgid "This list only has 2 examples. You can be the next!"
+#~ msgstr ""
+
+# 7ed4a7919dfd446c817c64a7e420e95e
+#~ msgid ""
+#~ "To use a requirements.txt file, first"
+#~ " create your requirements.txt file with "
+#~ "the listing of packages desired.  Next,"
+#~ " create a new Dockerfile like the "
+#~ "one shown below."
+#~ msgstr ""
+
+# 56f2354437c74650a70bd154647eed26
+#~ msgid ""
+#~ "Here is a quick example NGINX "
+#~ "configuration to get started.  You'll "
+#~ "need a server, a .crt and .key "
+#~ "file for your server, and docker &"
+#~ " docker-compose installed.  Then just "
+#~ "download the files at that gist "
+#~ "and run docker-compose up -d to"
+#~ " test it out.  Customize the "
+#~ "nginx.conf file to set the desired "
+#~ "paths and add other services."
 #~ msgstr ""
 
