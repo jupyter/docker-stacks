@@ -21,7 +21,7 @@ Example: `docker run -it --rm -p 8889:8888 jupyter/all-spark-notebook:latest`
 Example:
 
 1. Visit http://localhost:8889
-2. Start an R noteobok
+2. Start an R notebook
 3. ...
 
 **What do you expect to happen?**
