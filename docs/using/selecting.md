@@ -120,6 +120,17 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 * [Apache Toree](https://toree.apache.org/) and [spylon-kernel](https://github.com/maxpoint/spylon-kernel) to support Scala code in Jupyter notebooks
 * [ggplot2](http://ggplot2.org/), [sparklyr](http://spark.rstudio.com/), and [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html) packages
 
+### jupyter/sparkmagic-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/sparkmagic-notebook)
+| [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/sparkmagic-notebook/Dockerfile)
+| [Docker Hub image tags](https://hub.docker.com/r/jupyter/sparkmagic-notebook/tags/)
+
+`jupyter/sparkmagic-notebook` includes sparkmagic with support for R, pyspark and Scala using apache livy.
+
+* Everything in `jupyter/base-notebook`
+* [sparkmagic](https://github.com/jupyter-incubator/sparkmagic) to support Jupyter magics and kernels for working with remote Spark clusters
+
 ### Image Relationships
 
 The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles). Any given image inherits the complete content of all ancestor images pointing to it.
