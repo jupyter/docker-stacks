@@ -4,6 +4,11 @@ This page provides details about features specific to one or more images.
 
 ## Apache Spark
 
+**Specific Docker Image Options**
+* `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](http://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook` 
+
+**Usage Examples**
+
 The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images support the use of [Apache Spark](https://spark.apache.org/) in Python, R, and Scala notebooks. The following sections provide some examples of how to get started using them.
 
 ### Using Spark Local Mode
@@ -13,12 +18,10 @@ Spark local mode is useful for experimentation on small data when you do not hav
 #### In a Python Notebook
 
 ```python
-import pyspark
-sc = pyspark.SparkContext('local[*]')
-
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("SimpleApp").getOrCreate()
 # do something to prove it works
-rdd = sc.parallelize(range(1000))
-rdd.takeSample(False, 5)
+spark.sql('SELECT "Test" as c1').show()
 ```
 
 #### In a R Notebook

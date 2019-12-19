@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Tag the latest build with the short git sha. Push the tag in addition
 # to the "latest" tag already pushed.
@@ -6,7 +7,44 @@ GIT_SHA_TAG=${SOURCE_COMMIT:0:12}
 docker tag $IMAGE_NAME $DOCKER_REPO:$GIT_SHA_TAG
 docker push $DOCKER_REPO:$GIT_SHA_TAG
 
+# Create a working directory.
+BUILD_TIMESTAMP=$(date -u +%FT%TZ)
+WORKDIR=$(mktemp -d)
+GIT_URI="git@github.com:jupyter/docker-stacks.wiki.git"
+GIT_SANDBOX="${WORKDIR}/docker-stacks.wiki"
+IMAGE_SHORT_NAME=$(basename $DOCKER_REPO)
+MANIFEST_FILE="${GIT_SANDBOX}/manifests/${IMAGE_SHORT_NAME}-${GIT_SHA_TAG}.md"
+INDEX_FILE="${GIT_SANDBOX}/Home.md"
+
+# Configure git so it can push back to GitHub.
+eval $(ssh-agent -s)
+ssh-add <(echo "$DEPLOY_KEY")
+ssh-add -l
+git config --global user.email "jupyter@googlegroups.com"
+git config --global user.name "Jupyter Docker Stacks"
+
+# Glone the GitHub project wiki.
+pushd "$WORKDIR"
+git clone "$GIT_URI"
+popd
+
+# Render the build manifest template.
+mkdir -p $(dirname "$MANIFEST_FILE")
+source hooks/manifest.tmpl
+source hooks/index.tmpl
+
+# Push the wiki update back to GitHub.
+pushd "$GIT_SANDBOX"
+git add .
+git commit -m "DOC: Build ${MANIFEST_FILE}"
+git push -u origin master
+popd
+
+# Shutdown the ssh agent for good measure.
+ssh-agent -k
+
 # Invoke all downstream build triggers.
+set +e
 for url in $(echo $NEXT_BUILD_TRIGGERS | sed "s/,/ /g")
 do
     curl -X POST $url

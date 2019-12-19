@@ -1,6 +1,0 @@
-# Copyright (c) Jupyter Development Team.
-# Distributed under the terms of the Modified BSD License.
-# NOTE: jupyter_kernel_gateway uses the notebook package. We get a
-# speed up if we pre-install the notebook package using conda since
-# we'll get prebuilt binaries for all its dependencies like pyzmq.
-notebook==4.1

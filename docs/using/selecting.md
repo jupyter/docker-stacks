@@ -1,5 +1,9 @@
 # Selecting an Image
 
+* [Core Stacks](#core-stacks)
+* [Image Relationships](#image-relationships)
+* [Community Stacks](#community-stacks)
+
 Using one of the Jupyter Docker Stacks requires two choices:
 
 1. Which Docker image you wish to use
@@ -17,7 +21,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/base-notebook/Dockerfile)
 | [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
-`jupyter/base-notebook` is a small image supporting the [options common across all core stacks](configuration.html). It is the basis for all other stacks.
+`jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.md). It is the basis for all other stacks.
 
 * Minimally-functional Jupyter Notebook server (e.g., no [pandoc](https://pandoc.org/) for saving notebooks as PDFs)
 * [Miniconda](https://conda.io/miniconda.html) Python 3.x in `/opt/conda`
@@ -38,7 +42,7 @@ The Jupyter team maintains a set of Docker image definitions in the [https://git
 
 * Everything in `jupyter/base-notebook`
 * [Pandoc](http://pandoc.org) and [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [jed](https://www.jedsoft.org/jed/), [vim](http://www.vim.org/), and unzip
+* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [jed](https://www.jedsoft.org/jed/), [nano](https://www.nano-editor.org/), tzdata, and unzip
 
 ### jupyter/r-notebook
 
@@ -138,6 +142,22 @@ You must refer to git-SHA image tags when stability and reproducibility are impo
 
 The core stacks are just a tiny sample of what's possible when combining Jupyter with other technologies. We encourage members of the Jupyter community to create their own stacks based on the core images and link them below.
 
-*Nothing here yet! You can be the first!*
+* [csharp-notebook is a community Jupyter Docker Stack image. Try C# in Jupyter Notebooks](https://github.com/tlinnet/csharp-notebook). The image includes more than 200 Jupyter Notebooks with example C# code and can readily be tried online via mybinder.org. Click here to launch [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master).
 
-See the [contributing guide](contributing/stacks) for information about how to create your own Jupyter Docker Stack.
+* [education-notebook is a community Jupyter Docker Stack image](https://github.com/umsi-mads/education-notebook). The image includes nbgrader and RISE on top of the datascience-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
+
+* __crosscompass/ihaskell-notebook__
+
+  [Source on GitHub](https://github.com/jamesdbrock/ihaskell-notebook)
+  | [Dockerfile commit history](https://github.com/jamesdbrock/ihaskell-notebook/commits/master/Dockerfile)
+  | [Docker Hub image tags](https://hub.docker.com/r/crosscompass/ihaskell-notebook/tags)
+
+  `crosscompass/ihaskell-notebook` is based on [IHaskell](https://github.com/gibiansky/IHaskell). Includes popular packages and example notebooks.
+
+  Try it on binder: [![launch Learn You a Haskell for Great Good!](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/learn_you_a_haskell/00-preface.ipynb)
+
+* [java-notebook is a community Jupyter Docker Stack image](https://github.com/jbindinga/java-notebook). The image includes [IJava](https://github.com/SpencerPark/IJava) kernel on top of the minimal-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jbindinga/java-notebook/master).
+
+* [sage-notebook](https://github.com/sharpTrick/sage-notebook) is a community Jupyter Docker Stack image with the [sagemath](https://sagemath.org) kernel on top of the minimal-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master).
+
+See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.

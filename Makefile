@@ -6,6 +6,7 @@
 SHELL:=bash
 OWNER:=jupyter
 ARCH:=$(shell uname -m)
+DIFF_RANGE?=master...HEAD
 
 # Need to list the images in build dependency order
 ifeq ($(ARCH),ppc64le)
@@ -60,8 +61,27 @@ dev-env: ## install libraries required to build docs and run tests
 docs: ## build HTML documentation
 	make -C docs html
 
-test/docs: ## check links in Sphinx documentation
-	make -C docs linkcheck
+n-docs-diff: ## number of docs/ files changed since branch from master
+	@git diff --name-only $(DIFF_RANGE) -- docs/ ':!docs/locale' | wc -l | awk '{print $$1}'
+
+
+n-other-diff: ## number of files outside docs/ changed since branch from master
+	@git diff --name-only $(DIFF_RANGE) -- ':!docs/' | wc -l | awk '{print $$1}'
+
+tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
+	@git config --global user.email "travis@travis-ci.org"
+	@git config --global user.name "Travis CI"
+	@git checkout master
+
+	@make -C docs clean gettext
+	@cd docs && sphinx-intl update -p _build/gettext -l en
+
+	@git add docs/locale/en
+	@git commit -m "[ci skip] Update en source strings (build: $$TRAVIS_JOB_NUMBER)"
+
+	@git remote add origin-tx https://$${GH_TOKEN}@github.com/jupyter/docker-stacks.git
+	@git push -u origin-tx master
+
 
 test/%: ## run tests against a stack
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test

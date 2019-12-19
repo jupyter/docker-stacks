@@ -56,7 +56,26 @@ def test_gid_change(container):
         command=['start.sh', 'id']
     )
     c.wait(timeout=10)
-    assert 'gid=110(users)' in c.logs(stdout=True).decode('utf-8')
+    logs = c.logs(stdout=True).decode('utf-8')
+    assert 'gid=110(jovyan)' in logs
+    assert 'groups=110(jovyan),100(users)' in logs
+
+
+def test_chown_extra(container):
+    """Container should change the UID/GID of CHOWN_EXTRA."""
+    c = container.run(
+        tty=True,
+        user='root',
+        environment=['NB_UID=1010',
+                     'NB_GID=101',
+                     'CHOWN_EXTRA=/opt/conda',
+                     'CHOWN_EXTRA_OPTS=-R',
+        ],
+        command=['start.sh', 'bash', '-c', 'stat -c \'%n:%u:%g\' /opt/conda/LICENSE.txt']
+    )
+    # chown is slow so give it some time
+    c.wait(timeout=120)
+    assert '/opt/conda/LICENSE.txt:1010:101' in c.logs(stdout=True).decode('utf-8')
 
 
 def test_sudo(container):

@@ -87,7 +87,7 @@ The next steps are:
 ```
 if [ -f /home/$NB_USER/environment.yml ]; then
     conda env update --name root --file /home/$NB_USER/environment.yml
-    conda clean -tipsy
+    conda clean --all -f -y
 else
     if [ -f /home/$NB_USER/requirements.txt ]; then
         pip --no-cache-dir install -r /home/$NB_USER/requirements.txt

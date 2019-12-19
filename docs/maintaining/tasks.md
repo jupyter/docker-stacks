@@ -55,3 +55,28 @@ If automated builds on Docker Cloud have got you down, do the following to push 
 2. Check out the git SHA you want to build and publish.
 3. `docker login` with your Docker Hub/Cloud credentials.
 4. Run `make retry/release-all`.
+
+## Enabling a New Doc Language Translation
+
+First enable translation on Transifex:
+
+1. Visit https://www.transifex.com/project-jupyter/jupyter-docker-stacks-1/languages/
+2. Click *Edit Languages* in the top right.
+3. Select the language from the dropdown.
+4. Click *Apply*.
+
+Then setup a subproject on ReadTheDocs for the language:
+
+1. Visit https://readthedocs.org/dashboard/import/manual/
+2. Enter *jupyter-docker-stacks-language_abbreviation* for the project name.
+3. Enter https://github.com/jupyter/docker-stacks for the URL.
+4. Check *Edit advanced project options*.
+5. Click *Next*.
+6. Select the *Language* from the dropdown on the next screen.
+7. Click *Finish*.
+
+Finally link the new language subproject to the top level doc project:
+
+1. Visit https://readthedocs.org/dashboard/jupyter-docker-stacks/translations/
+2. Select the subproject you created from the *Project* dropdown.
+3. Click *Add*.

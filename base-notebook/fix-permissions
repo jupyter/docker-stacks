@@ -17,7 +17,7 @@
 
 set -e
 
-for d in $@; do
+for d in "$@"; do
   find "$d" \
     ! \( \
       -group $NB_GID \

@@ -112,7 +112,7 @@ notebook
 
 ## Using Binder
 
-[Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control. You can use any of the Jupyter Docker Stacks images as a basis for a Binder-compatible Dockerfile. See the [docker-stacks example](https://mybinder.readthedocs.io/en/latest/sample_repos.html#using-a-docker-image-from-the-jupyter-docker-stacks-repository) and [Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/dockerfile.html) sections in the [Binder documentation](https://mybinder.readthedocs.io/en/latest/index.html) for instructions.
+[Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control. You can use any of the Jupyter Docker Stacks images as a basis for a Binder-compatible Dockerfile. See the [docker-stacks example](https://mybinder.readthedocs.io/en/latest/sample_repos.html#using-a-docker-image-from-the-jupyter-docker-stacks-repository) and [Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html) sections in the [Binder documentation](https://mybinder.readthedocs.io/en/latest/index.html) for instructions.
 
 ## Using JupyterHub
 
