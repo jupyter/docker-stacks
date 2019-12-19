@@ -48,3 +48,9 @@ RUN conda install --quiet -y 'pyarrow' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+# Install Kerberos lib
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt update -qq && apt install -yqq --no-install-recommends \
+      krb5-user && \
+    rm -rf /var/lib/apt/lists/*;
