@@ -30,7 +30,7 @@ RUN apt-get -y update && \
     apt-key add /tmp/mesos.key && \
     echo "deb http://repos.mesosphere.io/ubuntu xenial main" > /etc/apt/sources.list.d/mesosphere.list && \
     apt-get -y update && \
-    apt-get --no-install-recommends -y install mesos=1.2\* && \
+    apt-get --no-install-recommends -y --force-yes install mesos=1.3.1-2.0.1 && \
     apt-get purge --auto-remove -y gnupg && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
