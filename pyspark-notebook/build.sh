@@ -1,5 +1,8 @@
 #!/bin/bash
 set -xe
+
+NO_CACHE="--no-cache"
+
 # Builds a pyspark docker image based on $PYTHON_CONTAINER
 TARGET_TAG=$1
 PYTHON_CONTAINER="python:3.7-slim-stretch"
@@ -27,20 +30,20 @@ cd $BASE_FOLDER
 sed -i "s/ run-one//g" Dockerfile
 
 # Build jupyter BASE image using python $PYTHON_CONTAINER image
-docker build \
+docker build $NO_CACHE \
   -t $BASE_CONTAINER \
   --build-arg BASE_CONTAINER=$PYTHON_CONTAINER \
   .
 
 # Build jupyter MINIMAL image using BASE image
 cd ../$MINIMAL_FOLDER
-docker build \
+docker build $NO_CACHE \
   -t $MINIMAL_CONTAINER \
   --build-arg BASE_CONTAINER=$BASE_CONTAINER \
   .
 
 cd ../$SCIPY_FOLDER
-docker build \
+docker build $NO_CACHE \
   -t $SCIPY_CONTAINER \
   --build-arg BASE_CONTAINER=$MINIMAL_CONTAINER \
   .
@@ -48,7 +51,7 @@ docker build \
 cd ../..
 pwd
 docker build \
-  -t $TARGET_TAG \
+  -t $TARGET_TAG $NO_CACHE\
   --build-arg BASE_CONTAINER=$SCIPY_CONTAINER \
   .
 
