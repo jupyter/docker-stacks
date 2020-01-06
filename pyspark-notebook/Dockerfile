@@ -25,11 +25,10 @@ RUN cd /tmp && \
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
 
 # Mesos dependencies
-# Install from the Xenial Mesosphere repository since there does not (yet)
-# exist a Bionic repository and the dependencies seem to be compatible for now.
 COPY mesos.key /tmp/
 # PATCH for issue MARATHON-7694 (https://jira.mesosphere.com/browse/MARATHON-7694)
 RUN touch /usr/local/bin/systemctl && chmod +x /usr/local/bin/systemctl
+
 RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
       libcurl3 libevent-dev libsvn1 libsasl2-modules libcurl4-nss-dev && \
     rm -rf /var/lib/apt/lists/*;
@@ -59,5 +58,23 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
       krb5-user acl && \
     rm -rf /var/lib/apt/lists/*;
+
+# Install tools
+RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
+      vim nano gnupg2 && \
+    rm -rf /var/lib/apt/lists/*;
+
+# Instll freeip client
+RUN wget -qO - http://apt.numeezy.fr/numeezy.asc | apt-key add - && \
+    echo 'deb http://apt.numeezy.fr stretch main' >> /etc/apt/sources.list && \
+    apt-get update -qq && apt-get install -yqq --no-install-recommends \
+      freeipa-client && \
+    rm -rf /var/lib/apt/lists/*;
+
+RUN mkdir -p /usr/lib/impala/lib/ && chown $NB_UID /usr/lib/impala/lib
+
+RUN sed -i '2iln -s /etc/hadoop/conf/sentry-libs/hive-hcatalog-core.jar /usr/lib/impala/lib/hive-hcatalog-core.jar' /usr/local/bin/start-notebook.sh && cat /usr/local/bin/start-notebook.sh
+
+WORKDIR /home/jovyan/work
 
 USER $NB_UID
