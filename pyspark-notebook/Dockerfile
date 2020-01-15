@@ -9,7 +9,7 @@ USER root
 
 # Spark dependencies
 ENV APACHE_SPARK_VERSION 2.3.4
-ENV HADOOP_VERSION 2.7
+ENV HADOOP_VERSION 2.6
 # On debian slim needs mkdir man directory to avoid installation errors
 RUN mkdir -p /usr/share/man/man1 && \
     apt-get -y update && \
