@@ -21,9 +21,9 @@ RUN conda install --quiet --yes \
     'bokeh=1.3*' \
     'cloudpickle=1.2*' \
     'cython=0.29*' \
-    'dask=2.2.*' \
+    'dask=2.9.*' \
     'dill=0.3*' \
-    'h5py=2.9*' \
+    'h5py=2.10*' \
     'hdf5=1.10*' \
     'ipywidgets=7.5*' \
     'matplotlib-base=3.1.*' \
