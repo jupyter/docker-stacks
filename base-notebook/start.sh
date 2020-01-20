@@ -76,18 +76,14 @@ if [ $(id -u) == 0 ] ; then
         fi
     fi
 
-    # Change UID of NB_USER to NB_UID if it does not match
-    if [ "$NB_UID" != $(id -u $NB_USER) ] ; then
-        echo "Set $NB_USER UID to: $NB_UID"
-        usermod -u $NB_UID $NB_USER
-    fi
-
-    # Set NB_USER primary gid to NB_GID (after making the group).  Set
-    # supplementary gids to NB_GID and 100.
-    if [ "$NB_GID" != $(id -g $NB_USER) ] ; then
-        echo "Add $NB_USER to group: $NB_GID"
-        groupadd -g $NB_GID -o ${NB_GROUP:-${NB_USER}}
-        usermod  -g $NB_GID -aG 100 $NB_USER
+    # Change UID:GID of NB_USER to NB_UID:NB_GID if it does not match
+    if [ "$NB_UID" != $(id -u $NB_USER) ] || [ "$NB_GID" != $(id -g $NB_USER) ]; then
+        echo "Set user $NB_USER UID:GID to: $NB_UID:$NB_GID"
+        if [ "$NB_GID" != $(id -g $NB_USER) ]; then
+            groupadd -g $NB_GID -o ${NB_GROUP:-${NB_USER}}
+        fi
+        userdel $NB_USER
+        useradd --home /home/$NB_USER -u $NB_UID -g $NB_GID -G 100 -l $NB_USER
     fi
 
     # Enable sudo if requested
