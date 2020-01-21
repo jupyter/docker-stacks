@@ -18,7 +18,7 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.8.*' \
     'conda-forge::blas=*=openblas' \
-    'bokeh=1.3*' \
+    'bokeh=1.4*' \
     'cloudpickle=1.2*' \
     'cython=0.29*' \
     'dask=2.9.*' \
