@@ -70,8 +70,8 @@ RUN mkdir /home/$NB_USER/work && \
     fix-permissions /home/$NB_USER
 
 # Install conda as jovyan and check the md5 sum provided on the download site
-ENV MINICONDA_VERSION=4.7.10 \
-    MINICONDA_MD5=1c945f2b3335c7b2b15130b1b2dc5cf4 \
+ENV MINICONDA_VERSION=4.7.12.1 \
+    MINICONDA_MD5=81c773ff87af5cfac79ab862942ab6b3 \
     CONDA_VERSION=4.7.12
 
 RUN cd /tmp && \
