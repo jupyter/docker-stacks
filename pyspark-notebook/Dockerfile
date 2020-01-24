@@ -1,17 +1,20 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-FROM jupyter/scipy-notebook
+ARG BASE_CONTAINER=jupyter/scipy-notebook
+FROM $BASE_CONTAINER
 
-LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
+LABEL maintainer="Saagie"
 
 USER root
 
 # Spark dependencies
 ENV APACHE_SPARK_VERSION 2.3.4
-ENV HADOOP_VERSION 2.7
-
-RUN apt-get -y update && \
-    apt-get install --no-install-recommends -y openjdk-8-jre-headless ca-certificates-java && \
+ENV HADOOP_VERSION 2.6
+# On debian slim needs mkdir man directory to avoid installation errors
+RUN mkdir -p /usr/share/man/man1 && \
+    apt-get -y update && \
+    apt-get install --no-install-recommends -y \
+      openjdk-8-jre-headless ca-certificates-java && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -22,18 +25,18 @@ RUN cd /tmp && \
 RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
 
 # Mesos dependencies
-# Install from the Xenial Mesosphere repository since there does not (yet)
-# exist a Bionic repository and the dependencies seem to be compatible for now.
 COPY mesos.key /tmp/
-RUN apt-get -y update && \
-    apt-get install --no-install-recommends -y gnupg && \
-    apt-key add /tmp/mesos.key && \
-    echo "deb http://repos.mesosphere.io/ubuntu xenial main" > /etc/apt/sources.list.d/mesosphere.list && \
-    apt-get -y update && \
-    apt-get --no-install-recommends -y --force-yes install mesos=1.3.1-2.0.1 && \
-    apt-get purge --auto-remove -y gnupg && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# PATCH for issue MARATHON-7694 (https://jira.mesosphere.com/browse/MARATHON-7694)
+RUN touch /usr/local/bin/systemctl && chmod +x /usr/local/bin/systemctl
+
+RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
+      libcurl3 libevent-dev libsvn1 libsasl2-modules libcurl4-nss-dev && \
+    rm -rf /var/lib/apt/lists/*;
+
+RUN cd /tmp && \
+    wget -q repos.mesosphere.com/debian/pool/main/m/mesos/mesos_1.3.1-2.0.1.debian9_amd64.deb && \
+    dpkg -i mesos_1.3.1-2.0.1.debian9_amd64.deb && \
+    rm mesos_1.3.1-2.0.1.debian9_amd64.deb
 
 # Spark and Mesos config
 ENV SPARK_HOME /usr/local/spark
@@ -49,8 +52,29 @@ RUN conda install --quiet -y 'pyarrow' && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# Install Kerberos
+USER root
+# Install Kerberos & ACL for Saagie
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update -qq && apt install -yqq --no-install-recommends \
-      krb5-user && \
+RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
+      krb5-user acl && \
     rm -rf /var/lib/apt/lists/*;
+
+# Install tools
+RUN apt-get update -qq && apt-get install -yqq --no-install-recommends \
+      vim nano gnupg2 && \
+    rm -rf /var/lib/apt/lists/*;
+
+# Instll freeip client
+RUN wget -qO - http://apt.numeezy.fr/numeezy.asc | apt-key add - && \
+    echo 'deb http://apt.numeezy.fr stretch main' >> /etc/apt/sources.list && \
+    apt-get update -qq && apt-get install -yqq --no-install-recommends \
+      freeipa-client && \
+    rm -rf /var/lib/apt/lists/*;
+
+RUN mkdir -p /usr/lib/impala/lib/ && chown $NB_UID /usr/lib/impala/lib
+
+RUN sed -i '2iln -s /etc/hadoop/conf/sentry-libs/hive-hcatalog-core.jar /usr/lib/impala/lib/hive-hcatalog-core.jar' /usr/local/bin/start-notebook.sh && cat /usr/local/bin/start-notebook.sh
+
+WORKDIR /home/jovyan/work
+
+USER $NB_UID
