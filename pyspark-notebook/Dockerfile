@@ -8,7 +8,8 @@ LABEL maintainer="Saagie"
 USER root
 
 # Spark dependencies
-ENV APACHE_SPARK_VERSION 2.3.4
+ENV APACHE_SPARK_VERSION 2.3.0
+ENV SPARK_VERSION 2.3.0-cloudera4
 ENV HADOOP_VERSION 2.6
 # On debian slim needs mkdir man directory to avoid installation errors
 RUN mkdir -p /usr/share/man/man1 && \
@@ -18,11 +19,10 @@ RUN mkdir -p /usr/share/man/man1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN cd /tmp && \
-        wget -q https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
-        tar xzf spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -C /usr/local --owner root --group root --no-same-owner && \
-        rm spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
-RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
+#FIXME fetch archive from http server
+COPY ./spark-2.3.0.cloudera4-bin-spark2.3.0-saagie.tgz /tmp/spark-2.3.0.cloudera4-bin-spark2.3.0-saagie.tgz
+RUN  tar -zxf /tmp/spark-2.3.0.cloudera4-bin-spark2.3.0-saagie.tgz -C /usr/local/  --owner root --group root --no-same-owner
+RUN  ln -s /usr/local/spark-2.3.0.cloudera4-bin-spark2.3.0-saagie/ /usr/local/spark
 
 # Mesos dependencies
 COPY mesos.key /tmp/
