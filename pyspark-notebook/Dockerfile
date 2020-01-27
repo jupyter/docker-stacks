@@ -19,10 +19,11 @@ RUN mkdir -p /usr/share/man/man1 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-#FIXME fetch archive from http server
-COPY ./spark-2.3.0.cloudera4-bin-spark2.3.0-saagie.tgz /tmp/spark-2.3.0.cloudera4-bin-spark2.3.0-saagie.tgz
-RUN  tar -zxf /tmp/spark-2.3.0.cloudera4-bin-spark2.3.0-saagie.tgz -C /usr/local/  --owner root --group root --no-same-owner
-RUN  ln -s /usr/local/spark-2.3.0.cloudera4-bin-spark2.3.0-saagie/ /usr/local/spark
+#Installing Spark
+RUN wget https://nexus.saagie.tech/content/repositories/thirdparty/org/apache/spark/spark2.3.0-cloudera4-saagie/spark-spark2.3.0-cloudera4-saagie-saagie.tgz -P /tmp \
+ && tar -zxf /tmp/spark-spark2.3.0-cloudera4-saagie-saagie.tgz -C /usr/local/  --owner root --group root --no-same-owner \
+ && ln -s /usr/local/spark-spark2.3.0-cloudera4-saagie-saagie/ /usr/local/spark \
+ && ln -s /usr/local/spark-spark2.3.0-cloudera4-saagie-saagie/ /usr/local/spark2
 
 # Mesos dependencies
 COPY mesos.key /tmp/
