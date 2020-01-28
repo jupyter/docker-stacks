@@ -18,27 +18,27 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.8.*' \
     'conda-forge::blas=*=openblas' \
-    'bokeh=1.4*' \
-    'cloudpickle=1.2*' \
-    'cython=0.29*' \
+    'bokeh=1.4.*' \
+    'cloudpickle=1.2.*' \
+    'cython=0.29.*' \
     'dask=2.9.*' \
-    'dill=0.3*' \
-    'h5py=2.10*' \
-    'hdf5=1.10*' \
-    'ipywidgets=7.5*' \
+    'dill=0.3.*' \
+    'h5py=2.10.*' \
+    'hdf5=1.10.*' \
+    'ipywidgets=7.5.*' \
     'matplotlib-base=3.1.*' \
-    'numba=0.45*' \
-    'numexpr=2.6*' \
-    'pandas=0.25*' \
-    'patsy=0.5*' \
-    'protobuf=3.9.*' \
-    'scikit-image=0.15*' \
-    'scikit-learn=0.21*' \
-    'scipy=1.3*' \
-    'seaborn=0.9*' \
-    'sqlalchemy=1.3*' \
-    'statsmodels=0.10*' \
-    'sympy=1.4*' \
+    'numba=0.48.*' \
+    'numexpr=2.7.*' \
+    'pandas=0.25.*' \
+    'patsy=0.5.*' \
+    'protobuf=3.11.*' \
+    'scikit-image=0.16.*' \
+    'scikit-learn=0.22.*' \
+    'scipy=1.4.*' \
+    'seaborn=0.9.*' \
+    'sqlalchemy=1.3.*' \
+    'statsmodels=0.11.*' \
+    'sympy=1.5.*' \
     'vincent=0.4.*' \
     'xlrd' \
     && \
