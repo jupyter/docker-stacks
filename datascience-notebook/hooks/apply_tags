@@ -9,7 +9,7 @@ PY_VERSION_TAG="python-$(docker run --rm ${IMAGE_NAME} python --version 2>&1 | a
 docker tag $IMAGE_NAME "$DOCKER_REPO:$PY_VERSION_TAG"
 R_VERSION_TAG=="hub-$(docker run --rm -a STDOUT ${IMAGE_NAME} R --version | tr -d '\r')"
 docker tag $IMAGE_NAME "$DOCKER_REPO:${R_VERSION_TAG%%\r}"
-JULIA_VERSION_TAG=="hub-$(docker run --rm -a STDOUT ${IMAGE_NAME} julia --version | tr -d '\r')"
+JULIA_VERSION_TAG=="hub-$(docker run --rm -a STDOUT ${IMAGE_NAME} julia --version | tr -d '\r' | tr -d '[a-z| ]')"
 docker tag $IMAGE_NAME "$DOCKER_REPO:${JULIA_VERSION_TAG%%\r}"
 NB_VERSION_TAG="notebook-$(docker run --rm -a STDOUT ${IMAGE_NAME} jupyter-notebook --version | tr -d '\r')"
 docker tag $IMAGE_NAME "$DOCKER_REPO:${NB_VERSION_TAG%% }"
