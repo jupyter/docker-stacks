@@ -7,7 +7,7 @@ GIT_SHA_TAG=${SOURCE_COMMIT:0:12}
 docker tag $IMAGE_NAME "$DOCKER_REPO:$GIT_SHA_TAG"
 PY_VERSION_TAG="python-$(docker run --rm ${IMAGE_NAME} python --version 2>&1 | awk '{print $2}')"
 docker tag $IMAGE_NAME "$DOCKER_REPO:$PY_VERSION_TAG"
-R_VERSION_TAG=="hub-$(docker run --rm -a STDOUT ${IMAGE_NAME} R --version | sed -n 1p | awk '{print $3}')"
+R_VERSION_TAG=="r-$(docker run --rm -a STDOUT ${IMAGE_NAME} R --version | sed -n 1p | awk '{print $3}')"
 docker tag $IMAGE_NAME "$DOCKER_REPO:${R_VERSION_TAG%%\r}"
 JULIA_VERSION_TAG=="julia-$(docker run --rm -a STDOUT ${IMAGE_NAME} julia --version | awk '{print $3}')"
 docker tag $IMAGE_NAME "$DOCKER_REPO:${JULIA_VERSION_TAG%%\r}"
