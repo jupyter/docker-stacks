@@ -62,7 +62,6 @@ RUN conda install --quiet --yes \
     'r-rmarkdown=2.1*' \
     'r-rsqlite=2.1*' \
     'r-shiny=1.3*' \
-    'r-sparklyr=1.1*' \
     'r-tidyverse=1.3*' \
     'rpy2=3.1*' \
     && \
