@@ -90,7 +90,7 @@ tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
 
 
 test/%: ## run tests against a stack
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test $(notdir $@)/test
 
 test/base-notebook: ## test supported options in the base notebook
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test base-notebook/test
