@@ -88,9 +88,5 @@ tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
 	@git remote add origin-tx https://$${GH_TOKEN}@github.com/jupyter/docker-stacks.git
 	@git push -u origin-tx master
 
-
-test/%: ## run tests against a stack
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test $(notdir $@)/test
-
-test/base-notebook: ## test supported options in the base notebook
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test base-notebook/test
+test/%: ## run tests against a stack (only common tests or common tests + specific tests)
+	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test; else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test $(notdir $@)/test; fi
