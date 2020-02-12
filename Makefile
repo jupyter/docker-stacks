@@ -49,6 +49,9 @@ build/%: ## build the latest image for a stack
 build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
 
+check_outdated/%: ## Check the outdated conda packages in a stack and produce a report (experimental)
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
+
 dev/%: ARGS?=
 dev/%: DARGS?=
 dev/%: PORT?=8888
@@ -89,4 +92,5 @@ tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
 	@git push -u origin-tx master
 
 test/%: ## run tests against a stack (only common tests or common tests + specific tests)
-	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test; else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test $(notdir $@)/test; fi
+	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
+	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test $(notdir $@)/test; fi
