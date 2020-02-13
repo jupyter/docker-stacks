@@ -73,7 +73,7 @@ def print_result(installed, result):
     nb_updatable = len(result)
     updatable_ratio = nb_updatable / nb_packages
     LOGGER.info(
-        f"{nb_updatable} packages can be updated over {nb_packages} -> {updatable_ratio:.0%}"
+        f"{nb_updatable}/{nb_packages} ({updatable_ratio:.0%}) packages could be updated"
     )
     LOGGER.info(f"\n{tabulate(result, headers='keys')}\n")
 
