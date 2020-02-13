@@ -14,7 +14,7 @@ fi
 # These won't be passed from DockerSpawner 0.9,
 # so avoid specifying --arg=empty-string
 if [ ! -z "$NOTEBOOK_DIR" ]; then
-  NOTEBOOK_ARGS="--notebook-dir='$NOTEBOOK_DIR' $NOTEBOOK_ARGS"
+  NOTEBOOK_ARGS="--notebook-dir=$NOTEBOOK_DIR $NOTEBOOK_ARGS"
 fi
 if [ ! -z "$JPY_PORT" ]; then
   NOTEBOOK_ARGS="--port=$JPY_PORT $NOTEBOOK_ARGS"
