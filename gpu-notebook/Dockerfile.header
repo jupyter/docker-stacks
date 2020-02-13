@@ -1,0 +1,7 @@
+# This Dockerfile was auto-generated from build_Dockerfile.sh as is based on
+# the NIVDIA CUDA image.
+
+# Use NVIDIA CUDA as base image and construct other files from here.
+FROM nvidia/cuda:10.1-base-ubuntu18.04
+LABEL maintainer="Christoph Schranz <christoph.schranz@salzburgresearch.at>"
+

@@ -74,3 +74,6 @@ dockerspawner.tar.gz
 !/julia-notebook/src/data/Getting_Started
 *.save*
 /julia-notebook/src/data/Spekulatius/
+
+gpu-notebook/.build
+!gpu-notebook/.build/.gitkeep

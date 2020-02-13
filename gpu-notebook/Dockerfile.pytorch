@@ -1,0 +1,15 @@
+# Install PyTorch dependencies
+RUN conda install --quiet --yes \
+    pyyaml mkl mkl-include setuptools cmake cffi typing && \
+    conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
+# Install PyTorch
+RUN conda install -y -c pytorch \
+    cudatoolkit=10.1 \
+    'pytorch=1.3.1' \
+    torchvision && \
+    conda clean --all -f -y && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
