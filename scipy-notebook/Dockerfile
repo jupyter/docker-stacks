@@ -16,31 +16,32 @@ USER $NB_UID
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
+    'beautifulsoup4=4.8.*' \
     'conda-forge::blas=*=openblas' \
-    'ipywidgets=7.5*' \
-    'pandas=0.24*' \
-    'numexpr=2.6*' \
+    'bokeh=1.4.*' \
+    'cloudpickle=1.2.*' \
+    'cython=0.29.*' \
+    'dask=2.9.*' \
+    'dill=0.3.*' \
+    'h5py=2.10.*' \
+    'hdf5=1.10.*' \
+    'ipywidgets=7.5.*' \
     'matplotlib-base=3.1.*' \
-    'scipy=1.2*' \
-    'seaborn=0.9*' \
-    'scikit-learn=0.20*' \
-    'scikit-image=0.14*' \
-    'sympy=1.3*' \
-    'cython=0.29*' \
-    'patsy=0.5*' \
-    'statsmodels=0.9*' \
-    'cloudpickle=0.8*' \
-    'dill=0.2*' \
-    'dask=1.1.*' \
-    'numba=0.42*' \
-    'bokeh=1.0*' \
-    'sqlalchemy=1.3*' \
-    'hdf5=1.10*' \
-    'h5py=2.9*' \
+    'numba=0.48.*' \
+    'numexpr=2.7.*' \
+    'pandas=0.25.*' \
+    'patsy=0.5.*' \
+    'protobuf=3.11.*' \
+    'scikit-image=0.16.*' \
+    'scikit-learn=0.22.*' \
+    'scipy=1.4.*' \
+    'seaborn=0.9.*' \
+    'sqlalchemy=1.3.*' \
+    'statsmodels=0.11.*' \
+    'sympy=1.5.*' \
     'vincent=0.4.*' \
-    'beautifulsoup4=4.7.*' \
-    'protobuf=3.7.*' \
-    'xlrd'  && \
+    'xlrd' \
+    && \
     conda clean --all -f -y && \
     # Activate ipywidgets extension in the environment that runs the notebook server
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
@@ -49,7 +50,7 @@ RUN conda install --quiet --yes \
     # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
     jupyter labextension install @jupyter-widgets/jupyterlab-manager@^1.0.1 --no-build && \
     jupyter labextension install jupyterlab_bokeh@1.0.0 --no-build && \
-    jupyter lab build --dev-build=False && \
+    jupyter lab build && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /home/$NB_USER/.cache/yarn && \

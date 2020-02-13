@@ -78,6 +78,20 @@ def test_chown_extra(container):
     assert '/opt/conda/LICENSE.txt:1010:101' in c.logs(stdout=True).decode('utf-8')
 
 
+def test_chown_home(container):
+    """Container should change the NB_USER home directory owner and 
+    group to the current value of NB_UID and NB_GID."""
+    c = container.run(
+        tty=True,
+        user='root',
+        environment=['CHOWN_HOME=yes',
+                     'CHOWN_HOME_OPTS=-R',
+        ],
+        command=['start.sh', 'bash', '-c', 'chown root:root /home/jovyan && ls -alsh /home']
+    )
+    assert "Changing ownership of /home/jovyan to 1000:100 with options '-R'" in c.logs(stdout=True).decode('utf-8')
+
+
 def test_sudo(container):
     """Container should grant passwordless sudo to the default user."""
     c = container.run(

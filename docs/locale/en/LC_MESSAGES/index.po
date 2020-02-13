@@ -9,42 +9,60 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-05 19:53-0400\n"
+"POT-Creation-Date: 2020-01-20 04:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.6.0\n"
+"Generated-By: Babel 2.8.0\n"
 
 # 22f1bd46933144e092bf92e3af4c6f4f
-#: ../../index.rst:32
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:32
+#: 79072cbf86294c09b9313ee07735fb65
 msgid "User Guide"
 msgstr ""
 
 # f35d75046f8c42ae8cab58d826154823
-#: ../../index.rst:42
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:42
+#: c9e3b347063f4b528690011606e8d5ea
 msgid "Contributor Guide"
 msgstr ""
 
 # a737afe726cd49c4986d75b7d74eeed3
-#: ../../index.rst:54
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:54
+#: c7b53fa9956546d691788706b3ef5dfc
 msgid "Maintainer Guide"
 msgstr ""
 
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:60
+msgid "Jupyter Discourse Forum"
+msgstr ""
+
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:60
+msgid "Jupyter Docker Stacks Issue Tracker"
+msgstr ""
+
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:60
+msgid "Jupyter Website"
+msgstr ""
+
 # 9cd216fa91ef40bbb957373faaf93732
-#: ../../index.rst:60
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:60
+#: 2789eaad173a43a495ff17fd0e1a1a38
 msgid "Getting Help"
 msgstr ""
 
 # a0aa0bcd999c4c5e96cc57fd77780f96
-#: ../../index.rst:2
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:2
+#: 121c8abde123400bbdb190b01441a180
 msgid "Jupyter Docker Stacks"
 msgstr ""
 
 # 5d06f458dc524214b2c97e865dd2dc81
-#: ../../index.rst:4
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:4
+#: 6463d955c7724db682f6fa42da6b25a7
 msgid ""
 "Jupyter Docker Stacks are a set of ready-to-run Docker images containing "
 "Jupyter applications and interactive computing tools. You can use a stack"
@@ -52,27 +70,32 @@ msgid ""
 msgstr ""
 
 # c69f151c806e4cdf9bebda05b06c760e
-#: ../../index.rst:6
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:6
+#: 417a2a71d6bd4afdba0c10d1824afa36
 msgid "Start a personal Jupyter Notebook server in a local Docker container"
 msgstr ""
 
 # b26271409ab743b2a349b3a8ca95233e
-#: ../../index.rst:7
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:7
+#: 318b7b2a1f4644048ce7deb74fc8a2cf
 msgid "Run JupyterLab servers for a team using JupyterHub"
 msgstr ""
 
 # 4d60f4325fff4ffcad12703a4b9d6781
-#: ../../index.rst:8
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:8
+#: faebaa8b57f24f52b0873a12b4da2a62
 msgid "Write your own project Dockerfile"
 msgstr ""
 
 # 78b0d31eb6e9462888eef92e6a84cdb7
-#: ../../index.rst:11
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:11
+#: 549f043c0b734a61817b2c737ac59d7c
 msgid "Quick Start"
 msgstr ""
 
 # d4c0e237dbe74e0d9afbf2b2f0e219c8
-#: ../../index.rst:13
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:13
+#: bc586127ae4b4cbba1d9709841f2135c
 msgid ""
 "You can try a `recent build of the jupyter/base-notebook image on "
 "mybinder.org <https://mybinder.org/v2/gh/jupyter/docker-"
@@ -84,14 +107,16 @@ msgid ""
 msgstr ""
 
 # 051ed23ef62e41058a7c889604f96035
-#: ../../index.rst:15
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:15
+#: 51538eb1f8d442acaae41b8e69a8704e
 msgid ""
 "The other pages in this documentation describe additional uses and "
 "features in detail."
 msgstr ""
 
 # e91f3b62a1b54166b966be6d7a4f061e
-#: ../../index.rst:17
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:17
+#: 0c8148b23d704a1699d2812744b20c7c
 msgid ""
 "**Example 1:** This command pulls the ``jupyter/scipy-notebook`` image "
 "tagged ``17aba6048f44`` from Docker Hub if it is not already present on "
@@ -105,7 +130,8 @@ msgid ""
 msgstr ""
 
 # e04140e6cd8442f7a6f347d88224f591
-#: ../../index.rst:21
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:21
+#: dcbbce6e5e67473aa32e264e422f334f
 msgid ""
 "**Example 2:** This command performs the same operations as **Example "
 "1**, but it exposes the server on host port 10000 instead of port 8888. "
@@ -115,7 +141,8 @@ msgid ""
 msgstr ""
 
 # 1c3229680cf44a5bb2d8450602bfcf7d
-#: ../../index.rst:25
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:25
+#: 449c01c1808b427381502b0d33f4efcb
 msgid ""
 "**Example 3:** This command pulls the ``jupyter/datascience-notebook`` "
 "image tagged ``9b06df75e445`` from Docker Hub if it is not already "
@@ -131,7 +158,8 @@ msgid ""
 msgstr ""
 
 # 3ac1a41d185844b1b43315a4cc74efc8
-#: ../../index.rst:30
+#: /home/travis/build/jupyter/docker-stacks/docs/index.rst:30
+#: 3e1e8e2674784f5caad20d9c110707c5
 msgid "Table of Contents"
 msgstr ""
 

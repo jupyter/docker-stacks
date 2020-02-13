@@ -68,7 +68,7 @@ First enable translation on Transifex:
 Then setup a subproject on ReadTheDocs for the language:
 
 1. Visit https://readthedocs.org/dashboard/import/manual/
-2. Enter *jupyter-docker-stacks-<lang>* for the project name.
+2. Enter *jupyter-docker-stacks-language_abbreviation* for the project name.
 3. Enter https://github.com/jupyter/docker-stacks for the URL.
 4. Check *Edit advanced project options*.
 5. Click *Next*.
