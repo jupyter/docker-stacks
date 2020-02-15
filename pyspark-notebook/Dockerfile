@@ -36,11 +36,11 @@ RUN apt-get -y update && \
     rm -rf /var/lib/apt/lists/*
 
 # Spark and Mesos config
-ENV SPARK_HOME=/usr/local/spark \
-    PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.7-src.zip \
+ENV SPARK_HOME=/usr/local/spark
+ENV PYTHONPATH=$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.7-src.zip \
     MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so \
     SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
-    PATH=$PATH:/usr/local/spark/bin
+    PATH=$PATH:$SPARH_HOME/bin
 
 USER $NB_UID
 
