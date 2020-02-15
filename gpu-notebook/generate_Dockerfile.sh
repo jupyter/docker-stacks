@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-echo "Do a git pull such that the latest version is used."
-cd ..
-git pull
-cd gpu-notebook
-
 # Set the path of the generated Dockerfile
 export DOCKERFILE=".build/Dockerfile"
 

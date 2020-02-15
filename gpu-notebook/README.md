@@ -1,7 +1,7 @@
 # GPU-Notebook
 #### Leverage Jupyter Notebooks with the power of your NVIDIA GPU and perform GPU calculations using Tensorflow and Pytorch in collaborative notebooks. 
 
-![Jupyterlab Overview](/extra/jupyterlab-overview.png)
+![Jupyterlab Overview](/gpu-notebook/extra/jupyterlab-overview.png)
 
 This notebook uses the robust toolstack of this project 
 and the NVIDIA CUDA drivers as an alternatice basis 
@@ -49,6 +49,7 @@ To generate the comprehensive Dockerfile as `gpu-notebook/.build/Dockerfile`, ru
   
 Afterwards, the image can be build and run using this command:
 ```bash
+git pull  # pull to use the latest versions
 ./run_Dockerfile.sh -p [port]:8888  
 # where [port] is an integer with 4 or more digits, e.g.: 8888
 ```
