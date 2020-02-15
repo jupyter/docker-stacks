@@ -73,7 +73,7 @@ In order to stop the local deployment, run:
 Please set a new password using `gpu-notebook/jupyter_notebook_config.json`.
 Therefore, hash your password in the form (password)(salt) using a sha1 hash generator, e.g., the sha1 generator of [sha1-online.com](http://www.sha1-online.com/). 
 The input with the default password `asdf` is appended by a arbitrary salt `e49e73b0eb0e` to `asdfe49e73b0eb0e` and should yield the hash string as shown in the config below.
-**Never give away your own unhashed password!**
+**Please change the default password immediately and never give away your own unhashed password!**
 
 Then update the config file as shown below and restart the service.
 
