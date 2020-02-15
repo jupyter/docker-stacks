@@ -24,5 +24,5 @@ if [[ $PORT != [0-9][0-9][0-9][0-9]* ]]; then
 fi
 
 # Build and run the Dockerfile
-docker build -t gpu-jupyter -f .build/.Dockerfile .
+docker build -t gpu-jupyter -f .build/Dockerfile .
 docker run -d -p "$PORT":8888 gpu-jupyter
