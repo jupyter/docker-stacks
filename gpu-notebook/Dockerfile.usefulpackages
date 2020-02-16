@@ -1,6 +1,8 @@
 # Update conda
 RUN conda update -n base conda -y
 
+USER root
+
 # Install rpy2 to share data between Python and R
 RUN conda install rpy2=2.9.4 plotly=4.4.1
 RUN conda install -c conda-forge ipyleaflet
