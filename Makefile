@@ -68,6 +68,12 @@ n-docs-diff: ## number of docs/ files changed since branch from master
 n-other-diff: ## number of files outside docs/ changed since branch from master
 	@git diff --name-only $(DIFF_RANGE) -- ':!docs/' | wc -l | awk '{print $$1}'
 
+run/%: ## run a bash in interactive mode in a stack
+	docker run -it --rm $(OWNER)/$(notdir $@) $(SHELL)
+
+run-sudo/%: ## run a bash in interactive mode as root in a stack
+	docker run -it --rm -u root $(OWNER)/$(notdir $@) $(SHELL)
+
 tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
 	@git config --global user.email "travis@travis-ci.org"
 	@git config --global user.name "Travis CI"
@@ -82,9 +88,5 @@ tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
 	@git remote add origin-tx https://$${GH_TOKEN}@github.com/jupyter/docker-stacks.git
 	@git push -u origin-tx master
 
-
-test/%: ## run tests against a stack
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test
-
-test/base-notebook: ## test supported options in the base notebook
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test base-notebook/test
+test/%: ## run tests against a stack (only common tests or common tests + specific tests)
+	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test; else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test $(notdir $@)/test; fi
