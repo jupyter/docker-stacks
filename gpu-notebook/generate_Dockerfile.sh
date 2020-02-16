@@ -43,11 +43,13 @@ cat ../datascience-notebook/Dockerfile | grep -v BASE_CONTAINER >> $DOCKERFILE
 
 echo "
 ############################################################################
-################ Dependency: jupyter/tensorflow-notebook ##################
+################ Dependency: jupyter/tensorflow-notebook ###################
 ############################################################################
 " >> $DOCKERFILE
 cat ../tensorflow-notebook/Dockerfile | grep -v BASE_CONTAINER >> $DOCKERFILE
 
+# Note that the following step also installs the cudatoolkit, which is
+# essential to access the GPU.
 echo "
 ############################################################################
 ########################## Dependency: pytorch #############################

@@ -41,31 +41,37 @@ and then appends the installation steps from the following images of this projec
 
 Finally, `PyTorch` and some other useful packages are installed, 
 as defined in `Dockerfile.pytorch` and `Dockerfile.usefulpackages`.
+
 To generate the comprehensive Dockerfile as `gpu-notebook/.build/Dockerfile`, run:
 
 ```bash
 ./generate_Dockerfile.sh
 ```
-  
-Afterwards, the image can be build and run using this command:
+
+If the latest version of the build should be used, a `git pull`
+is recommended before the generation of the Dockerfile. 
+This step may result in rebuilding the whole image which can take some time.
+
+Finally, the image can be build and run using this command:
 ```bash
-git pull  # pull to use the latest versions
 ./run_Dockerfile.sh -p [port]:8888  
 # where [port] is an integer with 4 or more digits, e.g.: 8888
 ```
+
 This will run *GPU-Notebook* on [localhost:8888](http://localhost:8888) 
 with the default password `asdf`. 
 
 With these commands we can see if everything worked well:
 ```bash
 docker ps
-docker logs [service-name]
+docker logs [UID]
 ```
 
 In order to stop the local deployment, run:
 
   ```bash
-  docker rm -f [UID] 
+  docker stop [UID]
+  docker rm [UID] 
   ```
  
 
@@ -84,4 +90,22 @@ Then update the config file as shown below and restart the service.
     "password": "sha1:e49e73b0eb0e:32edae7a5fd119045e699a0bd04f90819ca90cd6"
   }
 }
+```
+
+### Update CUDA to another version
+
+To update CUDA to another version, change in `Dockerfile.header`
+the line:
+
+    FROM nvidia/cuda:10.1-base-ubuntu18.04
+    
+and in the `Dockerfile.pytorch` the line:
+
+    cudatoolkit=10.1
+
+Then re-generate and re-run the image, as closer described above:
+
+```bash
+./generate_Dockerfile.sh
+./run_Dockerfile.sh -p [port]:8888  
 ```
