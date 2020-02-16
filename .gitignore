@@ -68,12 +68,3 @@ dockerspawner.tar.gz
 .ipynb_checkpoints/
 .vscode/
 .pytest_cache/
-
-.idea
-/julia-notebook/src/data/
-!/julia-notebook/src/data/Getting_Started
-*.save*
-/julia-notebook/src/data/Spekulatius/
-
-gpu-notebook/.build
-!gpu-notebook/.build/.gitkeep
