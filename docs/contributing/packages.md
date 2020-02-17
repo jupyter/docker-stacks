@@ -8,7 +8,7 @@ Please follow the process below to update a package version:
 2. Adjust the version number for the package. We prefer to pin the major and minor version number of packages so as to minimize rebuild side-effects when users submit pull requests (PRs). For example, you'll find the Jupyter Notebook package, `notebook`, installed using conda with `notebook=5.4.*`.
 3. Please build the image locally before submitting a pull request. Building the image locally shortens the debugging cycle by taking some load off [Travis CI](http://travis-ci.org/), which graciously provides free build services for open source projects like this one. If you use `make`, call:
 ```
-make image/somestack-notebook
+make build/somestack-notebook
 ```
 4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with your changes.
 5. Watch for Travis to report a build success or failure for your PR on GitHub.
