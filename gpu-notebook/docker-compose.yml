@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  gpu-jupyter:
+    build: .build
+    ports:
+      - ${JUPYTER_PORT}:8888
+    volumes:
+      - ./data:/home/jovyan/work
+    environment:
+      GRANT_SUDO: "yes"
+      JUPYTER_ENABLE_LAB: "yes"
+    # enable sudo permissions
+    user:
+      "root"

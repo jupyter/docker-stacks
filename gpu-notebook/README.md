@@ -11,15 +11,19 @@ to enable GPU calculations in the Jupyter notebooks.
 
 1. [Requirements](#requirements)
 2. [Quickstart](#quickstart)
-4. [Configuration](#configuration)
+3. [Tracing](#tracing)
+5. [Configuration](#configuration)
 
 
 ## Requirements
 
 1.  Install [Docker](https://www.docker.com/community-edition#/download) version **1.10.0+**
-3.  A NVIDIA GPU
-3.  Get access to use your GPU via the CUDA drivers, 
-    check out this medium [article](https://medium.com/@christoph.schranz/set-up-your-own-gpu-based-jupyterlab-e0d45fcacf43).
+ and [Docker Compose](https://docs.docker.com/compose/install/) version **1.6.0+**.
+2.  A NVIDIA GPU
+3.  Get access to use your GPU via the CUDA drivers, check out this 
+[medium article](https://medium.com/@christoph.schranz/set-up-your-own-gpu-based-jupyterlab-e0d45fcacf43).
+    The CUDA toolkit is not required on the host system, as it will be deployed 
+    in [NVIDIA-docker](https://github.com/NVIDIA/nvidia-docker).
 4.  Clone this repository
     ```bash
     git clone https://github.com/ChristophSchranz/docker-stacks.git
@@ -54,25 +58,36 @@ This step may result in rebuilding the whole image which can take some time.
 
 Finally, the image can be build and run using this command:
 ```bash
-./run_Dockerfile.sh -p [port]:8888  
-# where [port] is an integer with 4 or more digits, e.g.: 8888
+docker build -t gpu-jupyter .build/
+docker run -d -p [port]:8888 gpu-jupyter
+``` 
+
+Alternatively, you can configure the environment in `docker-compose.yml` and run 
+this to deploy the `GPU-Jupyter` via docker-compose (under-the-hood):
+
+```bash
+./generate_Dockerfile.sh
+./start-local.sh -p 8888  # where -p stands for the port of the service
 ```
+  
+Both options will run *GPU-Jupyter* by default on [localhost:8888](http://localhost:8888) with the default 
+password `asdf`.
 
-This will run *GPU-Notebook* on [localhost:8888](http://localhost:8888) 
-with the default password `asdf`. 
 
+## Tracing
+  
 With these commands we can see if everything worked well:
 ```bash
 docker ps
-docker logs [UID]
+docker logs [service-name]
 ```
 
 In order to stop the local deployment, run:
 
   ```bash
-  docker stop [UID]
-  docker rm [UID] 
+  ./stop-local.sh
   ```
+ 
  
 
 ## Configuration
