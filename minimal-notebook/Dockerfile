@@ -19,14 +19,14 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libxrender1 \
     lmodern \
     netcat \
-    pandoc \
     python-dev \
-    texlive-fonts-extra \
+    # ---- nbconvert dependencies ----
+    texlive-xetex \
     texlive-fonts-recommended \
     texlive-generic-recommended \
-    texlive-latex-base \
-    texlive-latex-extra \
-    texlive-xetex \
+    # Optional dependency
+    texlive-fonts-extra \
+    # ----
     tzdata \
     unzip \
     nano \
