@@ -44,7 +44,9 @@ RUN mkdir /etc/julia && \
 USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
-RUN conda install --quiet --yes \
+RUN conda update -n base conda && \
+    conda update -y --all && \
+    conda install --quiet --yes \
     'r-base=3.6.2' \
     'r-caret=6.0*' \
     'r-crayon=1.3*' \
