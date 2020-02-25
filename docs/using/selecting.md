@@ -160,4 +160,9 @@ The core stacks are just a tiny sample of what's possible when combining Jupyter
 
 * [sage-notebook](https://github.com/sharpTrick/sage-notebook) is a community Jupyter Docker Stack image with the [sagemath](https://sagemath.org) kernel on top of the minimal-notebook image. Click here to launch it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master).
 
+* [GPU-Jupyter](https://github.com/iot-salzburg/gpu-jupyter/): Leverage Jupyter Notebooks with the power of your NVIDIA GPU and perform GPU calculations using Tensorflow and Pytorch in collaborative notebooks.
+This is done by generating a Dockerfile, that consists of the **nvidia/cuda** base image, 
+the well-maintained **docker-stacks** that is integrated as submodule 
+and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it.
+
 See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.
