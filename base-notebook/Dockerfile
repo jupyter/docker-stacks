@@ -84,6 +84,7 @@ RUN cd /tmp && \
     conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
+    conda config --system --set channel_priority strict && \
     if [ ! $PYTHON_VERSION = 'default' ]; then conda install --yes python=$PYTHON_VERSION; fi && \
     conda list python | grep '^python ' | tr -s ' ' | cut -d '.' -f 1,2 | sed 's/$/.*/' >> $CONDA_DIR/conda-meta/pinned && \
     conda install --quiet --yes conda && \
@@ -126,9 +127,7 @@ ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start-notebook.sh"]
 
 # Copy local files as late as possible to avoid cache busting
-COPY start.sh /usr/local/bin/
-COPY start-notebook.sh /usr/local/bin/
-COPY start-singleuser.sh /usr/local/bin/
+COPY start.sh start-notebook.sh start-singleuser.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /etc/jupyter/
 
 # Fix permissions on /etc/jupyter as root
