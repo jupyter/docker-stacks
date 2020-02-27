@@ -26,6 +26,7 @@ RUN conda install --quiet --yes \
     'h5py=2.10.*' \
     'hdf5=1.10.*' \
     'ipywidgets=7.5.*' \
+    'ipympl=0.3.*'\
     'matplotlib-base=3.1.*' \
     'numba=0.48.*' \
     'numexpr=2.7.*' \
@@ -40,6 +41,7 @@ RUN conda install --quiet --yes \
     'statsmodels=0.11.*' \
     'sympy=1.5.*' \
     'vincent=0.4.*' \
+    'widgetsnbextension=3.5.*'\
     'xlrd' \
     && \
     conda clean --all -f -y && \
@@ -48,8 +50,9 @@ RUN conda install --quiet --yes \
     # Also activate ipywidgets extension for JupyterLab
     # Check this URL for most recent compatibilities
     # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^1.0.1 --no-build && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build && \
     jupyter labextension install jupyterlab_bokeh@1.0.0 --no-build && \
+    jupyter labextension install jupyter-matplotlib --no-build && \
     jupyter lab build && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
