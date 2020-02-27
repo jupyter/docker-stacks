@@ -26,6 +26,7 @@ import subprocess
 from collections import defaultdict
 from itertools import chain
 import logging
+import ast
 
 import pytest
 
@@ -67,9 +68,12 @@ def semantic_cmp(version_string):
     return tuple(map(try_int, mss))
 
 
-def print_result(installed, result):
+def print_result(installed, specs, result):
     """Print the result of the outdated check"""
-    nb_packages = len(installed)
+    if specs is None:
+        nb_packages = len(installed)
+    else:
+        nb_packages = len(specs)
     nb_updatable = len(result)
     updatable_ratio = nb_updatable / nb_packages
     LOGGER.info(
@@ -79,22 +83,46 @@ def print_result(installed, result):
 
 
 @pytest.mark.info
-def test_outdated_packages(container):
+def test_outdated_packages(container, remove_dependencies=True):
     """Getting the list of outdated packages"""
     LOGGER.info(f"Checking outdated packages in {container.image_name} ...")
     c = container.run(tty=True, command=["start.sh", "bash", "-c", "sleep infinity"])
     sp_i = c.exec_run(["conda", "list"])
     sp_v = c.exec_run(["conda", "search", "--outdated"])
+    specs = None
+    if remove_dependencies:
+        raw_specs = c.exec_run(
+            ["grep", "^# update specs:", "/opt/conda/conda-meta/history"]
+        )
+
+    specs = parse_specs(raw_specs.output.decode("utf-8"))
     installed = get_versions(sp_i.output.decode("utf-8"))
     available = get_versions(sp_v.output.decode("utf-8"))
     result = list()
     for pkg, inst_vs in installed.items():
-        avail_vs = sorted(list(available[pkg]), key=semantic_cmp)
-        if not avail_vs:
-            continue
-        current = min(inst_vs, key=semantic_cmp)
-        newest = avail_vs[-1]
-        if avail_vs and current != newest:
-            if semantic_cmp(current) < semantic_cmp(newest):
-                result.append({"Package": pkg, "Current": current, "Newest": newest})
-    print_result(installed, result)
+        if not remove_dependencies or pkg in specs:
+            avail_vs = sorted(list(available[pkg]), key=semantic_cmp)
+            if not avail_vs:
+                continue
+            current = min(inst_vs, key=semantic_cmp)
+            newest = avail_vs[-1]
+            if avail_vs and current != newest:
+                if semantic_cmp(current) < semantic_cmp(newest):
+                    result.append(
+                        {"Package": pkg, "Current": current, "Newest": newest}
+                    )
+    print_result(installed, specs, result)
+
+
+def parse_specs(raw_specs):
+    """Return the list of requested packages (specs)
+    
+    Versions are removed from packages.
+    """
+    packages = list()
+    for spec in (spec for spec in raw_specs.split("\n") if spec.strip() != ""):
+        packages += map(
+            lambda x: x.split("=", 1)[0], ast.literal_eval(spec.split(": ")[1])
+        )
+    LOGGER.debug(f"List of specs from conda env: {packages}")
+    return packages
