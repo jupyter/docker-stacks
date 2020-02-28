@@ -26,7 +26,7 @@ RUN conda install --quiet --yes \
     'h5py=2.10.*' \
     'hdf5=1.10.*' \
     'ipywidgets=7.5.*' \
-    'ipympl=0.3.*'\
+    'ipympl=0.5.*'\
     'matplotlib-base=3.1.*' \
     'numba=0.48.*' \
     'numexpr=2.7.*' \
@@ -50,7 +50,7 @@ RUN conda install --quiet --yes \
     # Also activate ipywidgets extension for JupyterLab
     # Check this URL for most recent compatibilities
     # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^1.0.1 --no-build && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^1.1.0 --no-build && \
     jupyter labextension install jupyterlab_bokeh@1.0.0 --no-build && \
     jupyter labextension install jupyter-matplotlib --no-build && \
     jupyter lab build && \
