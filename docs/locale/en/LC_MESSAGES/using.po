@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-20 04:43+0000\n"
+"POT-Creation-Date: 2020-02-25 12:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,14 +19,12 @@ msgstr ""
 "Generated-By: Babel 2.8.0\n"
 
 # 7c56c3891bd94336b21fc82d5aeab6ae
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:1
-#: d36ca6922d8e4edd98a9bbeae2a36fcd
+#: ../../using/common.md:1 1c44fafbdfd04b0f8489ac57da3be0c9
 msgid "Common Features"
 msgstr ""
 
 # bf4e4ace24d144538edc1d9a2605cfef
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:3
-#: 8d7c5038a59948208e9e0c2a7bb494cf
+#: ../../using/common.md:3 c0b052ac75644ecbbe869437046c4a87
 msgid ""
 "A container launched from any Jupyter Docker Stacks image runs a Jupyter "
 "Notebook server by default. The container does so by executing a start-"
@@ -36,22 +34,19 @@ msgid ""
 msgstr ""
 
 # 298bc09d3aab4abcb413ad481d6242ff
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:5
-#: 69f752e3a31e4818a5b14244fd06667d
+#: ../../using/common.md:5 f8c1d12c2ca24abfb2a7d901e659c79b
 msgid ""
 "This page describes the options supported by the startup script as well "
 "as how to bypass it to run alternative commands."
 msgstr ""
 
 # 056d2f8a9a4343668131dfb9de71838a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:7
-#: 591c7e84cc4a4f71890e78ec5031e97b
+#: ../../using/common.md:7 fffdd71799684b1eb92df0b14d9d65a7
 msgid "Notebook Options"
 msgstr ""
 
 # d1c32336e1f545d496f7a411fb18cb4e
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:9
-#: c2dd28ca250b49c69bcc35da28214d81
+#: ../../using/common.md:9 2d76c18837cd440ca0f5ef5892b734ec
 msgid ""
 "You can pass Jupyter command line options to the start-notebook.sh script"
 " when launching the container. For example, to secure the Notebook server"
@@ -60,22 +55,19 @@ msgid ""
 msgstr ""
 
 # 4c08f057def247cbbfc8231e628cb792
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:15
-#: e8d8a1964436412084dac54d27795815
+#: ../../using/common.md:15 53e03d31641242a6837f28a8fb341e59
 msgid ""
 "For example, to set the base URL of the notebook server, you can run the "
 "following:"
 msgstr ""
 
 # 58ad38b4300449da805bc67e73be5fd0
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:21
-#: 505f1b8f2cfc4f87ba897dfc1f464b5d
+#: ../../using/common.md:21 a1fce0d998534055bb969f508488413d
 msgid "Docker Options"
 msgstr ""
 
 # 0118197966504e3ab1c03a0c49e68c97
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:23
-#: 6617c4cf8ba647efb6284e93566d3f2a
+#: ../../using/common.md:23 7107dee10a2a4b3193fabe63d67e6a76
 msgid ""
 "You may instruct the start-notebook.sh script to customize the container "
 "environment before launching the notebook server. You do so by passing "
@@ -83,8 +75,7 @@ msgid ""
 msgstr ""
 
 # 391efc925af248fa9bfa2220bdf0730b
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:26
-#: f2c1c15a3c654401b7f2edce86bb1ca7
+#: ../../using/common.md:26 51f0477bc9904affbc264f2a6d75a3ae
 msgid ""
 "-e NB_USER=jovyan - Instructs the startup script to change the default "
 "container username from jovyan to the provided value. Causes the script "
@@ -95,8 +86,7 @@ msgid ""
 msgstr ""
 
 # 97929e34ea254dd289e235276b72068f
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:27
-#: cd58d499597d44be868f7ec8cc776285
+#: ../../using/common.md:27 931095dd6fa940bd9465c10540363061
 msgid ""
 "-e NB_UID=1000 - Instructs the startup script to switch the numeric user "
 "ID of $NB_USER to the given value. This feature is useful when mounting "
@@ -108,8 +98,7 @@ msgid ""
 msgstr ""
 
 # 71cac0c045d342008ca80ce23ef32431
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:28
-#: 79d964144bac4cb997f117216e2a2d6e
+#: ../../using/common.md:28 b6a05af5c5ad4363862750dad9b5d444
 msgid ""
 "-e NB_GID=100 - Instructs the startup script to change the primary group "
 "of$NB_USER to $NB_GID (the new group is added with a name of $NB_GROUP if"
@@ -126,8 +115,7 @@ msgid ""
 msgstr ""
 
 # 5ca13bdafc214f8b997ca2752592f1be
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:29
-#: 4e8d4157df5f495c913dda8ce1f738f0
+#: ../../using/common.md:29 0d6431dbefe044b383df6458c4bc9e18
 msgid ""
 "-e NB_GROUP=<name> - The name used for $NB_GID, which defaults to "
 "$NB_USER.  This is only used if $NB_GID is specified and completely "
@@ -135,8 +123,7 @@ msgid ""
 msgstr ""
 
 # 4d57d0bd85ae417687747831670ec35f
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:30
-#: bef60d06fcf746c986ae073a84cb2312
+#: ../../using/common.md:30 dc5bc38f490442ebb0999962e4ad09d2
 msgid ""
 "-e NB_UMASK=<umask> - Configures Jupyter to use a different umask value "
 "from default, i.e. 022. For example, if setting umask to 002, new files "
@@ -150,8 +137,7 @@ msgid ""
 msgstr ""
 
 # 580637e7f00d4a36b69ce3f6ec43370e
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:31
-#: 870cca692cb0482597d92db2d7457f6c
+#: ../../using/common.md:31 cd95a1e0dc14409ab403ac23bdc496dd
 msgid ""
 "-e CHOWN_HOME=yes - Instructs the startup script to change the $NB_USER "
 "home directory owner and group to the current value of $NB_UID and "
@@ -162,8 +148,7 @@ msgid ""
 msgstr ""
 
 # 42bbfaf32b43482ba99263a74b383ac3
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:32
-#: 176bf1f5852142df962661c5a49dc981
+#: ../../using/common.md:32 fa3894c477c64526ac699687f08cfa34
 msgid ""
 "-e CHOWN_EXTRA=\"<some dir>,<some other dir>\" - Instructs the startup "
 "script to change the owner and group of each comma-separated container "
@@ -173,8 +158,7 @@ msgid ""
 msgstr ""
 
 # 399a6318e3724410a4dcc93cc9d8736d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:33
-#: 24b9d582cdfe4c8e8b52c12ec9765c5f
+#: ../../using/common.md:33 b09cd2fb99d0469daa91a5e0be7b34a6
 msgid ""
 "-e GRANT_SUDO=yes - Instructs the startup script to grant the NB_USER "
 "user passwordless sudo capability. You do not need this option to allow "
@@ -188,8 +172,7 @@ msgid ""
 msgstr ""
 
 # 3c6485fef5d44f72b4693c1a3d1ec35c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:34
-#: 2be1e719bae44ed1af1cd443f5e4a8c6
+#: ../../using/common.md:34 00c47723cc8e4f9989bae184bd92585d
 msgid ""
 "-e GEN_CERT=yes - Instructs the startup script to generates a self-signed"
 " SSL certificate and configure Jupyter Notebook to use it to accept "
@@ -197,8 +180,7 @@ msgid ""
 msgstr ""
 
 # efe931ecaeac4348a6f0112a65371306
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:35
-#: 5cb0e5975e0f4e1182f48f2fde946c7a
+#: ../../using/common.md:35 f450d13e97b948b8b886ccb163ad5d82
 msgid ""
 "-e JUPYTER_ENABLE_LAB=yes - Instructs the startup script to run jupyter "
 "lab instead of the default jupyter notebook command. Useful in container "
@@ -207,8 +189,7 @@ msgid ""
 msgstr ""
 
 # fe40b3a059e54a53a7a5fde86441ae72
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:36
-#: 6286372ed3764585bd1f7c5f93408bcf
+#: ../../using/common.md:36 872e60feedbd4984afe0dc536bfa5545
 msgid ""
 "-e RESTARTABLE=yes - Runs Jupyter in a loop so that quitting Jupyter does"
 " not cause the container to exit.  This may be useful when you need to "
@@ -216,8 +197,7 @@ msgid ""
 msgstr ""
 
 # bb82e70358e7452d86eb1b8e971fbf27
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:37
-#: 6a6780a512904befbd57a3810bce153c
+#: ../../using/common.md:37 f9e87698ae2747e5ad8b0e930501c048
 msgid ""
 "-v /some/host/folder/for/work:/home/jovyan/work - Mounts a host machine "
 "directory as folder in the container. Useful when you want to preserve "
@@ -228,8 +208,7 @@ msgid ""
 msgstr ""
 
 # 403f8e6101534bc0951bf5bb0b03c5a0
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:38
-#: 95f52b964be3468d86acb414e49f9e09
+#: ../../using/common.md:38 c9d555a6733242deb665a93530b45241
 msgid ""
 "--user 5000 --group-add users - Launches the container with a specific "
 "user ID and adds that user to the users group so that it can modify files"
@@ -238,14 +217,12 @@ msgid ""
 msgstr ""
 
 # 565fbbe944ed4e68a5e202eaf07d1402
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:40
-#: 0e8b018a1c2241ca96c6a5845740680e
+#: ../../using/common.md:40 a82e0b7e1f6a43c0aa1cc201098d8832
 msgid "Startup Hooks"
 msgstr ""
 
 # 70f6f3501e1b43d3a95e200c39eef8d2
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:42
-#: ed97b71814e946d39f3be92cd3728c4d
+#: ../../using/common.md:42 17c4e582aeb848cd9abb97c980b55d64
 msgid ""
 "You can further customize the container environment by adding shell "
 "scripts (*.sh) to be sourced or executables (chmod +x) to be run to the "
@@ -253,16 +230,14 @@ msgid ""
 msgstr ""
 
 # bdc8d9262aea4329b09bac1deb92d6da
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:45
-#: 5748e68de5df431089ceae6417f0f734
+#: ../../using/common.md:45 d1cf0a304ea24cab9448a7a60206a8f3
 msgid ""
 "/usr/local/bin/start-notebook.d/ - handled before any of the standard "
 "options noted above are applied"
 msgstr ""
 
 # 786fba9678e24e3ba5ded6536dc0492a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:47
-#: 77faf18f2b7f43549773577045b66293
+#: ../../using/common.md:47 3e17cc830550401d9ef53d3061e6e4e1
 msgid ""
 "/usr/local/bin/before-notebook.d/ - handled after all of the standard "
 "options noted above are applied and just before the notebook server "
@@ -270,22 +245,19 @@ msgid ""
 msgstr ""
 
 # 5903b6a921cb42a9a8b6db0e9592769c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:50
-#: 6b773e2d0f16423691a82c8030a1cd39
+#: ../../using/common.md:50 e0c8c469cbf54de7bf1c2fe42b434a46
 msgid ""
 "See the run-hooks function in the jupyter/base-notebook start.sh script "
 "for execution details."
 msgstr ""
 
 # ffb01f3597d1453bb0299e9a4a888757
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:53
-#: 9a84c220f6124c76ab27d0cfb7906f3f
+#: ../../using/common.md:53 11395e168f07421db00f92441f00ef9b
 msgid "SSL Certificates"
 msgstr ""
 
 # 7b1a34debd094e02930aa7197377b691
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:55
-#: 91875a089511428b816a487a194f0fa7
+#: ../../using/common.md:55 3fff1aa577eb4cb4a7b988af85e4db4c
 msgid ""
 "You may mount SSL key and certificate files into a container and "
 "configure Jupyter Notebook to use them to accept HTTPS connections. For "
@@ -294,16 +266,14 @@ msgid ""
 msgstr ""
 
 # e496d62ce1b7489eabf40a55471247b4
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:65
-#: 38386c900d7f4dc98536b63107c8a67d
+#: ../../using/common.md:65 3be15d1b59da41deb1ebbd871220d786
 msgid ""
 "Alternatively, you may mount a single PEM file containing both the key "
 "and certificate. For example:"
 msgstr ""
 
 # 6ada67b7d1a34f59ad235d7e49e6a298
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:74
-#: 16959db250eb4a9ea3d8461647b19e7e
+#: ../../using/common.md:74 905c90327ec643ab91a306164ab7e39d
 msgid ""
 "In either case, Jupyter Notebook expects the key and certificate to be a "
 "base64 encoded text file. The certificate file or PEM may contain one or "
@@ -311,50 +281,43 @@ msgid ""
 msgstr ""
 
 # c908965cf0084fc2b276b50b47b87d18
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:76
-#: adeeb9ae1f9a442194bfa75615cf1870
+#: ../../using/common.md:76 7c9ce67e898b4dea88777c91415b1b08
 msgid "For additional information about using SSL, see the following:"
 msgstr ""
 
 # 11ef89b3d17b4bcf827e73a7ebb13756
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:78
-#: a0d6ce31208f4ab58701e17a08562a9b
+#: ../../using/common.md:78 30468f20364a4e51b8910dfb16f433d0
 msgid ""
 "The docker-stacks/examples for information about how to use Let's Encrypt"
 " certificates when you run these stacks on a publicly visible domain."
 msgstr ""
 
 # 4a42ccc5b624431bbacdc8c1d5624fb4
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:79
-#: a1375f4a9754492ca596b3a843b7ce36
+#: ../../using/common.md:79 8bf865e53f704ce2a6c420a5a2fadc3f
 msgid ""
 "The jupyter_notebook_config.py file for how this Docker image generates a"
 " self-signed certificate."
 msgstr ""
 
 # 95d9c3081fa34def82e309c53ef2147b
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:80
-#: ed6cc6f2a07b49acbb1d494b3c64cb82
+#: ../../using/common.md:80 1d822938d89a48e59017b7b6d39fbcea
 msgid ""
 "The Jupyter Notebook documentation for best practices about securing a "
 "public notebook server in general."
 msgstr ""
 
 # 9950b2e426414111ad46c6ba1e9d29bb
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:82
-#: c81719b13ebb4858a657e512d9a903df
+#: ../../using/common.md:82 10f85408cc59407abbc1ac29934c7b3d
 msgid "Alternative Commands"
 msgstr ""
 
 # 2e90717352804ebd8086eef378fa411d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:84
-#: 6ffd60a906ec44cca8e76b7f428f3b33
+#: ../../using/common.md:84 1501e4b03b50414e9478d40ad232ae8e
 msgid "start.sh"
 msgstr ""
 
 # 11637ea03062425e94964f2c70ed8676
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:86
-#: 570b548efef84632a1ecf5899683b2b4
+#: ../../using/common.md:86 38a7d8b7b24447008275ca6649c24001
 msgid ""
 "The start-notebook.sh script actually inherits most of its option "
 "handling capability from a more generic start.sh script. The start.sh "
@@ -364,14 +327,12 @@ msgid ""
 msgstr ""
 
 # ad0be3e8095e4394afb367e9e56e1ca5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:92
-#: 26e4524fba3543738929ea603a02ec4d
+#: ../../using/common.md:92 6cd5bf8fd86845d99ab31bf7f6ffa8ce
 msgid "Or, to run JupyterLab instead of the classic notebook, run the following:"
 msgstr ""
 
 # 3d92501fb3b940b385ee986095610391
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:98
-#: 21d0eda33a99409cb50fcd4c1042d661
+#: ../../using/common.md:98 63b9787b1f42433bb64015283b4f6438
 msgid ""
 "This script is particularly useful when you derive a new Dockerfile from "
 "this image and install additional Jupyter applications with subcommands "
@@ -379,14 +340,12 @@ msgid ""
 msgstr ""
 
 # ff1b1af310d54eedb852dc5eff7a4f7e
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:100
-#: 8eb68774c9084abb869ee11bba265d9a
+#: ../../using/common.md:100 38072813153d48ceb4632166093c5135
 msgid "Others"
 msgstr ""
 
 # 127ffe0a552b4dafaa77d173883350d7
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:102
-#: b40a1b5faf26497b9359ec05e6161814
+#: ../../using/common.md:102 a8bb6181d9044e938fb507e65f3db839
 msgid ""
 "You can bypass the provided scripts and specify an arbitrary start "
 "command. If you do, keep in mind that features supported by the start.sh "
@@ -394,14 +353,12 @@ msgid ""
 msgstr ""
 
 # 1d8bc4b15c3044b3932e0df72dd694a7
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:104
-#: 538c139a0bb749cf8867142e6c45b295
+#: ../../using/common.md:104 5fd07ddf321c4568b7eb4ab3e182614b
 msgid "Conda Environments"
 msgstr ""
 
 # 97935ba423ed4a8787f9895f00015e4b
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:106
-#: a4330c92e76d40e18788e8ce41211a73
+#: ../../using/common.md:106 12155fdd77844df091dd9ad96f67a258
 msgid ""
 "The default Python 3.x Conda environment resides in /opt/conda. The "
 "/opt/conda/bin directory is part of the default jovyan user's $PATH. That"
@@ -410,8 +367,7 @@ msgid ""
 msgstr ""
 
 # a8fe459cc9ff43b3b2f31efd4587f145
-#: /home/travis/build/jupyter/docker-stacks/docs/using/common.md:108
-#: 579cc3c3614e48a0b5c4ea6497b34c8b
+#: ../../using/common.md:108 ffa3856793224ea982ffff00c2507972
 msgid ""
 "The jovyan user has full read/write access to the /opt/conda directory. "
 "You can use either conda or pip to install new packages without any "
@@ -419,14 +375,12 @@ msgid ""
 msgstr ""
 
 # 36939901b3744e3fb67d2bae58ae8e25
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:1
-#: 1babcf6f858b4d41a766f41450e96462
+#: ../../using/recipes.md:1 6455da5997db4ae880aa5ab0f26951ab
 msgid "Contributed Recipes"
 msgstr ""
 
 # 8bc65b7f51f4442c95ea0dec5b4b2704
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:3
-#: 5d33bd7033514033b01fc47eea0444e9
+#: ../../using/recipes.md:3 f0b8955eaaa2489aaf81062ba1adfdb1
 msgid ""
 "Users sometimes share interesting ways of using the Jupyter Docker "
 "Stacks. We encourage users to contribute these recipes to the "
@@ -436,14 +390,12 @@ msgid ""
 msgstr ""
 
 # 7447af86f4f3438ba413a7e9cc9764e5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:8
-#: c9fa4865d14f49f8a694a7d1d714544f
+#: ../../using/recipes.md:8 2acc24b6854547b7b6b9219c2fe07efc
 msgid "Using sudo within a container"
 msgstr ""
 
 # ed8292c31667424184fe7515a30f79cd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:10
-#: afb9a62e9f9540669c12c8dafe2847d1
+#: ../../using/recipes.md:10 b8179781380e43c8ad9e163159e1cbd3
 msgid ""
 "Password authentication is disabled for the NB_USER (e.g., jovyan). This "
 "choice was made to avoid distributing images with a weak default password"
@@ -452,8 +404,7 @@ msgid ""
 msgstr ""
 
 # d22ae301bebb4857b866359ddbfb7e53
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:14
-#: e30cc9c150184d27ba260f4112aecd40
+#: ../../using/recipes.md:14 06a6b22f564b4131a994ec3dac6486a5
 msgid ""
 "You can grant the within-container NB_USER passwordless sudo access by "
 "adding -e GRANT_SUDO=yes and --user root to your Docker command line or "
@@ -461,40 +412,34 @@ msgid ""
 msgstr ""
 
 # f75300183d66418d958651b713e3c81e
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:18
-#: 3a0fdeb624e943f683170771ddfaa885
+#: ../../using/recipes.md:18 1e9d86da0e5b426bbde13b29d2f26699
 msgid "For example:"
 msgstr ""
 
 # 909f17eb57bc4e4e8df8216423d9c008
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:24
-#: f1507c1b9e47495194b9ebbbd3f984ca
+#: ../../using/recipes.md:24 1b43edd0a70e4c87b4ce9932f734a996
 msgid ""
 "You should only enable sudo if you trust the user and/or if the container"
 " is running on an isolated host."
 msgstr ""
 
 # 5b38bd48b58242788cc8b581b575241a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:27
-#: 508761ce7ad54f59bf441c9f89af7c01
+#: ../../using/recipes.md:27 d2cd2fa0aea24764bfd6895ce65a7b8a
 msgid "Using pip install or conda install in a Child Docker image"
 msgstr ""
 
 # cfb1a65ed1a4453e8b3355f1c0c23b1c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:29
-#: 61ccfd7cf1a44ecea1e36be9b1ac02bd
+#: ../../using/recipes.md:29 21d75ee6c08d48499e8fbedaac2bec1d
 msgid "Create a new Dockerfile like the one shown below."
 msgstr ""
 
 # 3ab615dc6fb6425d954cae4ce14f08b9
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:38
-#: 4a7331e570a9447d909867357a05da4d
+#: ../../using/recipes.md:38 3053ab82269645f69c1dd27b512512b3
 msgid "Then build a new image."
 msgstr ""
 
 # c35347a79a2e4a7faffe139767808965
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:44
-#: 4ca813b625b145848887ee139c5580b8
+#: ../../using/recipes.md:44 6511ec4410b94df1b52d83631bb0a11d
 msgid ""
 "To use a requirements.txt file, first create your requirements.txt file "
 "with the listing of packages desired. Next, create a new Dockerfile like "
@@ -502,26 +447,22 @@ msgid ""
 msgstr ""
 
 # f2f035925d764425b9999b19d36c1d30
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:57
-#: 153ac8c6bb4c4d10b46986aaba217a2f
+#: ../../using/recipes.md:57 85cd67c995f3447ea80eb10568d092f9
 msgid "For conda, the Dockerfile is similar:"
 msgstr ""
 
 # fd2320ac3001480992ab2dd80285467b
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:69
-#: 7f5502751c0f4c1d9a2fb04a194c1d8c
+#: ../../using/recipes.md:69 8212ebdbb522489a9718f2818f27d1a5
 msgid "Ref: docker-stacks/commit/79169618d571506304934a7b29039085e77db78c"
 msgstr ""
 
 # 179407610520450ea0e4b566eac8ec96
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:72
-#: ca0856f0b1404ef695a3851db2882e22
+#: ../../using/recipes.md:72 1573bfdb17ba4e91985237a1d81bd253
 msgid "Add a Python 2.x environment"
 msgstr ""
 
 # 19bf98219e344b80b68fbf7f3aa68ec6
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:74
-#: 6b8acaa9140e4db597e9a63b3d18806c
+#: ../../using/recipes.md:74 3af8e6ee72b140ec8a8b9b7d66e4fe6b
 msgid ""
 "Python 2.x was removed from all images on August 10th, 2017, starting in "
 "tag cc9feab481f7. You can add a Python 2.x environment by defining your "
@@ -529,18 +470,15 @@ msgid ""
 msgstr ""
 
 # be4f7d9b615d490c87cc6393ed0fabf2
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:98
-#: cd4ed80dcd1d485fad33ce6e18c5e2c2
+#: ../../using/recipes.md:98 47a1a6cc45cd4d59bd7feb3c8dfd134c
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/440"
 msgstr ""
 
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:101
-#: 74085bcd61fb46598ce22a3bc198f10a
+#: ../../using/recipes.md:101 300b2fa5e67347ecb1963e4ef26be8a3
 msgid "Add a Python 3.x environment"
 msgstr ""
 
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:103
-#: 4ccc42f2c78d4633820a31ad92bc587c
+#: ../../using/recipes.md:103 3b222dd4e64b415191fc416dbe384fde
 msgid ""
 "The default version of Python that ships with conda/ubuntu may not be the"
 " version you want. To add a conda environment with a different version "
@@ -549,36 +487,31 @@ msgid ""
 msgstr ""
 
 # 747e87a9067b4870bad5aa335ab39f7d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:142
-#: 4db21252e60f413fb4fbb8f855197699
+#: ../../using/recipes.md:142 c323ef3d52c440338bdf9f3ff1cb7da6
 msgid "Run JupyterLab"
 msgstr ""
 
 # e062399bbaee4f1eb3ab48dcc60289b8
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:144
-#: 1060efcfaf584802a2d51b0af9187d3e
+#: ../../using/recipes.md:144 47c63829ad7e460ba3b48562be1362ff
 msgid ""
 "JupyterLab is preinstalled as a notebook extension starting in tag "
 "c33a7dc0eece."
 msgstr ""
 
 # 7c0f192d197143698dd371fff8fa3ceb
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:147
-#: d98dbe265cd9451193c02e189589a651
+#: ../../using/recipes.md:147 b2c3733b2acd452b9daae41b9f517c62
 msgid ""
 "Run jupyterlab using a command such as docker run -it --rm -p 8888:8888 "
 "jupyter/datascience-notebook start.sh jupyter lab"
 msgstr ""
 
 # e7842069e6ce432b9f1a12271e0ddc24
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:150
-#: 00744f1b19a34c8e933616818522f1e5
+#: ../../using/recipes.md:150 aad3c0bddd784f868e0edd97d40caaa1
 msgid "Let's Encrypt a Notebook server"
 msgstr ""
 
 # 4c00785b93734066b349b42b23c312af
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:152
-#: 43f65b40a6ed4af8bdbb797c3c9324e5
+#: ../../using/recipes.md:152 f5c7f5a3e1054cd58bc973e34d8e46aa
 msgid ""
 "See the README for the simple automation here https://github.com/jupyter"
 "/docker-stacks/tree/master/examples/make-deploy which includes steps for "
@@ -586,62 +519,53 @@ msgid ""
 msgstr ""
 
 # c386f5913a78475487e9f12c76af9032
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:156
-#: f1294efb6111477085119902b9d36d15
+#: ../../using/recipes.md:156 bbcd4dba56064786996d4612ef9479f6
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/78"
 msgstr ""
 
 # dd297c8f73a44707bf02064434a50a47
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:159
-#: 8cf4a4db1bd44e8eb9798d812cec3b0b
+#: ../../using/recipes.md:159 079d0e845e2a4dac9922476c05aacaa7
 msgid "Slideshows with Jupyter and RISE"
 msgstr ""
 
 # a1834343ae3045ea962e0efc80f69443
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:161
-#: 1597bdeaac944dbe81ec69afb0b1b441
+#: ../../using/recipes.md:161 2c1bb1b6199b4838a356552107cabc80
 msgid ""
 "RISE allows via extension to create live slideshows of your notebooks, "
 "with no conversion, adding javascript Reveal.js:"
 msgstr ""
 
 # 6e0c67b18d3546a9ab024c5663aa8f90
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:169
-#: 1cbab955aca145c4947d01e12a9f31e8
+#: ../../using/recipes.md:169 7cf4022fd43e49e187249f274d3f6a21
 msgid "Credit: Paolo D. based on docker-stacks/issues/43"
 msgstr ""
 
 # 6bf66d68f2e5439b8403c0dd8ded40c5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:172
-#: 3a8d4e24f6bd4647811312ef8c936f08
+#: ../../using/recipes.md:172 fee046bfb4984bfaae416f39cd846bb1
 msgid "xgboost"
 msgstr ""
 
 # ce204678c3af4aa9a0fb55bb6de7554b
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:174
-#: 8a185a0c6d4c4cf0848a5d7cd895bc80
+#: ../../using/recipes.md:174 deca0b088f724ff7851ed1a22b715a1a
 msgid ""
 "You need to install conda's gcc for Python xgboost to work properly. "
 "Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0."
 msgstr ""
 
 # a9bc4b88bd3d4bc1a7832f31677c298a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:185
-#: fa9ddba000d040cba397a3bc00376993
+#: ../../using/recipes.md:185 d11777ce1f3646caaf4ca0241dc7d8ba
 msgid "Running behind a nginx proxy"
 msgstr ""
 
 # ca7763a5a35a47bd9fb29ae9d00feab3
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:187
-#: 024e257285ec4b4ca0f4a5a887177f3c
+#: ../../using/recipes.md:187 156c5987c6334d83be36673407e5ffc0
 msgid ""
 "Sometimes it is useful to run the Jupyter instance behind a nginx proxy, "
 "for instance:"
 msgstr ""
 
 # dd58dbc3b08744a0b9415448d3bdbba6
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:189
-#: 9f69129c5817477db02669545ab1bf42
+#: ../../using/recipes.md:189 cbbed1e909754e40b4ed344051890066
 msgid ""
 "you would prefer to access the notebook at a server URL with a path "
 "(https://example.com/jupyter) rather than a port "
@@ -649,8 +573,7 @@ msgid ""
 msgstr ""
 
 # a5129fb6e2b042f5b8161ed5318123f9
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:191
-#: 8eba911382ae40f19922e4fcde820856
+#: ../../using/recipes.md:191 9c05942b35f849b5867a84d1308f6600
 msgid ""
 "you may have many different services in addition to Jupyter running on "
 "the same server, and want to nginx to help improve server performance in "
@@ -658,8 +581,7 @@ msgid ""
 msgstr ""
 
 # cffd649e66ae4efb8122522e465ce3e3
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:194
-#: d2b3dd8dc7b84aebb1bbd47b89ea4dd3
+#: ../../using/recipes.md:194 4dd81c9aac3640208363d1b4d0427c6d
 msgid ""
 "Here is a quick example NGINX configuration to get started. You'll need a"
 " server, a .crt and .key file for your server, and docker & docker-"
@@ -669,14 +591,12 @@ msgid ""
 msgstr ""
 
 # 7ba37cfc11224013a862d6519168acd0
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:199
-#: a4bd6723d54c418e9615636314dca0c6
+#: ../../using/recipes.md:199 975f341f58ca4eb7aacfcb42939e0786
 msgid "Host volume mounts and notebook errors"
 msgstr ""
 
 # 0fc6706374ee4a5d98517ec02ee24a03
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:201
-#: 6dabe0abc25640d2adea4e9b0b780b37
+#: ../../using/recipes.md:201 ce520516c8c84093b64ce6582b7e5ef1
 msgid ""
 "If you are mounting a host directory as /home/jovyan/work in your "
 "container and you receive permission errors or connection errors when you"
@@ -687,20 +607,17 @@ msgid ""
 msgstr ""
 
 # a6c910ab798b43ee91c0af160a3aadb6
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:207
-#: 54f5bf3dce4d43baa59dc4adff63ff09
+#: ../../using/recipes.md:207 b3bb10e78a6d4d27b40b4c40fec612b0
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/199"
 msgstr ""
 
 # 908924a0b4fa44d79fbca1413a0fb296
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:210
-#: 506ed99b07cf4165b2bac82b431ac209
+#: ../../using/recipes.md:210 a0a732da676f48c6b1362bf2f82c99c1
 msgid "Manpage installation"
 msgstr ""
 
 # 7fc6566074ee4ba3a4e579437d7f151d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:212
-#: a4739a493dad41329b4a4e76e6d24970
+#: ../../using/recipes.md:212 c8b77422d3b94fb1b6d81ec7f541d95c
 msgid ""
 "Most containers, including our Ubuntu base image, ship without manpages "
 "installed to save space. You can use the following dockerfile to inherit "
@@ -708,8 +625,7 @@ msgid ""
 msgstr ""
 
 # fb4a0f5bc3534bd9bb8909ce6512f4dd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:238
-#: 66e88e95355344b294a8350663af8c6d
+#: ../../using/recipes.md:238 037ed3c135ad4ae2bc89f8873a600e0b
 msgid ""
 "Adding the documentation on top of an existing singleuser image wastes a "
 "lot of space and requires reinstalling every system package, which can "
@@ -719,148 +635,125 @@ msgid ""
 msgstr ""
 
 # 84b7fb0b5fd748ecba457f867a0e30bf
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:263
-#: 416a6a7e6e0f460da5806ef1eff48821
+#: ../../using/recipes.md:263 6b20d57a35ab42aabf2b153bb116348f
 msgid "Be sure to check the current base image in base-notebook before building."
 msgstr ""
 
 # 5764b06de0d941a585e5107f313235f4
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:265
-#: 0bf755396a624332a80ea6ac381080a2
+#: ../../using/recipes.md:265 8c0c252f5542484e8764563ec6135d4f
 msgid "JupyterHub"
 msgstr ""
 
 # af0ca920391b419b805ae3809388fcf2
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:267
-#: c4458ea8fb4c45be8918558e96e15322
+#: ../../using/recipes.md:267 b6c7f49d584c475b9830cfe22a469716
 msgid "We also have contributed recipes for using JupyterHub."
 msgstr ""
 
 # fbff97a16a2a4a53a69dd2d1c7dfbe91
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:269
-#: 8432582b5449482ba39683fd7fba531f
+#: ../../using/recipes.md:269 26c653db942d4d34a90f50bbf694cf32
 msgid "Use JupyterHub's dockerspawner"
 msgstr ""
 
 # 81e1dbb4c1c34f4c9e88630adff3d1e9
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:271
-#: c32d71e8d3c4472e85d22bd24374af73
+#: ../../using/recipes.md:271 b985033fe1364bad8fb10394c9573c90
 msgid ""
 "In most cases for use with DockerSpawner, given any image that already "
 "has a notebook stack set up, you would only need to add:"
 msgstr ""
 
 # 837b7a2dac01402e8cd2cc398bd5d785
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:274
-#: df89c62e127d4e25bb83f00df76a5f7f
+#: ../../using/recipes.md:274 5c6006e4c5974b61ad51e013a5189ef4
 msgid "install the jupyterhub-singleuser script (for the right Python)"
 msgstr ""
 
 # d9816cb5ae2041e2a5fde9cdfb91262f
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:275
-#: b5e41729369b46949d32a29395c2fd0a
+#: ../../using/recipes.md:275 bacf617fb03c40df8b8c5e13473fc1cb
 msgid "change the command to launch the single-user server"
 msgstr ""
 
 # 8b1bc94531e7490fbaa012f5c4a257bd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:277
-#: 7f1b09638fa142a8bf51586d246d7e8a
+#: ../../using/recipes.md:277 70db82b143e04a8d893fcbfbabd0030c
 msgid ""
 "Swapping out the FROM line in the jupyterhub/singleuser Dockerfile should"
 " be enough for most cases."
 msgstr ""
 
 # ce864521fffa4c89b7584d24296515d5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:280
-#: 480b1d2084fd403899730fd6aed33d8f
+#: ../../using/recipes.md:280 147dd0ae06f64830abbea9ca44d20a83
 msgid ""
 "Credit: Justin Tyberg, quanghoc, and Min RK based on docker-"
 "stacks/issues/124 and docker-stacks/pull/185"
 msgstr ""
 
 # 6a5d92e7b071449686d148be90544e64
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:285
-#: 3ac04f528149478ab1e6af9809a61711
+#: ../../using/recipes.md:285 43414a5b2ef24cd3b0595d7b65ca0872
 msgid "Containers with a specific version of JupyterHub"
 msgstr ""
 
 # 091b62f4a91c4d87b92554795a00744c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:287
-#: 672ef24d8575453f96d8686a6b60b98b
+#: ../../using/recipes.md:287 b803eb8657de4b1a9ace1412682ce32b
 msgid ""
 "To use a specific version of JupyterHub, the version of jupyterhub in "
 "your image should match the version in the Hub itself."
 msgstr ""
 
 # 67db6ce9d62f499a9d9aaf675a86cddc
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:295
-#: 270c09e6f3a545ba9d42ed43e629dec8
+#: ../../using/recipes.md:295 c4c7294b579f4305bf566e7ea80f9152
 msgid "Credit: MinRK"
 msgstr ""
 
 # d4613cff20a140cbbbacc84ada8fcd87
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:297
-#: 8e3949b640454f3382b3e2e77013cfa4
+#: ../../using/recipes.md:297 b588433dd3ea4621ae3802e38d96a3f4
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/177"
 msgstr ""
 
 # 19439bd85c2946bb89f385651f8283dc
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:300
-#: a40e4044793a413983d5ee2893092fa3
+#: ../../using/recipes.md:300 a984c0d442584480b4aa95d13479cfc0
 msgid "Spark"
 msgstr ""
 
 # 975c96d6a0b843dfabd889c753671c93
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:302
-#: c9e44fbef60c4a7eb8a5b24d4ca3e088
+#: ../../using/recipes.md:302 7f761b10084b4de182bd379b3c655056
 msgid "A few suggestions have been made regarding using Docker Stacks with spark."
 msgstr ""
 
 # 9c295c93db724e5fb11a8f870f805f41
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:304
-#: 4d27c7a63c494b628fb34aeacbcdc6e8
+#: ../../using/recipes.md:304 ef8d904a3dec4863954d9410250a57af
 msgid "Using PySpark with AWS S3"
 msgstr ""
 
 # dc4059d42eaa495f8ebca84ebc91ac09
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:306
-#: c8b2494ba10d453e9463cfeec4ea96cd
+#: ../../using/recipes.md:306 c5672957c6f94f83879debc84703f54f
 msgid "Using Spark session for hadoop 2.7.3"
 msgstr ""
 
 # d2c12e3525bf4d9ca518fef02c4a79d3
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:326
-#: 85274b779ed44b738be0657339135b2e
+#: ../../using/recipes.md:326 69c00dda317d4f448be7e955ee933793
 msgid "Using Spark context for hadoop 2.6.0"
 msgstr ""
 
 # 59f08373c7354fa4bb5b7c10441b5d69
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:348
-#: 70c4282287fb433cbe232b9c8c2a9168
+#: ../../using/recipes.md:348 e8112055a74449209392686a70ede073
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/127"
 msgstr ""
 
 # c32dccc031664268983f72ed7927beff
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:351
-#: 4f1894a07d1747269c972f6ab0852cd5
+#: ../../using/recipes.md:351 771e77e0dc224916bcd1b9e52a1681ed
 msgid "Using Local Spark JARs"
 msgstr ""
 
 # 19614ffa973f49bab235cb5ac9cdf259
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:367
-#: cb3cd9baea184bfe8f06e92ff5b4489b
+#: ../../using/recipes.md:367 351212efa46f49db9139e522437199b7
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/154"
 msgstr ""
 
 # fc70801958a34e5aa578388147a8a1fb
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:370
-#: fce8893aa1ad4c3d84613bffb973f5ec
+#: ../../using/recipes.md:370 4bf696e13a0a40f6aa4bf824f91c2774
 msgid "Using spark-packages.org"
 msgstr ""
 
 # 031b9633ca0849e9a9035f4fa5ec2d29
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:372
-#: 7997bd4665ea40d7a3cb777b7a40bd38
+#: ../../using/recipes.md:372 e3d31685321f466b835f5be3902ec0bd
 msgid ""
 "If you'd like to use packages from spark-packages.org, see "
 "https://gist.github.com/parente/c95fdaba5a9a066efaab for an example of "
@@ -869,40 +762,34 @@ msgid ""
 msgstr ""
 
 # 08c4d39ccfa84551af78867ab37d3f18
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:377
-#: 26f64bf562034b4f9efb8f15f0b9c828
+#: ../../using/recipes.md:377 88418150c371458597ce5783086ebade
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/43"
 msgstr ""
 
 # 285d9bf0eefb480386dfdcd55fd76ef5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:380
-#: 4c6951066e784c508c1160cf2876f97a
+#: ../../using/recipes.md:380 6e286874432a480ba83879d3aa2a5b1b
 msgid "Use jupyter/all-spark-notebooks with an existing Spark/YARN cluster"
 msgstr ""
 
 # 1b1c743d85d542989f6a8f2c97a588d3
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:444
-#: 510942ce41b740b693a395f36c3aa54a
+#: ../../using/recipes.md:444 61fca671eafb410fa2461db0b085d649
 msgid "Credit: britishbadger from docker-stacks/issues/369"
 msgstr ""
 
 # 06d2e360eccb489abeeebada6c0b41eb
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:447
-#: 5c2b2a3433704e099640c166f1df9a1f
+#: ../../using/recipes.md:447 c4161db25e7e4d7681e72e51597c33b6
 msgid ""
 "Run Jupyter Notebook/Lab inside an already secured environment (i.e., "
 "with no token)"
 msgstr ""
 
 # 42dd63565c4a4f67825f675972554d34
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:449
-#: f6b0b316bcf545499520a12f0de8868f
+#: ../../using/recipes.md:449 52ad712365ea45c596c4a6470fe48d79
 msgid "(Adapted from issue 728)"
 msgstr ""
 
 # 8af2ceb1414f46e1802681695b5917f8
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:451
-#: 6697ae6680fc412c9cf0384a9d0d8421
+#: ../../using/recipes.md:451 d570950aea9b4c2ea793dcbfb518ecc5
 msgid ""
 "The default security is very good. There are use cases, encouraged by "
 "containers, where the jupyter container and the system it runs within, "
@@ -912,80 +799,68 @@ msgid ""
 msgstr ""
 
 # 7476a6d5eae74ecaae966e56390c096e
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:456
-#: c62cf45c13624fbaa9703b15f4e53475
+#: ../../using/recipes.md:456 65f055ccd2ce41068f57227db675851b
 msgid "For jupyterlab:"
 msgstr ""
 
 # f2efc5a0ba6b4c53b2047cc5f22bdbaa
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:462
-#: cfac230bf3864f46b2ba03111e0afd1f
+#: ../../using/recipes.md:462 2b87a9c9f697436eae7b5e22b50601d4
 msgid "For jupyter classic:"
 msgstr ""
 
 # 158396013982441e9e62402c499dfb11
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:468
-#: d39f4bb818b44e5d9fed23fcba33f93a
+#: ../../using/recipes.md:468 229feef769a14cd7a9fc88bbe4f13273
 msgid "Enable nbextension spellchecker for markdown (or any other nbextension)"
 msgstr ""
 
 # 8ccfbcb4264f48d0b6709fe81aa0a86d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:470
-#: 0b6044a9bde94f95b77c146d8d5a4b37
+#: ../../using/recipes.md:470 6777263229974181a79742de9751b6a6
 msgid "NB: this works for classic notebooks only"
 msgstr ""
 
 # 78ba1c20de2445fb9b76ec6202e4d794
-#: /home/travis/build/jupyter/docker-stacks/docs/using/recipes.md:484
-#: 6e244dec27674cfab5d82fd479832937
+#: ../../using/recipes.md:484 866eb33a68534be7b67052a612ae3cd1
 msgid "Ref: https://github.com/jupyter/docker-stacks/issues/675"
 msgstr ""
 
 # f66d723263124285a641f0dee8a41565
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:1
-#: 76bddb6ccfbe4f47a2c95cbf5f173b1c
+#: ../../using/running.md:1 c540b41f3a514eebae3a67e19b273137
 msgid "Running a Container"
 msgstr ""
 
 # 1f345e7a53e94439b936b3f4bbc877da
 # 324906e630c646b0ae10bbff6ed587fa
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:3
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:7
-#: 123cf9c68d8e418f83f40dadb9b80d7e c32190e6f51446b5b41c286883006c42
+#: ../../using/running.md:3 ../../using/selecting.md:7
+#: 685760868dba4461b991bb9dc2195f8a fa05c80b2a934f71947d5ccac5129fa2
 msgid "Using one of the Jupyter Docker Stacks requires two choices:"
 msgstr ""
 
 # 781cbaffaea24fb08451cc83327cfa9b
 # 1c6c83776a3b4a27a8ed4128a0dceeb7
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:9
-#: a92a0d066d184037a3b8d057b411ec68 ab6ad2482fcf46b6b9f6097807500b14
+#: ../../using/running.md:5 ../../using/selecting.md:9
+#: 62816237a2934251aab0956be4d3344b 87acbce3484341249f337d42db451feb
 msgid "Which Docker image you wish to use"
 msgstr ""
 
 # 632f67c9207e4ed9ba01bf59c4d942f7
 # ab191cfc95204429b7c0271ecdf69d33
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:6
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:10
-#: 0fcd6308941b4b14a1f3790480c5d186 434c392fcdeb4ed0aa605c4ec4f1c480
+#: ../../using/running.md:6 ../../using/selecting.md:10
+#: a571698f2f0944dcb649ce566b4bba76 b24d6fd48c074beda0c2f64f1ff19a69
 msgid "How you wish to start Docker containers from that image"
 msgstr ""
 
 # ebf870aa1ede4e2ab8fdcb2cef0fd610
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:8
-#: f8c318ec4966433888feda26b1004409
+#: ../../using/running.md:8 189924f848e14f33aa90b01218908078
 msgid "This section provides details about the second."
 msgstr ""
 
 # 3a614d7e864741199c1223a26fc37c03
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:10
-#: 6eb5ea42c42f480b823493289b494872
+#: ../../using/running.md:10 c483b54e481e4e3e8dace6273d43f38a
 msgid "Using the Docker CLI"
 msgstr ""
 
 # 3039d667df25426b84be7ab9d920cfee
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:12
-#: 6a35f6fa27cc47b1bd48dd8b71ea4fe6
+#: ../../using/running.md:12 0f9f6e7e8efa4946a878a3636957a214
 msgid ""
 "You can launch a local Docker container from the Jupyter Docker Stacks "
 "using the Docker command line interface. There are numerous ways to "
@@ -994,8 +869,7 @@ msgid ""
 msgstr ""
 
 # 0ea4263c502142b2b3fa7f55a917af19
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:14
-#: f9a44b0a23f94bc6a476db9bbe770ddb
+#: ../../using/running.md:14 7c51a4a862d54cea8f245cb20b3a6ca2
 msgid ""
 "Example 1 This command pulls the jupyter/scipy-notebook image tagged "
 "2c80cf3537ca from Docker Hub if it is not already present on the local "
@@ -1005,8 +879,7 @@ msgid ""
 msgstr ""
 
 # 402a9d9ecccb479994d2903710aabaa6
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:36
-#: 55d6a53706344a258fcc7d510a40a396
+#: ../../using/running.md:36 a2c575a398c54717895a47bdf151cd35
 msgid ""
 "Pressing Ctrl-C shuts down the notebook server but leaves the container "
 "intact on disk for later restart or permanent deletion using commands "
@@ -1014,8 +887,7 @@ msgid ""
 msgstr ""
 
 # fe38eef5fbe24b90ab070cefeef42230
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:55
-#: b36b847b7da64cf7872e30c512336863
+#: ../../using/running.md:55 2596ffd7108f47d6b0fb74ed23b295ef
 msgid ""
 "Example 2 This command pulls the jupyter/r-notebook image tagged "
 "e5c5a7d3e52d from Docker Hub if it is not already present on the local "
@@ -1026,8 +898,7 @@ msgid ""
 msgstr ""
 
 # d911c29555904311b29d8eb79fcb9843
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:77
-#: 1cdc4da9b3b74eb58d53ed6632e6cb3f
+#: ../../using/running.md:77 653baef24957477a8950f173ec75d9bc
 msgid ""
 "Pressing Ctrl-C shuts down the notebook server and immediately destroys "
 "the Docker container. Files written to ~/work in the container remain "
@@ -1035,8 +906,7 @@ msgid ""
 msgstr ""
 
 # 718d037e82a64d69aea592f76b3f047b
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:79
-#: 7208e1660d66491cb89773ba4707cd53
+#: ../../using/running.md:79 b90b3d5c31db4719a082e62f330168b6
 msgid ""
 "Example 3 This command pulls the jupyter/all-spark-notebook image "
 "currently tagged latest from Docker Hub if an image tagged latest is not "
@@ -1046,16 +916,14 @@ msgid ""
 msgstr ""
 
 # 9a561b9bb5944059801c71862521d66a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:85
-#: f9e016ce55a545189280478a0bcdacee
+#: ../../using/running.md:85 07a9c29dc6fb4469a2e55445e268e242
 msgid ""
 "The assigned port and notebook server token are visible using other "
 "Docker commands."
 msgstr ""
 
 # c4bc333e19324e2a93118e21b1f8f360
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:99
-#: 263dfb7f420e4cb2b101e1b98b29a4f8
+#: ../../using/running.md:99 373c133016274f0b8455f9d26d3b2ff3
 msgid ""
 "Together, the URL to visit on the host machine to access the server in "
 "this case is "
@@ -1063,22 +931,19 @@ msgid ""
 msgstr ""
 
 # bf82931e197b40ad940d9969993120a2
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:101
-#: ceff4c56f59c4854871c97f7b9f01fa5
+#: ../../using/running.md:101 e203033cdf7f45678b7325429d572b8d
 msgid ""
 "The container runs in the background until stopped and/or removed by "
 "additional Docker commands."
 msgstr ""
 
 # f9627b2638ec498ebfd06d0475e1dc4c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:113
-#: 0ce93a92eb6a435796ac9c593cb395e6
+#: ../../using/running.md:113 c1b5c340b3a7435ea1c8e664dc2c2cab
 msgid "Using Binder"
 msgstr ""
 
 # 6e355acc72ca41a2aca2972df65259c7
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:115
-#: 41823405448a4712bbacb14e35363240
+#: ../../using/running.md:115 1c57772e0fb14498bdc5dfbf865ca1cc
 msgid ""
 "Binder is a service that allows you to create and share custom computing "
 "environments for projects in version control. You can use any of the "
@@ -1088,14 +953,12 @@ msgid ""
 msgstr ""
 
 # d6f8d0ee10b542488dce87b84eb48036
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:117
-#: 6d60318737e5428ba4e545df1b6efd5c
+#: ../../using/running.md:117 1b6b010d01e644158f369a7e8180325f
 msgid "Using JupyterHub"
 msgstr ""
 
 # ef9a37b25db542dea89c9c1fb31c18cd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:119
-#: dda0f24ad6ee424ea126d157de1f70bb
+#: ../../using/running.md:119 3bb9fa5f30c74845ae5041f805346a72
 msgid ""
 "You can configure JupyterHub to launcher Docker containers from the "
 "Jupyter Docker Stacks images. If you've been following the Zero to "
@@ -1106,14 +969,12 @@ msgid ""
 msgstr ""
 
 # bf63b713aece4a7eacc2ad77f6f47c2c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:121
-#: 82dd0d7f2b274bce9b6d1ac107452c02
+#: ../../using/running.md:121 72baefb228c74c49b571149ebc86151c
 msgid "Using Other Tools and Services"
 msgstr ""
 
 # fcce8862fc7a41a394c1e19d35363653
-#: /home/travis/build/jupyter/docker-stacks/docs/using/running.md:123
-#: da01cda526fe401093c3c1681344b513
+#: ../../using/running.md:123 65dac6cf5d7e4022aa7c7f0687e46b0b
 msgid ""
 "You can use the Jupyter Docker Stacks with any Docker-compatible "
 "technology (e.g., Docker Compose, docker-py, your favorite cloud "
@@ -1123,44 +984,38 @@ msgid ""
 msgstr ""
 
 # 75674f1f85cb43bcbc020de3b84f18f7
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:1
-#: f05d23d2987e4fd4a56c9d1398811086
+#: ../../using/selecting.md:1 8db14e6cbd8747bd84423c81bbe67c3e
 msgid "Selecting an Image"
 msgstr ""
 
 # 686b01e6feaf4363930c16cecff5f462
 # cdbd4076608348a182dc09701223093a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:3
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:14
-#: 174c8ad5d048489b8ec38f731fe8b70b f1eb48e745604f159d33f30ba69f87d1
+#: ../../using/selecting.md:3 ../../using/selecting.md:14
+#: 1e13810e802d46589dbd7b8ac1d6a50c f2c6d853622c4a7199a27356bf4dc464
 msgid "Core Stacks"
 msgstr ""
 
 # daaad3b4f13e4c6395b0e9186c73030d
 # d0275f3e7b07428a85c62db44d774d71
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:4
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:123
-#: abec8664800a4a909d18ae6dfd5eb558 f3f202132c1749f2870472dfd4278b96
+#: ../../using/selecting.md:4 ../../using/selecting.md:123
+#: 193ca537cdf847fc9a33e62eb6a5a8d9 8e0e69295d8b443d8b837dd641cd7501
 msgid "Image Relationships"
 msgstr ""
 
 # 892152661ffc4ea096ba152334ff086f
 # a6f02cacf6334057bdb5eb1339411a32
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:141
-#: 25fbc12e8ebd4764bb3f13bde0474da2 7b14fe68fa3048bface6abaf4a18ce56
+#: ../../using/selecting.md:5 ../../using/selecting.md:141
+#: 1899f93b909c42aa8572bdff6f5bed4f edd3ce1cfe2b46e59c11031421cecb65
 msgid "Community Stacks"
 msgstr ""
 
 # af7e19bb10ec44348e8121be4129ce8a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:12
-#: 12638fb4dd364130a057156a420d086c
+#: ../../using/selecting.md:12 0cac1e1de3ae4fac9379ee793fcf6172
 msgid "This section provides details about the first."
 msgstr ""
 
 # fc2fca9d04f442e9a313123cec1174ff
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:16
-#: f625585a1a4448e38120de0483df0d73
+#: ../../using/selecting.md:16 7ea53fb1c68c4fae91c7745f36fbe442
 msgid ""
 "The Jupyter team maintains a set of Docker image definitions in the "
 "https://github.com/jupyter/docker-stacks GitHub repository. The following"
@@ -1169,8 +1024,7 @@ msgid ""
 msgstr ""
 
 # 4e9d03b93e964d16b23b30610d17b3e2
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:18
-#: a167406272484044becd8e1e761fbaa4
+#: ../../using/selecting.md:18 00814813d0a5411cafb72333bf94caed
 msgid "jupyter/base-notebook"
 msgstr ""
 
@@ -1183,186 +1037,157 @@ msgstr ""
 # 227408f175a24d1cb70e69ca32f11434
 # b8ff65660ef14b0692edbe3a2fdff42b
 # b50d8b1a5d3849279bcbda725f9f8e62
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:20
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:37
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:49
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:63
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:76
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:87
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:100
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:112
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:151
-#: 0bb1d9622719479d876046476b548be9 23fa804edf0d4a92a64eeccae94846a0
-#: 5b36358bde3346dfadb5b25e03e2a385 70c9533cd5d04593a0bb79f2b2e48147
-#: 8425745e4e0e432abe165a768c2401cd 960035e4e8004a7cbdb3cc02a1332d94
-#: bf16c36b1724416ea35ad4e65e0c9840 cf491dc950fe4ad7842c60e790d64803
-#: fea0d96fc17245ab97b64dfb24e2adc6
+#: ../../using/selecting.md:20 ../../using/selecting.md:37
+#: ../../using/selecting.md:49 ../../using/selecting.md:63
+#: ../../using/selecting.md:76 ../../using/selecting.md:87
+#: ../../using/selecting.md:100 ../../using/selecting.md:112
+#: ../../using/selecting.md:151 004abb1a959840db8de92ad91d9c3011
+#: 2b12483148e0492e8759591286468775 309ffddc6a2141818f1cd919267d0255
+#: 3ab8ac2172a14449b4a314e6f49014b6 6670829536654ada8656391407e42623
+#: a60509b081864f038dc90799258af0e2 b1dca580d9b048b58f772846e75f73f5
+#: d5cdb1983ac346549d7e11b5e7c37235 f93f3512779a4e0a8d399e18e1544bc1
 msgid "Source on GitHub | Dockerfile commit history | Docker Hub image tags"
 msgstr ""
 
 # eea41b7365bd4751ae599beb4edfa168
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:24
-#: 677f45e8a8dc4413bddbd89f54fc1089
+#: ../../using/selecting.md:24 1efdd86f6ee8410595479c20fd176e87
 msgid ""
 "jupyter/base-notebook is a small image supporting the options common "
 "across all core stacks. It is the basis for all other stacks."
 msgstr ""
 
 # facfb37f7fa64b85930d8f12fdeef2dd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:26
-#: 7d729b0eea7d430cbd4b3e222fc668e1
+#: ../../using/selecting.md:26 a77ebc1d0bc6465f9413c6e3de50ba19
 msgid ""
 "Minimally-functional Jupyter Notebook server (e.g., no pandoc for saving "
 "notebooks as PDFs)"
 msgstr ""
 
 # e90347274dd1459383e31a40bc6685f2
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:27
-#: f59b16ce5f57410bb55c084a057eee7f
+#: ../../using/selecting.md:27 5598188396554031970d8dfbd5352f65
 msgid "Miniconda Python 3.x in /opt/conda"
 msgstr ""
 
 # c5732a5536554f91b8dd7e8946beaab8
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:28
-#: 43615d4d706d4a5481c312c22fed6db7
+#: ../../using/selecting.md:28 5df0d18b5f82471b8c3b59d39f30e5c0
 msgid "No preinstalled scientific computing packages"
 msgstr ""
 
 # 0396d289dcdd49788f06c18efeca5013
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:29
-#: ba4f7f2391604db286d0a1a2c7792685
+#: ../../using/selecting.md:29 29fc2ab02e53491bb59cba6caf7b3392
 msgid ""
 "Unprivileged user jovyan (uid=1000, configurable, see options) in group "
 "users (gid=100) with ownership over the /home/jovyan and /opt/conda paths"
 msgstr ""
 
 # 0e9211b01ef94b66bad9288682e1a833
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:30
-#: 3dbddfbc4faf48c1816696f5f82fb671
+#: ../../using/selecting.md:30 fc54deccb34b4d05a0d021345cf63536
 msgid ""
 "tini as the container entrypoint and a start-notebook.sh script as the "
 "default command"
 msgstr ""
 
 # e38b63a14dae4b718a94c6e0523daf1e
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:31
-#: 62b2d51a92e247c18083487e679fa7b3
+#: ../../using/selecting.md:31 3efe8b5b22944c3ea35d21499de21b90
 msgid "A start-singleuser.sh script useful for launching containers in JupyterHub"
 msgstr ""
 
 # 0a603f43d1b34be28d2c1002f6686fda
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:32
-#: 6f3bc5fc98ee4bfc9a64c4810a54bca0
+#: ../../using/selecting.md:32 831aa64e551546a9bbec708d7f54ba18
 msgid ""
 "A start.sh script useful for running alternative commands in the "
 "container (e.g. ipython, jupyter kernelgateway, jupyter lab)"
 msgstr ""
 
 # 075e6ffe0f5b4d508d555992f5dd6fe1
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:33
-#: 947600d2fd9d4e28beb2c4b150dfdf70
+#: ../../using/selecting.md:33 d02d7dea6167405381909e3a515093e0
 msgid "Options for a self-signed HTTPS certificate and passwordless sudo"
 msgstr ""
 
 # 9cff5da6908e42d5a7da093ba0bfcfe7
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:35
-#: e5513bf728ad46fd84cef7fc00d922b7
+#: ../../using/selecting.md:35 4c09acf8d98b478f81ae3b1858835565
 msgid "jupyter/minimal-notebook"
 msgstr ""
 
 # 8596676795f142d2912833d1320aa6a0
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:41
-#: fb3cd9d290d04565b050ea9b7f0db388
+#: ../../using/selecting.md:41 79718ff1e3df4ebaacb29dcc8067f90d
 msgid ""
 "jupyter/minimal-notebook adds command line tools useful when working in "
 "Jupyter applications."
 msgstr ""
 
 # b1167e8a2430451fbb41ea876714d541
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:43
-#: d6ed175322be4602bc23d519f30ec34d
+#: ../../using/selecting.md:43 2018837abee54fda853b97534661cdee
 msgid "Everything in jupyter/base-notebook"
 msgstr ""
 
 # c46294c22bd44a86ac08b977f060a21d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:44
-#: 3ca733a4acf74ea9ae39f19404814861
+#: ../../using/selecting.md:44 0bb0d6dcd1a041e4998ed53bf8db6448
 msgid "Pandoc and TeX Live for notebook document conversion"
 msgstr ""
 
 # ad6fec23e1bf4a42b0cafd2f15e74574
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:45
-#: 1fda2824d6f846ef8505f0073c737d5c
+#: ../../using/selecting.md:45 720522bfbd4e4918b3ab19e55b310898
 msgid "git, emacs, jed, nano, tzdata, and unzip"
 msgstr ""
 
 # 1c7363e9e14148f7a302b0075598590a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:47
-#: 0815bb5052294582a17a920815d8268b
+#: ../../using/selecting.md:47 b837aae5a8c84de889d306fb0e7a4dbf
 msgid "jupyter/r-notebook"
 msgstr ""
 
 # a6bc72d21b0c4102b16a38df077a48dd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:53
-#: c3df671b0b29425d9a96c87d826c9b71
+#: ../../using/selecting.md:53 a8bbb6d8595c4de7a1e07edc6fefae93
 msgid "jupyter/r-notebook includes popular packages from the R ecosystem."
 msgstr ""
 
 # bfe937844bef465081bdd0cc74064b77
 # eb5808624ae249d5aa6b1b06350035dc
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:55
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:69
-#: ad90de6c44144eb09efa216aa81e3863 e1ed788e333f4fdfacb37ccc94df65e6
+#: ../../using/selecting.md:55 ../../using/selecting.md:69
+#: 49f409ff895747b1a200a30c7eb09ffd 849f265153ae4e67bf9b98639236a40e
 msgid "Everything in jupyter/minimal-notebook and its ancestor images"
 msgstr ""
 
 # db6a08c9a21f4e1eae1f4a7c7656a60d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:56
-#: 97e68d5c4aa94def9ee880077d663baf
+#: ../../using/selecting.md:56 5f272f5c40c943d387b3d3f17161ba83
 msgid "The R interpreter and base environment"
 msgstr ""
 
 # c1cf2ef729d04aacbbf220cbe78edb07
 # 486896c4482443dcb0f7408c888f29e9
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:57
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:119
-#: 1ffd7c193cd7409982d02f0e3ad36bbd b1d0e353e194431fb240de8b06d16f13
+#: ../../using/selecting.md:57 ../../using/selecting.md:119
+#: 48287f74f06144a093a06a3f3a0de4d9 8b34613d12e2464abf26fa30eebd3cfd
 msgid "IRKernel to support R code in Jupyter notebooks"
 msgstr ""
 
 # ce8993612e2e44aea34dedc24740025d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:58
-#: 2482a85aef8c44a8a3aed21abccdc713
+#: ../../using/selecting.md:58 729d3f82d62644d3bf7e800c89dd1333
 msgid ""
 "tidyverse packages, including ggplot2, dplyr, tidyr, readr, purrr, "
 "tibble, stringr, lubridate, and broom from conda-forge"
 msgstr ""
 
 # dcf536112dad48369dbd06c240f5b337
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:59
-#: 7471a093163642288ac42de931e90862
+#: ../../using/selecting.md:59 c6ad7a52dbeb4314bf2c31bed330a262
 msgid ""
 "plyr, devtools, shiny, rmarkdown, forecast, rsqlite, reshape2, "
 "nycflights13, caret, rcurl, and randomforest packages from conda-forge"
 msgstr ""
 
 # 3e8e6435e2b64a9fb9be8fe252ed2f3a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:61
-#: d609d3ca531a49dd9234e0d7bd3c0e5a
+#: ../../using/selecting.md:61 16e4a23496394c3c96fc7584038ba88c
 msgid "jupyter/scipy-notebook"
 msgstr ""
 
 # 7d06f0f385c844389eabb820a73b9cf1
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:67
-#: 6b531eef4d804369b9d4e6eb4ff8eab5
+#: ../../using/selecting.md:67 72ca56d2bf7c4db7978c57686db3b7c5
 msgid ""
 "jupyter/scipy-notebook includes popular packages from the scientific "
 "Python ecosystem."
 msgstr ""
 
 # 9b123df88f864a9f8bd0472877a47a23
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:70
-#: e0afdd477d5d4f99967838ca1fb35158
+#: ../../using/selecting.md:70 9942fdfd55d94d50a3ea232f53e60b7f
 msgid ""
 "pandas, numexpr, matplotlib, scipy, seaborn, scikit-learn, scikit-image, "
 "sympy, cython, patsy, statsmodel, cloudpickle, dill, numba, bokeh, "
@@ -1370,26 +1195,22 @@ msgid ""
 msgstr ""
 
 # 577f93f6511a4b17afcef782def7f802
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:71
-#: 41240f64dcc44869b978199574b8b5e9
+#: ../../using/selecting.md:71 3ee10a05c31d4cb88badf0b8b21037e9
 msgid "ipywidgets for interactive visualizations in Python notebooks"
 msgstr ""
 
 # 538f0c0d60e84ac7b96c747c780dfd9e
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:72
-#: 96777cea62754114955ad4c0f1784c45
+#: ../../using/selecting.md:72 97902cddf52842d8865b974d07e18ad8
 msgid "Facets for visualizing machine learning datasets"
 msgstr ""
 
 # 91f89dafe55d46219648e753b94f3054
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:74
-#: 6550353550fe43e4b42339e4b92b7ba5
+#: ../../using/selecting.md:74 5c9f0b503a964f1fa706df1afbffab05
 msgid "jupyter/tensorflow-notebook"
 msgstr ""
 
 # 183ce48c172144bc91143bc63797512d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:80
-#: b7f78a10fafc472fa3ee40ef106105e8
+#: ../../using/selecting.md:80 304c744d6b284f7ab8173ad5ceca8d45
 msgid ""
 "jupyter/tensorflow-notebook includes popular Python deep learning "
 "libraries."
@@ -1397,119 +1218,101 @@ msgstr ""
 
 # 5406ba3cf8a644a79a678c7968ef36cc
 # 7dad34e3954840d69b1c418bfdc475c5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:82
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:106
-#: 199fc9c741384b118a9d5e204865b761 c12da8626eec40bda89e1de07d9b4d5c
+#: ../../using/selecting.md:82 ../../using/selecting.md:106
+#: 01f6cfe1dcbf434caea7171b227d6718 cf10204e2f744e29a8b6a9b7c3db4ad7
 msgid "Everything in jupyter/scipy-notebook and its ancestor images"
 msgstr ""
 
 # 7698f92c854b4324a3371453e3ee1878
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:83
-#: 98c68df7b2cd4f9a86e791aff70c63b2
+#: ../../using/selecting.md:83 16cb2c227d934a29afaec44ac25907c7
 msgid "tensorflow and keras machine learning libraries"
 msgstr ""
 
 # e1403de76d344f4d93bd47a91dd00428
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:85
-#: 3e67e504d29d45ad864859f759b590aa
+#: ../../using/selecting.md:85 73d022224ec54db29ee5eddf4e893aa3
 msgid "jupyter/datascience-notebook"
 msgstr ""
 
 # 2bd4e59533d04b86846cea01ccf36ed4
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:91
-#: 571e8f58eeb64882a74f38aeba2fbdf2
+#: ../../using/selecting.md:91 52d93678a35540b0bd0c545a5f59ac9a
 msgid ""
 "jupyter/datascience-notebook includes libraries for data analysis from "
 "the Julia, Python, and R communities."
 msgstr ""
 
 # ba7ecdc5c2444acd86073ac84157e7cf
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:93
-#: e186f16f96584d46985529b9cb709752
+#: ../../using/selecting.md:93 3ac8cc94ad0040f29c1d20c17b280d14
 msgid ""
 "Everything in the jupyter/scipy-notebook and jupyter/r-notebook images, "
 "and their ancestor images"
 msgstr ""
 
 # bfa2ae2246be45fdb389767d6f74baa6
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:94
-#: 7ed6488f489b4e2dbf3dc030d26604a2
+#: ../../using/selecting.md:94 a9e26eddc80745a297f3fa3906fda97d
 msgid "The Julia compiler and base environment"
 msgstr ""
 
 # 31750842f94747f4a0ebd0ca4ac8f2af
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:95
-#: cd4e928f9c7f4cbbb206e5dcd1b1c18e
+#: ../../using/selecting.md:95 142d8ade218346b399ceb3505aa9d7de
 msgid "IJulia to support Julia code in Jupyter notebooks"
 msgstr ""
 
 # d8985019373a4360a66ce8c6e32056fa
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:96
-#: cb01a93b988246b8b20953cce2a5823e
+#: ../../using/selecting.md:96 15c9bc4082c5424099739248fae0ee19
 msgid "HDF5, Gadfly, and RDatasets packages"
 msgstr ""
 
 # 051a6e882e974e599bc0221add5e0c50
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:98
-#: 93e0527cce7b47dda4f4d3898a286dfb
+#: ../../using/selecting.md:98 fd78c8da8958499982db13b7bcf17f5d
 msgid "jupyter/pyspark-notebook"
 msgstr ""
 
 # a1a474f29c9047d6bb99e9a41e789351
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:104
-#: 57ac948e51af4528913d46a410f77a3f
+#: ../../using/selecting.md:104 cccef2ef1a5246998e4f04e455bdf010
 msgid ""
 "jupyter/pyspark-notebook includes Python support for Apache Spark, "
 "optionally on Mesos."
 msgstr ""
 
 # 6d585f39fb334a5c95c7f9864baea8a9
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:107
-#: 8dad12688ab34784b8398d7a5118a853
+#: ../../using/selecting.md:107 791fa3ac7793485caf282c6c14839bb7
 msgid "Apache Spark with Hadoop binaries"
 msgstr ""
 
 # 33bbd9311c5640008e775210d3f75097
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:108
-#: 93357efa2d5f4df9ba5382cd4d1d1409
+#: ../../using/selecting.md:108 d52aada42f244082a5e0ef42867de15e
 msgid "Mesos client libraries"
 msgstr ""
 
 # dcdbe62ca177455881f879d5809648d9
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:110
-#: b84063232ea245b38298493942254e8e
+#: ../../using/selecting.md:110 5ed5b492e30e41959227d31593dc5b52
 msgid "jupyter/all-spark-notebook"
 msgstr ""
 
 # 954fbce53b9d4e3c90c88a65e7d138bd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:116
-#: ed15404ce98c41e788318691d71f3cac
+#: ../../using/selecting.md:116 fee768c4c66945b3ba31914bc0c0b4c0
 msgid ""
 "jupyter/all-spark-notebook includes Python, R, and Scala support for "
 "Apache Spark, optionally on Mesos."
 msgstr ""
 
 # 671183aa9bcb4f4ba34933a4cc0e28c0
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:118
-#: fa067713bc3c409a9830d30d898491bf
+#: ../../using/selecting.md:118 443a06ee94be4854a1fc26a58fbae8d6
 msgid "Everything in jupyter/pyspark-notebook and its ancestor images"
 msgstr ""
 
 # 0114a45f63054b1e9a56aff6c04bd670
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:120
-#: 948fcb4d0e284519a201c1ccf2c10ff4
+#: ../../using/selecting.md:120 64e462ead50342debd9c15c04f42b5b8
 msgid "Apache Toree and spylon-kernel to support Scala code in Jupyter notebooks"
 msgstr ""
 
 # aa21cb83205c4045960bcfd3f3fc1542
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:121
-#: fdb025e755b144d1bb29295a0cc4c40e
+#: ../../using/selecting.md:121 8d4ad513707844498a5ee2725f683592
 msgid "ggplot2, sparklyr, and rcurl packages"
 msgstr ""
 
 # 07d86ef0562f455abb691bffeaca467f
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:125
-#: b35876db56ad41b2aa7c0bc91ee53e6a
+#: ../../using/selecting.md:125 922ebca33fc74c5fa758322c38f51cac
 msgid ""
 "The following diagram depicts the build dependency tree of the core "
 "images. (i.e., the FROM statements in their Dockerfiles). Any given image"
@@ -1517,14 +1320,12 @@ msgid ""
 msgstr ""
 
 # fbf5d0a65b8748a5ba1b29a0e43ce9f4
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:129
-#: 614b6a15cb5f447badec83e948856cb6
+#: ../../using/selecting.md:129 db363910b39140cf9b2157308f550acd
 msgid "Builds"
 msgstr ""
 
 # 75fc61a8cc874e9196ee00f7af15bb0b
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:131
-#: ea9d2fb3d8e14ab79c6b170db8ba5430
+#: ../../using/selecting.md:131 a81909bc01c04af79ec202ebd131c447
 msgid ""
 "Pull requests to the jupyter/docker-stacks repository trigger builds of "
 "all images on Travis CI. These images are for testing purposes only and "
@@ -1534,14 +1335,12 @@ msgid ""
 msgstr ""
 
 # d226a5a7f673440cbe70097864dda848
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:133
-#: ab9ab6080313446e8fc21bc8b3934237
+#: ../../using/selecting.md:133 aa669e1a9b314ae3821b51ea7c3c3559
 msgid "Versioning"
 msgstr ""
 
 # 34b4f765c48944bd939679eeb9810497
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:135
-#: a198c4eb6fab4ae5997cbb2eb0777951
+#: ../../using/selecting.md:135 1f660470f49d4b68adfcf146123011b9
 msgid ""
 "The latest tag in each Docker Hub repository tracks the master branch "
 "HEAD reference on GitHub. latest is a moving target, by definition, and "
@@ -1549,8 +1348,7 @@ msgid ""
 msgstr ""
 
 # 7ea772c3bc1d4463b29db3b57e48be8d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:137
-#: 17024daf3a2d4811ba19fa1107a05a49
+#: ../../using/selecting.md:137 8af1005404ec40a1a129b8f62b02b336
 msgid ""
 "Every image on Docker Hub also receives a 12-character tag which "
 "corresponds with the git commit SHA that triggered the image build. You "
@@ -1561,8 +1359,7 @@ msgid ""
 msgstr ""
 
 # 5fd22c23fa3b430fb6c2259e962b02fd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:139
-#: 3ebf0547efad4ba085ec46949e1ff5db
+#: ../../using/selecting.md:139 82d782ecc09a426aa5257a9e693272ae
 msgid ""
 "You must refer to git-SHA image tags when stability and reproducibility "
 "are important in your work. (e.g. FROM jupyter/scipy-"
@@ -1573,8 +1370,7 @@ msgid ""
 msgstr ""
 
 # a448d28293544f72b0e5de024b0a1ef5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:143
-#: 1a8ed9f823f74524918dfc48ab5eef6c
+#: ../../using/selecting.md:143 723419758a454e978eb0bd6dc2f30dec
 msgid ""
 "The core stacks are just a tiny sample of what's possible when combining "
 "Jupyter with other technologies. We encourage members of the Jupyter "
@@ -1583,8 +1379,7 @@ msgid ""
 msgstr ""
 
 # cf34bef9989940dda5de9dc026732a4c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:145
-#: 09dbb093b06841bea975f5ab62cf9c12
+#: ../../using/selecting.md:145 f431d14703034f538c96170eea716966
 msgid ""
 "csharp-notebook is a community Jupyter Docker Stack image. Try C# in "
 "Jupyter Notebooks. The image includes more than 200 Jupyter Notebooks "
@@ -1593,8 +1388,7 @@ msgid ""
 msgstr ""
 
 # e5c4a7b08c2f4b34b361a923f9fb3dbd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:147
-#: 00cbc9fd5dad47b984739c1bfda2c00b
+#: ../../using/selecting.md:147 877b9a419e7b4ea9b83e3797b47ca3e9
 msgid ""
 "education-notebook is a community Jupyter Docker Stack image. The image "
 "includes nbgrader and RISE on top of the datascience-notebook image. "
@@ -1602,28 +1396,24 @@ msgid ""
 msgstr ""
 
 # 8a550c70c3454d72b976cabc1cbdf465
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:149
-#: 32a96f85918d4bb8b06d3ad1326cb922
+#: ../../using/selecting.md:149 71c277d47acf425e872a7780d1c8ae55
 msgid "crosscompass/ihaskell-notebook"
 msgstr ""
 
 # 997dafa5bad846f49a7eee78001ed3fc
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:155
-#: b6770aa81a374e97b32e6a16c69203ec
+#: ../../using/selecting.md:155 153bef5e5aaa46eabd3782b94679a4b0
 msgid ""
 "crosscompass/ihaskell-notebook is based on IHaskell. Includes popular "
 "packages and example notebooks."
 msgstr ""
 
 # 9af612ef9b1847e9a537228c2d3bc77d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:157
-#: 70c3de021e074b9b93d4136d342783fc
+#: ../../using/selecting.md:157 84b78e5ea35147fab2f15c7fa367cfc3
 msgid "Try it on binder:"
 msgstr ""
 
 # d514a88096544a2ca92ceaf14b1323eb
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:159
-#: ac44d8f6239f470483cdafeba44e07e5
+#: ../../using/selecting.md:159 147937a3e03944abb3a1bfa18c0cf03c
 msgid ""
 "java-notebook is a community Jupyter Docker Stack image. The image "
 "includes IJava kernel on top of the minimal-notebook image. Click here to"
@@ -1631,49 +1421,52 @@ msgid ""
 msgstr ""
 
 # e5b3d27fa68b47d4a2c02c7a039d7daf
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:161
-#: c8fcdf9b35704660b84204fcfba9eb3a
+#: ../../using/selecting.md:161 672bfc2e3c3f403191c6f305172b6e50
 msgid ""
 "sage-notebook is a community Jupyter Docker Stack image with the sagemath"
 " kernel on top of the minimal-notebook image. Click here to launch it on "
 "."
 msgstr ""
 
+#: ../../using/selecting.md:163 c983c62eceaf41829e6e5d2612ffe17f
+msgid ""
+"GPU-Jupyter: Leverage Jupyter Notebooks with the power of your NVIDIA GPU"
+" and perform GPU calculations using Tensorflow and Pytorch in "
+"collaborative notebooks. This is done by generating a Dockerfile, that "
+"consists of the nvidia/cuda base image, the well-maintained docker-stacks"
+" that is integrated as submodule and GPU-able libraries like Tensorflow, "
+"Keras and PyTorch on top of it."
+msgstr ""
+
 # f9f4ef31795249d9bf2a752dfbb27a8f
-#: /home/travis/build/jupyter/docker-stacks/docs/using/selecting.md:163
-#: 65062f7a30f74557bb9bf6660f4a9222
+#: ../../using/selecting.md:168 cfda998b29b8494cb363b6458bb56cdc
 msgid ""
 "See the contributing guide for information about how to create your own "
 "Jupyter Docker Stack."
 msgstr ""
 
 # 7b67588ff359486cb64810359db6704c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:1
-#: 0b81ad0d4338475ab1d055f0a0df9493
+#: ../../using/specifics.md:1 9019e8cef5444a77894943d96c5046cb
 msgid "Image Specifics"
 msgstr ""
 
 # 06b0d21a881140a29e17e5b9fa5598ab
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:3
-#: 4a4a5be67dd74e0a98761b802738cc7e
+#: ../../using/specifics.md:3 b1abc38b4c414365b3033f1668b502d5
 msgid "This page provides details about features specific to one or more images."
 msgstr ""
 
 # 4e5d822c2e1a410099f1ab5831e29927
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:5
-#: 48c13befeb4a4ecc9b7a64131d4f7063
+#: ../../using/specifics.md:5 d02bf9dcac8f4162a65adbca66e8b494
 msgid "Apache Spark"
 msgstr ""
 
 # 433d8d99798649029dafd444253567b4
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:7
-#: 916a511f1ba54e0aa4e06a9fd58a72aa
+#: ../../using/specifics.md:7 e480831d9fb94fada524e9f38763894e
 msgid "Specific Docker Image Options"
 msgstr ""
 
 # 70083fc71521409895897387117748bc
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:8
-#: 2cd0eb896fba4952968304f1f0f937b1
+#: ../../using/specifics.md:8 a5560eee3cec4e06a1df9ec3f49fc288
 msgid ""
 "-p 4040:4040 - The jupyter/pyspark-notebook and jupyter/all-spark-"
 "notebook images open SparkUI (Spark Monitoring and Instrumentation UI) at"
@@ -1685,14 +1478,12 @@ msgid ""
 msgstr ""
 
 # 2449b18de82e4d129cbd49e52ce9e522
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:10
-#: cc51b4a2e60e46898f82e7d75653d2a4
+#: ../../using/specifics.md:10 2eb26f88a6334203b9fa719e713d6892
 msgid "Usage Examples"
 msgstr ""
 
 # ec077f84f7394baba4071d0d8a9c9dbf
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:12
-#: ad22e14101ff4cf7877ec530bc7d575c
+#: ../../using/specifics.md:12 ae7971677dcd4cb8add6ec25bd6d0854
 msgid ""
 "The jupyter/pyspark-notebook and jupyter/all-spark-notebook images "
 "support the use of Apache Spark in Python, R, and Scala notebooks. The "
@@ -1701,14 +1492,12 @@ msgid ""
 msgstr ""
 
 # ca35b3b020914e2eb2e877199a90d4a4
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:14
-#: 11d4bded64884f20a13c2c6c0f236699
+#: ../../using/specifics.md:14 f49797070a77447fb8c0fec6546630ee
 msgid "Using Spark Local Mode"
 msgstr ""
 
 # 15a0171869f3437481b9dfb2aec3db00
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:16
-#: afa91b0b27684a1298a4b786dcd5a7fc
+#: ../../using/specifics.md:16 2b9a8e2419d94d659174b10dbd6702a6
 msgid ""
 "Spark local mode is useful for experimentation on small data when you do "
 "not have a Spark cluster available."
@@ -1716,31 +1505,27 @@ msgstr ""
 
 # 2c5367b84e444a1aa504910b22ba1454
 # 09d8b02687704d368a670cb243e299fb
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:18
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:74
-#: 1bc73249e9d84d6c81c8c022b31fb1fb 2f8085e8cd714e9bb930f75315869460
+#: ../../using/specifics.md:18 ../../using/specifics.md:74
+#: 5046b80f4ea640b79fa38f496e2bb880 601316011a864dc890c1fe4231e598c8
 msgid "In a Python Notebook"
 msgstr ""
 
 # 2b5c49ea60184570a8b50622140c22e1
 # 192add33e94844f080ae03254899e2ee
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:27
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:101
-#: 32d596e4a12c4434bf8daf6a46cc4000 d3e0c49f4bf0443096a439c9e7577676
+#: ../../using/specifics.md:27 ../../using/specifics.md:101
+#: 08e5f3aee7044a90abfec6a149905a8e ec6ca4bb14d34125a971f4e822a6214c
 msgid "In a R Notebook"
 msgstr ""
 
 # 80cedeb3b4514de792dba8e03b1c8774
 # 5f3159414ddc427699709ddef740d6fd
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:39
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:122
-#: 0d18273460204abab866a8dd45dd0d84 ed2692d0c60b433e8c52fc9762c0aff1
+#: ../../using/specifics.md:39 ../../using/specifics.md:122
+#: 669d46eb0dcb4ad1a2b2a320cfb71ca6 ace2b56b455340ffb8f0fd39a96571d4
 msgid "In a Spylon Kernel Scala Notebook"
 msgstr ""
 
 # 07c9256c669b488aaa2df48676d5a188
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:41
-#: baf800cafe7c4dbba98d6540ef9838a8
+#: ../../using/specifics.md:41 6426a015d46b4456967e4577c408a379
 #, python-format
 msgid ""
 "Spylon kernel instantiates a SparkContext for you in variable sc after "
@@ -1749,41 +1534,35 @@ msgstr ""
 
 # aeec453983524d3ab59f7241cf8bac7b
 # 472a48e72aaf46ca86a89e1598595045
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:55
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:137
-#: d0a43993c4fb4f4296f45d08ae299c25 eb3ecf1dc6f24a02af63bf6df6e400e3
+#: ../../using/specifics.md:55 ../../using/specifics.md:137
+#: 78b5838bc13a4e82ad44d6cd9e304c4d bef1c075c7534ce3bbdd8d37af9f89f7
 msgid "In an Apache Toree Scala Notebook"
 msgstr ""
 
 # 762d164260cd4938b5f9556b29b0e171
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:57
-#: 554702e29f2c4bf8ae2be1b91f4d0474
+#: ../../using/specifics.md:57 062446578d0547b2a41c5980285b0e4e
 msgid ""
 "Apache Toree instantiates a local SparkContext for you in variable sc "
 "when the kernel starts."
 msgstr ""
 
 # 8da1ef6876324b61885c5dec2c6a9cbf
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:64
-#: d286d9ab8173459787b993bdfa564e9d
+#: ../../using/specifics.md:64 b0a0ffaa9be7432a8d623483f8b436f7
 msgid "Connecting to a Spark Cluster on Mesos"
 msgstr ""
 
 # 4926e921fbd24baba9888b3f08cf4f51
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:66
-#: e6332fcd2a2e461ea88263da788bb6e2
+#: ../../using/specifics.md:66 303c1cd295614e49aca3e15cbc47855f
 msgid "This configuration allows your compute cluster to scale with your data."
 msgstr ""
 
 # e8c29961728146a28c6581966a2d2341
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:68
-#: 655ec0274b0c468c8c46b8b5ab60fcd4
+#: ../../using/specifics.md:68 574119187c9147debe7f23e020f74551
 msgid "Deploy Spark on Mesos."
 msgstr ""
 
 # 1838d7f4481246538ca4ffe89e02ff4d
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:69
-#: acff8e20eb684b68ad21cbce3f01f657
+#: ../../using/specifics.md:69 e5c8bca2081a4cf483cec7e5e6a18bcb
 msgid ""
 "Configure each slave with the --no-switch_user flag or create the "
 "$NB_USER account on every slave node."
@@ -1791,9 +1570,8 @@ msgstr ""
 
 # d4ee49cc6cb547389ed3228e74a4a67c
 # 4b8c4c1e7ea441f1af4b4e0fbed73888
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:70
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:166
-#: 7857f78cd4bb4806ba69a94473107b9e d93165ff99f24e10adbf8827c7ccc9f1
+#: ../../using/specifics.md:70 ../../using/specifics.md:166
+#: 6f5522ead974447383693ff14614f967 9c3df1daf9d1426bbac6f2c9fe68dc57
 msgid ""
 "Run the Docker container with --net=host in a location that is network "
 "addressable by all of your Spark workers. (This is a Spark networking "
@@ -1802,9 +1580,8 @@ msgstr ""
 
 # 9a026387155e46fa8e4e1ea3f00d3a63
 # 68e479d8f50e4685a0fb5de56a978347
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:71
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:167
-#: 32d045fc3fe443449d3f7fb810726ead 6000fc0c75394e5e8323446c2446ca5b
+#: ../../using/specifics.md:71 ../../using/specifics.md:167
+#: 4bd75bcdba5049c1b571e906ccbf27fa e1771d7b7a944b16a0633120741abe12
 msgid ""
 "NOTE: When using --net=host, you must also use the flags --pid=host -e "
 "TINI_SUBREAPER=true. See https://github.com/jupyter/docker-"
@@ -1812,14 +1589,12 @@ msgid ""
 msgstr ""
 
 # 16c4327879294075a64b4329f972321c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:72
-#: 4d0c36f7ba33463b81c3ba545272c73e
+#: ../../using/specifics.md:72 9f6809036e8a4ffda26809bab3b8017e
 msgid "Follow the language specific instructions below."
 msgstr ""
 
 # 929575857ae647aebbcb721af39bdd7e
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:139
-#: bceb41f2ee6e4676821036f813974e97
+#: ../../using/specifics.md:139 475f41266893486ca55a9dfaa218aad5
 msgid ""
 "The Apache Toree kernel automatically creates a SparkContext when it "
 "starts based on configuration information from its command line arguments"
@@ -1829,8 +1604,7 @@ msgid ""
 msgstr ""
 
 # 3e3d5ec9fa554e75989856139938f4f8
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:141
-#: 7b16bcde3580475d99b429d8f54614bb
+#: ../../using/specifics.md:141 b2a9f9fe316a4524900b2e2e44306c93
 msgid ""
 "For instance, to pass information about a Mesos master, Spark binary "
 "location in HDFS, and an executor options, you could start the container "
@@ -1838,8 +1612,7 @@ msgid ""
 msgstr ""
 
 # fa8494a4dde544109b9f6f49ac28178f
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:149
-#: 463b6aeb4ae84ac09928c74d2c05f539
+#: ../../using/specifics.md:149 e4df64670225453d8f9be63def3bc9c1
 msgid ""
 "Note that this is the same information expressed in a notebook in the "
 "Python case above. Once the kernel spec has your cluster information, you"
@@ -1847,36 +1620,31 @@ msgid ""
 msgstr ""
 
 # da5d5d861e914df98df9dba50fb3d66a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:160
-#: 4e66fd713a034438a06bf5d3729beaf3
+#: ../../using/specifics.md:160 e1fb4d61c33d41868a5fffd38d28cfd5
 msgid "Connecting to a Spark Cluster in Standalone Mode"
 msgstr ""
 
 # 79db0ba4244a4701aa8dfe0053d5579c
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:162
-#: 8eedcf72614649d9b098f07f2542dc98
+#: ../../using/specifics.md:162 eab8b1b8c3f44b1bac73959a0a041eff
 msgid ""
 "Connection to Spark Cluster on Standalone Mode requires the following set"
 " of steps:"
 msgstr ""
 
 # 2c728588b6df4753a0c08f969364a79a
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:164
-#: 283ebe960c684204937445426208016a
+#: ../../using/specifics.md:164 0fe2a57145ed4bfca09e8a15495052a7
 msgid ""
 "Verify that the docker image (check the Dockerfile) and the Spark Cluster"
 " which is being deployed, run the same version of Spark."
 msgstr ""
 
 # d5a341bb44524a8cb33f086803daaf63
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:165
-#: 4c720f88b8ae4989868c7d3f056e4e77
+#: ../../using/specifics.md:165 21844960921a44ba87fbbec906fad6f3
 msgid "Deploy Spark in Standalone Mode."
 msgstr ""
 
 # 3c781f06114240e28dcdb0c40a5d5cf5
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:168
-#: 39e8cca4f28b46278d55bbd0b6f1cb56
+#: ../../using/specifics.md:168 2b0b89ecf9f14a3a8ff3533cc4ecfd0d
 msgid ""
 "The language specific instructions are almost same as mentioned above for"
 " Mesos, only the master url would now be something like "
@@ -1884,28 +1652,24 @@ msgid ""
 msgstr ""
 
 # 85baa5bd4ed5426b96dad49dacfab9cb
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:170
-#: 479179d1bade4a3ba47d9a8f9a70a680
+#: ../../using/specifics.md:170 9da309ba7dbf4ad29312f2a688427254
 msgid "Tensorflow"
 msgstr ""
 
 # 4249b4b266fc4aeeb85dc8386ab60592
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:172
-#: 4557f6ad26d64c9285ea1c9ac287105a
+#: ../../using/specifics.md:172 f1b97eb62ab24a3d9e0419f7367dfcc5
 msgid ""
 "The jupyter/tensorflow-notebook image supports the use of Tensorflow in "
 "single machine or distributed mode."
 msgstr ""
 
 # 68fba23f7cd94702a9dead3c51719206
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:174
-#: 9e5c73d461b54280b85c49a8f38681e4
+#: ../../using/specifics.md:174 7efbc6f8be7c488ab8a4e69a3bd359d6
 msgid "Single Machine Mode"
 msgstr ""
 
 # d4b74babe01d4a3a86c46844a737151b
-#: /home/travis/build/jupyter/docker-stacks/docs/using/specifics.md:188
-#: 88bc45da6b1f44b19af820e97d3e7f2a
+#: ../../using/specifics.md:188 ec1f6cb0c663451992757bfe155a356d
 msgid "Distributed Mode"
 msgstr ""
 
