@@ -13,7 +13,7 @@ This section provides details about the first.
 
 ## Core Stacks
 
-The Jupyter team maintains a set of Docker image definitions in the [https://github.com/jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub 
+The Jupyter team maintains a set of Docker image definitions in the [https://github.com/jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub
 repository. The following sections describe these images including their contents, relationships, and versioning strategy.
 
 ### jupyter/base-notebook
@@ -43,7 +43,7 @@ repository. The following sections describe these images including their content
 
 * Everything in `jupyter/base-notebook`
 * [Pandoc](http://pandoc.org) and [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [jed](https://www.jedsoft.org/jed/), [nano](https://www.nano-editor.org/), tzdata, and 
+* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [jed](https://www.jedsoft.org/jed/), [nano](https://www.nano-editor.org/), tzdata, and
 unzip
 
 ### jupyter/r-notebook
@@ -57,15 +57,15 @@ unzip
 * Everything in `jupyter/minimal-notebook` and its ancestor images
 * The [R](https://www.r-project.org/) interpreter and base environment
 * [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
-* [tidyverse](https://www.tidyverse.org/) packages, including [ggplot2](http://ggplot2.org/), [dplyr](http://dplyr.tidyverse.org/), 
-[tidyr](http://tidyr.tidyverse.org/), [readr](http://readr.tidyverse.org/), [purrr](http://purrr.tidyverse.org/), [tibble](http://tibble.tidyverse.org/), 
-[stringr](http://stringr.tidyverse.org/), [lubridate](http://lubridate.tidyverse.org/), and 
+* [tidyverse](https://www.tidyverse.org/) packages, including [ggplot2](http://ggplot2.org/), [dplyr](http://dplyr.tidyverse.org/),
+[tidyr](http://tidyr.tidyverse.org/), [readr](http://readr.tidyverse.org/), [purrr](http://purrr.tidyverse.org/), [tibble](http://tibble.tidyverse.org/),
+[stringr](http://stringr.tidyverse.org/), [lubridate](http://lubridate.tidyverse.org/), and
 [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) from [conda-forge](https://conda-forge.github.io/feedstocks)
-* [plyr](https://cran.r-project.org/web/packages/plyr/index.html), [devtools](https://cran.r-project.org/web/packages/devtools/index.html), 
-[shiny](https://shiny.rstudio.com/), [rmarkdown](http://rmarkdown.rstudio.com/), [forecast](https://cran.r-project.org/web/packages/forecast/forecast.pdf), 
-[rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html), [reshape2](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf), 
-[nycflights13](https://cran.r-project.org/web/packages/nycflights13/index.html), [caret](http://topepo.github.io/caret/index.html), 
-[rcurl](https://cran.r-project.org/web/packages/RCurl/index.html), and [randomforest](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf) 
+* [plyr](https://cran.r-project.org/web/packages/plyr/index.html), [devtools](https://cran.r-project.org/web/packages/devtools/index.html),
+[shiny](https://shiny.rstudio.com/), [rmarkdown](http://rmarkdown.rstudio.com/), [forecast](https://cran.r-project.org/web/packages/forecast/forecast.pdf),
+[rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html), [reshape2](https://cran.r-project.org/web/packages/reshape2/reshape2.pdf),
+[nycflights13](https://cran.r-project.org/web/packages/nycflights13/index.html), [caret](http://topepo.github.io/caret/index.html),
+[rcurl](https://cran.r-project.org/web/packages/RCurl/index.html), and [randomforest](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf)
 packages from [conda-forge](https://conda-forge.github.io/feedstocks)
 
 ### jupyter/scipy-notebook
@@ -77,14 +77,14 @@ packages from [conda-forge](https://conda-forge.github.io/feedstocks)
 `jupyter/scipy-notebook` includes popular packages from the scientific Python ecosystem.
 
 * Everything in `jupyter/minimal-notebook` and its ancestor images
-* [pandas](https://pandas.pydata.org/), [numexpr](https://github.com/pydata/numexpr), [matplotlib](https://matplotlib.org/), [scipy](https://www.scipy.org/), 
-[seaborn](https://seaborn.pydata.org/), [scikit-learn](http://scikit-learn.org/stable/), [scikit-image](http://scikit-image.org/), 
-[sympy](http://www.sympy.org/en/index.html), [cython](http://cython.org/), [patsy](https://patsy.readthedocs.io/en/latest/), 
-[statsmodel](http://www.statsmodels.org/stable/index.html), [cloudpickle](https://github.com/cloudpipe/cloudpickle), [dill](https://pypi.python.org/pypi/dill), 
-[numba](https://numba.pydata.org/), [bokeh](https://bokeh.pydata.org/en/latest/), [sqlalchemy](https://www.sqlalchemy.org/), [hdf5](http://www.h5py.org/), 
-[vincent](http://vincent.readthedocs.io/en/latest/), [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/), 
+* [pandas](https://pandas.pydata.org/), [numexpr](https://github.com/pydata/numexpr), [matplotlib](https://matplotlib.org/), [scipy](https://www.scipy.org/),
+[seaborn](https://seaborn.pydata.org/), [scikit-learn](http://scikit-learn.org/stable/), [scikit-image](http://scikit-image.org/),
+[sympy](http://www.sympy.org/en/index.html), [cython](http://cython.org/), [patsy](https://patsy.readthedocs.io/en/latest/),
+[statsmodel](http://www.statsmodels.org/stable/index.html), [cloudpickle](https://github.com/cloudpipe/cloudpickle), [dill](https://pypi.python.org/pypi/dill),
+[numba](https://numba.pydata.org/), [bokeh](https://bokeh.pydata.org/en/latest/), [sqlalchemy](https://www.sqlalchemy.org/), [hdf5](http://www.h5py.org/),
+[vincent](http://vincent.readthedocs.io/en/latest/), [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/),
 [protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial), and [xlrd](http://www.python-excel.org/) packages
-* [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/) for interactive visualizations in Python notebooks
+* [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/) and [ipympl](https://github.com/matplotlib/jupyter-matplotlib) for interactive visualizations and plots in Python notebooks
 * [Facets](https://github.com/PAIR-code/facets) for visualizing machine learning datasets
 
 ### jupyter/tensorflow-notebook
@@ -138,41 +138,41 @@ packages from [conda-forge](https://conda-forge.github.io/feedstocks)
 
 ### Image Relationships
 
-The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles). Any given image inherits the 
+The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles). Any given image inherits the
 complete content of all ancestor images pointing to it.
 
-[![Image inheritance 
+[![Image inheritance
 diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFzTEPgjAQhuHdX9Gws5sQjGzujsaYKxzmQrlr2msMGv-71K0srO_3XGud9NNA8DSfgzESCFlBSdi0xkvQAKTNugw4QnL6GIU10hvX-Zh7Z24OLLq2SjaxpvP10lX35vCf6pOxELFmUbQiUz4oQhYzMc3gCrRt2cWe_FKosmSjyFHC6OS1AwdQWCtyj7sfh523_BI9hKlQ25YdOFdv5fcH0kiEMA)
 
 ### Builds
 
-Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on Travis CI. These images are for testing purposes only and are not saved for 
+Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on Travis CI. These images are for testing purposes only and are not saved for
 use. When pull requests merge to master, all images rebuild on Docker Cloud and become available to `docker pull` from Docker Hub.
 
 ### Versioning
 
-The `latest` tag in each Docker Hub repository tracks the master branch `HEAD` reference on GitHub. `latest` is a moving target, by definition, and will have 
+The `latest` tag in each Docker Hub repository tracks the master branch `HEAD` reference on GitHub. `latest` is a moving target, by definition, and will have
 backward-incompatible changes regularly.
 
-Every image on Docker Hub also receives a 12-character tag which corresponds with the git commit SHA that triggered the image build. You can inspect the state of 
-the `jupyter/docker-stacks` repository for that commit to review the definition of the image (e.g., images with tag 7c45ec67c8e7 were built from 
+Every image on Docker Hub also receives a 12-character tag which corresponds with the git commit SHA that triggered the image build. You can inspect the state of
+the `jupyter/docker-stacks` repository for that commit to review the definition of the image (e.g., images with tag 7c45ec67c8e7 were built from
 [https://github.com/jupyter/docker-stacks/tree/7c45ec67c8e7](https://github.com/jupyter/docker-stacks/tree/7c45ec67c8e7)).
 
-You must refer to git-SHA image tags when stability and reproducibility are important in your work. (e.g. `FROM jupyter/scipy-notebook:7c45ec67c8e7`, `docker run 
--it --rm jupyter/scipy-notebook:7c45ec67c8e7`). You should only use `latest` when a one-off container instance is acceptable (e.g., you want to briefly try a new 
+You must refer to git-SHA image tags when stability and reproducibility are important in your work. (e.g. `FROM jupyter/scipy-notebook:7c45ec67c8e7`, `docker run
+-it --rm jupyter/scipy-notebook:7c45ec67c8e7`). You should only use `latest` when a one-off container instance is acceptable (e.g., you want to briefly try a new
 library in a notebook).
 
 ## Community Stacks
 
-The core stacks are just a tiny sample of what's possible when combining Jupyter with other technologies. We encourage members of the Jupyter community to create 
+The core stacks are just a tiny sample of what's possible when combining Jupyter with other technologies. We encourage members of the Jupyter community to create
 their own stacks based on the core images and link them below.
 
-* [csharp-notebook is a community Jupyter Docker Stack image. Try C# in Jupyter Notebooks](https://github.com/tlinnet/csharp-notebook). The image includes more 
-than 200 Jupyter Notebooks with example C# code and can readily be tried online via mybinder.org. Click here to launch 
+* [csharp-notebook is a community Jupyter Docker Stack image. Try C# in Jupyter Notebooks](https://github.com/tlinnet/csharp-notebook). The image includes more
+than 200 Jupyter Notebooks with example C# code and can readily be tried online via mybinder.org. Click here to launch
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master).
 
-* [education-notebook is a community Jupyter Docker Stack image](https://github.com/umsi-mads/education-notebook). The image includes nbgrader and RISE on top of 
-the datascience-notebook image. Click here to launch it on 
+* [education-notebook is a community Jupyter Docker Stack image](https://github.com/umsi-mads/education-notebook). The image includes nbgrader and RISE on top of
+the datascience-notebook image. Click here to launch it on
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
 
 * __crosscompass/ihaskell-notebook__
@@ -183,27 +183,26 @@ the datascience-notebook image. Click here to launch it on
 
   `crosscompass/ihaskell-notebook` is based on [IHaskell](https://github.com/gibiansky/IHaskell). Includes popular packages and example notebooks.
 
-  Try it on binder: [![launch Learn You a Haskell for Great 
+  Try it on binder: [![launch Learn You a Haskell for Great
 Good!](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/learn_you_a_haskell/00-preface.ipynb)
 
-* [java-notebook is a community Jupyter Docker Stack image](https://github.com/jbindinga/java-notebook). The image includes 
-[IJava](https://github.com/SpencerPark/IJava) kernel on top of the minimal-notebook image. Click here to launch it on 
+* [java-notebook is a community Jupyter Docker Stack image](https://github.com/jbindinga/java-notebook). The image includes
+[IJava](https://github.com/SpencerPark/IJava) kernel on top of the minimal-notebook image. Click here to launch it on
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jbindinga/java-notebook/master).
 
-* [sage-notebook](https://github.com/sharpTrick/sage-notebook) is a community Jupyter Docker Stack image with the [sagemath](https://sagemath.org) kernel on top of 
-the minimal-notebook image. Click here to launch it on 
+* [sage-notebook](https://github.com/sharpTrick/sage-notebook) is a community Jupyter Docker Stack image with the [sagemath](https://sagemath.org) kernel on top of
+the minimal-notebook image. Click here to launch it on
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master).
 
-* [GPU-Jupyter](https://github.com/iot-salzburg/gpu-jupyter/): Leverage Jupyter Notebooks with the power of your NVIDIA GPU and perform GPU calculations using 
+* [GPU-Jupyter](https://github.com/iot-salzburg/gpu-jupyter/): Leverage Jupyter Notebooks with the power of your NVIDIA GPU and perform GPU calculations using
 Tensorflow and Pytorch in collaborative notebooks.
-This is done by generating a Dockerfile, that consists of the **nvidia/cuda** base image, 
-the well-maintained **docker-stacks** that is integrated as submodule 
+This is done by generating a Dockerfile, that consists of the **nvidia/cuda** base image,
+the well-maintained **docker-stacks** that is integrated as submodule
 and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it.
 
-* [cgspatial-notebook](https://github.com/SCiO-systems/cgspatial-notebook) is a community Jupyter Docker Stack image. The image includes major geospatial Python & 
-R libraries on top of the datascience-notebook image. Try it on 
+* [cgspatial-notebook](https://github.com/SCiO-systems/cgspatial-notebook) is a community Jupyter Docker Stack image. The image includes major geospatial Python &
+R libraries on top of the datascience-notebook image. Try it on
 binder:[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/SCiO-systems/cgspatial-notebook/master)
 
 
 See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.
-
