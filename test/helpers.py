@@ -26,7 +26,7 @@ import re
 from collections import defaultdict
 from itertools import chain
 import logging
-import ast
+import json
 
 from tabulate import tabulate
 
@@ -53,12 +53,44 @@ class CondaPackageHelper:
             tty=True, command=["start.sh", "bash", "-c", "sleep infinity"]
         )
 
+    @staticmethod
+    def _conda_export_command(from_history=False):
+        """Return the conda export command with or without history"""
+        cmd = ["conda", "env", "export", "-n", "base", "--json", "--no-builds"]
+        if from_history:
+            cmd.append("--from-history")
+        return cmd
+
     def installed_packages(self):
         """Return the installed packages"""
         if self.installed is None:
             LOGGER.info(f"Grabing the list of installed packages ...")
-            self.installed = self._packages(["conda", "list"])
+            self.installed = CondaPackageHelper._packages_from_json(
+                self._execute_command(CondaPackageHelper._conda_export_command())
+            )
         return self.installed
+
+    def specified_packages(self):
+        """Return the specifications (i.e. packages installation requested)"""
+        if self.specs is None:
+            LOGGER.info(f"Grabing the list of specifications ...")
+            self.specs = CondaPackageHelper._packages_from_json(
+                self._execute_command(CondaPackageHelper._conda_export_command(True))
+            )
+        return self.specs
+
+    def _execute_command(self, command):
+        """Execute a command on a running container"""
+        rc = self.running_container.exec_run(command)
+        return rc.output.decode("utf-8")
+
+    @staticmethod
+    def _packages_from_json(env_export):
+        """Extract packages and versions from the lines returned by the list of specifications"""
+        dependencies = json.loads(env_export).get("dependencies")
+        packages_list = map(lambda x: x.split("=", 1), dependencies)
+        # TODO: could be improved
+        return {package[0]: set(package[1:]) for package in packages_list}
 
     def available_packages(self):
         """Return the available packages"""
@@ -66,17 +98,20 @@ class CondaPackageHelper:
             LOGGER.info(
                 f"Grabing the list of available packages (can take a while) ..."
             )
-            self.available = self._packages(["conda", "search", "--outdated"])
+            # Keeping command line output since `conda search --outdated --json` is way too long ...
+            self.available = CondaPackageHelper._extract_available(
+                self._execute_command(["conda", "search", "--outdated"])
+            )
         return self.available
 
-    def specified_packages(self):
-        """Return the specifications (i.e. packages installation requested)"""
-        if self.specs is None:
-            LOGGER.info(f"Grabing the list of specifications ...")
-            self.specs = self._specifications(
-                ["grep", "^# update specs:", "/opt/conda/conda-meta/history"]
-            )
-        return self.specs
+    @staticmethod
+    def _extract_available(lines):
+        """Extract packages and versions from the lines returned by the list of packages"""
+        ddict = defaultdict(set)
+        for line in lines.splitlines()[2:]:
+            pkg, version = re.match(r"^(\S+)\s+(\S+)", line, re.MULTILINE).groups()
+            ddict[pkg].add(version)
+        return ddict
 
     def check_updatable_packages(self, specifications_only=True):
         """Check the updatables packages including or not dependencies"""
@@ -102,58 +137,6 @@ class CondaPackageHelper:
                         )
         return self.comparison
 
-    def get_outdated_summary(self, specifications_only=True):
-        """Return a summary of outdated packages"""
-        if specifications_only:
-            nb_packages = len(self.specs)
-        else:
-            nb_packages = len(self.installed)
-        nb_updatable = len(self.comparison)
-        updatable_ratio = nb_updatable / nb_packages
-        return f"{nb_updatable}/{nb_packages} ({updatable_ratio:.0%}) packages could be updated"
-
-    def get_outdated_table(self):
-        """Return a table of outdated packages"""
-        return tabulate(self.comparison, headers="keys")
-
-    def _execute_command(self, command):
-        """Execute a command on a running container"""
-        rc = self.running_container.exec_run(command)
-        return rc.output.decode("utf-8")
-
-    def _specifications(self, command):
-        """Return the list of specifications from a command"""
-        specifications = CondaPackageHelper._extract_specifications(
-            self._execute_command(command)
-        )
-        LOGGER.debug(f"List of specifications and versions {specifications}")
-        return specifications
-
-    def _packages(self, command):
-        """Return the list of packages from a command"""
-        packages = CondaPackageHelper._extract_packages(self._execute_command(command))
-        LOGGER.debug(f"List of packages and versions {packages}")
-        return packages
-
-    @staticmethod
-    def _extract_packages(lines):
-        """Extract packages and versions from the lines returned by the list of packages"""
-        ddict = defaultdict(set)
-        for line in lines.splitlines()[2:]:
-            pkg, version = re.match(r"^(\S+)\s+(\S+)", line, re.MULTILINE).groups()
-            ddict[pkg].add(version)
-        return ddict
-
-    @staticmethod
-    def _extract_specifications(lines):
-        """Extract packages and versions from the lines returned by the list of specifications"""
-        packages_list = list()
-        for spec in (spec for spec in lines.split("\n") if spec.strip() != ""):
-            spec_list = ast.literal_eval(spec.split(": ")[1])
-            packages_list += map(lambda x: x.split("=", 1), spec_list)
-        # TODO: could be improved
-        return {package[0]: set(package[1:]) for package in packages_list}
-
     @staticmethod
     def semantic_cmp(version_string):
         """Manage semantic versioning for comparison"""
@@ -177,3 +160,17 @@ class CondaPackageHelper:
 
         mss = list(chain(*mysplit(version_string)))
         return tuple(map(try_int, mss))
+
+    def get_outdated_summary(self, specifications_only=True):
+        """Return a summary of outdated packages"""
+        if specifications_only:
+            nb_packages = len(self.specs)
+        else:
+            nb_packages = len(self.installed)
+        nb_updatable = len(self.comparison)
+        updatable_ratio = nb_updatable / nb_packages
+        return f"{nb_updatable}/{nb_packages} ({updatable_ratio:.0%}) packages could be updated"
+
+    def get_outdated_table(self):
+        """Return a table of outdated packages"""
+        return tabulate(self.comparison, headers="keys")
