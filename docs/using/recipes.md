@@ -22,7 +22,7 @@ docker run -it -e GRANT_SUDO=yes --user root jupyter/minimal-notebook
 ```
 
 **You should only enable `sudo` if you trust the user and/or if the container is running on an
-isolated host.**
+isolated host.** See [Docker security documentation](https://docs.docker.com/engine/security/userns-remap/) for more information about running containers as `root`.
 
 ## Using `pip install` or `conda install` in a Child Docker image
 
