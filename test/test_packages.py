@@ -9,7 +9,7 @@ It's a basic test aiming to prove that the package is working properly.
 
 The goal is to detect import errors that can be caused by incompatibilities between packages for example:
 
-- #1012: issue importing `import sympy`
+- #1012: issue importing `sympy`
 - #966: isssue importing `pyarrow`
 
 This module checks dynmamically, through the `CondaPackageHelper`, only the specified packages i.e. packages requested by `conda install` in the `Dockerfiles`.
