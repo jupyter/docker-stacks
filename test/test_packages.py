@@ -1,6 +1,40 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
+"""
+test_packages
+~~~~~~~~~~~~~~~
+This test module tests if R and Python packages installed can be imported.
+It's a basic test aiming to prove that the package is working properly.
+
+The goal is to detect import errors that can be caused by incompatibilities between packages for example:
+
+- #1012: issue importing `import sympy`
+- #966: isssue importing `pyarrow`
+
+This module checks dynmamically, through the `CondaPackageHelper`, only the specified packages i.e. packages requested by `conda install` in the `Dockerfiles`.
+This means that it does not check dependencies. This choice is a tradeoff to cover the main requirements while achieving reasonabe test duration.
+However it could be easily changed (or completed) to cover also dependencies `package_helper.installed_packages()` instead of `package_helper.specified_packages()`.
+
+Example:                                                                                                                                                                                         [ 33%]
+
+    $ make test/datascience-notebook
+
+    # [...]
+    # test/test_packages.py::test_python_packages 
+    # --------------------------------------------------------------------------------------------- live log setup ----------------------------------------------------------------------------------------------
+    # 2020-03-08 09:56:04 [    INFO] Starting container jupyter/datascience-notebook ... (helpers.py:51)
+    # 2020-03-08 09:56:04 [    INFO] Running jupyter/datascience-notebook with args {'detach': True, 'ports': {'8888/tcp': 8888}, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:78)
+    # 2020-03-08 09:56:04 [    INFO] Grabing the list of specifications ... (helpers.py:76)
+    # ---------------------------------------------------------------------------------------------- live log call ----------------------------------------------------------------------------------------------
+    # 2020-03-08 09:56:07 [    INFO] Testing the import of packages ... (test_packages.py:125)
+    # 2020-03-08 09:56:07 [    INFO] Trying to import conda (test_packages.py:127)
+    # 2020-03-08 09:56:07 [    INFO] Trying to import notebook (test_packages.py:127)
+    # 2020-03-08 09:56:08 [    INFO] Trying to import jupyterhub (test_packages.py:127)
+    # [...]
+
+"""
+
 import logging
 
 import pytest
@@ -10,14 +44,18 @@ from helpers import CondaPackageHelper
 LOGGER = logging.getLogger(__name__)
 
 # Mapping between package and module name
-PYTHON_PACKAGE_MAPPING = {
+PACKAGE_MAPPING = {
+    # Python
     "matplotlib-base": "matplotlib",
     "beautifulsoup4": "bs4",
     "scikit-learn": "sklearn",
     "scikit-image": "skimage",
+    # R
+    "randomforest": "randomForest",
+    "rsqlite": "DBI",
+    "rcurl": "RCurl",
+    "rodbc": "RODBC",
 }
-
-R_PACKAGE_MAPPING = {"randomforest": "randomForest", "rsqlite": "DBI", "rcurl": "RCurl"}
 
 # List of packages that cannot be tested in a standard way
 EXCLUDED_PACKAGES = [
@@ -27,6 +65,8 @@ EXCLUDED_PACKAGES = [
     "conda-forge::blas[build",
     "protobuf",
     "r-irkernel",
+    "unixodbc",
+    "spylon-kernel",
 ]
 
 
@@ -38,7 +78,16 @@ def package_helper(container):
 
 @pytest.fixture(scope="function")
 def packages(package_helper):
+    """Return the list of specified packages (i.e. packages explicitely installed excluding dependecnies)"""
     return package_helper.specified_packages()
+
+
+def package_map(package):
+    """Perform a mapping between the python package name and the name used for the import"""
+    _package = package
+    if _package in PACKAGE_MAPPING:
+        _package = PACKAGE_MAPPING.get(_package)
+    return _package
 
 
 def excluded_package_predicate(package):
@@ -47,30 +96,13 @@ def excluded_package_predicate(package):
 
 
 def python_package_predicate(package):
-    # return x not in block_list and x in accept_list and is_good(x)
+    """Predicate matching python packages"""
     return not excluded_package_predicate(package) and not r_package_predicate(package)
 
 
-def python_package_map(package):
-    """Perform a mapping between the python package name and the name used for the import"""
-    _package = package
-    if _package in PYTHON_PACKAGE_MAPPING:
-        _package = PYTHON_PACKAGE_MAPPING.get(_package)
-    return _package
-
-
 def r_package_predicate(package):
+    """Predicate matching R packages"""
     return not excluded_package_predicate(package) and package.startswith("r-")
-
-
-# TODO: Refactoring
-def r_package_map(package):
-    """Perform a mapping between the R package name and the name used for the import"""
-    # Removing the leading "r-"
-    _package = package[2:]
-    if _package in R_PACKAGE_MAPPING:
-        _package = R_PACKAGE_MAPPING.get(_package)
-    return _package
 
 
 def _check_import_package(package_helper, command):
@@ -113,7 +145,11 @@ def _import_packages(package_helper, filtered_packages, check_function):
 
 @pytest.fixture(scope="function")
 def r_packages(packages):
-    return map(r_package_map, filter(r_package_predicate, packages))
+    """Return an iterable of R packages"""
+    # package[2:] is to remove the leading "r-" appended by conda on R packages
+    return map(
+        lambda package: package_map(package[2:]), filter(r_package_predicate, packages)
+    )
 
 
 def test_python_packages(package_helper, python_packages):
@@ -125,7 +161,8 @@ def test_python_packages(package_helper, python_packages):
 
 @pytest.fixture(scope="function")
 def python_packages(packages):
-    return map(python_package_map, filter(python_package_predicate, packages))
+    """Return an iterable of Python packages"""
+    return map(package_map, filter(python_package_predicate, packages))
 
 
 def test_r_packages(package_helper, r_packages):
