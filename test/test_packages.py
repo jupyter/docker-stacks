@@ -16,7 +16,7 @@ This module checks dynmamically, through the `CondaPackageHelper`, only the spec
 This means that it does not check dependencies. This choice is a tradeoff to cover the main requirements while achieving reasonabe test duration.
 However it could be easily changed (or completed) to cover also dependencies `package_helper.installed_packages()` instead of `package_helper.specified_packages()`.
 
-Example:                                                                                                                                                                                         [ 33%]
+Example:
 
     $ make test/datascience-notebook
 
