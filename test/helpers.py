@@ -88,6 +88,7 @@ class CondaPackageHelper:
     def _packages_from_json(env_export):
         """Extract packages and versions from the lines returned by the list of specifications"""
         dependencies = json.loads(env_export).get("dependencies")
+        # FIXME: # shall be able to parse conda-forge::blas[build=openblas] without considering openblas as the version
         packages_list = map(lambda x: x.split("=", 1), dependencies)
         # TODO: could be improved
         return {package[0]: set(package[1:]) for package in packages_list}

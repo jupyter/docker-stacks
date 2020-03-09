@@ -13,7 +13,7 @@ The goal is to detect import errors that can be caused by incompatibilities betw
 - #966: isssue importing `pyarrow`
 
 This module checks dynmamically, through the `CondaPackageHelper`, only the specified packages i.e. packages requested by `conda install` in the `Dockerfiles`.
-This means that it does not check dependencies. This choice is a tradeoff to cover the main requirements while achieving reasonabe test duration.
+This means that it does not check dependencies. This choice is a tradeoff to cover the main requirements while achieving reasonable test duration.
 However it could be easily changed (or completed) to cover also dependencies `package_helper.installed_packages()` instead of `package_helper.specified_packages()`.
 
 Example:
@@ -50,6 +50,7 @@ PACKAGE_MAPPING = {
     "beautifulsoup4": "bs4",
     "scikit-learn": "sklearn",
     "scikit-image": "skimage",
+    "spylon-kernel": "spylon_kernel1",
     # R
     "randomforest": "randomForest",
     "rsqlite": "DBI",
@@ -62,11 +63,11 @@ EXCLUDED_PACKAGES = [
     "tini",
     "python",
     "hdf5",
+    # FIXME: shall be parsed as conda-forge::blas[build=openblas]
     "conda-forge::blas[build",
     "protobuf",
     "r-irkernel",
     "unixodbc",
-    "spylon-kernel",
 ]
 
 
@@ -78,7 +79,7 @@ def package_helper(container):
 
 @pytest.fixture(scope="function")
 def packages(package_helper):
-    """Return the list of specified packages (i.e. packages explicitely installed excluding dependecnies)"""
+    """Return the list of specified packages (i.e. packages explicitely installed excluding dependencies)"""
     return package_helper.specified_packages()
 
 
@@ -124,10 +125,10 @@ def check_import_r_package(package_helper, package):
     )
 
 
-def _import_packages(package_helper, filtered_packages, check_function):
+def _import_packages(package_helper, filtered_packages, check_function, max_failures):
     """Test if packages can be imported
-    
-    Note: using a list of packages instead of a fixture for the list of packages since pytest prevent to use multiple yields
+
+    Note: using a list of packages instead of a fixture for the list of packages since pytest prevents use of multiple yields
     """
     failures = {}
     LOGGER.info(f"Testing the import of packages ...")
@@ -139,8 +140,10 @@ def _import_packages(package_helper, filtered_packages, check_function):
             ), f"Package [{package}] import failed"
         except AssertionError as err:
             failures[package] = err
-    if failures:
+    if len(failures) > max_failures:
         raise AssertionError(failures)
+    elif len(failures) > 0:
+        LOGGER.warning(f"Some import(s) has(have) failed: {failures}")
 
 
 @pytest.fixture(scope="function")
@@ -152,10 +155,10 @@ def r_packages(packages):
     )
 
 
-def test_python_packages(package_helper, python_packages):
+def test_python_packages(package_helper, python_packages, max_failures=0):
     """Test the import of specified python packages"""
     return _import_packages(
-        package_helper, python_packages, check_import_python_package
+        package_helper, python_packages, check_import_python_package, max_failures
     )
 
 
@@ -165,6 +168,8 @@ def python_packages(packages):
     return map(package_map, filter(python_package_predicate, packages))
 
 
-def test_r_packages(package_helper, r_packages):
+def test_r_packages(package_helper, r_packages, max_failures=0):
     """Test the import of specified R packages"""
-    return _import_packages(package_helper, r_packages, check_import_r_package)
+    return _import_packages(
+        package_helper, r_packages, check_import_r_package, max_failures
+    )
