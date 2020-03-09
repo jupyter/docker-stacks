@@ -50,7 +50,7 @@ PACKAGE_MAPPING = {
     "beautifulsoup4": "bs4",
     "scikit-learn": "sklearn",
     "scikit-image": "skimage",
-    "spylon-kernel": "spylon_kernel1",
+    "spylon-kernel": "spylon_kernel",
     # R
     "randomforest": "randomForest",
     "rsqlite": "DBI",
