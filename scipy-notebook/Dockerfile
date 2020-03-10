@@ -45,13 +45,8 @@ RUN conda install --quiet --yes \
     'xlrd' \
     && \
     conda clean --all -f -y && \
-    # Activate ipywidgets extension in the environment that runs the notebook server
-    jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-    # Also activate ipywidgets extension for JupyterLab
-    # Check this URL for most recent compatibilities
-    # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^1.1.0 --no-build && \
-    jupyter labextension install jupyterlab_bokeh@1.0.0 --no-build && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^2.0.0 --no-build && \
+    jupyter labextension install @bokeh/jupyter_bokeh@^2.0.0 --no-build && \
     jupyter labextension install jupyter-matplotlib --no-build && \
     jupyter lab build && \
     npm cache clean --force && \
