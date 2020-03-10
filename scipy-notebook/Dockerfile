@@ -52,7 +52,7 @@ RUN conda install --quiet --yes \
     # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
     jupyter labextension install @jupyter-widgets/jupyterlab-manager@^1.1.0 --no-build && \
     jupyter labextension install jupyterlab_bokeh@1.0.0 --no-build && \
-    jupyter labextension install jupyter-matplotlib --no-build && \
+    jupyter labextension install jupyter-matplotlib@0.7.2 --no-build && \
     jupyter lab build && \
     npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
