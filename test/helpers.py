@@ -88,10 +88,21 @@ class CondaPackageHelper:
     def _packages_from_json(env_export):
         """Extract packages and versions from the lines returned by the list of specifications"""
         dependencies = json.loads(env_export).get("dependencies")
-        # FIXME: # shall be able to parse conda-forge::blas[build=openblas] without considering openblas as the version
-        packages_list = map(lambda x: x.split("=", 1), dependencies)
-        # TODO: could be improved
-        return {package[0]: set(package[1:]) for package in packages_list}
+        packages_dict = dict()
+        for split in map(lambda x: x.split("=", 1), dependencies):
+            # default values
+            package = split[0]
+            version = set()
+            # cheking if it's a proper version by testing if the first char is a digit
+            if len(split) > 1:
+                if split[1][0].isdigit():
+                    # package + version case
+                    version = set(split[1:])
+                else:
+                    # The split was incorrect and the package shall not be splitted
+                    package = f"{split[0]}={split[1]}"
+            packages_dict[package] = version
+        return packages_dict
 
     def available_packages(self):
         """Return the available packages"""

@@ -63,8 +63,7 @@ EXCLUDED_PACKAGES = [
     "tini",
     "python",
     "hdf5",
-    # FIXME: shall be parsed as conda-forge::blas[build=openblas]
-    "conda-forge::blas[build",
+    "conda-forge::blas[build=openblas]",
     "protobuf",
     "r-irkernel",
     "unixodbc",
