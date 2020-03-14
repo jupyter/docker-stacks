@@ -94,3 +94,5 @@ tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
 test/%: ## run tests against a stack (only common tests or common tests + specific tests)
 	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
 	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test $(notdir $@)/test; fi
+
+test-all: $(foreach I,$(ALL_IMAGES),test/$(I)) ## test all stacks
