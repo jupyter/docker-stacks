@@ -54,8 +54,8 @@ RUN conda install --quiet --yes \
     jupyter labextension install @bokeh/jupyter_bokeh@^2.0.0 --no-build && \
     jupyter labextension install jupyter-matplotlib@^0.7.2 --no-build && \
     jupyter lab build && \
+    jupyter lab clean && \
     npm cache clean --force && \
-    rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     rm -rf /home/$NB_USER/.node-gyp && \
     fix-permissions $CONDA_DIR && \
