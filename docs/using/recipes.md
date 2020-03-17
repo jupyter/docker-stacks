@@ -160,8 +160,6 @@ RUN pip install dask_labextension ; \
     jupyter labextension install -y --clean \
     dask-labextension
 
-# Jupyter notebook
-EXPOSE 8888
 # Dask Scheduler & Bokeh ports
 EXPOSE 8787
 EXPOSE 8786
