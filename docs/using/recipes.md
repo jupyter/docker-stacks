@@ -149,7 +149,7 @@ Run jupyterlab using a command such as
 
 ## Dask JupyterLab Extension
 
-[Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes.
+[Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes. Create the Dockerfile as:
 
 ```dockerfile
 # Start from a core stack version
@@ -167,9 +167,14 @@ EXPOSE 8786
 ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 ```
 
+And build the image as:
+```
+docker build -t jupyter/scipy-dasklabextension:latest .
+```
+
 Once built, run using the command:
 ```
-docker run -it --rm -p 8888:8888 -p 8787:8787 IMAGE_ID
+docker run -it --rm -p 8888:8888 -p 8787:8787 jupyter/scipy-dasklabextension:latest
 ```
 
 Ref:
