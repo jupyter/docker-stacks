@@ -147,6 +147,39 @@ JupyterLab is preinstalled as a notebook extension starting in tag
 Run jupyterlab using a command such as
 `docker run -it --rm -p 8888:8888 jupyter/datascience-notebook start.sh jupyter lab`
 
+## Dask JupyterLab Extension
+
+[Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes. Create the Dockerfile as:
+
+```dockerfile
+# Start from a core stack version
+FROM jupyter/scipy-notebook:latest
+
+# Install the Dask dashboard
+RUN pip install dask_labextension ; \
+    jupyter labextension install -y --clean \
+    dask-labextension
+
+# Dask Scheduler & Bokeh ports
+EXPOSE 8787
+EXPOSE 8786
+
+ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
+```
+
+And build the image as:
+```
+docker build -t jupyter/scipy-dasklabextension:latest .
+```
+
+Once built, run using the command:
+```
+docker run -it --rm -p 8888:8888 -p 8787:8787 jupyter/scipy-dasklabextension:latest
+```
+
+Ref:
+[https://github.com/jupyter/docker-stacks/issues/999](https://github.com/jupyter/docker-stacks/issues/999)
+
 ## Let's Encrypt a Notebook server
 
 See the README for the simple automation here
