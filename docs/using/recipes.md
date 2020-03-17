@@ -149,7 +149,7 @@ Run jupyterlab using a command such as
 
 ## Dask JupyterLab Extension
 
-[Dask JupyterLab Extension][https://github.com/dask/dask-labextension] provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes.
+[Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes.
 
 ```dockerfile
 # Start from a core stack version
