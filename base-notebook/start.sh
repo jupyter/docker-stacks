@@ -39,60 +39,82 @@ run-hooks () {
     echo "${0}: done running hooks in ${1}"
 }
 
+
+
+# NOTE: This hook will run as the user the container was started with!
 run-hooks /usr/local/bin/start-notebook.d
 
-# Handle special flags if we're root
+
+
+# If we have started the container as the root user, then we have permission to
+# manipulate user identities and storage file permissions before we start the
+# server as a non-root user.
+#
+# Environment variables of relevance:
+# - NB_UID: the user we want to run as, uniquely identified by an id
+# - NB_USER: the username and associated home folder we want for our user
+# - NB_GID: a group we want our user to belong to, uniquely identified by an id
+# - NB_GROUP: the groupname we want for the group
 if [ "$(id -u)" == 0 ] ; then
 
-    # Only attempt to change the jovyan username if it exists
-    if id jovyan &> /dev/null ; then
-        echo "Set username to: ${NB_USER}"
-        usermod -d "/home/${NB_USER}" -l "${NB_USER}" jovyan
-    fi
-    # Update any environment variables we set during build of the
-    # Dockerfile that contained the home directory path.
-    export XDG_CACHE_HOME=/home/$NB_USER/.cache
-
-    # handle home and working directory if the username changed
-    if [[ "${NB_USER}" != "jovyan" ]]; then
-        # changing username, make sure homedir exists
-        # (it could be mounted, and we shouldn't create it if it already exists)
-        if [[ ! -e "/home/${NB_USER}" ]]; then
-            echo "Copying home dir to /home/${NB_USER}"
-            mkdir "/home/${NB_USER}"
-            cp -a /home/jovyan/. "/home/${NB_USER}/" || ln -s /home/jovyan "/home/${NB_USER}"
-        fi
-        # if workdir is in /home/jovyan, cd to /home/${NB_USER}
-        if [[ "${PWD}/" == "/home/jovyan/"* ]]; then
-            newcwd="/home/${NB_USER}/${PWD:13}"
-            echo "Setting CWD to ${newcwd}"
-            cd "${newcwd}"
-        fi
-    fi
-
-    # Handle case where provisioned storage does not have the correct permissions by default
-    # Ex: default NFS/EFS (no auto-uid/gid)
-    if [[ "${CHOWN_HOME}" == "1" || "${CHOWN_HOME}" == 'yes' ]]; then
-        echo "Changing ownership of /home/${NB_USER} to ${NB_UID}:${NB_GID} with options '${CHOWN_HOME_OPTS}'"
+    # Optionally ensure the user we want to run as (NB_UID) get filesystem
+    # ownership of it's home folder and additional folders. This can be relevant
+    # for attached NFS storage.
+    #
+    # Environment variables:
+    # - CHOWN_HOME: a boolean ("1" or "yes") to chown the user's home folder
+    # - CHOWN_EXTRA: a comma separated list of paths to chown
+    # - CHOWN_HOME_OPTS / CHOWN_EXTRA_OPTS: arguments to the chown command
+    if [[ "${CHOWN_HOME}" == "1" || "${CHOWN_HOME}" == "yes" ]]; then
+        echo "Updating ownership of /home/${NB_USER} to ${NB_UID}:${NB_GID} with options '${CHOWN_HOME_OPTS}'"
         # shellcheck disable=SC2086
-        chown ${CHOWN_HOME_OPTS} "${NB_UID}:${NB_GID}" "/home/${NB_USER}"
+        chown $CHOWN_HOME_OPTS "${NB_UID}:${NB_GID}" "/home/${NB_USER}"
     fi
     if [ -n "${CHOWN_EXTRA}" ]; then
         for extra_dir in $(echo "${CHOWN_EXTRA}" | tr ',' ' '); do
-            echo "Changing ownership of ${extra_dir} to ${NB_UID}:${NB_GID} with options '${CHOWN_EXTRA_OPTS}'"
+            echo "Updating ownership of ${extra_dir} to ${NB_UID}:${NB_GID} with options '${CHOWN_EXTRA_OPTS}'"
             # shellcheck disable=SC2086
             chown ${CHOWN_EXTRA_OPTS} "${NB_UID}:${NB_GID}" "${extra_dir}"
         done
     fi
 
-    # Change UID:GID of NB_USER to NB_UID:NB_GID if it does not match
-    if [ "${NB_UID}" != "$(id -u "${NB_USER}")" ] || [ "${NB_GID}" != "$(id -g "${NB_USER}")" ]; then
-        echo "Set user ${NB_USER} UID:GID to: ${NB_UID}:${NB_GID}"
-        if [ "${NB_GID}" != "$(id -g "${NB_USER}")" ]; then
-            groupadd -f -g "${NB_GID}" -o "${NB_GROUP:-${NB_USER}}"
+    # Update the jovyan identity to get desired username and its associated home folder.
+    if id jovyan &> /dev/null ; then
+        echo "Updating the default jovyan user:"
+        echo "username: jovyan -> ${NB_USER}"
+        echo "home dir: /home/jovyan -> /home/${NB_USER}"
+        usermod --home "/home/${NB_USER}" --login "${NB_USER}" jovyan
+    fi
+    # Update any environment variables we set during build of the
+    # Dockerfile that contained the home directory path.
+    export XDG_CACHE_HOME=/home/$NB_USER/.cache
+
+    # For non-jovyan username's, populate their home directory with the jovyan's
+    # home directory as a fallback if they don't have one mounted already.
+    if [[ "${NB_USER}" != "jovyan" ]]; then
+        if [[ ! -e "/home/${NB_USER}" ]]; then
+            echo "Copying home dir to /home/${NB_USER}"
+            mkdir "/home/${NB_USER}"
+            cp -a /home/jovyan/. "/home/${NB_USER}/" || ln -s /home/jovyan "/home/${NB_USER}"
         fi
+        # Ensure the current working directory is updated
+        if [[ "${PWD}/" == "/home/jovyan/"* ]]; then
+            newcwd="/home/${NB_USER}/${PWD:13}"
+            echo "Changing working directory to ${newcwd}"
+            cd "${newcwd}"
+        fi
+    fi
+
+    # Ensure NB_USER gets the NB_UID user id and is a member of the NB_GID group
+    if [ "${NB_UID}" != "$(id -u "${NB_USER}")" ] || [ "${NB_GID}" != "$(id -g "${NB_USER}")" ]; then
+        echo "Update ${NB_USER}'s UID:GID to ${NB_UID}:${NB_GID}"
+        # Ensure the group's existence
+        if [ "${NB_GID}" != "$(id -g "${NB_USER}")" ]; then
+            groupadd --force --gid "$NB_GID" --non-unique "${NB_GROUP:-${NB_USER}}"
+        fi
+        # Recreate the user as we want it
         userdel "${NB_USER}"
-        useradd --home "/home/${NB_USER}" -u "${NB_UID}" -g "${NB_GID}" -G 100 -l "${NB_USER}"
+        useradd --home "/home/${NB_USER}" --uid "${NB_UID}" --gid "${NB_GID}" --groups 100 --no-log-init "${NB_USER}"
     fi
 
     # Conditionally enable passwordless sudo usage for the jovyan user
@@ -132,6 +154,10 @@ if [ "$(id -u)" == 0 ] ; then
 
     echo "Running as ${NB_USER}:" "${cmd[@]}"
     exec sudo --preserve-env --set-home --user "${NB_USER}" "${cmd[@]}"
+
+
+
+# The container didn't start as the root user.
 else
     if [[ "${NB_UID}" == "$(id -u jovyan 2>/dev/null)" && "${NB_GID}" == "$(id -g jovyan 2>/dev/null)" ]]; then
         # User is not attempting to override user/group via environment
@@ -147,13 +173,13 @@ else
                 cat /tmp/passwd > /etc/passwd
                 rm /tmp/passwd
             else
-                echo 'Container must be run with group "root" to update passwd file'
+                echo "WARNING: Container must be run with group 'root' to update passwd file"
             fi
         fi
 
         # Warn if the user isn't going to be able to write files to ${HOME}.
         if [[ ! -w /home/jovyan ]]; then
-            echo 'Container must be run with group "users" to update files'
+            echo "WARNING: Container must be run with group 'users' to update files"
         fi
     else
         # Warn if looks like user want to override uid/gid but hasn't
@@ -166,13 +192,11 @@ else
         fi
     fi
 
-    # Warn if looks like user want to run in sudo mode but hasn't run
-    # the container as root.
+    # Warn about a probable misconfiguration of sudo
     if [[ "${GRANT_SUDO}" == "1" || "${GRANT_SUDO}" == 'yes' ]]; then
-        echo 'Container must be run as root to grant sudo permissions'
+        echo "WARNING: container must be started up as root to grant sudo permissions."
     fi
 
-    # Execute the command
     run-hooks /usr/local/bin/before-notebook.d
     echo "Executing the command:" "${cmd[@]}"
     exec "${cmd[@]}"
