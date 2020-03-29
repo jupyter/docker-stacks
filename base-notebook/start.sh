@@ -48,6 +48,9 @@ if [ $(id -u) == 0 ] ; then
         echo "Set username to: $NB_USER"
         usermod -d /home/$NB_USER -l $NB_USER jovyan
     fi
+    # Update any environment variables we set during build of the
+    # Dockerfile that contained the home directory path.
+    export XDG_CACHE_HOME=/home/$NB_USER/.cache
 
     # Handle case where provisioned storage does not have the correct permissions by default
     # Ex: default NFS/EFS (no auto-uid/gid)
@@ -88,20 +91,43 @@ if [ $(id -u) == 0 ] ; then
         useradd --home /home/$NB_USER -u $NB_UID -g $NB_GID -G 100 -l $NB_USER
     fi
 
-    # Enable sudo if requested
+    # Conditionally enable passwordless sudo usage for the jovyan user
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
-        echo "Granting $NB_USER sudo access and appending $CONDA_DIR/bin to sudo PATH"
-        echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/notebook
+        echo "Granting $NB_USER passwordless sudo rights!"
+        echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/added-by-start-script
     fi
 
-    # Add $CONDA_DIR/bin to sudo secure_path
-    sed -r "s#Defaults\s+secure_path=\"([^\"]+)\"#Defaults secure_path=\"\1:$CONDA_DIR/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
+    # Ensure that the initial environment that this container is started with
+    # is preserved when we run transition from running as root to running as
+    # NB_USER.
+    #
+    # - We use the sudo command to execute the command as NB_USER. But, what
+    #   happens to the environment will be determined by configuration in
+    #   /etc/sudoers and /etc/sudoers.d/* as well as flags we pass to the sudo
+    #   command. The behavior can be inspected with `sudo -V` run as root.
+    #
+    #   ref: `man sudo` - https://linux.die.net/man/8/sudo ref: `man sudoers` -
+    #   https://www.sudo.ws/man/1.8.15/sudoers.man.html
+    #
+    # - We use the `--preserve-env` flag to pass through most environment, but
+    #   understand that exceptions are caused by the sudoers configuration:
+    #   `env_delete`, `env_check`, and `secure_path`.
+    #
+    # - We reduce the `env_delete` list of default variables to be deleted by
+    #   default which would ignore the `--preserve-env` flag and `env_keep`
+    #   configuration.
+    #
+    # - We manage the PATH variable specifically as `secure_path` is set by
+    #   default in /etc/sudoers and would override the PATH variable. So we
+    #   disable that default.
+    echo 'Defaults env_delete -= "PATH LD_* PYTHON*"' >> /etc/sudoers.d/added-by-start-script
+    echo 'Defaults !secure_path' >> /etc/sudoers.d/added-by-start-script
 
-    # Exec the command as NB_USER with the PATH and the rest of
-    # the environment preserved
+    # NOTE: This hook is run as the root user!
     run-hooks /usr/local/bin/before-notebook.d
-    echo "Executing the command: ${cmd[@]}"
-    exec sudo -E -H -u $NB_USER PATH=$PATH XDG_CACHE_HOME=/home/$NB_USER/.cache PYTHONPATH=${PYTHONPATH:-} "${cmd[@]}"
+
+    echo "Running as $NB_USER with preserved environment: ${cmd[@]}"
+    exec sudo --preserve-env --set-home --user $NB_USER "${cmd[@]}"
 else
     if [[ "$NB_UID" == "$(id -u jovyan)" && "$NB_GID" == "$(id -g jovyan)" ]]; then
         # User is not attempting to override user/group via environment
