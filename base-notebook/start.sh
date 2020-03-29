@@ -38,6 +38,18 @@ run-hooks () {
     echo "$0: done running hooks in $1"
 }
 
+# A helper function to unset env vars listed in the value of the env var
+# JUPYTER_ENV_VARS_TO_UNSET.
+unset_explicit_env_vars () {
+    if [ ! -z "$JUPYTER_ENV_VARS_TO_UNSET" ]; then
+        for env_var_to_unset in $(echo $JUPYTER_ENV_VARS_TO_UNSET | tr ',;:' ' '); do
+            echo "Unset ${env_var_to_unset} due to JUPYTER_ENV_VARS_TO_UNSET"
+            unset ${env_var_to_unset}
+        done
+        unset JUPYTER_ENV_VARS_TO_UNSET
+    fi
+}
+
 
 
 # NOTE: This hook will run as the user the container was started with!
@@ -126,7 +138,9 @@ if [ $(id -u) == 0 ] ; then
 
     # Ensure that the initial environment that this container is started with
     # is preserved when we run transition from running as root to running as
-    # NB_USER.
+    # NB_USER. But, make an exception for environment variables explicitly
+    # listed in the JUPYTER_ENV_VARS_TO_UNSET environment variable, let these be
+    # unset before the transition.
     #
     # - We use the sudo command to execute the command as NB_USER. But, what
     #   happens to the environment will be determined by configuration in
@@ -153,7 +167,8 @@ if [ $(id -u) == 0 ] ; then
     # NOTE: This hook is run as the root user!
     run-hooks /usr/local/bin/before-notebook.d
 
-    echo "Running as $NB_USER with preserved environment: ${cmd[@]}"
+    unset_explicit_env_vars
+    echo "Running (as $NB_USER): ${cmd[@]}"
     exec sudo --preserve-env --set-home --user $NB_USER "${cmd[@]}"
 
 
@@ -199,6 +214,7 @@ else
     fi
 
     run-hooks /usr/local/bin/before-notebook.d
+    unset_explicit_env_vars
     echo "Running: ${cmd[@]}"
     exec "${cmd[@]}"
 fi
