@@ -11,25 +11,27 @@ else
     cmd=( "$@" )
 fi
 
+# The run-hooks function looks for .sh scripts and executable files
+# - .sh scripts will be sourced
+# - executable files (+x) will be executed
 run-hooks () {
-    # Source scripts or run executable files in a directory
     if [[ ! -d "${1}" ]] ; then
         return
     fi
-    echo "${0}: running hooks in ${1}"
+    echo "${0}: running hooks in ${1} as uid / gid: $(id -u) / $(id -g)"
     for f in "${1}/"*; do
         case "${f}" in
             *.sh)
-                echo "${0}: running ${f}"
+                echo "${0}: running script ${f}"
                 # shellcheck disable=SC1090
                 source "${f}"
                 ;;
             *)
                 if [[ -x "${f}" ]] ; then
-                    echo "${0}: running ${f}"
+                    echo "${0}: running executable ${f}"
                     "${f}"
                 else
-                    echo "${0}: ignoring ${f}"
+                    echo "${0}: ignoring non-executable ${f}"
                 fi
                 ;;
         esac
