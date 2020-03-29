@@ -240,7 +240,6 @@ def test_container_not_delete_bind_mount(container, tmp_path):
     assert len(list(tmp_path.iterdir())) == 1
 
 
-@pytest.mark.skip(reason="not yet implemented; TODO: cherry-pick b44b7ab")
 def test_jupyter_env_vars_to_unset_as_root(container):
     """Environment variables names listed in JUPYTER_ENV_VARS_TO_UNSET
     should be unset in the final environment."""

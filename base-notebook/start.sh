@@ -39,6 +39,18 @@ run-hooks () {
     echo "${0}: done running hooks in ${1}"
 }
 
+# A helper function to unset env vars listed in the value of the env var
+# JUPYTER_ENV_VARS_TO_UNSET.
+unset_explicit_env_vars () {
+    if [ -n "${JUPYTER_ENV_VARS_TO_UNSET}" ]; then
+        for env_var_to_unset in $(echo "${JUPYTER_ENV_VARS_TO_UNSET}" | tr ',;:' ' '); do
+            echo "Unset ${env_var_to_unset} due to JUPYTER_ENV_VARS_TO_UNSET"
+            unset "${env_var_to_unset}"
+        done
+        unset JUPYTER_ENV_VARS_TO_UNSET
+    fi
+}
+
 
 # NOTE: This hook will run as the user the container was started with!
 run-hooks /usr/local/bin/start-notebook.d
@@ -143,6 +155,7 @@ if [ "$(id -u)" == 0 ] ; then
     # NOTE: This hook is run as the root user!
     run-hooks /usr/local/bin/before-notebook.d
 
+    unset_explicit_env_vars
     echo "Running as ${NB_USER}:" "${cmd[@]}"
     exec sudo --preserve-env --set-home --user "${NB_USER}" \
         PATH="${PATH}" \
@@ -199,6 +212,7 @@ else
 
     # NOTE: This hook is run as the user we started the container as!
     run-hooks /usr/local/bin/before-notebook.d
+    unset_explicit_env_vars
     echo "Executing the command:" "${cmd[@]}"
     exec "${cmd[@]}"
 fi
