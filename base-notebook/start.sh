@@ -90,8 +90,13 @@ if [ $(id -u) == 0 ] ; then
     # home directory as a fallback if they don't have one mounted already.
     if [[ "$NB_USER" != "jovyan" ]]; then
         if [[ ! -e "/home/$NB_USER" ]]; then
-            echo "Relocating home dir to /home/$NB_USER"
-            mv /home/jovyan "/home/$NB_USER" || ln -s /home/jovyan "/home/$NB_USER"
+            echo "Attempting to move /home/jovyan to /home/${NB_USER}..."
+            if mv /home/jovyan "/home/$NB_USER"; then
+                echo "Done"
+            else
+                echo "Failed. Attempting to symlink /home/jovyan to /home/${NB_USER}..."
+                ln -s /home/jovyan "/home/$NB_USER" && echo "Done"
+            fi
         fi
         # Ensure the current working directory is updated
         if [[ "$PWD/" == "/home/jovyan/"* ]]; then
