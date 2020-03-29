@@ -3,6 +3,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 set -e
+echo "Running: start.sh $@"
 
 # Exec the specified command or fall back on bash
 if [ $# -eq 0 ]; then
@@ -38,8 +39,8 @@ run-hooks () {
     echo "$0: done running hooks in $1"
 }
 
-# A helper function to unset env vars listed in the value of the env var
-# JUPYTER_ENV_VARS_TO_UNSET.
+# The unset_explicit_env_vars function unset env vars listed in the value of the
+# env var JUPYTER_ENV_VARS_TO_UNSET.
 unset_explicit_env_vars () {
     if [ ! -z "$JUPYTER_ENV_VARS_TO_UNSET" ]; then
         for env_var_to_unset in $(echo $JUPYTER_ENV_VARS_TO_UNSET | tr ',;:' ' '); do
@@ -89,13 +90,13 @@ if [ $(id -u) == 0 ] ; then
 
     # Update the jovyan identity to get desired username and its associated home folder.
     if id jovyan &> /dev/null; then
-        echo "Updating the default jovyan user:"
-        echo "username: jovyan -> $NB_USER"
-        echo "home dir: /home/jovyan -> /home/$NB_USER"
-        usermod --login $NB_USER --home /home/$NB_USER jovyan
+        if ! usermod --login $NB_USER --home /home/$NB_USER jovyan 2>&1 | grep "no changes" > /dev/null; then
+            echo "Updated the jovyan user:"
+            echo "username: jovyan -> $NB_USER"
+            echo "home dir location: /home/jovyan -> /home/$NB_USER"
+        fi
     fi
-    # Update any environment variables we set during build of the
-    # Dockerfile that contained the home directory path.
+    # Update env vars set during image build with the current NB_USER value
     export XDG_CACHE_HOME=/home/$NB_USER/.cache
 
     # For non-jovyan username's, populate their home directory with the jovyan's
@@ -147,8 +148,8 @@ if [ $(id -u) == 0 ] ; then
     #   /etc/sudoers and /etc/sudoers.d/* as well as flags we pass to the sudo
     #   command. The behavior can be inspected with `sudo -V` run as root.
     #
-    #   ref: `man sudo` - https://linux.die.net/man/8/sudo ref: `man sudoers` -
-    #   https://www.sudo.ws/man/1.8.15/sudoers.man.html
+    #   ref: `man sudo`    https://linux.die.net/man/8/sudo
+    #   ref: `man sudoers` https://www.sudo.ws/man/1.8.15/sudoers.man.html
     #
     # - We use the `--preserve-env` flag to pass through most environment, but
     #   understand that exceptions are caused by the sudoers configuration:
