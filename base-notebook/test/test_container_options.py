@@ -43,7 +43,8 @@ def test_uid_change(container):
         command=['start.sh', 'bash', '-c', 'id && touch /opt/conda/test-file']
     )
     # usermod is slow so give it some time
-    c.wait(timeout=120)
+    rv = c.wait(timeout=120)
+    assert rv == 0 or rv["StatusCode"] == 0
     assert 'uid=1010(jovyan)' in c.logs(stdout=True).decode('utf-8')
 
 
@@ -55,27 +56,31 @@ def test_gid_change(container):
         environment=['NB_GID=110'],
         command=['start.sh', 'id']
     )
-    c.wait(timeout=10)
+    rv = c.wait(timeout=10)
+    assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode('utf-8')
     assert 'gid=110(jovyan)' in logs
     assert 'groups=110(jovyan),100(users)' in logs
 
 
 def test_chown_extra(container):
-    """Container should change the UID/GID of CHOWN_EXTRA."""
+    """Container should change the UID/GID of a comma separated
+    CHOWN_EXTRA list of folders."""
     c = container.run(
         tty=True,
         user='root',
-        environment=['NB_UID=1010',
-                     'NB_GID=101',
-                     'CHOWN_EXTRA=/opt/conda',
+        environment=['CHOWN_EXTRA=/home/jovyan,/opt/conda/bin',
                      'CHOWN_EXTRA_OPTS=-R',
+                     'NB_UID=1010',
+                     'NB_GID=101',
         ],
-        command=['start.sh', 'bash', '-c', 'stat -c \'%n:%u:%g\' /opt/conda/LICENSE.txt']
+        command=['start.sh', 'bash', '-c', 'stat -c \'%n:%u:%g\' /home/jovyan/.bashrc /opt/conda/bin/jupyter']
     )
-    # chown is slow so give it some time
-    c.wait(timeout=120)
-    assert '/opt/conda/LICENSE.txt:1010:101' in c.logs(stdout=True).decode('utf-8')
+    rv = c.wait(timeout=10)
+    assert rv == 0 or rv["StatusCode"] == 0
+    logs = c.logs(stdout=True).decode('utf-8')
+    assert '/home/jovyan/.bashrc:1010:101' in logs
+    assert '/opt/conda/bin/jupyter:1010:101' in logs
 
 
 def test_chown_home(container):
@@ -86,10 +91,16 @@ def test_chown_home(container):
         user='root',
         environment=['CHOWN_HOME=yes',
                      'CHOWN_HOME_OPTS=-R',
+                     'NB_USER=kitten',
+                     'NB_UID=1010',
+                     'NB_GID=101',
         ],
-        command=['start.sh', 'bash', '-c', 'chown root:root /home/jovyan && ls -alsh /home']
+        command=['start.sh', 'bash', '-c', 'stat -c \'%n:%u:%g\' /home/kitten/.bashrc']
     )
-    assert "Changing ownership of /home/jovyan to 1000:100 with options '-R'" in c.logs(stdout=True).decode('utf-8')
+    rv = c.wait(timeout=10)
+    assert rv == 0 or rv["StatusCode"] == 0
+    logs = c.logs(stdout=True).decode('utf-8')
+    assert '/home/kitten/.bashrc:1010:101' in logs
 
 
 def test_sudo(container):
@@ -142,3 +153,23 @@ def test_group_add(container, tmpdir):
     rv = c.wait(timeout=5)
     assert rv == 0 or rv["StatusCode"] == 0
     assert 'uid=1010 gid=1010 groups=1010,100(users)' in c.logs(stdout=True).decode('utf-8')
+
+
+def test_jupyter_env_vars_to_unset_as_root(container):
+    """Environment variables names listed in JUPYTER_ENV_VARS_TO_UNSET
+    should be unset in the final environment."""
+    c = container.run(
+        tty=True,
+        user='root',
+        environment=[
+            'JUPYTER_ENV_VARS_TO_UNSET=SECRET_ANIMAL,UNUSED_ENV,SECRET_FRUIT',
+            'FRUIT=bananas',
+            'SECRET_FRUIT=mango',
+            'SECRET_ANIMAL=cats',
+        ],
+        command=['start.sh', 'bash', '-c', 'echo I like $FRUIT and ${SECRET_FRUIT:-stuff}, and love ${SECRET_LOVE:-to keep secrets}!']
+    )
+    rv = c.wait(timeout=10)
+    assert rv == 0 or rv["StatusCode"] == 0
+    logs = c.logs(stdout=True).decode('utf-8')
+    assert 'I like bananas and stuff, and love to keep secrets!' in logs

@@ -12,9 +12,8 @@ else
     cmd=( "$@" )
 fi
 
-# The run-hooks function looks for .sh scripts and executable files
-# - .sh scripts will be sourced
-# - executable files (+x) will be executed
+# The run-hooks function looks for .sh scripts to source and executable files to
+# run within a passed directory.
 run-hooks () {
     if [[ ! -d "$1" ]] ; then
         return
@@ -39,8 +38,8 @@ run-hooks () {
     echo "$0: done running hooks in $1"
 }
 
-# The unset_explicit_env_vars function unset env vars listed in the value of the
-# env var JUPYTER_ENV_VARS_TO_UNSET.
+# The unset_explicit_env_vars function unset environment variables listed in the
+# value of JUPYTER_ENV_VARS_TO_UNSET.
 unset_explicit_env_vars () {
     if [ ! -z "$JUPYTER_ENV_VARS_TO_UNSET" ]; then
         for env_var_to_unset in $(echo $JUPYTER_ENV_VARS_TO_UNSET | tr ',;:' ' '); do
@@ -51,99 +50,98 @@ unset_explicit_env_vars () {
     fi
 }
 
-
-
 # NOTE: This hook will run as the user the container was started with!
 run-hooks /usr/local/bin/start-notebook.d
 
-
-
-# If we have started the container as the root user, then we have permission to
-# manipulate user identities and storage file permissions before we start the
-# server as a non-root user.
+# If the container started as the root user, then we have permission to refit
+# the jovyan user, and ensure file permissions, grant sudo rights, and such
+# things before we run the command passed to start.sh as the desired user
+# (NB_USER).
 #
-# Environment variables of relevance:
-# - NB_UID: the user we want to run as, uniquely identified by an id
-# - NB_USER: the username and associated home folder we want for our user
-# - NB_GID: a group we want our user to belong to, uniquely identified by an id
-# - NB_GROUP: the groupname we want for the group
 if [ $(id -u) == 0 ] ; then
-
-    # Optionally ensure the user we want to run as (NB_UID) get filesystem
-    # ownership of it's home folder and additional folders. This can be relevant
-    # for attached NFS storage.
-    #
     # Environment variables:
+    # - NB_USER: the desired username and associated home folder
+    # - NB_UID: the desired user id
+    # - NB_GID: a group id we want our user to belong to
+    # - NB_GROUP: the groupname we want for the group
+    # - GRANT_SUDO: a boolean ("1" or "yes") to grant the user sudo rights
     # - CHOWN_HOME: a boolean ("1" or "yes") to chown the user's home folder
     # - CHOWN_EXTRA: a comma separated list of paths to chown
-    # - CHOWN_HOME_OPTS / CHOWN_EXTRA_OPTS: arguments to the chown command
-    if [[ "$CHOWN_HOME" == "1" || "$CHOWN_HOME" == "yes" ]]; then
-        echo "Updating ownership of /home/$NB_USER to $NB_UID:$NB_GID with options '${CHOWN_HOME_OPTS}'"
-        chown $CHOWN_HOME_OPTS $NB_UID:$NB_GID /home/$NB_USER
-    fi
-    if [ ! -z "$CHOWN_EXTRA" ]; then
-        for extra_dir in $(echo $CHOWN_EXTRA | tr ',' ' '); do
-            echo "Updating ownership of ${extra_dir} to $NB_UID:$NB_GID with options '${CHOWN_EXTRA_OPTS}'"
-            chown $CHOWN_EXTRA_OPTS $NB_UID:$NB_GID $extra_dir
-        done
-    fi
+    # - CHOWN_HOME_OPTS / CHOWN_EXTRA_OPTS: arguments to the chown commands
 
-    # Update the jovyan identity to get desired username and its associated home folder.
+    # Refit the jovyan user to the desired the user (NB_USER)
     if id jovyan &> /dev/null; then
         if ! usermod --login $NB_USER --home /home/$NB_USER jovyan 2>&1 | grep "no changes" > /dev/null; then
             echo "Updated the jovyan user:"
-            echo "username: jovyan -> $NB_USER"
-            echo "home dir location: /home/jovyan -> /home/$NB_USER"
+            echo "- username: jovyan       -> $NB_USER"
+            echo "- home dir: /home/jovyan -> /home/$NB_USER"
         fi
+    elif ! id -u $NB_USER &> /dev/null; then
+        echo "ERROR: Neither the jovyan user or '$NB_USER' exists."
+        echo "       This could be the result of stopping and starting, the"
+        echo "       container with a different NB_USER environment variable."
+        exit 1
     fi
-    # Update env vars set during image build with the current NB_USER value
-    export XDG_CACHE_HOME=/home/$NB_USER/.cache
-
-    # For non-jovyan username's, populate their home directory with the jovyan's
-    # home directory as a fallback if they don't have one mounted already.
-    if [[ "$NB_USER" != "jovyan" ]]; then
-        if [[ ! -e "/home/$NB_USER" ]]; then
-            echo "Attempting to move /home/jovyan to /home/${NB_USER}..."
-            if mv /home/jovyan "/home/$NB_USER"; then
-                echo "Done"
-            else
-                echo "Failed. Attempting to symlink /home/jovyan to /home/${NB_USER}..."
-                ln -s /home/jovyan "/home/$NB_USER" && echo "Done"
-            fi
-        fi
-        # Ensure the current working directory is updated
-        if [[ "$PWD/" == "/home/jovyan/"* ]]; then
-            newcwd="/home/$NB_USER/${PWD:13}"
-            echo "Changing working directory to $newcwd"
-            cd "$newcwd"
-        fi
-    fi
-
-    # Ensure NB_USER gets the NB_UID user id and is a member of the NB_GID group
+    # Ensure the desired user (NB_USER) gets its desired user id (NB_UID) and is
+    # a member of the desired group (NB_GROUP, NB_GID)
     if [ "$NB_UID" != $(id -u $NB_USER) ] || [ "$NB_GID" != $(id -g $NB_USER) ]; then
         echo "Update $NB_USER's UID:GID to $NB_UID:$NB_GID"
-        # Ensure the group's existance
+        # Ensure the desired group's existance
         if [ "$NB_GID" != $(id -g $NB_USER) ]; then
             groupadd --gid $NB_GID --non-unique ${NB_GROUP:-${NB_USER}}
         fi
-        # Recreate the user as we want it
+        # Recreate the desired user as we want it
         userdel $NB_USER
         useradd --home /home/$NB_USER --uid $NB_UID --gid $NB_GID --groups 100 --no-log-init $NB_USER
     fi
 
-    # Conditionally enable passwordless sudo usage for the jovyan user
-    if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
-        echo "Granting $NB_USER passwordless sudo rights!"
-        echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/added-by-start-script
+    # Move or symlink the jovyan home directory to the desired users home
+    # directory if it doesn't already exist, and update the current working
+    # directory to the new location if needed.
+    if [[ "$NB_USER" != "jovyan" ]]; then
+        if [[ ! -e "/home/$NB_USER" ]]; then
+            echo "Attempting to move /home/jovyan to /home/${NB_USER}..."
+            if mv /home/jovyan "/home/$NB_USER"; then
+                echo "Success!"
+            else
+                echo "Failed!"
+                echo "Attempting to symlink /home/jovyan to /home/${NB_USER}..."
+                if ln -s /home/jovyan "/home/$NB_USER"; then
+                    echo "Success!"
+                else
+                    echo "Failed!"
+                fi
+            fi
+        fi
+        # Ensure the current working directory is updated to the new path
+        if [[ "$PWD/" == "/home/jovyan/"* ]]; then
+            new_wd="/home/$NB_USER/${PWD:13}"
+            echo "Changing working directory to $new_wd"
+            cd "$new_wd"
+        fi
     fi
 
-    # Ensure that the initial environment that this container is started with
-    # is preserved when we run transition from running as root to running as
-    # NB_USER. But, make an exception for environment variables explicitly
-    # listed in the JUPYTER_ENV_VARS_TO_UNSET environment variable, let these be
-    # unset before the transition.
+    # Optionally ensure the desired user get filesystem ownership of it's home
+    # folder and/or additional folders
+    if [[ "$CHOWN_HOME" == "1" || "$CHOWN_HOME" == "yes" ]]; then
+        echo "Ensuring /home/$NB_USER is owned by $NB_UID:$NB_GID ${CHOWN_HOME_OPTS:+chown options: $CHOWN_HOME_OPTS}"
+        chown $CHOWN_HOME_OPTS $NB_UID:$NB_GID /home/$NB_USER
+    fi
+    if [ ! -z "$CHOWN_EXTRA" ]; then
+        for extra_dir in $(echo $CHOWN_EXTRA | tr ',' ' '); do
+            echo "Ensuring ${extra_dir} is owned by $NB_UID:$NB_GID ${CHOWN_HOME_OPTS:+(chown options: $CHOWN_HOME_OPTS)}"
+            chown $CHOWN_EXTRA_OPTS $NB_UID:$NB_GID $extra_dir
+        done
+    fi
+
+    # Update potentially outdated environment variables since image build
+    export XDG_CACHE_HOME=/home/$NB_USER/.cache
+
+    # Notes on how we ensure that the environment that this container is started
+    # with is preserved (except vars listen in JUPYTER_ENV_VARS_TO_UNSET) when
+    # we transition from running as root to running as NB_USER.
     #
-    # - We use the sudo command to execute the command as NB_USER. But, what
+    # - We use `sudo` to execute the command as NB_USER. What then
     #   happens to the environment will be determined by configuration in
     #   /etc/sudoers and /etc/sudoers.d/* as well as flags we pass to the sudo
     #   command. The behavior can be inspected with `sudo -V` run as root.
@@ -151,19 +149,26 @@ if [ $(id -u) == 0 ] ; then
     #   ref: `man sudo`    https://linux.die.net/man/8/sudo
     #   ref: `man sudoers` https://www.sudo.ws/man/1.8.15/sudoers.man.html
     #
-    # - We use the `--preserve-env` flag to pass through most environment, but
-    #   understand that exceptions are caused by the sudoers configuration:
-    #   `env_delete`, `env_check`, and `secure_path`.
+    # - We use the `--preserve-env` flag to pass through most environment
+    #   variables, but understand that exceptions are caused by the sudoers
+    #   configuration: `env_delete`, `env_check`, and `secure_path`.
     #
-    # - We reduce the `env_delete` list of default variables to be deleted by
-    #   default which would ignore the `--preserve-env` flag and `env_keep`
+    # - We use the `--set-home` flag to set the HOME variable appropriatly.
+    #
+    # - We reduce the `env_delete` list of default variables to be deleted. It
+    #   has higher priority than the `--preserve-env` flag and `env_keep`
     #   configuration.
     #
-    # - We manage the PATH variable specifically as `secure_path` is set by
-    #   default in /etc/sudoers and would override the PATH variable. So we
-    #   disable that default.
+    # - We disable the `secure_path` which is set by default in /etc/sudoers as
+    #   it would override the PATH variable.
+    echo 'Defaults !secure_path' > /etc/sudoers.d/added-by-start-script
     echo 'Defaults env_delete -= "PATH LD_* PYTHON*"' >> /etc/sudoers.d/added-by-start-script
-    echo 'Defaults !secure_path' >> /etc/sudoers.d/added-by-start-script
+
+    # Optionally grant passwordless sudo rights for the desired user
+    if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
+        echo "Granting $NB_USER passwordless sudo rights!"
+        echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/added-by-start-script
+    fi
 
     # NOTE: This hook is run as the root user!
     run-hooks /usr/local/bin/before-notebook.d
@@ -172,49 +177,51 @@ if [ $(id -u) == 0 ] ; then
     echo "Running (as $NB_USER): ${cmd[@]}"
     exec sudo --preserve-env --set-home --user $NB_USER "${cmd[@]}"
 
-
-
-# The container didn't start as the root user.
+# The container didn't start as the root user, so we will have to act as the
+# user we started as.
 else
-    if [[ "$NB_UID" == "$(id -u jovyan)" && "$NB_GID" == "$(id -g jovyan)" ]]; then
-        # User is not attempting to override user/group via environment
-        # variables, but they could still have overridden the uid/gid that
-        # container runs as. Check that the user has an entry in the passwd
-        # file and if not add an entry.
-        STATUS=0 && whoami &> /dev/null || STATUS=$? && true
-        if [[ "$STATUS" != "0" ]]; then
-            if [[ -w /etc/passwd ]]; then
-                echo "Adding passwd file entry for $(id -u)"
-                cat /etc/passwd | sed -e "s/^jovyan:/nayvoj:/" > /tmp/passwd
-                echo "jovyan:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
-                cat /tmp/passwd > /etc/passwd
-                rm /tmp/passwd
-            else
-                echo "WARNING: Container must be run with group 'root' to update passwd file"
-            fi
-        fi
-
-        # Warn if the user isn't going to be able to write files to $HOME.
-        if [[ ! -w /home/jovyan ]]; then
-            echo "WARNING: Container must be run with group 'users' to update files"
-        fi
-    else
-        # Warn if looks like user want to override uid/gid but hasn't
-        # run the container as root.
-        if [[ ! -z "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
-            echo 'Container must be run as root to set $NB_UID'
-        fi
-        if [[ ! -z "$NB_GID" && "$NB_GID" != "$(id -g)" ]]; then
-            echo 'Container must be run as root to set $NB_GID'
-        fi
+    # Warn about misconfiguration of: desired username, user id, or group id
+    if [[ ! -z "$NB_USER" && "$NB_USER" != "$(id -un)" ]]; then
+        echo "WARNING: container must be started as root to change the desired user's name with NB_USER!"
+    fi
+    if [[ ! -z "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
+        echo "WARNING: container must be started as root to change the desired user's id with NB_UID!"
+    fi
+    if [[ ! -z "$NB_GID" && "$NB_GID" != "$(id -g)" ]]; then
+        echo "WARNING: container must be started as root to change the desired user's group id with NB_GID!"
     fi
 
-    # Warn about a probable misconfiguration of sudo
+    # Warn about misconfiguration of: granting sudo rights
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
-        echo "WARNING: container must be started up as root to grant sudo permissions."
+        echo "WARNING: container must be started as root to grant sudo permissions!"
     fi
 
+    # Attempt to ensure the user uid we currently run as has a named entry in
+    # the /etc/passwd file, as it avoids software crashing on hard assumptions
+    # on such entry. Writing to the /etc/passwd was allowed for the root group
+    # from the Dockerfile during build.
+    #
+    # ref: https://github.com/jupyter/docker-stacks/issues/552
+    if ! whoami &> /dev/null; then
+        if [[ -w /etc/passwd ]]; then
+            sed --in-place "s/^jovyan:/nayvoj:/" /etc/passwd
+            echo "Renamed old jovyan user to nayvoy (1000:100)"
+
+            echo "jovyan:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /etc/passwd
+            echo "Added new jovyan user ($(id -u):$(id -g))"
+        else
+            echo "WARNING: container must be started with group 'root' (0) to add a user entry in /etc/passwd!"
+        fi
+    fi
+
+    # Warn if the user isn't able to write files to $HOME
+    if [[ ! -w /home/jovyan ]]; then
+        echo "WARNING: container must be started with group 'users' (100) to be allowed to write to /home/jovyan!"
+    fi
+
+    # NOTE: This hook is run as the user we started the container as!
     run-hooks /usr/local/bin/before-notebook.d
+
     unset_explicit_env_vars
     echo "Running: ${cmd[@]}"
     exec "${cmd[@]}"
