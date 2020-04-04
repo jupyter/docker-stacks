@@ -25,7 +25,7 @@ USER $NB_UID
 
 # R packages
 RUN conda install --quiet --yes \
-    'r-base=3.6.2' \
+    'r-base=3.6.3' \
     'r-caret=6.0*' \
     'r-crayon=1.3*' \
     'r-devtools=2.2*' \
@@ -41,7 +41,7 @@ RUN conda install --quiet --yes \
     'r-reshape2=1.4*' \
     'r-rmarkdown=2.1*' \
     'r-rodbc=1.3*' \
-    'r-rsqlite=2.1*' \
+    'r-rsqlite=2.2*' \
     'r-shiny=1.4*' \
     'r-tidyverse=1.3*' \
     'unixodbc=2.3.*' \

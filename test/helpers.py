@@ -89,7 +89,9 @@ class CondaPackageHelper:
         """Extract packages and versions from the lines returned by the list of specifications"""
         dependencies = json.loads(env_export).get("dependencies")
         packages_dict = dict()
-        for split in map(lambda x: x.split("=", 1), dependencies):
+        for split in map(lambda x: x.split("=", 1) if isinstance(x, str) else None, dependencies):
+            if split is None:
+                break
             # default values
             package = split[0]
             version = set()

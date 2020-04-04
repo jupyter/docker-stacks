@@ -23,8 +23,8 @@ USER $NB_UID
 
 # R packages
 RUN conda install --quiet --yes \
-    'r-base=3.6.2' \
-    'r-ggplot2=3.2*' \
+    'r-base=3.6.3' \
+    'r-ggplot2=3.3*' \
     'r-irkernel=1.1*' \
     'r-rcurl=1.98*' \
     'r-sparklyr=1.1*' \
