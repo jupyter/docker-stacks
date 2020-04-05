@@ -11,6 +11,7 @@ USER root
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     build-essential \
     emacs \
+    vim \
     git \
     inkscape \
     jed \
