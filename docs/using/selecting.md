@@ -43,7 +43,7 @@ repository. The following sections describe these images including their content
 
 * Everything in `jupyter/base-notebook`
 * [Pandoc](http://pandoc.org) and [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [vim](https://www.vim.org), [jed](https://www.jedsoft.org/jed/), [nano](https://www.nano-editor.org/), tzdata, and
+	* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [vi](actually [vim-tiny](https://vim.org)), [jed](https://www.jedsoft.org/jed/), [nano](https://www.nano-editor.org/), tzdata, and
 unzip
 
 ### jupyter/r-notebook
