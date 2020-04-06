@@ -4,16 +4,19 @@
 
 set -e
 
+if [[ ! -z "${JUPYTERHUB_API_TOKEN}" ]]; then
+  echo "WARNING: use start-singleuser.sh instead of start-notebook.sh to start a server associated with JupyterHub."
+  exec /usr/local/bin/start-singleuser.sh "$@"
+  exit
+fi
+
 wrapper=""
 if [[ "${RESTARTABLE}" == "yes" ]]; then
   wrapper="run-one-constantly"
 fi
 
-if [[ ! -z "${JUPYTERHUB_API_TOKEN}" ]]; then
-  # launched by JupyterHub, use single-user entrypoint
-  exec /usr/local/bin/start-singleuser.sh "$@"
-elif [[ ! -z "${JUPYTER_ENABLE_LAB}" ]]; then
-  . /usr/local/bin/start.sh $wrapper jupyter lab "$@"
+if [[ ! -z "${JUPYTER_ENABLE_LAB}" ]]; then
+  exec /usr/local/bin/start.sh $wrapper $NOTEBOOK_ARGS jupyter lab "$@"
 else
-  . /usr/local/bin/start.sh $wrapper jupyter notebook "$@"
+  exec /usr/local/bin/start.sh $wrapper $NOTEBOOK_ARGS jupyter notebook "$@"
 fi
