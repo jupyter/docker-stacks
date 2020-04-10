@@ -112,7 +112,7 @@ ARG conda_env=python36
 ARG py_ver=3.6
 
 # you can add additional libraries you want conda to install by listing them below the first line and ending with "&& \"
-RUN conda env create --quiet --yes -p $CONDA_DIR/envs/$conda_env python=$py_ver ipython ipykernel && \
+RUN conda create --quiet --yes -p $CONDA_DIR/envs/$conda_env python=$py_ver ipython ipykernel && \
     conda clean --all -f -y
 
 # alternatively, you can comment out the lines above and uncomment those below
