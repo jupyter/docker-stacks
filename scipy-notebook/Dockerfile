@@ -18,16 +18,16 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.8.*' \
     'conda-forge::blas=*=openblas' \
-    'bokeh=1.4.*' \
+    'bokeh=2.0.*' \
     'cloudpickle=1.3.*' \
     'cython=0.29.*' \
-    'dask=2.11.*' \
+    'dask=2.14.*' \
     'dill=0.3.*' \
     'h5py=2.10.*' \
     'hdf5=1.10.*' \
     'ipywidgets=7.5.*' \
     'ipympl=0.5.*'\
-    'matplotlib-base=3.1.*' \
+    'matplotlib-base=3.2.*' \
     'numba=0.48.*' \
     'numexpr=2.7.*' \
     'pandas=1.0.*' \
@@ -53,8 +53,8 @@ RUN conda install --quiet --yes \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager@^2.0.0 --no-build && \
     jupyter labextension install @bokeh/jupyter_bokeh@^2.0.0 --no-build && \
     jupyter labextension install jupyter-matplotlib@^0.7.2 --no-build && \
-    jupyter lab build && \
-    jupyter lab clean && \
+    jupyter lab build -y && \
+    jupyter lab clean -y && \
     npm cache clean --force && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     rm -rf /home/$NB_USER/.node-gyp && \
