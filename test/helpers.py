@@ -87,7 +87,11 @@ class CondaPackageHelper:
     @staticmethod
     def _packages_from_json(env_export):
         """Extract packages and versions from the lines returned by the list of specifications"""
+        #dependencies = filter(lambda x:  isinstance(x, str), json.loads(env_export).get("dependencies"))
         dependencies = json.loads(env_export).get("dependencies")
+        # Filtering packages installed through pip in this case it's a dict {'pip': ['toree==0.3.0']}
+        # Since we only manage packages installed through conda here
+        dependencies = filter(lambda x:  isinstance(x, str), dependencies)
         packages_dict = dict()
         for split in map(lambda x: x.split("=", 1), dependencies):
             # default values
