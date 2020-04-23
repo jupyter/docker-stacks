@@ -24,7 +24,7 @@ repository. The following sections describe these images including their content
 
 `jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.md). It is the basis for all other stacks.
 
-* Minimally-functional Jupyter Notebook server (e.g., no [pandoc](https://pandoc.org/) for saving notebooks as PDFs)
+* Minimally-functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
 * [Miniconda](https://conda.io/miniconda.html) Python 3.x in `/opt/conda`
 * No preinstalled scientific computing packages
 * Unprivileged user `jovyan` (`uid=1000`, configurable, see options) in group `users` (`gid=100`) with ownership over the `/home/jovyan` and `/opt/conda` paths
@@ -42,9 +42,8 @@ repository. The following sections describe these images including their content
 `jupyter/minimal-notebook` adds command line tools useful when working in Jupyter applications.
 
 * Everything in `jupyter/base-notebook`
-* [Pandoc](http://pandoc.org) and [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/), [vi](https://vim.org/) (actually `vim-tiny`), [jed](https://www.jedsoft.org/jed/), [nano](https://www.nano-editor.org/), tzdata, and
-unzip
+* [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
+* [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/) (actually `emacs-nox`), [vi](https://vim.org/) (actually `vim-tiny`), [jed](https://www.jedsoft.org/jed/), [nano](https://www.nano-editor.org/), tzdata, and unzip
 
 ### jupyter/r-notebook
 
