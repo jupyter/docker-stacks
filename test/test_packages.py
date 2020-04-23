@@ -21,7 +21,7 @@ Example:
     $ make test/datascience-notebook
 
     # [...]
-    # test/test_packages.py::test_python_packages 
+    # test/test_packages.py::test_python_packages
     # --------------------------------------------------------------------------------------------- live log setup ----------------------------------------------------------------------------------------------
     # 2020-03-08 09:56:04 [    INFO] Starting container jupyter/datascience-notebook ... (helpers.py:51)
     # 2020-03-08 09:56:04 [    INFO] Running jupyter/datascience-notebook with args {'detach': True, 'ports': {'8888/tcp': 8888}, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:78)
@@ -56,6 +56,7 @@ PACKAGE_MAPPING = {
     "rsqlite": "DBI",
     "rcurl": "RCurl",
     "rodbc": "RODBC",
+    "pytables": "tables",
 }
 
 # List of packages that cannot be tested in a standard way
