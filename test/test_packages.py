@@ -51,12 +51,12 @@ PACKAGE_MAPPING = {
     "scikit-learn": "sklearn",
     "scikit-image": "skimage",
     "spylon-kernel": "spylon_kernel",
+    "pytables": "tables",
     # R
     "randomforest": "randomForest",
     "rsqlite": "DBI",
     "rcurl": "RCurl",
     "rodbc": "RODBC",
-    "pytables": "tables",
 }
 
 # List of packages that cannot be tested in a standard way
