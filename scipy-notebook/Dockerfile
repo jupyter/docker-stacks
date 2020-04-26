@@ -19,6 +19,7 @@ RUN conda install --quiet --yes \
     'beautifulsoup4=4.8.*' \
     'conda-forge::blas=*=openblas' \
     'bokeh=2.0.*' \
+    'bottleneck=1.3.*' \
     'cloudpickle=1.3.*' \
     'cython=0.29.*' \
     'dask=2.14.*' \
@@ -33,6 +34,7 @@ RUN conda install --quiet --yes \
     'pandas=1.0.*' \
     'patsy=0.5.*' \
     'protobuf=3.11.*' \
+    'pytables=3.6.*' \
     'scikit-image=0.16.*' \
     'scikit-learn=0.22.*' \
     'scipy=1.4.*' \

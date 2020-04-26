@@ -82,7 +82,7 @@ packages from [conda-forge](https://conda-forge.github.io/feedstocks)
 [statsmodel](http://www.statsmodels.org/stable/index.html), [cloudpickle](https://github.com/cloudpipe/cloudpickle), [dill](https://pypi.python.org/pypi/dill),
 [numba](https://numba.pydata.org/), [bokeh](https://bokeh.pydata.org/en/latest/), [sqlalchemy](https://www.sqlalchemy.org/), [hdf5](http://www.h5py.org/),
 [vincent](http://vincent.readthedocs.io/en/latest/), [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/),
-[protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial), and [xlrd](http://www.python-excel.org/) packages
+[protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial), [xlrd](http://www.python-excel.org/), [bottleneck](https://bottleneck.readthedocs.io/en/latest/), and [pytables](https://www.pytables.org/) packages
 * [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/) and [ipympl](https://github.com/matplotlib/jupyter-matplotlib) for interactive visualizations and plots in Python notebooks
 * [Facets](https://github.com/PAIR-code/facets) for visualizing machine learning datasets
 
