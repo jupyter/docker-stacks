@@ -182,8 +182,7 @@ the datascience-notebook image. Click here to launch it on
 
   `crosscompass/ihaskell-notebook` is based on [IHaskell](https://github.com/gibiansky/IHaskell). Includes popular packages and example notebooks.
 
-  Try it on binder: [![launch Learn You a Haskell for Great
-Good!](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/learn_you_a_haskell/00-preface.ipynb)
+  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
 
 * [java-notebook is a community Jupyter Docker Stack image](https://github.com/jbindinga/java-notebook). The image includes
 [IJava](https://github.com/SpencerPark/IJava) kernel on top of the minimal-notebook image. Click here to launch it on
