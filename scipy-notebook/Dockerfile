@@ -29,7 +29,8 @@ RUN conda install --quiet --yes \
     'ipywidgets=7.5.*' \
     'ipympl=0.5.*'\
     'matplotlib-base=3.2.*' \
-    'numba=0.49.*' \
+    # numba update to 0.49 fails resolving deps.
+    'numba=0.48.*' \
     'numexpr=2.7.*' \
     'pandas=1.0.*' \
     'patsy=0.5.*' \
