@@ -1,8 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import time
+import logging
 
 import pytest
+
+LOGGER = logging.getLogger(__name__)
 
 
 def test_cli_args(container, http_client):
@@ -59,6 +62,37 @@ def test_gid_change(container):
     logs = c.logs(stdout=True).decode('utf-8')
     assert 'gid=110(jovyan)' in logs
     assert 'groups=110(jovyan),100(users)' in logs
+
+
+def test_nb_user_change(container):
+    """Container should change the user name of the default user."""
+    nb_user = "nayvoj"
+    running_container = container.run(
+        tty=True,
+        user="root",
+        environment=[f"NB_USER={nb_user}",
+                      "CHOWN_HOME=yes"],
+        working_dir=f"/home/{nb_user}",
+        command=['start.sh', 'bash', '-c', 'sleep infinity']
+    )
+    
+    LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
+    output = running_container.logs(stdout=True).decode("utf-8")
+    assert f"Set username to: {nb_user}" in output, f"User is not changed to {nb_user}" 
+    
+    LOGGER.info(f"Checking {nb_user} id ...")
+    command = "id"
+    expected_output = f"uid=1000({nb_user}) gid=100(users) groups=100(users)"
+    cmd = running_container.exec_run(command, user=nb_user)
+    output = cmd.output.decode("utf-8").strip("\n")
+    assert output == expected_output, f"Bad user {output}, expected {expected_output}"
+    
+    LOGGER.info(f"Checking if {nb_user} owns his home folder ...")
+    command = f'stat -c "%U %G" /home/{nb_user}/'
+    expected_output = f"{nb_user} users"
+    cmd = running_container.exec_run(command)
+    output = cmd.output.decode("utf-8").strip("\n")
+    assert output == expected_output, f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
 
 
 def test_chown_extra(container):
