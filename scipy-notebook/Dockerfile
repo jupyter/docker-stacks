@@ -16,23 +16,26 @@ USER $NB_UID
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
-    'beautifulsoup4=4.8.*' \
+    'beautifulsoup4=4.9.*' \
     'conda-forge::blas=*=openblas' \
-    'bokeh=1.4.*' \
-    'cloudpickle=1.3.*' \
+    'bokeh=2.0.*' \
+    'bottleneck=1.3.*' \
+    'cloudpickle=1.4.*' \
     'cython=0.29.*' \
-    'dask=2.11.*' \
+    'dask=2.15.*' \
     'dill=0.3.*' \
     'h5py=2.10.*' \
     'hdf5=1.10.*' \
     'ipywidgets=7.5.*' \
     'ipympl=0.5.*'\
-    'matplotlib-base=3.1.*' \
+    'matplotlib-base=3.2.*' \
+    # numba update to 0.49 fails resolving deps.
     'numba=0.48.*' \
     'numexpr=2.7.*' \
     'pandas=1.0.*' \
     'patsy=0.5.*' \
     'protobuf=3.11.*' \
+    'pytables=3.6.*' \
     'scikit-image=0.16.*' \
     'scikit-learn=0.22.*' \
     'scipy=1.4.*' \
@@ -42,7 +45,7 @@ RUN conda install --quiet --yes \
     'sympy=1.5.*' \
     'vincent=0.4.*' \
     'widgetsnbextension=3.5.*'\
-    'xlrd' \
+    'xlrd=1.2.*' \
     && \
     conda clean --all -f -y && \
     # Activate ipywidgets extension in the environment that runs the notebook server
@@ -53,8 +56,8 @@ RUN conda install --quiet --yes \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager@^2.0.0 --no-build && \
     jupyter labextension install @bokeh/jupyter_bokeh@^2.0.0 --no-build && \
     jupyter labextension install jupyter-matplotlib@^0.7.2 --no-build && \
-    jupyter lab build && \
-    jupyter lab clean && \
+    jupyter lab build -y && \
+    jupyter lab clean -y && \
     npm cache clean --force && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     rm -rf /home/$NB_USER/.node-gyp && \

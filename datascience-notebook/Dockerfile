@@ -23,12 +23,12 @@ RUN apt-get update && \
 # install Julia packages in /opt/julia instead of $HOME
 ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.3.1
+ENV JULIA_VERSION=1.4.1
 
 RUN mkdir /opt/julia-${JULIA_VERSION} && \
     cd /tmp && \
     wget -q https://julialang-s3.julialang.org/bin/linux/x64/`echo ${JULIA_VERSION} | cut -d. -f 1,2`/julia-${JULIA_VERSION}-linux-x86_64.tar.gz && \
-    echo "faa707c8343780a6fe5eaf13490355e8190acf8e2c189b9e7ecbddb0fa2643ad *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    echo "fd6d8cadaed678174c3caefb92207a3b0e8da9f926af6703fb4d1e4e4f50610a *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf julia-${JULIA_VERSION}-linux-x86_64.tar.gz -C /opt/julia-${JULIA_VERSION} --strip-components=1 && \
     rm /tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz
 RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
@@ -45,11 +45,11 @@ USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
-    'r-base=3.6.2' \
+    'r-base=3.6.3' \
     'r-caret=6.0*' \
     'r-crayon=1.3*' \
-    'r-devtools=2.2*' \
-    'r-forecast=8.10*' \
+    'r-devtools=2.3*' \
+    'r-forecast=8.12*' \
     'r-hexbin=1.28*' \
     'r-htmltools=0.4*' \
     'r-htmlwidgets=1.5*' \
@@ -60,8 +60,8 @@ RUN conda install --quiet --yes \
     'r-rcurl=1.98*' \
     'r-reshape2=1.4*' \
     'r-rmarkdown=2.1*' \
-    'r-rsqlite=2.1*' \
-    'r-shiny=1.3*' \
+    'r-rsqlite=2.2*' \
+    'r-shiny=1.4*' \
     'r-tidyverse=1.3*' \
     'rpy2=3.1*' \
     && \
