@@ -93,7 +93,7 @@ if [ $(id -u) == 0 ] ; then
     fi
 
     # Add $CONDA_DIR/bin to sudo secure_path
-    sed -r "s#Defaults\s+secure_path=\"([^\"]+)\"#Defaults secure_path=\"\1:$CONDA_DIR/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
+    sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"\1:$CONDA_DIR/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
 
     # Exec the command as NB_USER with the PATH and the rest of
     # the environment preserved
