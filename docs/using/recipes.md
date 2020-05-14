@@ -519,7 +519,7 @@ Ref:
 
 ## Enable auto-sklearn notebooks
 
-Using auto-sklearn requires swig, which the other notebook images lack, so it cant be experimented with. Also, there is no Conda package for auto-sklearn.
+Using `auto-sklearn` requires `swig`, which the other notebook images lack, so it cant be experimented with. Also, there is no Conda package for `auto-sklearn`.
 
 ```
 ARG BASE_CONTAINER=jupyter/scipy-notebook
@@ -530,10 +530,11 @@ USER root
 # autosklearn requires swig, which no other image has
 RUN apt-get update && \
     apt-get install -y --no-install-recommends swig && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-USER $NB_UID
-ARG py_ver=3.6
 
-RUN pip install auto-sklearn
+USER $NB_UID
+
+RUN pip install --quiet auto-sklearn
 ```
