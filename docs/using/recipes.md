@@ -536,5 +536,5 @@ RUN apt-get update && \
 
 USER $NB_UID
 
-RUN pip install --quiet auto-sklearn
+RUN pip install --quiet --no-cache-dir auto-sklearn
 ```
