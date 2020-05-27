@@ -2,6 +2,7 @@ cat << EOF > "$MANIFEST_FILE"
 * Build datetime: ${BUILD_TIMESTAMP}
 * DockerHub build code: ${BUILD_CODE}
 * Docker image: ${DOCKER_REPO}:${GIT_SHA_TAG}
+* Docker image size: $(docker images ${IMAGE_NAME} --format "{{.Size}}")
 * Git commit SHA: [${SOURCE_COMMIT}](https://github.com/jupyter/docker-stacks/commit/${SOURCE_COMMIT})
 * Git commit message:
 \`\`\`
