@@ -8,13 +8,13 @@ This page describes the options supported by the startup script as well as how t
 
 You can pass [Jupyter command line options](https://jupyter.readthedocs.io/en/latest/projects/jupyter-command.html) to the `start-notebook.sh` script when launching the container. For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token, you can run the following:
 
-```
+```bash
 docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
 ```
 
 For example, to set the base URL of the notebook server, you can run the following:
 
-```
+```bash
 docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.base_url=/some/path
 ```
 
@@ -54,7 +54,7 @@ script for execution details.
 
 You may mount SSL key and certificate files into a container and configure Jupyter Notebook to use them to accept HTTPS connections. For example, to mount a host folder containing a `notebook.key` and `notebook.crt` and use them, you might run the following:
 
-```
+```bash
 docker run -d -p 8888:8888 \
     -v /some/host/folder:/etc/ssl/notebook \
     jupyter/base-notebook start-notebook.sh \
@@ -64,7 +64,7 @@ docker run -d -p 8888:8888 \
 
 Alternatively, you may mount a single PEM file containing both the key and certificate. For example:
 
-```
+```bash
 docker run -d -p 8888:8888 \
     -v /some/host/folder/notebook.pem:/etc/ssl/notebook.pem \
     jupyter/base-notebook start-notebook.sh \
@@ -85,13 +85,13 @@ For additional information about using SSL, see the following:
 
 The `start-notebook.sh` script actually inherits most of its option handling capability from a more generic `start.sh` script. The `start.sh` script supports all of the features described above, but allows you to specify an arbitrary command to execute. For example, to run the text-based `ipython` console in a container, do the following:
 
-```
+```bash
 docker run -it --rm jupyter/base-notebook start.sh ipython
 ```
 
 Or, to run JupyterLab instead of the classic notebook, run the following:
 
-```
+```bash
 docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter lab
 ```
 
@@ -107,7 +107,7 @@ The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/en
 
 The `jovyan` user has full read/write access to the `/opt/conda` directory. You can use either `conda` or `pip` to install new packages without any additional permissions.
 
-```
+```bash
 # install a package into the default (python 3.x) environment
 pip install some-package
 conda install some-package

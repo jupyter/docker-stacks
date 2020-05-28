@@ -13,10 +13,10 @@ Please follow the process below to add new tests:
 1. If the test should run against every image built, add your test code to one of the modules in [test/](https://github.com/jupyter/docker-stacks/tree/master/test) or create a new module.
 2. If your test should run against a single image, add your test code to one of the modules in `some-notebook/test/` or create a new module.
 3. Build one or more images you intend to test and run the tests locally. If you use `make`, call:
-```
-make build/somestack-notebook
-make test/somestack-notebook
-```
+    ```bash
+    make build/somestack-notebook
+    make test/somestack-notebook
+    ```
 4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with your changes.
 5. Watch for Travis to report a build success or failure for your PR on GitHub.
 6. Discuss changes with the maintainers and address any issues running the tests on Travis.

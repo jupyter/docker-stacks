@@ -72,8 +72,8 @@ Connection to Spark Cluster on Standalone Mode requires the following set of ste
 2. Run the Docker container with `--net=host` in a location that is network addressable by all of
    your Spark workers. (This is a [Spark networking
    requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
-    * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e
-      TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
+   * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e
+   TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
 
 #### In a Python Notebook
 
@@ -111,9 +111,11 @@ library(SparkR)
 # Point to spark binary package in HDFS or on local filesystem on all worker
 # nodes (e.g., file:///opt/spark/spark-2.2.0-bin-hadoop2.7.tgz) in sparkEnvir
 # Set other options in sparkEnvir
-sc <- sparkR.session("spark://10.10.10.10:7070", sparkEnvir=list(
-    spark.executor.uri="hdfs://10.10.10.10/spark/spark-2.4.3-bin-hadoop2.7.tgz",
-    spark.executor.memory="8g"
+sc <- sparkR.session(
+    "spark://10.10.10.10:7070",
+    sparkEnvir=list(
+        spark.executor.uri="hdfs://10.10.10.10/spark/spark-2.4.3-bin-hadoop2.7.tgz",
+        spark.executor.memory="8g"
     )
 )
 
@@ -147,7 +149,7 @@ about your cluster via the `SPARK_OPTS` environment variable when you spawn a co
 For instance, to pass information about a standalone Spark master, Spark binary location in HDFS,
 and an executor options, you could start the container like so:
 
-```
+```bash
 docker run -d -p 8888:8888 -e SPARK_OPTS='--master=spark://10.10.10.10:7070 \
     --spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.4.3-bin-hadoop2.7.tgz \
     --spark.executor.memory=8g' jupyter/all-spark-notebook
