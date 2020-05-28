@@ -6,7 +6,7 @@ This page provides details about features specific to one or more images.
 
 **Specific Docker Image Options**
 
-* `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](http://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook` 
+* `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](http://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
 
 **Usage Examples**
 
@@ -48,7 +48,7 @@ df <- as.DataFrame(iris)
 head(filter(df, df$Petal_Width > 0.2))
 ```
 
-In a R notebook with [sparklyr][sparklyr]
+In a R notebook with [sparklyr][sparklyr].
 
 ```R
 library(sparklyr)
@@ -141,7 +141,7 @@ df <- as.DataFrame(iris)
 head(filter(df, df$Petal_Width > 0.2))
 ```
 
-In a R notebook with [sparklyr][sparklyr]
+In a R notebook with [sparklyr][sparklyr].
 
 ```R
 library(sparklyr)
