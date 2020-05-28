@@ -6,6 +6,7 @@
 # OS/ARCH: linux/amd64
 ARG ROOT_CONTAINER=ubuntu:bionic-20200403@sha256:b58746c8a89938b8c9f5b77de3b8cf1fe78210c696ab03a1442e235eea65d84f
 ARG BASE_CONTAINER=$ROOT_CONTAINER
+# hadolint ignore=DL3006
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -13,11 +14,15 @@ ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
 
+# Fix DL4006
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 USER root
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
+# hadolint ignore=DL3008
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     wget \
@@ -76,8 +81,8 @@ ENV MINICONDA_VERSION=4.8.2 \
     MINICONDA_MD5=87e77f097f6ebb5127c77662dfc3165e \
     CONDA_VERSION=4.8.2
 
-RUN cd /tmp && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh && \
+WORKDIR /tmp
+RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh && \
     echo "${MINICONDA_MD5} *Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
     rm Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh && \
@@ -137,3 +142,5 @@ RUN fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
+
+WORKDIR $HOME
