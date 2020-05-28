@@ -1,6 +1,6 @@
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/pyspark-notebook.svg)](https://hub.docker.com/r/jupyter/pyspark-notebook/) [![docker stars](https://img.shields.io/docker/stars/jupyter/pyspark-notebook.svg)](https://hub.docker.com/r/jupyter/pyspark-notebook/) [![image metadata](https://images.microbadger.com/badges/image/jupyter/pyspark-notebook.svg)](https://microbadger.com/images/jupyter/pyspark-notebook "jupyter/pyspark-notebook image metadata")
 
-# Jupyter Notebook Python, Spark, Mesos Stack
+# Jupyter Notebook Python, Spark Stack
 
 Please visit the documentation site for help using and contributing to this image and others.
 
