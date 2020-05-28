@@ -82,6 +82,8 @@ lint/%: ## lint the dockerfile(s) for a stack
 
 lint-all: $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
 
+lint-build-test-all: $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
+
 lint-install: ## install hadolint
 	@echo "Installing hadolint at $(HADOLINT) ..."
 	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/v1.17.6/hadolint-$(shell uname -s)-$(shell uname -m)"

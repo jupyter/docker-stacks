@@ -26,10 +26,11 @@ jobs:
       install:
       - pip install --upgrade pip
       - make dev-env
+      - make-lint-install
       script:
       - set -e
       - make docs
-      - make build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"
+      - make lint-build-test-all DARGS="--build-arg TEST_ONLY_BUILD=1"
 
 stages:
     - name: diff-test
