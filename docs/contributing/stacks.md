@@ -13,13 +13,13 @@ This approach mirrors how we build and share the core stack images. Feel free to
 
 First, install [cookiecutter](https://github.com/audreyr/cookiecutter) using pip or conda:
 
-```
+```bash
 pip install cookiecutter   # or conda install cookiecutter
 ```
 
 Run the cookiecutter command pointing to the [jupyter/cookiecutter-docker-stacks](https://github.com/jupyter/cookiecutter-docker-stacks) project on GitHub.
 
-```
+```bash
 cookiecutter https://github.com/jupyter/cookiecutter-docker-stacks.git
 ```
 

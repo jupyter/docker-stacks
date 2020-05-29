@@ -25,9 +25,9 @@ If there's agreement that the feature belongs in one or more of the core stacks:
 
 1. Implement the feature in a local clone of the `jupyter/docker-stacks` project.
 2. Please build the image locally before submitting a pull request. Building the image locally shortens the debugging cycle by taking some load off [Travis CI](http://travis-ci.org/), which graciously provides free build services for open source projects like this one.  If you use `make`, call:
-```
-make build/somestack-notebook
-```
+    ```bash
+    make build/somestack-notebook
+    ```
 3. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with your changes.
 4. Watch for Travis to report a build success or failure for your PR on GitHub.
 5. Discuss changes with the maintainers and address any build issues.

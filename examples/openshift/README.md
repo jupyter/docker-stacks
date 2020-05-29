@@ -16,7 +16,7 @@ Loading the Templates
 
 To load the templates, login to OpenShift from the command line and run:
 
-```
+```bash
 oc create -f https://raw.githubusercontent.com/jupyter-on-openshift/docker-stacks/master/examples/openshift/templates.json
 ```
 
@@ -33,7 +33,7 @@ Deploying a Notebook
 
 To deploy a notebook from the command line using the template, run:
 
-```
+```bash
 oc new-app --template jupyter-notebook
 ```
 
@@ -71,7 +71,7 @@ A password you can use when accessing the notebook will be auto generated and is
 
 To see the hostname for accessing the notebook run:
 
-```
+```bash
 oc get routes
 ```
 
@@ -95,7 +95,7 @@ Passing Template Parameters
 
 To override the name for the notebook, the image used, and the password, you can pass template parameters using the ``--param`` option.
 
-```
+```bash
 oc new-app --template jupyter-notebook \
   --param APPLICATION_NAME=mynotebook \
   --param NOTEBOOK_IMAGE=jupyter/scipy-notebook:latest \
@@ -120,7 +120,7 @@ Deleting the Notebook Instance
 
 To delete the notebook instance, run ``oc delete`` using a label selector for the application name.
 
-```
+```bash
 oc delete all,configmap --selector app=mynotebook
 ```
 
@@ -129,7 +129,7 @@ Enabling Jupyter Lab Interface
 
 To enable the Jupyter Lab interface for a deployed notebook set the ``JUPYTER_ENABLE_LAB`` environment variable.
 
-```
+```bash
 oc set env dc/mynotebook JUPYTER_ENABLE_LAB=true
 ```
 
@@ -140,7 +140,7 @@ Adding Persistent Storage
 
 You can upload notebooks and other files using the web interface of the notebook. Any uploaded files or changes you make to them will be lost when the notebook instance is restarted. If you want to save your work, you need to add persistent storage to the notebook. To add persistent storage run:
 
-```
+```bash
 oc set volume dc/mynotebook --add \
       --type=pvc --claim-size=1Gi --claim-mode=ReadWriteOnce \
       --claim-name mynotebook-data --name data \
@@ -149,7 +149,7 @@ oc set volume dc/mynotebook --add \
 
 When you have deleted the notebook instance, if using a persistent volume, you will need to delete it in a separate step.
 
-```
+```bash
 oc delete pvc/mynotebook-data
 ```
 
@@ -158,7 +158,7 @@ Customizing the Configuration
 
 If you want to set any custom configuration for the notebook, you can edit the config map created by the template.
 
-```
+```bash
 oc edit configmap/mynotebook-cfg
 ```
 
@@ -176,19 +176,19 @@ Because the configuration is Python code, ensure any indenting is correct. Any e
 
 If the error is in the config map, edit it again to fix it and trigged a new deployment if necessary by running:
 
-```
+```bash
 oc rollout latest dc/mynotebook
 ```
 
 If you make an error in the configuration file stored in the persistent volume, you will need to scale down the notebook so it isn't running.
 
-```
+```bash
 oc scale dc/mynotebook --replicas 0
 ```
 
 Then run:
 
-```
+```bash
 oc debug dc/mynotebook
 ```
 
@@ -196,7 +196,7 @@ to run the notebook in debug mode. This will provide you with an interactive ter
 
 Start up the notebook again.
 
-```
+```bash
 oc scale dc/mynotebook --replicas 1
 ```
 
@@ -207,7 +207,7 @@ The password for the notebook is supplied as a template parameter, or if not sup
 
 If you want to change the password, you can do so by editing the environment variable on the deployment configuration.
 
-```
+```bash
 oc set env dc/mynotebook JUPYTER_NOTEBOOK_PASSWORD=mypassword
 ```
 
@@ -232,13 +232,13 @@ If the image is in your OpenShift project, because you imported the image into O
 
 This can be illustrated by first importing an image into the OpenShift project.
 
-```
+```bash
 oc import-image jupyter/datascience-notebook:latest --confirm
 ```
 
 Then deploy it using the name of the image stream created.
 
-```
+```bash
 oc new-app --template jupyter-notebook \
   --param APPLICATION_NAME=mynotebook \
   --param NOTEBOOK_IMAGE=datascience-notebook \
