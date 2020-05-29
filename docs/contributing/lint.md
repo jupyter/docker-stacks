@@ -17,7 +17,7 @@ $ make lint-install
 
 ## Lint
 
-The linter can be run per stack `make lint/<stack>`
+The linter can be run per stack `make lint/<stack>`.
 
 ```bash
 $ make lint/scipy-notebook  
@@ -49,7 +49,7 @@ $ make lint-all
 
 Sometimes it's necessary to ignore [some rules][LK3]. The preferred way is to do it in the `Dockerfile`.
 
-> It is also possible to ignore rules by using a special comment directly above the Dockerfile instruction you want to make an exception for. Ignore rule comments look like `# hadolint ignore=DL3001,SC1081.` For example:
+> It is also possible to ignore rules by using a special comment directly above the Dockerfile instruction you want to make an exception for. Ignore rule comments look like `# hadolint ignore=DL3001,SC1081`. For example:
 
 ```dockerfile
 # hadolint ignore=DL3006
