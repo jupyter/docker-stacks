@@ -12,6 +12,7 @@ jobs:
       install:
       - pip install --upgrade pip
       - make dev-env
+      - make-lint-install
       script:
       - set -e
       - if [ $(make n-docs-diff) -ne 0 ]; then make docs; fi;
