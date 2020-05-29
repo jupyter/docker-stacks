@@ -11,7 +11,7 @@ This folder contains a Makefile and a set of supporting files demonstrating how 
 
 To show what's possible, here's how to run the `jupyter/minimal-notebook` on a brand new local virtualbox.
 
-```
+```bash
 # create a new VM
 make virtualbox-vm NAME=dev
 # make the new VM the active docker machine
@@ -30,7 +30,7 @@ The last command will log the IP address and port to visit in your browser.
 
 Yes. Specify a unique name and port on the `make notebook` command.
 
-```
+```bash
 make notebook NAME=my-notebook PORT=9000
 make notebook NAME=your-notebook PORT=9001
 ```
@@ -39,7 +39,7 @@ make notebook NAME=your-notebook PORT=9001
 
 Yes.
 
-```
+```bash
 make notebook NAME=my-notebook PORT=9000 WORK_VOLUME=our-work
 make notebook NAME=your-notebook PORT=9001 WORK_VOLUME=our-work
 ```
@@ -52,7 +52,7 @@ Instead of `make notebook`, run `make self-signed-notebook PASSWORD=your_desired
 
 Yes. Please.
 
-```
+```bash
 make letsencrypt FQDN=host.mydomain.com EMAIL=myemail@somewhere.com
 make letsencrypt-notebook
 ```
@@ -61,7 +61,7 @@ The first command creates a Docker volume named after the notebook container wit
 
 Be aware: Let's Encrypt has a pretty [low rate limit per domain](https://community.letsencrypt.org/t/public-beta-rate-limits/4772/3) at the moment.  You can avoid exhausting your limit by testing against the Let's Encrypt staging servers.  To hit their staging servers, set the environment variable `CERT_SERVER=--staging`.
 
-```
+```bash
 make letsencrypt FQDN=host.mydomain.com EMAIL=myemail@somewhere.com CERT_SERVER=--staging
 ```
 
@@ -69,7 +69,7 @@ Also, keep in mind Let's Encrypt certificates are short lived: 90 days at the mo
 
 ### My pip/conda/apt-get installs disappear every time I restart the container. Can I make them permanent?
 
-```
+```bash
 # add your pip, conda, apt-get, etc. permanent features to the Dockerfile where
 # indicated by the comments in the Dockerfile
 vi Dockerfile
@@ -79,7 +79,7 @@ make notebook
 
 ### How do I upgrade my Docker container?
 
-```
+```bash
 make image DOCKER_ARGS=--pull
 make notebook
 ```
@@ -90,7 +90,7 @@ The first line pulls the latest version of the Docker image used in the local Do
 
 Yes. As an example, there's a `softlayer.makefile` included in this repo as an example. You would use it like so:
 
-```
+```bash
 make softlayer-vm NAME=myhost \
     SOFTLAYER_DOMAIN=your_desired_domain \
     SOFTLAYER_USER=your_user_id \

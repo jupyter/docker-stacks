@@ -116,11 +116,10 @@ packages from [conda-forge](https://conda-forge.github.io/feedstocks)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/pyspark-notebook/Dockerfile)
 | [Docker Hub image tags](https://hub.docker.com/r/jupyter/pyspark-notebook/tags/)
 
-`jupyter/pyspark-notebook` includes Python support for Apache Spark, optionally on Mesos.
+`jupyter/pyspark-notebook` includes Python support for Apache Spark.
 
 * Everything in `jupyter/scipy-notebook` and its ancestor images
 * [Apache Spark](https://spark.apache.org/) with Hadoop binaries
-* [Mesos](http://mesos.apache.org/) client libraries
 
 ### jupyter/all-spark-notebook
 
@@ -128,7 +127,7 @@ packages from [conda-forge](https://conda-forge.github.io/feedstocks)
 | [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/all-spark-notebook/Dockerfile)
 | [Docker Hub image tags](https://hub.docker.com/r/jupyter/all-spark-notebook/tags/)
 
-`jupyter/all-spark-notebook` includes Python, R, and Scala support for Apache Spark, optionally on Mesos.
+`jupyter/all-spark-notebook` includes Python, R, and Scala support for Apache Spark.
 
 * Everything in `jupyter/pyspark-notebook` and its ancestor images
 * [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks

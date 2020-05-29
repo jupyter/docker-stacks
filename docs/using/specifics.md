@@ -5,7 +5,8 @@ This page provides details about features specific to one or more images.
 ## Apache Spark
 
 **Specific Docker Image Options**
-* `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](http://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook` 
+
+* `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](http://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
 
 **Usage Examples**
 
@@ -13,137 +14,193 @@ The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images support t
 
 ### Using Spark Local Mode
 
-Spark local mode is useful for experimentation on small data when you do not have a Spark cluster available.
+Spark **local mode** is useful for experimentation on small data when you do not have a Spark cluster available.
 
-#### In a Python Notebook
+#### In Python
+
+In a Python notebook.
 
 ```python
 from pyspark.sql import SparkSession
-spark = SparkSession.builder.appName("SimpleApp").getOrCreate()
-# do something to prove it works
-spark.sql('SELECT "Test" as c1').show()
+
+# Spark session & context
+spark = SparkSession.builder.master('local').getOrCreate()
+sc = spark.sparkContext
+
+# Sum of the first 100 whole numbers
+rdd = sc.parallelize(range(100 + 1))
+rdd.sum()
+# 5050
 ```
 
-#### In a R Notebook
+#### In R
 
-```r
+In a R notebook with [SparkR][sparkr].
+
+```R
 library(SparkR)
 
-as <- sparkR.session("local[*]")
+# Spark session & context
+sc <- sparkR.session("local")
 
-# do something to prove it works
-df <- as.DataFrame(iris)
-head(filter(df, df$Petal_Width > 0.2))
+# Sum of the first 100 whole numbers
+sdf <- createDataFrame(list(1:100))
+dapplyCollect(sdf,
+              function(x) 
+              { x <- sum(x)}
+             )
+# 5050
 ```
 
-#### In a Spylon Kernel Scala Notebook
+In a R notebook with [sparklyr][sparklyr].
 
-Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark options in a `%%init_spark` magic cell.
+```R
+library(sparklyr)
+
+# Spark configuration
+conf <- spark_config()
+# Set the catalog implementation in-memory
+conf$spark.sql.catalogImplementation <- "in-memory"
+
+# Spark session & context
+sc <- spark_connect(master = "local", config = conf)
+
+# Sum of the first 100 whole numbers
+sdf_len(sc, 100, repartition = 1) %>% 
+    spark_apply(function(e) sum(e))
+# 5050
+```
+
+#### In Scala
+
+##### In a Spylon Kernel
+
+Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
+options in a `%%init_spark` magic cell.
 
 ```python
 %%init_spark
 # Configure Spark to use a local master
-launcher.master = "local[*]"
+launcher.master = "local"
 ```
 
 ```scala
-// Now run Scala code that uses the initialized SparkContext in sc
-val rdd = sc.parallelize(0 to 999)
-rdd.takeSample(false, 5)
+// Sum of the first 100 whole numbers
+val rdd = sc.parallelize(0 to 100)
+rdd.sum()
+// 5050
 ```
 
-#### In an Apache Toree Scala Notebook
+##### In an Apache Toree Kernel
 
 Apache Toree instantiates a local `SparkContext` for you in variable `sc` when the kernel starts.
 
 ```scala
-val rdd = sc.parallelize(0 to 999)
-rdd.takeSample(false, 5)
+// Sum of the first 100 whole numbers
+val rdd = sc.parallelize(0 to 100)
+rdd.sum()
+// 5050
 ```
 
-### Connecting to a Spark Cluster on Mesos
+### Connecting to a Spark Cluster in Standalone Mode
 
-This configuration allows your compute cluster to scale with your data.
+Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs/latest/spark-standalone.html)** requires the following set of steps:
 
-0. [Deploy Spark on Mesos](http://spark.apache.org/docs/latest/running-on-mesos.html).
-1. Configure each slave with [the `--no-switch_user` flag](https://open.mesosphere.com/reference/mesos-slave/) or create the `$NB_USER` account on every slave node.
-2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
-    * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
-3. Follow the language specific instructions below.
+0. Verify that the docker image (check the Dockerfile) and the Spark Cluster which is being
+   deployed, run the same version of Spark.
+1. [Deploy Spark in Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).
+2. Run the Docker container with `--net=host` in a location that is network addressable by all of
+   your Spark workers. (This is a [Spark networking
+   requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
+   * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e
+   TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
 
-#### In a Python Notebook
+**Note**: In the following examples we are using the Spark master URL `spark://master:7077` that shall be replaced by the URL of the Spark master.
+
+#### In Python
+
+The **same Python version** need to be used on the notebook (where the driver is located) and on the Spark workers.
+The python version used at driver and worker side can be adjusted by setting the environment variables `PYSPARK_PYTHON` and / or `PYSPARK_DRIVER_PYTHON`, see [Spark Configuration][spark-conf] for more information.
 
 ```python
-import os
-# make sure pyspark tells workers to use python3 not 2 if both are installed
-os.environ['PYSPARK_PYTHON'] = '/usr/bin/python3'
+from pyspark.sql import SparkSession
 
-import pyspark
-conf = pyspark.SparkConf()
+# Spark session & context
+spark = SparkSession.builder.master('spark://master:7077').getOrCreate()
+sc = spark.sparkContext
 
-# point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
-conf.setMaster("mesos://10.10.10.10:5050")
-# point to spark binary package in HDFS or on local filesystem on all slave
-# nodes (e.g., file:///opt/spark/spark-2.2.0-bin-hadoop2.7.tgz)
-conf.set("spark.executor.uri", "hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz")
-# set other options as desired
-conf.set("spark.executor.memory", "8g")
-conf.set("spark.core.connection.ack.wait.timeout", "1200")
-
-# create the context
-sc = pyspark.SparkContext(conf=conf)
-
-# do something to prove it works
-rdd = sc.parallelize(range(100000000))
-rdd.sumApprox(3)
+# Sum of the first 100 whole numbers
+rdd = sc.parallelize(range(100 + 1))
+rdd.sum()
+# 5050
 ```
 
-#### In a R Notebook
+#### In R
 
-```r
+In a R notebook with [SparkR][sparkr].
+
+```R
 library(SparkR)
 
-# Point to mesos master or zookeeper entry (e.g., zk://10.10.10.10:2181/mesos)
-# Point to spark binary package in HDFS or on local filesystem on all slave
-# nodes (e.g., file:///opt/spark/spark-2.2.0-bin-hadoop2.7.tgz) in sparkEnvir
-# Set other options in sparkEnvir
-sc <- sparkR.session("mesos://10.10.10.10:5050", sparkEnvir=list(
-    spark.executor.uri="hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz",
-    spark.executor.memory="8g"
-    )
-)
+# Spark session & context
+sc <- sparkR.session("spark://master:7077")
 
-# do something to prove it works
-data(iris)
-df <- as.DataFrame(iris)
-head(filter(df, df$Petal_Width > 0.2))
+# Sum of the first 100 whole numbers
+sdf <- createDataFrame(list(1:100))
+dapplyCollect(sdf,
+              function(x) 
+              { x <- sum(x)}
+             )
+# 5050
 ```
 
-#### In a Spylon Kernel Scala Notebook
+In a R notebook with [sparklyr][sparklyr].
+
+```R
+library(sparklyr)
+
+# Spark session & context
+# Spark configuration
+conf <- spark_config()
+# Set the catalog implementation in-memory
+conf$spark.sql.catalogImplementation <- "in-memory"
+sc <- spark_connect(master = "spark://master:7077", config = conf)
+
+# Sum of the first 100 whole numbers
+sdf_len(sc, 100, repartition = 1) %>% 
+    spark_apply(function(e) sum(e))
+# 5050
+```
+
+#### In Scala
+
+##### In a Spylon Kernel
+
+Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
+options in a `%%init_spark` magic cell.
 
 ```python
 %%init_spark
-# Configure the location of the mesos master and spark distribution on HDFS
-launcher.master = "mesos://10.10.10.10:5050"
-launcher.conf.spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz
+# Configure Spark to use a local master
+launcher.master = "spark://master:7077"
 ```
 
 ```scala
-// Now run Scala code that uses the initialized SparkContext in sc
-val rdd = sc.parallelize(0 to 999)
-rdd.takeSample(false, 5)
+// Sum of the first 100 whole numbers
+val rdd = sc.parallelize(0 to 100)
+rdd.sum()
+// 5050
 ```
 
-#### In an Apache Toree Scala Notebook
+##### In an Apache Toree Scala Notebook
 
-The Apache Toree kernel automatically creates a `SparkContext` when it starts based on configuration information from its command line arguments and environment variables. You can pass information about your Mesos cluster via the `SPARK_OPTS` environment variable when you spawn a container.
+The Apache Toree kernel automatically creates a `SparkContext` when it starts based on configuration information from its command line arguments and environment variables. You can pass information about your cluster via the `SPARK_OPTS` environment variable when you spawn a container.
 
-For instance, to pass information about a Mesos master, Spark binary location in HDFS, and an executor options, you could start the container like so:
+For instance, to pass information about a standalone Spark master, you could start the container like so:
 
-```
-docker run -d -p 8888:8888 -e SPARK_OPTS='--master=mesos://10.10.10.10:5050 \
-    --spark.executor.uri=hdfs://10.10.10.10/spark/spark-2.2.0-bin-hadoop2.7.tgz \
-    --spark.executor.memory=8g' jupyter/all-spark-notebook
+```bash
+docker run -d -p 8888:8888 -e SPARK_OPTS='--master=spark://master:7077' \
+       jupyter/all-spark-notebook
 ```
 
 Note that this is the same information expressed in a notebook in the Python case above. Once the kernel spec has your cluster information, you can test your cluster in an Apache Toree notebook like so:
@@ -152,24 +209,16 @@ Note that this is the same information expressed in a notebook in the Python cas
 // should print the value of --master in the kernel spec
 println(sc.master)
 
-// do something to prove it works
-val rdd = sc.parallelize(0 to 99999999)
+// Sum of the first 100 whole numbers
+val rdd = sc.parallelize(0 to 100)
 rdd.sum()
+// 5050
 ```
-
-### Connecting to a Spark Cluster in Standalone Mode
-
-Connection to Spark Cluster on Standalone Mode requires the following set of steps:
-
-0. Verify that the docker image (check the Dockerfile) and the Spark Cluster which is being deployed, run the same version of Spark.
-1. [Deploy Spark in Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).
-2. Run the Docker container with `--net=host` in a location that is network addressable by all of your Spark workers. (This is a [Spark networking requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
-    * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
-3. The language specific instructions are almost same as mentioned above for Mesos, only the master url would now be something like spark://10.10.10.10:7077
 
 ## Tensorflow
 
-The `jupyter/tensorflow-notebook` image supports the use of [Tensorflow](https://www.tensorflow.org/) in single machine or distributed mode.
+The `jupyter/tensorflow-notebook` image supports the use of
+[Tensorflow](https://www.tensorflow.org/) in single machine or distributed mode.
 
 ### Single Machine Mode
 
@@ -199,3 +248,7 @@ init = tf.global_variables_initializer()
 sess.run(init)
 sess.run(hello)
 ```
+
+[sparkr]: https://spark.apache.org/docs/latest/sparkr.html
+[sparklyr]: https://spark.rstudio.com/
+[spark-conf]: https://spark.apache.org/docs/latest/configuration.html
