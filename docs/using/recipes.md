@@ -17,7 +17,7 @@ orchestrator config.
 
 For example:
 
-```
+```bash
 docker run -it -e GRANT_SUDO=yes --user root jupyter/minimal-notebook
 ```
 
@@ -75,7 +75,7 @@ Python 2.x was removed from all images on August 10th, 2017, starting in tag `cc
 add a Python 2.x environment by defining your own Dockerfile inheriting from one of the images like
 so:
 
-```
+```dockerfile
 # Choose your desired base image
 FROM jupyter/scipy-notebook:latest
 
@@ -103,7 +103,7 @@ Ref:
 The default version of Python that ships with conda/ubuntu may not be the version you want.
 To add a conda environment with a different version and make it accessible to Jupyter, the instructions are very similar to Python 2.x but are slightly simpler (no need to switch to `root`):
 
-```
+```dockerfile
 # Choose your desired base image
 FROM jupyter/minimal-notebook:latest
 
@@ -168,12 +168,12 @@ ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 ```
 
 And build the image as:
-```
+```bash
 docker build -t jupyter/scipy-dasklabextension:latest .
 ```
 
 Once built, run using the command:
-```
+```bash
 docker run -it --rm -p 8888:8888 -p 8787:8787 jupyter/scipy-dasklabextension:latest
 ```
 
@@ -194,7 +194,7 @@ Ref:
 [RISE](https://github.com/damianavila/RISE) allows via extension to create live slideshows of your
 notebooks, with no conversion, adding javascript Reveal.js:
 
-```
+```bash
 # Add Live slideshows with RISE
 RUN conda install -c damianavila82 rise
 ```
@@ -207,7 +207,7 @@ Credit: [Paolo D.](https://github.com/pdonorio) based on
 You need to install conda's gcc for Python xgboost to work properly. Otherwise, you'll get an
 exception about libgomp.so.1 missing GOMP_4.0.
 
-```
+```bash
 %%bash
 conda install -y gcc
 pip install xgboost
@@ -312,8 +312,8 @@ Credit: [Justin Tyberg](https://github.com/jtyberg), [quanghoc](https://github.c
 To use a specific version of JupyterHub, the version of `jupyterhub` in your image should match the
 version in the Hub itself.
 
-```
-FROM  jupyter/base-notebook:5ded1de07260
+```dockerfile
+FROM jupyter/base-notebook:5ded1de07260
 RUN pip install jupyterhub==0.8.0b1
 ```
 
@@ -375,7 +375,7 @@ Ref:
 
 ### Using Local Spark JARs
 
-```
+```python
 import os
 os.environ['PYSPARK_SUBMIT_ARGS'] = '--jars /home/jovyan/spark-streaming-kafka-assembly_2.10-1.6.1.jar pyspark-shell'
 import pyspark
@@ -404,7 +404,7 @@ Ref:
 
 ### Use jupyter/all-spark-notebooks with an existing Spark/YARN cluster
 
-```
+```dockerfile
 FROM jupyter/all-spark-notebook
 
 # Set env vars for pydoop
@@ -480,13 +480,13 @@ convenient to launch the server without a password or token. In this case, you s
 
 For jupyterlab:
 
-```
+```bash
 docker run jupyter/base-notebook:6d2a05346196 start.sh jupyter lab --LabApp.token=''
 ```
 
 For jupyter classic:
 
-```
+```bash
 docker run jupyter/base-notebook:6d2a05346196 start.sh jupyter notebook --NotebookApp.token=''
 ```
 
@@ -494,7 +494,7 @@ docker run jupyter/base-notebook:6d2a05346196 start.sh jupyter notebook --Notebo
 
 NB: this works for classic notebooks only
 
-```
+```dockerfile
 # Update with your base image of choice
 FROM jupyter/minimal-notebook:latest
 
@@ -513,7 +513,7 @@ Ref:
 
 Using `auto-sklearn` requires `swig`, which the other notebook images lack, so it cant be experimented with. Also, there is no Conda package for `auto-sklearn`.
 
-```
+```dockerfile
 ARG BASE_CONTAINER=jupyter/scipy-notebook
 FROM jupyter/scipy-notebook:latest
 

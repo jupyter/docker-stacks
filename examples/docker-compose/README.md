@@ -12,7 +12,7 @@ See the [installation instructions](https://docs.docker.com/engine/installation/
 
 Build and run a `jupyter/minimal-notebook` container on a VirtualBox VM on local desktop.
 
-```
+```bash
 # create a Docker Machine-controlled VirtualBox VM
 bin/vbox.sh mymachine
 
@@ -28,7 +28,7 @@ notebook/up.sh
 
 To stop and remove the container:
 
-```
+```bash
 notebook/down.sh
 ```
 
@@ -39,14 +39,14 @@ notebook/down.sh
 
 You can customize the docker-stack notebook image to deploy by modifying the `notebook/Dockerfile`.  For example, you can build and deploy a `jupyter/all-spark-notebook` by modifying the Dockerfile like so:
 
-```
+```dockerfile
 FROM jupyter/all-spark-notebook:55d5ca6be183
 ...
 ```
 
 Once you modify the Dockerfile, don't forget to rebuild the image.
 
-```
+```bash
 # activate the docker machine
 eval "$(docker-machine env mymachine)"
 
@@ -57,14 +57,14 @@ notebook/build.sh
 
 Yes. Set environment variables to specify unique names and ports when running the `up.sh` command.
 
-```
+```bash
 NAME=my-notebook PORT=9000 notebook/up.sh
 NAME=your-notebook PORT=9001 notebook/up.sh
 ```
 
 To stop and remove the containers:
 
-```
+```bash
 NAME=my-notebook notebook/down.sh
 NAME=your-notebook notebook/down.sh
 ```
@@ -78,7 +78,7 @@ The `up.sh` creates a Docker volume named after the notebook container with a `-
 
 Yes. Set the `WORK_VOLUME` environment variable to the same value for each notebook.
 
-```
+```bash
 NAME=my-notebook PORT=9000 WORK_VOLUME=our-work notebook/up.sh
 NAME=your-notebook PORT=9001 WORK_VOLUME=our-work notebook/up.sh
 ```
@@ -87,7 +87,7 @@ NAME=your-notebook PORT=9001 WORK_VOLUME=our-work notebook/up.sh
 
 To run the notebook server with a self-signed certificate, pass the `--secure` option to the `up.sh` script.  You must also provide a password, which will be used to secure the notebook server.  You can specify the password by setting the `PASSWORD` environment variable, or by passing it to the `up.sh` script.  
 
-```
+```bash
 PASSWORD=a_secret notebook/up.sh --secure
 
 # or
@@ -103,7 +103,7 @@ This example includes the `bin/letsencrypt.sh` script, which runs the `letsencry
 
 The following command will create a certificate chain and store it in a Docker volume named `mydomain-secrets`.
 
-```
+```bash
 FQDN=host.mydomain.com EMAIL=myemail@somewhere.com \
   SECRETS_VOLUME=mydomain-secrets \
   bin/letsencrypt.sh
@@ -111,7 +111,7 @@ FQDN=host.mydomain.com EMAIL=myemail@somewhere.com \
 
 Now run `up.sh` with the `--letsencrypt` option.  You must also provide the name of the secrets volume and a password.
 
-```
+```bash
 PASSWORD=a_secret SECRETS_VOLUME=mydomain-secrets notebook/up.sh --letsencrypt
 
 # or
@@ -120,7 +120,7 @@ notebook/up.sh --letsencrypt --password a_secret --secrets mydomain-secrets
 
 Be aware that Let's Encrypt has a pretty [low rate limit per domain](https://community.letsencrypt.org/t/public-beta-rate-limits/4772/3) at the moment.  You can avoid exhausting your limit by testing against the Let's Encrypt staging servers.  To hit their staging servers, set the environment variable `CERT_SERVER=--staging`.
 
-```
+```bash
 FQDN=host.mydomain.com EMAIL=myemail@somewhere.com \
   CERT_SERVER=--staging \
   bin/letsencrypt.sh
@@ -134,13 +134,13 @@ Yes, you should be able to deploy to any Docker Machine-controlled host.  To mak
 
 To create a Docker machine using a VirtualBox VM on local desktop:
 
-```
+```bash
 bin/vbox.sh mymachine
 ```
 
 To create a Docker machine using a virtual device on IBM SoftLayer:
 
-```
+```bash
 export SOFTLAYER_USER=my_softlayer_username
 export SOFTLAYER_API_KEY=my_softlayer_api_key
 export SOFTLAYER_DOMAIN=my.domain

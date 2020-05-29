@@ -22,7 +22,7 @@ Getting Started with S2I
 
 As an example of how S2I can be used to create a custom image with a bundled set of notebooks, run:
 
-```
+```bash
 s2i build \
   --scripts-url https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image \
   --context-dir docs/source/examples/Notebook \
@@ -76,7 +76,7 @@ The supplied ``assemble`` script performs a few key steps.
 
 The first steps copy files into the location they need to be when the image is run, from the directory where they are initially placed by the ``s2i`` command.
 
-```
+```bash
 cp -Rf /tmp/src/. /home/$NB_USER
 
 rm -rf /tmp/src
@@ -84,7 +84,7 @@ rm -rf /tmp/src
 
 The next steps are:
 
-```
+```bash
 if [ -f /home/$NB_USER/environment.yml ]; then
     conda env update --name root --file /home/$NB_USER/environment.yml
     conda clean --all -f -y
@@ -101,7 +101,7 @@ This means that so long as a set of notebook files provides one of these files l
 
 A final step is:
 
-```
+```bash
 fix-permissions $CONDA_DIR
 fix-permissions /home/$NB_USER
 ```
@@ -112,7 +112,7 @@ As long as you preserve the first and last set of steps, you can do whatever you
 
 The ``run`` script in this directory is very simple and just runs the notebook application.
 
-```
+```bash
 exec start-notebook.sh "$@"
 ```
 
@@ -121,13 +121,13 @@ Integration with OpenShift
 
 The OpenShift platform provides integrated support for S2I type builds. Templates are provided for using the S2I build mechanism with the scripts in this directory. To load the templates run:
 
-```
+```bash
 oc create -f https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image/templates.json
 ```
 
 This will create the templates:
 
-```
+```bash
 jupyter-notebook-builder
 jupyter-notebook-quickstart
 ```
@@ -136,7 +136,7 @@ The templates can be used from the OpenShift web console or command line. This `
 
 To use the OpenShift command line to build into an image, and deploy, the set of notebooks used above, run:
 
-```
+```bash
 oc new-app --template jupyter-notebook-quickstart \
   --param APPLICATION_NAME=notebook-examples \
   --param GIT_REPOSITORY_URL=https://github.com/jupyter/notebook \
