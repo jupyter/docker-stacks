@@ -79,7 +79,7 @@ dev-env: ## install libraries required to build docs and run tests
 lint/%: ARGS?=
 lint/%: ## lint the dockerfile(s) for a stack
 	@echo "Linting Dockerfiles in $(notdir $@)..."
-	git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
+	@git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
 	@echo "Linting done!"
 
 lint-all: $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
