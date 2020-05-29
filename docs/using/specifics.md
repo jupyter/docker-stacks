@@ -27,9 +27,10 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.master('local').getOrCreate()
 sc = spark.sparkContext
 
-# Do something to prove it works
-rdd = sc.parallelize(range(100))
+# Sum of the first 100 whole numbers
+rdd = sc.parallelize(range(100 + 1))
 rdd.sum()
+# 5050
 ```
 
 #### In R
@@ -42,26 +43,32 @@ library(SparkR)
 # Spark session & context
 sc <- sparkR.session("local")
 
-# Do something to prove it works
-data(iris)
-df <- as.DataFrame(iris)
-head(filter(df, df$Petal_Width > 0.2))
+# Sum of the first 100 whole numbers
+sdf <- createDataFrame(list(1:100))
+dapplyCollect(sdf,
+              function(x) 
+              { x <- sum(x)}
+             )
+# 5050
 ```
 
 In a R notebook with [sparklyr][sparklyr].
 
 ```R
 library(sparklyr)
-library(dplyr)
+
+# Spark configuration
+conf <- spark_config()
+# Set the catalog implementation in-memory
+conf$spark.sql.catalogImplementation <- "in-memory"
 
 # Spark session & context
-sc <- spark_connect(master = "local")
+sc <- spark_connect(master = "local", config = conf)
 
-# Do something to prove it works
-iris_tbl <- copy_to(sc, iris)
-iris_tbl %>% 
-    filter(Petal_Width > 0.2) %>%
-    head()
+# Sum of the first 100 whole numbers
+sdf_len(sc, 100, repartition = 1) %>% 
+    spark_apply(function(e) sum(e))
+# 5050
 ```
 
 #### In Scala
@@ -78,9 +85,10 @@ launcher.master = "local"
 ```
 
 ```scala
-// Do something to prove it works
+// Sum of the first 100 whole numbers
 val rdd = sc.parallelize(0 to 100)
 rdd.sum()
+// 5050
 ```
 
 ##### In an Apache Toree Kernel
@@ -88,9 +96,10 @@ rdd.sum()
 Apache Toree instantiates a local `SparkContext` for you in variable `sc` when the kernel starts.
 
 ```scala
-// do something to prove it works
+// Sum of the first 100 whole numbers
 val rdd = sc.parallelize(0 to 100)
 rdd.sum()
+// 5050
 ```
 
 ### Connecting to a Spark Cluster in Standalone Mode
@@ -120,9 +129,10 @@ from pyspark.sql import SparkSession
 spark = SparkSession.builder.master('spark://master:7077').getOrCreate()
 sc = spark.sparkContext
 
-# Do something to prove it works
-rdd = sc.parallelize(range(100))
+# Sum of the first 100 whole numbers
+rdd = sc.parallelize(range(100 + 1))
 rdd.sum()
+# 5050
 ```
 
 #### In R
@@ -135,26 +145,31 @@ library(SparkR)
 # Spark session & context
 sc <- sparkR.session("spark://master:7077")
 
-# Do something to prove it works
-data(iris)
-df <- as.DataFrame(iris)
-head(filter(df, df$Petal_Width > 0.2))
+# Sum of the first 100 whole numbers
+sdf <- createDataFrame(list(1:100))
+dapplyCollect(sdf,
+              function(x) 
+              { x <- sum(x)}
+             )
+# 5050
 ```
 
 In a R notebook with [sparklyr][sparklyr].
 
 ```R
 library(sparklyr)
-library(dplyr)
 
 # Spark session & context
-sc <- spark_connect(master = "spark://master:7077")
+# Spark configuration
+conf <- spark_config()
+# Set the catalog implementation in-memory
+conf$spark.sql.catalogImplementation <- "in-memory"
+sc <- spark_connect(master = "spark://master:7077", config = conf)
 
-# Do something to prove it works
-iris_tbl <- copy_to(sc, iris)
-iris_tbl %>% 
-    filter(Petal_Width > 0.2) %>%
-    head()
+# Sum of the first 100 whole numbers
+sdf_len(sc, 100, repartition = 1) %>% 
+    spark_apply(function(e) sum(e))
+# 5050
 ```
 
 #### In Scala
@@ -171,9 +186,10 @@ launcher.master = "spark://master:7077"
 ```
 
 ```scala
-// Do something to prove it works
+// Sum of the first 100 whole numbers
 val rdd = sc.parallelize(0 to 100)
 rdd.sum()
+// 5050
 ```
 
 ##### In an Apache Toree Scala Notebook
@@ -193,9 +209,10 @@ Note that this is the same information expressed in a notebook in the Python cas
 // should print the value of --master in the kernel spec
 println(sc.master)
 
-// do something to prove it works
+// Sum of the first 100 whole numbers
 val rdd = sc.parallelize(0 to 100)
 rdd.sum()
+// 5050
 ```
 
 ## Tensorflow
