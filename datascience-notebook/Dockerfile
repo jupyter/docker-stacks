@@ -85,10 +85,10 @@ RUN conda install --quiet --yes \
 # to the system share location. Avoids problems with runtime UID change not
 # taking effect properly on the .local folder in the jovyan home dir.
 RUN julia -e 'import Pkg; Pkg.update()' && \
-    (test "${TEST_ONLY_BUILD}" || julia -e 'import Pkg; Pkg.add("HDF5")') && \
+    (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
     julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \
     # move kernelspec out of home \
-    mv "${HOME}/.local/share/jupyter/kernels/julia*" "${CONDA_DIR}/share/jupyter/kernels/" && \
+    mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
     chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
     rm -rf "${HOME}/.local" && \
     fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
