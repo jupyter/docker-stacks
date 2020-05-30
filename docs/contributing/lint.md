@@ -1,10 +1,10 @@
 # Image Lint
 
-We are using the [Hadolint][LK1] tool to analyse each `Dockerfile` to comply with [Docker best practices][LK2].
+To comply with [Docker best practices][LK2], we are using the [Hadolint][LK1] tool to analyse each `Dockerfile` .
 
-## Install
+## Installation
 
-There is a specific make target to install the linter.
+There is a specific `make` target to install the linter.
 By default `hadolint` will be installed in `${HOME}/hadolint`.
 
 ```bash
@@ -17,7 +17,9 @@ $ make lint-install
 
 ## Lint
 
-The linter can be run per stack `make lint/<stack>`.
+### Per Stack
+
+The linter can be run per stack.
 
 ```bash
 $ make lint/scipy-notebook  
@@ -39,15 +41,17 @@ Optionally you can pass arguments to the linter.
 $ make lint/scipy-notebook ARGS="--format codeclimate"  
 ```
 
-To lint all the stacks.
+### All the Stacks
+
+The linter can be run against all the stacks.
 
 ```bash
 $ make lint-all
 ```
 
-## Ignore Rules
+## Ignoring Rules
 
-Sometimes it's necessary to ignore [some rules][LK3]. The preferred way is to do it in the `Dockerfile`.
+Sometimes it is necessary to ignore [some rules][LK3]. The preferred way to do it is to flag ignored rules in the `Dockerfile`.
 
 > It is also possible to ignore rules by using a special comment directly above the Dockerfile instruction you want to make an exception for. Ignore rule comments look like `# hadolint ignore=DL3001,SC1081`. For example:
 
