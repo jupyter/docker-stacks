@@ -1,7 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG BASE_CONTAINER=jupyter/scipy-notebook
-# hadolint ignore=DL3006
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -14,7 +13,7 @@ USER root
 # Spark dependencies
 ENV APACHE_SPARK_VERSION=2.4.5 \
     HADOOP_VERSION=2.7
-# hadolint ignore=DL3008
+
 RUN apt-get -y update && \
     apt-get install --no-install-recommends -y openjdk-8-jre-headless ca-certificates-java && \
     rm -rf /var/lib/apt/lists/*

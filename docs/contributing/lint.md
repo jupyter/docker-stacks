@@ -1,6 +1,6 @@
 # Image Lint
 
-To comply with [Docker best practices][LK2], we are using the [Hadolint][LK1] tool to analyse each `Dockerfile` .
+To comply with [Docker best practices][dbp], we are using the [Hadolint][hadolint] tool to analyse each `Dockerfile` .
 
 ## Installation
 
@@ -51,18 +51,28 @@ $ make lint-all
 
 ## Ignoring Rules
 
-Sometimes it is necessary to ignore [some rules][LK3]. The preferred way to do it is to flag ignored rules in the `Dockerfile`.
+Sometimes it is necessary to ignore [some rules][rules]. 
+The following rules are ignored by default and sor for all images in the `.hadolint.yaml` file.
+
+- [`DL3006`][DL3006]: We use a specific policy to manage image tags. 
+  - `base-notebook` `FROM` clause is fixed but based on an argument (`ARG`). 
+  - Building downstream images from (`FROM`) the latest is done on purpose.
+- [`DL3008`][DL3008]: System packages are always updated (`apt-get`) to the latest version.
+
+For other rules, the preferred way to do it is to flag ignored rules in the `Dockerfile`.
 
 > It is also possible to ignore rules by using a special comment directly above the Dockerfile instruction you want to make an exception for. Ignore rule comments look like `# hadolint ignore=DL3001,SC1081`. For example:
 
 ```dockerfile
-# hadolint ignore=DL3006
+
 FROM ubuntu
 
 # hadolint ignore=DL3003,SC1035
 RUN cd /tmp && echo "hello!"
 ```
 
-[LK1]: https://github.com/hadolint/hadolint
-[LK2]: https://docs.docker.com/develop/develop-images/dockerfile_best-practices
-[LK3]: https://github.com/hadolint/hadolint#rules
+[hadolint]: https://github.com/hadolint/hadolint
+[dbp]: https://docs.docker.com/develop/develop-images/dockerfile_best-practices
+[rules]: https://github.com/hadolint/hadolint#rules
+[DL3006]: https://github.com/hadolint/hadolint/wiki/DL3006
+[DL3008]: https://github.com/hadolint/hadolint/wiki/DL3008

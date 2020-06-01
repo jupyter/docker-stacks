@@ -1,7 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 ARG BASE_CONTAINER=jupyter/pyspark-notebook
-# hadolint ignore=DL3006
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -13,7 +12,6 @@ ENV R_LIBS_USER $SPARK_HOME/R/lib
 RUN fix-permissions $R_LIBS_USER
 
 # R pre-requisites
-# hadolint ignore=DL3008
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-dejavu \

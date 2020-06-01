@@ -6,7 +6,6 @@
 # OS/ARCH: linux/amd64
 ARG ROOT_CONTAINER=ubuntu:bionic-20200403@sha256:b58746c8a89938b8c9f5b77de3b8cf1fe78210c696ab03a1442e235eea65d84f
 ARG BASE_CONTAINER=$ROOT_CONTAINER
-# hadolint ignore=DL3006
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -22,7 +21,6 @@ USER root
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
-# hadolint ignore=DL3008
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     wget \
