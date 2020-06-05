@@ -35,10 +35,8 @@ RUN conda install --quiet --yes -c conda-forge \
     'r-htmlwidgets=1.5*' \
     'r-irkernel=1.1*' \
     'r-nycflights13=1.0*' \
-    'r-plyr=1.8*' \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
-    'r-reshape2=1.4*' \
     'r-rmarkdown=2.2    *' \
     'r-rodbc=1.3*' \
     'r-rsqlite=2.2*' \
