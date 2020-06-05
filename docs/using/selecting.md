@@ -63,7 +63,7 @@ repository. The following sections describe these images including their content
 * [devtools](https://cran.r-project.org/web/packages/devtools/index.html),
 [shiny](https://shiny.rstudio.com/), [rmarkdown](http://rmarkdown.rstudio.com/), [forecast](https://cran.r-project.org/web/packages/forecast/forecast.pdf),
 [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
-[nycflights13](https://cran.r-project.org/web/packages/nycflights13/index.html), [caret](http://topepo.github.io/caret/index.html),
+[nycflights13](https://cran.r-project.org/web/packages/nycflights13/index.html), [caret](http://topepo.github.io/caret/index.html), [tidymodels](https://www.tidymodels.org/),
 [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html), and [randomforest](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf)
 packages from [conda-forge](https://conda-forge.github.io/feedstocks)
 

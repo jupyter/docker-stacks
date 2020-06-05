@@ -43,6 +43,7 @@ RUN conda install --quiet --yes -c conda-forge \
     'r-shiny=1.4*' \
     'r-tidyverse=1.3*' \
     'unixodbc=2.3.*' \
+    'r-tidymodels=0.1*' \
     && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR
