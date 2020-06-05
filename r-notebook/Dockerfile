@@ -24,9 +24,9 @@ RUN ln -s /bin/tar /bin/gtar
 USER $NB_UID
 
 # R packages
-RUN conda install --quiet --yes \
-    'r-base=3.6.3' \
-    'r-caret=6.0*' \
+RUN conda install --quiet --yes -c conda-forge \
+    'r-base=4.0*' \
+    'r-caret=6.*' \
     'r-crayon=1.3*' \
     'r-devtools=2.3*' \
     'r-forecast=8.12*' \
@@ -39,7 +39,7 @@ RUN conda install --quiet --yes \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
     'r-reshape2=1.4*' \
-    'r-rmarkdown=2.1*' \
+    'r-rmarkdown=2.2    *' \
     'r-rodbc=1.3*' \
     'r-rsqlite=2.2*' \
     'r-shiny=1.4*' \
