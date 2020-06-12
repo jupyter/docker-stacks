@@ -15,7 +15,7 @@ RUN apt-get update && \
 USER $NB_UID
 
 # Install Python 3 packages
-RUN conda install --quiet --yes \
+RUN conda install -v --yes -S \
     'beautifulsoup4=4.9.*' \
     'conda-forge::blas=*=openblas' \
     'bokeh=2.0.*' \
@@ -46,17 +46,8 @@ RUN conda install --quiet --yes \
     'vincent=0.4.*' \
     'widgetsnbextension=3.5.*'\
     'xlrd=1.2.*' \
-    'lxml=4.4.*' \
-    'matplotlib=3.2.*' \
     'nltk=3.4.*' \
-    'spacy=2.0.*' \
-    'tensorboard=1.14.0' \
-    'tensorflow=1.14.0' \
-    'tensorflow-estimator=1.14.0' \
-    'regex=3.4.*' \
-    'Keras=2.2.4' \
-    'Keras-Applications=1.0.8' \
-    'Keras-Preprocessing=1.1.0' \
+    'celery=4.4.5' \
     && \
     conda clean --all -f -y && \
     # Activate ipywidgets extension in the environment that runs the notebook server
@@ -74,6 +65,14 @@ RUN conda install --quiet --yes \
     rm -rf /home/$NB_USER/.node-gyp && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+RUN python -m nltk.downloader stopwords
+RUN python -m nltk.downloader punkt
+RUN python -m nltk.downloader word2vec_sample
+RUN python -m nltk.downloader wordnet
+RUN python -m nltk.downloader averaged_perceptron_tagger
+
+RUN chmod -R 777 /home/jovyan/work
 
 # Install facets which does not have a pip or conda package at the moment
 RUN cd /tmp && \
