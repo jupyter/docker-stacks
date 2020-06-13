@@ -47,6 +47,7 @@ Table of Contents
    contributing/packages
    contributing/recipes
    contributing/translations
+   contributing/lint
    contributing/tests
    contributing/features
    contributing/stacks

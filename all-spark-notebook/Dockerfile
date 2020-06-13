@@ -30,22 +30,23 @@ RUN conda install --quiet --yes \
     'r-sparklyr=1.2*' \
     && \
     conda clean --all -f -y && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 # Apache Toree kernel
+# hadolint ignore=DL3013
 RUN pip install --no-cache-dir \
     https://dist.apache.org/repos/dist/release/incubator/toree/0.3.0-incubating/toree-pip/toree-0.3.0.tar.gz \
     && \
     jupyter toree install --sys-prefix && \
-    rm -rf /home/$NB_USER/.local && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    rm -rf "/home/${NB_USER}/.local" && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 # Spylon-kernel
 RUN conda install --quiet --yes 'spylon-kernel=0.4*' && \
     conda clean --all -f -y && \
     python -m spylon_kernel install --sys-prefix && \
-    rm -rf /home/$NB_USER/.local && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    rm -rf "/home/${NB_USER}/.local" && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"

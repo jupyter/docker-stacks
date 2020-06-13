@@ -59,24 +59,25 @@ RUN conda install --quiet --yes \
     jupyter lab build -y && \
     jupyter lab clean -y && \
     npm cache clean --force && \
-    rm -rf /home/$NB_USER/.cache/yarn && \
-    rm -rf /home/$NB_USER/.node-gyp && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    rm -rf "/home/${NB_USER}/.cache/yarn" && \
+    rm -rf "/home/${NB_USER}/.node-gyp" && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 # Install facets which does not have a pip or conda package at the moment
-RUN cd /tmp && \
-    git clone https://github.com/PAIR-code/facets.git && \
-    cd facets && \
-    jupyter nbextension install facets-dist/ --sys-prefix && \
-    cd && \
+WORKDIR /tmp
+RUN git clone https://github.com/PAIR-code/facets.git && \
+    jupyter nbextension install facets/facets-dist/ --sys-prefix && \
     rm -rf /tmp/facets && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 # Import matplotlib the first time to build the font cache.
-ENV XDG_CACHE_HOME /home/$NB_USER/.cache/
+ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
+
 RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
-    fix-permissions /home/$NB_USER
+    fix-permissions "/home/${NB_USER}"
 
 USER $NB_UID
+
+WORKDIR $HOME
