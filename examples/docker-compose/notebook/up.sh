@@ -11,8 +11,7 @@ USAGE="Usage: `basename $0` [--secure | --letsencrypt] [--password PASSWORD] [--
 # Parse args to determine security settings
 SECURE=${SECURE:=no}
 LETSENCRYPT=${LETSENCRYPT:=no}
-while [[ $# > 0 ]]
-do
+while [[ $# > 0 ]]; do
 key="$1"
 case $key in
     --secure)
@@ -37,25 +36,25 @@ shift # past argument or value
 done
 
 if [[ "$LETSENCRYPT" == yes || "$SECURE" == yes ]]; then
-  if [ -z "${PASSWORD:+x}" ]; then
-    echo "ERROR: Must set PASSWORD if running in secure mode"
-    echo "$USAGE"
-    exit 1
-  fi
-  if [ "$LETSENCRYPT" == yes ]; then
-    CONFIG=letsencrypt-notebook.yml
-    if [ -z "${SECRETS_VOLUME:+x}" ]; then
-      echo "ERROR: Must set SECRETS_VOLUME if running in letsencrypt mode"
-      echo "$USAGE"
-      exit 1
+    if [ -z "${PASSWORD:+x}" ]; then
+        echo "ERROR: Must set PASSWORD if running in secure mode"
+        echo "$USAGE"
+        exit 1
     fi
-  else
-    CONFIG=secure-notebook.yml
-  fi
-  export PORT=${PORT:=443}
+    if [ "$LETSENCRYPT" == yes ]; then
+        CONFIG=letsencrypt-notebook.yml
+        if [ -z "${SECRETS_VOLUME:+x}" ]; then
+            echo "ERROR: Must set SECRETS_VOLUME if running in letsencrypt mode"
+            echo "$USAGE"
+            exit 1
+        fi
+    else
+        CONFIG=secure-notebook.yml
+    fi
+    export PORT=${PORT:=443}
 else
-  CONFIG=notebook.yml
-  export PORT=${PORT:=80}
+    CONFIG=notebook.yml
+    export PORT=${PORT:=80}
 fi
 
 # Setup environment
