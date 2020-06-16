@@ -63,11 +63,9 @@ RUN conda install --quiet --yes \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
     'r-rmarkdown=2.2*' \
-    'r-rodbc=1.3*' \
     'r-rsqlite=2.2*' \
     'r-shiny=1.4*' \
     'r-tidyverse=1.3*' \
-    'unixodbc=2.3.*' \
     'r-tidymodels=0.1*' \
     && \
     conda clean --all -f -y && \
