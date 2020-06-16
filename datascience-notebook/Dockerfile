@@ -62,6 +62,7 @@ RUN conda install --quiet --yes \
     'r-nycflights13=1.0*' \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
+    'r-reticulate=1.16*' \
     'r-rmarkdown=2.2*' \
     'r-rsqlite=2.2*' \
     'r-shiny=1.4*' \
