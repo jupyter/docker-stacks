@@ -14,23 +14,23 @@ USER root
 ENV APACHE_SPARK_VERSION=3.0.0 \
     HADOOP_VERSION=3.2
 
+
+# Install JRE 11
 RUN apt-get -y update && \
-    apt-get install --no-install-recommends -y openjdk-11-jre-headless ca-certificates-java && \
+    apt-get install --no-install-recommends -y openjdk-11-jre-headless=11.0.7+10-2ubuntu2~18.04 ca-certificates-java=20180516ubuntu1~18.04.1 && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp
 
 # Using the preferred mirror to download Spark
-RUN cd /tmp && \
+RUN \
     wget -q https://www-us.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
     echo "BFE45406C67CC4AE00411AD18CC438F51E7D4B6F14EB61E7BF6B5450897C2E8D3AB020152657C0239F253735C263512FFABF538AC5B9FFFA38B8295736A9C387 *spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" | sha512sum -c - && \
     tar xzf spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz -C /usr/local --owner root --group root --no-same-owner && \
     rm spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
-RUN cd /usr/local && ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
 
-
-WORKDIR /usr/local
-RUN ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" spark
+WORKDIR /usr/local 
+RUN ln -s spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark
 
 # Configure Spark
 ENV SPARK_HOME=/usr/local/spark
