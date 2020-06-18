@@ -259,38 +259,30 @@ RUN rm /etc/dpkg/dpkg.cfg.d/excludes \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Workaround for a mandb bug, should be fixed in mandb > 2.8.5
-# https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
-RUN echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/man" >> /etc/manpath.config \
-    && echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/share/man" >> /etc/manpath.config \
-    && mandb
-
 USER $NB_UID
 ```
 
 Adding the documentation on top of an existing singleuser image wastes a lot of space and requires
 reinstalling every system package, which can take additional time and bandwidth; the
 `datascience-notebook` image has been shown to grow by almost 3GB when adding manapages in this way.
-Enabling manpages in the base Ubuntu layer prevents this container bloat:
+Enabling manpages in the base Ubuntu layer prevents this container bloat.
+Just use previous `Dockerfile` with original ubuntu image as your base container:
 
-```Dockerfile
-# Ubuntu 18.04 (bionic) from 2018-05-26
-# https://github.com/docker-library/official-images/commit/aac6a45b9eb2bffb8102353c350d341a410fb169
-ARG BASE_CONTAINER=ubuntu:bionic-20180526@sha256:c8c275751219dadad8fa56b3ac41ca6cb22219ff117ca98fe82b42f24e1ba64e
-FROM $BASE_CONTAINER
+```dockerfile
+# Ubuntu 20.04 (focal) from 2020-04-23
+# https://github.com/docker-library/official-images/commit/4475094895093bcc29055409494cce1e11b52f94
+ARG BASE_CONTAINER=ubuntu:focal-20200423@sha256:238e696992ba9913d24cfc3727034985abd136e08ee3067982401acdc30cbf3f
+```
 
-ENV DEBIAN_FRONTEND noninteractive
-# Remove the manpage blacklist, install man, install docs
-RUN rm /etc/dpkg/dpkg.cfg.d/excludes \
-    && apt-get update \
-    && dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install -yq --no-install-recommends --reinstall man \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Workaround for a mandb bug, should be fixed in mandb > 2.8.5
+For Ubuntu 18.04 (bionic) and earlier, you may also require to workaround for a mandb bug, which was fixed in mandb >= 2.8.6.1:
+```dockerfile
 # https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
-RUN echo "MANPATH_MAP /opt/conda/bin /opt/conda/man" >> /etc/manpath.config \
-    && echo "MANPATH_MAP /opt/conda/bin /opt/conda/share/man" >> /etc/manpath.config
+# http://launchpadlibrarian.net/435841763/man-db_2.8.5-2_2.8.6-1.diff.gz
+
+RUN echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/man" >> /etc/manpath.config \
+    && echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/share/man" >> /etc/manpath.config \
+    && mandb
+
 ```
 
 Be sure to check the current base image in `base-notebook` before building.
