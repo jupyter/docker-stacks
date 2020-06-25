@@ -64,7 +64,7 @@ class CondaPackageHelper:
     def installed_packages(self):
         """Return the installed packages"""
         if self.installed is None:
-            LOGGER.info(f"Grabing the list of installed packages ...")
+            LOGGER.info("Grabing the list of installed packages ...")
             self.installed = CondaPackageHelper._packages_from_json(
                 self._execute_command(CondaPackageHelper._conda_export_command())
             )
@@ -73,7 +73,7 @@ class CondaPackageHelper:
     def specified_packages(self):
         """Return the specifications (i.e. packages installation requested)"""
         if self.specs is None:
-            LOGGER.info(f"Grabing the list of specifications ...")
+            LOGGER.info("Grabing the list of specifications ...")
             self.specs = CondaPackageHelper._packages_from_json(
                 self._execute_command(CondaPackageHelper._conda_export_command(True))
             )
@@ -87,11 +87,11 @@ class CondaPackageHelper:
     @staticmethod
     def _packages_from_json(env_export):
         """Extract packages and versions from the lines returned by the list of specifications"""
-        #dependencies = filter(lambda x:  isinstance(x, str), json.loads(env_export).get("dependencies"))
+        # dependencies = filter(lambda x:  isinstance(x, str), json.loads(env_export).get("dependencies"))
         dependencies = json.loads(env_export).get("dependencies")
         # Filtering packages installed through pip in this case it's a dict {'pip': ['toree==0.3.0']}
         # Since we only manage packages installed through conda here
-        dependencies = filter(lambda x:  isinstance(x, str), dependencies)
+        dependencies = filter(lambda x: isinstance(x, str), dependencies)
         packages_dict = dict()
         for split in map(lambda x: x.split("=", 1), dependencies):
             # default values
@@ -112,7 +112,7 @@ class CondaPackageHelper:
         """Return the available packages"""
         if self.available is None:
             LOGGER.info(
-                f"Grabing the list of available packages (can take a while) ..."
+                "Grabing the list of available packages (can take a while) ..."
             )
             # Keeping command line output since `conda search --outdated --json` is way too long ...
             self.available = CondaPackageHelper._extract_available(
@@ -135,7 +135,7 @@ class CondaPackageHelper:
         installed = self.installed_packages()
         available = self.available_packages()
         self.comparison = list()
-        for pkg, inst_vs in self.installed.items():
+        for pkg, inst_vs in installed.items():
             if not specifications_only or pkg in specs:
                 avail_vs = sorted(
                     list(available[pkg]), key=CondaPackageHelper.semantic_cmp
@@ -158,7 +158,8 @@ class CondaPackageHelper:
         """Manage semantic versioning for comparison"""
 
         def mysplit(string):
-            version_substrs = lambda x: re.findall(r"([A-z]+|\d+)", x)
+            def version_substrs(x):
+                return re.findall(r"([A-z]+|\d+)", x)
             return list(chain(map(version_substrs, string.split("."))))
 
         def str_ord(string):

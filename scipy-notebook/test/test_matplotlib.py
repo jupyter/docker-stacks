@@ -3,7 +3,6 @@
 
 import logging
 
-import pytest
 import os
 
 LOGGER = logging.getLogger(__name__)
@@ -15,7 +14,7 @@ def test_matplotlib(container):
     cont_data_dir = "/home/jovyan/data"
     test_file = "matplotlib_1.py"
     output_dir = "/tmp"
-    LOGGER.info(f"Test that matplotlib is able to plot a graph and write it as an image ...")
+    LOGGER.info("Test that matplotlib is able to plot a graph and write it as an image ...")
     command = "sleep infinity"
     running_container = container.run(
         volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},

@@ -13,6 +13,7 @@ from requests.adapters import HTTPAdapter
 
 LOGGER = logging.getLogger(__name__)
 
+
 @pytest.fixture(scope='session')
 def http_client():
     """Requests session with retries and backoff."""
@@ -78,7 +79,7 @@ class TrackedContainer(object):
         LOGGER.info(f"Running {self.image_name} with args {all_kwargs} ...")
         self.container = self.docker_client.containers.run(self.image_name, **all_kwargs)
         return self.container
-    
+
     def remove(self):
         """Kills and removes the tracked docker container."""
         if self.container:
