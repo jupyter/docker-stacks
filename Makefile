@@ -89,7 +89,7 @@ flake8-lint:
 
 lint-all: flake8-lint $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
 
-lint-build-test-all: $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
+lint-build-test-all: flake8-lint $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
 
 lint-install: ## install hadolint
 	@echo "Installing hadolint at $(HADOLINT) ..."
