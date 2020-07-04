@@ -22,8 +22,8 @@ def test_nbconvert(container, test_file):
     timeout_ms = 600
     LOGGER.info(f"Test that {test_file} notebook can be executed ...")
     command = "jupyter nbconvert --to markdown " + \
-        f"--ExecutePreprocessor.timeout={timeout_ms}" + \
-        f"--output-dir {output_dir}" +\
+        f"--ExecutePreprocessor.timeout={timeout_ms} " + \
+        f"--output-dir {output_dir} " + \
         f"--execute {cont_data_dir}/{test_file}.ipynb"
     c = container.run(
         volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
