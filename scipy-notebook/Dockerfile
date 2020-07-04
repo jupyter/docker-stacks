@@ -37,7 +37,7 @@ RUN conda install --quiet --yes \
     'protobuf=3.11.*' \
     'pytables=3.6.*' \
     'scikit-image=0.16.*' \
-    'scikit-learn=0.22.*' \
+    'scikit-learn=0.23.*' \
     'scipy=1.4.*' \
     'seaborn=0.10.*' \
     'sqlalchemy=1.3.*' \
