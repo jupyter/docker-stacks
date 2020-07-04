@@ -88,7 +88,7 @@ lint-build-test-all: $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$
 
 lint-install: ## install hadolint
 	@echo "Installing hadolint at $(HADOLINT) ..."
-	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/v1.17.6/hadolint-$(shell uname -s)-$(shell uname -m)"
+	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/v1.18.0/hadolint-$(shell uname -s)-$(shell uname -m)"
 	@chmod 700 $(HADOLINT)
 	@echo "Installation done!"
 	@$(HADOLINT) --version	
