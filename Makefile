@@ -80,9 +80,14 @@ lint/%: ARGS?=
 lint/%: ## lint the dockerfile(s) for a stack
 	@echo "Linting Dockerfiles in $(notdir $@)..."
 	@git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
-	@echo "Linting done!"
+	@echo "Linting Dockerfiles done!"
 
-lint-all: $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
+flake8-lint:
+	@echo "Linting Python source files..."
+	@git ls-files '**.py' | xargs -L 1 flake8
+	@echo "Linting Python source files done!"
+
+lint-all: flake8-lint $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
 
 lint-build-test-all: $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
 
@@ -91,7 +96,7 @@ lint-install: ## install hadolint
 	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/v1.18.0/hadolint-$(shell uname -s)-$(shell uname -m)"
 	@chmod 700 $(HADOLINT)
 	@echo "Installation done!"
-	@$(HADOLINT) --version	
+	@$(HADOLINT) --version
 
 img-clean: img-rm-dang img-rm ## clean dangling and jupyter images
 

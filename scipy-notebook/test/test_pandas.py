@@ -8,17 +8,23 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
-    "name,command",
+    "name,command_list",
     [
         (
             "Sum series",
-            "import pandas as pd; import numpy as np; np.random.seed(0); print(pd.Series(np.random.randint(0, 7, size=10)).sum())",
+            [
+                "import pandas as pd",
+                "import numpy as np",
+                "np.random.seed(0)",
+                "print(pd.Series(np.random.randint(0, 7, size=10)).sum())"
+            ]
         ),
     ],
 )
-def test_pandas(container, name, command):
+def test_pandas(container, name, command_list):
     """Basic pandas tests"""
     LOGGER.info(f"Testing pandas: {name} ...")
+    command = ';'.join(command_list)
     c = container.run(tty=True, command=["start.sh", "python", "-c", command])
     rv = c.wait(timeout=30)
     assert rv == 0 or rv["StatusCode"] == 0, f"Command {command} failed"
