@@ -82,14 +82,14 @@ lint/%: ## lint the dockerfile(s) for a stack
 	@git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
 	@echo "Linting Dockerfiles done!"
 
-flake8-lint:
+flake8-lint-all:
 	@echo "Linting Python source files..."
 	@git ls-files '**.py' | xargs -L 1 flake8
 	@echo "Linting Python source files done!"
 
-lint-all: flake8-lint $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
+lint-all: flake8-lint-all $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
 
-lint-build-test-all: flake8-lint $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
+lint-build-test-all: flake8-lint-all $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
 
 lint-install: ## install hadolint
 	@echo "Installing hadolint at $(HADOLINT) ..."
