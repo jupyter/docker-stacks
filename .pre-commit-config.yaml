@@ -1,0 +1,27 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.1.0
+    hooks:
+      #- id: flake8
+      - id: check-yaml
+        files: .*\.(yaml|yml)$
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.23.0
+    hooks:
+      - id: yamllint
+        files: \.(yaml|yml)$
+        exclude: ^.travis
+  - repo: https://github.com/openstack-dev/bashate.git
+    rev: 2.0.0
+    hooks:
+      - id: bashate
+  - repo: local
+    hooks:
+      - id: hadolint
+        name: Hadolint linter
+        description: Runs Hadolint to check for Dockerfile best practices
+        language: system
+        types:
+          - dockerfile
+        entry: make lint-all
