@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libxrender1 \
     lmodern \
     netcat \
-    python-dev \
     # ---- nbconvert dependencies ----
     texlive-xetex \
     texlive-fonts-recommended \
