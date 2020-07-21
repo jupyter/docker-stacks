@@ -75,7 +75,7 @@ dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
 dev-env: ## install libraries required to build docs and run tests
-	pip install -r requirements-dev.txt
+	@pip install -r requirements-dev.txt
 
 lint/%: ARGS?=
 lint/%: ## lint the dockerfile(s) for a stack
@@ -117,6 +117,13 @@ n-docs-diff: ## number of docs/ files changed since branch from master
 
 n-other-diff: ## number of files outside docs/ changed since branch from master
 	@git diff --name-only $(DIFF_RANGE) -- ':!docs/' | wc -l | awk '{print $$1}'
+
+pre-commit-all: ## run pre-commit hook on all files
+	@pre-commit run --all 
+
+pre-commit-install: ## set up the git hook scripts
+	@pre-commit --version
+	@pre-commit install
 
 pull/%: DARGS?=
 pull/%: ## pull a jupyter image
