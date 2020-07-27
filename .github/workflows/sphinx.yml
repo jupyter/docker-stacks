@@ -1,0 +1,25 @@
+name: Build Sphinx Documentation
+
+on:
+  push:
+    paths:
+      - "docs/**"
+      - ".github/workflows/sphinx.yml"
+
+jobs:
+  build:
+    name: Build Sphinx Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+  template:
+    name: Update English Translation Templates
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: TODO
+        run: echo "todo"
