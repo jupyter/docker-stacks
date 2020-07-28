@@ -13,8 +13,21 @@ jobs:
     name: Build Docker Images
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Clone Main Repo
         uses: actions/checkout@v2
+      - name: Debug
+        run: |
+          pwd
+          ls -al
+      - name: Clone Wiki
+        uses: actions/checkout@v2
+        with:
+          repository: ${{github.repository}}.wiki
+          path: "${{github.repository}}.wiki"
+      - name: Debug
+        run: |
+          pwd
+          ls -al
       - name: Set Up Python
         uses: actions/setup-python@v2
         with:
@@ -25,10 +38,13 @@ jobs:
           make dev-env lint-install
       - name: Lint Dockerfiles
         run: make lint-all
-      - name: Debug python
-        run: which pytest
       - name: Build Docker Images
-        run: make build-test-all
+        run: make build/base-notebook test/base-notebook # build-test-all
+      - name: Run Post-Build Hooks
+        run: make hook/base-notebook #hooks-all
+        env:
+          COMMIT_MSG: "${{github.event.head_commit.message}}"
+          WIKI_PATH: "${{runner.temp}}/${{github.repository}}.wiki"
 
   push:
     name: Push Docker Images
@@ -37,5 +53,11 @@ jobs:
       - build
     if: github.ref == 'refs/heads/master'
     steps:
-      - name: TODO
-        run: echo "todo"
+      - name: Push Images
+        run: make push-all
+      # TODO: doesn't support working directory
+      - name: Push Wiki
+        uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{github.repository}}.wiki

@@ -76,6 +76,18 @@ dev/%: ## run a foreground container for a stack
 dev-env: ## install libraries required to build docs and run tests
 	pip install -r requirements-dev.txt
 
+hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
+hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
+hook/%: export WIKI_PATH?=./wiki
+hook/%: ## run post-build hooks for an image
+	BUILD_TIMESTAMP="$$(date -u +%FT%TZ)" \
+	DOCKER_REPO="$(OWNER)/$(notdir $@)" \
+	IMAGE_NAME="$(OWNER)/$(notdir $@):latest" \
+	IMAGE_SHORT_NAME="$(notdir $@)" \
+	$(SHELL) $(notdir $@)/hooks/run_hook
+
+hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
+
 lint/%: ARGS?=
 lint/%: ## lint the dockerfile(s) for a stack
 	@echo "Linting Dockerfiles in $(notdir $@)..."
@@ -121,6 +133,12 @@ pull/%: DARGS?=
 pull/%: ## pull a jupyter image
 	docker pull $(DARGS) $(OWNER)/$(notdir $@)
 
+push/%: DARGS?=
+push/%: ## push all tags for a jupyter image
+	docker push $(DARGS) $(OWNER)/$(notdir $@)
+
+push-all: $(foreach I,$(ALL_IMAGES),push/$(I) ) ## push all tagged images
+
 run/%: DARGS?=
 run/%: ## run a bash in interactive mode in a stack
 	docker run -it --rm $(DARGS) $(OWNER)/$(notdir $@) $(SHELL)
@@ -128,20 +146,6 @@ run/%: ## run a bash in interactive mode in a stack
 run-sudo/%: DARGS?=
 run-sudo/%: ## run a bash in interactive mode as root in a stack
 	docker run -it --rm -u root $(DARGS) $(OWNER)/$(notdir $@) $(SHELL)
-
-tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
-	@git config --global user.email "travis@travis-ci.org"
-	@git config --global user.name "Travis CI"
-	@git checkout master
-
-	@make -C docs clean gettext
-	@cd docs && sphinx-intl update -p _build/gettext -l en
-
-	@git add docs/locale/en
-	@git commit -m "[ci skip] Update en source strings (build: $$TRAVIS_JOB_NUMBER)"
-
-	@git remote add origin-tx https://$${GH_TOKEN}@github.com/jupyter/docker-stacks.git
-	@git push -u origin-tx master
 
 test/%: ## run tests against a stack (only common tests or common tests + specific tests)
 	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
