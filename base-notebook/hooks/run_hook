@@ -17,7 +17,6 @@ docker tag $IMAGE_NAME "$DOCKER_REPO:${HUB_VERSION_TAG%%\r}"
 INDEX_FILE="${WIKI_PATH}/Home.md"
 INDEX_ROW="|\`${BUILD_TIMESTAMP}\`|\`jupyter/${IMAGE_SHORT_NAME}:${GIT_SHA_TAG}\`<br />\`jupyter/${IMAGE_SHORT_NAME}:${PY_VERSION_TAG}\`<br />\`jupyter/${IMAGE_SHORT_NAME}:${NB_VERSION_TAG}\`<br />\`jupyter/${IMAGE_SHORT_NAME}:${LAB_VERSION_TAG}\`<br />\`jupyter/${IMAGE_SHORT_NAME}:${HUB_VERSION_TAG}\`|[Git diff](https://github.com/jupyter/docker-stacks/commit/${SOURCE_COMMIT})<br />[Dockerfile](https://github.com/jupyter/docker-stacks/blob/${SOURCE_COMMIT}/${IMAGE_SHORT_NAME}/Dockerfile)<br />[Build manifest](./${IMAGE_SHORT_NAME}-${GIT_SHA_TAG})|"
 sed "/|-|/a ${INDEX_ROW}" -i "$INDEX_FILE"
-head -n 25 "$INDEX_FILE" 
 
 # Build manifest
 MANIFEST_FILE="${WIKI_PATH}/manifests/${IMAGE_SHORT_NAME}-${GIT_SHA_TAG}.md"
@@ -52,5 +51,3 @@ $(docker run --rm ${IMAGE_NAME} conda list)
 $(docker run --rm ${IMAGE_NAME} apt list --installed)
 \`\`\`
 EOF
-
-cat "$MANIFEST_FILE"
