@@ -35,7 +35,7 @@ jobs:
       - name: Build Docker Images
         run: make -C main build-test-all
       - name: Run Post-Build Hooks
-        run: make -C main hooks-all
+        run: make -C main hook-all
         env:
           COMMIT_MSG: "${{github.event.head_commit.message}}"
           WIKI_PATH: ../wiki
@@ -47,6 +47,7 @@ jobs:
       - build
     if: github.ref == 'refs/heads/master'
     steps:
+      # TODO: need to auth with docker hub
       - name: Push Images
         run: make -C main push-all
       # TODO: doesn't support working directory
