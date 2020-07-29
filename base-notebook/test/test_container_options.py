@@ -76,6 +76,9 @@ def test_nb_user_change(container):
         command=['start.sh', 'bash', '-c', 'sleep infinity']
     )
     
+    # Give the chown time to complete. Use sleep, not wait, because the 
+    # container sleeps forever.
+    time.sleep(10)
     LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
     output = running_container.logs(stdout=True).decode("utf-8")
     assert f"Set username to: {nb_user}" in output, f"User is not changed to {nb_user}" 
@@ -123,6 +126,7 @@ def test_chown_home(container):
         ],
         command=['start.sh', 'bash', '-c', 'chown root:root /home/jovyan && ls -alsh /home']
     )
+    c.wait(timeout=120)
     assert "Changing ownership of /home/jovyan to 1000:100 with options '-R'" in c.logs(stdout=True).decode('utf-8')
 
 
