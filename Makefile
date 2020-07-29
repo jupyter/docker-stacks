@@ -4,9 +4,8 @@
 
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
-OWNER:=jupyter
 ARCH:=$(shell uname -m)
-DIFF_RANGE?=master...HEAD
+OWNER?=jupyter
 
 # Need to list the images in build dependency order
 ifeq ($(ARCH),ppc64le)
@@ -76,9 +75,26 @@ dev/%: ## run a foreground container for a stack
 dev-env: ## install libraries required to build docs and run tests
 	pip install -r requirements-dev.txt
 
+docs: ## build HTML documentation
+	make -C docs html
+
+git-commit: LOCAL_PATH?=.
+git-commit: export GITHUB_SHA?=$(shell git rev-parse HEAD)
+git-commit: GITHUB_REPOSITORY?=jupyter/docker-stacks
+git-commit: ## commit outstading git changes and push to remote
+	@git config --global user.name "GitHub Actions"
+	@git config --global user.email "actions@users.noreply.github.com"
+	@git remote add publisher https://$${GITHUB_TOKEN}@github.com/$${GITHUB_REPOSITORY}.git
+
+	@cd $(LOCAL_PATH)
+	@git checkout master
+	@git add -A -- .
+	@git commit -m "[ci skip] Automated publish for $${GITHUB_SHA}" || exit 0
+	@git push -u publisher master
+
 hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
 hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
-hook/%: export WIKI_PATH?=./wiki
+hook/%: export WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
 	BUILD_TIMESTAMP="$$(date -u +%FT%TZ)" \
 	DOCKER_REPO="$(OWNER)/$(notdir $@)" \
@@ -87,6 +103,20 @@ hook/%: ## run post-build hooks for an image
 	$(SHELL) $(notdir $@)/hooks/run_hook
 
 hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
+
+img-clean: img-rm-dang img-rm ## clean dangling and jupyter images
+
+img-list: ## list jupyter images
+	@echo "Listing $(OWNER) images ..."
+	docker images "$(OWNER)/*"
+
+img-rm:  ## remove jupyter images
+	@echo "Removing $(OWNER) images ..."
+	-docker rmi --force $(shell docker images --quiet "$(OWNER)/*") 2> /dev/null
+
+img-rm-dang: ## remove dangling images (tagged None)
+	@echo "Removing dangling images ..."
+	-docker rmi --force $(shell docker images -f "dangling=true" -q) 2> /dev/null
 
 lint/%: ARGS?=
 lint/%: ## lint the dockerfile(s) for a stack
@@ -104,30 +134,6 @@ lint-install: ## install hadolint
 	@chmod 700 $(HADOLINT)
 	@echo "Installation done!"
 	@$(HADOLINT) --version	
-
-img-clean: img-rm-dang img-rm ## clean dangling and jupyter images
-
-img-list: ## list jupyter images
-	@echo "Listing $(OWNER) images ..."
-	docker images "$(OWNER)/*"
-
-img-rm:  ## remove jupyter images
-	@echo "Removing $(OWNER) images ..."
-	-docker rmi --force $(shell docker images --quiet "$(OWNER)/*") 2> /dev/null
-
-img-rm-dang: ## remove dangling images (tagged None)
-	@echo "Removing dangling images ..."
-	-docker rmi --force $(shell docker images -f "dangling=true" -q) 2> /dev/null
-
-docs: ## build HTML documentation
-	make -C docs html
-
-n-docs-diff: ## number of docs/ files changed since branch from master
-	@git diff --name-only $(DIFF_RANGE) -- docs/ ':!docs/locale' | wc -l | awk '{print $$1}'
-
-
-n-other-diff: ## number of files outside docs/ changed since branch from master
-	@git diff --name-only $(DIFF_RANGE) -- ':!docs/' | wc -l | awk '{print $$1}'
 
 pull/%: DARGS?=
 pull/%: ## pull a jupyter image

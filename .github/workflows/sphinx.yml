@@ -10,6 +10,7 @@ jobs:
   build:
     name: Build Sphinx Documentation
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message , 'ci skip')"
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -29,15 +30,16 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build
-    if: github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, 'ci skip')
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Extract Source Strings
         working-directory: docs
         run: |
           make gettext
           sphinx-intl update -p _build/gettext -l en
-      # TODO: need to ci skip to prevent looping
       - name: Push Strings to Master
-        uses: mikeal/publish-to-github-action@master
+        run: make git-commit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          LOCAL_PATH: ./docs/locale/en

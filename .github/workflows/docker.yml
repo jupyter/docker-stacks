@@ -12,6 +12,7 @@ jobs:
   build:
     name: Build Docker Images
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message , 'ci skip')"
     steps:
       - name: Clone Main Repo
         uses: actions/checkout@v2
@@ -47,12 +48,15 @@ jobs:
       - build
     if: github.ref == 'refs/heads/master'
     steps:
-      # TODO: need to auth with docker hub
-      - name: Push Images
+      - name: Login to Docker Hub
+        run: >
+          echo '${{secrets.DOCKERHUB_PASSWORD}}' | docker login --username
+          '${{secrets.DOCKERHUB_USERNAME}}'' --password-stdin
+      - name: Push Images to DockerHub
         run: make -C main push-all
-      # TODO: doesn't support working directory
-      - name: Push Wiki
-        uses: mikeal/publish-to-github-action@master
+      - name: Push Wiki to GitHub
+        run: make -C main git-commit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{github.repository}}.wiki
+          LOCAL_PATH: ../wiki
