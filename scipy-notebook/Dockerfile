@@ -32,7 +32,7 @@ RUN conda install --quiet --yes \
     # numba update to 0.49 fails resolving deps.
     'numba=0.48.*' \
     'numexpr=2.7.*' \
-    'pandas=1.0.*' \
+    'pandas=1.1.*' \
     'patsy=0.5.*' \
     'protobuf=3.12.*' \
     'pytables=3.6.*' \
