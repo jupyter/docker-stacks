@@ -1,7 +1,13 @@
 name: Build Sphinx Documentation
 
 on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".github/workflows/sphinx.yml"
   push:
+    branches:
+      - master
     paths:
       - "docs/**"
       - ".github/workflows/sphinx.yml"

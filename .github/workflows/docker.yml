@@ -1,7 +1,15 @@
 name: Build Docker Images
 
 on:
+  pull_request:
+    paths-ignore:
+      - "*.md"
+      - "binder/**"
+      - "docs/**"
+      - "examples/**"
   push:
+    branches:
+      - master
     paths-ignore:
       - "*.md"
       - "binder/**"
@@ -51,7 +59,7 @@ jobs:
       - name: Login to Docker Hub
         run: >
           echo '${{secrets.DOCKERHUB_PASSWORD}}' | docker login --username
-          '${{secrets.DOCKERHUB_USERNAME}}'' --password-stdin
+          '${{secrets.DOCKERHUB_USERNAME}}' --password-stdin
       - name: Push Images to DockerHub
         run: make -C main push-all
       - name: Push Wiki to GitHub
