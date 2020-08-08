@@ -1,7 +1,15 @@
 name: Build Docker Images
 
 on:
+  pull_request:
+    paths-ignore:
+      - "*.md"
+      - "binder/**"
+      - "docs/**"
+      - "examples/**"
   push:
+    branches:
+      - master
     paths-ignore:
       - "*.md"
       - "binder/**"
