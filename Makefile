@@ -79,17 +79,18 @@ docs: ## build HTML documentation
 	make -C docs html
 
 git-commit: LOCAL_PATH?=.
-git-commit: export GITHUB_SHA?=$(shell git rev-parse HEAD)
+git-commit: GITHUB_SHA?=$(shell git rev-parse HEAD)
 git-commit: GITHUB_REPOSITORY?=jupyter/docker-stacks
+git-commit: GITHUB_TOKEN?=
 git-commit: ## commit outstading git changes and push to remote
 	@git config --global user.name "GitHub Actions"
 	@git config --global user.email "actions@users.noreply.github.com"
-	@git remote add publisher https://$${GITHUB_TOKEN}@github.com/$${GITHUB_REPOSITORY}.git
+	@git remote add publisher https://$(GITHUB_TOKEN)@github.com/$(GITHUB_REPOSITORY).git
 
 	@cd $(LOCAL_PATH)
 	@git checkout master
 	@git add -A -- .
-	@git commit -m "[ci skip] Automated publish for $${GITHUB_SHA}" || exit 0
+	@git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0
 	@git push -u publisher master
 
 hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
