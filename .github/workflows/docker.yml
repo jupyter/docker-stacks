@@ -1,0 +1,62 @@
+name: Build Docker Images
+
+on:
+  push:
+    paths-ignore:
+      - "*.md"
+      - "binder/**"
+      - "docs/**"
+      - "examples/**"
+
+jobs:
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message , 'ci skip')"
+    steps:
+      - name: Clone Main Repo
+        uses: actions/checkout@v2
+        with:
+          path: main
+      - name: Clone Wiki
+        uses: actions/checkout@v2
+        with:
+          repository: ${{github.repository}}.wiki
+          path: wiki
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Dev Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          make -C main dev-env lint-install
+      - name: Lint Dockerfiles
+        run: make -C main lint-all
+      - name: Build Docker Images
+        run: make -C main build-test-all
+      - name: Run Post-Build Hooks
+        run: make -C main hook-all
+        env:
+          COMMIT_MSG: "${{github.event.head_commit.message}}"
+          WIKI_PATH: ../wiki
+
+  push:
+    name: Push Docker Images
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Login to Docker Hub
+        run: >
+          echo '${{secrets.DOCKERHUB_PASSWORD}}' | docker login --username
+          '${{secrets.DOCKERHUB_USERNAME}}'' --password-stdin
+      - name: Push Images to DockerHub
+        run: make -C main push-all
+      - name: Push Wiki to GitHub
+        run: make -C main git-commit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{github.repository}}.wiki
+          LOCAL_PATH: ../wiki
