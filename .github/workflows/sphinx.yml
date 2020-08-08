@@ -16,7 +16,9 @@ jobs:
   build:
     name: Build Sphinx Documentation
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message , 'ci skip')"
+    if: >
+      "!contains(github.event.head_commit.message, 'ci skip') and
+      !contains(github.event.pull_request.title, 'ci skip')"
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
