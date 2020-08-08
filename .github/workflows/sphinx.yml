@@ -30,20 +30,14 @@ jobs:
           make dev-env
       - name: Build Documentation
         run: make docs
-
-  gettext:
-    name: Update Translation Source Strings
-    runs-on: ubuntu-latest
-    needs:
-      - build
-    if: github.ref == 'refs/heads/master'
-    steps:
       - name: Extract Source Strings
+        if: github.ref == 'refs/heads/master'
         working-directory: docs
         run: |
           make gettext
           sphinx-intl update -p _build/gettext -l en
       - name: Push Strings to Master
+        if: github.ref == 'refs/heads/master'
         run: make git-commit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
