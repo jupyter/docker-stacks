@@ -88,7 +88,7 @@ git-commit: ## commit outstading git changes and push to remote
 	@git config --global user.email "actions@users.noreply.github.com"
 
 	@cd $(LOCAL_PATH) && \
-		git remote add publisher https://$(GITHUB_TOKEN)@github.com/$(GITHUB_REPOSITORY).git
+		git remote add publisher https://$(GITHUB_TOKEN)@github.com/$(GITHUB_REPOSITORY).git && \
 		git checkout master && \
 		git add -A -- . && \
 		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0 && \
