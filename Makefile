@@ -87,12 +87,13 @@ git-commit: ## commit outstading git changes and push to remote
 	@git config --global user.name "GitHub Actions"
 	@git config --global user.email "actions@users.noreply.github.com"
 
+	@echo "Publishing outstanding changes in $(LOCAL_PATH) to $(GITHUB_REPOSITORY)" 
 	@cd $(LOCAL_PATH) && \
 		git remote add publisher https://$(GITHUB_TOKEN)@github.com/$(GITHUB_REPOSITORY).git && \
 		git checkout master && \
 		git add -A -- . && \
-		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0 && \
-		git push -u publisher master
+		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0
+	@cd $(LOCAL_PATH) && git push -u publisher master
 
 hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
 hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
