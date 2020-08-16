@@ -15,6 +15,10 @@ repos:
     rev: 2.0.0
     hooks:
       - id: bashate
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.3
+    hooks:
+      - id: flake8
   - repo: local
     hooks:
       - id: hadolint
