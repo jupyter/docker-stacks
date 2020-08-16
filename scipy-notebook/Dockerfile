@@ -18,11 +18,11 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.9.*' \
     'conda-forge::blas=*=openblas' \
-    'bokeh=2.0.*' \
+    'bokeh=2.1.*' \
     'bottleneck=1.3.*' \
-    'cloudpickle=1.4.*' \
+    'cloudpickle=1.5.*' \
     'cython=0.29.*' \
-    'dask=2.15.*' \
+    'dask=2.20.*' \
     'dill=0.3.*' \
     'h5py=2.10.*' \
     'hdf5=1.10.*' \
@@ -32,17 +32,17 @@ RUN conda install --quiet --yes \
     # numba update to 0.49 fails resolving deps.
     'numba=0.48.*' \
     'numexpr=2.7.*' \
-    'pandas=1.0.*' \
+    'pandas=1.1.*' \
     'patsy=0.5.*' \
-    'protobuf=3.11.*' \
+    'protobuf=3.12.*' \
     'pytables=3.6.*' \
-    'scikit-image=0.16.*' \
-    'scikit-learn=0.22.*' \
-    'scipy=1.4.*' \
+    'scikit-image=0.17.*' \
+    'scikit-learn=0.23.*' \
+    'scipy=1.5.*' \
     'seaborn=0.10.*' \
     'sqlalchemy=1.3.*' \
     'statsmodels=0.11.*' \
-    'sympy=1.5.*' \
+    'sympy=1.6.*' \
     'vincent=0.4.*' \
     'widgetsnbextension=3.5.*'\
     'xlrd=1.2.*' \
