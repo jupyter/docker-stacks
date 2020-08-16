@@ -21,6 +21,8 @@ repos:
         name: Hadolint linter
         description: Runs Hadolint to check for Dockerfile best practices
         language: system
+        # Exclude ppc64le Dockerfile since cannot check their build easily
+        exclude: ppc64
         types:
           - dockerfile
         entry: hadolint
