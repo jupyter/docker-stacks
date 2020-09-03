@@ -2,9 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 .PHONY: docs help test
 
-# Use bash for inline if-statements in arch_patch target
 SHELL:=bash
-ARCH:=$(shell uname -m)
 OWNER?=ttmetro
 
 # Need to list the images in build dependency order
@@ -32,8 +30,8 @@ build/%: ## build the latest image for a stack
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 
-build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
-build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
+build-all: $(foreach I,$(ALL_IMAGES) build/$(I) ) ## build all stacks
+build-test-all: $(foreach I,$(ALL_IMAGES) build/$(I) test/$(I) ) ## build and test all stacks
 
 check-outdated/%: ## check the outdated packages in a stack and produce a report (experimental)
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
@@ -110,7 +108,7 @@ lint/%: ## lint the dockerfile(s) for a stack
 
 lint-all: $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
 
-lint-build-test-all: $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
+lint-build-test-all: $(foreach I,$(ALL_IMAGES),lint/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
 
 lint-install: ## install hadolint
 	@echo "Installing hadolint at $(HADOLINT) ..."
