@@ -5,21 +5,12 @@
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
 ARCH:=$(shell uname -m)
-OWNER?=jupyter
+OWNER?=ttmetro
 
 # Need to list the images in build dependency order
-ifeq ($(ARCH),ppc64le)
-ALL_STACKS:=base-notebook
-else
 ALL_STACKS:=base-notebook \
 	minimal-notebook \
-	r-notebook \
-	scipy-notebook \
-	tensorflow-notebook \
-	datascience-notebook \
-	pyspark-notebook \
-	all-spark-notebook
-endif
+	scipy-notebook
 
 ALL_IMAGES:=$(ALL_STACKS)
 
@@ -29,21 +20,11 @@ HADOLINT_VERSION="v1.18.0"
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
-	@echo "jupyter/docker-stacks"
+	@echo "ttmetro/docker-stacks"
 	@echo "====================="
 	@echo "Replace % with a stack directory name (e.g., make build/minimal-notebook)"
 	@echo
 	@grep -E '^[a-zA-Z0-9_%/-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
-
-arch_patch/%: ## apply hardware architecture specific patches to the Dockerfile
-	@if [ -e ./$(notdir $@)/Dockerfile.$(ARCH).patch ]; then \
-		if [ -e ./$(notdir $@)/Dockerfile.orig ]; then \
-               		cp -f ./$(notdir $@)/Dockerfile.orig ./$(notdir $@)/Dockerfile;\
-		else\
-                	cp -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.orig;\
-		fi;\
-		patch -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.$(ARCH).patch; \
-	fi
 
 build/%: DARGS?=
 build/%: ## build the latest image for a stack
@@ -54,7 +35,7 @@ build/%: ## build the latest image for a stack
 build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
 
-check-outdated/%: ## check the outdated conda packages in a stack and produce a report (experimental)
+check-outdated/%: ## check the outdated packages in a stack and produce a report (experimental)
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
 
 cont-clean-all: cont-stop-all cont-rm-all ## clean all containers (stop + rm)
@@ -81,7 +62,7 @@ docs: ## build HTML documentation
 
 git-commit: LOCAL_PATH?=.
 git-commit: GITHUB_SHA?=$(shell git rev-parse HEAD)
-git-commit: GITHUB_REPOSITORY?=jupyter/docker-stacks
+git-commit: GITHUB_REPOSITORY?=iot49/docker-stacks
 git-commit: GITHUB_TOKEN?=
 git-commit: ## commit outstading git changes and push to remote
 	@git config --global user.name "GitHub Actions"
