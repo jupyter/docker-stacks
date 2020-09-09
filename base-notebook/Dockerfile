@@ -1,10 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# Ubuntu 20.04 (focal)
-# https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
+# Ubuntu 18.04 and CUDA 10.2
+# https://hub.docker.com/r/nvidia/cuda
 # OS/ARCH: linux/amd64
-ARG ROOT_CONTAINER=ubuntu:focal-20200703@sha256:d5a6519d9f048100123c568eb83f7ef5bfcad69b01424f420f17c932b00dea76
+ARG ROOT_CONTAINER=nvidia/cuda:10.2-base-ubuntu18.04@sha256:4918ce9269396c77da6b45ee97e227fb56f37093c498a2a0bbebfda785a3b69e
+#ubuntu:focal-20200703@sha256:d5a6519d9f048100123c568eb83f7ef5bfcad69b01424f420f17c932b00dea76
 
 ARG BASE_CONTAINER=$ROOT_CONTAINER
 FROM $BASE_CONTAINER
