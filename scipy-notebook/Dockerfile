@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-ARG BASE_CONTAINER=jupyter/minimal-notebook
+ARG BASE_CONTAINER=dain/minimal-notebook
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -17,7 +17,8 @@ USER $NB_UID
 # Install Python 3 packages
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.9.*' \
-    'conda-forge::blas=*=openblas' \
+# blas causes problems later when installing pytorch
+#    'conda-forge::blas=*=openblas' \
     'bokeh=2.1.*' \
     'bottleneck=1.3.*' \
     'cloudpickle=1.5.*' \
