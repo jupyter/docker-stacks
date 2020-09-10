@@ -3,7 +3,7 @@
 ARG BASE_CONTAINER=dain/scipy-notebook
 FROM $BASE_CONTAINER
 
-LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
+LABEL maintainer="Pekka Ahtonen <pekka.ahtonen@dainstudios.com>"
 
 USER $NB_UID
 
