@@ -5,7 +5,7 @@
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
 ARCH:=$(shell uname -m)
-OWNER?=jupyter
+OWNER?=dain
 
 # Need to list the images in build dependency order
 ifeq ($(ARCH),ppc64le)
@@ -15,10 +15,15 @@ ALL_STACKS:=base-notebook \
 	minimal-notebook \
 	r-notebook \
 	scipy-notebook \
+	pytorch-notebook \
 	tensorflow-notebook \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook
+PYTORCH_STACKS:=base-notebook \
+	minimal-notebook \
+	scipy-notebook \
+	pytorch-notebook
 endif
 
 ALL_IMAGES:=$(ALL_STACKS)
@@ -53,6 +58,9 @@ build/%: ## build the latest image for a stack
 
 build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
+
+build-pytorch: $(foreach I,$(PYTORCH_STACKS),arch_patch/$(I) build/$(I) ) ## build stacks up to pytorch
+
 
 check-outdated/%: ## check the outdated conda packages in a stack and produce a report (experimental)
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
