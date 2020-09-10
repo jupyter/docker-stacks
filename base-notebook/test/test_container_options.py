@@ -11,11 +11,13 @@ LOGGER = logging.getLogger(__name__)
 def test_cli_args(container, http_client):
     """Container should respect notebook server command line args
     (e.g., disabling token security)"""
-    container.run(
-        command=['start-notebook.sh', '--NotebookApp.token=""']
+    c = container.run(
+        command=["start-notebook.sh", "--NotebookApp.token=''"]
     )
     resp = http_client.get('http://localhost:8888')
     resp.raise_for_status()
+    logs = c.logs(stdout=True).decode('utf-8')
+    LOGGER.debug(logs)
     assert 'login_submit' not in resp.text
 
 
