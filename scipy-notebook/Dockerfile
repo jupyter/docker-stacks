@@ -18,30 +18,31 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.9.*' \
     'conda-forge::blas=*=openblas' \
-    'bokeh=2.1.*' \
+    'bokeh=2.2.*' \
     'bottleneck=1.3.*' \
-    'cloudpickle=1.5.*' \
+    'cloudpickle=1.6.*' \
     'cython=0.29.*' \
-    'dask=2.20.*' \
+    'dask=2.26.*' \
     'dill=0.3.*' \
     'h5py=2.10.*' \
+    # hdf5 update to > 1.10 fails resolving deps
     'hdf5=1.10.*' \
     'ipywidgets=7.5.*' \
     'ipympl=0.5.*'\
-    'matplotlib-base=3.2.*' \
-    # numba update to 0.49 fails resolving deps.
+    'matplotlib-base=3.3.*' \
+    # numba update to > 0.49 fails resolving deps
     'numba=0.48.*' \
     'numexpr=2.7.*' \
     'pandas=1.1.*' \
     'patsy=0.5.*' \
-    'protobuf=3.12.*' \
+    'protobuf=3.13.*' \
     'pytables=3.6.*' \
     'scikit-image=0.17.*' \
     'scikit-learn=0.23.*' \
     'scipy=1.5.*' \
-    'seaborn=0.10.*' \
+    'seaborn=0.11.*' \
     'sqlalchemy=1.3.*' \
-    'statsmodels=0.11.*' \
+    'statsmodels=0.12.*' \
     'sympy=1.6.*' \
     'vincent=0.4.*' \
     'widgetsnbextension=3.5.*'\
