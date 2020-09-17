@@ -17,8 +17,7 @@ USER $NB_UID
 # Install Python 3 packages
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.9.*' \
-# blas causes problems later when installing pytorch
-#    'conda-forge::blas=*=openblas' \
+    'conda-forge::blas=*=openblas' \
     'bokeh=2.1.*' \
     'bottleneck=1.3.*' \
     'cloudpickle=1.5.*' \
