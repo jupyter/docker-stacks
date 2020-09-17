@@ -12,7 +12,7 @@ This page provides details about features specific to one or more images.
 
 You can build a `pyspark-notebook` image (and also the downstream `all-spark-notebook` image) with a different version of Spark by overriding the default value of the following arguments at build time.
 
-* Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum, see [Download Apache Spark](https://spark.apache.org/downloads.html) for more information.
+* Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum, see [Download Apache Spark](https://spark.apache.org/downloads.html) for more information. At this time the build will only work with the set of versions available on the Apache Spark download page, so it will not work with the archived versions.
   * `spark_version`: The Spark version to install (`3.0.0`).
   * `hadoop_version`: The Hadoop version (`3.2`).
   * `spark_checksum`: The package checksum (`BFE4540...`).
@@ -59,14 +59,14 @@ docker run -it --rm jupyter/pyspark-notebook:spark-2.4.6 pyspark --version
  * get the version (`ls /usr/local/spark/python/lib/`),
  * set the version `--build-arg py4j_version=0.10.7`.
 
-*Note: At the time of writing there is an issue preventing to use Spark `2.4.6` with Python `3.8`, see [this answer on SO](https://stackoverflow.com/a/62173969/4413446) for more information.*
-
 ```bash
 docker run -it --rm jupyter/pyspark-notebook:spark-2.4.6 ls /usr/local/spark/python/lib/ 
 # py4j-0.10.7-src.zip  PY4J_LICENSE.txt  pyspark.zip
 # You can now set the build-arg
 # --build-arg py4j_version=
 ```
+
+*Note: At the time of writing there is an issue preventing to use Spark `2.4.6` with Python `3.8`, see [this answer on SO](https://stackoverflow.com/a/62173969/4413446) for more information.*
 
 ### Usage Examples
 
