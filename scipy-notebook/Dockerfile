@@ -22,20 +22,17 @@ RUN conda install --quiet --yes \
     'bottleneck=1.3.*' \
     'cloudpickle=1.6.*' \
     'cython=0.29.*' \
-    'dask=2.26.*' \
+    'dask=2.25.*' \
     'dill=0.3.*' \
     'h5py=2.10.*' \
-    # hdf5 update to > 1.10 fails resolving deps
-    'hdf5=1.10.*' \
     'ipywidgets=7.5.*' \
     'ipympl=0.5.*'\
     'matplotlib-base=3.3.*' \
-    # numba update to > 0.49 fails resolving deps
-    'numba=0.48.*' \
+    'numba=0.51.*' \
     'numexpr=2.7.*' \
     'pandas=1.1.*' \
     'patsy=0.5.*' \
-    'protobuf=3.13.*' \
+    'protobuf=3.12.*' \
     'pytables=3.6.*' \
     'scikit-image=0.17.*' \
     'scikit-learn=0.23.*' \
