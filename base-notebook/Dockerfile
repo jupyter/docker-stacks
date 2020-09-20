@@ -84,7 +84,7 @@ WORKDIR /tmp
 RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh && \
     echo "${MINICONDA_MD5} *Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    printf '__conda_setup=\"\$(\"%s/bin/conda\" \"shell.bash\" \"hook\" 2> /dev/null)\"\nif [ $? -eq 0 ]; then\n    eval \"\$__conda_setup\"\nelse\n    if [ -f \"%s/etc/profile.d/conda.sh\" ]; then\n        . \"%s/etc/profile.d/conda.sh\"\n    else\n         export PATH=\"%s/bin:\$PATH\"\n    fi\nfi\nunset __conda_setup\n' "${CONDA_DIR}" "${CONDA_DIR}" "${CONDA_DIR}" "${CONDA_DIR}" > ${HOME}/.profile && \
+    printf "__conda_setup=\"\$(\"%s/bin/conda\" \"shell.bash\" \"hook\" 2> /dev/null)\"\nif [ $? -eq 0 ]; then\n    eval \"\$__conda_setup\"\nelse\n    if [ -f \"%s/etc/profile.d/conda.sh\" ]; then\n        . \"%s/etc/profile.d/conda.sh\"\n    else\n         export PATH=\"%s/bin:\$PATH\"\n    fi\nfi\nunset __conda_setup\n" "${CONDA_DIR}" "${CONDA_DIR}" "${CONDA_DIR}" "${CONDA_DIR}" > ${HOME}/.profile && \
     rm Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh && \
     echo "conda ${CONDA_VERSION}" >> $CONDA_DIR/conda-meta/pinned && \
     conda config --system --prepend channels conda-forge && \
