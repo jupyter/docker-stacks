@@ -21,6 +21,7 @@ RUN conda config --show channels && \
     conda install -q -y \
     'conda-forge::blas=*=mkl' \
     'conda-forge::opencv=4.*' \
+    'tensorboard=2.*' \
     'pytorch=1.6*' \
     'torchvision=0.7*' \
     'cudatoolkit=10.2*' \
@@ -29,5 +30,8 @@ RUN conda config --show channels && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+# Install MONAI with Pillow (already there, see earlier layers)
+RUN pip install -q --no-cache-dir monai[pillow]
 
 WORKDIR $HOME
