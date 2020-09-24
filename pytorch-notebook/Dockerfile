@@ -31,7 +31,10 @@ RUN conda config --show channels && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# Install MONAI with Pillow (already there, see earlier layers)
-RUN pip install -q --no-cache-dir monai[pillow]
+# Install MONAI milestone edition with Pillow (already there, see earlier layers)
+#RUN pip install -q --no-cache-dir monai[pillow]
+
+# Install and build MONAI from master branch
+RUN pip install -q --no-cache-dir git+https://github.com/Project-MONAI/MONAI#egg=MONAI
 
 WORKDIR $HOME
