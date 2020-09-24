@@ -5,7 +5,6 @@
 # https://hub.docker.com/r/nvidia/cuda
 # OS/ARCH: linux/amd64
 ARG ROOT_CONTAINER=nvidia/cuda:10.2-base-ubuntu18.04@sha256:4918ce9269396c77da6b45ee97e227fb56f37093c498a2a0bbebfda785a3b69e
-#ubuntu:focal-20200703@sha256:d5a6519d9f048100123c568eb83f7ef5bfcad69b01424f420f17c932b00dea76
 
 ARG BASE_CONTAINER=$ROOT_CONTAINER
 FROM $BASE_CONTAINER
@@ -78,15 +77,14 @@ RUN mkdir /home/$NB_USER/work && \
 
 # Install conda as jovyan and check the md5 sum provided on the download site
 ENV MINICONDA_VERSION=4.8.3 \
-    #MINICONDA_MD5=d63adf39f2c220950a063e0529d4ff74 \
-    MINICONDA_MD5=751786b92c00b1aeae3f017b781018df \
+    MINICONDA_MD5=d63adf39f2c220950a063e0529d4ff74 \
     CONDA_VERSION=4.8.3
 
 WORKDIR /tmp
-RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "${MINICONDA_MD5} *Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
-    /bin/bash Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-py37_${MINICONDA_VERSION}-Linux-x86_64.sh && \
+RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh && \
+    echo "${MINICONDA_MD5} *Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    /bin/bash Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh && \
     echo "conda ${CONDA_VERSION}" >> $CONDA_DIR/conda-meta/pinned && \
     conda config --system --add channels conda-forge && \
     conda config --system --set auto_update_conda false && \
