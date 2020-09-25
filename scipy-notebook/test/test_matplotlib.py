@@ -33,3 +33,30 @@ def test_matplotlib(container):
     cmd = running_container.exec_run(command)
     assert cmd.exit_code == 0, f"Command {command} failed"
     LOGGER.debug(cmd.output.decode("utf-8"))
+
+
+def test_matplotlib_fonts(container):
+    """Test matplotlib latex fonts, which depent on the cm-super package"""
+    host_data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                                 "data")
+    cont_data_dir = "/home/jovyan/data"
+    test_file = "matplotlib_fonts_1.py"
+    output_dir = "/tmp"
+    LOGGER.info(f"Test cm-super latex labels in matplotlib ...")
+    command = "sleep infinity"
+    running_container = container.run(
+        volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
+        tty=True,
+        command=["start.sh", "bash", "-c", command],
+    )
+    command = f"python {cont_data_dir}/{test_file}"
+    cmd = running_container.exec_run(command)
+    assert cmd.exit_code == 0, f"Command {command} failed"
+    LOGGER.debug(cmd.output.decode("utf-8"))
+    # Checking if the file is generated
+    # https://stackoverflow.com/a/15895594/4413446
+    expected_file = f"{output_dir}/test_fonts.png"
+    command = f"test -s {expected_file}"
+    cmd = running_container.exec_run(command)
+    assert cmd.exit_code == 0, f"Command {command} failed"
+    LOGGER.debug(cmd.output.decode("utf-8"))
