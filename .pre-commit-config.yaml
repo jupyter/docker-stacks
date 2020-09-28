@@ -19,6 +19,10 @@ repos:
     rev: 3.8.3
     hooks:
       - id: flake8
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.5.4
+    hooks:
+      - id: autopep8
   - repo: local
     hooks:
       - id: hadolint
