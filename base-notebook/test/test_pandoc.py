@@ -3,8 +3,6 @@
 
 import logging
 
-import pytest
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -17,4 +15,3 @@ def test_pandoc(container):
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
     assert "<p><strong>BOLD</strong></p>" in logs
-

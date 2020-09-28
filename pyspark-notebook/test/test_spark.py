@@ -1,11 +1,10 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-import time
 import logging
 
-import pytest
 
 LOGGER = logging.getLogger(__name__)
+
 
 def test_spark_shell(container):
     """Checking if Spark (spark-shell) is running properly"""
@@ -17,6 +16,7 @@ def test_spark_shell(container):
     logs = c.logs(stdout=True).decode('utf-8')
     LOGGER.debug(logs)
     assert 'res0: Int = 2' in logs
+
 
 def test_pyspark(container):
     """PySpark should be in the Python path"""

@@ -131,7 +131,7 @@ def _import_packages(package_helper, filtered_packages, check_function, max_fail
     Note: using a list of packages instead of a fixture for the list of packages since pytest prevents use of multiple yields
     """
     failures = {}
-    LOGGER.info(f"Testing the import of packages ...")
+    LOGGER.info("Testing the import of packages ...")
     for package in filtered_packages:
         LOGGER.info(f"Trying to import {package}")
         try:
