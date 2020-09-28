@@ -3,6 +3,7 @@
 
 import logging
 
+import pytest
 import os
 
 LOGGER = logging.getLogger(__name__)
