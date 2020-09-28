@@ -7,9 +7,9 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 USER root
 
-# ffmpeg for matplotlib anim & dvipng for latex labels
+# ffmpeg for matplotlib anim & dvipng+cm-super for latex labels
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ffmpeg dvipng && \
+    apt-get install -y --no-install-recommends ffmpeg dvipng cm-super && \
     rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
@@ -18,19 +18,17 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.9.*' \
     'conda-forge::blas=*=openblas' \
-    'bokeh=2.1.*' \
+    'bokeh=2.2.*' \
     'bottleneck=1.3.*' \
-    'cloudpickle=1.5.*' \
+    'cloudpickle=1.6.*' \
     'cython=0.29.*' \
-    'dask=2.20.*' \
+    'dask=2.25.*' \
     'dill=0.3.*' \
     'h5py=2.10.*' \
-    'hdf5=1.10.*' \
     'ipywidgets=7.5.*' \
     'ipympl=0.5.*'\
-    'matplotlib-base=3.2.*' \
-    # numba update to 0.49 fails resolving deps.
-    'numba=0.48.*' \
+    'matplotlib-base=3.3.*' \
+    'numba=0.51.*' \
     'numexpr=2.7.*' \
     'pandas=1.1.*' \
     'patsy=0.5.*' \
@@ -39,9 +37,9 @@ RUN conda install --quiet --yes \
     'scikit-image=0.17.*' \
     'scikit-learn=0.23.*' \
     'scipy=1.5.*' \
-    'seaborn=0.10.*' \
+    'seaborn=0.11.*' \
     'sqlalchemy=1.3.*' \
-    'statsmodels=0.11.*' \
+    'statsmodels=0.12.*' \
     'sympy=1.6.*' \
     'vincent=0.4.*' \
     'widgetsnbextension=3.5.*'\
