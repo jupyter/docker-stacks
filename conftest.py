@@ -49,6 +49,7 @@ class TrackedContainer(object):
     **kwargs: dict, optional
         Default keyword arguments to pass to docker.DockerClient.containers.run
     """
+
     def __init__(self, docker_client, image_name, **kwargs):
         self.container = None
         self.docker_client = docker_client
