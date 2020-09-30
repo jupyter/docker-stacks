@@ -50,7 +50,7 @@ and versioning strategy.
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 - [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/) (actually `emacs-nox`),
   [vi](https://vim.org/) (actually `vim-tiny`), [jed](https://www.jedsoft.org/jed/),
-  [nano](https://www.nano-editor.org/), tzdata, and unzip
+  [nano](https://www.nano-editor.org/) (actually `nano-tiny`), tzdata, and unzip
 
 ### jupyter/r-notebook
 
