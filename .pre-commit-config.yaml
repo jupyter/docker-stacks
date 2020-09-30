@@ -15,6 +15,7 @@ repos:
     rev: 2.0.0
     hooks:
       - id: bashate
+        args: ['--ignore=E006']
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.8.3
     hooks:
