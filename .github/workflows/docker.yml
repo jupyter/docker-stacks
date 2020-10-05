@@ -43,6 +43,8 @@ jobs:
           make -C main dev-env lint-install
       - name: Lint Dockerfiles
         run: make -C main lint-all
+      - name: Run pre-commit hooks
+        run: make -C main pre-commit-all
       - name: Build Docker Images
         run: make -C main build-test-all
       - name: Run Post-Build Hooks

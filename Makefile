@@ -136,10 +136,10 @@ lint-install: ## install hadolint
 	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/$(HADOLINT_VERSION)/hadolint-$(shell uname -s)-$(shell uname -m)"
 	@chmod 700 $(HADOLINT)
 	@echo "Installation done!"
-	@$(HADOLINT) --version	
+	@$(HADOLINT) --version
 
 pre-commit-all: ## run pre-commit hook on all files
-	@pre-commit run --all 
+	@pre-commit run --all-files
 
 pre-commit-install: ## set up the git hook scripts
 	@pre-commit --version
