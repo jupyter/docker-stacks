@@ -23,7 +23,7 @@ endif
 
 ALL_IMAGES:=$(ALL_STACKS)
 
-# Linter
+# Dockerfile Linter
 HADOLINT="${HOME}/hadolint"
 HADOLINT_VERSION="v1.18.0"
 
@@ -121,17 +121,17 @@ img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
 	-docker rmi --force $(shell docker images -f "dangling=true" -q) 2> /dev/null
 
-lint/%: ARGS?=
-lint/%: ## lint the dockerfile(s) for a stack
+hadolint/%: ARGS?=
+hadolint/%: ## lint the dockerfile(s) for a stack
 	@echo "Linting Dockerfiles in $(notdir $@)..."
 	@git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
 	@echo "Linting done!"
 
-lint-all: $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
+hadolint-all: $(foreach I,$(ALL_IMAGES),hadolint/$(I) ) ## lint all stacks
 
-lint-build-test-all: $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
+hadolint-build-test-all: $(foreach I,$(ALL_IMAGES),hadolint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
 
-lint-install: ## install hadolint
+hadolint-install: ## install hadolint
 	@echo "Installing hadolint at $(HADOLINT) ..."
 	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/$(HADOLINT_VERSION)/hadolint-$(shell uname -s)-$(shell uname -m)"
 	@chmod 700 $(HADOLINT)

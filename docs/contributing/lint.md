@@ -8,7 +8,7 @@ To integrate and enforce this process in the project lifecycle we are using **gi
 
 ### Installation
 
-pre-commit is a Python package that needs to be installed. 
+pre-commit is a Python package that needs to be installed.
 This can be achieved by using the generic task used to install all Python development dependencies.
 
 ```sh
@@ -21,7 +21,7 @@ $ pip install pre-commit
 Then the git hooks scripts configured for the project in `.pre-commit-config.yaml` need to be installed in the local git repository.
 
 ```sh
-$ make pre-commit-install 
+$ make pre-commit-install
 ```
 
 ### Run
@@ -43,7 +43,7 @@ There is a specific `make` target to install the linter.
 By default `hadolint` will be installed in `${HOME}/hadolint`.
 
 ```bash
-$ make lint-install
+$ make hadolint-install
 
 # Installing hadolint at /Users/romain/hadolint ...
 # Installation done!
@@ -57,7 +57,7 @@ $ make lint-install
 The linter can be run per stack.
 
 ```bash
-$ make lint/scipy-notebook  
+$ make hadolint/scipy-notebook
 
 # Linting Dockerfiles in scipy-notebook...
 # scipy-notebook/Dockerfile:4 DL3006 Always tag the version of an image explicitly
@@ -69,11 +69,11 @@ $ make lint/scipy-notebook
 # make: *** [lint/scipy-notebook] Error 1
 ```
 
-Optionally you can pass arguments to the linter.
+Optionally you can pass arguments to the hadolint.
 
 ```bash
 # Use a different export format
-$ make lint/scipy-notebook ARGS="--format codeclimate"  
+$ make hadolint/scipy-notebook ARGS="--format codeclimate"
 ```
 
 #### All the Stacks
@@ -81,16 +81,16 @@ $ make lint/scipy-notebook ARGS="--format codeclimate"
 The linter can be run against all the stacks.
 
 ```bash
-$ make lint-all
+$ make hadolint-all
 ```
 
 ### Ignoring Rules
 
-Sometimes it is necessary to ignore [some rules][rules]. 
+Sometimes it is necessary to ignore [some rules][rules].
 The following rules are ignored by default and sor for all images in the `.hadolint.yaml` file.
 
-- [`DL3006`][DL3006]: We use a specific policy to manage image tags. 
-  - `base-notebook` `FROM` clause is fixed but based on an argument (`ARG`). 
+- [`DL3006`][DL3006]: We use a specific policy to manage image tags.
+  - `base-notebook` `FROM` clause is fixed but based on an argument (`ARG`).
   - Building downstream images from (`FROM`) the latest is done on purpose.
 - [`DL3008`][DL3008]: System packages are always updated (`apt-get`) to the latest version.
 
