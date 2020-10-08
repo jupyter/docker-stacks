@@ -24,6 +24,7 @@ RUN conda config --show channels && \
     'tensorboard=2.*' \
     'pytorch=1.6*' \
     'torchvision=0.7*' \
+    'ignite=0.4*' \
     'cudatoolkit=10.2*' \
     && \
     conda config --system --set channel_priority strict && \
@@ -31,10 +32,10 @@ RUN conda config --show channels && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# Install MONAI milestone edition with Pillow (already there, see earlier layers)
-#RUN pip install -q --no-cache-dir monai[pillow]
+# Install MONAI milestone edition with some extras
+RUN pip install -q --no-cache-dir 'monai[gdown,nibabel,pillow]'
 
 # Install and build MONAI from master branch
-RUN pip install -q --no-cache-dir git+https://github.com/Project-MONAI/MONAI#egg=MONAI
+#RUN pip install -q --no-cache-dir git+https://github.com/Project-MONAI/MONAI#egg=MONAI
 
 WORKDIR $HOME
