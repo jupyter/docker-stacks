@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-08 19:06+0000\n"
+"POT-Creation-Date: 2020-10-12 12:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
 
-#: ../../contributing/features.md:1 1f4b30ecd7854c24ba6b446ba4edd5af
+#: ../../contributing/features.md:1 87308dbcd6784ce9ad29d2305cea02f3
 msgid "# New Features"
 msgstr ""
 
 # 64c3ecc68ada47afada78f945253c9e9
-#: ../../contributing/features.md:3 a0a089fe726f4ba98b685362a66efef4
+#: ../../contributing/features.md:3 b8fb9393c2a445e5912f497253c98316
 msgid ""
 "Thank you for contributing to the Jupyter Docker Stacks! We review pull "
 "requests of new features (e.g., new packages, new scripts, new flags) to "
@@ -31,24 +31,24 @@ msgid ""
 " maintaining the images over time."
 msgstr ""
 
-#: ../../contributing/features.md:7 0aec09141ec142cf8916ecda7121893e
+#: ../../contributing/features.md:7 78c4a61c35ef4459805bf39791465684
 msgid "## Suggesting a New Feature"
 msgstr ""
 
 # c995f8cabb1d4b4fb53a9c56ae8e017b
-#: ../../contributing/features.md:9 bc1a8da55c8b46f08dce546e3c9ae370
+#: ../../contributing/features.md:9 7b46b9181cd4467c979fd5be70706250
 msgid ""
 "Please follow the process below to suggest a new feature for inclusion in"
 " one of the core stacks:"
 msgstr ""
 
-#: ../../contributing/features.md:11 b75bbd51f6f5485d8520eb0d5e3ae1fd
+#: ../../contributing/features.md:11 00d28bc039ce4092bc6aca41a8bc553a
 msgid ""
 "[Open a GitHub issue](https://github.com/jupyter/docker-stacks/issues) "
 "describing the feature you'd like to contribute."
 msgstr ""
 
-#: ../../contributing/features.md:13 54f000e337af4a86a021fbd997d7db79
+#: ../../contributing/features.md:13 6acfd3ae068e40dcbc16490e90121847
 msgid ""
 "Discuss with the maintainers whether the addition makes sense in [one of "
 "the core stacks](../using/selecting.md#Core-Stacks), as a [recipe in the "
@@ -56,32 +56,32 @@ msgid ""
 "something else entirely."
 msgstr ""
 
-#: ../../contributing/features.md:18 eb4065ca16dd4d61b0b79194f9b6f211
+#: ../../contributing/features.md:18 e5915de592804c548f5f1973cf6cea1d
 msgid "## Selection Criteria"
 msgstr ""
 
 # ca139cf0df684011bdf6f6f68e151796
-#: ../../contributing/features.md:20 d592f1ed0e6c42ebb1aef28e458da779
+#: ../../contributing/features.md:20 86f6a99b92284fd69be9a52cce713b4c
 msgid ""
 "Roughly speaking, we evaluate new features based on the following "
 "criteria:"
 msgstr ""
 
-#: ../../contributing/features.md:22 82d535c284ac4b1dbb81cab01be9fe70
+#: ../../contributing/features.md:22 8a9346f5b6884bf9b43f0bc57677f819
 msgid ""
 "**Usefulness to Jupyter users**: Is the feature generally applicable "
 "across domains? Does it work with Jupyter Notebook, JupyterLab, "
 "JupyterHub, etc.?"
 msgstr ""
 
-#: ../../contributing/features.md:24 737e8604999a4c488c4f4fcb408025d7
+#: ../../contributing/features.md:24 cf706a116a7f4026b9ab0b584847a8d7
 msgid ""
 "**Fit with the image purpose**: Does the feature match the theme of the "
 "stack in which it will be added? Would it fit better in a new, community "
 "stack?"
 msgstr ""
 
-#: ../../contributing/features.md:26 2f3afb23ca24406fb209a961779be680
+#: ../../contributing/features.md:26 43fc5585256e48b7ad38dff717f12186
 msgid ""
 "**Complexity of build / runtime configuration**: How many lines of code "
 "does the feature require in one of the Dockerfiles or startup scripts? "
@@ -89,14 +89,14 @@ msgid ""
 "use the images?"
 msgstr ""
 
-#: ../../contributing/features.md:29 0fb7606257ae4d768e434785d9a02c1c
+#: ../../contributing/features.md:29 7bcd2a965dcc4be7bfbfd6331d22e98f
 msgid ""
 "**Impact on image metrics**: How many bytes does the feature and its "
 "dependencies add to the image(s)? How many minutes do they add to the "
 "build time?"
 msgstr ""
 
-#: ../../contributing/features.md:31 0d8de7ec393740848ddf5a0da5919804
+#: ../../contributing/features.md:31 5de0b8259ced455ba453570673b08494
 msgid ""
 "**Ability to support the addition**: Can existing maintainers answer user"
 " questions and address future build issues? Are the contributors "
@@ -104,25 +104,25 @@ msgid ""
 "ensure the feature continues to work over time?"
 msgstr ""
 
-#: ../../contributing/features.md:35 4a13b2d0552143ceab1d7a350bbf3605
+#: ../../contributing/features.md:35 5c052421f8df46d39c2bc72ebe8e19c5
 msgid "## Submitting a Pull Request"
 msgstr ""
 
 # f7ca9b40be90476eb97c8fcd67205e9d
-#: ../../contributing/features.md:37 bb1f2f3efd914f66aa1373a8b6562b38
+#: ../../contributing/features.md:37 2db28556d2cd4caba39a1ff0f849c74c
 msgid ""
 "If there's agreement that the feature belongs in one or more of the core "
 "stacks:"
 msgstr ""
 
-#: ../../contributing/features.md:39 35f409699bb346bc8366ef1dbe982e03
+#: ../../contributing/features.md:39 b061abb656de4eb390e1870f389d7924
 msgid ""
 "Implement the feature in a local clone of the `jupyter/docker-stacks` "
 "project."
 msgstr ""
 
 #: ../../contributing/features.md:40 ../../contributing/packages.md:16
-#: 7293d312853c4abda978753a2b60ff84 94d4c3fe5ba94c2e8c4936e4a76bc7f3
+#: 55c69137787042128ebd124707ea616b df1ac6d2a26d406281bc9152610fe2af
 msgid ""
 "Please build the image locally before submitting a pull request. Building"
 " the image locally shortens the debugging cycle by taking some load off "
@@ -132,8 +132,8 @@ msgid ""
 msgstr ""
 
 #: ../../contributing/features.md:46 ../../contributing/packages.md:22
-#: ../../contributing/tests.md:30 3675d6f338b84723a7127fb5b24c737f
-#: 965eed2fff184215a5c28d6ea75f2b4f c329b62057d04f6faede305145005946
+#: ../../contributing/tests.md:30 363cb4db9e3e4fae9d6efd9a78ec1fcc
+#: 3f7c28f5163843d780f23e813878c15e 7a5cbed2ef80436bbd09e6fb80a7639c
 msgid ""
 "[Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A"
 "-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with"
@@ -141,30 +141,30 @@ msgid ""
 msgstr ""
 
 #: ../../contributing/features.md:48 ../../contributing/packages.md:24
-#: ../../contributing/tests.md:32 5a921237338542e6a6fd99f42cd656d2
-#: a1dc49974c1643bda2f80d34136323e9 ed8607039a744a0bacfe3717febb3b0c
+#: ../../contributing/tests.md:32 04c2ba3dcf4345cca38686b36398b810
+#: 07bf93330ea14e67bd97f2056875604f f0f9893eb5ce4aa88bb12d27c20f44fb
 msgid ""
 "Watch for GitHub to report a build success or failure for your PR on "
 "GitHub."
 msgstr ""
 
-#: ../../contributing/features.md:49 953bf754003d400499fb07de69e5bccd
+#: ../../contributing/features.md:49 b51493712bb74ac2a4a30320a026a77e
 msgid "Discuss changes with the maintainers and address any build issues."
 msgstr ""
 
-#: ../../contributing/issues.md:1 d00f33cb4fad444098bfade52e940f44
+#: ../../contributing/issues.md:1 c00f1dc66c21441b89d7cafd32739dde
 msgid "# Project Issues"
 msgstr ""
 
 # 9c2a6e9f67354e86aca23758676fca43
-#: ../../contributing/issues.md:3 52782ccfd9d545f0a8cbc5fdae85c516
+#: ../../contributing/issues.md:3 31ac1b2de5c047fba3430cfaae215291
 msgid ""
 "We appreciate your taking the time to report an issue you encountered "
 "using the Jupyter Docker Stacks. Please review the following guidelines "
 "when reporting your problem."
 msgstr ""
 
-#: ../../contributing/issues.md:7 28eede6be4644c28b6d5dd0c427588bf
+#: ../../contributing/issues.md:7 a1c98f9ccf7142c89e08ff6dd704f140
 msgid ""
 "If you believe you’ve found a security vulnerability in any of the "
 "Jupyter projects included in Jupyter Docker Stacks images, please report "
@@ -174,7 +174,7 @@ msgid ""
 "notebook.readthedocs.io/en/stable/_downloads/ipython_security.asc)."
 msgstr ""
 
-#: ../../contributing/issues.md:13 8d443940580a48f49cc75cd8d460c797
+#: ../../contributing/issues.md:13 1d8b7ce9769548a6b938a0ad4ba5b9ba
 msgid ""
 "If you think your problem is unique to the Jupyter Docker Stacks images, "
 "please search the [jupyter/docker-stacks issue "
@@ -185,14 +185,14 @@ msgid ""
 msgstr ""
 
 # 69a18cc239b34b94800599bf185f58d6
-#: ../../contributing/issues.md:19 e572b613ae394b70b62b38fbcc392456
+#: ../../contributing/issues.md:19 c8c8bdd67a004a13bd2ca6b4e307ff51
 msgid ""
 "If the issue you're seeing is with one of the open source libraries "
 "included in the Docker images and is reproducible outside the images, "
 "please file a bug with the appropriate open source project."
 msgstr ""
 
-#: ../../contributing/issues.md:22 311c5cbf53e3443f92be6f68aa83ea4f
+#: ../../contributing/issues.md:22 974c46b5e11c4a75938e423bfcd88988
 msgid ""
 "If you have a general question about how to use the Jupyter Docker Stacks"
 " in your environment, in conjunction with other tools, with "
@@ -200,11 +200,11 @@ msgid ""
 "Discourse site](https://discourse.jupyter.org)."
 msgstr ""
 
-#: ../../contributing/lint.md:1 35097c868663402ba1a07d04057f2c6f
+#: ../../contributing/lint.md:1 4396b5f26aaf4ee2a706423a65b9f9ca
 msgid "# Lint"
 msgstr ""
 
-#: ../../contributing/lint.md:3 25d10dda1a5d424fb492fc56ef4949ae
+#: ../../contributing/lint.md:3 07df41ff9d704181b26efbca931a2c4c
 msgid ""
 "In order to enforce some rules **linters** are used in this project. "
 "Linters can be run either during the **development phase** (by the "
@@ -213,96 +213,96 @@ msgid ""
 " through [pre-commit][pre-commit]."
 msgstr ""
 
-#: ../../contributing/lint.md:7 6dcf9c5d11b74b99b7938440c24ff309
+#: ../../contributing/lint.md:7 e33136a6c8114c65a0a4d38180cc3fc8
 msgid "## Pre-commit hook"
 msgstr ""
 
 #: ../../contributing/lint.md:9 ../../contributing/lint.md:40
-#: 5ff980cf70524b309f20519a7d93c8cf 762f7c709146483caaec06a591ed1be3
+#: 1b5448d363b8439b863be35b7f6183a9 1fca689d7de74f9b9457bfd13c6a9d30
 msgid "### Installation"
 msgstr ""
 
-#: ../../contributing/lint.md:11 480cf1862e374b29b37c1dbc9d584249
+#: ../../contributing/lint.md:11 cd83a8dc7dd84758832ee0e483b3b66b
 msgid ""
 "pre-commit is a Python package that needs to be installed. This can be "
 "achieved by using the generic task used to install all Python development"
 " dependencies."
 msgstr ""
 
-#: ../../contributing/lint.md:14 357b5cc91a9b40288f11fe71db5471aa
+#: ../../contributing/lint.md:14 9477502634654897aca51088e8d4787c
 msgid ""
 "```sh # Install all development dependencies for the project $ make dev-"
 "env # It can also be installed directly $ pip install pre-commit ```"
 msgstr ""
 
-#: ../../contributing/lint.md:21 9125ec7b353f4f248d8b72aaaac3d59e
+#: ../../contributing/lint.md:21 46be9c5e331748798064931114c4f70f
 msgid ""
 "Then the git hooks scripts configured for the project in `.pre-commit-"
 "config.yaml` need to be installed in the local git repository."
 msgstr ""
 
-#: ../../contributing/lint.md:23 0ecb8947372d4f9681b4a8fb8a2a930f
+#: ../../contributing/lint.md:23 175d9f84c6744b66b3b1910be299d3fa
 msgid "```sh $ make pre-commit-install ```"
 msgstr ""
 
-#: ../../contributing/lint.md:27 fe671ebbac8542c48096bcbeac893809
+#: ../../contributing/lint.md:27 7f1926f94d7948e095690fefb1f93514
 msgid "### Run"
 msgstr ""
 
-#: ../../contributing/lint.md:29 ffe3e6145c514786a2e01466279c5548
+#: ../../contributing/lint.md:29 6ab4f30ae07142fea78d5d1b8b73899f
 msgid ""
 "Now pre-commit (and so configured hooks) will run automatically on `git "
 "commit` on each changed file. However it is also possible to trigger it "
 "against all files."
 msgstr ""
 
-#: ../../contributing/lint.md:32 ac22aa59c7434960bf368861cd801566
+#: ../../contributing/lint.md:32 bd7182f5c5754fe2b6d98c207ce5c2ef
 msgid "```sh $ make pre-commit-all ```"
 msgstr ""
 
-#: ../../contributing/lint.md:36 71ae8ce818444ba2bc56d2386944d5b3
+#: ../../contributing/lint.md:36 cda6c7ee8c4446449cc3d6e5dbcf87cf
 msgid "## Image Lint"
 msgstr ""
 
-#: ../../contributing/lint.md:38 41179f693173417291b77cdff156f487
+#: ../../contributing/lint.md:38 4aa54697088342ffa1b405d9ed1ec2fb
 msgid ""
 "To comply with [Docker best practices][dbp], we are using the "
 "[Hadolint][hadolint] tool to analyse each `Dockerfile` ."
 msgstr ""
 
-#: ../../contributing/lint.md:42 3e900e49cead4074934cfcb6e2996cea
+#: ../../contributing/lint.md:42 6e41b84dee3347e388c030a714519d6f
 msgid ""
 "There is a specific `make` target to install the linter. By default "
 "`hadolint` will be installed in `${HOME}/hadolint`."
 msgstr ""
 
-#: ../../contributing/lint.md:45 29c319a53327485d9c071fe5b304e511
-msgid "```bash $ make lint-install"
+#: ../../contributing/lint.md:45 69e40b66f0de4db28efdedc5d9cf8f48
+msgid "```bash $ make hadolint-install"
 msgstr ""
 
-#: ../../contributing/lint.md:48 c5293dc866fe450caaaafa815b9b5807
+#: ../../contributing/lint.md:48 f6007312e41146d29878e020b62c7053
 msgid ""
 "# Installing hadolint at /Users/romain/hadolint ... # Installation done! "
 "# Haskell Dockerfile Linter v1.17.6-0-gc918759 ```"
 msgstr ""
 
-#: ../../contributing/lint.md:53 15a35b489c1e411c9d89aab350c63d7f
+#: ../../contributing/lint.md:53 da22db6ea37a474aaca1a00c228137e9
 msgid "### Linting"
 msgstr ""
 
-#: ../../contributing/lint.md:55 41ef020cae874c2d9ca519058511cb18
+#: ../../contributing/lint.md:55 f44e656083764cb4af7a770562979466
 msgid "#### Per Stack"
 msgstr ""
 
-#: ../../contributing/lint.md:57 41366eb471f445dab4c340a91e6fa0dc
+#: ../../contributing/lint.md:57 c9701b319ef24841bb45cb511ea84ebc
 msgid "The linter can be run per stack."
 msgstr ""
 
-#: ../../contributing/lint.md:59 41f2568c53604a0f9d1592be3d85f282
-msgid "```bash $ make lint/scipy-notebook"
+#: ../../contributing/lint.md:59 fc8640e34a2f4da49c9c64167f689a36
+msgid "```bash $ make hadolint/scipy-notebook"
 msgstr ""
 
-#: ../../contributing/lint.md:62 ad960793755e4572ac30b6352b79d637
+#: ../../contributing/lint.md:62 9a28958a28484776b7134d96d162d925
 msgid ""
 "# Linting Dockerfiles in scipy-notebook... # scipy-notebook/Dockerfile:4 "
 "DL3006 Always tag the version of an image explicitly # scipy-"
@@ -316,59 +316,59 @@ msgid ""
 "splitting. # make: *** [lint/scipy-notebook] Error 1 ```"
 msgstr ""
 
-#: ../../contributing/lint.md:72 e026e25057904d69b4edf7b553d8f638
-msgid "Optionally you can pass arguments to the linter."
+#: ../../contributing/lint.md:72 50b1ceb50a6e463996fd7ed3b753e888
+msgid "Optionally you can pass arguments to the hadolint."
 msgstr ""
 
-#: ../../contributing/lint.md:74 1127ab0649204c5b84764164f5c1b04d
+#: ../../contributing/lint.md:74 082ffcf691e14c45a621507ab3e1c7ba
 msgid ""
-"```bash # Use a different export format $ make lint/scipy-notebook "
+"```bash # Use a different export format $ make hadolint/scipy-notebook "
 "ARGS=\"--format codeclimate\" ```"
 msgstr ""
 
-#: ../../contributing/lint.md:79 fdbef21047db45749fafca202efd10a0
+#: ../../contributing/lint.md:79 8b4b3a3e00d44d4ba01dd2418f2f9bad
 msgid "#### All the Stacks"
 msgstr ""
 
-#: ../../contributing/lint.md:81 9a95d1f652b7430a89fbffa9f1ebe75e
+#: ../../contributing/lint.md:81 060a24494a864096b8e104741f1f5a12
 msgid "The linter can be run against all the stacks."
 msgstr ""
 
-#: ../../contributing/lint.md:83 8b1bfdcf345d4af99501d154e0dab0b5
-msgid "```bash $ make lint-all ```"
+#: ../../contributing/lint.md:83 1e2218fbdc2b48ed8012ccfcaf8f784f
+msgid "```bash $ make hadolint-all ```"
 msgstr ""
 
-#: ../../contributing/lint.md:87 acde0d5ce4f54bbdacdd58ed10db14e0
+#: ../../contributing/lint.md:87 80a26f7c3dd145698319886f9a6c14a2
 msgid "### Ignoring Rules"
 msgstr ""
 
-#: ../../contributing/lint.md:89 f6d04edf48e44471a9e73062d99f9389
+#: ../../contributing/lint.md:89 8a7febddacee495cb24c522ae9e9fe9e
 msgid ""
 "Sometimes it is necessary to ignore [some rules][rules]. The following "
 "rules are ignored by default and sor for all images in the "
 "`.hadolint.yaml` file."
 msgstr ""
 
-#: ../../contributing/lint.md:92 af91bdf6147c41cdaea723e48e3d4c55
+#: ../../contributing/lint.md:92 e3de5a5a054a43bbab01e7957247fa4c
 msgid ""
 "[`DL3006`][DL3006]: We use a specific policy to manage image tags. - "
 "`base-notebook` `FROM` clause is fixed but based on an argument (`ARG`). "
 "- Building downstream images from (`FROM`) the latest is done on purpose."
 msgstr ""
 
-#: ../../contributing/lint.md:95 b892962b128f49a791eda29158574c12
+#: ../../contributing/lint.md:95 5848d2723079460687e8edc3370ce293
 msgid ""
 "[`DL3008`][DL3008]: System packages are always updated (`apt-get`) to the"
 " latest version."
 msgstr ""
 
-#: ../../contributing/lint.md:97 b85c2a3a25884fe3a2b13bd5b7ba4f0e
+#: ../../contributing/lint.md:97 5572ba308fc84e77a1d5f86ef9ac609c
 msgid ""
 "For other rules, the preferred way to do it is to flag ignored rules in "
 "the `Dockerfile`."
 msgstr ""
 
-#: ../../contributing/lint.md:99 dcf48a746ba44969b5068eaefdc52bb2
+#: ../../contributing/lint.md:99 cafb81e77c3642afa8857e0b62db4c39
 msgid ""
 "> It is also possible to ignore rules by using a special comment directly"
 " above the Dockerfile instruction you want to make an exception for. "
@@ -376,19 +376,19 @@ msgid ""
 "example:"
 msgstr ""
 
-#: ../../contributing/lint.md:101 8e111990cdb340eaa85258992d0a5c26
+#: ../../contributing/lint.md:101 e0eb3a2b65b446128a063a8057d4157b
 msgid "```dockerfile"
 msgstr ""
 
-#: ../../contributing/lint.md:103 d066e760189f4eb0abc1304a95b7e5f5
+#: ../../contributing/lint.md:103 6db846d111bc4d4d994cd4188e3affa5
 msgid "FROM ubuntu"
 msgstr ""
 
-#: ../../contributing/lint.md:105 6d8b8e215e11402fa32af7a4ba1f76aa
+#: ../../contributing/lint.md:105 0e37b9ac48b744779a21552c9d0b6738
 msgid "# hadolint ignore=DL3003,SC1035 RUN cd /tmp && echo \"hello!\" ```"
 msgstr ""
 
-#: ../../contributing/lint.md:109 f2da01d5433947b68f2559c7d80796eb
+#: ../../contributing/lint.md:109 6f67100d77094c12aac2c5a8dc27decf
 msgid ""
 "[hadolint]: https://github.com/hadolint/hadolint [dbp]: "
 "https://docs.docker.com/develop/develop-images/dockerfile_best-practices "
@@ -398,12 +398,12 @@ msgid ""
 "://pre-commit.com/"
 msgstr ""
 
-#: ../../contributing/packages.md:1 e2294b839d07437480f4402937469230
+#: ../../contributing/packages.md:1 d68ccfd1ee584ea596fa1b5ef16c4aca
 msgid "# Package Updates"
 msgstr ""
 
 # 5f269a667f9a4c3ca342cfb49ecaefb2
-#: ../../contributing/packages.md:3 4453da6339b6477f9dcc91eccaa86e31
+#: ../../contributing/packages.md:3 cd57b842483b4a9c8f1e2370b8d9f822
 msgid ""
 "We actively seek pull requests which update packages already included in "
 "the project Dockerfiles. This is a great way for first-time contributors "
@@ -411,11 +411,11 @@ msgid ""
 msgstr ""
 
 # 30d4a79bce8d439d97e6e3555a088548
-#: ../../contributing/packages.md:7 3c16959d3ead47e0872f7d79c8435824
+#: ../../contributing/packages.md:7 4938511e6e7d470a9e22b9cfea38b6e2
 msgid "Please follow the process below to update a package version:"
 msgstr ""
 
-#: ../../contributing/packages.md:9 64ed93cfb883495eae845d07888bb83b
+#: ../../contributing/packages.md:9 ce4ef90e4efd450494172e43a222d2a4
 msgid ""
 "Locate the Dockerfile containing the library you wish to update (e.g., "
 "[base-notebook/Dockerfile](https://github.com/jupyter/docker-"
@@ -424,7 +424,7 @@ msgid ""
 "/scipy-notebook/Dockerfile))"
 msgstr ""
 
-#: ../../contributing/packages.md:12 8f9a5ef2958d42dd9fd3e771a43b9703
+#: ../../contributing/packages.md:12 f71ed60421f24a7db15710d6d958f43d
 msgid ""
 "Adjust the version number for the package. We prefer to pin the major and"
 " minor version number of packages so as to minimize rebuild side-effects "
@@ -433,18 +433,18 @@ msgid ""
 "`notebook=5.4.*`."
 msgstr ""
 
-#: ../../contributing/packages.md:25 bce00ae15d21464fbf78cffd96b278f3
+#: ../../contributing/packages.md:25 d9de1265b7c848edacefec29bea6e9c2
 msgid ""
 "Discuss changes with the maintainers and address any build issues. "
 "Version conflicts are the most common problem. You may need to upgrade "
 "additional packages to fix build failures."
 msgstr ""
 
-#: ../../contributing/packages.md:28 8f564432a8944e909f97d3462756d64f
+#: ../../contributing/packages.md:28 b01b2c58231747018f0b6c2e9604907f
 msgid "## Notes"
 msgstr ""
 
-#: ../../contributing/packages.md:30 1471b87cc5f24f089a3f3c9ca80f7350
+#: ../../contributing/packages.md:30 6ec6fa6d7d28432abf5c90acc9d5de93
 msgid ""
 "In order to help identifying packages that can be updated you can use the"
 " following helper tool. It will list all the packages installed in the "
@@ -452,11 +452,11 @@ msgid ""
 "only on requested packages."
 msgstr ""
 
-#: ../../contributing/packages.md:34 c97fe1c61a8a4b9d9717eff5b6cfee0d
+#: ../../contributing/packages.md:34 2d52bd16ed7b42b5a2b4841e69e582c6
 msgid "```bash $ make check-outdated/base-notebook"
 msgstr ""
 
-#: ../../contributing/packages.md:37 10f69925750a4280a0c1e32329505a97
+#: ../../contributing/packages.md:37 5b47002f04fa48b78c032fec4ba2554f
 msgid ""
 "# INFO     test_outdated:test_outdated.py:80 3/8 (38%) packages could be "
 "updated # INFO     test_outdated:test_outdated.py:82 # Package     "
@@ -465,11 +465,11 @@ msgid ""
 "```"
 msgstr ""
 
-#: ../../contributing/recipes.md:1 51acfd2e5cc04d79b4b0237f60d1e0b7
+#: ../../contributing/recipes.md:1 9d9c719b4f864b63ab2bef21848ac0e3
 msgid "# New Recipes"
 msgstr ""
 
-#: ../../contributing/recipes.md:3 86d268668ef047d699a583bb03b37ab8
+#: ../../contributing/recipes.md:3 9edb226afe8246ae9cae02e0e7b630b8
 msgid ""
 "We welcome contributions of [recipes](../using/recipes.md), short "
 "examples of using, configuring, or extending the Docker Stacks, for "
@@ -477,25 +477,25 @@ msgid ""
 "new recipe:"
 msgstr ""
 
-#: ../../contributing/recipes.md:5 bc2e49a608154c85b595d6f682937d8f
+#: ../../contributing/recipes.md:5 3852ad45c4bf4f87a490e2a0878cf4dc
 msgid "Open the `docs/using/recipes.md` source file."
 msgstr ""
 
-#: ../../contributing/recipes.md:6 fbb143e5a1534520928e32e4ee7c85ff
+#: ../../contributing/recipes.md:6 d7b7a4eaaa994125badb2e040bc54f36
 msgid ""
 "Add a second-level Markdown heading naming your recipe at the bottom of "
 "the file (e.g., `## Add the RISE extension`)"
 msgstr ""
 
 # 8838b0ff2be24c23afaca9a6f43a9b66
-#: ../../contributing/recipes.md:7 e791aa1de3774b3eb10d864c2c1bbfac
+#: ../../contributing/recipes.md:7 eb8e87e0c1c54104b4b219c5d0687a7f
 msgid ""
 "Write the body of your recipe under the heading, including whatever "
 "command line, Dockerfile, links, etc. you need."
 msgstr ""
 
 #: ../../contributing/recipes.md:8 ../../contributing/stacks.md:137
-#: 4b62401782314bd69e0626a418243aa2 e67fe61f4c01439e9a80f7c1f6048e75
+#: 1b072ea6b88c43ecaf29ab232059fa9a 1cc55819a5d2466ba936c6d7d51d73da
 msgid ""
 "[Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A"
 "-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with"
@@ -503,11 +503,11 @@ msgid ""
 "formatting or content issues."
 msgstr ""
 
-#: ../../contributing/stacks.md:1 5e9b9b192a664abfa1b62c1b1d3bcb1d
+#: ../../contributing/stacks.md:1 a2fb4c2f48d34e50afbee154fdb38484
 msgid "# Community Stacks"
 msgstr ""
 
-#: ../../contributing/stacks.md:3 fd57650d76a640d5b088ee62814d58d8
+#: ../../contributing/stacks.md:3 cd04d357da92428fa1bfd0f5bf472c41
 msgid ""
 "We love to see the community create and share new Jupyter Docker images. "
 "We've put together a [cookiecutter project](https://github.com/jupyter"
@@ -516,129 +516,129 @@ msgid ""
 "Docker. Following these steps will:"
 msgstr ""
 
-#: ../../contributing/stacks.md:8 bd5dbaa5f43f426a97e5b9435f09e4cb
+#: ../../contributing/stacks.md:8 85e339e52121447081aac3fb65e25318
 msgid ""
 "Setup a project on GitHub containing a Dockerfile based on either the "
 "`jupyter/base-notebook` or `jupyter/minimal-notebook` image."
 msgstr ""
 
-#: ../../contributing/stacks.md:10 b09f698e6f7b48e9b3174c2f0117d872
+#: ../../contributing/stacks.md:10 21bf55f67f17411f83687abd80d59d24
 msgid ""
 "Configure GitHub Actions to build and test your image when users submit "
 "pull requests to your repository."
 msgstr ""
 
 # cb04d6b8877b47e78277b7025f642ae3
-#: ../../contributing/stacks.md:12 fff629a47a9a4e849aba0f0267d0e113
+#: ../../contributing/stacks.md:12 4cfb7f9e9c324cf79514a9ae2d2ee81b
 msgid "Configure Docker Cloud to build and host your images for others to use."
 msgstr ""
 
-#: ../../contributing/stacks.md:13 ec6c068089db4f8b83a065fca595bcd9
+#: ../../contributing/stacks.md:13 bc59cbb517a744b2bea901bd9a476011
 msgid ""
 "Update the [list of community stacks](../using/selecting.html#community-"
 "stacks) in this documentation to include your image."
 msgstr ""
 
 # 8e0fd1dc73cc40ceab19307d0cd809c1
-#: ../../contributing/stacks.md:16 e1e72acfda3748f6a7e5b5f9ea7f3861
+#: ../../contributing/stacks.md:16 1c38271a003a4718814876db567fdcb4
 msgid ""
 "This approach mirrors how we build and share the core stack images. Feel "
 "free to follow it or pave your own path using alternative services and "
 "build tools."
 msgstr ""
 
-#: ../../contributing/stacks.md:19 dd26246cef5542bf858e9b80d07bf908
+#: ../../contributing/stacks.md:19 51aef9b1db844cb68012611a673e3436
 msgid "## Creating a Project"
 msgstr ""
 
-#: ../../contributing/stacks.md:21 78b8dce06a1b49b3ab561a4794cf61bd
+#: ../../contributing/stacks.md:21 f182f54fc4c343a99aa9f1af271b2dc6
 msgid ""
 "First, install [cookiecutter](https://github.com/audreyr/cookiecutter) "
 "using pip or conda:"
 msgstr ""
 
-#: ../../contributing/stacks.md:23 9ff3413066b04a8a87d97edf68c3d098
+#: ../../contributing/stacks.md:23 50c7c1895f4e483f85c3befa73a284bd
 msgid "```bash pip install cookiecutter   # or conda install cookiecutter ```"
 msgstr ""
 
-#: ../../contributing/stacks.md:27 c9c7a9dee7aa47229c9ca71551b505db
+#: ../../contributing/stacks.md:27 4a6d87dae24a484a9accbeacd74a7f40
 msgid ""
 "Run the cookiecutter command pointing to the [jupyter/cookiecutter-"
 "docker-stacks](https://github.com/jupyter/cookiecutter-docker-stacks) "
 "project on GitHub."
 msgstr ""
 
-#: ../../contributing/stacks.md:31 5f569d16777d427586d3ee933da8bdf7
+#: ../../contributing/stacks.md:31 6e0c2fee484a4b1ab6b5fb1f7d50a405
 msgid ""
 "```bash cookiecutter https://github.com/jupyter/cookiecutter-docker-"
 "stacks.git ```"
 msgstr ""
 
 # 676ff068156d4ca7b1043b4a4fe2d1f1
-#: ../../contributing/stacks.md:35 9702bf91c71e49d4b05b22708b11d0dc
+#: ../../contributing/stacks.md:35 8159034dfc68487d816a55125703e5d2
 msgid ""
 "Enter a name for your new stack image. This will serve as both the git "
 "repository name and the part of the Docker image name after the slash."
 msgstr ""
 
-#: ../../contributing/stacks.md:38 302c74268ac043e19e0a1a4becaa3a81
+#: ../../contributing/stacks.md:38 0c034655f6ac436eaede9d3925e65f19
 msgid "``` stack_name [my-jupyter-stack]: ```"
 msgstr ""
 
 # 96deffa98bab47da82e5598e549c8a39
-#: ../../contributing/stacks.md:42 ef070c4a4e5947afad068dd42c94afa8
+#: ../../contributing/stacks.md:42 a0f5a35cac1e4582a318afd73514efd5
 msgid ""
 "Enter the user or organization name under which this stack will reside on"
 " Docker Cloud / Hub. You must have access to manage this Docker Cloud org"
 " in order to push images here and setup automated builds."
 msgstr ""
 
-#: ../../contributing/stacks.md:46 0f0d1602a3594734af9c9448b96a7992
+#: ../../contributing/stacks.md:46 c8100d324d084444bf67a58ee0ab2e09
 msgid "``` stack_org [my-project]: ```"
 msgstr ""
 
 # b796c2d7c08b4a1db5cdfd3de7d84c16
-#: ../../contributing/stacks.md:50 fa5555c0063c40aeb048112658255e4e
+#: ../../contributing/stacks.md:50 a89e98daea0d4aad8cb7851e6d112d4c
 msgid ""
 "Select an image from the jupyter/docker-stacks project that will serve as"
 " the base for your new image."
 msgstr ""
 
-#: ../../contributing/stacks.md:53 94e00ac700294ef596da279daa673331
+#: ../../contributing/stacks.md:53 483295ba6cc4481f91e6da37606e4a38
 msgid "``` stack_base_image [jupyter/base-notebook]: ```"
 msgstr ""
 
 # 7ef9d73286d04b12a1350e8d9565df65
-#: ../../contributing/stacks.md:57 893a7ded902c463a8362a494a79a5cf8
+#: ../../contributing/stacks.md:57 138efdd072494ea8abf5c2dde20024d9
 msgid "Enter a longer description of the stack for your README."
 msgstr ""
 
-#: ../../contributing/stacks.md:59 63b5b03b3a484a5b9027e10194dedeef
+#: ../../contributing/stacks.md:59 647f97d0246943e893f84137b8226255
 msgid ""
 "``` stack_description [my-jupyter-stack is a community maintained Jupyter"
 " Docker Stack image]: ```"
 msgstr ""
 
 # 479d3a5c6ef9481a9dc4033224c540fa
-#: ../../contributing/stacks.md:63 75186ce005fc4399b9f1294c87dd4cd2
+#: ../../contributing/stacks.md:63 c4a42cd3c9d94d3d980e0f2ec3118b36
 msgid "Initialize your project as a Git repository and push it to GitHub."
 msgstr ""
 
-#: ../../contributing/stacks.md:65 4b5cc135f4de4e6a824e8e89636e38e5
+#: ../../contributing/stacks.md:65 e0e73ae693f844609ca59b3763d72f2b
 msgid "``` cd <stack_name you chose>"
 msgstr ""
 
-#: ../../contributing/stacks.md:68 68bf7622f36343bb9ee98810ef07a89b
+#: ../../contributing/stacks.md:68 1f56621c93d44d17aea81b92a4380fc4
 msgid ""
 "git init git add . git commit -m 'Seed repo' git remote add origin <url "
 "from github> git push -u origin master ```"
 msgstr ""
 
-#: ../../contributing/stacks.md:75 ee68ec99549f4a7ab077ca743699acdc
+#: ../../contributing/stacks.md:75 9c926fd26373447aaf1adb6ca61a549d
 msgid "## Configuring Travis"
 msgstr ""
 
-#: ../../contributing/stacks.md:77 f7336f2c3ea14f36a9f467c7803e952c
+#: ../../contributing/stacks.md:77 d2901e5fe48047538a629599b53cabcf
 msgid ""
 "> NOTE: This section and the cookiecutter template should be updated to "
 "describe using GitHub > Actions now that jupyter/docker-stacks uses that "
@@ -646,13 +646,13 @@ msgid ""
 msgstr ""
 
 # 38e3784d96f64d7481f0e1fd17aff9cb
-#: ../../contributing/stacks.md:80 ad43e39d477944b898cf18ebdc37ec01
+#: ../../contributing/stacks.md:80 6c82a90981524e9a8e72e7a35d948c35
 msgid ""
 "Next, link your GitHub project to Travis CI to build your Docker image "
 "whenever you or someone else submits a pull request."
 msgstr ""
 
-#: ../../contributing/stacks.md:83 c59b36597fc7460982e6406d66090592
+#: ../../contributing/stacks.md:83 6110a2aee3e245829b443d0e7c0af93d
 msgid ""
 "Visit [https://docs.travis-ci.com/user/getting-started/#To-get-started-"
 "with-Travis-CI](https://docs.travis-ci.com/user/getting-started/#To-get-"
@@ -660,73 +660,73 @@ msgid ""
 "application to your GitHub account."
 msgstr ""
 
-#: ../../contributing/stacks.md:86 9e5d81ade9684748b32c6ade3605a0ec
+#: ../../contributing/stacks.md:86 e2a8f63fa23549d0ba5bbd31441fffc2
 msgid "Visit [https://travis-ci.org](https://travis-ci.org)."
 msgstr ""
 
-#: ../../contributing/stacks.md:87 af91579e3ec14edeb8788cdf67fa141e
+#: ../../contributing/stacks.md:87 f113948ac90c4505bf68bf6a68c52d7c
 msgid ""
 "Click the + symbol at the top of the left sidebar. ![Travis sidebar with "
 "plus button screenshot](../_static/travis-plus-repo.png)"
 msgstr ""
 
 # ac370ece6fb24becb8034cb994ad8f4b
-#: ../../contributing/stacks.md:89 18584d73dddb4c41b2e7819e17e8968b
+#: ../../contributing/stacks.md:89 a26db0d349c64f799c69ffffa66c846e
 msgid ""
 "Locate your project repository either in your primary user account or in "
 "one of the organizations to which you belong."
 msgstr ""
 
 # 6b6a7bab547d4e25bd930009a6a9ea44
-#: ../../contributing/stacks.md:91 8e2e7f97a52a464ebfead53159d1ab6b
+#: ../../contributing/stacks.md:91 425c5eee8ebc47d89f987a356595a4db
 msgid "Click the toggle to enable builds for the project repository."
 msgstr ""
 
-#: ../../contributing/stacks.md:92 8c1eac1c459442e1b97c8ebbe46385f3
+#: ../../contributing/stacks.md:92 cdfa9566710f41698a1280d03890599d
 msgid ""
 "Click the **Settings** button for that repository. ![Travis enable build "
 "toggle screenshot](../_static/travis-enable-build.png)"
 msgstr ""
 
-#: ../../contributing/stacks.md:94 605dcce863334fac957041e789237e36
+#: ../../contributing/stacks.md:94 dd3284c38bae43e0a7f3f14ff5833b19
 msgid ""
 "Enable **Build only if .travis.yml is present** and **Build pushed pull "
 "requests**. ![Travis build settings screenshot](../_static/travis-build-"
 "settings.png)"
 msgstr ""
 
-#: ../../contributing/stacks.md:96 7b2793aba2404996bccbd9acc3a140e4
+#: ../../contributing/stacks.md:96 205587c034d1423b81fc5fa4a496efc1
 msgid "Disable **Build pushed branches**."
 msgstr ""
 
-#: ../../contributing/stacks.md:98 aa71473c30c940beac55816b2d0e0625
+#: ../../contributing/stacks.md:98 990583b6752746af97649d1800576dd6
 msgid "## Configuring Docker Cloud"
 msgstr ""
 
 # f0c01a2906494d039d73324e90cbae44
-#: ../../contributing/stacks.md:100 c8648232b1174610931b9391084910cd
+#: ../../contributing/stacks.md:100 08bda4db862d4603a9d49d3ab5351e3f
 msgid ""
 "Now, configure Docker Cloud to build your stack image and push it to "
 "Docker Hub repository whenever you merge a GitHub pull request to the "
 "master branch of your project."
 msgstr ""
 
-#: ../../contributing/stacks.md:103 af488675981a41eab8cae4129071e5a3
+#: ../../contributing/stacks.md:103 47a00269a8ed47198bbc8dd123dba6fb
 msgid "Visit [https://cloud.docker.com/](https://cloud.docker.com/) and login."
 msgstr ""
 
-#: ../../contributing/stacks.md:104 afeb9da9a29b400db62a7c0785d5227c
+#: ../../contributing/stacks.md:104 d61a554ff66e4c6dbce0fa697f1cd3de
 msgid ""
 "Select the account or organization matching the one you entered when "
 "prompted with `stack_org` by the cookiecutter. ![Docker account selection"
 " screenshot](../_static/docker-org-select.png)"
 msgstr ""
 
-#: ../../contributing/stacks.md:106 620c22ad41cd454dbdfab22b9158156e
+#: ../../contributing/stacks.md:106 6e922ad53ece461d9dc14eceb9a3aeaf
 msgid "Scroll to the bottom of the page and click **Create repository**."
 msgstr ""
 
-#: ../../contributing/stacks.md:107 895d2943d06e425db1b224f1d72e3124
+#: ../../contributing/stacks.md:107 e4405a6afcf543b5a1cc701cfa181b14
 msgid ""
 "Enter the name of the image matching the one you entered when prompted "
 "with `stack_name` by the cookiecutter. ![Docker image name and "
@@ -734,32 +734,32 @@ msgid ""
 msgstr ""
 
 # 79092e5007ba4bdead594a71e30cd58a
-#: ../../contributing/stacks.md:109 166a9e752d5a410da94fd26ee53a7541
+#: ../../contributing/stacks.md:109 e05a5b44a22e40ff8a1924808ee1dc7d
 msgid "Enter a description for your image."
 msgstr ""
 
-#: ../../contributing/stacks.md:110 9269f2d3466a4ec99bc5e18fb953d0db
+#: ../../contributing/stacks.md:110 6cbf40533f1e4c0391ccf0e41c1978be
 msgid ""
 "Click **GitHub** under the **Build Settings** and follow the prompts to "
 "connect your account if it is not already connected."
 msgstr ""
 
-#: ../../contributing/stacks.md:112 c7031cb980624063a69bbbca22342331
+#: ../../contributing/stacks.md:112 0e50754e855540d28eff05ccd98388ef
 msgid ""
 "Select the GitHub organization and repository containing your image "
 "definition from the dropdowns. ![Docker from GitHub automated build "
 "screenshot](../_static/docker-github-settings.png)"
 msgstr ""
 
-#: ../../contributing/stacks.md:115 796d545d2dd84b01bdde42b0fee0074f
+#: ../../contributing/stacks.md:115 c30e839b855a42f1929fe6a08ba3bc84
 msgid "Click the **Create and Build** button."
 msgstr ""
 
-#: ../../contributing/stacks.md:117 42867fa2fedb45a39954f5cc4b583375
+#: ../../contributing/stacks.md:117 e15c750e97354edaacdc63b36fc1edc0
 msgid "## Defining Your Image"
 msgstr ""
 
-#: ../../contributing/stacks.md:119 49468177c5fb451a84cd60d2768a2b94
+#: ../../contributing/stacks.md:119 17382a87e8274b83ae1206d9f9ed6b8a
 msgid ""
 "Make edits the Dockerfile in your project to add third-party libraries "
 "and configure Jupyter applications. Refer to the Dockerfiles for the core"
@@ -768,7 +768,7 @@ msgid ""
 "feel for what's possible and best practices."
 msgstr ""
 
-#: ../../contributing/stacks.md:124 5576d815ad70493bbe72f01328de6cf5
+#: ../../contributing/stacks.md:124 81684a9c7c6b4a56a511ac84cd4b74f5
 msgid ""
 "[Submit pull requests](https://github.com/PointCloudLibrary/pcl/wiki/A"
 "-step-by-step-guide-on-preparing-and-submitting-a-pull-request) to your "
@@ -777,52 +777,52 @@ msgid ""
 "master branch that you can `docker pull`."
 msgstr ""
 
-#: ../../contributing/stacks.md:128 aad71792a20a445db158a8f7bf2a325c
+#: ../../contributing/stacks.md:128 1777e2d4a2cb418f80f8ace8e59deeb9
 msgid "## Sharing Your Image"
 msgstr ""
 
 # d8e9f1a37f4c4a72bb630e7a3b265b92
-#: ../../contributing/stacks.md:130 cc493bc273f14c36992a76f5decbb050
+#: ../../contributing/stacks.md:130 277fb84aa77f45f7a8a23ff5cc072d52
 msgid ""
 "Finally, if you'd like to add a link to your project to this "
 "documentation site, please do the following:"
 msgstr ""
 
-#: ../../contributing/stacks.md:133 4924422ac8e94c618f56872713ba1668
+#: ../../contributing/stacks.md:133 733d33f4230c4b6fb6bb8346cb14ca85
 msgid ""
 "Clone ths [jupyter/docker-stacks](https://github.com/jupyter/docker-"
 "stacks) GitHub repository."
 msgstr ""
 
-#: ../../contributing/stacks.md:134 c24b73c540d441879f7e4ea3d40ff2f3
+#: ../../contributing/stacks.md:134 57f684437d914934836571fd79e9a06e
 msgid ""
 "Open the `docs/using/selecting.md` source file and locate the **Community"
 " Stacks** section."
 msgstr ""
 
 # 9d37dfec6fba48e6966c254b476e1e81
-#: ../../contributing/stacks.md:135 98fd6aad1ad14a02bc814defe22ce9ee
+#: ../../contributing/stacks.md:135 4a3f3101813149a4ac636983bc4117c6
 msgid ""
 "Add a bullet with a link to your project and a short description of what "
 "your Docker image contains."
 msgstr ""
 
-#: ../../contributing/tests.md:1 22236142608f4504be42349534c43058
+#: ../../contributing/tests.md:1 50e771280fdc415aa192bd98fcfdee00
 msgid "# Image Tests"
 msgstr ""
 
 # 6dbd44985f3c4ba1a3823c90c5944ad0
-#: ../../contributing/tests.md:3 11613393a5c74007a7dadd37ad0ef4bf
+#: ../../contributing/tests.md:3 0e386f0f67a64e1d89fe8a312c5a887a
 msgid ""
 "We greatly appreciate pull requests that extend the automated tests that "
 "vet the basic functionality of the Docker images."
 msgstr ""
 
-#: ../../contributing/tests.md:6 9aab19f0419248d6980b18a066a095b9
+#: ../../contributing/tests.md:6 82a536a5b8bd4d9e8081d44d67a60763
 msgid "## How the Tests Work"
 msgstr ""
 
-#: ../../contributing/tests.md:8 c4ec76da67e74ed7a30cfa32e057fe21
+#: ../../contributing/tests.md:8 db35e6490160442a9fb25951d2cfb3b5
 msgid ""
 "GitHub executes `make build-test-all` against pull requests submitted to "
 "the `jupyter/docker-stacks` repository. This `make` command builds every "
@@ -837,46 +837,46 @@ msgid ""
 "stacks/blob/master/conftest.py) file at the root of the projects."
 msgstr ""
 
-#: ../../contributing/tests.md:17 158ebcc14b3a48f4bbfb85f42a23512d
+#: ../../contributing/tests.md:17 3c7d490c789048b9969f3e71855bf5a7
 msgid "## Contributing New Tests"
 msgstr ""
 
 # d317e6be0fbf487e8528ff1fe0bbdb78
-#: ../../contributing/tests.md:19 5d7f3aa184a64520bdf4186722d6784c
+#: ../../contributing/tests.md:19 85ba397ab21942c3b2370803ef9b9773
 msgid "Please follow the process below to add new tests:"
 msgstr ""
 
-#: ../../contributing/tests.md:21 1361ba427a584cabbb9bfd1627f08c66
+#: ../../contributing/tests.md:21 5832cd504f494785ab0f8ec0286e3094
 msgid ""
 "If the test should run against every image built, add your test code to "
 "one of the modules in [test/](https://github.com/jupyter/docker-"
 "stacks/tree/master/test) or create a new module."
 msgstr ""
 
-#: ../../contributing/tests.md:23 03369705269846a09daec3baa3d82c4b
+#: ../../contributing/tests.md:23 ef7ae1ac3dfb473380f586498048f8e7
 msgid ""
 "If your test should run against a single image, add your test code to one"
 " of the modules in `some-notebook/test/` or create a new module."
 msgstr ""
 
-#: ../../contributing/tests.md:25 4cfce5f6338e43de9c6209c04e55436a
+#: ../../contributing/tests.md:25 43568c62e1724eb88ab71d9ccc8196be
 msgid ""
 "Build one or more images you intend to test and run the tests locally. If"
 " you use `make`, call: ```bash make build/somestack-notebook make test"
 "/somestack-notebook ```"
 msgstr ""
 
-#: ../../contributing/tests.md:33 3b16fb7184f349f28e07f28fcdf6e25b
+#: ../../contributing/tests.md:33 ef7e04dcc21149caafcb7a6079faaa3b
 msgid ""
 "Discuss changes with the maintainers and address any issues running the "
 "tests on GitHub."
 msgstr ""
 
-#: ../../contributing/translations.md:1 74b02b85c9f04bbfa10f61d4e0f4c3d1
+#: ../../contributing/translations.md:1 c75a0579bb1c4278be5aff8a72e141b3
 msgid "# Doc Translations"
 msgstr ""
 
-#: ../../contributing/translations.md:3 e89669694caa44b4a92ca9004b16ab9b
+#: ../../contributing/translations.md:3 e2e2c42e5d3a411f947927eab693b079
 msgid ""
 "We are delighted when members of the Jupyter community want to help "
 "translate these documentation pages to other languages. If you're "
@@ -885,14 +885,14 @@ msgid ""
 "updating translations of the Jupyter Docker Stacks documentation."
 msgstr ""
 
-#: ../../contributing/translations.md:5 a169495d239445838922f97deb5dcc60
+#: ../../contributing/translations.md:5 99be6240a1494e02a5c0e8ce3ab8b391
 msgid ""
 "Follow the steps documented on the [Getting Started as a "
 "Translator](https://docs.transifex.com/getting-started-1/translators) "
 "page."
 msgstr ""
 
-#: ../../contributing/translations.md:6 68339c58d93a46cbb07beb65cd3be415
+#: ../../contributing/translations.md:6 c56ae9779af6494b80e42560e18e630e
 msgid ""
 "Look for *jupyter-docker-stacks* when prompted to choose a translation "
 "team. Alternatively, visit https://www.transifex.com/project-jupyter"
@@ -900,7 +900,7 @@ msgid ""
 "the project."
 msgstr ""
 
-#: ../../contributing/translations.md:7 cb8843de0486450caf61604d01e63a3a
+#: ../../contributing/translations.md:7 c8d10f6202f146f5b44fdf390289152d
 msgid ""
 "See [Translating with the Web "
 "Editor](https://docs.transifex.com/translation/translating-with-the-web-"
@@ -1639,5 +1639,23 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "```bash make build/somestack-notebook make test/somestack-notebook ```"
+#~ msgstr ""
+
+#~ msgid "```bash $ make lint-install"
+#~ msgstr ""
+
+#~ msgid "```bash $ make lint/scipy-notebook"
+#~ msgstr ""
+
+#~ msgid "Optionally you can pass arguments to the linter."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "```bash # Use a different export "
+#~ "format $ make lint/scipy-notebook "
+#~ "ARGS=\"--format codeclimate\" ```"
+#~ msgstr ""
+
+#~ msgid "```bash $ make lint-all ```"
 #~ msgstr ""
 
