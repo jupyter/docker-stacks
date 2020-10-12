@@ -40,9 +40,11 @@ jobs:
       - name: Install Dev Dependencies
         run: |
           python -m pip install --upgrade pip
-          make -C main dev-env lint-install
+          make -C main dev-env hadolint-install
       - name: Lint Dockerfiles
-        run: make -C main lint-all
+        run: make -C main hadolint-all
+      - name: Run pre-commit hooks
+        run: make -C main pre-commit-all
       - name: Build Docker Images
         run: make -C main build-test-all
       - name: Run Post-Build Hooks
