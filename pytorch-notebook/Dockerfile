@@ -25,6 +25,7 @@ RUN conda config --show channels && \
     'pytorch=1.6*' \
     'torchvision=0.7*' \
     'ignite=0.4*' \
+    'pytorch-lightning=0.9*' \
     'cudatoolkit=10.2*' \
     && \
     conda config --system --set channel_priority strict && \
