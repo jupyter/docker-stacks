@@ -1,4 +1,4 @@
-# Copyright (c) Jupyter Development Team.
+# Copyright (c) DAIN Studios.
 # Distributed under the terms of the Modified BSD License.
 ARG BASE_CONTAINER=dain/scipy-notebook
 FROM $BASE_CONTAINER
@@ -7,11 +7,16 @@ LABEL maintainer="Pekka Ahtonen <pekka.ahtonen@dainstudios.com>"
 
 USER $NB_UID
 
-# Install Pytorch 1.6 with CUDA 10.2 support
 # Note that channel priority must be set flexible since cudatoolkit package is
 # not available in conda-forge, to prevent a frozen dependency resolve
 #
-# Install OpenCV and switch to Intel MKL backend
+# Install following packages:
+#  Pytorch 1.6 with CUDA 10.2 support
+#  Torchvision
+#  Ignite
+#  OpenCV
+#  Intel MKL backend, replaces OpenBLAS
+#  Tensorboard
 #
 RUN conda config --show channels && \
     conda config --add channels pytorch && \
@@ -36,7 +41,7 @@ RUN conda config --show channels && \
 # Install MONAI milestone edition with some extras
 RUN pip install -q --no-cache-dir 'monai[gdown,nibabel,pillow]'
 
-# Install and build MONAI from master branch
+# Install and build MONAI from master branch, latest development version
 #RUN pip install -q --no-cache-dir git+https://github.com/Project-MONAI/MONAI#egg=MONAI
 
 WORKDIR $HOME
