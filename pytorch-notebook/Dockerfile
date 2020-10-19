@@ -14,9 +14,6 @@ USER $NB_UID
 #  Pytorch 1.6 with CUDA 10.2 support
 #  Torchvision
 #  Ignite
-#  OpenCV
-#  Intel MKL backend, replaces OpenBLAS
-#  Tensorboard
 #
 RUN conda config --show channels && \
     conda config --add channels pytorch && \
@@ -24,24 +21,13 @@ RUN conda config --show channels && \
     conda config --show channels && \
     conda config --system --set channel_priority flexible && \
     conda install -q -y \
-    'conda-forge::blas=*=mkl' \
-    'conda-forge::opencv=4.*' \
-    'tensorboard=2.*' \
     'pytorch=1.6*' \
     'torchvision=0.7*' \
     'ignite=0.4*' \
-    'pytorch-lightning=0.9*' \
-    'cudatoolkit=10.2*' \
     && \
     conda config --system --set channel_priority strict && \
     conda clean --all -f -y && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
-
-# Install MONAI milestone edition with some extras
-RUN pip install -q --no-cache-dir 'monai[gdown,nibabel,pillow]'
-
-# Install and build MONAI from master branch, latest development version
-#RUN pip install -q --no-cache-dir git+https://github.com/Project-MONAI/MONAI#egg=MONAI
 
 WORKDIR $HOME
