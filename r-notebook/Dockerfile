@@ -16,7 +16,7 @@ RUN apt-get update && \
     r-cran-rodbc \
     gfortran \
     gcc && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
 RUN ln -s /bin/tar /bin/gtar
@@ -25,7 +25,7 @@ USER $NB_UID
 
 # R packages
 RUN conda install --quiet --yes \
-    'r-base=4.0.2' \
+    'r-base=4.0.3' \
     'r-caret=6.*' \
     'r-crayon=1.3*' \
     'r-devtools=2.3*' \
@@ -37,7 +37,7 @@ RUN conda install --quiet --yes \
     'r-nycflights13=1.0*' \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
-    'r-rmarkdown=2.3*' \
+    'r-rmarkdown=2.4*' \
     'r-rodbc=1.3*' \
     'r-rsqlite=2.2*' \
     'r-shiny=1.5*' \

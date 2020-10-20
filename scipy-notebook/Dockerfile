@@ -10,7 +10,7 @@ USER root
 # ffmpeg for matplotlib anim & dvipng+cm-super for latex labels
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ffmpeg dvipng cm-super && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
 
@@ -22,7 +22,7 @@ RUN conda install --quiet --yes \
     'bottleneck=1.3.*' \
     'cloudpickle=1.6.*' \
     'cython=0.29.*' \
-    'dask=2.25.*' \
+    'dask=2.30.*' \
     'dill=0.3.*' \
     'h5py=2.10.*' \
     'ipywidgets=7.5.*' \
@@ -32,7 +32,7 @@ RUN conda install --quiet --yes \
     'numexpr=2.7.*' \
     'pandas=1.1.*' \
     'patsy=0.5.*' \
-    'protobuf=3.12.*' \
+    'protobuf=3.13.*' \
     'pytables=3.6.*' \
     'scikit-image=0.17.*' \
     'scikit-learn=0.23.*' \

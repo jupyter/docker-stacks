@@ -11,6 +11,8 @@ Using one of the Jupyter Docker Stacks requires two choices:
 
 This section provides details about the first.
 
+Note: Deprecated feature or image content is displayed with ~~strikethrough~~ formatting.
+
 ## Core Stacks
 
 The Jupyter team maintains a set of Docker image definitions in the
@@ -48,8 +50,8 @@ and versioning strategy.
 
 - Everything in `jupyter/base-notebook`
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-- [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/) (actually `emacs-nox`),
-  [vi](https://vim.org/) (actually `vim-tiny`), [jed](https://www.jedsoft.org/jed/),
+- [git](https://git-scm.com/), ~~[emacs](https://www.gnu.org/software/emacs/) (actually `emacs-nox`)~~,
+  [vi](https://vim.org/) (actually `vim-tiny`),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`), tzdata, and unzip
 
 ### jupyter/r-notebook
@@ -63,12 +65,7 @@ and versioning strategy.
 - Everything in `jupyter/minimal-notebook` and its ancestor images
 - The [R](https://www.r-project.org/) interpreter and base environment
 - [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
-- [tidyverse](https://www.tidyverse.org/) packages, including [ggplot2](http://ggplot2.org/),
-  [dplyr](http://dplyr.tidyverse.org/), [tidyr](http://tidyr.tidyverse.org/),
-  [readr](http://readr.tidyverse.org/), [purrr](http://purrr.tidyverse.org/),
-  [tibble](http://tibble.tidyverse.org/), [stringr](http://stringr.tidyverse.org/),
-  [lubridate](http://lubridate.tidyverse.org/), and
-  [broom](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) from
+- [tidyverse](https://www.tidyverse.org/) packages from
   [conda-forge](https://conda-forge.github.io/feedstocks)
 - [devtools](https://cran.r-project.org/web/packages/devtools/index.html),
   [shiny](https://shiny.rstudio.com/), [rmarkdown](http://rmarkdown.rstudio.com/),

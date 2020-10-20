@@ -26,7 +26,7 @@ RUN apt-get -y update && \
     apt-get install --no-install-recommends -y \
     "openjdk-${openjdk_version}-jre-headless" \
     ca-certificates-java && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Spark installation
 WORKDIR /tmp
@@ -51,7 +51,7 @@ USER $NB_UID
 
 # Install pyarrow
 RUN conda install --quiet --yes --satisfied-skip-solve \
-    'pyarrow=1.0.*' && \
+    'pyarrow=2.0.*' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"

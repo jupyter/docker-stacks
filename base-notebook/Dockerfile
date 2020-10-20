@@ -4,7 +4,7 @@
 # Ubuntu 20.04 (focal)
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
 # OS/ARCH: linux/amd64
-ARG ROOT_CONTAINER=ubuntu:focal-20200916@sha256:028d7303257c7f36c721b40099bf5004a41f666a54c0896d5f229f1c0fd99993
+ARG ROOT_CONTAINER=ubuntu:focal-20200925@sha256:2e70e9c81838224b5311970dbf7ed16802fbfe19e7a70b3cbfa3d7522aa285b4
 
 ARG BASE_CONTAINER=$ROOT_CONTAINER
 FROM $BASE_CONTAINER
@@ -28,7 +28,7 @@ ARG miniconda_version="4.8.3"
 # Archive MD5 checksum
 ARG miniconda_checksum="d63adf39f2c220950a063e0529d4ff74"
 # Conda version that can be different from the archive
-ARG conda_version="4.8.5"
+ARG conda_version="4.9.0"
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
