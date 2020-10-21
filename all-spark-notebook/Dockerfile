@@ -17,17 +17,17 @@ RUN apt-get update && \
     fonts-dejavu \
     gfortran \
     gcc && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
 
 # R packages
 RUN conda install --quiet --yes \
-    'r-base=3.6.3' \
+    'r-base=4.0.3' \
     'r-ggplot2=3.3*' \
     'r-irkernel=1.1*' \
     'r-rcurl=1.98*' \
-    'r-sparklyr=1.2*' \
+    'r-sparklyr=1.4*' \
     && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \

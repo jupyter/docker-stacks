@@ -26,7 +26,7 @@ RUN apt-get -y update && \
     apt-get install --no-install-recommends -y \
     "openjdk-${openjdk_version}-jre-headless" \
     ca-certificates-java && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Spark installation
 WORKDIR /tmp

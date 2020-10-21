@@ -18,9 +18,9 @@ USER root
 # Default values can be overridden at build time
 # (ARGS are in lower case to distinguish them from ENV)
 # Check https://julialang.org/downloads/
-ARG julia_version="1.5.1"
+ARG julia_version="1.5.2"
 # SHA256 checksum
-ARG julia_checksum="f5d37cb7fe40e3a730f721da8f7be40310f133220220949939d8f892ce2e86e3"
+ARG julia_checksum="6da704fadcefa39725503e4c7a9cfa1a570ba8a647c4bd8de69a118f43584630"
 
 # R pre-requisites
 RUN apt-get update && \
@@ -28,7 +28,7 @@ RUN apt-get update && \
     fonts-dejavu \
     gfortran \
     gcc && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Julia dependencies
 # install Julia packages in /opt/julia instead of $HOME
@@ -58,26 +58,23 @@ USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
-    'r-base=3.6.3' \
+    'r-base=4.0.3'  \
     'r-caret=6.0*' \
     'r-crayon=1.3*' \
     'r-devtools=2.3*' \
-    'r-forecast=8.13*' \
+    'r-forecast=8.13*' \ 
     'r-hexbin=1.28*' \
     'r-htmltools=0.5*' \
-    'r-htmlwidgets=1.5*' \
+    'r-htmlwidgets=1.5*' \ 
     'r-irkernel=1.1*' \
     'r-nycflights13=1.0*' \
-    'r-plyr=1.8*' \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
-    'r-reshape2=1.4*' \
-    'r-rmarkdown=2.3*' \
+    'r-rmarkdown=2.4*' \
     'r-rsqlite=2.2*' \
     'r-shiny=1.5*' \
     'r-tidyverse=1.3*' \
-    'rpy2=3.3*' \
-    && \
+    'rpy2=3.3*' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
