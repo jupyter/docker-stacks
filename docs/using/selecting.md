@@ -11,8 +11,6 @@ Using one of the Jupyter Docker Stacks requires two choices:
 
 This section provides details about the first.
 
-Note: Deprecated feature or image content is displayed with ~~strikethrough~~ formatting.
-
 ## Core Stacks
 
 The Jupyter team maintains a set of Docker image definitions in the
@@ -50,8 +48,8 @@ and versioning strategy.
 
 - Everything in `jupyter/base-notebook`
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-- [git](https://git-scm.com/), ~~[emacs](https://www.gnu.org/software/emacs/) (actually `emacs-nox`)~~,
-  [vi](https://vim.org/) (actually `vim-tiny`),
+- [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/) (actually `emacs-nox`),
+  [vi](https://vim.org/) (actually `vim-tiny`), [jed](https://www.jedsoft.org/jed/),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`), tzdata, and unzip
 
 ### jupyter/r-notebook
