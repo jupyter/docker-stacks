@@ -48,7 +48,7 @@ packages desired. Next, create a new Dockerfile like the one shown below.
 # Start from a core stack version
 FROM jupyter/datascience-notebook:9f9e5ca8fe5a
 # Install from requirements.txt file
-COPY requirements.txt /tmp/
+COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
@@ -60,7 +60,7 @@ For conda, the Dockerfile is similar:
 # Start from a core stack version
 FROM jupyter/datascience-notebook:9f9e5ca8fe5a
 # Install from requirements.txt file
-COPY requirements.txt /tmp/
+COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN conda install --yes --file /tmp/requirements.txt && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
@@ -118,7 +118,7 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/$conda_env python=$py_ver ipyt
 # alternatively, you can comment out the lines above and uncomment those below
 # if you'd prefer to use a YAML file present in the docker build context
 
-# COPY environment.yml /home/$NB_USER/tmp/
+# COPY --chown=${NB_UID}:${NB_GID} environment.yml /home/$NB_USER/tmp/
 # RUN cd /home/$NB_USER/tmp/ && \
 #     conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
 #     conda clean --all -f -y
