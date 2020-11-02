@@ -1,0 +1,47 @@
+name: Build Sphinx Documentation
+
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".github/workflows/sphinx.yml"
+  push:
+    branches:
+      - master
+    paths:
+      - "docs/**"
+      - ".github/workflows/sphinx.yml"
+
+jobs:
+  build:
+    name: Build Sphinx Documentation
+    runs-on: ubuntu-latest
+    if: >
+      !contains(github.event.head_commit.message , 'ci skip') &&
+      !contains(github.event.pull_request.title, 'ci skip')
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Install Dev Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          make dev-env
+      - name: Build Documentation
+        run: make docs
+      - name: Extract Source Strings
+        if: github.ref == 'refs/heads/master'
+        working-directory: docs
+        run: |
+          make gettext
+          sphinx-intl update -p _build/gettext -l en
+      - name: Push Strings to Master
+        if: github.ref == 'refs/heads/master'
+        run: make git-commit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          LOCAL_PATH: ./docs/locale/en

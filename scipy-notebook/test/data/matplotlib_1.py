@@ -3,7 +3,6 @@
 
 # Optional test with [Matplotlib Jupyter Integration](https://github.com/matplotlib/ipympl)
 # %matplotlib widget
-import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import os

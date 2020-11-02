@@ -14,26 +14,34 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
+# Julia installation
+# Default values can be overridden at build time
+# (ARGS are in lower case to distinguish them from ENV)
+# Check https://julialang.org/downloads/
+ARG julia_version="1.5.2"
+# SHA256 checksum
+ARG julia_checksum="6da704fadcefa39725503e4c7a9cfa1a570ba8a647c4bd8de69a118f43584630"
+
 # R pre-requisites
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-dejavu \
     gfortran \
     gcc && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Julia dependencies
 # install Julia packages in /opt/julia instead of $HOME
-ENV JULIA_DEPOT_PATH=/opt/julia
-ENV JULIA_PKGDIR=/opt/julia
-ENV JULIA_VERSION=1.4.1
+ENV JULIA_DEPOT_PATH=/opt/julia \
+    JULIA_PKGDIR=/opt/julia \
+    JULIA_VERSION="${julia_version}"
 
 WORKDIR /tmp
 
 # hadolint ignore=SC2046
 RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
     wget -q https://julialang-s3.julialang.org/bin/linux/x64/$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)"/julia-${JULIA_VERSION}-linux-x86_64.tar.gz" && \
-    echo "fd6d8cadaed678174c3caefb92207a3b0e8da9f926af6703fb4d1e4e4f50610a *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
+    echo "${julia_checksum} *julia-${JULIA_VERSION}-linux-x86_64.tar.gz" | sha256sum -c - && \
     tar xzf "julia-${JULIA_VERSION}-linux-x86_64.tar.gz" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
     rm "/tmp/julia-${JULIA_VERSION}-linux-x86_64.tar.gz"
 RUN ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
@@ -50,26 +58,23 @@ USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
-    'r-base=3.6.3' \
+    'r-base=4.0.3'  \
     'r-caret=6.0*' \
     'r-crayon=1.3*' \
     'r-devtools=2.3*' \
-    'r-forecast=8.12*' \
+    'r-forecast=8.13*' \ 
     'r-hexbin=1.28*' \
-    'r-htmltools=0.4*' \
-    'r-htmlwidgets=1.5*' \
+    'r-htmltools=0.5*' \
+    'r-htmlwidgets=1.5*' \ 
     'r-irkernel=1.1*' \
     'r-nycflights13=1.0*' \
-    'r-plyr=1.8*' \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
-    'r-reshape2=1.4*' \
-    'r-rmarkdown=2.1*' \
+    'r-rmarkdown=2.4*' \
     'r-rsqlite=2.2*' \
-    'r-shiny=1.4*' \
+    'r-shiny=1.5*' \
     'r-tidyverse=1.3*' \
-    'rpy2=3.1*' \
-    && \
+    'rpy2=3.3*' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"

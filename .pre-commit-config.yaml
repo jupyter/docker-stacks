@@ -1,0 +1,26 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.1.0
+    hooks:
+      - id: check-yaml
+        files: .*\.(yaml|yml)$
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.23.0
+    hooks:
+      - id: yamllint
+        args: ['-d {extends: relaxed, rules: {line-length: disable}}', '-s']
+        files: \.(yaml|yml)$
+  - repo: https://github.com/openstack-dev/bashate.git
+    rev: 2.0.0
+    hooks:
+      - id: bashate
+        args: ['--ignore=E006']
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.3
+    hooks:
+      - id: flake8
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.5.4
+    hooks:
+      - id: autopep8

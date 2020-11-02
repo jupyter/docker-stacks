@@ -21,11 +21,6 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-# For conversion from markdown to html
-import recommonmark.parser
-from recommonmark.transform import AutoStructify
-
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.

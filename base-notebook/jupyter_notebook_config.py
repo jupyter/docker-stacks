@@ -7,7 +7,7 @@ import os
 import errno
 import stat
 
-c = get_config()
+c = get_config()  # noqa: F821
 c.NotebookApp.ip = '0.0.0.0'
 c.NotebookApp.port = 8888
 c.NotebookApp.open_browser = False

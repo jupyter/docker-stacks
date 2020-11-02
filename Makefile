@@ -4,9 +4,8 @@
 
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
-OWNER:=jupyter
 ARCH:=$(shell uname -m)
-DIFF_RANGE?=master...HEAD
+OWNER?=jupyter
 
 # Need to list the images in build dependency order
 ifeq ($(ARCH),ppc64le)
@@ -24,8 +23,9 @@ endif
 
 ALL_IMAGES:=$(ALL_STACKS)
 
-# Linter
+# Dockerfile Linter
 HADOLINT="${HOME}/hadolint"
+HADOLINT_VERSION="v1.18.0"
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -74,24 +74,38 @@ dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
 
 dev-env: ## install libraries required to build docs and run tests
-	pip install -r requirements-dev.txt
+	@pip install -r requirements-dev.txt
 
-lint/%: ARGS?=
-lint/%: ## lint the dockerfile(s) for a stack
-	@echo "Linting Dockerfiles in $(notdir $@)..."
-	@git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
-	@echo "Linting done!"
+docs: ## build HTML documentation
+	make -C docs html
 
-lint-all: $(foreach I,$(ALL_IMAGES),lint/$(I) ) ## lint all stacks
+git-commit: LOCAL_PATH?=.
+git-commit: GITHUB_SHA?=$(shell git rev-parse HEAD)
+git-commit: GITHUB_REPOSITORY?=jupyter/docker-stacks
+git-commit: GITHUB_TOKEN?=
+git-commit: ## commit outstading git changes and push to remote
+	@git config --global user.name "GitHub Actions"
+	@git config --global user.email "actions@users.noreply.github.com"
 
-lint-build-test-all: $(foreach I,$(ALL_IMAGES),lint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
+	@echo "Publishing outstanding changes in $(LOCAL_PATH) to $(GITHUB_REPOSITORY)" 
+	@cd $(LOCAL_PATH) && \
+		git remote add publisher https://$(GITHUB_TOKEN)@github.com/$(GITHUB_REPOSITORY).git && \
+		git checkout master && \
+		git add -A -- . && \
+		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0
+	@cd $(LOCAL_PATH) && git push -u publisher master
 
-lint-install: ## install hadolint
-	@echo "Installing hadolint at $(HADOLINT) ..."
-	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/v1.18.0/hadolint-$(shell uname -s)-$(shell uname -m)"
-	@chmod 700 $(HADOLINT)
-	@echo "Installation done!"
-	@$(HADOLINT) --version	
+hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
+hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
+hook/%: export WIKI_PATH?=../wiki
+hook/%: ## run post-build hooks for an image
+	BUILD_TIMESTAMP="$$(date -u +%FT%TZ)" \
+	DOCKER_REPO="$(OWNER)/$(notdir $@)" \
+	IMAGE_NAME="$(OWNER)/$(notdir $@):latest" \
+	IMAGE_SHORT_NAME="$(notdir $@)" \
+	$(SHELL) $(notdir $@)/hooks/run_hook
+
+hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
 
 img-clean: img-rm-dang img-rm ## clean dangling and jupyter images
 
@@ -107,19 +121,39 @@ img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
 	-docker rmi --force $(shell docker images -f "dangling=true" -q) 2> /dev/null
 
-docs: ## build HTML documentation
-	make -C docs html
+hadolint/%: ARGS?=
+hadolint/%: ## lint the dockerfile(s) for a stack
+	@echo "Linting Dockerfiles in $(notdir $@)..."
+	@git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
+	@echo "Linting done!"
 
-n-docs-diff: ## number of docs/ files changed since branch from master
-	@git diff --name-only $(DIFF_RANGE) -- docs/ ':!docs/locale' | wc -l | awk '{print $$1}'
+hadolint-all: $(foreach I,$(ALL_IMAGES),hadolint/$(I) ) ## lint all stacks
 
+hadolint-build-test-all: $(foreach I,$(ALL_IMAGES),hadolint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
 
-n-other-diff: ## number of files outside docs/ changed since branch from master
-	@git diff --name-only $(DIFF_RANGE) -- ':!docs/' | wc -l | awk '{print $$1}'
+hadolint-install: ## install hadolint
+	@echo "Installing hadolint at $(HADOLINT) ..."
+	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/$(HADOLINT_VERSION)/hadolint-$(shell uname -s)-$(shell uname -m)"
+	@chmod 700 $(HADOLINT)
+	@echo "Installation done!"
+	@$(HADOLINT) --version
+
+pre-commit-all: ## run pre-commit hook on all files
+	@pre-commit run --all-files
+
+pre-commit-install: ## set up the git hook scripts
+	@pre-commit --version
+	@pre-commit install
 
 pull/%: DARGS?=
 pull/%: ## pull a jupyter image
 	docker pull $(DARGS) $(OWNER)/$(notdir $@)
+
+push/%: DARGS?=
+push/%: ## push all tags for a jupyter image
+	docker push $(DARGS) $(OWNER)/$(notdir $@)
+
+push-all: $(foreach I,$(ALL_IMAGES),push/$(I) ) ## push all tagged images
 
 run/%: DARGS?=
 run/%: ## run a bash in interactive mode in a stack
@@ -128,20 +162,6 @@ run/%: ## run a bash in interactive mode in a stack
 run-sudo/%: DARGS?=
 run-sudo/%: ## run a bash in interactive mode as root in a stack
 	docker run -it --rm -u root $(DARGS) $(OWNER)/$(notdir $@) $(SHELL)
-
-tx-en: ## rebuild en locale strings and push to master (req: GH_TOKEN)
-	@git config --global user.email "travis@travis-ci.org"
-	@git config --global user.name "Travis CI"
-	@git checkout master
-
-	@make -C docs clean gettext
-	@cd docs && sphinx-intl update -p _build/gettext -l en
-
-	@git add docs/locale/en
-	@git commit -m "[ci skip] Update en source strings (build: $$TRAVIS_JOB_NUMBER)"
-
-	@git remote add origin-tx https://$${GH_TOKEN}@github.com/jupyter/docker-stacks.git
-	@git push -u origin-tx master
 
 test/%: ## run tests against a stack (only common tests or common tests + specific tests)
 	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
