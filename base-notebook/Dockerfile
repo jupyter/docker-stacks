@@ -4,7 +4,7 @@
 # Ubuntu 20.04 (focal)
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
 # OS/ARCH: linux/amd64
-ARG ROOT_CONTAINER=ubuntu:focal-20200925@sha256:2e70e9c81838224b5311970dbf7ed16802fbfe19e7a70b3cbfa3d7522aa285b4
+ARG ROOT_CONTAINER=ubuntu:focal-20201008@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
 
 ARG BASE_CONTAINER=$ROOT_CONTAINER
 FROM $BASE_CONTAINER
@@ -129,8 +129,8 @@ RUN conda install --quiet --yes 'tini=0.18.0' && \
 # files across image layers when the permissions change
 RUN conda install --quiet --yes \
     'notebook=6.1.4' \
-    'jupyterhub=1.1.0' \
-    'jupyterlab=2.2.8' && \
+    'jupyterhub=1.2.1' \
+    'jupyterlab=2.2.9' && \
     conda clean --all -f -y && \
     npm cache clean --force && \
     jupyter notebook --generate-config && \

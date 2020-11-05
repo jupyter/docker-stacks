@@ -25,7 +25,7 @@ ALL_IMAGES:=$(ALL_STACKS)
 
 # Dockerfile Linter
 HADOLINT="${HOME}/hadolint"
-HADOLINT_VERSION="v1.18.0"
+HADOLINT_VERSION="v1.18.2"
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -68,7 +68,7 @@ cont-rm-all: ## remove all containers
 	-docker rm --force $(shell docker ps -a -q) 2> /dev/null
 
 dev/%: ARGS?=
-dev/%: DARGS?=
+dev/%: DARGS?=-e JUPYTER_ENABLE_LAB=yes
 dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
