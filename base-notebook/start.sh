@@ -47,19 +47,6 @@ if [ $(id -u) == 0 ] ; then
         usermod -d /home/$NB_USER -l $NB_USER jovyan
     fi
 
-    # Handle case where provisioned storage does not have the correct permissions by default
-    # Ex: default NFS/EFS (no auto-uid/gid)
-    if [[ "$CHOWN_HOME" == "1" || "$CHOWN_HOME" == 'yes' ]]; then
-        echo "Changing ownership of /home/$NB_USER to $NB_UID:$NB_GID with options '${CHOWN_HOME_OPTS}'"
-        chown $CHOWN_HOME_OPTS $NB_UID:$NB_GID /home/$NB_USER
-    fi
-    if [ ! -z "$CHOWN_EXTRA" ]; then
-        for extra_dir in $(echo $CHOWN_EXTRA | tr ',' ' '); do
-            echo "Changing ownership of ${extra_dir} to $NB_UID:$NB_GID with options '${CHOWN_EXTRA_OPTS}'"
-            chown $CHOWN_EXTRA_OPTS $NB_UID:$NB_GID $extra_dir
-        done
-    fi
-
     # handle home and working directory if the username changed
     if [[ "$NB_USER" != "jovyan" ]]; then
         # changing username, make sure homedir exists
@@ -74,6 +61,19 @@ if [ $(id -u) == 0 ] ; then
             echo "Setting CWD to $newcwd"
             cd "$newcwd"
         fi
+    fi
+
+    # Handle case where provisioned storage does not have the correct permissions by default
+    # Ex: default NFS/EFS (no auto-uid/gid)
+    if [[ "$CHOWN_HOME" == "1" || "$CHOWN_HOME" == 'yes' ]]; then
+        echo "Changing ownership of /home/$NB_USER to $NB_UID:$NB_GID with options '${CHOWN_HOME_OPTS}'"
+        chown $CHOWN_HOME_OPTS $NB_UID:$NB_GID /home/$NB_USER
+    fi
+    if [ ! -z "$CHOWN_EXTRA" ]; then
+        for extra_dir in $(echo $CHOWN_EXTRA | tr ',' ' '); do
+            echo "Changing ownership of ${extra_dir} to $NB_UID:$NB_GID with options '${CHOWN_EXTRA_OPTS}'"
+            chown $CHOWN_EXTRA_OPTS $NB_UID:$NB_GID $extra_dir
+        done
     fi
 
     # Change UID:GID of NB_USER to NB_UID:NB_GID if it does not match
