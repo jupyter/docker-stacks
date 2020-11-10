@@ -76,7 +76,6 @@ def test_nb_user_change(container):
             f"NB_USER={nb_user}",
             "CHOWN_HOME=yes"
         ],
-        working_dir=f"/home/{nb_user}",
         command=['start.sh', 'bash', '-c', 'sleep infinity']
     )
 
@@ -90,14 +89,14 @@ def test_nb_user_change(container):
     LOGGER.info(f"Checking {nb_user} id ...")
     command = "id"
     expected_output = f"uid=1000({nb_user}) gid=100(users) groups=100(users)"
-    cmd = running_container.exec_run(command, user=nb_user)
+    cmd = running_container.exec_run(command, user=nb_user, workdir=f"/home/{nb_user}")
     output = cmd.output.decode("utf-8").strip("\n")
     assert output == expected_output, f"Bad user {output}, expected {expected_output}"
 
     LOGGER.info(f"Checking if {nb_user} owns his home folder ...")
     command = f'stat -c "%U %G" /home/{nb_user}/'
     expected_output = f"{nb_user} users"
-    cmd = running_container.exec_run(command)
+    cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
     output = cmd.output.decode("utf-8").strip("\n")
     assert output == expected_output, f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
 
