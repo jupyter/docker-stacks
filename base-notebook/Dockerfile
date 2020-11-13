@@ -27,8 +27,9 @@ USER root
 ARG conda_version="4.9.0"
 # Miniforge archive to install
 ARG miniforge_version="${conda_version}-3"
-# Miniforge installer
+# Miniforge installer and its checksum
 ARG miniforge_installer="Miniforge3-${miniforge_version}-Linux-x86_64.sh"
+ARG miniforge_checksum="29f0eb17dd02aceb0dfd4dad2654e974b1699baed06ee6d350b0ab4a2ccf3d02"
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
@@ -93,10 +94,9 @@ RUN mkdir "/home/$NB_USER/work" && \
 WORKDIR /tmp
 
 RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}" && \
-    wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}.sha256" && \
-    sha256sum -c "${miniforge_installer}.sha256" && \
+    echo "${miniforge_checksum} *${miniforge_installer}" | sha256sum --check && \
     /bin/bash "${miniforge_installer}" -f -b -p $CONDA_DIR && \
-    rm "${miniforge_installer}" "${miniforge_installer}.sha256" && \
+    rm "${miniforge_installer}" && \
     # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
     echo "conda ${CONDA_VERSION}" >> $CONDA_DIR/conda-meta/pinned && \
     conda config --system --set auto_update_conda false && \
