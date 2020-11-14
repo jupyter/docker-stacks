@@ -117,7 +117,7 @@ conda install some-package
 
 Conda is configured by default to use only the [`conda-forge`](https://anaconda.org/conda-forge) channel. 
 However, alternative channels can be used either one shot by overwriting the default channel in the installation command or by configuring `conda` to use different channels.
-The examples below shows how to use the [anaconda default channels](https://repo.anaconda.com/pkgs/main) instead of `conda-forge` to install packages.
+The examples below show how to use the [anaconda default channels](https://repo.anaconda.com/pkgs/main) instead of `conda-forge` to install packages.
 
 ```bash
 # using defaults channels to install a package
