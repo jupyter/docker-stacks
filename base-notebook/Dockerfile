@@ -19,16 +19,25 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Miniforge installation
+# ---- Miniforge installer ----
 # Default values can be overridden at build time
 # (ARGS are in lower case to distinguish them from ENV)
 # Check https://github.com/conda-forge/miniforge/releases
 # Conda version
 ARG conda_version="4.9.0"
+# Miniforge installer patch version
+ARG miniforge_patch_number="3"
+# Miniforge installer architecture
+ARG miniforge_arch="x86_64"
+# Python implementation to use 
+# can be either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
+ARG miniforge_python="Miniforge3"
+
 # Miniforge archive to install
-ARG miniforge_version="${conda_version}-3"
-# Miniforge installer and its checksum
-ARG miniforge_installer="Miniforge3-${miniforge_version}-Linux-x86_64.sh"
+ARG miniforge_version="${conda_version}-${miniforge_patch_number}"
+# Miniforge installer
+ARG miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh"
+# Miniforge checksum
 ARG miniforge_checksum="29f0eb17dd02aceb0dfd4dad2654e974b1699baed06ee6d350b0ab4a2ccf3d02"
 
 # Install all OS dependencies for notebook server that starts but lacks all
