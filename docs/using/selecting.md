@@ -241,5 +241,10 @@ core images and link them below.
   datascience-notebook image. Try it on
   binder:[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/SCiO-systems/cgspatial-notebook/master)
 
+- [kotlin-notebook](https://github.com/knonm/kotlin-notebook) is a community Jupyter
+  Docker Stack image. The image includes [Kotlin kernel for Jupyter/IPython](https://github.com/Kotlin/kotlin-jupyter) on top of the
+  `base-notebook` image. Try it on
+  Binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/knonm/kotlin-notebook/main)
+
 See the [contributing guide](../contributing/stacks.md) for information about how to create your own
 Jupyter Docker Stack.
