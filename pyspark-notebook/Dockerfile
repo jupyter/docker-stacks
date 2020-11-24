@@ -16,7 +16,6 @@ USER root
 ARG spark_version="3.0.1"
 ARG hadoop_version="3.2"
 ARG spark_checksum="E8B47C5B658E0FBC1E57EEA06262649D8418AE2B2765E44DA53AAF50094877D17297CC5F0B9B35DF2CEEF830F19AA31D7E56EAD950BBE7F8830D6874F88CFC3C"
-ARG py4j_version="0.10.9"
 ARG openjdk_version="11"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
@@ -39,13 +38,16 @@ RUN wget -q $(wget -qO- https://www.apache.org/dyn/closer.lua/spark/spark-${APAC
     rm "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz"
 
 WORKDIR /usr/local
-RUN ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" spark
 
 # Configure Spark
 ENV SPARK_HOME=/usr/local/spark
-ENV PYTHONPATH="${SPARK_HOME}/python:${SPARK_HOME}/python/lib/py4j-${py4j_version}-src.zip" \
-    SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
+ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
     PATH=$PATH:$SPARK_HOME/bin
+
+RUN ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" spark && \
+    # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
+    mkdir -p /usr/local/bin/before-notebook.d && \
+    ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh
 
 USER $NB_UID
 

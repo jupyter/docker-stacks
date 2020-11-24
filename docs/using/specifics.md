@@ -16,8 +16,6 @@ You can build a `pyspark-notebook` image (and also the downstream `all-spark-not
   * `spark_version`: The Spark version to install (`3.0.0`).
   * `hadoop_version`: The Hadoop version (`3.2`).
   * `spark_checksum`: The package checksum (`BFE4540...`).
-* Spark is shipped with a version of Py4J that has to be referenced in the `PYTHONPATH`.
-  * `py4j_version`: The Py4J version (`0.10.9`), see the tip below.
 * Spark can run with different OpenJDK versions.
   * `openjdk_version`: The version of (JRE headless) the OpenJDK distribution (`11`), see [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
 
@@ -27,46 +25,24 @@ For example here is how to build a `pyspark-notebook` image with Spark `2.4.6`, 
 # From the root of the project
 # Build the image with different arguments
 docker build --rm --force-rm \
-    -t jupyter/pyspark-notebook:spark-2.4.6 ./pyspark-notebook \
-    --build-arg spark_version=2.4.6 \
+    -t jupyter/pyspark-notebook:spark-2.4.7 ./pyspark-notebook \
+    --build-arg spark_version=2.4.7 \
     --build-arg hadoop_version=2.7 \
-    --build-arg spark_checksum=3A9F401EDA9B5749CDAFD246B1D14219229C26387017791C345A23A65782FB8B25A302BF4AC1ED7C16A1FE83108E94E55DAD9639A51C751D81C8C0534A4A9641 \
-    --build-arg openjdk_version=8 \
-    --build-arg py4j_version=0.10.7
+    --build-arg spark_checksum=0F5455672045F6110B030CE343C049855B7BA86C0ECB5E39A075FF9D093C7F648DA55DED12E72FFE65D84C32DCD5418A6D764F2D6295A3F894A4286CC80EF478 \
+    --build-arg openjdk_version=8
 
 # Check the newly built image
-docker images jupyter/pyspark-notebook:spark-2.4.6
-
-# REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
-# jupyter/pyspark-notebook   spark-2.4.6         7ad7b5a9dbcd        4 minutes ago       3.44GB
-
-# Check the Spark version
-docker run -it --rm jupyter/pyspark-notebook:spark-2.4.6 pyspark --version
+docker run -it --rm jupyter/pyspark-notebook:spark-2.4.7 pyspark --version
 
 # Welcome to
 #       ____              __
 #      / __/__  ___ _____/ /__
 #     _\ \/ _ \/ _ `/ __/  '_/
-#    /___/ .__/\_,_/_/ /_/\_\   version 2.4.6
+#    /___/ .__/\_,_/_/ /_/\_\   version 2.4.7
 #       /_/
 #                         
-# Using Scala version 2.11.12, OpenJDK 64-Bit Server VM, 1.8.0_265
+# Using Scala version 2.11.12, OpenJDK 64-Bit Server VM, 1.8.0_275
 ```
-
-**Tip**: to get the version of Py4J shipped with Spark:
-
- * Build a first image without changing `py4j_version` (it will not prevent the image to build it will just prevent Python to find the `pyspark` module),
- * get the version (`ls /usr/local/spark/python/lib/`),
- * set the version `--build-arg py4j_version=0.10.7`.
-
-```bash
-docker run -it --rm jupyter/pyspark-notebook:spark-2.4.6 ls /usr/local/spark/python/lib/ 
-# py4j-0.10.7-src.zip  PY4J_LICENSE.txt  pyspark.zip
-# You can now set the build-arg
-# --build-arg py4j_version=
-```
-
-*Note: At the time of writing there is an issue preventing to use Spark `2.4.6` with Python `3.8`, see [this answer on SO](https://stackoverflow.com/a/62173969/4413446) for more information.*
 
 ### Usage Examples
 
