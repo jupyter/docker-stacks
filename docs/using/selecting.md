@@ -48,8 +48,8 @@ and versioning strategy.
 
 - Everything in `jupyter/base-notebook`
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-- [git](https://git-scm.com/), [emacs](https://www.gnu.org/software/emacs/) (actually `emacs-nox`),
-  [vi](https://vim.org/) (actually `vim-tiny`), [jed](https://www.jedsoft.org/jed/),
+- [git](https://git-scm.com/),
+  [vi](https://vim.org/) (actually `vim-tiny`),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`), tzdata, and unzip
 
 ### jupyter/r-notebook
