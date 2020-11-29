@@ -93,11 +93,11 @@ class CondaPackageHelper:
         # Since we only manage packages installed through conda here
         dependencies = filter(lambda x: isinstance(x, str), dependencies)
         packages_dict = dict()
-        for split in map(lambda x: x.split("=", 1), dependencies):
+        for split in map(lambda x: re.split("=?=", x), dependencies):
             # default values
             package = split[0]
             version = set()
-            # cheking if it's a proper version by testing if the first char is a digit
+            # checking if it's a proper version by testing if the first char is a digit
             if len(split) > 1:
                 if split[1][0].isdigit():
                     # package + version case

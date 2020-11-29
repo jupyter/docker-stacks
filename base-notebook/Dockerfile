@@ -19,16 +19,26 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Miniconda installation
+# ---- Miniforge installer ----
 # Default values can be overridden at build time
 # (ARGS are in lower case to distinguish them from ENV)
-# Check https://repo.anaconda.com/miniconda/
-# Miniconda archive to install
-ARG miniconda_version="4.8.3"
-# Archive MD5 checksum
-ARG miniconda_checksum="d63adf39f2c220950a063e0529d4ff74"
-# Conda version that can be different from the archive
+# Check https://github.com/conda-forge/miniforge/releases
+# Conda version
 ARG conda_version="4.9.0"
+# Miniforge installer patch version
+ARG miniforge_patch_number="4"
+# Miniforge installer architecture
+ARG miniforge_arch="x86_64"
+# Python implementation to use 
+# can be either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
+ARG miniforge_python="Miniforge3"
+
+# Miniforge archive to install
+ARG miniforge_version="${conda_version}-${miniforge_patch_number}"
+# Miniforge installer
+ARG miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh"
+# Miniforge checksum
+ARG miniforge_checksum="dae28a05f0fcfed0b47c66468e8434ab42cb1ff90de96540a506949cdecd2b5a"
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
@@ -57,7 +67,8 @@ ENV CONDA_DIR=/opt/conda \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
-    HOME=/home/$NB_USER
+    HOME=/home/$NB_USER \
+    CONDA_VERSION="${conda_version}"
 
 # Copy a script that we will use to correct permissions after running certain commands
 COPY fix-permissions /usr/local/bin/fix-permissions
@@ -82,28 +93,23 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions $CONDA_DIR
 
 USER $NB_UID
-WORKDIR $HOME
 ARG PYTHON_VERSION=default
 
 # Setup work directory for backward-compatibility
-RUN mkdir /home/$NB_USER/work && \
-    fix-permissions /home/$NB_USER
+RUN mkdir "/home/$NB_USER/work" && \
+    fix-permissions "/home/$NB_USER"
 
-# Install conda as jovyan and check the md5 sum provided on the download site
-ENV MINICONDA_VERSION="${miniconda_version}" \
-    CONDA_VERSION="${conda_version}"
-
+# Install conda as jovyan and check the sha256 sum provided on the download site
 WORKDIR /tmp
-RUN wget --quiet https://repo.continuum.io/miniconda/Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "${miniconda_checksum} *Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
-    /bin/bash Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-py38_${MINICONDA_VERSION}-Linux-x86_64.sh && \
+
+RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}" && \
+    echo "${miniforge_checksum} *${miniforge_installer}" | sha256sum --check && \
+    /bin/bash "${miniforge_installer}" -f -b -p $CONDA_DIR && \
+    rm "${miniforge_installer}" && \
     # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
     echo "conda ${CONDA_VERSION}" >> $CONDA_DIR/conda-meta/pinned && \
-    conda config --system --prepend channels conda-forge && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
-    conda config --system --set channel_priority strict && \
     if [ ! $PYTHON_VERSION = 'default' ]; then conda install --yes python=$PYTHON_VERSION; fi && \
     conda list python | grep '^python ' | tr -s ' ' | cut -d '.' -f 1,2 | sed 's/$/.*/' >> $CONDA_DIR/conda-meta/pinned && \
     conda install --quiet --yes "conda=${CONDA_VERSION}" && \

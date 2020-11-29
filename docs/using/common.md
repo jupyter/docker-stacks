@@ -113,3 +113,17 @@ pip install some-package
 conda install some-package
 ```
 
+### Using alternative channels
+
+Conda is configured by default to use only the [`conda-forge`](https://anaconda.org/conda-forge) channel. 
+However, alternative channels can be used either one shot by overwriting the default channel in the installation command or by configuring `conda` to use different channels.
+The examples below show how to use the [anaconda default channels](https://repo.anaconda.com/pkgs/main) instead of `conda-forge` to install packages.
+
+```bash
+# using defaults channels to install a package
+conda install --channel defaults humanize
+# configure conda to add default channels at the top of the list
+conda config --system --prepend channels defaults
+# install a package
+conda install humanize
+```
