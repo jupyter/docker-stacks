@@ -25,7 +25,7 @@ ALL_IMAGES:=$(ALL_STACKS)
 
 # Dockerfile Linter
 HADOLINT="${HOME}/hadolint"
-HADOLINT_VERSION="v1.18.2"
+HADOLINT_VERSION="v1.19.0"
 
 help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html

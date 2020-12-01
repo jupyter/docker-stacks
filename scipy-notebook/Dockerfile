@@ -24,7 +24,7 @@ RUN conda install --quiet --yes \
     'cython=0.29.*' \
     'dask=2.30.*' \
     'dill=0.3.*' \
-    'h5py=2.10.*' \
+    'h5py=3.1.*' \
     'ipywidgets=7.5.*' \
     'ipympl=0.5.*'\
     'matplotlib-base=3.3.*' \
@@ -40,7 +40,7 @@ RUN conda install --quiet --yes \
     'seaborn=0.11.*' \
     'sqlalchemy=1.3.*' \
     'statsmodels=0.12.*' \
-    'sympy=1.6.*' \
+    'sympy=1.7.*' \
     'vincent=0.4.*' \
     'widgetsnbextension=3.5.*'\
     'xlrd=1.2.*' \

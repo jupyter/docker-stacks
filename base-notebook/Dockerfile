@@ -4,7 +4,7 @@
 # Ubuntu 20.04 (focal)
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
 # OS/ARCH: linux/amd64
-ARG ROOT_CONTAINER=ubuntu:focal-20201008@sha256:1d7b639619bdca2d008eca2d5293e3c43ff84cbee597ff76de3b7a7de3e84956
+ARG ROOT_CONTAINER=ubuntu:focal-20201106@sha256:4e4bc990609ed865e07afc8427c30ffdddca5153fd4e82c20d8f0783a291e241
 
 ARG BASE_CONTAINER=$ROOT_CONTAINER
 FROM $BASE_CONTAINER
@@ -46,7 +46,6 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     wget \
-    bzip2 \
     ca-certificates \
     sudo \
     locales \
@@ -68,7 +67,8 @@ ENV CONDA_DIR=/opt/conda \
     LANGUAGE=en_US.UTF-8
 ENV PATH=$CONDA_DIR/bin:$PATH \
     HOME=/home/$NB_USER \
-    CONDA_VERSION="${conda_version}"
+    CONDA_VERSION="${conda_version}" \
+    MINIFORGE_VERSION="${miniforge_version}"
 
 # Copy a script that we will use to correct permissions after running certain commands
 COPY fix-permissions /usr/local/bin/fix-permissions
@@ -102,6 +102,7 @@ RUN mkdir "/home/$NB_USER/work" && \
 # Install conda as jovyan and check the sha256 sum provided on the download site
 WORKDIR /tmp
 
+# Prerequisites installation: conda, pip, tini
 RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}" && \
     echo "${miniforge_checksum} *${miniforge_installer}" | sha256sum --check && \
     /bin/bash "${miniforge_installer}" -f -b -p $CONDA_DIR && \
@@ -112,18 +113,14 @@ RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${m
     conda config --system --set show_channel_urls true && \
     if [ ! $PYTHON_VERSION = 'default' ]; then conda install --yes python=$PYTHON_VERSION; fi && \
     conda list python | grep '^python ' | tr -s ' ' | cut -d '.' -f 1,2 | sed 's/$/.*/' >> $CONDA_DIR/conda-meta/pinned && \
-    conda install --quiet --yes "conda=${CONDA_VERSION}" && \
-    conda install --quiet --yes pip && \
+    conda install --quiet --yes \
+    "conda=${CONDA_VERSION}" \
+    'pip' \
+    'tini=0.18.0' && \
     conda update --all --quiet --yes && \
-    conda clean --all -f -y && \
-    rm -rf /home/$NB_USER/.cache/yarn && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
-# Install Tini
-RUN conda install --quiet --yes 'tini=0.18.0' && \
     conda list tini | grep tini | tr -s ' ' | cut -d ' ' -f 1,2 >> $CONDA_DIR/conda-meta/pinned && \
     conda clean --all -f -y && \
+    rm -rf /home/$NB_USER/.cache/yarn && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
@@ -134,8 +131,8 @@ RUN conda install --quiet --yes 'tini=0.18.0' && \
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 RUN conda install --quiet --yes \
-    'notebook=6.1.4' \
-    'jupyterhub=1.2.1' \
+    'notebook=6.1.5' \
+    'jupyterhub=1.2.2' \
     'jupyterlab=2.2.9' && \
     conda clean --all -f -y && \
     npm cache clean --force && \
