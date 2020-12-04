@@ -15,5 +15,6 @@ sed -i 's/ARG NB_USER/# &/g' $tmpFile
 
 cat base.Dockerfile > Dockerfile
 cat $tmpFile >> Dockerfile
+cat tensorrt.Dockerfile >> Dockerfile
 
 rm $tmpFile

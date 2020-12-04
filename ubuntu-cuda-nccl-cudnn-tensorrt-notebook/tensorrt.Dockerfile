@@ -1,3 +1,5 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
 LABEL maintainer="fuzhuzheng <fuzhuzheng@163.com>"
 ARG TENSORRT_URL='https://nvidia-cuda-cudnn-tensortr-jupyter.oss-cn-hongkong.aliyuncs.com/nv-tensorrt-repo-ubuntu1804-cuda10.2-trt7.2.1.6-ga-20201006_1-1_amd64.deb?Expires=1606932105&OSSAccessKeyId=TMP.3Kg43SoAHNv5CuQnAirTQCGsWLnwoN6TsvcHLB7RanYyeP5KY8r4Wd6WzckXAQJHbcsmkB33nU3wemcMpiSyCRaK6626wt&Signature=LqwuUIgLeuJsm1ID%2F69PQWBcfEA%3D'
 
