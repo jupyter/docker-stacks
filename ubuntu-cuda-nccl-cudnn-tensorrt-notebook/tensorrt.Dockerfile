@@ -8,6 +8,7 @@ RUN tensorrt_file_name=$(echo $TENSORRT_URL|awk -F '?' '{print $1}'|awk -F '/' '
     ubuntu_os=$(echo $tensorrt_file_name|awk -F '-' '{print $4}') && \
     cuda_v=$(echo $tensorrt_file_name|awk -F '-' '{print $5}') && \
     tensorrt_v=$(echo $tensorrt_file_name|awk -F '-' '{print $6}') && \
+    tensorrt_n=$(echo $tensorrt_v|awk -F 'trt' '{print $2}'|awk -F '.' '{print $1}') && \
     app_v=$(echo $tensorrt_v|awk -F 'trt' '{print $2}'|awk -F '.' '{print $1"."$2"."$3}')-1+${cuda_v} && \
     RUN wget $TENSORRT_URL -O $tensorrt_file_name && \
     dpkg -i $tensorrt_file_name && \
@@ -19,13 +20,13 @@ RUN tensorrt_file_name=$(echo $TENSORRT_URL|awk -F '?' '{print $1}'|awk -F '/' '
     libnvinfer-dev=$app_v \
     libnvinfer-doc=$app_v \
     libnvinfer-plugin-dev=$app_v \
-    libnvinfer-plugin7=$app_v \
+    libnvinfer-plugin${tensorrt_n}=$app_v \
     libnvinfer-samples=$app_v \
-    libnvinfer7=$app_v \
+    libnvinfer${tensorrt_n}=$app_v \
     libnvonnxparsers-dev=$app_v \
-    libnvonnxparsers7=$app_v \
+    libnvonnxparsers${tensorrt_n}=$app_v \
     libnvparsers-dev=$app_v \
-    libnvparsers7=$app_v \
+    libnvparsers${tensorrt_n}=$app_v \
     python-libnvinfer=$app_v \
     python-libnvinfer-dev=$app_v \
     python3-libnvinfer=$app_v \
