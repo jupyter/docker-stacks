@@ -303,7 +303,7 @@ RUN tensorrt_file_name=$(echo $TENSORRT_URL|awk -F '?' '{print $1}'|awk -F '/' '
     tensorrt_v=$(echo $tensorrt_file_name|awk -F '-' '{print $6}') && \
     tensorrt_n=$(echo $tensorrt_v|awk -F 'trt' '{print $2}'|awk -F '.' '{print $1}') && \
     app_v=$(echo $tensorrt_v|awk -F 'trt' '{print $2}'|awk -F '.' '{print $1"."$2"."$3}')-1+${cuda_v} && \
-    RUN wget $TENSORRT_URL -O $tensorrt_file_name && \
+    wget $TENSORRT_URL -O $tensorrt_file_name && \
     dpkg -i $tensorrt_file_name && \
     apt-key add $(echo $tensorrt_file_name|awk -F '-' '{print "/var/"$1"-"$2"-"$3"-"$5"-"$6"-"$7"-"$8"/7fa2af80.pub"}'|awk -F '_' '{print $1}') && \
     apt-get update && \
