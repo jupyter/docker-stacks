@@ -13,3 +13,13 @@ FROM $BASE_CONTAINER
 LABEL maintainer="fuzhuzheng Project <fuzhuzheng@163.com>"
 ARG NB_USER="fuzhuzheng"
 
+USER root
+
+RUN tensorrt_file_name=$(echo $TENSORRT_URL|awk -F '?' '{print $1}'|awk -F '/' '{print $4}') && \
+    ubuntu_os=$(echo $tensorrt_file_name|awk -F '-' '{print $4}') && \
+    cuda_v=$(echo $tensorrt_file_name|awk -F '-' '{print $5}') && \
+    tensorrt_v=$(echo $tensorrt_file_name|awk -F '-' '{print $6}') && \
+    tensorrt_n=$(echo $tensorrt_v|awk -F 'trt' '{print $2}'|awk -F '.' '{print $1}') && \
+    app_v=$(echo $tensorrt_v|awk -F 'trt' '{print $2}'|awk -F '.' '{print $1"."$2"."$3}')-1+${cuda_v} && \
+    wget ${TENSORRT_URL} -O ${tensorrt_file_name}
+
