@@ -5,13 +5,6 @@ FROM $BASE_CONTAINER
 
 LABEL maintainer="fuzhuzheng <fuzhuzheng@163.com>"
 
-USER root
-
-RUN fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
-
-USER root
-
 # Install paddle
 RUN pip install --quiet --no-cache-dir \
     paddlepaddle-gpu==2.0.0rc0 \
