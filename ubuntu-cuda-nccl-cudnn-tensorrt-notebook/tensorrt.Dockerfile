@@ -35,6 +35,8 @@ RUN tensorrt_file_name=$(echo $TENSORRT_URL|awk -F '?' '{print $1}'|awk -F '/' '
     uff-converter-tf=${app_v} && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    rm -fr ${tensorrt_file_name}
+    rm -fr ${tensorrt_file_name} && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
 
 USER $NB_UID
