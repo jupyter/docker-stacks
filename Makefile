@@ -19,10 +19,10 @@ ALL_STACKS:=base-notebook \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook \
-	base-notebook-nvidia \
-	minimal-notebook-nvidia \
-	scipy-notebook-nvidia \
-	tensorflow-notebook-nvidia
+	base-notebook-gpu \
+	minimal-notebook-gpu \
+	scipy-notebook-gpu \
+	tensorflow-notebook-gpu
 endif
 
 ALL_IMAGES:=$(ALL_STACKS)
