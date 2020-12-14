@@ -19,9 +19,6 @@ ALL_STACKS:=base-notebook \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook \
-	base-notebook-gpu \
-	minimal-notebook-gpu \
-	scipy-notebook-gpu \
 	tensorflow-notebook-gpu
 endif
 
