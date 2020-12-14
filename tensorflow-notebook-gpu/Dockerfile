@@ -12,6 +12,9 @@ ARG LIB_DIR_PREFIX=x86_64
 ARG LIBNVINFER=7.2.1-1
 ARG LIBNVINFER_MAJOR_VERSION=7
 
+# Fix DL4006
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 USER root
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
