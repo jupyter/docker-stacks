@@ -6,7 +6,7 @@ FROM $BASE_CONTAINER
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 ARG CUDA=11.1
-ARG CUDNN=8.0.4.30-1
+ARG CUDNN=8.0.5.39-1
 ARG CUDNN_MAJOR_VERSION=8
 ARG LIB_DIR_PREFIX=x86_64
 ARG LIBNVINFER=7.2.1-1
@@ -20,7 +20,7 @@ USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg2 curl ca-certificates && \
     curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub | apt-key add - && \
-    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64 /" > /etc/apt/sources.list.d/cuda.list && \
+    echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64 /" > /etc/apt/sources.list.d/cuda.list && \
     echo "deb https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get purge --autoremove -y curl \
     && rm -rf /var/lib/apt/lists/*
@@ -58,7 +58,6 @@ RUN apt-get update \
     libcurand-${CUDA/./-} \
     libcusolver-${CUDA/./-} \
     libcusparse-${CUDA/./-} \
-    curl \
     libcudnn8=${CUDNN}+cuda${CUDA} \
     libfreetype6-dev \
     libhdf5-serial-dev \
@@ -68,6 +67,7 @@ RUN apt-get update \
     cm-super \
     libnvinfer${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda${CUDA} \
     libnvinfer-plugin${LIBNVINFER_MAJOR_VERSION}=${LIBNVINFER}+cuda${CUDA} \
+#    python3-libnvinfer=${LIBNVINFER}+cuda${CUDA} \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
