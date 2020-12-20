@@ -47,10 +47,10 @@ jobs:
         run: make -C main pre-commit-all
       - name: Setup buildx
         run: make -C main buildx-setup
-      - name: Setup QEMU
-        run: make -C main qemu-setup
+      # - name: Setup QEMU
+      #   run: make -C main qemu-setup
       - name: Build Multi-arch Docker Images
-        run: make -C main build-test-multi-arch-all
+        run: make -C main build-multi-arch-all
       - name: Build Docker Images
         run: make -C main build-test-all
       - name: Run Post-Build Hooks
