@@ -238,10 +238,6 @@ build-multi-arch-all: $(foreach I,$(ALL_M_ARCH_IMAGES),build-multi-arch/$(I) ) #
 build-test-multi-arch-all: qemu-setup
 build-test-multi-arch-all: $(foreach I,$(ALL_M_ARCH_IMAGES),build-multi-arch/$(I) test-multi-arch/$(I) ) ## build and test all multi-arch stacks
 
-qemu-setup: ## setup QEMU to be able to run all arch images through emulation
-	@echo "Setting up QEMU ..."
-	@docker run --rm --privileged multiarch/qemu-user-static --reset --persistent yes
-
 test-multi-arch/%: DARGS?=
 test-multi-arch/%: ## test the different arch of a the stack %  
 	@echo "Testing multi-arch image $(notdir $@) ..."
@@ -255,3 +251,14 @@ push-multi-arch/%: ## push all tags for a jupyter image
 		--rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --push
 
 push-all: $(foreach I,$(ALL_M_ARCH_IMAGES),push/$(I) ) ## push all tagged images
+
+# --- multi-arch prerequisites ---
+
+qemu-setup: ## setup QEMU to be able to run all arch images through emulation
+	@echo "Setting up QEMU ..."
+	docker run --rm --privileged multiarch/qemu-user-static --reset --persistent yes
+
+buildx-setup: ## setup buildx to be able to build multi-arch images
+	@echo "Setting up buildx ..."	
+	docker buildx create --name multi --use
+	docker buildx inspect --bootstrap

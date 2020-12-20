@@ -45,6 +45,10 @@ jobs:
         run: make -C main hadolint-all
       - name: Run pre-commit hooks
         run: make -C main pre-commit-all
+      - name: Setup buildx
+        run: make -C main buildx-setup
+      - name: Setup QEMU
+        run: make -C main qemu-setup
       - name: Build Multi-arch Docker Images
         run: make -C main build-test-multi-arch-all
       - name: Build Docker Images
