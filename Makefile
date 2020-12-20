@@ -8,20 +8,17 @@ ARCH:=$(shell uname -m)
 OWNER?=jupyter
 
 # Need to list the images in build dependency order
-ifeq ($(ARCH),ppc64le)
-ALL_STACKS:=base-notebook
-else
-ALL_STACKS:=base-notebook \
-	minimal-notebook \
+
+ALL_STACKS:=minimal-notebook \
 	r-notebook \
 	scipy-notebook \
 	tensorflow-notebook \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook
-endif
 
 ALL_IMAGES:=$(ALL_STACKS)
+ALL_M_ARCH_IMAGES:=base-notebook 
 
 # Dockerfile Linter
 HADOLINT="${HOME}/hadolint"
@@ -45,17 +42,25 @@ arch_patch/%: ## apply hardware architecture specific patches to the Dockerfile
 		patch -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.$(ARCH).patch; \
 	fi
 
+build/%: TAG?=latest
 build/%: DARGS?=
 build/%: ## build the latest image for a stack
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
 	@echo -n "Built image size: "
-	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
+	@docker images "$(OWNER)/$(notdir $@):$(TAG)" --format "{{.Size}}"
 
 build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
 build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
 
+# --- maintenance helper ----
+# tool to check outdated packages
+
+check-outdated/%: TAG?=latest
 check-outdated/%: ## check the outdated conda packages in a stack and produce a report (experimental)
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
+	@TEST_IMAGE="$(OWNER)/$(notdir $@):$(TAG)" pytest test/test_outdated.py
+
+# --- container utils --- #
+# container utilities for development purpose
 
 cont-clean-all: cont-stop-all cont-rm-all ## clean all containers (stop + rm)
 
@@ -67,17 +72,21 @@ cont-rm-all: ## remove all containers
 	@echo "Removing all containers ..."
 	-docker rm --force $(shell docker ps -a -q) 2> /dev/null
 
+dev/%: TAG?=latest
 dev/%: ARGS?=
 dev/%: DARGS?=-e JUPYTER_ENABLE_LAB=yes
 dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
-	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
+	docker run -it --rm -p $(PORT):8888 $(DARGS) "$(OWNER)/$(notdir $@):$(TAG)" $(ARGS)
 
 dev-env: ## install libraries required to build docs and run tests
 	@pip install -r requirements-dev.txt
 
 docs: ## build HTML documentation
 	make -C docs html
+
+# --- git ---
+# git management
 
 git-commit: LOCAL_PATH?=.
 git-commit: GITHUB_SHA?=$(shell git rev-parse HEAD)
@@ -95,6 +104,9 @@ git-commit: ## commit outstading git changes and push to remote
 		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0
 	@cd $(LOCAL_PATH) && git push -u publisher master
 
+# --- hooks --- #
+# hook targests definition
+
 hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
 hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
 hook/%: export WIKI_PATH?=../wiki
@@ -106,6 +118,9 @@ hook/%: ## run post-build hooks for an image
 	$(SHELL) $(notdir $@)/hooks/run_hook
 
 hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
+
+# --- image utils --- #
+# image utilities for development purpose
 
 img-clean: img-rm-dang img-rm ## clean dangling and jupyter images
 
@@ -120,6 +135,9 @@ img-rm:  ## remove jupyter images
 img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
 	-docker rmi --force $(shell docker images -f "dangling=true" -q) 2> /dev/null
+
+# --- linters --- #
+# hadoling installation and usage
 
 hadolint/%: ARGS?=
 hadolint/%: ## lint the dockerfile(s) for a stack
@@ -138,6 +156,8 @@ hadolint-install: ## install hadolint
 	@echo "Installation done!"
 	@$(HADOLINT) --version
 
+# pre-commit installation and usage
+
 pre-commit-all: ## run pre-commit hook on all files
 	@pre-commit run --all-files
 
@@ -145,9 +165,12 @@ pre-commit-install: ## set up the git hook scripts
 	@pre-commit --version
 	@pre-commit install
 
+# --- pull / push ---
+
+pull/%: TAG?=latest
 pull/%: DARGS?=
 pull/%: ## pull a jupyter image
-	docker pull $(DARGS) $(OWNER)/$(notdir $@)
+	docker pull $(DARGS) "$(OWNER)/$(notdir $@):$(TAG)"
 
 push/%: DARGS?=
 push/%: ## push all tags for a jupyter image
@@ -155,16 +178,80 @@ push/%: ## push all tags for a jupyter image
 
 push-all: $(foreach I,$(ALL_IMAGES),push/$(I) ) ## push all tagged images
 
+# --- run helpers ---
+# container run helpers for development purpose
+
+run-sudo/%: TAG?=latest
 run/%: DARGS?=
 run/%: ## run a bash in interactive mode in a stack
-	docker run -it --rm $(DARGS) $(OWNER)/$(notdir $@) $(SHELL)
+	docker run -it --rm $(DARGS) "$(OWNER)/$(notdir $@):$(TAG)" $(SHELL)
 
+run-sudo/%: TAG?=latest
 run-sudo/%: DARGS?=
 run-sudo/%: ## run a bash in interactive mode as root in a stack
-	docker run -it --rm -u root $(DARGS) $(OWNER)/$(notdir $@) $(SHELL)
+	docker run -it --rm -u root $(DARGS) "$(OWNER)/$(notdir $@):$(TAG)" $(SHELL)
 
+# --- tests ---
+# test definition
+
+test/%: TAG?=latest
 test/%: ## run tests against a stack (only common tests or common tests + specific tests)
-	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
-	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test $(notdir $@)/test; fi
+	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@):$(TAG)" pytest -m "not info" test; \
+	else TEST_IMAGE="$(OWNER)/$(notdir $@):$(TAG)" pytest -m "not info" test $(notdir $@)/test; fi
 
 test-all: $(foreach I,$(ALL_IMAGES),test/$(I)) ## test all stacks
+
+# --- new multi-arch ---
+
+# | Ubuntu          | Miniforge       |
+# |-----------------|-----------------|
+# | `linux/arm64`   | `linux-aarch64` |
+# | `linux/amd64`   | `linux-x86_64`  |
+# | `linux/ppc64le` | `linux-ppc64le` |
+
+# Determine this makefile's path.
+# Be sure to place this BEFORE `include` directives, if any.
+THIS_FILE:=$(lastword $(MAKEFILE_LIST))
+
+DEFAULT_ARCH:=amd64
+
+build-arch/%: PLATFORM?=
+build-arch/%: DARGS?=
+build-arch/%: ## build a arch image for a stack
+	@echo "Building $(OWNER)/$(notdir $@) for platform $(PLATFORM) ..."
+	docker buildx build $(DARGS) --platform "linux/$(PLATFORM)"  \
+		--output type=docker --rm --force-rm \
+		--tag $(OWNER)/$(notdir $@):$(PLATFORM) ./$(notdir $@)
+	@docker images $(OWNER)/$(notdir $@):$(PLATFORM) --format "{{.Size}}"
+
+build-multi-arch/%: DARGS?=
+build-multi-arch/%: ## build multi-arch images for a stack  
+	@echo "Building multi-arch image $(OWNER)/$(notdir $@) ..." 
+	@$(MAKE) -f $(THIS_FILE) build-arch/$(notdir $@) PLATFORM=amd64
+	@$(MAKE) -f $(THIS_FILE) build-arch/$(notdir $@) PLATFORM=arm64 \
+		DARGS="--build-arg miniforge_arch=aarch64 --build-arg miniforge_checksum=3c6f3f5dd5dcbd1fe8bce7cfc5c11b46ea51a432f8e3c03b60384680ea621b3a"
+	# @$(MAKE) -f $(THIS_FILE) build-arch/$(notdir $@) PLATFORM=ppc64le
+	docker tag $(OWNER)/$(notdir $@):$(DEFAULT_ARCH) $(OWNER)/$(notdir $@):latest
+
+build-multi-arch-all: $(foreach I,$(ALL_M_ARCH_IMAGES),build-multi-arch/$(I) ) ## build all multi-arch stacks
+
+build-test-multi-arch-all: qemu-setup
+build-test-multi-arch-all: $(foreach I,$(ALL_M_ARCH_IMAGES),build-multi-arch/$(I) test-multi-arch/$(I) ) ## build and test all multi-arch stacks
+
+qemu-setup: ## setup QEMU to be able to run all arch images through emulation
+	@echo "Setting up QEMU ..."
+	@docker run --rm --privileged multiarch/qemu-user-static --reset --persistent yes
+
+test-multi-arch/%: DARGS?=
+test-multi-arch/%: ## test the different arch of a the stack %  
+	@echo "Testing multi-arch image $(notdir $@) ..."
+	#@$(MAKE) -f $(THIS_FILE) test/$(notdir $@) TAG=amd64 
+	@$(MAKE) -f $(THIS_FILE) test/$(notdir $@) TAG=arm64
+	#@$(MAKE) -f $(THIS_FILE) test/$(notdir $@) TAG=ppc64le
+
+push-multi-arch/%: DARGS?=
+push-multi-arch/%: ## push all tags for a jupyter image
+	docker buildx build --platform linux/amd64,linux/arm64,linux/ppc64le \
+		--rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --push
+
+push-all: $(foreach I,$(ALL_M_ARCH_IMAGES),push/$(I) ) ## push all tagged images

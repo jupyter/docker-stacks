@@ -28,11 +28,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: main
-      - name: Clone Wiki
-        uses: actions/checkout@v2
-        with:
-          repository: ${{github.repository}}.wiki
-          path: wiki
+      # - name: Clone Wiki
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: ${{github.repository}}.wiki
+      #     path: wiki
       - name: Set Up Python
         uses: actions/setup-python@v2
         with:
@@ -45,6 +45,8 @@ jobs:
         run: make -C main hadolint-all
       - name: Run pre-commit hooks
         run: make -C main pre-commit-all
+      - name: Build Multi-arch Docker Images
+        run: make -C main build-test-multi-arch-all
       - name: Build Docker Images
         run: make -C main build-test-all
       - name: Run Post-Build Hooks
