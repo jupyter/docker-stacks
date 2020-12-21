@@ -28,11 +28,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: main
-      # - name: Clone Wiki
-      #   uses: actions/checkout@v2
-      #   with:
-      #     repository: ${{github.repository}}.wiki
-      #     path: wiki
+      - name: Clone Wiki
+        uses: actions/checkout@v2
+        with:
+          repository: ${{github.repository}}.wiki
+          path: wiki
       - name: Set Up Python
         uses: actions/setup-python@v2
         with:
