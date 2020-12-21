@@ -122,8 +122,8 @@ def arch(container):
 @pytest.fixture(autouse=True)
 def skip_by_arch(request, arch):
     """Define a skip_arch marker to skip tests that will not work on
-    Taken from: https://stackoverflow.com/a/28198398/4413446
+    Inspired by https://stackoverflow.com/a/28198398/4413446
     """
     if request.node.get_closest_marker('skip_arch'):
-        if request.node.get_closest_marker('skip_arch').args[0] == arch:
+        if arch in request.node.get_closest_marker('skip_arch').args[0]:
             pytest.skip(f"skipped on the {arch} architecture")
