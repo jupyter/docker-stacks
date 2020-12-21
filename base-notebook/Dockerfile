@@ -133,9 +133,7 @@ RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${m
 RUN conda install --quiet --yes \
     'notebook=6.1.5' \
     'jupyterhub=1.2.2' \
-    'jupyterlab=2.2.9' \
-    # apparently pandoc does not come with nbconvert on arm
-    'pandoc=2.11.3.*' && \
+    'jupyterlab=2.2.9' && \
     conda clean --all -f -y && \
     npm cache clean --force && \
     jupyter notebook --generate-config && \

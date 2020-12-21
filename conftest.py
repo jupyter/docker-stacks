@@ -104,3 +104,26 @@ def container(docker_client, image_name):
     )
     yield container
     container.remove()
+
+
+@pytest.fixture
+def arch(container):
+    """Return the architecture of the image based on its tag"""
+    # default
+    arch = "amd64"
+    # give something like this ['jupyter/base-notebook', 'arm64']
+    split = container.image_name.split(":", 1)
+    if len(split) > 1 and split[1] != "latest":
+        # setting the architecture to the tag if not latest
+        arch = split[1]
+    return arch
+
+
+@pytest.fixture(autouse=True)
+def skip_by_arch(request, arch):
+    """Define a skip_arch marker to skip tests that will not work on
+    Taken from: https://stackoverflow.com/a/28198398/4413446
+    """
+    if request.node.get_closest_marker('skip_arch'):
+        if request.node.get_closest_marker('skip_arch').args[0] == arch:
+            pytest.skip(f"skipped on the {arch} architecture")
