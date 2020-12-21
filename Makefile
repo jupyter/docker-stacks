@@ -255,7 +255,7 @@ push-all: $(foreach I,$(ALL_M_ARCH_IMAGES),push/$(I) ) ## push all tagged images
 
 qemu-setup: ## setup QEMU to be able to run all arch images through emulation
 	@echo "Setting up QEMU ..."
-	docker run --rm --privileged multiarch/qemu-user-static --reset --persistent yes
+	docker run --rm --privileged multiarch/qemu-user-static --reset --persistent yes --credential yes
 
 buildx-setup: ## setup buildx to be able to build multi-arch images
 	@echo "Setting up buildx ..."	
