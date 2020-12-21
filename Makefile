@@ -227,9 +227,9 @@ build-arch/%: ## build a arch image for a stack
 build-multi-arch/%: DARGS?=
 build-multi-arch/%: ## build multi-arch images for a stack  
 	@echo "Building multi-arch image $(OWNER)/$(notdir $@) ..." 
-	# @$(MAKE) -f $(THIS_FILE) build-arch/$(notdir $@) PLATFORM=amd64
-	# @$(MAKE) -f $(THIS_FILE) build-arch/$(notdir $@) PLATFORM=arm64 \
-	# 	DARGS="--build-arg miniforge_arch=aarch64 --build-arg miniforge_checksum=3c6f3f5dd5dcbd1fe8bce7cfc5c11b46ea51a432f8e3c03b60384680ea621b3a"
+	@$(MAKE) -f $(THIS_FILE) build-arch/$(notdir $@) PLATFORM=amd64
+	@$(MAKE) -f $(THIS_FILE) build-arch/$(notdir $@) PLATFORM=arm64 \
+	 	DARGS="--build-arg miniforge_arch=aarch64 --build-arg miniforge_checksum=3c6f3f5dd5dcbd1fe8bce7cfc5c11b46ea51a432f8e3c03b60384680ea621b3a"
 	@$(MAKE) -f $(THIS_FILE) build-arch/$(notdir $@) PLATFORM=ppc64le \
 		DARGS="--build-arg miniforge_arch=ppc64le --build-arg miniforge_checksum=2ac5780924f6eb6613b99ed7266d0b23126e555a45faf4ceff6e8f3fa3a48e0e"
 	docker tag $(OWNER)/$(notdir $@):$(DEFAULT_ARCH) $(OWNER)/$(notdir $@):latest
