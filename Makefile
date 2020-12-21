@@ -181,7 +181,7 @@ push-all: $(foreach I,$(ALL_IMAGES),push/$(I) ) ## push all tagged images
 # --- run helpers ---
 # container run helpers for development purpose
 
-run-sudo/%: TAG?=latest
+run/%: TAG?=latest
 run/%: DARGS?=
 run/%: ## run a bash in interactive mode in a stack
 	docker run -it --rm $(DARGS) "$(OWNER)/$(notdir $@):$(TAG)" $(SHELL)
