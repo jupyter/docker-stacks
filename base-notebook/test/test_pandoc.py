@@ -7,7 +7,7 @@ import pytest
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.skip_arch("arm64")
+@pytest.mark.skip_arch(["arm64", "ppc64le"])
 def test_pandoc(container):
     """Pandoc shall be able to convert MD to HTML."""
     LOGGER.info(container.image_name)
