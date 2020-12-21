@@ -49,8 +49,20 @@ jobs:
         run: make -C main qemu-setup
       - name: Setup buildx
         run: make -C main buildx-setup
+      # Note dedicated actions exist to setup QEMU and Buildx
+      # https://github.com/docker/setup-buildx-action
+      # However we are sticking with a portable solution for the time being
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v1
+      # - name: Set up Docker Buildx
+      #   id: buildx
+      #   uses: docker/setup-buildx-action@v1
+      # - name: Builder instance name
+      #   run: echo ${{ steps.buildx.outputs.name }}
+      # - name: Available platforms
+      #   run: echo ${{ steps.buildx.outputs.platforms }}
       - name: Build Multi-arch Docker Images
-        run: make -C main build-multi-arch-all
+        run: make -C main build-test-multi-arch-all
       - name: Build Docker Images
         run: make -C main build-test-all
       - name: Run Post-Build Hooks

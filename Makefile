@@ -235,7 +235,6 @@ build-multi-arch/%: ## build multi-arch images for a stack
 
 build-multi-arch-all: $(foreach I,$(ALL_M_ARCH_IMAGES),build-multi-arch/$(I) ) ## build all multi-arch stacks
 
-build-test-multi-arch-all: qemu-setup
 build-test-multi-arch-all: $(foreach I,$(ALL_M_ARCH_IMAGES),build-multi-arch/$(I) test-multi-arch/$(I) ) ## build and test all multi-arch stacks
 
 test-multi-arch/%: DARGS?=
