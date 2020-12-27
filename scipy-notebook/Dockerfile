@@ -22,20 +22,20 @@ RUN conda install --quiet --yes \
     'bottleneck=1.3.*' \
     'cloudpickle=1.6.*' \
     'cython=0.29.*' \
-    'dask=2.30.*' \
+    'dask=2020.12.*' \
     'dill=0.3.*' \
     'h5py=3.1.*' \
-    'ipywidgets=7.5.*' \
+    'ipywidgets=7.6.*' \
     'ipympl=0.5.*'\
     'matplotlib-base=3.3.*' \
-    'numba=0.51.*' \
+    'numba=0.52.*' \
     'numexpr=2.7.*' \
     'pandas=1.1.*' \
     'patsy=0.5.*' \
-    'protobuf=3.13.*' \
+    'protobuf=3.14.*' \
     'pytables=3.6.*' \
-    'scikit-image=0.17.*' \
-    'scikit-learn=0.23.*' \
+    'scikit-image=0.18.*' \
+    'scikit-learn=0.24.*' \
     'scipy=1.5.*' \
     'seaborn=0.11.*' \
     'sqlalchemy=1.3.*' \
@@ -50,10 +50,9 @@ RUN conda install --quiet --yes \
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
     # Also activate ipywidgets extension for JupyterLab
     # Check this URL for most recent compatibilities
-    # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^2.0.0 --no-build && \
-    jupyter labextension install @bokeh/jupyter_bokeh@^2.0.0 --no-build && \
-    jupyter labextension install jupyter-matplotlib@^0.7.2 --no-build && \
+    # Not compliant with jupyterlab 3.0.x see https://github.com/bokeh/bokeh/issues/10569
+    #jupyter labextension install @bokeh/jupyter_bokeh@^2.0.4 --no-build && \
+    jupyter labextension install jupyter-matplotlib@^0.7.4 --no-build && \
     jupyter lab build -y && \
     jupyter lab clean -y && \
     npm cache clean --force && \

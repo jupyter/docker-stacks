@@ -7,6 +7,6 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 # Install Tensorflow
 RUN pip install --quiet --no-cache-dir \
-    'tensorflow==2.3.1' && \
+    'tensorflow==2.4.0' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
