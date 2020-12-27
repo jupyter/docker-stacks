@@ -10,6 +10,7 @@ USER root
 # Octave pre-requisites
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+    fonts-freefont-otf \
     gnuplot \
     ghostscript \
     texinfo \
