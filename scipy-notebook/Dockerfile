@@ -50,9 +50,10 @@ RUN conda install --quiet --yes \
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
     # Also activate ipywidgets extension for JupyterLab
     # Check this URL for most recent compatibilities
-    # Not compliant with jupyterlab 3.0.x see https://github.com/bokeh/bokeh/issues/10569
-    #jupyter labextension install @bokeh/jupyter_bokeh@^2.0.4 --no-build && \
-    jupyter labextension install jupyter-matplotlib@^0.7.4 --no-build && \
+    # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^2.0.0 --no-build && \
+    jupyter labextension install @bokeh/jupyter_bokeh@^2.0.0 --no-build && \
+    jupyter labextension install jupyter-matplotlib@^0.7.2 --no-build && \
     jupyter lab build -y && \
     jupyter lab clean -y && \
     npm cache clean --force && \
