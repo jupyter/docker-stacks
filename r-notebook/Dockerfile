@@ -24,7 +24,7 @@ RUN ln -s /bin/tar /bin/gtar
 USER $NB_UID
 
 # R packages
-RUN conda install --quiet --yes \
+RUN mamba install --quiet --yes \
     'r-base=4.0.3' \
     'r-caret=6.*' \
     'r-crayon=1.3*' \
@@ -45,8 +45,8 @@ RUN conda install --quiet --yes \
     'unixodbc=2.3.*' \
     'r-tidymodels=0.1*' \
     && \
-    conda clean --all -f -y && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}"
 
 # Install e1071 R package (dependency of the caret R package)
-RUN conda install --quiet --yes r-e1071
+RUN mamba install --quiet --yes r-e1071

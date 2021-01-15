@@ -57,7 +57,7 @@ RUN mkdir /etc/julia && \
 USER $NB_UID
 
 # R packages including IRKernel which gets installed globally.
-RUN conda install --quiet --yes \
+RUN mamba install --quiet --yes \
     'r-base=4.0.3'  \
     'r-caret=6.0*' \
     'r-crayon=1.3*' \
@@ -75,7 +75,7 @@ RUN conda install --quiet --yes \
     'r-shiny=1.5*' \
     'r-tidyverse=1.3*' \
     'rpy2=3.3*' && \
-    conda clean --all -f -y && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 

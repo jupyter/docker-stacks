@@ -15,7 +15,7 @@ RUN apt-get update && \
 USER $NB_UID
 
 # Install Python 3 packages
-RUN conda install --quiet --yes \
+RUN mamba install --quiet --yes \
     'beautifulsoup4=4.9.*' \
     'conda-forge::blas=*=openblas' \
     'bokeh=2.2.*' \
@@ -45,7 +45,7 @@ RUN conda install --quiet --yes \
     'widgetsnbextension=3.5.*'\
     'xlrd=1.2.*' \
     && \
-    conda clean --all -f -y && \
+    mamba clean --all -f -y && \
     # Activate ipywidgets extension in the environment that runs the notebook server
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
     # Also activate ipywidgets extension for JupyterLab
