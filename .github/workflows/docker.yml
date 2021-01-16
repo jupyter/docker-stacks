@@ -47,6 +47,9 @@ jobs:
         run: make -C main pre-commit-all
       - name: Build Docker Images
         run: make -C main build-test-all
+        env:
+          # Full logs for CI build
+          BUILDKIT_PROGRESS: plain
       - name: Run Post-Build Hooks
         run: make -C main hook-all
         env:
