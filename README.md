@@ -28,6 +28,13 @@ Anyone in the community can jump in and help with these activities at any time. 
 grant additional permissions (e.g., ability to merge PRs) to anyone who shows an on-going interest
 in working on the project.
 
+## Jupyter Notebook Deprecation Notice
+
+Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), we encourage users to transition to JupyterLab.
+This can be done by passing the environment variable `JUPYTER_ENABLE_LAB=yes` at container startup, 
+more information in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html).
+This change is followed in the issue [#1217](https://github.com/jupyter/docker-stacks/issues/1217).
+
 ## Quick Start
 
 You can try a
