@@ -29,5 +29,5 @@ def test_start_notebook(container, http_client, env, expected_server):
     ), f"Not the expected command (jupyter {expected_server}) was launched"
     # Checking warning messages
     if not env:
-        msg = "WARN: Jupyter Notebook deprecation notice https://github.com/jupyter/notebook#notice."
+        msg = "WARN: Jupyter Notebook deprecation notice"
         assert msg in logs, f"Expected warning message {msg} not printed"
