@@ -28,6 +28,18 @@ Anyone in the community can jump in and help with these activities at any time. 
 grant additional permissions (e.g., ability to merge PRs) to anyone who shows an on-going interest
 in working on the project.
 
+## Jupyter Notebook Deprecation Notice
+
+Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), we encourage users to transition to JupyterLab.
+This can be done by passing the environment variable `JUPYTER_ENABLE_LAB=yes` at container startup, 
+more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#docker-options).
+
+In April 2021 JupyterLab will become the default for all of the Jupyter Docker stack images, however a new environment variable will be introduced to switch back to Jupyter Notebook if needed.
+
+After the change of default, and according to the Jupyter Notebook project status and its compatibility with JupyterLab, these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another *classic-like* UI built atop JupyterLab.
+
+This change is tracked in the issue [#1217](https://github.com/jupyter/docker-stacks/issues/1217), please check its content for more information.
+
 ## Quick Start
 
 You can try a
