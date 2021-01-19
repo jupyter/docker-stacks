@@ -43,8 +43,9 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 ## Quick Start
 
 You can try a
-[recent build of the jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb)
-by simply clicking the preceding link. Otherwise, the two examples below may help you get started if
+[relatively recent build of the jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb)
+by simply clicking the preceding link. The image used in binder was last updated on 19 Jan 2021.
+Otherwise, the two examples below may help you get started if
 you [have Docker installed](https://docs.docker.com/install/) know
 [which Docker image](http://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you
 want to use, and want to launch a single Jupyter Notebook server in a container.
