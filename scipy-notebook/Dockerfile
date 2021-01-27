@@ -22,43 +22,29 @@ RUN conda install --quiet --yes \
     'bottleneck=1.3.*' \
     'cloudpickle=1.6.*' \
     'cython=0.29.*' \
-    'dask=2020.12.*' \
+    'dask=2021.1.*' \
     'dill=0.3.*' \
     'h5py=3.1.*' \
     'ipywidgets=7.6.*' \
-    'ipympl=0.5.*'\
+    'ipympl=0.6.*'\
     'matplotlib-base=3.3.*' \
     'numba=0.52.*' \
     'numexpr=2.7.*' \
-    'pandas=1.1.*' \
+    'pandas=1.2.*' \
     'patsy=0.5.*' \
     'protobuf=3.14.*' \
     'pytables=3.6.*' \
     'scikit-image=0.18.*' \
     'scikit-learn=0.24.*' \
-    'scipy=1.5.*' \
+    'scipy=1.6.*' \
     'seaborn=0.11.*' \
     'sqlalchemy=1.3.*' \
     'statsmodels=0.12.*' \
     'sympy=1.7.*' \
     'vincent=0.4.*' \
     'widgetsnbextension=3.5.*'\
-    'xlrd=1.2.*' \
-    && \
+    'xlrd=2.0.*' && \
     conda clean --all -f -y && \
-    # Activate ipywidgets extension in the environment that runs the notebook server
-    jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
-    # Also activate ipywidgets extension for JupyterLab
-    # Check this URL for most recent compatibilities
-    # https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^2.0.0 --no-build && \
-    jupyter labextension install @bokeh/jupyter_bokeh@^2.0.0 --no-build && \
-    jupyter labextension install jupyter-matplotlib@^0.7.2 --no-build && \
-    jupyter lab build -y && \
-    jupyter lab clean -y && \
-    npm cache clean --force && \
-    rm -rf "/home/${NB_USER}/.cache/yarn" && \
-    rm -rf "/home/${NB_USER}/.node-gyp" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
