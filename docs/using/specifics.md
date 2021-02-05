@@ -40,7 +40,7 @@ docker run -it --rm jupyter/pyspark-notebook:spark-2.4.7 pyspark --version
 #     _\ \/ _ \/ _ `/ __/  '_/
 #    /___/ .__/\_,_/_/ /_/\_\   version 2.4.7
 #       /_/
-#                         
+#
 # Using Scala version 2.11.12, OpenJDK 64-Bit Server VM, 1.8.0_275
 ```
 
@@ -82,7 +82,7 @@ sc <- sparkR.session("local")
 # Sum of the first 100 whole numbers
 sdf <- createDataFrame(list(1:100))
 dapplyCollect(sdf,
-              function(x) 
+              function(x)
               { x <- sum(x)}
              )
 # 5050
@@ -102,7 +102,7 @@ conf$spark.sql.catalogImplementation <- "in-memory"
 sc <- spark_connect(master = "local", config = conf)
 
 # Sum of the first 100 whole numbers
-sdf_len(sc, 100, repartition = 1) %>% 
+sdf_len(sc, 100, repartition = 1) %>%
     spark_apply(function(e) sum(e))
 # 5050
 ```
@@ -171,7 +171,7 @@ sc <- sparkR.session("spark://master:7077")
 # Sum of the first 100 whole numbers
 sdf <- createDataFrame(list(1:100))
 dapplyCollect(sdf,
-              function(x) 
+              function(x)
               { x <- sum(x)}
              )
 # 5050
@@ -190,7 +190,7 @@ conf$spark.sql.catalogImplementation <- "in-memory"
 sc <- spark_connect(master = "spark://master:7077", config = conf)
 
 # Sum of the first 100 whole numbers
-sdf_len(sc, 100, repartition = 1) %>% 
+sdf_len(sc, 100, repartition = 1) %>%
     spark_apply(function(e) sum(e))
 # 5050
 ```
@@ -231,6 +231,26 @@ init = tf.global_variables_initializer()
 sess.run(init)
 sess.run(hello)
 ```
+
+## SensiML
+
+The `jupyter/sensiml-notebook` image supports the use of
+[SensiML](https://www.sensiml.com/) Analytics Toolkit using a SensiML account.
+
+### Single Machine Mode
+
+```python
+from sensiml import *
+
+connection = SensiML()
+
+# Here you will be prompted for your username/password
+
+# Now, Open the DashBoard UI:
+DashBoard(connection)
+```
+
+For further usage examples, see the [SensiML Analytics Studio Notebook documentation](https://sensiml.com/documentation/analytics-studio-notebook/index.html).
 
 ### Distributed Mode
 
