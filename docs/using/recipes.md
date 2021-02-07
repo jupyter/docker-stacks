@@ -156,9 +156,7 @@ Run jupyterlab using a command such as
 FROM jupyter/scipy-notebook:latest
 
 # Install the Dask dashboard
-RUN pip install dask_labextension ; \
-    jupyter labextension install -y --clean \
-    dask-labextension
+RUN pip install dask-labextension
 
 # Dask Scheduler & Bokeh ports
 EXPOSE 8787
