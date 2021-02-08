@@ -130,7 +130,7 @@ RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=$
     fix-permissions /home/$NB_USER
 
 # any additional pip installs can be added by uncommenting the following line
-# RUN $CONDA_DIR/envs/${conda_env}/bin/pip install 
+# RUN $CONDA_DIR/envs/${conda_env}/bin/pip install
 
 # prepend conda environment to path
 ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
@@ -527,4 +527,25 @@ RUN apt-get update && \
 USER $NB_UID
 
 RUN pip install --quiet --no-cache-dir auto-sklearn
+```
+
+## Enable SensiML notebooks
+
+Using `sensiml` requires `tensorflow`, and installs `qgrid` and `bqplot`. There is no conda package for `sensiml` at this time.
+
+```dockerfile
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+ARG BASE_CONTAINER=jupyter/tensorflow-notebook
+FROM $BASE_CONTAINER
+
+# Install SensiML and enable notebook extensions.
+RUN pip install --quiet --no-cache-dir \
+    'sensiml' && \
+    jupyter nbextension enable --py widgetsnbextension --sys-prefix  && \
+    jupyter nbextension enable --py --sys-prefix bqplot  && \
+    jupyter nbextension enable --py --sys-prefix qgrid  && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
 ```
