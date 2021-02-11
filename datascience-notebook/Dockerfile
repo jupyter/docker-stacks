@@ -60,7 +60,7 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'r-base=4.0.3'  \
     'r-caret=6.0*' \
-    'r-crayon=1.3*' \
+    'r-crayon=1.4*' \
     'r-devtools=2.3*' \
     'r-forecast=8.13*' \ 
     'r-hexbin=1.28*' \
@@ -72,7 +72,7 @@ RUN conda install --quiet --yes \
     'r-rcurl=1.98*' \
     'r-rmarkdown=2.6*' \
     'r-rsqlite=2.2*' \
-    'r-shiny=1.5*' \
+    'r-shiny=1.6*' \
     'r-tidyverse=1.3*' \
     'rpy2=3.4*' && \
     conda clean --all -f -y && \
