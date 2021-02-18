@@ -77,42 +77,40 @@ git push -u origin master
 > NOTE: This section and the cookiecutter template should be updated to describe using GitHub
 > Actions now that jupyter/docker-stacks uses that service.
 
-Next, link your GitHub project to Travis CI to build your Docker image whenever you or someone else
-submits a pull request.
+The cookiecutter template comes with a `.github/workflows/docker.yml` file, which allows you to use GitHub actions to build your Docker image whenever you or someone else submits a pull request.
 
-1. Visit
-   [https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI](https://docs.travis-ci.com/user/getting-started/#To-get-started-with-Travis-CI)
-   and follow the instructions to add the Travis CI application to your GitHub account.
-2. Visit [https://travis-ci.org](https://travis-ci.org).
-3. Click the + symbol at the top of the left sidebar.
-   ![Travis sidebar with plus button screenshot](../_static/travis-plus-repo.png)
-4. Locate your project repository either in your primary user account or in one of the organizations
-   to which you belong.
-5. Click the toggle to enable builds for the project repository.
-6. Click the **Settings** button for that repository.
-   ![Travis enable build toggle screenshot](../_static/travis-enable-build.png)
-7. Enable **Build only if .travis.yml is present** and **Build pushed pull requests**.
-   ![Travis build settings screenshot](../_static/travis-build-settings.png)
-8. Disable **Build pushed branches**.
+[TODO] - @trallard to add screenshots and details for GH actions
 
 ## Configuring Docker Cloud
 
 Now, configure Docker Cloud to build your stack image and push it to Docker Hub repository whenever
 you merge a GitHub pull request to the master branch of your project.
 
-1. Visit [https://cloud.docker.com/](https://cloud.docker.com/) and login.
-2. Select the account or organization matching the one you entered when prompted with `stack_org` by
-   the cookiecutter. ![Docker account selection screenshot](../_static/docker-org-select.png)
+1. Visit [https://cloud.docker.com/](https://cloud.docker.com/) and log in.
+2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter. 
+   ![Docker account selection screenshot](../_static/docker-org-select.png)
 3. Scroll to the bottom of the page and click **Create repository**.
-4. Enter the name of the image matching the one you entered when prompted with `stack_name` by the
-   cookiecutter. ![Docker image name and description screenshot](../_static/docker-repo-name.png)
+4. Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter. 
+   ![Docker image name and description screenshot](../_static/docker-repo-name.png)
 5. Enter a description for your image.
-6. Click **GitHub** under the **Build Settings** and follow the prompts to connect your account if
-   it is not already connected.
-7. Select the GitHub organization and repository containing your image definition from the
-   dropdowns.
+6. Click **GitHub** under the **Build Settings** and follow the prompts to connect your account if it is not already connected.
+7. Select the GitHub organization and repository containing your image definition from the dropdowns.
    ![Docker from GitHub automated build screenshot](../_static/docker-github-settings.png)
 8. Click the **Create and Build** button.
+9. Click on your avatar on the top-right corner and select Account settings.
+   ![Docker account selection screenshot](../_static/docker-org-select.png)
+10. Click on **Security** and then click on the **New Access Token** button.
+   ![Docker account Security settings screenshot](../_static/docker-org-security.png)
+11. Enter a meaningful name for your token and click on **Create**
+   ![Docker account create new token screenshot](../_static/docker-org-create-token.png)
+12. Copy the personal access token displayed in the next screen. **Note that you will not be able to see it again after you close the pop-up window**.
+13. Head back to your GitHub repository and click on the **Settings tab**.
+   ![Github repository settings tab screenshot](../static/../_static/github-create-secrets.png)
+14. Click on the **Secrets** section and then on the **New repository secret** button on the top right corner (see image above).
+15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the *value* field.
+   ![GitHub create token secret screenshot](../static/../_static/github-secret-token.png).
+16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the *value* field with your DockerHub username. Your repository secrets section should look something like this:
+   ![GitHub repository secrets created screenshot](../static/../_static/github-secrets-completed.png)
 
 ## Defining Your Image
 
