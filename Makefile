@@ -154,7 +154,7 @@ pull/%: ## pull a jupyter image
 
 push/%: DARGS?=
 push/%: ## push all tags for a jupyter image
-	docker push $(DARGS) $(OWNER)/$(notdir $@)
+	docker push --all-tags $(DARGS) $(OWNER)/$(notdir $@)
 
 push-all: $(foreach I,$(ALL_IMAGES),push/$(I) ) ## push all tagged images
 
