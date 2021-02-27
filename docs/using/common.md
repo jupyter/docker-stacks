@@ -105,12 +105,13 @@ You can bypass the provided scripts and specify an arbitrary start command. If y
 
 The default Python 3.x [Conda environment](http://conda.pydata.org/docs/using/envs.html) resides in `/opt/conda`. The `/opt/conda/bin` directory is part of the default `jovyan` user's `$PATH`. That directory is also whitelisted for use in `sudo` commands by the `start.sh` script.
 
-The `jovyan` user has full read/write access to the `/opt/conda` directory. You can use either `conda` or `pip` to install new packages without any additional permissions.
+The `jovyan` user has full read/write access to the `/opt/conda` directory. You can use either `conda`, `mamba` or `pip` to install new packages without any additional permissions.
 
 ```bash
 # install a package into the default (python 3.x) environment
 pip install some-package
 conda install some-package
+mamba install some-package
 ```
 
 ### Using alternative channels
