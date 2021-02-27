@@ -8,7 +8,13 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
-    "package_manager, cmd", [("apt", "--version"), ("conda", "--version"), ("mamba", "--version"), ("npm", "--version")]
+    "package_manager, cmd",
+    [
+        ("apt", "--version"),
+        ("conda", "--version"),
+        ("mamba", "--version"),
+        ("npm", "--version"),
+    ],
 )
 def test_package_manager(container, package_manager, cmd):
     """Test the notebook start-notebook script"""
@@ -20,5 +26,7 @@ def test_package_manager(container, package_manager, cmd):
     )
     rv = c.wait(timeout=5)
     logs = c.logs(stdout=True).decode("utf-8")
-    assert rv == 0 or rv["StatusCode"] == 0, f"Package manager {package_manager} not working"
+    assert (
+        rv == 0 or rv["StatusCode"] == 0
+    ), f"Package manager {package_manager} not working"
     LOGGER.debug(logs)
