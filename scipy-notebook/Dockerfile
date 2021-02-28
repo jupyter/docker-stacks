@@ -32,7 +32,7 @@ RUN conda install --quiet --yes \
     'numexpr=2.7.*' \
     'pandas=1.2.*' \
     'patsy=0.5.*' \
-    'protobuf=3.14.*' \
+    'protobuf=3.15.*' \
     'pytables=3.6.*' \
     'scikit-image=0.18.*' \
     'scikit-learn=0.24.*' \
