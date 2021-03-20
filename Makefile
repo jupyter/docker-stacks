@@ -106,7 +106,7 @@ hook/%: ## run post-build hooks for an image
 	DOCKER_REPO="$(OWNER)/$(notdir $@)" \
 	IMAGE_NAME="$(OWNER)/$(notdir $@):latest" \
 	IMAGE_SHORT_NAME="$(notdir $@)" \
-	$(SHELL) $(notdir $@)/hooks/run_hook
+	./tagging/apply_tags.py --short-image-name "$(notdir $@)" --owner "$(OWNER)"
 
 hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
 
