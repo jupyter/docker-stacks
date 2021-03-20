@@ -17,6 +17,7 @@ ARG spark_version="3.1.1"
 ARG hadoop_version="3.2"
 ARG spark_checksum="E90B31E58F6D95A42900BA4D288261D71F6C19FA39C1CB71862B792D1B5564941A320227F6AB0E09D946F16B8C1969ED2DEA2A369EC8F9D2D7099189234DE1BE"
 ARG openjdk_version="11"
+ARG mysql_connector_version="8.0.23"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
     HADOOP_VERSION="${hadoop_version}"
@@ -54,6 +55,9 @@ RUN ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" spark && \
 RUN cp -p "$SPARK_HOME/conf/spark-defaults.conf.template" "$SPARK_HOME/conf/spark-defaults.conf" && \
     echo 'spark.driver.extraJavaOptions="-Dio.netty.tryReflectionSetAccessible=true"' >> $SPARK_HOME/conf/spark-defaults.conf && \
     echo 'spark.executor.extraJavaOptions="-Dio.netty.tryReflectionSetAccessible=true"' >> $SPARK_HOME/conf/spark-defaults.conf
+
+# Add MySQL connector
+RUN wget -q https://repo1.maven.org/maven2/mysql/mysql-connector-java/${mysql_connector_version}/mysql-connector-java-${mysql_connector_version}.jar -P /usr/local/spark/jars/
 
 USER $NB_UID
 
