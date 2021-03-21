@@ -6,15 +6,12 @@ import logging
 from tagger_interface import TaggerInterface
 from dataclasses import dataclass, field
 from typing import Optional, List
-from taggers import SHATagger, PythonVersionTagger
+from taggers import SHATagger, \
+    PythonVersionTagger, JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger
+from plumbum.cmd import docker
 
 
-# NB_VERSION_TAG="notebook-$(docker run --rm -a STDOUT ${IMAGE_NAME} jupyter-notebook --version | tr -d '\r')"
-# docker tag $IMAGE_NAME "$DOCKER_REPO:${NB_VERSION_TAG%% }"
-# LAB_VERSION_TAG="lab-$(docker run --rm -a STDOUT ${IMAGE_NAME} jupyter-lab --version | tr -d '\r')"
-# docker tag $IMAGE_NAME "$DOCKER_REPO:${LAB_VERSION_TAG%%\r}"
-# HUB_VERSION_TAG="hub-$(docker run --rm -a STDOUT ${IMAGE_NAME} jupyterhub --version | tr -d '\r')"
-# docker tag $IMAGE_NAME "$DOCKER_REPO:${HUB_VERSION_TAG%%\r}"
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -24,13 +21,16 @@ class ImageDescription:
 
 
 ALL_IMAGES = {
-    "minimal-notebook": ImageDescription(
-        parent_image=None,
-        taggers=[SHATagger]
-    ),
     "base-notebook": ImageDescription(
-        parent_image="minimal-notebook",
-        taggers=[PythonVersionTagger]
+        parent_image=None,
+        taggers=[
+            SHATagger,
+            PythonVersionTagger, JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger
+        ]
+    ),
+    "minimal-notebook": ImageDescription(
+        parent_image="base-notebook",
+        taggers=[]
     )
 }
 
@@ -45,12 +45,13 @@ def get_all_taggers(short_image_name):
 
 
 def apply_tags(short_image_name, owner):
-    logging.info(f"Applying tags for image: {short_image_name}")
+    logger.info(f"Applying tags for image: {short_image_name}")
     taggers = get_all_taggers(short_image_name)
 
     for tagger in taggers:
         tag_name, tag_value = tagger.tag_name(), tagger.tag_value(short_image_name, owner)
-        logging.info(f"Applying tag tag_name: {tag_name} tag_value: {tag_value}")
+        logger.info(f"Applying tag tag_name: {tag_name} tag_value: {tag_value}")
+        docker["tag", f"{owner}/{short_image_name}:latest", f"{owner}/{short_image_name}:{tag_value}"]()
 
 
 if __name__ == "__main__":

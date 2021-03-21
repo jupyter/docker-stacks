@@ -1,22 +1,21 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+import logging
 from tagger_interface import TaggerInterface
 from git_helper import GitHelper
-from plumbum.cmd import docker
+from docker_runner import DockerRunner
 
 
-def _get_full_name(short_image_name, owner):
-    return f"{owner}/{short_image_name}:latest"
+logger = logging.getLogger(__name__)
 
 
 def _get_program_version(short_image_name, owner, program):
-    return docker[
-        "run",
-        "--rm",
-        "-a", "STDOUT",
-        _get_full_name(short_image_name, owner),
-        program, "--version"
-    ]().strip()
+    image = f"{owner}/{short_image_name}:latest"
+    cmd = f"{program} --version"
+    with DockerRunner(image) as cont:
+        logger.info(f"Running cmd: '{cmd}' on image: {image}")
+        # exit code doesn't have to be 0, so we won't check it
+        return cont.exec_run(cmd).output.decode("utf-8").strip()
 
 
 class SHATagger(TaggerInterface):
@@ -37,3 +36,33 @@ class PythonVersionTagger(TaggerInterface):
     @staticmethod
     def tag_name():
         return "python_version"
+
+
+class JupyterNotebookVersionTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(short_image_name, owner):
+        return "notebook-" + _get_program_version(short_image_name, owner, "jupyter-notebook")
+
+    @staticmethod
+    def tag_name():
+        return "jupyter_notebook_version"
+
+
+class JupyterLabVersionTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(short_image_name, owner):
+        return "lab-" + _get_program_version(short_image_name, owner, "jupyter-lab")
+
+    @staticmethod
+    def tag_name():
+        return "jupyter_lab_version"
+
+
+class JupyterHubVersionTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(short_image_name, owner):
+        return "hub-" + _get_program_version(short_image_name, owner, "jupyterhub")
+
+    @staticmethod
+    def tag_name():
+        return "jupyter_lab_version"
