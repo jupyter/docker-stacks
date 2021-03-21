@@ -528,3 +528,18 @@ USER $NB_UID
 
 RUN pip install --quiet --no-cache-dir auto-sklearn
 ```
+
+## Enable Delta Lake in Spark notebooks
+Please note that the Delta lake packages are only available for Spark version > 3.0. By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook. 
+
+```dockerfile
+FROM jupyter/pyspark-notebook:latest
+
+USER root
+RUN echo 'spark.jars.packages io.delta:delta-core_2.12:0.8.0' >> $SPARK_HOME/conf/spark-defaults.conf && \
+ echo 'spark.sql.extensions io.delta.sql.DeltaSparkSessionExtension' >> $SPARK_HOME/conf/spark-defaults.conf &&\
+ echo 'spark.sql.catalog.spark_catalog org.apache.spark.sql.delta.catalog.DeltaCatalog' >> $SPARK_HOME/conf/spark-defaults.conf
+
+USER $NB_UID
+
+```
