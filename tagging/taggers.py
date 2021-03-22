@@ -17,6 +17,19 @@ def _get_program_version(short_image_name, owner, program):
         return cont.exec_run(cmd).output.decode("utf-8").strip()
 
 
+def _get_env_variable(short_image_name, owner, variable):
+    image = f"{owner}/{short_image_name}:latest"
+    cmd = "env"
+    with DockerRunner(image) as cont:
+        logger.info(f"Running 'env' on image: {image} to get environment")
+        # exit code doesn't have to be 0, so we won't check it
+        env = cont.exec_run(cmd).output.decode("utf-8").strip().splitlines()
+        for env_entry in env:
+            if env_entry.startswith(variable):
+                return env_entry[len(variable) + 1:]
+        raise KeyError(variable)
+
+
 class TaggerInterface:
     """HooksInterface for all hooks common interface"""
     @staticmethod
@@ -75,16 +88,16 @@ class JuliaVersionTagger(TaggerInterface):
 class SparkVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(short_image_name, owner):
-        return "spark-" + _get_program_version(short_image_name, owner, "spark")
+        return "spark-" + _get_env_variable(short_image_name, owner, "APACHE_SPARK_VERSION")
 
 
 class HadoopVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(short_image_name, owner):
-        return "hadoop-" + _get_program_version(short_image_name, owner, "hadoop")
+        return "hadoop-" + _get_env_variable(short_image_name, owner, "HADOOP_VERSION")
 
 
 class JavaVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(short_image_name, owner):
-        return "java-" + _get_program_version(short_image_name, owner, "java")
+        return "java-" + _get_program_version(short_image_name, owner, "java").split()[1]
