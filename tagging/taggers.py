@@ -20,6 +20,14 @@ def _get_env_variable(container, variable):
     raise KeyError(variable)
 
 
+def _get_pip_package_version(container, package):
+    VERSION_PREFIX = "Version: "
+    package_info = run_simple_command(container, cmd=f"pip show {package}", print_result=False)
+    version_line = package_info.split("\n")[1]
+    assert version_line.startswith(VERSION_PREFIX)
+    return version_line[len(VERSION_PREFIX):]
+
+
 class TaggerInterface:
     """HooksInterface for all hooks common interface"""
     @staticmethod
@@ -66,7 +74,7 @@ class RVersionTagger(TaggerInterface):
 class TensorflowVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container):
-        return "tensorflow-" + _get_program_version(container, "tensorflow")
+        return "tensorflow-" + _get_pip_package_version(container, "tensorflow")
 
 
 class JuliaVersionTagger(TaggerInterface):
