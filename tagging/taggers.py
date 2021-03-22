@@ -60,7 +60,7 @@ class JupyterHubVersionTagger(TaggerInterface):
 class RVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container):
-        return "r-" + _get_program_version(container, "R")
+        return "r-" + _get_program_version(container, "R").split()[2]
 
 
 class TensorflowVersionTagger(TaggerInterface):
