@@ -1,9 +1,7 @@
 #!/bin/bash
 set -e
 
-# Apply tags
 GIT_SHA_TAG=${GITHUB_SHA:0:12}
-docker tag $IMAGE_NAME "$DOCKER_REPO:$GIT_SHA_TAG"
 
 # Update index
 INDEX_ROW="|\`${BUILD_TIMESTAMP}\`|\`jupyter/${IMAGE_SHORT_NAME}:${GIT_SHA_TAG}\`|[Git diff](https://github.com/jupyter/docker-stacks/commit/${GITHUB_SHA})<br />[Dockerfile](https://github.com/jupyter/docker-stacks/blob/${GITHUB_SHA}/${IMAGE_SHORT_NAME}/Dockerfile)<br />[Build manifest](./${IMAGE_SHORT_NAME}-${GIT_SHA_TAG})|"
