@@ -9,11 +9,11 @@ logger = logging.getLogger(__name__)
 
 
 def _get_program_version(container, program):
-    return run_simple_command(container, f"{program} --version")
+    return run_simple_command(container, cmd=f"{program} --version")
 
 
 def _get_env_variable(container, variable):
-    env = run_simple_command(container, "env").split()
+    env = run_simple_command(container, cmd="env", print_result=False).split()
     for env_entry in env:
         if env_entry.startswith(variable):
             return env_entry[len(variable) + 1:]
