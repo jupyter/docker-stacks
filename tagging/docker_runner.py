@@ -27,3 +27,12 @@ class DockerRunner:
         if self.container:
             self.container.remove(force=True)
             logger.info(f"Container {self.container.name} removed")
+
+
+def run_simple_command(container, cmd):
+    logger.info(f"Running cmd: '{cmd}' on container: {container}")
+    out = container.exec_run(cmd)
+    assert out.exit_code == 0, f"Command: {cmd} failed"
+    result = out.output.decode("utf-8").strip()
+    logger.info(f"Command result: {result}")
+    return result
