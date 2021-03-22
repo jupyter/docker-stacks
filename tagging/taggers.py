@@ -80,7 +80,7 @@ class TensorflowVersionTagger(TaggerInterface):
 class JuliaVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container):
-        return "julia-" + _get_program_version(container, "julia")
+        return "julia-" + _get_program_version(container, "julia").split()[2]
 
 
 class SparkVersionTagger(TaggerInterface):
