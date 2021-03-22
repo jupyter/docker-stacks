@@ -47,7 +47,7 @@ ALL_IMAGES = {
         parent_image="scipy-notebook",
         taggers=[SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger]
     ),
-    "allspark-notebook": ImageDescription(
+    "all-spark-notebook": ImageDescription(
         parent_image="pyspark-notebook",
         taggers=[RVersionTagger]
     )
