@@ -3,11 +3,14 @@
 # Distributed under the terms of the Modified BSD License.
 import argparse
 import logging
-from tagger_interface import TaggerInterface
 from dataclasses import dataclass, field
 from typing import Optional, List
-from taggers import SHATagger, \
-    PythonVersionTagger, JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger
+from taggers import TaggerInterface, \
+    SHATagger, \
+    PythonVersionTagger, \
+    JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger, \
+    RVersionTagger, TensorflowVersionTagger, JuliaVersionTagger, \
+    SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger
 from plumbum.cmd import docker
 
 
@@ -29,8 +32,30 @@ ALL_IMAGES = {
         ]
     ),
     "minimal-notebook": ImageDescription(
-        parent_image="base-notebook",
-        taggers=[]
+        parent_image="base-notebook"
+    ),
+    "scipy-notebook": ImageDescription(
+        parent_image="minimal-notebook"
+    ),
+    "r-notebook": ImageDescription(
+        parent_image="minimal-notebook",
+        taggers=[RVersionTagger]
+    ),
+    "tensorflow-notebook": ImageDescription(
+        parent_image="scipy-notebook",
+        taggers=[TensorflowVersionTagger]
+    ),
+    "datascience-notebook": ImageDescription(
+        parent_image="scipy-notebook",
+        taggers=[JuliaVersionTagger]
+    ),
+    "pyspark-notebook": ImageDescription(
+        parent_image="scipy-notebook",
+        taggers=[SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger]
+    ),
+    "allspark-notebook": ImageDescription(
+        parent_image="pyspark-notebook",
+        taggers=[RVersionTagger]
     )
 }
 
@@ -49,15 +74,23 @@ def apply_tags(short_image_name, owner):
     taggers = get_all_taggers(short_image_name)
 
     for tagger in taggers:
-        tag_name, tag_value = tagger.tag_name(), tagger.tag_value(short_image_name, owner)
-        logger.info(f"Applying tag tag_name: {tag_name} tag_value: {tag_value}")
+        tagger_name = tagger.__name__
+        tag_value = tagger.tag_value(short_image_name, owner)
+        logger.info(f"Applying tag tagger_name: {tagger_name} tag_value: {tag_value}")
         docker["tag", f"{owner}/{short_image_name}:latest", f"{owner}/{short_image_name}:{tag_value}"]()
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
+
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--short-image-name", required=True, help="Short image name to apply tags for")
     arg_parser.add_argument("--owner", required=True, help="Owner of the image")
     args = arg_parser.parse_args()
-    apply_tags(args.short_image_name, args.owner)
+
+    short_image_name = args.short_image_name
+    owner = args.owner
+
+    assert short_image_name in ALL_IMAGES, f"Did not found {short_image_name} image description"
+
+    apply_tags(short_image_name, owner)
