@@ -542,4 +542,9 @@ RUN echo 'spark.jars.packages io.delta:delta-core_2.12:0.8.0' >> $SPARK_HOME/con
  echo 'spark.sql.catalog.spark_catalog org.apache.spark.sql.delta.catalog.DeltaCatalog' >> $SPARK_HOME/conf/spark-defaults.conf
 
 USER $NB_UID
+
+# Run pyspark and exit to trigger the download of the delta lake jars
+RUN echo "quit()" > /tmp/init-delta.py && \
+    spark-submit /tmp/init-delta.py && \
+    rm /tmp/init-delta.py
 ```
