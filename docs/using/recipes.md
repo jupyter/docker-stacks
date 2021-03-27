@@ -535,11 +535,11 @@ Please note that the Delta lake packages are only available for Spark version > 
 ```dockerfile
 FROM jupyter/pyspark-notebook:latest
 
-ARG delta-core_version="0.8.0"
+ARG DELTA_CORE_VERSION="0.8.0"
 
 USER root
 
-RUN echo "spark.jars.packages io.delta:delta-core_2.12:${delta-core_version}" >> $SPARK_HOME/conf/spark-defaults.conf && \
+RUN echo "spark.jars.packages io.delta:delta-core_2.12:${DELTA_CORE_VERSION}" >> $SPARK_HOME/conf/spark-defaults.conf && \
     echo 'spark.sql.extensions io.delta.sql.DeltaSparkSessionExtension' >> $SPARK_HOME/conf/spark-defaults.conf && \
  echo 'spark.sql.catalog.spark_catalog org.apache.spark.sql.delta.catalog.DeltaCatalog' >> $SPARK_HOME/conf/spark-defaults.conf
 
