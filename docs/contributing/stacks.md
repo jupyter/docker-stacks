@@ -72,14 +72,37 @@ git remote add origin <url from github>
 git push -u origin master
 ```
 
-## Configuring Travis
-
-> NOTE: This section and the cookiecutter template should be updated to describe using GitHub
-> Actions now that jupyter/docker-stacks uses that service.
+## Configuring GitHub actions
 
 The cookiecutter template comes with a `.github/workflows/docker.yml` file, which allows you to use GitHub actions to build your Docker image whenever you or someone else submits a pull request.
 
-[TODO] - @trallard to add screenshots and details for GH actions
+1. By default the `.github/workflows/docker.yaml` file has the following triggers configuration:
+
+   ```yaml
+   on:
+   pull_request:
+      paths-ignore:
+         - "*.md"
+         - "binder/**"
+         - "docs/**"
+         - "examples/**"
+   push:
+      branches:
+         - master
+      paths-ignore:
+         - "*.md"
+         - "binder/**"
+         - "docs/**"
+         - "examples/**"
+   ```
+
+   This will trigger the CI pipeline whenever you push to your `master` branch and when any Pull Request are made to your repository. For more details on this configurations visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/reference/events-that-trigger-workflows).
+2. Commit your changes and push to GitHub.
+3. Head back to your repository and click on the **Actions** tab.
+![GitHub actions tab screenshot](../static/../_static/github-actions-tab.png)
+From there you can click on the workflows on the left hand side of the screen.
+4. In the next screen, you will be able to see information aboutb the workflow run and duration. If you click again on the button with the workflow name, you will be able to see the logs for the workflow steps.
+   ![Github actions workflow run screenshot](../static/../_static/github-actions-workflow.png)
 
 ## Configuring Docker Cloud
 
@@ -87,10 +110,10 @@ Now, configure Docker Cloud to build your stack image and push it to Docker Hub 
 you merge a GitHub pull request to the master branch of your project.
 
 1. Visit [https://cloud.docker.com/](https://cloud.docker.com/) and log in.
-2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter. 
+2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter.
    ![Docker account selection screenshot](../_static/docker-org-select.png)
 3. Scroll to the bottom of the page and click **Create repository**.
-4. Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter. 
+4. Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter.
    ![Docker image name and description screenshot](../_static/docker-repo-name.png)
 5. Enter a description for your image.
 6. Click **GitHub** under the **Build Settings** and follow the prompts to connect your account if it is not already connected.
@@ -107,9 +130,9 @@ you merge a GitHub pull request to the master branch of your project.
 13. Head back to your GitHub repository and click on the **Settings tab**.
    ![Github repository settings tab screenshot](../static/../_static/github-create-secrets.png)
 14. Click on the **Secrets** section and then on the **New repository secret** button on the top right corner (see image above).
-15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the *value* field.
-   ![GitHub create token secret screenshot](../static/../_static/github-secret-token.png).
-16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the *value* field with your DockerHub username. Your repository secrets section should look something like this:
+15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the **value** field.
+   ![GitHub create token secret screenshot](../static/../_static/github-secret-token.png)
+16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the *value* field with your DockerHub username. Once you have completed these steps your repository secrets section should look something like this:
    ![GitHub repository secrets created screenshot](../static/../_static/github-secrets-completed.png)
 
 ## Defining Your Image
