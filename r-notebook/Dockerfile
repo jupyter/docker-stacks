@@ -29,7 +29,7 @@ RUN conda install --quiet --yes \
     'r-caret=6.*' \
     'r-crayon=1.4*' \
     'r-devtools=2.3*' \
-    'r-forecast=8.13*' \
+    'r-forecast=8.14*' \
     'r-hexbin=1.28*' \
     'r-htmltools=0.5*' \
     'r-htmlwidgets=1.5*' \
@@ -37,7 +37,7 @@ RUN conda install --quiet --yes \
     'r-nycflights13=1.0*' \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
-    'r-rmarkdown=2.6*' \
+    'r-rmarkdown=2.7*' \
     'r-rodbc=1.3*' \
     'r-rsqlite=2.2*' \
     'r-shiny=1.6*' \

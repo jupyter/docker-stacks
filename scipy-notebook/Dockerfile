@@ -18,27 +18,27 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'beautifulsoup4=4.9.*' \
     'conda-forge::blas=*=openblas' \
-    'bokeh=2.2.*' \
+    'bokeh=2.3.*' \
     'bottleneck=1.3.*' \
     'cloudpickle=1.6.*' \
     'cython=0.29.*' \
-    'dask=2021.2.*' \
+    'dask=2021.3.*' \
     'dill=0.3.*' \
     'h5py=3.1.*' \
     'ipywidgets=7.6.*' \
     'ipympl=0.6.*'\
     'matplotlib-base=3.3.*' \
-    'numba=0.52.*' \
+    'numba=0.53.*' \
     'numexpr=2.7.*' \
     'pandas=1.2.*' \
     'patsy=0.5.*' \
-    'protobuf=3.14.*' \
+    'protobuf=3.15.*' \
     'pytables=3.6.*' \
     'scikit-image=0.18.*' \
     'scikit-learn=0.24.*' \
     'scipy=1.6.*' \
     'seaborn=0.11.*' \
-    'sqlalchemy=1.3.*' \
+    'sqlalchemy=1.4.*' \
     'statsmodels=0.12.*' \
     'sympy=1.7.*' \
     'vincent=0.4.*' \
