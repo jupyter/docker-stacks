@@ -18,9 +18,9 @@ USER root
 # Default values can be overridden at build time
 # (ARGS are in lower case to distinguish them from ENV)
 # Check https://julialang.org/downloads/
-ARG julia_version="1.5.4"
+ARG julia_version="1.6.0"
 # SHA256 checksum
-ARG julia_checksum="80dec351d1a593e8ad152636971a48d0c81bfcfab92c87f3604663616f1e8bc5"
+ARG julia_checksum="463b71dc70ca7094c0e0fd6d55d130051a7901e8dec5eb44d6002c57d1bd8585"
 
 # R pre-requisites
 RUN apt-get update && \
@@ -61,7 +61,7 @@ RUN conda install --quiet --yes \
     'r-base=4.0.3'  \
     'r-caret=6.0*' \
     'r-crayon=1.4*' \
-    'r-devtools=2.3*' \
+    'r-devtools=2.4*' \
     'r-forecast=8.14*' \ 
     'r-hexbin=1.28*' \
     'r-htmltools=0.5*' \
