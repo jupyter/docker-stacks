@@ -28,7 +28,7 @@ RUN conda install --quiet --yes \
     'r-base=4.0.3' \
     'r-caret=6.*' \
     'r-crayon=1.4*' \
-    'r-devtools=2.3*' \
+    'r-devtools=2.4*' \
     'r-forecast=8.14*' \
     'r-hexbin=1.28*' \
     'r-htmltools=0.5*' \
