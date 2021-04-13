@@ -110,7 +110,7 @@ From there you can click on the workflows on the left hand side of the screen.
 Now, configure Docker Cloud to build your stack image and push it to Docker Hub repository whenever
 you merge a GitHub pull request to the master branch of your project.
 
-1. Visit [https://cloud.docker.com/](https://cloud.docker.com/) and log in.
+1. Visit [https://hub.docker.com/](https://hub.docker.com/) and log in.
 2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter.
    ![Docker account selection screenshot](../_static/docker-org-select.png)
 3. Scroll to the bottom of the page and click **Create repository**.
