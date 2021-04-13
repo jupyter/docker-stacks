@@ -102,7 +102,7 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
 3. Head back to your repository and click on the **Actions** tab.
 ![GitHub actions tab screenshot](../static/../_static/github-actions-tab.png)
 From there you can click on the workflows on the left hand side of the screen.
-4. In the next screen, you will be able to see information aboutb the workflow run and duration. If you click again on the button with the workflow name, you will be able to see the logs for the workflow steps.
+4. In the next screen, you will be able to see information about the workflow run and duration. If you click again on the button with the workflow name, you will be able to see the logs for the workflow steps.
    ![Github actions workflow run screenshot](../static/../_static/github-actions-workflow.png)
 
 ## Configuring Docker Cloud
