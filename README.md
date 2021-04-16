@@ -34,7 +34,7 @@ Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice),
 This can be done by passing the environment variable `JUPYTER_ENABLE_LAB=yes` at container startup, 
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#docker-options).
 
-In April 2021 JupyterLab will become the default for all of the Jupyter Docker stack images, however a new environment variable will be introduced to switch back to Jupyter Notebook if needed.
+At some point, JupyterLab will become the default for all of the Jupyter Docker stack images, however a new environment variable will be introduced to switch back to Jupyter Notebook if needed.
 
 After the change of default, and according to the Jupyter Notebook project status and its compatibility with JupyterLab, these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another *classic-like* UI built atop JupyterLab.
 
