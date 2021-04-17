@@ -62,10 +62,10 @@ RUN conda install --quiet --yes \
     'r-caret=6.0*' \
     'r-crayon=1.4*' \
     'r-devtools=2.4*' \
-    'r-forecast=8.14*' \ 
+    'r-forecast=8.14*' \
     'r-hexbin=1.28*' \
     'r-htmltools=0.5*' \
-    'r-htmlwidgets=1.5*' \ 
+    'r-htmlwidgets=1.5*' \
     'r-irkernel=1.1*' \
     'r-nycflights13=1.0*' \
     'r-randomforest=4.6*' \
