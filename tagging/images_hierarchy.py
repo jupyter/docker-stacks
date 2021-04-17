@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import Optional, List
 from taggers import TaggerInterface, \
     SHATagger, \
-    PythonVersionTagger, \
+    UbuntuVersionTagger, PythonVersionTagger, \
     JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger, \
     RVersionTagger, TensorflowVersionTagger, JuliaVersionTagger, \
     SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger
@@ -21,7 +21,7 @@ ALL_IMAGES = {
         parent_image=None,
         taggers=[
             SHATagger,
-            PythonVersionTagger,
+            UbuntuVersionTagger, PythonVersionTagger,
             JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger
         ]
     ),

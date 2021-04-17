@@ -41,6 +41,15 @@ class SHATagger(TaggerInterface):
         return GitHelper.commit_hash()[:12]
 
 
+class UbuntuVersionTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(container):
+        os_release = run_simple_command(container, "cat /etc/os-release").split("\n")
+        for line in os_release:
+            if line.startswith("VERSION_ID"):
+                return "ubuntu-" + line.split("=")[1].strip('"')
+
+
 class PythonVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container):
