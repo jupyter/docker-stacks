@@ -75,7 +75,7 @@ class CondaPackageHelper:
         if self.specs is None:
             LOGGER.info("Grabing the list of specifications ...")
             self.specs = CondaPackageHelper._packages_from_json(
-                self._execute_command(CondaPackageHelper._conda_export_command(True))
+                self._execute_command(CondaPackageHelper._conda_export_command(from_history=True))
             )
         return self.specs
 
@@ -130,7 +130,7 @@ class CondaPackageHelper:
         return ddict
 
     def check_updatable_packages(self, specifications_only=True):
-        """Check the updatables packages including or not dependencies"""
+        """Check the updatable packages including or not dependencies"""
         specs = self.specified_packages()
         installed = self.installed_packages()
         available = self.available_packages()
@@ -145,9 +145,10 @@ class CondaPackageHelper:
                 current = min(inst_vs, key=CondaPackageHelper.semantic_cmp)
                 newest = avail_vs[-1]
                 if avail_vs and current != newest:
-                    if CondaPackageHelper.semantic_cmp(
-                        current
-                    ) < CondaPackageHelper.semantic_cmp(newest):
+                    if (
+                        CondaPackageHelper.semantic_cmp(current) <
+                        CondaPackageHelper.semantic_cmp(newest)
+                    ):
                         self.comparison.append(
                             {"Package": pkg, "Current": current, "Newest": newest}
                         )
@@ -180,10 +181,7 @@ class CondaPackageHelper:
 
     def get_outdated_summary(self, specifications_only=True):
         """Return a summary of outdated packages"""
-        if specifications_only:
-            nb_packages = len(self.specs)
-        else:
-            nb_packages = len(self.installed)
+        nb_packages = len(self.specs if specifications_only else self.installed)
         nb_updatable = len(self.comparison)
         updatable_ratio = nb_updatable / nb_packages
         return f"{nb_updatable}/{nb_packages} ({updatable_ratio:.0%}) packages could be updated"
