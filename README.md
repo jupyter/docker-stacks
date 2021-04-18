@@ -31,7 +31,7 @@ in working on the project.
 ## Jupyter Notebook Deprecation Notice
 
 Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), we encourage users to transition to JupyterLab.
-This can be done by passing the environment variable `JUPYTER_ENABLE_LAB=yes` at container startup, 
+This can be done by passing the environment variable `JUPYTER_ENABLE_LAB=yes` at container startup,
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#docker-options).
 
 At some point, JupyterLab will become the default for all of the Jupyter Docker stack images, however a new environment variable will be introduced to switch back to Jupyter Notebook if needed.

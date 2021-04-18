@@ -82,7 +82,7 @@ sc <- sparkR.session("local")
 # Sum of the first 100 whole numbers
 sdf <- createDataFrame(list(1:100))
 dapplyCollect(sdf,
-              function(x) 
+              function(x)
               { x <- sum(x)}
              )
 # 5050
@@ -102,7 +102,7 @@ conf$spark.sql.catalogImplementation <- "in-memory"
 sc <- spark_connect(master = "local", config = conf)
 
 # Sum of the first 100 whole numbers
-sdf_len(sc, 100, repartition = 1) %>% 
+sdf_len(sc, 100, repartition = 1) %>%
     spark_apply(function(e) sum(e))
 # 5050
 ```
@@ -171,7 +171,7 @@ sc <- sparkR.session("spark://master:7077")
 # Sum of the first 100 whole numbers
 sdf <- createDataFrame(list(1:100))
 dapplyCollect(sdf,
-              function(x) 
+              function(x)
               { x <- sum(x)}
              )
 # 5050
@@ -190,7 +190,7 @@ conf$spark.sql.catalogImplementation <- "in-memory"
 sc <- spark_connect(master = "spark://master:7077", config = conf)
 
 # Sum of the first 100 whole numbers
-sdf_len(sc, 100, repartition = 1) %>% 
+sdf_len(sc, 100, repartition = 1) %>%
     spark_apply(function(e) sum(e))
 # 5050
 ```

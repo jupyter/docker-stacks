@@ -90,7 +90,7 @@ git-commit: ## commit outstading git changes and push to remote
 	@git config --global user.name "GitHub Actions"
 	@git config --global user.email "actions@users.noreply.github.com"
 
-	@echo "Publishing outstanding changes in $(LOCAL_PATH) to $(GITHUB_REPOSITORY)" 
+	@echo "Publishing outstanding changes in $(LOCAL_PATH) to $(GITHUB_REPOSITORY)"
 	@cd $(LOCAL_PATH) && \
 		git remote add publisher https://$(GITHUB_TOKEN)@github.com/$(GITHUB_REPOSITORY).git && \
 		git checkout master && \
@@ -151,6 +151,8 @@ pre-commit-install: ## set up the git hook scripts
 pull/%: DARGS?=
 pull/%: ## pull a jupyter image
 	docker pull $(DARGS) $(OWNER)/$(notdir $@)
+
+pull-all: $(foreach I,$(ALL_IMAGES),pull/$(I) ) ## pull all images
 
 push/%: DARGS?=
 push/%: ## push all tags for a jupyter image
