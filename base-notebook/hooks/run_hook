@@ -2,15 +2,6 @@
 set -e
 
 GIT_SHA_TAG=${GITHUB_SHA:0:12}
-PY_VERSION_TAG="python-$(docker run --rm ${IMAGE_NAME} python --version 2>&1 | awk '{print $2}')"
-NB_VERSION_TAG="notebook-$(docker run --rm -a STDOUT ${IMAGE_NAME} jupyter-notebook --version | tr -d '\r')"
-LAB_VERSION_TAG="lab-$(docker run --rm -a STDOUT ${IMAGE_NAME} jupyter-lab --version | tr -d '\r')"
-HUB_VERSION_TAG="hub-$(docker run --rm -a STDOUT ${IMAGE_NAME} jupyterhub --version | tr -d '\r')"
-
-# Update index
-INDEX_FILE="${WIKI_PATH}/Home.md"
-INDEX_ROW="|\`${BUILD_TIMESTAMP}\`|\`jupyter/${IMAGE_SHORT_NAME}:${GIT_SHA_TAG}\`<br />\`jupyter/${IMAGE_SHORT_NAME}:${PY_VERSION_TAG}\`<br />\`jupyter/${IMAGE_SHORT_NAME}:${NB_VERSION_TAG}\`<br />\`jupyter/${IMAGE_SHORT_NAME}:${LAB_VERSION_TAG}\`<br />\`jupyter/${IMAGE_SHORT_NAME}:${HUB_VERSION_TAG}\`|[Git diff](https://github.com/jupyter/docker-stacks/commit/${GITHUB_SHA})<br />[Dockerfile](https://github.com/jupyter/docker-stacks/blob/${GITHUB_SHA}/${IMAGE_SHORT_NAME}/Dockerfile)<br />[Build manifest](./${IMAGE_SHORT_NAME}-${GIT_SHA_TAG})|"
-sed "/|-|/a ${INDEX_ROW}" -i "$INDEX_FILE"
 
 # Build manifest
 MANIFEST_FILE="${WIKI_PATH}/manifests/${IMAGE_SHORT_NAME}-${GIT_SHA_TAG}.md"
