@@ -29,7 +29,7 @@ def _get_pip_package_version(container, package):
 
 
 class TaggerInterface:
-    """HooksInterface for all hooks common interface"""
+    """Common interface for all taggers"""
     @staticmethod
     def tag_value(container):
         raise NotImplementedError

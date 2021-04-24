@@ -5,24 +5,15 @@ import argparse
 import logging
 from plumbum.cmd import docker
 from docker_runner import DockerRunner
-from images_hierarchy import ALL_IMAGES
+from get_taggers_and_manifests import get_taggers_and_manifests
 
 
 logger = logging.getLogger(__name__)
 
 
-def get_all_taggers(short_image_name):
-    taggers = []
-    while short_image_name is not None:
-        image_description = ALL_IMAGES[short_image_name]
-        taggers = image_description.taggers + taggers
-        short_image_name = image_description.parent_image
-    return taggers
-
-
-def apply_tags(short_image_name, owner):
-    logger.info(f"Applying tags for image: {short_image_name}")
-    taggers = get_all_taggers(short_image_name)
+def tag_image(short_image_name, owner):
+    logger.info(f"Tagging image: {short_image_name}")
+    taggers, _ = get_taggers_and_manifests(short_image_name)
 
     image = f"{owner}/{short_image_name}:latest"
 
@@ -31,7 +22,7 @@ def apply_tags(short_image_name, owner):
             tagger_name = tagger.__name__
             tag_value = tagger.tag_value(container)
             logger.info(f"Applying tag tagger_name: {tagger_name} tag_value: {tag_value}")
-            docker["tag", f"{owner}/{short_image_name}:latest", f"{owner}/{short_image_name}:{tag_value}"]()
+            docker["tag", image, f"{owner}/{short_image_name}:{tag_value}"]()
 
 
 if __name__ == "__main__":
@@ -42,9 +33,4 @@ if __name__ == "__main__":
     arg_parser.add_argument("--owner", required=True, help="Owner of the image")
     args = arg_parser.parse_args()
 
-    short_image_name = args.short_image_name
-    owner = args.owner
-
-    assert short_image_name in ALL_IMAGES, f"Did not found {short_image_name} image description"
-
-    apply_tags(short_image_name, owner)
+    tag_image(args.short_image_name, args.owner)

@@ -102,11 +102,8 @@ hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
 hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
 hook/%: export WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
-	BUILD_TIMESTAMP="$$(date -u +%FT%TZ)" \
-	DOCKER_REPO="$(OWNER)/$(notdir $@)" \
-	IMAGE_NAME="$(OWNER)/$(notdir $@):latest" \
-	IMAGE_SHORT_NAME="$(notdir $@)" \
-	./tagging/apply_tags.py --short-image-name "$(notdir $@)" --owner "$(OWNER)"
+	./tagging/tag_image.py --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
+	./tagging/create_manifests.py --short-image-name "$(notdir $@)" --owner "$(OWNER)"
 
 hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
 

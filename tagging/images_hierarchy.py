@@ -8,12 +8,15 @@ from taggers import TaggerInterface, \
     JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger, \
     RVersionTagger, TensorflowVersionTagger, JuliaVersionTagger, \
     SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger
+from manifests import ManifestInterface, \
+    BuildInfoManifest, CondaEnvironmentManifest, AptPackagesManifest
 
 
 @dataclass
 class ImageDescription:
     parent_image: Optional[str]
     taggers: List[TaggerInterface] = field(default_factory=list)
+    manifests: List[ManifestInterface] = field(default_factory=list)
 
 
 ALL_IMAGES = {
@@ -23,6 +26,9 @@ ALL_IMAGES = {
             SHATagger,
             UbuntuVersionTagger, PythonVersionTagger,
             JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger
+        ],
+        manifests=[
+            BuildInfoManifest, CondaEnvironmentManifest, AptPackagesManifest
         ]
     ),
     "minimal-notebook": ImageDescription(
