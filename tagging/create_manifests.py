@@ -35,7 +35,8 @@ def append_build_history_line(short_image_name, owner, wiki_path, all_tags, cont
     home_wiki_file = os.path.join(wiki_path, 'Home.md')
     with open(home_wiki_file, "r") as f:
         file = f.read()
-    file.replace("|-|-|-|", "|-|-|-|\n" + build_history_line)
+    TABLE_BEGINNING = "|-|-|-|\n"
+    file = file.replace(TABLE_BEGINNING, TABLE_BEGINNING + build_history_line + "\n")
     with open(home_wiki_file, "w") as f:
         f.write(file)
 
@@ -63,6 +64,6 @@ if __name__ == "__main__":
     arg_parser.add_argument("--wiki-path", required=True, help="Path to the wiki pages")
     args = arg_parser.parse_args()
 
-    logger.info(f"Calculated build BUILD_TIMESTAMP: {BUILD_TIMESTAMP}")
+    logger.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
     create_manifests(args.short_image_name, args.owner, args.wiki_path)
