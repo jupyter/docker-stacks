@@ -103,7 +103,7 @@ hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
 hook/%: export WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
 	./tagging/tag_image.py --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
-	./tagging/create_manifests.py --short-image-name "$(notdir $@)" --owner "$(OWNER)"
+	./tagging/create_manifests.py --short-image-name "$(notdir $@)" --owner "$(OWNER)" --wiki-path "${WIKI_PATH}"
 
 hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
 
