@@ -19,6 +19,8 @@ MARKDOWN_LINE_BREAK = "<br />"
 
 
 def append_build_history_line(short_image_name, owner, wiki_path, all_tags, container):
+    logger.info("Appending build history line")
+
     date_column = f"`{BUILD_TIMESTAMP}`"
     image_column = MARKDOWN_LINE_BREAK.join(
         f"`{owner}/{short_image_name}:{tag_value}`" for tag_value in all_tags
