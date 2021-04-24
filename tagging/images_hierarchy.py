@@ -47,7 +47,7 @@ ALL_IMAGES = {
     ),
     "datascience-notebook": ImageDescription(
         parent_image="scipy-notebook",
-        taggers=[JuliaVersionTagger]
+        taggers=[RVersionTagger, JuliaVersionTagger]
     ),
     "pyspark-notebook": ImageDescription(
         parent_image="scipy-notebook",
