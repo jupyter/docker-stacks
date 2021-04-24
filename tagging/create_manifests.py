@@ -15,17 +15,17 @@ logger = logging.getLogger(__name__)
 
 
 BUILD_TIMESTAMP = datetime.datetime.utcnow().isoformat()[:-7] + "Z"
-MARKDOWN_NEWLINE = "<br />"
+MARKDOWN_LINE_BREAK = "<br />"
 
 
 def append_build_history_line(short_image_name, owner, wiki_path, all_tags, container):
     date_column = f"`{BUILD_TIMESTAMP}`"
-    image_column = MARKDOWN_NEWLINE.join(
+    image_column = MARKDOWN_LINE_BREAK.join(
         f"`{owner}/{short_image_name}:{tag_value}`" for tag_value in all_tags
     )
     commit_sha_tag = SHATagger.tag_value(container)  # first 12 letters of commit hash
     commit_hash = GitHelper.commit_hash()  # full commit hash
-    links_column = MARKDOWN_NEWLINE.join([
+    links_column = MARKDOWN_LINE_BREAK.join([
         f"[Git diff](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
         f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/{short_image_name}/Dockerfile)"
         f"[Build manifest](./{short_image_name}-{commit_sha_tag})"
