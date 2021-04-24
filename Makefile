@@ -98,9 +98,7 @@ git-commit: ## commit outstading git changes and push to remote
 		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0
 	@cd $(LOCAL_PATH) && git push -u publisher master
 
-hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
-hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
-hook/%: export WIKI_PATH?=../wiki
+hook/%: WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
 	./tagging/tag_image.py --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
 	./tagging/create_manifests.py --short-image-name "$(notdir $@)" --owner "$(OWNER)" --wiki-path "${WIKI_PATH}"
