@@ -34,7 +34,7 @@ def append_build_history_line(short_image_name, owner, wiki_path, all_tags, cont
     ])
     build_history_line = "|".join([date_column, image_column, links_column]) + "|"
 
-    home_wiki_file = os.path.join(wiki_path, 'Home.md')
+    home_wiki_file = os.path.join(wiki_path, "Home.md")
     with open(home_wiki_file, "r") as f:
         file = f.read()
     TABLE_BEGINNING = "|-|-|-|\n"
