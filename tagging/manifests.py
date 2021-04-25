@@ -25,7 +25,7 @@ class ManifestHeader:
         commit_hash_tag = GitHelper.commit_hash_tag()
         commit_message = GitHelper.commit_message()
 
-        image_size = docker["images", f"{owner}/{short_image_name}:latest", "--format", '{{.Size}}']().rstrip()
+        image_size = docker["images", f"{owner}/{short_image_name}:latest", "--format", "{{.Size}}"]().rstrip()
 
         return "\n".join([
             f"# Build manifest for image: {short_image_name}:{commit_hash_tag}",
