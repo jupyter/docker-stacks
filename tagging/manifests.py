@@ -84,3 +84,15 @@ class RPackagesManifest(ManifestInterface):
             "",
             quoted_output(container, "R --silent -e 'installed.packages(.Library)[, c(1,3)]'")
         ])
+
+
+class JuliaPackagesManifest(ManifestInterface):
+    @staticmethod
+    def markdown_piece(container) -> str:
+        return "\n".join([
+            "## Julia Packages",
+            "",
+            quoted_output(container, "julia -E 'using InteractiveUtils; versioninfo()'"),
+            "",
+            quoted_output(container, "julia -E 'import Pkg; Pkg.status()'")
+        ])

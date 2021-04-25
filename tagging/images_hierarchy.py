@@ -9,7 +9,8 @@ from taggers import TaggerInterface, \
     RVersionTagger, TensorflowVersionTagger, JuliaVersionTagger, \
     SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger
 from manifests import ManifestInterface, \
-    CondaEnvironmentManifest, AptPackagesManifest, RPackagesManifest
+    CondaEnvironmentManifest, AptPackagesManifest, \
+    RPackagesManifest, JuliaPackagesManifest
 
 
 @dataclass
@@ -49,7 +50,7 @@ ALL_IMAGES = {
     "datascience-notebook": ImageDescription(
         parent_image="scipy-notebook",
         taggers=[RVersionTagger, JuliaVersionTagger],
-        manifests=[RPackagesManifest]
+        manifests=[RPackagesManifest, JuliaPackagesManifest]
     ),
     "pyspark-notebook": ImageDescription(
         parent_image="scipy-notebook",
