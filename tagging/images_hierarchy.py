@@ -10,7 +10,7 @@ from taggers import TaggerInterface, \
     SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger
 from manifests import ManifestInterface, \
     CondaEnvironmentManifest, AptPackagesManifest, \
-    RPackagesManifest, JuliaPackagesManifest
+    RPackagesManifest, JuliaPackagesManifest, SparkInfoManifest
 
 
 @dataclass
@@ -54,7 +54,8 @@ ALL_IMAGES = {
     ),
     "pyspark-notebook": ImageDescription(
         parent_image="scipy-notebook",
-        taggers=[SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger]
+        taggers=[SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger],
+        manifests=[SparkInfoManifest]
     ),
     "all-spark-notebook": ImageDescription(
         parent_image="pyspark-notebook",

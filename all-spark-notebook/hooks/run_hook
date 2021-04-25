@@ -1,8 +1,0 @@
-#!/bin/bash
-set -e
-
-## Apache Spark
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} bash -c '$SPARK_HOME/bin/spark-submit --version' 2>&1)
-\`\`\`

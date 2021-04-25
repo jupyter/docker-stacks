@@ -96,3 +96,13 @@ class JuliaPackagesManifest(ManifestInterface):
             "",
             quoted_output(container, "julia -E 'import Pkg; Pkg.status()'")
         ])
+
+
+class SparkInfoManifest(ManifestInterface):
+    @staticmethod
+    def markdown_piece(container) -> str:
+        return "\n".join([
+            "## Apache Spark",
+            "",
+            quoted_output(container, "/usr/local/spark/bin/spark-submit --version"),
+        ])
