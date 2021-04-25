@@ -22,24 +22,4 @@ ${COMMIT_MSG}
 \`\`\`
 $(docker run --rm ${IMAGE_NAME} bash -c '$SPARK_HOME/bin/spark-submit --version' 2>&1)
 \`\`\`
-
-## Python Packages
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} python --version)
-\`\`\`
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} conda info)
-\`\`\`
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} conda list)
-\`\`\`
-
-## Apt Packages
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} apt list --installed)
-\`\`\`
 EOF

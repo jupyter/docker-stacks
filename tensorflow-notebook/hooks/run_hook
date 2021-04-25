@@ -16,24 +16,4 @@ cat << EOF > "$MANIFEST_FILE"
 \`\`\`
 ${COMMIT_MSG}
 \`\`\`
-
-## Python Packages
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} python --version)
-\`\`\`
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} conda info)
-\`\`\`
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} conda list)
-\`\`\`
-
-## Apt Packages
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} apt list --installed)
-\`\`\`
 EOF

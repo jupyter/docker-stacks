@@ -6,6 +6,7 @@ GIT_SHA_TAG=${GITHUB_SHA:0:12}
 # Build manifest
 MANIFEST_FILE="${WIKI_PATH}/manifests/${IMAGE_SHORT_NAME}-${GIT_SHA_TAG}.md"
 mkdir -p $(dirname "$MANIFEST_FILE")
+
 cat << EOF > "$MANIFEST_FILE"
 * Build datetime: ${BUILD_TIMESTAMP}
 * Docker image: ${DOCKER_REPO}:${GIT_SHA_TAG}
@@ -14,25 +15,5 @@ cat << EOF > "$MANIFEST_FILE"
 * Git commit message:
 \`\`\`
 ${COMMIT_MSG}
-\`\`\`
-
-## Python Packages
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} python --version)
-\`\`\`
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} conda info)
-\`\`\`
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} conda list)
-\`\`\`
-
-## Apt Packages
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} apt list --installed)
 \`\`\`
 EOF
