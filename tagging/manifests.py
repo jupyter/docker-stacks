@@ -72,3 +72,15 @@ class AptPackagesManifest(ManifestInterface):
             "",
             quoted_output(container, "apt list --installed")
         ])
+
+
+class RPackagesManifest(ManifestInterface):
+    @staticmethod
+    def markdown_piece(container) -> str:
+        return "\n".join([
+            "## R Packages",
+            "",
+            quoted_output(container, "R --version"),
+            "",
+            quoted_output(container, "R --silent -e 'installed.packages(.Library)[, c(1,3)]'")
+        ])

@@ -10,13 +10,3 @@ $(docker run --rm ${IMAGE_NAME} julia -E 'using InteractiveUtils; versioninfo()'
 \`\`\`
 $(docker run --rm ${IMAGE_NAME} julia -E 'import Pkg; Pkg.status()')
 \`\`\`
-
-## R Packages
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} R --version)
-\`\`\`
-
-\`\`\`
-$(docker run --rm ${IMAGE_NAME} R --silent -e 'installed.packages(.Library)[, c(1,3)]')
-\`\`\`

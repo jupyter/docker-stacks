@@ -9,7 +9,7 @@ from taggers import TaggerInterface, \
     RVersionTagger, TensorflowVersionTagger, JuliaVersionTagger, \
     SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger
 from manifests import ManifestInterface, \
-    CondaEnvironmentManifest, AptPackagesManifest
+    CondaEnvironmentManifest, AptPackagesManifest, RPackagesManifest
 
 
 @dataclass
@@ -39,7 +39,8 @@ ALL_IMAGES = {
     ),
     "r-notebook": ImageDescription(
         parent_image="minimal-notebook",
-        taggers=[RVersionTagger]
+        taggers=[RVersionTagger],
+        manifests=[RPackagesManifest]
     ),
     "tensorflow-notebook": ImageDescription(
         parent_image="scipy-notebook",
@@ -47,7 +48,8 @@ ALL_IMAGES = {
     ),
     "datascience-notebook": ImageDescription(
         parent_image="scipy-notebook",
-        taggers=[RVersionTagger, JuliaVersionTagger]
+        taggers=[RVersionTagger, JuliaVersionTagger],
+        manifests=[RPackagesManifest]
     ),
     "pyspark-notebook": ImageDescription(
         parent_image="scipy-notebook",
@@ -55,6 +57,7 @@ ALL_IMAGES = {
     ),
     "all-spark-notebook": ImageDescription(
         parent_image="pyspark-notebook",
-        taggers=[RVersionTagger]
+        taggers=[RVersionTagger],
+        manifests=[RPackagesManifest]
     )
 }
