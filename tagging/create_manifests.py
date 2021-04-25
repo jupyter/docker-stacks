@@ -43,6 +43,22 @@ def append_build_history_line(short_image_name, owner, wiki_path, all_tags, cont
         f.write(file)
 
 
+def create_manifest_file(short_image_name, owner, wiki_path, manifests, container):
+    manifest_names = [manifest.__name__ for manifest in manifests]
+    logger.info(f"Using manifests: {manifest_names}")
+
+    commit_sha_tag = SHATagger.tag_value(container)  # first 12 letters of commit hash
+    manifest_file = os.path.join(wiki_path, f"manifests/{short_image_name}-{commit_sha_tag}.md")
+
+    markdown_pieces = [manifest.markdown_piece(container) for manifest in manifests]
+    # TODO: remove this filter
+    markdown_pieces = [piece for piece in markdown_pieces if piece is not None]
+    markdown_content = "\n\n".join(markdown_pieces) + "\n"
+
+    with open(manifest_file, "w") as f:
+        f.write(markdown_content)
+
+
 def create_manifests(short_image_name, owner, wiki_path):
     logger.info(f"Creating manifests for image: {short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
@@ -52,9 +68,7 @@ def create_manifests(short_image_name, owner, wiki_path):
     with DockerRunner(image) as container:
         all_tags = [tagger.tag_value(container) for tagger in taggers]
         append_build_history_line(short_image_name, owner, wiki_path, all_tags, container)
-
-        manifest_names = [manifest.__name__ for manifest in manifests]
-        logger.info(f"Using manifests: {manifest_names}")
+        create_manifest_file(short_image_name, owner, wiki_path, manifests, container)
 
 
 if __name__ == "__main__":

@@ -33,7 +33,7 @@ def run_simple_command(container, cmd, print_result=True):
     logger.info(f"Running cmd: '{cmd}' on container: {container}")
     out = container.exec_run(cmd)
     assert out.exit_code == 0, f"Command: {cmd} failed"
-    result = out.output.decode("utf-8").strip()
+    result = out.output.decode("utf-8").rstrip()
     if print_result:
         logger.info(f"Command result: {result}")
     return result
