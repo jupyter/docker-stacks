@@ -1,25 +1,8 @@
 #!/bin/bash
 set -e
 
-GIT_SHA_TAG=${GITHUB_SHA:0:12}
-
-# Build manifest
-MANIFEST_FILE="${WIKI_PATH}/manifests/${IMAGE_SHORT_NAME}-${GIT_SHA_TAG}.md"
-mkdir -p $(dirname "$MANIFEST_FILE")
-
-cat << EOF > "$MANIFEST_FILE"
-* Build datetime: ${BUILD_TIMESTAMP}
-* Docker image: ${DOCKER_REPO}:${GIT_SHA_TAG}
-* Docker image size: $(docker images ${IMAGE_NAME} --format "{{.Size}}")
-* Git commit SHA: [${GITHUB_SHA}](https://github.com/jupyter/docker-stacks/commit/${GITHUB_SHA})
-* Git commit message:
-\`\`\`
-${COMMIT_MSG}
-\`\`\`
-
 ## Apache Spark
 
 \`\`\`
 $(docker run --rm ${IMAGE_NAME} bash -c '$SPARK_HOME/bin/spark-submit --version' 2>&1)
 \`\`\`
-EOF
