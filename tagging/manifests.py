@@ -1,7 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
+from plumbum.cmd import docker
 from docker_runner import run_simple_command
+from git_helper import GitHelper
 
 
 logger = logging.getLogger(__name__)
@@ -15,17 +17,37 @@ def quoted_output(container, cmd: str) -> str:
     ])
 
 
+class ManifestHeader:
+    """ManifestHeader doesn't fall under common interface and we run it separately"""
+    @staticmethod
+    def create_header(short_image_name, owner, build_timestamp) -> str:
+        commit_hash = GitHelper.commit_hash()
+        commit_hash_tag = GitHelper.commit_hash_tag()
+        commit_message = GitHelper.commit_message()
+
+        image_size = docker["images", f"{owner}/{short_image_name}:latest", "--format", '{{.Size}}']().rstrip()
+
+        return "\n".join([
+            f"# Build manifest for image: {short_image_name}:{commit_hash_tag}",
+            "",
+            "## Build Info",
+            "",
+            f"* Build datetime: {build_timestamp}",
+            f"* Docker image: {owner}/{short_image_name}:{commit_hash_tag}",
+            f"* Docker image size: {image_size}",
+            f"* Git commit SHA: [{commit_hash}](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
+            "* Git commit message:",
+            "```",
+            f"{commit_message}",
+            "```"
+        ])
+
+
 class ManifestInterface:
     """Common interface for all manifests"""
     @staticmethod
     def markdown_piece(container) -> str:
         raise NotImplementedError
-
-
-class BuildInfoManifest(ManifestInterface):
-    @staticmethod
-    def markdown_piece(container) -> str:
-        return None
 
 
 class CondaEnvironmentManifest(ManifestInterface):

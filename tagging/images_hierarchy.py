@@ -9,7 +9,7 @@ from taggers import TaggerInterface, \
     RVersionTagger, TensorflowVersionTagger, JuliaVersionTagger, \
     SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger
 from manifests import ManifestInterface, \
-    BuildInfoManifest, CondaEnvironmentManifest, AptPackagesManifest
+    CondaEnvironmentManifest, AptPackagesManifest
 
 
 @dataclass
@@ -28,7 +28,7 @@ ALL_IMAGES = {
             JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger
         ],
         manifests=[
-            BuildInfoManifest, CondaEnvironmentManifest, AptPackagesManifest
+            CondaEnvironmentManifest, AptPackagesManifest
         ]
     ),
     "minimal-notebook": ImageDescription(

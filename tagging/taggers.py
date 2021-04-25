@@ -38,7 +38,7 @@ class TaggerInterface:
 class SHATagger(TaggerInterface):
     @staticmethod
     def tag_value(container):
-        return GitHelper.commit_hash()[:12]
+        return GitHelper.commit_hash_tag()
 
 
 class UbuntuVersionTagger(TaggerInterface):

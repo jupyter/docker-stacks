@@ -10,6 +10,10 @@ class GitHelper:
         return git["rev-parse", "HEAD"]().strip()
 
     @staticmethod
+    def commit_hash_tag():
+        return GitHelper.commit_hash()[:12]
+
+    @staticmethod
     def commit_message():
         return git["log", -1, "--pretty=%B"]().strip()
 
