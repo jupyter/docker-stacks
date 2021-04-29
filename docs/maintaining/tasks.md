@@ -2,20 +2,20 @@
 
 ## Merging Pull Requests
 
-To build new images on Docker Cloud and publish them to the Docker Hub registry, do the following:
+To build new images and publish them to the Docker Hub registry, do the following:
 
 1. Make sure GitHub Actions status checks pas for the PR.
 2. Merge the PR.
-3. Monitor the Docker Cloud build status for each of the stacks, starting with
-   [jupyter/base-notebook](https://cloud.docker.com/app/jupyter/repository/docker/jupyter/base-notebook/general)
+3. Monitor the Docker Hub build status for each of the stacks, starting with
+   [jupyter/base-notebook](https://hub.docker.com/app/jupyter/repository/docker/jupyter/base-notebook/general)
    and ending with
-   [jupyter/all-spark-notebook](https://cloud.docker.com/app/jupyter/repository/docker/jupyter/all-spark-notebook/general).
+   [jupyter/all-spark-notebook](https://hub.docker.com/app/jupyter/repository/docker/jupyter/all-spark-notebook/general).
    See the [stack hierarchy diagram](../using/selecting.html#image-relationships) for the current,
    complete build order.
 4. Manually click the retry button next to any build that fails to resume that build and any
    dependent builds.
 5. Try to avoid merging another PR to master until all outstanding builds complete. There's no way
-   at present to propagate the git SHA to build through the Docker Cloud build trigger API. Every
+   at present to propagate the git SHA to build through the Docker Hub build trigger API. Every
    build trigger works off of master HEAD.
 
 ## Updating the Ubuntu Base Image
@@ -26,7 +26,7 @@ update the pinned SHA in the
 Submit it as a regular PR and go through the build process. Expect the build to take a while to
 complete: every image layer will rebuild.
 
-## Adding a New Core Image to Docker Cloud
+## Adding a New Core Image to Docker Hub
 
 When there's a new stack definition, do the following before merging the PR with the new stack:
 
@@ -34,12 +34,12 @@ When there's a new stack definition, do the following before merging the PR with
    [in the documentation](https://github.com/jupyter/docker-stacks/blob/master/docs/using/selecting.md#image-relationships).
    The image links to the [blockdiag source](http://interactive.blockdiag.com/) used to create it.
 2. Ensure the PR updates the Makefile which is used to build the stacks in order on GitHub Actions.
-3. Create a new repository in the `jupyter` org on Docker Cloud named after the stack folder in the
+3. Create a new repository in the `jupyter` org on Docker Hub named after the stack folder in the
    git repo.
 4. Grant the `stacks` team permission to write to the repo.
 5. Click _Builds_ and then _Configure Automated Builds_ for the repository.
 6. Select `jupyter/docker-stacks` as the source repository.
-7. Choose _Build on Docker Cloud's infrastructure using a Small node_ unless you have reason to
+7. Choose _Build on Docker Hub's infrastructure using a Small node_ unless you have reason to
    believe a bigger host is required.
 8. Update the _Build Context_ in the default build rule to be `/<name-of-the-stack>`.
 9. Toggle _Autobuild_ to disabled unless the stack is a new root stack (e.g., like
@@ -62,18 +62,18 @@ When there's a new stack definition, do the following before merging the PR with
 
 ## Adding a New Maintainer Account
 
-1. Visit https://cloud.docker.com/app/jupyter/team/stacks/users
-2. Add the maintainer's Docker Cloud username.
+1. Visit https://hub.docker.com/app/jupyter/team/stacks/users
+2. Add the maintainer's Docker Hub username.
 3. Visit https://github.com/orgs/jupyter/teams/docker-image-maintainers/members
 4. Add the maintainer's GitHub username.
 
 ## Pushing a Build Manually
 
-If automated builds on Docker Cloud have got you down, do the following to push a build manually:
+If automated builds on Docker Hub have got you down, do the following to push a build manually:
 
 1. Clone this repository.
 2. Check out the git SHA you want to build and publish.
-3. `docker login` with your Docker Hub/Cloud credentials.
+3. `docker login` with your Docker Hub credentials.
 4. Run `make retry/release-all`.
 
 ## Enabling a New Doc Language Translation
