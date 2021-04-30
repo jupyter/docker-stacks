@@ -6,7 +6,7 @@ FROM $BASE_CONTAINER
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 # Install Tensorflow
-RUN conda install --quiet --yes \
+RUN mamba install --quiet --yes \
     'tensorflow=2.4.1' \
     && \
     conda clean --all -f -y && \
