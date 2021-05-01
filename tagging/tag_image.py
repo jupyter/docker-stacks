@@ -26,7 +26,7 @@ def tag_image(short_image_name, owner):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--short-image-name", required=True, help="Short image name to apply tags for")
