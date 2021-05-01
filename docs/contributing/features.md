@@ -40,9 +40,11 @@ If there's agreement that the feature belongs in one or more of the core stacks:
 2. Please build the image locally before submitting a pull request. Building the image locally
    shortens the debugging cycle by taking some load off GitHub Actions, which graciously provide
    free build services for open source projects like this one. If you use `make`, call:
+
    ```bash
    make build/somestack-notebook
    ```
+
 3. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)
    (PR) with your changes.
 4. Watch for GitHub to report a build success or failure for your PR on GitHub.
