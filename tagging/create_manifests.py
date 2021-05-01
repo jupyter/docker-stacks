@@ -71,7 +71,7 @@ def create_manifests(short_image_name, owner, wiki_path):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--short-image-name", required=True, help="Short image name to apply tags for")
