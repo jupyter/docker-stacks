@@ -1,3 +1,6 @@
+OpenShift example
+=================
+
 This example provides templates for deploying the Jupyter Project docker-stacks images to OpenShift.
 
 Prerequsites
@@ -221,7 +224,7 @@ If using a persistent volume, you could instead setup a password in the file:
 
 as per guidelines in:
 
-* https://jupyter-notebook.readthedocs.io/en/stable/public_server.html
+* <https://jupyter-notebook.readthedocs.io/en/stable/public_server.html>
 
 Deploying from a Custom Image
 -----------------------------

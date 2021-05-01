@@ -1,8 +1,8 @@
+# Jupyter Notebook Data Science Stack
+
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/datascience-notebook.svg)](https://hub.docker.com/r/jupyter/datascience-notebook/)
 [![docker stars](https://img.shields.io/docker/stars/jupyter/datascience-notebook.svg)](https://hub.docker.com/r/jupyter/datascience-notebook/)
 [![image metadata](https://images.microbadger.com/badges/image/jupyter/datascience-notebook.svg)](https://microbadger.com/images/jupyter/datascience-notebook "jupyter/datascience-notebook image metadata")
-
-# Jupyter Notebook Data Science Stack
 
 GitHub Actions in the https://github.com/jupyter/docker-stacks project builds and pushes this image
 to Docker Hub.

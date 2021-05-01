@@ -1,3 +1,5 @@
+# Docker Compose example
+
 This example demonstrate how to deploy docker-stack notebook containers to any Docker Machine-controlled host using Docker Compose.
 
 ## Prerequisites

@@ -1,3 +1,6 @@
+Custom Jupyter Notebook images
+==============================
+
 This example provides scripts for building custom Jupyter Notebook images containing notebooks, data files, and with Python packages required by the notebooks already installed. The scripts provided work with the Source-to-Image tool and you can create the images from the command line on your own computer. Templates are also provided to enable running builds in OpenShift, as well as deploying the resulting image to OpenShift to make it available.
 
 The build scripts, when used with the Source-to-Image tool, provide similar capabilities to ``repo2docker``. When builds are run under OpenShift with the supplied templates, it provides similar capabilities to ``mybinder.org``, but where notebook instances are deployed in your existing OpenShift project and JupyterHub is not required.

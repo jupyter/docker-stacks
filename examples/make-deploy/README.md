@@ -1,3 +1,5 @@
+# Make deploy example
+
 This folder contains a Makefile and a set of supporting files demonstrating how to run a docker-stack notebook container on a docker-machine controlled host.
 
 ## Prerequisites

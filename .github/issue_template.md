@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->
 Hi! Thanks for using the Jupyter Docker Stacks.
 
 Please review the following guidance about how to ask questions, contribute changes, or report bugs in the Docker images maintained here.
@@ -20,7 +21,7 @@ Example: `docker run -it --rm -p 8889:8888 jupyter/all-spark-notebook:latest`
 
 Example:
 
-1. Visit http://localhost:8888
+1. Visit <http://localhost:8888>
 2. Start an R notebook
 3. ...
 
