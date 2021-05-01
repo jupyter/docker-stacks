@@ -1,8 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
-from git_helper import GitHelper
-from docker_runner import run_simple_command
+from .git_helper import GitHelper
+from .docker_runner import run_simple_command
 
 
 logger = logging.getLogger(__name__)

@@ -4,8 +4,8 @@
 import argparse
 import logging
 from plumbum.cmd import docker
-from docker_runner import DockerRunner
-from get_taggers_and_manifests import get_taggers_and_manifests
+from .docker_runner import DockerRunner
+from .get_taggers_and_manifests import get_taggers_and_manifests
 
 
 logger = logging.getLogger(__name__)

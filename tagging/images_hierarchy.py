@@ -2,13 +2,13 @@
 # Distributed under the terms of the Modified BSD License.
 from dataclasses import dataclass, field
 from typing import Optional, List
-from taggers import TaggerInterface, \
+from .taggers import TaggerInterface, \
     SHATagger, \
     UbuntuVersionTagger, PythonVersionTagger, \
     JupyterNotebookVersionTagger, JupyterLabVersionTagger, JupyterHubVersionTagger, \
     RVersionTagger, TensorflowVersionTagger, JuliaVersionTagger, \
     SparkVersionTagger, HadoopVersionTagger, JavaVersionTagger
-from manifests import ManifestInterface, \
+from .manifests import ManifestInterface, \
     CondaEnvironmentManifest, AptPackagesManifest, \
     RPackagesManifest, JuliaPackagesManifest, SparkInfoManifest
 

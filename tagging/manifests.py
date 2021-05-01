@@ -2,8 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 from plumbum.cmd import docker
-from docker_runner import run_simple_command
-from git_helper import GitHelper
+from .docker_runner import run_simple_command
+from .git_helper import GitHelper
 
 
 logger = logging.getLogger(__name__)

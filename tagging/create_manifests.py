@@ -5,10 +5,10 @@ import argparse
 import datetime
 import logging
 import os
-from docker_runner import DockerRunner
-from get_taggers_and_manifests import get_taggers_and_manifests
-from git_helper import GitHelper
-from manifests import ManifestHeader
+from .docker_runner import DockerRunner
+from .get_taggers_and_manifests import get_taggers_and_manifests
+from .git_helper import GitHelper
+from .manifests import ManifestHeader
 
 
 logger = logging.getLogger(__name__)

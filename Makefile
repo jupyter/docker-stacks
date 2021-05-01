@@ -100,8 +100,8 @@ git-commit: ## commit outstading git changes and push to remote
 
 hook/%: WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
-	./tagging/tag_image.py --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
-	./tagging/create_manifests.py --short-image-name "$(notdir $@)" --owner "$(OWNER)" --wiki-path "$(WIKI_PATH)"
+	python3 -m tagging.tag_image --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
+	python3 -m tagging.create_manifests --short-image-name "$(notdir $@)" --owner "$(OWNER)" --wiki-path "$(WIKI_PATH)"
 
 hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
 
