@@ -283,7 +283,7 @@ msgstr ""
 
 # 2869b2f7a89c428f903e3695dd511e9a
 #: ../../maintaining/tasks.md:92 9ebca91beff846648bdc758fc90afec1
-msgid "Enter <https://github.com/jupyter/docker-stacks> for the URL."
+msgid "Enter https://github.com/jupyter/docker-stacks for the URL."
 msgstr ""
 
 #: ../../maintaining/tasks.md:93 2d3b518fd69640169e17d44018a7a8e4

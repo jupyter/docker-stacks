@@ -153,7 +153,7 @@ You can provide a password using the `NOTEBOOK_PASSWORD` parameter. If you don't
 
 Once the image has been built, it will be deployed. To see the hostname for accessing the notebook, run `oc get routes`.
 
-```bash
+```lang-none
 NAME                HOST/PORT                                                       PATH SERVICES           PORT      TERMINATION    WILDCARD
 notebook-examples   notebook-examples-jupyter.abcd.pro-us-east-1.openshiftapps.com       notebook-examples  8888-tcp  edge/Redirect  None
 ```
