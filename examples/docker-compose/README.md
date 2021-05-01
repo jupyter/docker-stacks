@@ -34,7 +34,6 @@ To stop and remove the container:
 notebook/down.sh
 ```
 
-
 ## FAQ
 
 ### How do I specify which docker-stack notebook image to deploy?
@@ -75,7 +74,6 @@ NAME=your-notebook notebook/down.sh
 
 The `up.sh` creates a Docker volume named after the notebook container with a `-work` suffix, e.g., `my-notebook-work`.
 
-
 ### Can multiple notebook containers share the same notebook volume?
 
 Yes. Set the `WORK_VOLUME` environment variable to the same value for each notebook.
@@ -99,7 +97,6 @@ notebook/up.sh --secure --password a_secret
 ### Can I use Let's Encrypt certificate chains?
 
 Sure.  If you want to secure access to publicly addressable notebook containers, you can generate a free certificate using the [Let's Encrypt](https://letsencrypt.org) service.
-
 
 This example includes the `bin/letsencrypt.sh` script, which runs the `letsencrypt` client to create a full-chain certificate and private key, and stores them in a Docker volume.  _Note:_ The script hard codes several `letsencrypt` options, one of which automatically agrees to the Let's Encrypt Terms of Service.
 
@@ -154,10 +151,9 @@ bin/softlayer.sh myhost
 bin/sl-dns.sh myhost
 ```
 
-
 ## Troubleshooting
 
-### Unable to connect to VirtualBox VM on Mac OS X when using Cisco VPN client.
+### Unable to connect to VirtualBox VM on Mac OS X when using Cisco VPN client
 
 The Cisco VPN client blocks access to IP addresses that it does not know about, and may block access to a new VM if it is created while the Cisco VPN client is running.
 

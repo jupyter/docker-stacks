@@ -96,7 +96,7 @@ docker logs --tail 3 notebook
         http://localhost:8888/?token=15914ca95f495075c0aa7d0e060f1a78b6d94f70ea373b00
 ```
 
-Together, the URL to visit on the host machine to access the server in this case is http://localhost:32769?token=15914ca95f495075c0aa7d0e060f1a78b6d94f70ea373b00.
+Together, the URL to visit on the host machine to access the server in this case is <http://localhost:32769?token=15914ca95f495075c0aa7d0e060f1a78b6d94f70ea373b00>.
 
 The container runs in the background until stopped and/or removed by additional Docker commands.
 

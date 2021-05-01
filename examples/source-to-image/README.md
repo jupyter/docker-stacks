@@ -7,7 +7,7 @@ The build scripts, when used with the Source-to-Image tool, provide similar capa
 
 For separate examples of using JupyterHub with OpenShift, see the project:
 
-* https://github.com/jupyter-on-openshift/jupyterhub-quickstart
+* <https://github.com/jupyter-on-openshift/jupyterhub-quickstart>
 
 Source-to-Image Project
 -----------------------
@@ -16,7 +16,7 @@ Source-to-Image (S2I) is an open source project which provides a tool for creati
 
 Details on the S2I tool, and executable binaries for Linux, macOS and Windows, can be found on GitHub at:
 
-* https://github.com/openshift/source-to-image
+* <https://github.com/openshift/source-to-image>
 
 The tool is standalone, and can be used on any system which provides a docker daemon for running containers. To provide an end-to-end capability to build and deploy applications in containers, support for S2I is also integrated into container platforms such as OpenShift.
 

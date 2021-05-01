@@ -6,7 +6,7 @@ To integrate and enforce this process in the project lifecycle we are using **gi
 
 ## Pre-commit hook
 
-### Installation
+### Pre-commit hook installation
 
 pre-commit is a Python package that needs to be installed.
 This can be achieved by using the generic task used to install all Python development dependencies.
@@ -21,7 +21,7 @@ $ pip install pre-commit
 Then the git hooks scripts configured for the project in `.pre-commit-config.yaml` need to be installed in the local git repository.
 
 ```sh
-$ make pre-commit-install
+make pre-commit-install
 ```
 
 ### Run
@@ -30,14 +30,14 @@ Now pre-commit (and so configured hooks) will run automatically on `git commit` 
 However it is also possible to trigger it against all files.
 
 ```sh
-$ make pre-commit-all
+make pre-commit-all
 ```
 
 ## Image Lint
 
 To comply with [Docker best practices][dbp], we are using the [Hadolint][hadolint] tool to analyse each `Dockerfile` .
 
-### Installation
+### Hadolint installation
 
 There is a specific `make` target to install the linter.
 By default `hadolint` will be installed in `${HOME}/hadolint`.
@@ -81,7 +81,7 @@ $ make hadolint/scipy-notebook ARGS="--format codeclimate"
 The linter can be run against all the stacks.
 
 ```bash
-$ make hadolint-all
+make hadolint-all
 ```
 
 ### Ignoring Rules

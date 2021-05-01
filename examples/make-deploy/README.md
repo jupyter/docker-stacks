@@ -5,7 +5,7 @@ This folder contains a Makefile and a set of supporting files demonstrating how 
 ## Prerequisites
 
 * make 3.81+
-    * Ubuntu users: Be aware of [make 3.81 defect 483086](https://bugs.launchpad.net/ubuntu/+source/make-dfsg/+bug/483086) which exists in 14.04 LTS but is fixed in 15.04+
+  * Ubuntu users: Be aware of [make 3.81 defect 483086](https://bugs.launchpad.net/ubuntu/+source/make-dfsg/+bug/483086) which exists in 14.04 LTS but is fixed in 15.04+
 * docker-machine 0.5.0+
 * docker 1.9.0+
 
