@@ -3,27 +3,28 @@
 The main purpose of the source code in this folder is to properly tag all the images and to update [build manifests](https://github.com/jupyter/docker-stacks/wiki).
 These 2 processes are closely related, so the source code is reused where it seems to be possible.
 
-Basic example of such a tag would be python version tag.
-For an image `jupyter/base-notebook` with `python 3.8.8` we will create a tag `jupyter/base-notebook:python-3.8.8` and push it to Docker Hub.
+Basic example of a tag is a `python` version tag.
+For example, an image `jupyter/base-notebook` with `python 3.8.8` will have a tag `jupyter/base-notebook:python-3.8.8`.
+This tag (and all the other tags) are pushed to Docker Hub.
 
-Manifest is a description of the important parts of the image in a text form.
-For example, we dump all the `conda` packages to see a list of available packages.
+Manifest is a description of some important part of the image in a `markdown`.
+For example, we dump all the `conda` packages including their versions.
 
-## Principles
+## Main principles
 
 - All the images are located in a hierarchical tree. More info on [image relationships](../docs/using/selecting.md#image-relationships).
-- We have tagger and manifest classes, which can be run inside docker containers to create tags and build manifest pieces.
+- We have tagger and manifest classes, which can be run inside docker containers to obtain tags and build manifest pieces.
 - These classes are inherited from the parent image to all the children images.
-- Because manifests and tag might change for different images in the tree, taggers and manifests are reevaluated on each image. So, the values are not inherited.
-- To run tag and manifest creation process, run `make hook/base-notebook` (or another image of your choice).
+- Because manifests and tags might change from parent to children, taggers and manifests are reevaluated on each image. So, the values are not inherited.
+- To tag an image and create a manifest, run `make hook/base-notebook` (or another image of your choice).
 
 ## Source code description
 
-In this section we will briefly describe source code used in this folder and give simple examples.
+In this section we will briefly describe source code used in this folder and give examples on how to use this code.
 
 ### DockerRunner
 
-`DockerRunner` is a helper class to easily run docker container and execute actions inside this container:
+`DockerRunner` is a helper class to easily run a docker container and execute commands inside this container:
 
 
 ```python
@@ -44,7 +45,7 @@ print("Git hash:", GitHelper.commit_hash())
 print("Git message:", GitHelper.commit_message())
 ```
 
-First `12` letters of commit hash are also used as an image tag to make it easy to have fixed version of docker image.
+Prefix of commit hash (namely, 12 letters) is used as an image tag to make it easy to inherit from a fixed version of docker image.
 
 ### Tagger
 
@@ -71,8 +72,8 @@ class SHATagger(TaggerInterface):
         return GitHelper.commit_hash_tag()
 ```
 
-`taggers.py` contains all the taggers.
-`tag_image.py` is a python executable which is used to tag the image.
+- `taggers.py` contains all the taggers.
+- `tag_image.py` is a python executable which is used to tag the image.
 
 ### Manifest
 
@@ -89,7 +90,7 @@ class ManifestInterface:
         raise NotImplementedError
 ```
 
-`markdown_piece(container)` method returns piece of markdown file to be used as a part of build manifest.
+- `markdown_piece(container)` method returns piece of markdown file to be used as a part of build manifest.
 
 `AptPackagesManifest` example:
 
@@ -104,9 +105,9 @@ class AptPackagesManifest(ManifestInterface):
         ])
 ```
 
-`quoted_output` simply runs the command inside container using `DockerRunner.run_simple_command` and wraps it to triple quotes.
-`manifests.py` contains all the manifests.
-`create_manifests.py` is a python executable which is used to create the build manifest for an image.
+- `quoted_output` simply runs the command inside container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece of file.
+- `manifests.py` contains all the manifests.
+- `create_manifests.py` is a python executable which is used to create the build manifest for an image.
 
 ### Images Hierarchy
 
