@@ -2,18 +2,22 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 from .git_helper import GitHelper
-from .docker_runner import run_simple_command
+from .docker_runner import DockerRunner
 
 
 logger = logging.getLogger(__name__)
 
 
 def _get_program_version(container, program):
-    return run_simple_command(container, cmd=f"{program} --version")
+    return DockerRunner.run_simple_command(container, cmd=f"{program} --version")
 
 
 def _get_env_variable(container, variable):
-    env = run_simple_command(container, cmd="env", print_result=False).split()
+    env = DockerRunner.run_simple_command(
+        container,
+        cmd="env",
+        print_result=False
+    ).split()
     for env_entry in env:
         if env_entry.startswith(variable):
             return env_entry[len(variable) + 1:]
@@ -22,7 +26,11 @@ def _get_env_variable(container, variable):
 
 def _get_pip_package_version(container, package):
     VERSION_PREFIX = "Version: "
-    package_info = run_simple_command(container, cmd=f"pip show {package}", print_result=False)
+    package_info = DockerRunner.run_simple_command(
+        container,
+        cmd=f"pip show {package}",
+        print_result=False
+    )
     version_line = package_info.split("\n")[1]
     assert version_line.startswith(VERSION_PREFIX)
     return version_line[len(VERSION_PREFIX):]
@@ -44,7 +52,7 @@ class SHATagger(TaggerInterface):
 class UbuntuVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container):
-        os_release = run_simple_command(container, "cat /etc/os-release").split("\n")
+        os_release = DockerRunner.run_simple_command(container, "cat /etc/os-release").split("\n")
         for line in os_release:
             if line.startswith("VERSION_ID"):
                 return "ubuntu-" + line.split("=")[1].strip('"')

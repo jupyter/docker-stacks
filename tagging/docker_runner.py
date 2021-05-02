@@ -28,12 +28,12 @@ class DockerRunner:
             self.container.remove(force=True)
             logger.info(f"Container {self.container.name} removed")
 
-
-def run_simple_command(container, cmd, print_result=True):
-    logger.info(f"Running cmd: '{cmd}' on container: {container}")
-    out = container.exec_run(cmd)
-    assert out.exit_code == 0, f"Command: {cmd} failed"
-    result = out.output.decode("utf-8").rstrip()
-    if print_result:
-        logger.info(f"Command result: {result}")
-    return result
+    @staticmethod
+    def run_simple_command(container, cmd, print_result=True):
+        logger.info(f"Running cmd: '{cmd}' on container: {container}")
+        out = container.exec_run(cmd)
+        assert out.exit_code == 0, f"Command: {cmd} failed"
+        result = out.output.decode("utf-8").rstrip()
+        if print_result:
+            logger.info(f"Command result: {result}")
+        return result
