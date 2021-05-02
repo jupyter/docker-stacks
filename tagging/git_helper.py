@@ -6,15 +6,15 @@ from plumbum.cmd import git
 
 class GitHelper:
     @staticmethod
-    def commit_hash():
+    def commit_hash() -> str:
         return git["rev-parse", "HEAD"]().strip()
 
     @staticmethod
-    def commit_hash_tag():
+    def commit_hash_tag() -> str:
         return GitHelper.commit_hash()[:12]
 
     @staticmethod
-    def commit_message():
+    def commit_message() -> str:
         return git["log", -1, "--pretty=%B"]().strip()
 
 

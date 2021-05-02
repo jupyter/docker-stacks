@@ -11,7 +11,7 @@ from .get_taggers_and_manifests import get_taggers_and_manifests
 logger = logging.getLogger(__name__)
 
 
-def tag_image(short_image_name, owner):
+def tag_image(short_image_name: str, owner: str) -> None:
     logger.info(f"Tagging image: {short_image_name}")
     taggers, _ = get_taggers_and_manifests(short_image_name)
 

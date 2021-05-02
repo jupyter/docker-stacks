@@ -20,7 +20,7 @@ def quoted_output(container, cmd: str) -> str:
 class ManifestHeader:
     """ManifestHeader doesn't fall under common interface and we run it separately"""
     @staticmethod
-    def create_header(short_image_name, owner, build_timestamp) -> str:
+    def create_header(short_image_name: str, owner: str, build_timestamp: str) -> str:
         commit_hash = GitHelper.commit_hash()
         commit_hash_tag = GitHelper.commit_hash_tag()
         commit_message = GitHelper.commit_message()

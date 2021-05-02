@@ -5,10 +5,11 @@ import argparse
 import datetime
 import logging
 import os
+from typing import List
 from .docker_runner import DockerRunner
 from .get_taggers_and_manifests import get_taggers_and_manifests
 from .git_helper import GitHelper
-from .manifests import ManifestHeader
+from .manifests import ManifestHeader, ManifestInterface
 
 
 logger = logging.getLogger(__name__)
@@ -18,7 +19,7 @@ BUILD_TIMESTAMP = datetime.datetime.utcnow().isoformat()[:-7] + "Z"
 MARKDOWN_LINE_BREAK = "<br />"
 
 
-def append_build_history_line(short_image_name, owner, wiki_path, all_tags):
+def append_build_history_line(short_image_name: str, owner: str, wiki_path: str, all_tags: List[str]) -> None:
     logger.info("Appending build history line")
 
     date_column = f"`{BUILD_TIMESTAMP}`"
@@ -43,7 +44,13 @@ def append_build_history_line(short_image_name, owner, wiki_path, all_tags):
         f.write(file)
 
 
-def create_manifest_file(short_image_name, owner, wiki_path, manifests, container):
+def create_manifest_file(
+    short_image_name: str,
+    owner: str,
+    wiki_path: str,
+    manifests: List[ManifestInterface],
+    container
+) -> None:
     manifest_names = [manifest.__name__ for manifest in manifests]
     logger.info(f"Using manifests: {manifest_names}")
 
@@ -58,7 +65,7 @@ def create_manifest_file(short_image_name, owner, wiki_path, manifests, containe
         f.write(markdown_content)
 
 
-def create_manifests(short_image_name, owner, wiki_path):
+def create_manifests(short_image_name: str, owner: str, wiki_path: str) -> None:
     logger.info(f"Creating manifests for image: {short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 

@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class DockerRunner:
-    def __init__(self, image_name, docker_client=docker.from_env(), command="sleep infinity"):
+    def __init__(self, image_name: str, docker_client=docker.from_env(), command: str = "sleep infinity"):
         self.container = None
         self.image_name = image_name
         self.command = command
@@ -29,7 +29,7 @@ class DockerRunner:
             logger.info(f"Container {self.container.name} removed")
 
     @staticmethod
-    def run_simple_command(container, cmd, print_result=True):
+    def run_simple_command(container, cmd: str, print_result: bool = True):
         logger.info(f"Running cmd: '{cmd}' on container: {container}")
         out = container.exec_run(cmd)
         assert out.exit_code == 0, f"Command: {cmd} failed"
