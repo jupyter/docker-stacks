@@ -1,7 +1,7 @@
 # Docker stacks tagging and manifest creation
 
 The main purpose of the source code in this folder is to properly tag all the images and to update [build manifests](https://github.com/jupyter/docker-stacks/wiki).
-These 2 processes are closely related, so the source code is reused where it seems to be possible.
+These 2 processes are closely related, so the source code is widely reused.
 
 Basic example of a tag is a `python` version tag.
 For example, an image `jupyter/base-notebook` with `python 3.8.8` will have a tag `jupyter/base-notebook:python-3.8.8`.
@@ -13,14 +13,14 @@ For example, we dump all the `conda` packages including their versions.
 ## Main principles
 
 - All the images are located in a hierarchical tree. More info on [image relationships](../docs/using/selecting.md#image-relationships).
-- We have tagger and manifest classes, which can be run inside docker containers to obtain tags and build manifest pieces.
+- We have `tagger` and `manifest` classes, which can be run inside docker containers to obtain tags and build manifest pieces.
 - These classes are inherited from the parent image to all the children images.
-- Because manifests and tags might change from parent to children, taggers and manifests are reevaluated on each image. So, the values are not inherited.
+- Because manifests and tags might change from parent to children, `taggers` and `manifests` are reevaluated on each image. So, the values are not inherited.
 - To tag an image and create a manifest, run `make hook/base-notebook` (or another image of your choice).
 
 ## Source code description
 
-In this section we will briefly describe source code used in this folder and give examples on how to use this code.
+In this section we will briefly describe source code in this folder and give examples on how to use it.
 
 ### DockerRunner
 
@@ -31,12 +31,12 @@ In this section we will briefly describe source code used in this folder and giv
 from .docker_runner import DockerRunner
 
 with DockerRunner("ubuntu:bionic") as container:
-	DockerRunner.run_simple_command(container, cmd="env", print_result=True)
+    DockerRunner.run_simple_command(container, cmd="env", print_result=True)
 ```
 
 ### GitHelper
 
-`GitHelper` is run in the current `git` repo and gives the information about last commit hash and commit message:
+`GitHelper` methods are run in the current `git` repo and give the information about last commit hash and commit message:
 
 ```python
 from .git_helper import GitHelper
@@ -45,7 +45,7 @@ print("Git hash:", GitHelper.commit_hash())
 print("Git message:", GitHelper.commit_message())
 ```
 
-Prefix of commit hash (namely, 12 letters) is used as an image tag to make it easy to inherit from a fixed version of docker image.
+Prefix of commit hash (namely, 12 letters) is used as an image tag to make it easy to inherit from a fixed version of a docker image.
 
 ### Tagger
 
