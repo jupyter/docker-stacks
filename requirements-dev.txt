@@ -3,7 +3,7 @@ myst-parser
 pre-commit
 pytest
 requests
-sphinx>=1.6
+sphinx>=2.1
 sphinx-intl
 tabulate
 transifex-client
