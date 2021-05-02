@@ -1,4 +1,4 @@
-# Docker stacks tagging
+# Docker stacks tagging and manifest creation
 
 The main purpose of the source code in this folder is to properly tag all the images and to update [build manifests](https://github.com/jupyter/docker-stacks/wiki).
 These 2 processes are closely related, so the source code is reused where it seems to be possible.
