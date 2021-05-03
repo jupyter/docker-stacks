@@ -1,4 +1,5 @@
 docker
+plumbum
 pre-commit
 pytest
 recommonmark
