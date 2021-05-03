@@ -1,7 +1,7 @@
 # Docker stacks tagging and manifest creation
 
 The main purpose of the source code in this folder is to properly tag all the images and to update [build manifests](https://github.com/jupyter/docker-stacks/wiki).
-These 2 processes are closely related, so the source code is widely reused.
+These two processes are closely related, so the source code is widely reused.
 
 Basic example of a tag is a `python` version tag.
 For example, an image `jupyter/base-notebook` with `python 3.8.8` will have a tag `jupyter/base-notebook:python-3.8.8`.
