@@ -133,7 +133,7 @@ RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${m
 # files across image layers when the permissions change
 RUN conda install --quiet --yes \
     'notebook=6.3.0' \
-    'jupyterhub=1.3.0' \
+    'jupyterhub=1.4.0' \
     'jupyterlab=3.0.14' && \
     conda clean --all -f -y && \
     npm cache clean --force && \
