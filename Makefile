@@ -98,15 +98,10 @@ git-commit: ## commit outstading git changes and push to remote
 		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0
 	@cd $(LOCAL_PATH) && git push -u publisher master
 
-hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
-hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
-hook/%: export WIKI_PATH?=../wiki
+hook/%: WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
-	BUILD_TIMESTAMP="$$(date -u +%FT%TZ)" \
-	DOCKER_REPO="$(OWNER)/$(notdir $@)" \
-	IMAGE_NAME="$(OWNER)/$(notdir $@):latest" \
-	IMAGE_SHORT_NAME="$(notdir $@)" \
-	$(SHELL) $(notdir $@)/hooks/run_hook
+	python3 -m tagging.tag_image --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
+	python3 -m tagging.create_manifests --short-image-name "$(notdir $@)" --owner "$(OWNER)" --wiki-path "$(WIKI_PATH)"
 
 hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
 

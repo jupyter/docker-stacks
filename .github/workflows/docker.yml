@@ -52,9 +52,6 @@ jobs:
           BUILDKIT_PROGRESS: plain
       - name: Run Post-Build Hooks
         run: make -C main hook-all
-        env:
-          COMMIT_MSG: "${{github.event.head_commit.message}}"
-          WIKI_PATH: ../wiki
       - name: Login to Docker Hub
         if: github.ref == 'refs/heads/master'
         run: >
@@ -66,7 +63,7 @@ jobs:
       - name: Push Wiki to GitHub
         if: github.ref == 'refs/heads/master'
         # Pass GITHUB_REPOSITORY directly to avoid conflict with GitHub Actions built-in env var
-        run: make -C main git-commit GITHUB_REPOSITORY='${{ github.repository }}.wiki'
+        run: make -C main git-commit GITHUB_REPOSITORY='${{github.repository}}.wiki'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           LOCAL_PATH: ../wiki
