@@ -8,7 +8,7 @@ To build new images and publish them to the Docker Hub registry, do the followin
 2. Merge the PR.
 3. Monitor the merge commit GitHub Actions status.
    **Note**: we think, GitHub Actions are quite reliable, so please, investigate, if some error occurs.
-   The process of building docker images in PRs is exactly the same for master branch, except there is a push step in master.
+   The process of building docker images in PRs is exactly the same after merging to master, except there is an additional `push` step.
 4. Try to avoid merging another PR to master until all pending builds complete. This way you will know which commit
    might have broken the build and also have correct tags for moving tags (like `python` version).
 
@@ -27,32 +27,11 @@ When there's a new stack definition, do the following before merging the PR with
 1. Ensure the PR includes an update to the stack overview diagram
    [in the documentation](https://github.com/jupyter/docker-stacks/blob/master/docs/using/selecting.md#image-relationships).
    The image links to the [blockdiag source](http://interactive.blockdiag.com/) used to create it.
-2. Ensure the PR updates the Makefile which is used to build the stacks in order on GitHub Actions.
-3. Create a new repository in the `jupyter` org on Docker Hub named after the stack folder in the
+2. Ensure the PR updates the [Makefile](../../Makefile) which is used to build the stacks in order on GitHub Actions.
+3. Ensure necessary tags / manifests are added for the new image in the [tagging](../../tagging) folder.
+4. Create a new repository in the `jupyter` org on Docker Hub named after the stack folder in the
    git repo.
-4. Grant the `stacks` team permission to write to the repo.
-5. Click _Builds_ and then _Configure Automated Builds_ for the repository.
-6. Select `jupyter/docker-stacks` as the source repository.
-7. Choose _Build on Docker Hub's infrastructure using a Small node_ unless you have reason to
-   believe a bigger host is required.
-8. Update the _Build Context_ in the default build rule to be `/<name-of-the-stack>`.
-9. Toggle _Autobuild_ to disabled unless the stack is a new root stack (e.g., like
-   `jupyter/base-notebook`).
-10. If the new stack depends on the build of another stack in the hierarchy:
-    1. Hit _Save_ and then click _Configure Automated Builds_.
-    2. At the very bottom, add a build trigger named _Stack hierarchy trigger_.
-    3. Copy the build trigger URL.
-    4. Visit the parent repository _Builds_ page and click _Configure Automated Builds_.
-    5. Add the URL you copied to the _NEXT_BUILD_TRIGGERS_ environment variable comma separated list
-       of URLs, creating that environment variable if it does not already exist.
-    6. Hit _Save_.
-11. If the new stack should trigger other dependent builds:
-    1. Add an environment variable named _NEXT_BUILD_TRIGGERS_.
-    2. Copy the build trigger URLs from the dependent builds into the _NEXT_BUILD_TRIGGERS_ comma
-       separated list of URLs.
-    3. Hit _Save_.
-12. Adjust other _NEXT_BUILD_TRIGGERS_ values as needed so that the build order matches that in the
-    stack hierarchy diagram.
+5. Grant the `stacks` team permission to write to the repo.
 
 ## Adding a New Maintainer Account
 
@@ -63,7 +42,7 @@ When there's a new stack definition, do the following before merging the PR with
 
 ## Pushing a Build Manually
 
-If automated builds on Docker Hub have got you down, do the following to push a build manually:
+If automated build in Github Actions have got you down, do the following to push a build manually:
 
 1. Clone this repository.
 2. Check out the git SHA you want to build and publish.
