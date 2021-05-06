@@ -23,10 +23,6 @@ endif
 
 ALL_IMAGES:=$(ALL_STACKS)
 
-# Dockerfile Linter
-HADOLINT="${HOME}/hadolint"
-HADOLINT_VERSION="v2.3.0"
-
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
 
@@ -118,23 +114,6 @@ img-rm:  ## remove jupyter images
 img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
 	-docker rmi --force $(shell docker images -f "dangling=true" -q) 2> /dev/null
-
-hadolint/%: ARGS?=
-hadolint/%: ## lint the dockerfile(s) for a stack
-	@echo "Linting Dockerfiles in $(notdir $@)..."
-	@git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
-	@echo "Linting done!"
-
-hadolint-all: $(foreach I,$(ALL_IMAGES),hadolint/$(I) ) ## lint all stacks
-
-hadolint-build-test-all: $(foreach I,$(ALL_IMAGES),hadolint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
-
-hadolint-install: ## install hadolint
-	@echo "Installing hadolint at $(HADOLINT) ..."
-	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/$(HADOLINT_VERSION)/hadolint-$(shell uname -s)-$(shell uname -m)"
-	@chmod 700 $(HADOLINT)
-	@echo "Installation done!"
-	@$(HADOLINT) --version
 
 pre-commit-all: ## run pre-commit hook on all files
 	@pre-commit run --all-files
