@@ -36,7 +36,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 
 At some point, JupyterLab will become the default for all of the Jupyter Docker stack images, however a new environment variable will be introduced to switch back to Jupyter Notebook if needed.
 
-After the change of default, and according to the Jupyter Notebook project status and its compatibility with JupyterLab, these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another *classic-like* UI built atop JupyterLab.
+After the change of default, and according to the Jupyter Notebook project status and its compatibility with JupyterLab, these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another _classic-like_ UI built atop JupyterLab.
 
 This change is tracked in the issue [#1217](https://github.com/jupyter/docker-stacks/issues/1217), please check its content for more information.
 

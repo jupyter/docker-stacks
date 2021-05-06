@@ -44,10 +44,10 @@ To comply with [Docker best practices][dbp], we are using the [Hadolint][hadolin
 Sometimes it is necessary to ignore [some rules][rules].
 The following rules are ignored by default for all images in the `.hadolint.yaml` file.
 
-- [`DL3006`][DL3006]: We use a specific policy to manage image tags.
+- [`DL3006`][dl3006]: We use a specific policy to manage image tags.
   - `base-notebook` `FROM` clause is fixed but based on an argument (`ARG`).
   - Building downstream images from (`FROM`) the latest is done on purpose.
-- [`DL3008`][DL3008]: System packages are always updated (`apt-get`) to the latest version.
+- [`DL3008`][dl3008]: System packages are always updated (`apt-get`) to the latest version.
 
 For other rules, the preferred way to do it is to flag ignored rules in the `Dockerfile`.
 
@@ -63,6 +63,6 @@ RUN cd /tmp && echo "hello!"
 [hadolint]: https://github.com/hadolint/hadolint
 [dbp]: https://docs.docker.com/develop/develop-images/dockerfile_best-practices
 [rules]: https://github.com/hadolint/hadolint#rules
-[DL3006]: https://github.com/hadolint/hadolint/wiki/DL3006
-[DL3008]: https://github.com/hadolint/hadolint/wiki/DL3008
+[dl3006]: https://github.com/hadolint/hadolint/wiki/DL3006
+[dl3008]: https://github.com/hadolint/hadolint/wiki/DL3008
 [pre-commit]: https://pre-commit.com/
