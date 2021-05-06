@@ -6,7 +6,8 @@ FROM $BASE_CONTAINER
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 # Install Tensorflow
-RUN pip install --quiet --no-cache-dir \
-    'tensorflow==2.4.1' && \
+RUN mamba install --quiet --yes \
+    'tensorflow=2.4.1' && \
+    conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
