@@ -4,19 +4,13 @@
 
 To build new images and publish them to the Docker Hub registry, do the following:
 
-1. Make sure GitHub Actions status checks pas for the PR.
+1. Make sure GitHub Actions status checks pass for the PR.
 2. Merge the PR.
-3. Monitor the Docker Hub build status for each of the stacks, starting with
-   [jupyter/base-notebook](https://hub.docker.com/app/jupyter/repository/docker/jupyter/base-notebook/general)
-   and ending with
-   [jupyter/all-spark-notebook](https://hub.docker.com/app/jupyter/repository/docker/jupyter/all-spark-notebook/general).
-   See the [stack hierarchy diagram](../using/selecting.html#image-relationships) for the current,
-   complete build order.
-4. Manually click the retry button next to any build that fails to resume that build and any
-   dependent builds.
-5. Try to avoid merging another PR to master until all outstanding builds complete. There's no way
-   at present to propagate the git SHA to build through the Docker Hub build trigger API. Every
-   build trigger works off of master HEAD.
+3. Monitor the merge commit GitHub Actions status.
+   **Note**: we think, GitHub Actions are quite reliable, so please, investigate, if some error occurs.
+   The process of building docker images in PRs is exactly the same for master branch, except there is a push step in master.
+4. Try to avoid merging another PR to master until all pending builds complete. This way you will know which commit
+   might have broken the build and also have correct tags for moving tags (like `python` version).
 
 ## Updating the Ubuntu Base Image
 
@@ -74,7 +68,7 @@ If automated builds on Docker Hub have got you down, do the following to push a 
 1. Clone this repository.
 2. Check out the git SHA you want to build and publish.
 3. `docker login` with your Docker Hub credentials.
-4. Run `make retry/release-all`.
+4. Run `make push-all`.
 
 ## Enabling a New Doc Language Translation
 
