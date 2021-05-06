@@ -4,13 +4,9 @@
 
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
-ARCH:=$(shell uname -m)
 OWNER?=jupyter
 
 # Need to list the images in build dependency order
-ifeq ($(ARCH),ppc64le)
-ALL_IMAGES:=base-notebook
-else
 ALL_IMAGES:=base-notebook \
 	minimal-notebook \
 	r-notebook \
@@ -19,7 +15,6 @@ ALL_IMAGES:=base-notebook \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook
-endif
 
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
@@ -32,24 +27,14 @@ help:
 	@echo
 	@grep -E '^[a-zA-Z0-9_%/-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-arch_patch/%: ## apply hardware architecture specific patches to the Dockerfile
-	@if [ -e ./$(notdir $@)/Dockerfile.$(ARCH).patch ]; then \
-		if [ -e ./$(notdir $@)/Dockerfile.orig ]; then \
-			cp -f ./$(notdir $@)/Dockerfile.orig ./$(notdir $@)/Dockerfile; \
-		else \
-			cp -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.orig; \
-		fi; \
-		patch -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.$(ARCH).patch; \
-	fi
-
 build/%: DARGS?=
 build/%: ## build the latest image for a stack
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 
-build-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) ) ## build all stacks
-build-test-all: $(foreach I,$(ALL_IMAGES),arch_patch/$(I) build/$(I) test/$(I) ) ## build and test all stacks
+build-all: $(foreach I,$(ALL_IMAGES), build/$(I) ) ## build all stacks
+build-test-all: $(foreach I,$(ALL_IMAGES), build/$(I) test/$(I) ) ## build and test all stacks
 
 check-outdated/%: ## check the outdated conda packages in a stack and produce a report (experimental)
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
