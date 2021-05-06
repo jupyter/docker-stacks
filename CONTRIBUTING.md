@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD041 -->
+
 Thanks for contributing! Please see the
 __Contributor Guide__ section in [the documentation](https://jupyter-docker-stacks.readthedocs.io) for
 information about how to contribute

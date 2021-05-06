@@ -31,3 +31,8 @@ repos:
     rev: v1.5.6
     hooks:
       - id: autopep8
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.27.1
+    hooks:
+      - id: markdownlint
+        args: ['--fix']

@@ -20,7 +20,7 @@ your own path using alternative services and build tools.
 First, install [cookiecutter](https://github.com/audreyr/cookiecutter) using pip or conda:
 
 ```bash
-pip install cookiecutter   # or conda install cookiecutter
+pip install cookiecutter  # or conda install cookiecutter
 ```
 
 Run the cookiecutter command pointing to the
@@ -34,7 +34,7 @@ cookiecutter https://github.com/jupyter/cookiecutter-docker-stacks.git
 Enter a name for your new stack image. This will serve as both the git repository name and the part
 of the Docker image name after the slash.
 
-```
+```lang-none
 stack_name [my-jupyter-stack]:
 ```
 
@@ -42,26 +42,26 @@ Enter the user or organization name under which this stack will reside on Docker
 must have access to manage this Docker Cloud org to push images here and set up automated
 builds.
 
-```
+```lang-none
 stack_org [my-project]:
 ```
 
 Select an image from the jupyter/docker-stacks project that will serve as the base for your new
 image.
 
-```
+```lang-none
 stack_base_image [jupyter/base-notebook]:
 ```
 
 Enter a longer description of the stack for your README.
 
-```
+```lang-none
 stack_description [my-jupyter-stack is a community maintained Jupyter Docker Stack image]:
 ```
 
 Initialize your project as a Git repository and push it to GitHub.
 
-```
+```bash
 cd <stack_name you chose>
 
 git init

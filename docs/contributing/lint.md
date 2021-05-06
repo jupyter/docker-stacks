@@ -6,7 +6,7 @@ To integrate and enforce this process in the project lifecycle we are using **gi
 
 ## Pre-commit hook
 
-### Installation
+### Pre-commit hook installation
 
 pre-commit is a Python package that needs to be installed.
 This can be achieved by using the generic task used to install all Python development dependencies.
@@ -21,7 +21,7 @@ $ pip install pre-commit
 Then the git hooks scripts configured for the project in `.pre-commit-config.yaml` need to be installed in the local git repository.
 
 ```sh
-$ make pre-commit-install
+make pre-commit-install
 ```
 
 ### Run
@@ -32,7 +32,7 @@ However it is also possible to trigger it against all files.
 - Note: Hadolint pre-commit uses docker to run, so docker should be running while running this command.
 
 ```sh
-$ make pre-commit-all
+make pre-commit-all
 ```
 
 ## Image Lint

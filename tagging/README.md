@@ -26,7 +26,6 @@ In this section we will briefly describe source code in this folder and give exa
 
 `DockerRunner` is a helper class to easily run a docker container and execute commands inside this container:
 
-
 ```python
 from .docker_runner import DockerRunner
 

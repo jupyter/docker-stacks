@@ -166,11 +166,13 @@ ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 ```
 
 And build the image as:
+
 ```bash
 docker build -t jupyter/scipy-dasklabextension:latest .
 ```
 
 Once built, run using the command:
+
 ```bash
 docker run -it --rm -p 8888:8888 -p 8787:8787 jupyter/scipy-dasklabextension:latest
 ```
@@ -273,6 +275,7 @@ ARG BASE_CONTAINER=ubuntu:focal-20200423@sha256:238e696992ba9913d24cfc3727034985
 ```
 
 For Ubuntu 18.04 (bionic) and earlier, you may also require to workaround for a mandb bug, which was fixed in mandb >= 2.8.6.1:
+
 ```dockerfile
 # https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
 # http://launchpadlibrarian.net/435841763/man-db_2.8.5-2_2.8.6-1.diff.gz
