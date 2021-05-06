@@ -16,13 +16,13 @@ repos:
     rev: v1.26.1
     hooks:
       - id: yamllint
-        args: ['-d {extends: relaxed, rules: {line-length: disable}}', '-s']
+        args: ["-d {extends: relaxed, rules: {line-length: disable}}", "-s"]
         files: \.(yaml|yml)$
   - repo: https://github.com/openstack-dev/bashate.git
     rev: 2.0.0
     hooks:
       - id: bashate
-        args: ['--ignore=E006']
+        args: ["--ignore=E006"]
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.9.1
     hooks:
@@ -35,4 +35,8 @@ repos:
     rev: v0.27.1
     hooks:
       - id: markdownlint
-        args: ['--fix']
+        args: ["--fix"]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.2.1
+    hooks:
+      - id: prettier
