@@ -30,7 +30,7 @@ def append_build_history_line(short_image_name: str, owner: str, wiki_path: str,
     commit_hash_tag = GitHelper.commit_hash_tag()
     links_column = MARKDOWN_LINE_BREAK.join([
         f"[Git diff](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
-        f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/{short_image_name}/Dockerfile)"
+        f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/{short_image_name}/Dockerfile)",
         f"[Build manifest](./{short_image_name}-{commit_hash_tag})"
     ])
     build_history_line = "|".join([date_column, image_column, links_column]) + "|"

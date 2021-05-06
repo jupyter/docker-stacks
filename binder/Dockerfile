@@ -8,6 +8,7 @@ FROM $BASE_CONTAINER
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 ENV TAG="aec555e49be6"
 
+WORKDIR $HOME
 COPY binder/README.ipynb .
 
 # Fix permissions on README.ipynb as root
