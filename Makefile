@@ -25,7 +25,7 @@ ALL_IMAGES:=$(ALL_STACKS)
 
 # Dockerfile Linter
 HADOLINT="${HOME}/hadolint"
-HADOLINT_VERSION="v2.1.0"
+HADOLINT_VERSION="v2.3.0"
 
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1

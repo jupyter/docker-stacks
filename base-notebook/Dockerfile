@@ -44,17 +44,16 @@ ARG miniforge_checksum="c56cc2da96043688c6bdb521d825de27754de0a342d5228ba3155cd9
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get -q update \
- && apt-get install -yq --no-install-recommends \
+RUN apt-get -q update && \
+    apt-get install -yq --no-install-recommends \
     wget \
     ca-certificates \
     sudo \
     locales \
     fonts-liberation \
-    run-one \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    run-one && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
 
 # Configure environment
@@ -159,9 +158,8 @@ USER root
 
 # Prepare upgrade to JupyterLab V3.0 #1205
 RUN sed -re "s/c.NotebookApp/c.ServerApp/g" \
-    /etc/jupyter/jupyter_notebook_config.py > /etc/jupyter/jupyter_server_config.py
-
-RUN fix-permissions /etc/jupyter/
+    /etc/jupyter/jupyter_notebook_config.py > /etc/jupyter/jupyter_server_config.py && \
+    fix-permissions /etc/jupyter/
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER $NB_UID
