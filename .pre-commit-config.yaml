@@ -11,7 +11,6 @@ repos:
       - id: hadolint-docker
         # FIXME: remove after https://github.com/hadolint/hadolint/issues/628 is resolved
         entry: hadolint/hadolint:v2.3.0 hadolint
-        exclude: Dockerfile.ppc64le|Dockerfile.ppc64le.patch
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.26.1
     hooks:
