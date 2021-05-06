@@ -6,11 +6,11 @@ repos:
       - id: check-yaml
         files: .*\.(yaml|yml)$
   - repo: https://github.com/hadolint/hadolint.git
-    rev: v2.1.0
+    rev: v2.3.0
     hooks:
       - id: hadolint-docker
         # FIXME: remove after https://github.com/hadolint/hadolint/issues/628 is resolved
-        entry: hadolint/hadolint:v2.1.0 hadolint
+        entry: hadolint/hadolint:v2.3.0 hadolint
         exclude: Dockerfile.ppc64le|Dockerfile.ppc64le.patch
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.26.1
