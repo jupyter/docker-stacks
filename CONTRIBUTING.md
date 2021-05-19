@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD041 -->
 
 Thanks for contributing! Please see the
-__Contributor Guide__ section in [the documentation](https://jupyter-docker-stacks.readthedocs.io) for
+**Contributor Guide** section in [the documentation](https://jupyter-docker-stacks.readthedocs.io) for
 information about how to contribute
 [package updates](http://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/packages.html),
 [recipes](http://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/recipes.html),

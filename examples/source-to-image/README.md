@@ -1,5 +1,4 @@
-Custom Jupyter Notebook images
-==============================
+# Custom Jupyter Notebook images
 
 This example provides scripts for building custom Jupyter Notebook images containing notebooks, data files, and with Python packages required by the notebooks already installed. The scripts provided work with the Source-to-Image tool and you can create the images from the command line on your own computer. Templates are also provided to enable running builds in OpenShift, as well as deploying the resulting image to OpenShift to make it available.
 
@@ -7,21 +6,19 @@ The build scripts, when used with the Source-to-Image tool, provide similar capa
 
 For separate examples of using JupyterHub with OpenShift, see the project:
 
-* <https://github.com/jupyter-on-openshift/jupyterhub-quickstart>
+- <https://github.com/jupyter-on-openshift/jupyterhub-quickstart>
 
-Source-to-Image Project
------------------------
+## Source-to-Image Project
 
 Source-to-Image (S2I) is an open source project which provides a tool for creating container images. It works by taking a base image, injecting additional source code or files into a running container created from the base image, and running a builder script in the container to process the source code or files to prepare the new image.
 
 Details on the S2I tool, and executable binaries for Linux, macOS and Windows, can be found on GitHub at:
 
-* <https://github.com/openshift/source-to-image>
+- <https://github.com/openshift/source-to-image>
 
 The tool is standalone, and can be used on any system which provides a docker daemon for running containers. To provide an end-to-end capability to build and deploy applications in containers, support for S2I is also integrated into container platforms such as OpenShift.
 
-Getting Started with S2I
-------------------------
+## Getting Started with S2I
 
 As an example of how S2I can be used to create a custom image with a bundled set of notebooks, run:
 
@@ -67,8 +64,7 @@ Executing the command: jupyter notebook
 
 Open your browser on the URL displayed, and you will find the notebooks from the Git repository and can work with them.
 
-The S2I Builder Scripts
------------------------
+## The S2I Builder Scripts
 
 Normally when using S2I, the base image would be S2I enabled and contain the builder scripts needed to prepare the image and define how the application in the image should be run. As the Jupyter Project `docker-stacks` images are not S2I enabled (although they could be), in the above example the `--scripts-url` option has been used to specify that the example builder scripts contained in this directory of this Git repository should be used.
 
@@ -120,8 +116,7 @@ The `run` script in this directory is very simple and just runs the notebook app
 exec start-notebook.sh "$@"
 ```
 
-Integration with OpenShift
---------------------------
+## Integration with OpenShift
 
 The OpenShift platform provides integrated support for S2I type builds. Templates are provided for using the S2I build mechanism with the scripts in this directory. To load the templates run:
 

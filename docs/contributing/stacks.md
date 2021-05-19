@@ -80,27 +80,28 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
    ```yaml
    on:
    pull_request:
-      paths-ignore:
-         - "*.md"
-         - "binder/**"
-         - "docs/**"
-         - "examples/**"
+     paths-ignore:
+       - "*.md"
+       - "binder/**"
+       - "docs/**"
+       - "examples/**"
    push:
-      branches:
-         - master
-         - main
-      paths-ignore:
-         - "*.md"
-         - "binder/**"
-         - "docs/**"
-         - "examples/**"
+     branches:
+       - master
+       - main
+     paths-ignore:
+       - "*.md"
+       - "binder/**"
+       - "docs/**"
+       - "examples/**"
    ```
 
    This will trigger the CI pipeline whenever you push to your `main` or `master` branch and when any Pull Requests are made to your repository. For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/reference/events-that-trigger-workflows).
+
 2. Commit your changes and push to GitHub.
 3. Head back to your repository and click on the **Actions** tab.
-![GitHub actions tab screenshot](../_static/github-actions-tab.png)
-From there, you can click on the workflows on the left-hand side of the screen.
+   ![GitHub actions tab screenshot](../_static/github-actions-tab.png)
+   From there, you can click on the workflows on the left-hand side of the screen.
 4. In the next screen, you will be able to see information about the workflow run and duration. If you click again on the button with the workflow name, you will see the logs for the workflow steps.
    ![Github actions workflow run screenshot](../_static/github-actions-workflow.png)
 
@@ -123,17 +124,17 @@ you merge a GitHub pull request to the master branch of your project.
 9. Click on your avatar on the top-right corner and select Account settings.
    ![Docker account selection screenshot](../_static/docker-org-select.png)
 10. Click on **Security** and then click on the **New Access Token** button.
-   ![Docker account Security settings screenshot](../_static/docker-org-security.png)
+    ![Docker account Security settings screenshot](../_static/docker-org-security.png)
 11. Enter a meaningful name for your token and click on **Create**
-   ![Docker account create new token screenshot](../_static/docker-org-create-token.png)
+    ![Docker account create new token screenshot](../_static/docker-org-create-token.png)
 12. Copy the personal access token displayed on the next screen. **Note that you will not be able to see it again after you close the pop-up window**.
 13. Head back to your GitHub repository and click on the **Settings tab**.
-   ![Github repository settings tab screenshot](../_static/github-create-secrets.png)
+    ![Github repository settings tab screenshot](../_static/github-create-secrets.png)
 14. Click on the **Secrets** section and then on the **New repository secret** button on the top right corner (see image above).
 15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the **value** field.
-   ![GitHub create secret token screenshot](../_static/github-secret-token.png)
-16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the *value* field with your DockerHub username. Once you have completed these steps, your repository secrets section should look something like this:
-   ![GitHub repository secrets created screenshot](../_static/github-secrets-completed.png)
+    ![GitHub create secret token screenshot](../_static/github-secret-token.png)
+16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the _value_ field with your DockerHub username. Once you have completed these steps, your repository secrets section should look something like this:
+    ![GitHub repository secrets created screenshot](../_static/github-secrets-completed.png)
 
 ## Defining Your Image
 
@@ -151,7 +152,7 @@ master or main. Refer to Docker Hub to build your master or main branch that you
 Finally, if you'd like to add a link to your project to this documentation site, please do the
 following:
 
-1. Clone the  [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
+1. Clone the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
 2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section.
 3. Add a bullet with a link to your project and a short description of what your Docker image contains.
 4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)

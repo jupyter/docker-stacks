@@ -6,18 +6,18 @@ This page provides details about features specific to one or more images.
 
 ### Specific Docker Image Options
 
-* `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](http://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
+- `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](http://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
 
 ### Build an Image with a Different Version of Spark
 
 You can build a `pyspark-notebook` image (and also the downstream `all-spark-notebook` image) with a different version of Spark by overriding the default value of the following arguments at build time.
 
-* Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum, see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
-  * `spark_version`: The Spark version to install (`3.0.0`).
-  * `hadoop_version`: The Hadoop version (`3.2`).
-  * `spark_checksum`: The package checksum (`BFE4540...`).
-* Spark can run with different OpenJDK versions.
-  * `openjdk_version`: The version of (JRE headless) the OpenJDK distribution (`11`), see [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
+- Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum, see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
+  - `spark_version`: The Spark version to install (`3.0.0`).
+  - `hadoop_version`: The Hadoop version (`3.2`).
+  - `spark_checksum`: The package checksum (`BFE4540...`).
+- Spark can run with different OpenJDK versions.
+  - `openjdk_version`: The version of (JRE headless) the OpenJDK distribution (`11`), see [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
 
 For example here is how to build a `pyspark-notebook` image with Spark `2.4.6`, Hadoop `2.7` and OpenJDK `8`.
 
@@ -40,7 +40,7 @@ docker run -it --rm jupyter/pyspark-notebook:spark-2.4.7 pyspark --version
 #     _\ \/ _ \/ _ `/ __/  '_/
 #    /___/ .__/\_,_/_/ /_/\_\   version 2.4.7
 #       /_/
-#                         
+#
 # Using Scala version 2.11.12, OpenJDK 64-Bit Server VM, 1.8.0_275
 ```
 
@@ -135,8 +135,7 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
 2. Run the Docker container with `--net=host` in a location that is network addressable by all of
    your Spark workers. (This is a [Spark networking
    requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
-   * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e
-   TINI_SUBREAPER=true`. See <https://github.com/jupyter/docker-stacks/issues/64> for details.
+   - NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See <https://github.com/jupyter/docker-stacks/issues/64> for details.
 
 **Note**: In the following examples we are using the Spark master URL `spark://master:7077` that shall be replaced by the URL of the Spark master.
 

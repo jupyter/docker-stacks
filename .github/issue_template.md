@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD041 -->
+
 Hi! Thanks for using the Jupyter Docker Stacks.
 
 Please review the following guidance about how to ask questions, contribute changes, or report bugs in the Docker images maintained here.
