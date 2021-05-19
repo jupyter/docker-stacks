@@ -8,11 +8,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
-    "env,expected_server",
-    [
-        (["JUPYTER_ENABLE_LAB=yes"], "lab"),
-        (None, "notebook"),
-    ],
+    "env,expected_server", [(["JUPYTER_ENABLE_LAB=yes"], "lab"), (None, "notebook"), ],
 )
 def test_start_notebook(container, http_client, env, expected_server):
     """Test the notebook start-notebook script"""
@@ -31,3 +27,17 @@ def test_start_notebook(container, http_client, env, expected_server):
     if not env:
         msg = "WARN: Jupyter Notebook deprecation notice"
         assert msg in logs, f"Expected warning message {msg} not printed"
+
+
+def test_tini_entrypoint(container, pid=1, command="tini"):
+    """Check that tini is launched as PID 1
+
+    Credits to the following answer for the ps options used in the test:
+    https://superuser.com/questions/632979/if-i-know-the-pid-number-of-a-process-how-can-i-get-its-name
+    """
+    LOGGER.info(f"Test that {command} is launched as PID {pid} ...")
+    c = container.run(tty=True, command=["start.sh"])
+    # Select the PID 1 and get the corresponding command
+    cmd = c.exec_run(f"ps -p {pid} -o comm=")
+    output = cmd.output.decode("utf-8").strip("\n")
+    assert output == command, f"{command} shall be launched as pid {pid}, got {output}"
