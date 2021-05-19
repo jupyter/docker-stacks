@@ -238,7 +238,7 @@ core images and link them below.
   **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule
   and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it.
 
-- [PRP GPU Jupyter repo](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp) and [Registry](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/container_registry): PRP (Pacific Research Platform) maintained registry for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages, and GUI Desktop notebook based on https://github.com/jupyterhub/jupyter-remote-desktop-proxy.
+- [PRP GPU Jupyter repo](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp) and [Registry](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/container_registry): PRP (Pacific Research Platform) maintained registry for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages, and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.
 
 - [cgspatial-notebook](https://github.com/SCiO-systems/cgspatial-notebook) is a community Jupyter
   Docker Stack image. The image includes major geospatial Python & R libraries on top of the
