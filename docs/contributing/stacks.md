@@ -133,7 +133,7 @@ you merge a GitHub pull request to the master branch of your project.
 14. Click on the **Secrets** section and then on the **New repository secret** button on the top right corner (see image above).
 15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the **value** field.
     ![GitHub create secret token screenshot](../_static/github-secret-token.png)
-16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the *value* field with your DockerHub username. Once you have completed these steps, your repository secrets section should look something like this:
+16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the _value_ field with your DockerHub username. Once you have completed these steps, your repository secrets section should look something like this:
     ![GitHub repository secrets created screenshot](../_static/github-secrets-completed.png)
 
 ## Defining Your Image
