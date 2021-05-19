@@ -174,7 +174,7 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 
 Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on GitHub
 Actions. These images are for testing purposes only and are not saved for use. When pull requests
-merge to master, all images rebuild on Docker Cloud and become available to `docker pull` from
+merge to master, all images rebuild on Docker Hub and become available to `docker pull` from
 Docker Hub.
 
 ### Versioning

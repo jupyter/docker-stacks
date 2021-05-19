@@ -9,7 +9,7 @@ Following these steps will:
    `jupyter/minimal-notebook` image.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your
    repository.
-3. Configure Docker Cloud to build and host your images for others to use.
+3. Configure Docker Hub to build and host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.html#community-stacks) in this documentation to include your image.
 
 This approach mirrors how we build and share the core stack images. Feel free to follow it or pave
@@ -38,8 +38,8 @@ of the Docker image name after the slash.
 stack_name [my-jupyter-stack]:
 ```
 
-Enter the user or organization name under which this stack will reside on Docker Cloud / Hub. You
-must have access to manage this Docker Cloud org to push images here and set up automated
+Enter the user or organization name under which this stack will reside on Docker Hub. You
+must have access to manage this Docker Hub organization to push images here and set up automated
 builds.
 
 ```lang-none
@@ -104,9 +104,9 @@ From there, you can click on the workflows on the left-hand side of the screen.
 4. In the next screen, you will be able to see information about the workflow run and duration. If you click again on the button with the workflow name, you will see the logs for the workflow steps.
    ![Github actions workflow run screenshot](../_static/github-actions-workflow.png)
 
-## Configuring Docker Cloud
+## Configuring Docker Hub
 
-Now, configure Docker Cloud to build your stack image and push it to Docker Hub repository whenever
+Now, configure Docker Hub to build your stack image and push it to Docker Hub repository whenever
 you merge a GitHub pull request to the master branch of your project.
 
 1. Visit [https://hub.docker.com/](https://hub.docker.com/) and log in.
@@ -144,7 +144,7 @@ to get a feel for what's possible and best practices.
 
 [Submit pull requests](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)
 to your project repository on GitHub. Ensure your image builds correctly on GitHub actions before merging to
-master or main. Refer to Docker Cloud to build your master or main branch that you can `docker pull`.
+master or main. Refer to Docker Hub to build your master or main branch that you can `docker pull`.
 
 ## Sharing Your Image
 
