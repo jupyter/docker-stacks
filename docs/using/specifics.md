@@ -12,7 +12,7 @@ This page provides details about features specific to one or more images.
 
 You can build a `pyspark-notebook` image (and also the downstream `all-spark-notebook` image) with a different version of Spark by overriding the default value of the following arguments at build time.
 
-* Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum, see [Download Apache Spark](https://spark.apache.org/downloads.html) for more information. At this time the build will only work with the set of versions available on the Apache Spark download page, so it will not work with the archived versions.
+* Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum, see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
   * `spark_version`: The Spark version to install (`3.0.0`).
   * `hadoop_version`: The Hadoop version (`3.2`).
   * `spark_checksum`: The package checksum (`BFE4540...`).
@@ -52,7 +52,7 @@ The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images support t
 
 Spark **local mode** is useful for experimentation on small data when you do not have a Spark cluster available.
 
-##### In Python
+##### Local Mode in Python
 
 In a Python notebook.
 
@@ -69,7 +69,7 @@ rdd.sum()
 # 5050
 ```
 
-##### In R
+##### Local Mode in R
 
 In a R notebook with [SparkR][sparkr].
 
@@ -107,7 +107,7 @@ sdf_len(sc, 100, repartition = 1) %>%
 # 5050
 ```
 
-##### In Scala
+##### Local Mode in Scala
 
 Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
 options in a `%%init_spark` magic cell.
@@ -136,11 +136,11 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
    your Spark workers. (This is a [Spark networking
    requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
    * NOTE: When using `--net=host`, you must also use the flags `--pid=host -e
-   TINI_SUBREAPER=true`. See https://github.com/jupyter/docker-stacks/issues/64 for details.
+   TINI_SUBREAPER=true`. See <https://github.com/jupyter/docker-stacks/issues/64> for details.
 
 **Note**: In the following examples we are using the Spark master URL `spark://master:7077` that shall be replaced by the URL of the Spark master.
 
-##### In Python
+##### Standalone Mode in Python
 
 The **same Python version** need to be used on the notebook (where the driver is located) and on the Spark workers.
 The python version used at driver and worker side can be adjusted by setting the environment variables `PYSPARK_PYTHON` and / or `PYSPARK_DRIVER_PYTHON`, see [Spark Configuration][spark-conf] for more information.
@@ -158,7 +158,7 @@ rdd.sum()
 # 5050
 ```
 
-##### In R
+##### Standalone Mode in R
 
 In a R notebook with [SparkR][sparkr].
 
@@ -195,7 +195,7 @@ sdf_len(sc, 100, repartition = 1) %>%
 # 5050
 ```
 
-##### In Scala
+##### Standalone Mode in Scala
 
 Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
 options in a `%%init_spark` magic cell.

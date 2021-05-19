@@ -23,10 +23,6 @@ endif
 
 ALL_IMAGES:=$(ALL_STACKS)
 
-# Dockerfile Linter
-HADOLINT="${HOME}/hadolint"
-HADOLINT_VERSION="v2.1.0"
-
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
 
@@ -98,15 +94,10 @@ git-commit: ## commit outstading git changes and push to remote
 		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0
 	@cd $(LOCAL_PATH) && git push -u publisher master
 
-hook/%: export COMMIT_MSG?=$(shell git log -1 --pretty=%B)
-hook/%: export GITHUB_SHA?=$(shell git rev-parse HEAD)
-hook/%: export WIKI_PATH?=../wiki
+hook/%: WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
-	BUILD_TIMESTAMP="$$(date -u +%FT%TZ)" \
-	DOCKER_REPO="$(OWNER)/$(notdir $@)" \
-	IMAGE_NAME="$(OWNER)/$(notdir $@):latest" \
-	IMAGE_SHORT_NAME="$(notdir $@)" \
-	$(SHELL) $(notdir $@)/hooks/run_hook
+	python3 -m tagging.tag_image --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
+	python3 -m tagging.create_manifests --short-image-name "$(notdir $@)" --owner "$(OWNER)" --wiki-path "$(WIKI_PATH)"
 
 hook-all: $(foreach I,$(ALL_IMAGES),hook/$(I) ) ## run post-build hooks for all images
 
@@ -123,23 +114,6 @@ img-rm:  ## remove jupyter images
 img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
 	-docker rmi --force $(shell docker images -f "dangling=true" -q) 2> /dev/null
-
-hadolint/%: ARGS?=
-hadolint/%: ## lint the dockerfile(s) for a stack
-	@echo "Linting Dockerfiles in $(notdir $@)..."
-	@git ls-files --exclude='Dockerfile*' --ignored $(notdir $@) | grep -v ppc64 | xargs -L 1 $(HADOLINT) $(ARGS)
-	@echo "Linting done!"
-
-hadolint-all: $(foreach I,$(ALL_IMAGES),hadolint/$(I) ) ## lint all stacks
-
-hadolint-build-test-all: $(foreach I,$(ALL_IMAGES),hadolint/$(I) arch_patch/$(I) build/$(I) test/$(I) ) ## lint, build and test all stacks
-
-hadolint-install: ## install hadolint
-	@echo "Installing hadolint at $(HADOLINT) ..."
-	@curl -sL -o $(HADOLINT) "https://github.com/hadolint/hadolint/releases/download/$(HADOLINT_VERSION)/hadolint-$(shell uname -s)-$(shell uname -m)"
-	@chmod 700 $(HADOLINT)
-	@echo "Installation done!"
-	@$(HADOLINT) --version
 
 pre-commit-all: ## run pre-commit hook on all files
 	@pre-commit run --all-files

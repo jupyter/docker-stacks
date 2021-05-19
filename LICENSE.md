@@ -39,7 +39,7 @@ The Jupyter Development Team is the set of all contributors to the Jupyter proje
 This includes all of the Jupyter subprojects.
 
 The core team that coordinates development on GitHub can be found here:
-https://github.com/jupyter/.
+<https://github.com/jupyter/>.
 
 ## Our Copyright Policy
 

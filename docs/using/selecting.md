@@ -51,7 +51,7 @@ and versioning strategy.
 - Everything in `jupyter/base-notebook`
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 - [git](https://git-scm.com/),
-  [vi](https://vim.org/) (actually `vim-tiny`),
+  [vi](https://www.vim.org) (actually `vim-tiny`),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`), tzdata, and unzip
 
 ### jupyter/r-notebook
@@ -158,7 +158,7 @@ communities.
 - [Apache Toree](https://toree.apache.org/) and
   [spylon-kernel](https://github.com/maxpoint/spylon-kernel) to support Scala code in Jupyter
   notebooks
-- [ggplot2](http://ggplot2.org/), [sparklyr](http://spark.rstudio.com/), and
+- [ggplot2](https://ggplot2.tidyverse.org), [sparklyr](http://spark.rstudio.com/), and
   [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html) packages
 
 ### Image Relationships
@@ -174,7 +174,7 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 
 Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on GitHub
 Actions. These images are for testing purposes only and are not saved for use. When pull requests
-merge to master, all images rebuild on Docker Cloud and become available to `docker pull` from
+merge to master, all images rebuild on Docker Hub and become available to `docker pull` from
 Docker Hub.
 
 ### Versioning
@@ -237,6 +237,8 @@ core images and link them below.
   collaborative notebooks. This is done by generating a Dockerfile, that consists of the
   **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule
   and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it.
+
+- [PRP GPU Jupyter repo](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp) and [Registry](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/container_registry): PRP (Pacific Research Platform) maintained registry for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages, and GUI Desktop notebook based on https://github.com/jupyterhub/jupyter-remote-desktop-proxy.
 
 - [cgspatial-notebook](https://github.com/SCiO-systems/cgspatial-notebook) is a community Jupyter
   Docker Stack image. The image includes major geospatial Python & R libraries on top of the
