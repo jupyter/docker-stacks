@@ -1,9 +1,0 @@
-{
-    "display_name": "Apache Toree (Scala 2.10.4)",
-    "language": "scala",
-    "argv": [
-        "/opt/toree-kernel/bin/toree-kernel",
-        "--profile",
-        "{connection_file}"
-    ]
-}
