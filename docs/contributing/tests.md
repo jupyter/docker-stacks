@@ -10,7 +10,7 @@ repository. This `make` command builds every docker image. After building each i
 command executes `pytest` to run both image-specific tests like those in
 [base-notebook/test/](https://github.com/jupyter/docker-stacks/tree/master/base-notebook/test) and
 common tests defined in [test/](https://github.com/jupyter/docker-stacks/tree/master/test). Both
-kinds of tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/fixture.html)
+kinds of tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/reference/fixtures.html)
 defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/master/conftest.py) file
 at the root of the projects.
 

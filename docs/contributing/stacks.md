@@ -17,7 +17,7 @@ your own path using alternative services and build tools.
 
 ## Creating a Project
 
-First, install [cookiecutter](https://github.com/audreyr/cookiecutter) using pip or conda:
+First, install [cookiecutter](https://github.com/cookiecutter/cookiecutter) using pip or conda:
 
 ```bash
 pip install cookiecutter  # or conda install cookiecutter
@@ -99,10 +99,10 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
    This will trigger the CI pipeline whenever you push to your `main` or `master` branch and when any Pull Requests are made to your repository. For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/reference/events-that-trigger-workflows).
 2. Commit your changes and push to GitHub.
 3. Head back to your repository and click on the **Actions** tab.
-![GitHub actions tab screenshot](../static/../_static/github-actions-tab.png)
+![GitHub actions tab screenshot](../_static/github-actions-tab.png)
 From there, you can click on the workflows on the left-hand side of the screen.
 4. In the next screen, you will be able to see information about the workflow run and duration. If you click again on the button with the workflow name, you will see the logs for the workflow steps.
-   ![Github actions workflow run screenshot](../static/../_static/github-actions-workflow.png)
+   ![Github actions workflow run screenshot](../_static/github-actions-workflow.png)
 
 ## Configuring Docker Cloud
 
@@ -128,12 +128,12 @@ you merge a GitHub pull request to the master branch of your project.
    ![Docker account create new token screenshot](../_static/docker-org-create-token.png)
 12. Copy the personal access token displayed on the next screen. **Note that you will not be able to see it again after you close the pop-up window**.
 13. Head back to your GitHub repository and click on the **Settings tab**.
-   ![Github repository settings tab screenshot](../static/../_static/github-create-secrets.png)
+   ![Github repository settings tab screenshot](../_static/github-create-secrets.png)
 14. Click on the **Secrets** section and then on the **New repository secret** button on the top right corner (see image above).
 15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the **value** field.
-   ![GitHub create secret token screenshot](../static/../_static/github-secret-token.png)
+   ![GitHub create secret token screenshot](../_static/github-secret-token.png)
 16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the *value* field with your DockerHub username. Once you have completed these steps, your repository secrets section should look something like this:
-   ![GitHub repository secrets created screenshot](../static/../_static/github-secrets-completed.png)
+   ![GitHub repository secrets created screenshot](../_static/github-secrets-completed.png)
 
 ## Defining Your Image
 

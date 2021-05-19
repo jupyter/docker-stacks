@@ -9,7 +9,7 @@ your problem.
   [security@ipython.org](mailto:security@iypthon.org), not in the issue trackers
   on GitHub. If you prefer to encrypt your security reports, you can use [this
   PGP public
-  key](https://jupyter-notebook.readthedocs.io/en/stable/_downloads/ipython_security.asc).
+  key](https://github.com/jupyter/jupyter.github.io/blob/master/assets/ipython_security.asc).
 * If you think your problem is unique to the Jupyter Docker Stacks images,
   please search the [jupyter/docker-stacks issue
   tracker](https://github.com/jupyter/docker-stacks/issues) to see if someone

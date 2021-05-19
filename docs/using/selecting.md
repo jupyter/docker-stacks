@@ -51,7 +51,7 @@ and versioning strategy.
 - Everything in `jupyter/base-notebook`
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 - [git](https://git-scm.com/),
-  [vi](https://vim.org/) (actually `vim-tiny`),
+  [vi](https://www.vim.org) (actually `vim-tiny`),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`), tzdata, and unzip
 
 ### jupyter/r-notebook
@@ -158,7 +158,7 @@ communities.
 - [Apache Toree](https://toree.apache.org/) and
   [spylon-kernel](https://github.com/maxpoint/spylon-kernel) to support Scala code in Jupyter
   notebooks
-- [ggplot2](http://ggplot2.org/), [sparklyr](http://spark.rstudio.com/), and
+- [ggplot2](https://ggplot2.tidyverse.org), [sparklyr](http://spark.rstudio.com/), and
   [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html) packages
 
 ### Image Relationships
