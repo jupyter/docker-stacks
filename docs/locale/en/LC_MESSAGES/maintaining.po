@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-19 02:28+0000\n"
+"POT-Creation-Date: 2021-05-19 12:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,30 +18,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: ../../maintaining/tasks.md:1 3c2bc067ce4c46feb55f6b2488e93b98
+#: ../../maintaining/tasks.md:1 36aa984554db45c1975869f92250b196
 msgid "Maintainer Playbook"
 msgstr ""
 
-#: ../../maintaining/tasks.md:3 85f7f8ddb3374f2d96a4d4a6d21c2c44
+#: ../../maintaining/tasks.md:3 e078acfe63c649a9ab5d69e2af34a5b8
 msgid "Merging Pull Requests"
 msgstr ""
 
-#: ../../maintaining/tasks.md:5 f81ee280bb844ec29f31cde6584cf111
+#: ../../maintaining/tasks.md:5 4a920ae0767c48fb89801f3346d37458
 msgid ""
 "To build new images and publish them to the Docker Hub registry, do the "
 "following:"
 msgstr ""
 
-#: ../../maintaining/tasks.md:7 a8a6852ea62d4583b5908f244cca5c8f
+#: ../../maintaining/tasks.md:7 f238f3e5ef6b403598c7b10a584a791e
 msgid "Make sure GitHub Actions status checks pass for the PR."
 msgstr ""
 
 # db74ca47dfde4e558a20aff52176347a
-#: ../../maintaining/tasks.md:8 f70dd29cc1b0441f84267cc7728fc29d
+#: ../../maintaining/tasks.md:8 e80ecb24c1c4461087d0e23b04c3dbf3
 msgid "Merge the PR."
 msgstr ""
 
-#: ../../maintaining/tasks.md:9 a1a0150c58b744e9b7994ce868b6a028
+#: ../../maintaining/tasks.md:9 01b54c05a9c94ad7866faad0a04ce96d
 msgid ""
 "Monitor the merge commit GitHub Actions status. **Note**: we think, "
 "GitHub Actions are quite reliable, so please, investigate, if some error "
@@ -49,18 +49,18 @@ msgid ""
 "after merging to master, except there is an additional `push` step."
 msgstr ""
 
-#: ../../maintaining/tasks.md:12 dd5996da32154cc7a0bc5e4971499bbb
+#: ../../maintaining/tasks.md:12 0670c328c85144a1bc68fe902072c909
 msgid ""
 "Try to avoid merging another PR to master until all pending builds "
 "complete. This way you will know which commit might have broken the build"
 " and also have correct tags for moving tags (like `python` version)."
 msgstr ""
 
-#: ../../maintaining/tasks.md:15 8dfa51663a1f45dd9febf4abfe69a6d8
+#: ../../maintaining/tasks.md:15 eda94117e7a44e6fb5bfbe59f13a45ba
 msgid "Updating the Ubuntu Base Image"
 msgstr ""
 
-#: ../../maintaining/tasks.md:17 1545a1fa966549d68c921700bdd82a4f
+#: ../../maintaining/tasks.md:17 84db97b1fd414f4d901b2da8f46dbf8c
 msgid ""
 "When there's a security fix in the Ubuntu base image or after some time "
 "passes, it's a good idea to update the pinned SHA in the [jupyter/base-"
@@ -70,18 +70,18 @@ msgid ""
 "layer will rebuild."
 msgstr ""
 
-#: ../../maintaining/tasks.md:23 a4a5333072844a9fad65c90c7d613e5c
+#: ../../maintaining/tasks.md:23 761ef16eeb9a4177aa0e9b3823867c58
 msgid "Adding a New Core Image to Docker Hub"
 msgstr ""
 
 # 201f0506bbb24b47b79a5db01db86557
-#: ../../maintaining/tasks.md:25 6cfbce865d4d49b794f40e383f76504f
+#: ../../maintaining/tasks.md:25 21d26aefed8b4e79a85c875180c310e1
 msgid ""
 "When there's a new stack definition, do the following before merging the "
 "PR with the new stack:"
 msgstr ""
 
-#: ../../maintaining/tasks.md:27 d06865dd99804aada0b00e6da95acbea
+#: ../../maintaining/tasks.md:27 24ac42986f19450db063e4a1fc377af1
 msgid ""
 "Ensure the PR includes an update to the stack overview diagram [in the "
 "documentation](https://github.com/jupyter/docker-"
@@ -90,156 +90,158 @@ msgid ""
 "used to create it."
 msgstr ""
 
-#: ../../maintaining/tasks.md:30 904b140ad9344a08933591a3a37b6b56
+#: ../../maintaining/tasks.md:30 29943041fb854312a60bb4523d6e59ab
 msgid ""
-"Ensure the PR updates the [Makefile](../../Makefile) which is used to "
-"build the stacks in order on GitHub Actions."
+"Ensure the PR updates the [Makefile](https://github.com/jupyter/docker-"
+"stacks/blob/master/Makefile) which is used to build the stacks in order "
+"on GitHub Actions."
 msgstr ""
 
-#: ../../maintaining/tasks.md:31 6ef0fed5623b429f90d763250b9a1ea6
+#: ../../maintaining/tasks.md:31 f41c93c16de349e3a2cc7fe406b0ec07
 msgid ""
 "Ensure necessary tags / manifests are added for the new image in the "
-"[tagging](../../tagging) folder."
+"[tagging](https://github.com/jupyter/docker-stacks/blob/master/tagging) "
+"folder."
 msgstr ""
 
-#: ../../maintaining/tasks.md:32 4e89927e5e304ceab8e8d2e5e5715e95
+#: ../../maintaining/tasks.md:32 3910d84b12464d0994343bc94687d370
 msgid ""
 "Create a new repository in the `jupyter` org on Docker Hub named after "
 "the stack folder in the git repo."
 msgstr ""
 
-#: ../../maintaining/tasks.md:34 fe25a79462f9451c9bb897284706119d
+#: ../../maintaining/tasks.md:34 db96376a5df8499c815ac851dc347bc3
 msgid "Grant the `stacks` team permission to write to the repo."
 msgstr ""
 
-#: ../../maintaining/tasks.md:36 ecd9f97984ff4cfabd379d19420306c6
+#: ../../maintaining/tasks.md:36 2a5a492fda5747fc85d452f22d9ecdeb
 msgid "Adding a New Maintainer Account"
 msgstr ""
 
-#: ../../maintaining/tasks.md:38 35bb176407294ee480231d97c84096d7
+#: ../../maintaining/tasks.md:38 501178aca878406e9c2ab67bf96f83c6
 msgid "Visit <https://hub.docker.com/app/jupyter/team/stacks/users>"
 msgstr ""
 
-#: ../../maintaining/tasks.md:39 6d54d171c2094aafbeb8dd9f9dcd385f
+#: ../../maintaining/tasks.md:39 39b4d0876de544fb9515f04e218f5783
 msgid "Add the maintainer's Docker Hub username."
 msgstr ""
 
-#: ../../maintaining/tasks.md:40 e6bad256bb9640c387dd2a485c1f18e5
+#: ../../maintaining/tasks.md:40 d47524198d8a4c47b3d9ad35884d5dcc
 msgid ""
 "Visit <https://github.com/orgs/jupyter/teams/docker-image-"
 "maintainers/members>"
 msgstr ""
 
 # e26ad8ffb6de489988e076e64b6a1415
-#: ../../maintaining/tasks.md:41 82b5d1662c8a4ba5b459fa11cf3e273e
+#: ../../maintaining/tasks.md:41 f8cede6bd2954283b229bbf630dc0ff0
 msgid "Add the maintainer's GitHub username."
 msgstr ""
 
-#: ../../maintaining/tasks.md:43 535518f7a6d84a9bb1e809c05a45e65f
+#: ../../maintaining/tasks.md:43 e8107495b82f46cb8a1185b4cedb899f
 msgid "Pushing a Build Manually"
 msgstr ""
 
-#: ../../maintaining/tasks.md:45 efd25c198e2b4f3e9f1d212357486aac
+#: ../../maintaining/tasks.md:45 ecd857c1ac0740da8d505c2a322376ab
 msgid ""
 "If automated build in Github Actions has got you down, do the following "
 "to push a build manually:"
 msgstr ""
 
 # ead6a3a714ae4a8a9df5585c18260c16
-#: ../../maintaining/tasks.md:47 f08ebfb8719c4e1cb41b43eb3692f4f8
+#: ../../maintaining/tasks.md:47 55b1f456bb36419eb9b21fe0b5eefc86
 msgid "Clone this repository."
 msgstr ""
 
 # 48e1d6954f414fe080d7b4afd9e0c391
-#: ../../maintaining/tasks.md:48 7510082540e14c22a06a3c7cf530c3e6
+#: ../../maintaining/tasks.md:48 32f46bab662d4800adab1d68cb776f3b
 msgid "Check out the git SHA you want to build and publish."
 msgstr ""
 
-#: ../../maintaining/tasks.md:49 88a43beb874d44ad8229a20a62856b1e
+#: ../../maintaining/tasks.md:49 deeb5fdcb9884d49bb3f4f186971c714
 msgid "`docker login` with your Docker Hub credentials."
 msgstr ""
 
-#: ../../maintaining/tasks.md:50 5c5343cdf1d34757844873f3f9240854
+#: ../../maintaining/tasks.md:50 4631479c1957409e9c23bdd18f629f5c
 msgid "Run `make push-all`."
 msgstr ""
 
-#: ../../maintaining/tasks.md:52 fcfadfc4096a42d595079aa658effdd1
+#: ../../maintaining/tasks.md:52 19097ff3ad974841ae59294cf94550cd
 msgid "Enabling a New Doc Language Translation"
 msgstr ""
 
 # 5aafef10dc75417785a79aba203175e5
-#: ../../maintaining/tasks.md:54 0aec4b87ea88447996f13ae8a99cd7ec
+#: ../../maintaining/tasks.md:54 d713c944f43a45fe947e95452b38f4e9
 msgid "First enable translation on Transifex:"
 msgstr ""
 
-#: ../../maintaining/tasks.md:56 a46016568f4643ee8ac10ba569e4789c
+#: ../../maintaining/tasks.md:56 e31efa382a01467b93b42af19213e08f
 msgid ""
 "Visit <https://www.transifex.com/project-jupyter/jupyter-docker-"
 "stacks-1/languages/>."
 msgstr ""
 
-#: ../../maintaining/tasks.md:57 fe9ea2e3276b40c0a0f78d43c4e122cf
+#: ../../maintaining/tasks.md:57 3fd60a8b97a64a298aae4db59581bba6
 msgid "Click _Edit Languages_ in the top right."
 msgstr ""
 
 # 7efe7d98a98b47bd82d697673d277cbd
-#: ../../maintaining/tasks.md:58 7c70ee307608446485a73808818d9ea2
+#: ../../maintaining/tasks.md:58 0036c763567540249116fc3d0489aec3
 msgid "Select the language from the dropdown."
 msgstr ""
 
-#: ../../maintaining/tasks.md:59 8a0d785364f2442d99a94f6ad2e0ce7e
+#: ../../maintaining/tasks.md:59 56eaaf33a60c416286917a1737c0dadd
 msgid "Click _Apply_."
 msgstr ""
 
 # 1e3868ee7dae469f9921516dd7973766
-#: ../../maintaining/tasks.md:61 55cc884e765b415fa559620689867ac9
+#: ../../maintaining/tasks.md:61 1309d33c3d4646899d7183a82387453d
 msgid "Then setup a subproject on ReadTheDocs for the language:"
 msgstr ""
 
-#: ../../maintaining/tasks.md:63 2044355939cb4b20b4478dfe4d4b03cb
+#: ../../maintaining/tasks.md:63 4cc6ee44b1e94f35848244192e79f34d
 msgid "Visit <https://readthedocs.org/dashboard/import/manual/>."
 msgstr ""
 
-#: ../../maintaining/tasks.md:64 ae192b230fac4eca92d82fd6e61a84a3
+#: ../../maintaining/tasks.md:64 06c9fd1794f1460f91302e83c8d303e8
 msgid "Enter _jupyter-docker-stacks-language_abbreviation_ for the project name."
 msgstr ""
 
-#: ../../maintaining/tasks.md:65 56e197ddf5454fd08e18014b68f073c8
+#: ../../maintaining/tasks.md:65 93ca591c2aec455295e029427780c99e
 msgid "Enter <https://github.com/jupyter/docker-stacks> for the URL."
 msgstr ""
 
-#: ../../maintaining/tasks.md:66 e5a370d0287b4125a79666c5d86285c9
+#: ../../maintaining/tasks.md:66 34d2b7ed185043b783fd442fd546618b
 msgid "Check _Edit advanced project options_."
 msgstr ""
 
-#: ../../maintaining/tasks.md:67 3877f9c962ca42688456e3e32af86c1b
+#: ../../maintaining/tasks.md:67 3f8cd130c1074c1e8c63ea8a64c44c13
 msgid "Click _Next_."
 msgstr ""
 
-#: ../../maintaining/tasks.md:68 d364680e0c614182be0afc18500e2b2c
+#: ../../maintaining/tasks.md:68 4b40605b15a340b8a3838311f0aa273c
 msgid "Select the _Language_ from the dropdown on the next screen."
 msgstr ""
 
-#: ../../maintaining/tasks.md:69 1b339f7007504d948dc5dd079e3c5011
+#: ../../maintaining/tasks.md:69 e7c54f72663145daa3e1246b0098e029
 msgid "Click _Finish_."
 msgstr ""
 
 # 529f3729d2474287adec0ff895100248
-#: ../../maintaining/tasks.md:71 99276f9332874287b054e3e4c584ce13
+#: ../../maintaining/tasks.md:71 85238cf75f184dddbc5092e2120b7585
 msgid "Finally link the new language subproject to the top level doc project:"
 msgstr ""
 
-#: ../../maintaining/tasks.md:73 01ad70de042b4f29b65cffde26f83650
+#: ../../maintaining/tasks.md:73 95111d987ea1476693d78445926d09dc
 msgid ""
 "Visit <https://readthedocs.org/dashboard/jupyter-docker-"
 "stacks/translations/>."
 msgstr ""
 
-#: ../../maintaining/tasks.md:74 dc634f693ac84fc398e2ecaef76b3351
+#: ../../maintaining/tasks.md:74 f6b7cf1cc5c84594918602f11be1d867
 msgid "Select the subproject you created from the _Project_ dropdown."
 msgstr ""
 
-#: ../../maintaining/tasks.md:75 799ef3d780b644b3a18476b81e7de1dd
+#: ../../maintaining/tasks.md:75 d8954b48da5f4bee983b451c10a20ea9
 msgid "Click _Add_."
 msgstr ""
 
@@ -752,5 +754,18 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "## Enabling a New Doc Language Translation"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ensure the PR updates the "
+#~ "[Makefile](../../Makefile) which is used to"
+#~ " build the stacks in order on "
+#~ "GitHub Actions."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ensure necessary tags / manifests are"
+#~ " added for the new image in the"
+#~ " [tagging](../../tagging) folder."
 #~ msgstr ""
 
