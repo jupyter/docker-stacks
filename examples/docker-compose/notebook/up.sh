@@ -58,6 +58,7 @@ else
 fi
 
 # Setup environment
+# shellcheck disable=SC1091
 source "$DIR/env.sh"
 
 # Create a Docker volume to store notebooks

@@ -18,10 +18,10 @@ set -e
 
 # letsencrypt certificate server type (default is production).
 # Set `CERT_SERVER=--staging` for staging.
-: ${CERT_SERVER=''}
+: "${CERT_SERVER=''}"
 
 # Create Docker volume to contain the cert
-: ${SECRETS_VOLUME:=my-notebook-secrets}
+: "${SECRETS_VOLUME:=my-notebook-secrets}"
 docker volume create --name $SECRETS_VOLUME 1>/dev/null
 # Generate the cert and save it to the Docker volume
 docker run --rm -it \

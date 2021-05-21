@@ -10,7 +10,7 @@
 export NAME
 
 # Exposed container port
-: ${PORT:=80}
+: "${PORT:=80}"
 export PORT
 
 # Container work volume name

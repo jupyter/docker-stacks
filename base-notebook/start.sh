@@ -21,6 +21,7 @@ run-hooks () {
         case "$f" in
             *.sh)
                 echo "$0: running $f"
+                # shellcheck disable=SC1090
                 source "$f"
                 ;;
             *)
@@ -98,7 +99,7 @@ if [ "$(id -u)" == 0 ] ; then
     # Exec the command as NB_USER with the PATH and the rest of
     # the environment preserved
     run-hooks /usr/local/bin/before-notebook.d
-    echo "Executing the command: ${cmd[@]}"
+    echo "Executing the command: " "${cmd[@]}"
     exec sudo -E -H -u "$NB_USER" PATH="$PATH" XDG_CACHE_HOME="/home/$NB_USER/.cache" PYTHONPATH="${PYTHONPATH:-}" "${cmd[@]}"
 else
     if [[ "$NB_UID" == "$(id -u jovyan 2>/dev/null)" && "$NB_GID" == "$(id -g jovyan 2>/dev/null)" ]]; then
@@ -110,7 +111,7 @@ else
         if [[ "$STATUS" != "0" ]]; then
             if [[ -w /etc/passwd ]]; then
                 echo "Adding passwd file entry for $(id -u)"
-                cat /etc/passwd | sed -e "s/^jovyan:/nayvoj:/" > /tmp/passwd
+                sed -e "s/^jovyan:/nayvoj:/" /etc/passwd > /tmp/passwd
                 echo "jovyan:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
                 cat /tmp/passwd > /etc/passwd
                 rm /tmp/passwd
@@ -127,10 +128,10 @@ else
         # Warn if looks like user want to override uid/gid but hasn't
         # run the container as root.
         if [[ -n "$NB_UID" && "$NB_UID" != "$(id -u)" ]]; then
-            echo 'Container must be run as root to set $NB_UID'
+            echo "Container must be run as root to set NB_UID to $NB_UID"
         fi
         if [[ -n "$NB_GID" && "$NB_GID" != "$(id -g)" ]]; then
-            echo 'Container must be run as root to set $NB_GID'
+            echo "Container must be run as root to set NB_GID to $NB_GID"
         fi
     fi
 
@@ -142,6 +143,6 @@ else
 
     # Execute the command
     run-hooks /usr/local/bin/before-notebook.d
-    echo "Executing the command: ${cmd[@]}"
+    echo "Executing the command: " "${cmd[@]}"
     exec "${cmd[@]}"
 fi
