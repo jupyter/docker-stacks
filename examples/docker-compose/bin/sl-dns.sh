@@ -7,7 +7,7 @@ set -e
 # User must have slcli installed
 which slcli > /dev/null || (echo "SoftLayer cli not found (pip install softlayer)"; exit 1)
 
-USAGE="Usage: `basename $0` machine_name [domain]"
+USAGE="Usage: $(basename "$0") machine_name [domain]"
 E_BADARGS=85
 
 # Machine name is first command line arg
@@ -20,4 +20,4 @@ DOMAIN="${2:-$SOFTLAYER_DOMAIN}" && [ -z "$DOMAIN" ] && \
 
 IP=$(docker-machine ip "$MACHINE_NAME")
 
-slcli dns record-add $DOMAIN $MACHINE_NAME A $IP
+slcli dns record-add "$DOMAIN" "$MACHINE_NAME" A "$IP"
