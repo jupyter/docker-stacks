@@ -116,7 +116,7 @@ notebook
 
 ## Using JupyterHub
 
-You can configure JupyterHub to launcher Docker containers from the Jupyter Docker Stacks images. If you've been following the [Zero to JupyterHub with Kubernetes](http://zero-to-jupyterhub.readthedocs.io/en/latest/) guide, see the [Use an existing Docker image](http://zero-to-jupyterhub.readthedocs.io/en/latest/user-environment.html#use-an-existing-docker-image) section for details. If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://github.com/jupyterhub/dockerspawner#picking-or-building-a-docker-image) instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner) instead.
+You can configure JupyterHub to launcher Docker containers from the Jupyter Docker Stacks images. If you've been following the [Zero to JupyterHub with Kubernetes](https://zero-to-jupyterhub.readthedocs.io/en/latest/) guide, see the [Use an existing Docker image](https://zero-to-jupyterhub.readthedocs.io/en/latest/jupyterhub/customizing/user-environment.html#choose-and-use-an-existing-docker-image) section for details. If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://github.com/jupyterhub/dockerspawner#picking-or-building-a-docker-image) instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner) instead.
 
 ## Using Other Tools and Services
 

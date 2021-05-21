@@ -6,7 +6,7 @@ Please review the following guidance about how to ask questions, contribute chan
 
 1. If you have a general question about using these Docker images or with Jupyter + Docker in general, please post your question in the [Jupyter Discourse Forum](https://discourse.jupyter.org/) so that it can be seen, discussed, and hopefully answered by the community.
 
-2. If you are looking to contribute to the images, please see the [Contributor's Guide](http://jupyter-docker-stacks.readthedocs.io/en/latest/#) in the documentation for our preferred processes.
+2. If you are looking to contribute to the images, please see the [Contributor's Guide](https://jupyter-docker-stacks.readthedocs.io/en/latest/#) in the documentation for our preferred processes.
 
 3. If you are reporting an issue with one of the existing images, please answer the questions below to help us troubleshoot the problem. Please be as thorough as possible.
 

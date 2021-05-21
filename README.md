@@ -3,7 +3,7 @@
 [![Discourse badge](https://img.shields.io/discourse/https/discourse.jupyter.org/users.svg?color=%23f37626)](https://discourse.jupyter.org/ "Jupyter Discourse Forum")
 [![Read the Docs badge](https://img.shields.io/readthedocs/jupyter-docker-stacks.svg)](https://jupyter-docker-stacks.readthedocs.io/en/latest/ "Documentation build status")
 [![DockerHub badge](https://images.microbadger.com/badges/version/jupyter/base-notebook.svg)](https://microbadger.com/images/jupyter/base-notebook "Recent tag/version of jupyter/base-notebook")
-[![Binder badget](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb "Launch a jupyter/base-notebook container on mybinder.org")
+[![Binder badge](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb "Launch a jupyter/base-notebook container on mybinder.org")
 
 Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter)
 containing Jupyter applications and interactive computing tools.
@@ -47,10 +47,10 @@ You can try a
 by simply clicking the preceding link. The image used in binder was last updated on 19 Jan 2021.
 Otherwise, the two examples below may help you get started if
 you [have Docker installed](https://docs.docker.com/install/) know
-[which Docker image](http://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you
+[which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you
 want to use, and want to launch a single Jupyter Notebook server in a container.
 
-The [User Guide on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/) describes additional
+The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) describes additional
 uses and features in detail.
 
 **Example 1:** This command pulls the `jupyter/scipy-notebook` image tagged `17aba6048f44` from
@@ -83,7 +83,7 @@ files written to `~/work` in the container remain intact on the host.
 
 ## Contributing
 
-Please see the [Contributor Guide on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/) for
+Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) for
 information about how to contribute package updates, recipes, features, tests, and community
 maintained stacks.
 
@@ -98,7 +98,7 @@ maintained stacks.
 
 ## Resources
 
-- [Documentation on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/)
+- [Documentation on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/)
 - [Issue Tracker on GitHub](https://github.com/jupyter/docker-stacks)
 - [Jupyter Discourse Forum](https://discourse.jupyter.org/)
 - [Jupyter Website](https://jupyter.org)

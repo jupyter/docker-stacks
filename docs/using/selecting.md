@@ -14,7 +14,7 @@ This section provides details about the first.
 ## Core Stacks
 
 The Jupyter team maintains a set of Docker image definitions in the
-[https://github.com/jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub
+<https://github.com/jupyter/docker-stacks> GitHub
 repository. The following sections describe these images including their contents, relationships,
 and versioning strategy.
 
@@ -66,16 +66,16 @@ and versioning strategy.
 - The [R](https://www.r-project.org/) interpreter and base environment
 - [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
 - [tidyverse](https://www.tidyverse.org/) packages from
-  [conda-forge](https://conda-forge.github.io/feedstocks)
+  [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
 - [devtools](https://cran.r-project.org/web/packages/devtools/index.html),
-  [shiny](https://shiny.rstudio.com/), [rmarkdown](http://rmarkdown.rstudio.com/),
+  [shiny](https://shiny.rstudio.com/), [rmarkdown](https://rmarkdown.rstudio.com),
   [forecast](https://cran.r-project.org/web/packages/forecast/forecast.pdf),
   [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
   [nycflights13](https://cran.r-project.org/web/packages/nycflights13/index.html),
-  [caret](http://topepo.github.io/caret/index.html), [tidymodels](https://www.tidymodels.org/),
+  [caret](https://topepo.github.io/caret/index.html), [tidymodels](https://www.tidymodels.org/),
   [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html), and
   [randomforest](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf) packages
-  from [conda-forge](https://conda-forge.github.io/feedstocks)
+  from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
 
 ### jupyter/scipy-notebook
 
@@ -89,20 +89,20 @@ and versioning strategy.
 - [dask](https://dask.org/), [pandas](https://pandas.pydata.org/),
   [numexpr](https://github.com/pydata/numexpr), [matplotlib](https://matplotlib.org/),
   [scipy](https://www.scipy.org/), [seaborn](https://seaborn.pydata.org/),
-  [scikit-learn](http://scikit-learn.org/stable/), [scikit-image](http://scikit-image.org/),
-  [sympy](http://www.sympy.org/en/index.html), [cython](http://cython.org/),
+  [scikit-learn](https://scikit-learn.org/stable/), [scikit-image](https://scikit-image.org),
+  [sympy](https://www.sympy.org/en/index.html), [cython](https://cython.org),
   [patsy](https://patsy.readthedocs.io/en/latest/),
-  [statsmodel](http://www.statsmodels.org/stable/index.html),
+  [statsmodel](https://www.statsmodels.org/stable/index.html),
   [cloudpickle](https://github.com/cloudpipe/cloudpickle),
-  [dill](https://pypi.python.org/pypi/dill), [numba](https://numba.pydata.org/),
-  [bokeh](https://bokeh.pydata.org/en/latest/), [sqlalchemy](https://www.sqlalchemy.org/),
-  [hdf5](http://www.h5py.org/), [vincent](http://vincent.readthedocs.io/en/latest/),
+  [dill](https://pypi.org/project/dill/), [numba](https://numba.pydata.org/),
+  [bokeh](https://docs.bokeh.org/en/latest/), [sqlalchemy](https://www.sqlalchemy.org/),
+  [hdf5](https://www.h5py.org), [vincent](https://vincent.readthedocs.io/en/latest/),
   [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/),
   [protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial),
-  [xlrd](http://www.python-excel.org/), [bottleneck](https://bottleneck.readthedocs.io/en/latest/),
+  [xlrd](https://www.python-excel.org), [bottleneck](https://bottleneck.readthedocs.io/en/latest/),
   and [pytables](https://www.pytables.org/) packages
 - [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/) and
-  [ipympl](https://github.com/matplotlib/jupyter-matplotlib) for interactive visualizations and
+  [ipympl](https://github.com/matplotlib/ipympl) for interactive visualizations and
   plots in Python notebooks
 - [Facets](https://github.com/PAIR-code/facets) for visualizing machine learning datasets
 
@@ -131,8 +131,8 @@ communities.
   images
 - The [Julia](https://julialang.org/) compiler and base environment
 - [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebooks
-- [HDF5](https://github.com/JuliaIO/HDF5.jl), [Gadfly](http://gadflyjl.org/stable/), and
-  [RDatasets](https://github.com/johnmyleswhite/RDatasets.jl) packages
+- [HDF5](https://github.com/JuliaIO/HDF5.jl), [Gadfly](https://gadflyjl.org/stable/), and
+  [RDatasets](https://github.com/JuliaStats/RDatasets.jl) packages
 
 ### jupyter/pyspark-notebook
 
@@ -156,9 +156,9 @@ communities.
 - Everything in `jupyter/pyspark-notebook` and its ancestor images
 - [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
 - [Apache Toree](https://toree.apache.org/) and
-  [spylon-kernel](https://github.com/maxpoint/spylon-kernel) to support Scala code in Jupyter
+  [spylon-kernel](https://github.com/vericast/spylon-kernel) to support Scala code in Jupyter
   notebooks
-- [ggplot2](https://ggplot2.tidyverse.org), [sparklyr](http://spark.rstudio.com/), and
+- [ggplot2](https://ggplot2.tidyverse.org), [sparklyr](https://spark.rstudio.com), and
   [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html) packages
 
 ### Image Relationships
@@ -228,7 +228,7 @@ core images and link them below.
   [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jbindinga/java-notebook/master).
 
 - [sage-notebook](https://github.com/sharpTrick/sage-notebook) is a community Jupyter Docker Stack
-  image with the [sagemath](https://sagemath.org) kernel on top of the minimal-notebook image. Click
+  image with the [sagemath](https://www.sagemath.org) kernel on top of the minimal-notebook image. Click
   here to launch it on
   [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master).
 

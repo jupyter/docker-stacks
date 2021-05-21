@@ -278,7 +278,7 @@ For Ubuntu 18.04 (bionic) and earlier, you may also require to workaround for a 
 
 ```dockerfile
 # https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
-# http://launchpadlibrarian.net/435841763/man-db_2.8.5-2_2.8.6-1.diff.gz
+# https://launchpadlibrarian.net/435841763/man-db_2.8.5-2_2.8.6-1.diff.gz
 
 RUN echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/man" >> /etc/manpath.config \
     && echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/share/man" >> /etc/manpath.config \
@@ -416,14 +416,14 @@ ENV HADOOP_CONF_DIR  /usr/local/hadoop-2.7.3/etc/hadoop
 
 USER root
 # Add proper open-jdk-8 not just the jre, needed for pydoop
-RUN echo 'deb http://cdn-fastly.deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list && \
+RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list && \
     apt-get -y update && \
     apt-get install --no-install-recommends -t jessie-backports -y openjdk-8-jdk && \
     rm /etc/apt/sources.list.d/jessie-backports.list && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/ && \
 # Add hadoop binaries
-    wget http://mirrors.ukfast.co.uk/sites/ftp.apache.org/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
+    wget https://mirrors.ukfast.co.uk/sites/ftp.apache.org/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
     tar -xvf hadoop-2.7.3.tar.gz -C /usr/local && \
     chown -R $NB_USER:users /usr/local/hadoop-2.7.3 && \
     rm -f hadoop-2.7.3.tar.gz && \
