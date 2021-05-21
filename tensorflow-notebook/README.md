@@ -10,6 +10,6 @@ to Docker Hub.
 Please visit the project documentation site for help using and contributing to this image and
 others.
 
-- [Jupyter Docker Stacks on ReadTheDocs](http://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
-- [Selecting an Image :: Core Stacks :: jupyter/tensorflow-notebook](http://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook)
-- [Image Specifics :: Tensorflow](http://jupyter-docker-stacks.readthedocs.io/en/latest/using/specifics.html#tensorflow)
+- [Jupyter Docker Stacks on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
+- [Selecting an Image :: Core Stacks :: jupyter/tensorflow-notebook](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-tensorflow-notebook)
+- [Image Specifics :: Tensorflow](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/specifics.html#tensorflow)
