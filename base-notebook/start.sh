@@ -99,7 +99,7 @@ if [ "$(id -u)" == 0 ] ; then
     # Exec the command as NB_USER with the PATH and the rest of
     # the environment preserved
     run-hooks /usr/local/bin/before-notebook.d
-    echo "Executing the command: " "${cmd[@]}"
+    echo "Executing the command:" "${cmd[@]}"
     exec sudo -E -H -u "$NB_USER" PATH="$PATH" XDG_CACHE_HOME="/home/$NB_USER/.cache" PYTHONPATH="${PYTHONPATH:-}" "${cmd[@]}"
 else
     if [[ "$NB_UID" == "$(id -u jovyan 2>/dev/null)" && "$NB_GID" == "$(id -g jovyan 2>/dev/null)" ]]; then
@@ -143,6 +143,6 @@ else
 
     # Execute the command
     run-hooks /usr/local/bin/before-notebook.d
-    echo "Executing the command: " "${cmd[@]}"
+    echo "Executing the command:" "${cmd[@]}"
     exec "${cmd[@]}"
 fi
