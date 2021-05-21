@@ -9,9 +9,9 @@ OWNER?=jupyter
 
 # Need to list the images in build dependency order
 ifeq ($(ARCH),ppc64le)
-ALL_STACKS:=base-notebook
+ALL_IMAGES:=base-notebook
 else
-ALL_STACKS:=base-notebook \
+ALL_IMAGES:=base-notebook \
 	minimal-notebook \
 	r-notebook \
 	scipy-notebook \
@@ -21,13 +21,11 @@ ALL_STACKS:=base-notebook \
 	all-spark-notebook
 endif
 
-ALL_IMAGES:=$(ALL_STACKS)
-
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
 
-help:
 # http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+help:
 	@echo "jupyter/docker-stacks"
 	@echo "====================="
 	@echo "Replace % with a stack directory name (e.g., make build/minimal-notebook)"
@@ -37,10 +35,10 @@ help:
 arch_patch/%: ## apply hardware architecture specific patches to the Dockerfile
 	@if [ -e ./$(notdir $@)/Dockerfile.$(ARCH).patch ]; then \
 		if [ -e ./$(notdir $@)/Dockerfile.orig ]; then \
-               		cp -f ./$(notdir $@)/Dockerfile.orig ./$(notdir $@)/Dockerfile;\
-		else\
-                	cp -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.orig;\
-		fi;\
+			cp -f ./$(notdir $@)/Dockerfile.orig ./$(notdir $@)/Dockerfile; \
+		else \
+			cp -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.orig; \
+		fi; \
 		patch -f ./$(notdir $@)/Dockerfile ./$(notdir $@)/Dockerfile.$(ARCH).patch; \
 	fi
 
@@ -107,7 +105,7 @@ img-list: ## list jupyter images
 	@echo "Listing $(OWNER) images ..."
 	docker images "$(OWNER)/*"
 
-img-rm:  ## remove jupyter images
+img-rm: ## remove jupyter images
 	@echo "Removing $(OWNER) images ..."
 	-docker rmi --force $(shell docker images --quiet "$(OWNER)/*") 2> /dev/null
 
