@@ -96,7 +96,7 @@ html_theme_options = {
     'github_user': 'jupyter',
     'github_repo': 'docker-stacks',
     'github_type': 'star',
-    'logo': 'jupyter-logo.png',
+    'logo': 'jupyter-logo.svg',
     'logo_text_align': 'left'
 }
 
