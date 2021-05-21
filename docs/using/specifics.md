@@ -6,7 +6,7 @@ This page provides details about features specific to one or more images.
 
 ### Specific Docker Image Options
 
-- `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](http://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
+- `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](https://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
 
 ### Build an Image with a Different Version of Spark
 
@@ -131,10 +131,10 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
 
 0. Verify that the docker image (check the Dockerfile) and the Spark Cluster which is being
    deployed, run the same version of Spark.
-1. [Deploy Spark in Standalone Mode](http://spark.apache.org/docs/latest/spark-standalone.html).
+1. [Deploy Spark in Standalone Mode](https://spark.apache.org/docs/latest/spark-standalone.html).
 2. Run the Docker container with `--net=host` in a location that is network addressable by all of
    your Spark workers. (This is a [Spark networking
-   requirement](http://spark.apache.org/docs/latest/cluster-overview.html#components).)
+   requirement](https://spark.apache.org/docs/latest/cluster-overview.html#components).)
    - NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See <https://github.com/jupyter/docker-stacks/issues/64> for details.
 
 **Note**: In the following examples we are using the Spark master URL `spark://master:7077` that shall be replaced by the URL of the Spark master.

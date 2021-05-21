@@ -24,7 +24,7 @@ endif
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
 
-# http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+# https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help:
 	@echo "jupyter/docker-stacks"
 	@echo "====================="
