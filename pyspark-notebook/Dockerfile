@@ -55,7 +55,7 @@ RUN cp -p "$SPARK_HOME/conf/spark-defaults.conf.template" "$SPARK_HOME/conf/spar
 USER $NB_UID
 
 # Install pyarrow
-RUN conda install --quiet --yes --satisfied-skip-solve \
+RUN mamba install --quiet --yes --satisfied-skip-solve \
     'pyarrow=4.0.*' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \

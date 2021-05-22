@@ -22,7 +22,7 @@ RUN apt-get update && \
 USER $NB_UID
 
 # R packages
-RUN conda install --quiet --yes \
+RUN mamba install --quiet --yes \
     'r-base=4.0.5' \
     'r-ggplot2=3.3*' \
     'r-irkernel=1.2*' \
@@ -33,7 +33,7 @@ RUN conda install --quiet --yes \
     fix-permissions "/home/${NB_USER}"
 
 # Spylon-kernel
-RUN conda install --quiet --yes 'spylon-kernel=0.4*' && \
+RUN mamba install --quiet --yes 'spylon-kernel=0.4*' && \
     conda clean --all -f -y && \
     python -m spylon_kernel install --sys-prefix && \
     rm -rf "/home/${NB_USER}/.local" && \

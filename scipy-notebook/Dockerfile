@@ -16,6 +16,7 @@ USER $NB_UID
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
+    'altair=4.1.*' \
     'beautifulsoup4=4.9.*' \
     'conda-forge::blas=*=openblas' \
     'bokeh=2.3.*' \
@@ -41,7 +42,6 @@ RUN conda install --quiet --yes \
     'sqlalchemy=1.4.*' \
     'statsmodels=0.12.*' \
     'sympy=1.8.*' \
-    'vincent=0.4.*' \
     'widgetsnbextension=3.5.*'\
     'xlrd=2.0.*' && \
     conda clean --all -f -y && \

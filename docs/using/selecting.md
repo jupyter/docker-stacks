@@ -96,7 +96,7 @@ and versioning strategy.
   [cloudpickle](https://github.com/cloudpipe/cloudpickle),
   [dill](https://pypi.org/project/dill/), [numba](https://numba.pydata.org/),
   [bokeh](https://docs.bokeh.org/en/latest/), [sqlalchemy](https://www.sqlalchemy.org/),
-  [hdf5](https://www.h5py.org), [vincent](https://vincent.readthedocs.io/en/latest/),
+  [hdf5](https://www.h5py.org), [altair](https://altair-viz.github.io),
   [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/),
   [protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial),
   [xlrd](https://www.python-excel.org), [bottleneck](https://bottleneck.readthedocs.io/en/latest/),
