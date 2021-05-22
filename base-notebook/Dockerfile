@@ -44,8 +44,8 @@ ARG miniforge_checksum="cdc6755dba2d6ffce04ef773ff5ad3e7b9878ff05d7fb43c013db94d
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get -q update && \
-    apt-get install -yq --no-install-recommends \
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends \
     tini \
     wget \
     ca-certificates \

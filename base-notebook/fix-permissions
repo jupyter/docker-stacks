@@ -21,7 +21,7 @@ for d in "$@"; do
     find "$d" \
         ! \( \
             -group "${NB_GID}" \
-            -a -perm -g+rwX  \
+            -a -perm -g+rwX \
         \) \
         -exec chgrp "${NB_GID}" {} \; \
         -exec chmod g+rwX {} \;
@@ -29,7 +29,7 @@ for d in "$@"; do
     find "$d" \
         \( \
             -type d \
-            -a ! -perm -6000  \
+            -a ! -perm -6000 \
         \) \
         -exec chmod +6000 {} \;
 done

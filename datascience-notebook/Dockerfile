@@ -19,8 +19,8 @@ ARG julia_version="1.6.0"
 ARG julia_checksum="463b71dc70ca7094c0e0fd6d55d130051a7901e8dec5eb44d6002c57d1bd8585"
 
 # R pre-requisites
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends \
     fonts-dejavu \
     gfortran \
     gcc && \
