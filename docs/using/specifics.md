@@ -19,7 +19,7 @@ You can build a `pyspark-notebook` image (and also the downstream `all-spark-not
 - Spark can run with different OpenJDK versions.
   - `openjdk_version`: The version of (JRE headless) the OpenJDK distribution (`11`), see [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
 
-For example here is how to build a `pyspark-notebook` image with Spark `2.4.6`, Hadoop `2.7` and OpenJDK `8`.
+For example here is how to build a `pyspark-notebook` image with Spark `2.4.7`, Hadoop `2.7` and OpenJDK `8`.
 
 ```bash
 # From the root of the project
@@ -141,7 +141,7 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
 
 ##### Standalone Mode in Python
 
-The **same Python version** need to be used on the notebook (where the driver is located) and on the Spark workers.
+The **same Python version** needs to be used on the notebook (where the driver is located) and on the Spark workers.
 The python version used at driver and worker side can be adjusted by setting the environment variables `PYSPARK_PYTHON` and / or `PYSPARK_DRIVER_PYTHON`, see [Spark Configuration][spark-conf] for more information.
 
 ```python

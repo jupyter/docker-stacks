@@ -66,8 +66,7 @@ RUN conda install --yes --file /tmp/requirements.txt && \
     fix-permissions /home/$NB_USER
 ```
 
-Ref:
-[docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
+Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
 
 ## Add a Python 2.x environment
 
@@ -95,8 +94,7 @@ $CONDA_DIR/envs/python2/bin/kernda -o -y /usr/local/share/jupyter/kernels/python
 USER $NB_USER
 ```
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/440](https://github.com/jupyter/docker-stacks/issues/440)
+Ref: <https://github.com/jupyter/docker-stacks/issues/440>
 
 ## Add a Python 3.x environment
 
@@ -142,10 +140,10 @@ ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
 ## Run JupyterLab
 
 JupyterLab is preinstalled as a notebook extension starting in tag
-[c33a7dc0eece](https://github.com/jupyter/docker-stacks/wiki/Docker-build-history).
+[c33a7dc0eece](https://github.com/jupyter/docker-stacks/pull/355).
 
 Run jupyterlab using a command such as
-`docker run -it --rm -p 8888:8888 jupyter/datascience-notebook start.sh jupyter lab`
+`docker run -it --rm -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes jupyter/datascience-notebook`
 
 ## Dask JupyterLab Extension
 
@@ -177,17 +175,15 @@ Once built, run using the command:
 docker run -it --rm -p 8888:8888 -p 8787:8787 jupyter/scipy-dasklabextension:latest
 ```
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/999](https://github.com/jupyter/docker-stacks/issues/999)
+Ref: <https://github.com/jupyter/docker-stacks/issues/999>
 
 ## Let's Encrypt a Notebook server
 
 See the README for the simple automation here
-[https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy](https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy)
+<https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy>
 which includes steps for requesting and renewing a Let's Encrypt certificate.
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/78](https://github.com/jupyter/docker-stacks/issues/78)
+Ref: <https://github.com/jupyter/docker-stacks/issues/78>
 
 ## Slideshows with Jupyter and RISE
 
@@ -237,8 +233,7 @@ permission errors or connection errors when you create a notebook, be sure that 
 UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the
 [Common Features, Docker Options section](../using/common.html#Docker-Options)
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/199](https://github.com/jupyter/docker-stacks/issues/199)
+Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 
 ## Manpage installation
 
@@ -318,8 +313,7 @@ RUN pip install jupyterhub==0.8.0b1
 
 Credit: [MinRK](https://github.com/jupyter/docker-stacks/issues/423#issuecomment-322767742)
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/177](https://github.com/jupyter/docker-stacks/issues/177)
+Ref: <https://github.com/jupyter/docker-stacks/issues/177>
 
 ## Spark
 
@@ -369,8 +363,7 @@ hadoopConf.set("fs.s3.awsSecretAccessKey", mySecretKey)
 df = sqlContext.read.parquet("s3://myBucket/myKey")
 ```
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/127](https://github.com/jupyter/docker-stacks/issues/127)
+Ref: <https://github.com/jupyter/docker-stacks/issues/127>
 
 ### Using Local Spark JARs
 
@@ -388,8 +381,7 @@ directKafkaStream.pprint()
 ssc.start()
 ```
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/154](https://github.com/jupyter/docker-stacks/issues/154)
+Ref: <https://github.com/jupyter/docker-stacks/issues/154>
 
 ### Using spark-packages.org
 
@@ -398,8 +390,7 @@ If you'd like to use packages from [spark-packages.org](https://spark-packages.o
 for an example of how to specify the package identifier in the environment before creating a
 SparkContext.
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43)
+Ref: <https://github.com/jupyter/docker-stacks/issues/43>
 
 ### Use jupyter/all-spark-notebooks with an existing Spark/YARN cluster
 
@@ -503,8 +494,7 @@ RUN pip install jupyter_contrib_nbextensions && \
     jupyter nbextension enable spellchecker/main --user
 ```
 
-Ref:
-[https://github.com/jupyter/docker-stacks/issues/675](https://github.com/jupyter/docker-stacks/issues/675)
+Ref: <https://github.com/jupyter/docker-stacks/issues/675>
 
 ## Enable auto-sklearn notebooks
 
