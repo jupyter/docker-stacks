@@ -21,8 +21,8 @@ ARG openjdk_version="11"
 ENV APACHE_SPARK_VERSION="${spark_version}" \
     HADOOP_VERSION="${hadoop_version}"
 
-RUN apt-get -y update && \
-    apt-get install --no-install-recommends -y \
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends \
     "openjdk-${openjdk_version}-jre-headless" \
     ca-certificates-java && \
     apt-get clean && rm -rf /var/lib/apt/lists/*

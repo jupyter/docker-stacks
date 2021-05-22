@@ -7,7 +7,7 @@ FROM jupyter/minimal-notebook:55d5ca6be183
 USER root
 
 # Add permanent apt-get installs and other root commands here
-# e.g., RUN apt-get install npm nodejs
+# e.g., RUN apt-get install --yes --no-install-recommends npm nodejs
 
 USER $NB_UID
 

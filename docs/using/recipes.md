@@ -253,11 +253,10 @@ FROM $BASE_CONTAINER
 USER root
 
 # Remove the manpage blacklist, install man, install docs
-RUN rm /etc/dpkg/dpkg.cfg.d/excludes \
-    && apt-get update \
-    && dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install -yq --no-install-recommends --reinstall man \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+RUN rm /etc/dpkg/dpkg.cfg.d/excludes && \
+    apt-get update --yes && \
+    dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install --yes --no-install-recommends --reinstall man && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
 ```
@@ -280,10 +279,9 @@ For Ubuntu 18.04 (bionic) and earlier, you may also require to workaround for a 
 # https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
 # https://launchpadlibrarian.net/435841763/man-db_2.8.5-2_2.8.6-1.diff.gz
 
-RUN echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/man" >> /etc/manpath.config \
-    && echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/share/man" >> /etc/manpath.config \
-    && mandb
-
+RUN echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/man" >> /etc/manpath.config && \
+    echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/share/man" >> /etc/manpath.config && \
+    mandb
 ```
 
 Be sure to check the current base image in `base-notebook` before building.
@@ -417,21 +415,19 @@ ENV HADOOP_CONF_DIR  /usr/local/hadoop-2.7.3/etc/hadoop
 USER root
 # Add proper open-jdk-8 not just the jre, needed for pydoop
 RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list && \
-    apt-get -y update && \
-    apt-get install --no-install-recommends -t jessie-backports -y openjdk-8-jdk && \
+    apt-get update --yes && \
+    apt-get install --yes --no-install-recommends -t jessie-backports openjdk-8-jdk && \
     rm /etc/apt/sources.list.d/jessie-backports.list && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/ && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
 # Add hadoop binaries
     wget https://mirrors.ukfast.co.uk/sites/ftp.apache.org/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
     tar -xvf hadoop-2.7.3.tar.gz -C /usr/local && \
     chown -R $NB_USER:users /usr/local/hadoop-2.7.3 && \
     rm -f hadoop-2.7.3.tar.gz && \
 # Install os dependencies required for pydoop, pyhive
-    apt-get update && \
-    apt-get install --no-install-recommends -y build-essential python-dev libsasl2-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
+    apt-get update --yes && \
+    apt-get install --yes --no-install-recommends build-essential python-dev libsasl2-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
 # Remove the example hadoop configs and replace
 # with those for our cluster.
 # Alternatively this could be mounted as a volume
@@ -521,11 +517,9 @@ FROM jupyter/scipy-notebook:latest
 USER root
 
 # autosklearn requires swig, which no other image has
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends swig && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends swig && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
 
