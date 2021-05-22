@@ -30,7 +30,7 @@ Create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:9f9e5ca8fe5a
+FROM jupyter/datascience-notebook:33add21fab64
 # Install in the default python3 environment
 RUN pip install 'ggplot==0.6.8'
 ```
@@ -46,7 +46,7 @@ packages desired. Next, create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:9f9e5ca8fe5a
+FROM jupyter/datascience-notebook:33add21fab64
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --requirement /tmp/requirements.txt && \
@@ -58,7 +58,7 @@ For conda, the Dockerfile is similar:
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:9f9e5ca8fe5a
+FROM jupyter/datascience-notebook:33add21fab64
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN conda install --yes --file /tmp/requirements.txt && \
@@ -312,7 +312,7 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:5ded1de07260
+FROM jupyter/base-notebook:33add21fab64
 RUN pip install jupyterhub==0.8.0b1
 ```
 
@@ -478,13 +478,13 @@ convenient to launch the server without a password or token. In this case, you s
 For jupyterlab:
 
 ```bash
-docker run jupyter/base-notebook:6d2a05346196 start.sh jupyter lab --LabApp.token=''
+docker run jupyter/base-notebook:33add21fab64 start.sh jupyter lab --LabApp.token=''
 ```
 
 For jupyter classic:
 
 ```bash
-docker run jupyter/base-notebook:6d2a05346196 start.sh jupyter notebook --NotebookApp.token=''
+docker run jupyter/base-notebook:33add21fab64 start.sh jupyter notebook --NotebookApp.token=''
 ```
 
 ## Enable nbextension spellchecker for markdown (or any other nbextension)
