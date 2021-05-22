@@ -2,11 +2,11 @@
 # Distributed under the terms of the Modified BSD License.
 
 # https://hub.docker.com/r/jupyter/base-notebook/tags
-ARG BASE_CONTAINER=jupyter/base-notebook:aec555e49be6
+ARG BASE_CONTAINER=jupyter/base-notebook:33add21fab64
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
-ENV TAG="aec555e49be6"
+ENV TAG="33add21fab64"
 
 WORKDIR $HOME
 COPY binder/README.ipynb .

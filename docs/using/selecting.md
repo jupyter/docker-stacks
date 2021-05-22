@@ -184,13 +184,13 @@ The `latest` tag in each Docker Hub repository tracks the master branch `HEAD` r
 
 Every image on Docker Hub also receives a 12-character tag which corresponds with the git commit SHA
 that triggered the image build. You can inspect the state of the `jupyter/docker-stacks` repository
-for that commit to review the definition of the image (e.g., images with tag 7c45ec67c8e7 were built
+for that commit to review the definition of the image (e.g., images with tag `33add21fab64` were built
 from
-[https://github.com/jupyter/docker-stacks/tree/7c45ec67c8e7](https://github.com/jupyter/docker-stacks/tree/7c45ec67c8e7)).
+<https://github.com/jupyter/docker-stacks/tree/33add21fab64>.
 
 You must refer to git-SHA image tags when stability and reproducibility are important in your work.
-(e.g. `FROM jupyter/scipy-notebook:7c45ec67c8e7`,
-`docker run -it --rm jupyter/scipy-notebook:7c45ec67c8e7`). You should only use `latest` when a
+(e.g. `FROM jupyter/scipy-notebook:33add21fab64`,
+`docker run -it --rm jupyter/scipy-notebook:33add21fab64`). You should only use `latest` when a
 one-off container instance is acceptable (e.g., you want to briefly try a new library in a
 notebook).
 
