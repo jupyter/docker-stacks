@@ -95,7 +95,8 @@ and versioning strategy.
 `jupyter/scipy-notebook` includes popular packages from the scientific Python ecosystem.
 
 - Everything in `jupyter/minimal-notebook` and its ancestor images
-- [beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/),
+- [altair](https://altair-viz.github.io),
+  [beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/),
   [bokeh](https://docs.bokeh.org/en/latest/),
   [bottleneck](https://bottleneck.readthedocs.io/en/latest/),
   [cloudpickle](https://github.com/cloudpipe/cloudpickle),
@@ -118,7 +119,6 @@ and versioning strategy.
   [sqlalchemy](https://www.sqlalchemy.org/),
   [statsmodel](https://www.statsmodels.org/stable/index.html),
   [sympy](https://www.sympy.org/en/index.html),
-  [vincent](https://vincent.readthedocs.io/en/latest/),
   [widgetsnbextension](https://ipywidgets.readthedocs.io/en/latest/user_install.html#installing-in-classic-jupyter-notebook),
   [xlrd](https://www.python-excel.org)
   packages
