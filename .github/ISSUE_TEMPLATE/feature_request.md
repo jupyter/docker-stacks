@@ -1,11 +1,9 @@
 ---
-
 name: Feature request
 about: Suggest an idea for this project
-title: ''
-labels: 'type:Enhancement'
-assignees: ''
-
+title: ""
+labels: "type:Enhancement"
+assignees: ""
 ---
 
 Hi! Thanks for using the Jupyter Docker Stacks.
