@@ -31,6 +31,7 @@ and versioning strategy.
 - [Miniforge](https://github.com/conda-forge/miniforge) Python 3.x in `/opt/conda` with two package managers
   - [conda](https://github.com/conda/conda): "cross-platform, language-agnostic binary package manager".
   - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++".
+- `notebook`, `jupyterhub` and `jupyterlab` packages
 - No preinstalled scientific computing packages
 - Unprivileged user `jovyan` (`uid=1000`, configurable, see options) in group `users` (`gid=100`)
   with ownership over the `/home/jovyan` and `/opt/conda` paths
@@ -52,7 +53,7 @@ and versioning strategy.
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 - [git](https://git-scm.com/),
   [vi](https://www.vim.org) (actually `vim-tiny`),
-  [nano](https://www.nano-editor.org/) (actually `nano-tiny`), tzdata, and unzip
+  [nano](https://www.nano-editor.org/) (actually `nano-tiny`), `tzdata`, and `unzip`
 
 ### jupyter/r-notebook
 
@@ -65,17 +66,25 @@ and versioning strategy.
 - Everything in `jupyter/minimal-notebook` and its ancestor images
 - The [R](https://www.r-project.org/) interpreter and base environment
 - [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
-- [tidyverse](https://www.tidyverse.org/) packages from
-  [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
-- [devtools](https://cran.r-project.org/web/packages/devtools/index.html),
-  [shiny](https://shiny.rstudio.com/), [rmarkdown](https://rmarkdown.rstudio.com),
-  [forecast](https://cran.r-project.org/web/packages/forecast/forecast.pdf),
-  [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
+- [tidyverse](https://www.tidyverse.org/)
+  packages from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
+- [caret](https://topepo.github.io/caret/index.html),
+  [crayon](https://cran.r-project.org/web/packages/crayon/index.html),
+  [devtools](https://cran.r-project.org/web/packages/devtools/index.html),
+  [forecast](https://cran.r-project.org/web/packages/forecast/index.html),
+  [hexbin](https://cran.r-project.org/web/packages/hexbin/index.html),
+  [htmltools](https://cran.r-project.org/web/packages/htmltools/index.html),
+  [htmlwidgets](https://www.htmlwidgets.org),
   [nycflights13](https://cran.r-project.org/web/packages/nycflights13/index.html),
-  [caret](https://topepo.github.io/caret/index.html), [tidymodels](https://www.tidymodels.org/),
-  [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html), and
-  [randomforest](https://cran.r-project.org/web/packages/randomForest/randomForest.pdf) packages
-  from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
+  [randomforest](https://cran.r-project.org/web/packages/randomForest/index.html),
+  [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html),
+  [rmarkdown](https://rmarkdown.rstudio.com),
+  [rodbc](https://cran.r-project.org/web/packages/RODBC/index.html),
+  [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
+  [shiny](https://shiny.rstudio.com/),
+  [tidymodels](https://www.tidymodels.org/),
+  [unixodbc](http://www.unixodbc.org)
+  packages from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
 
 ### jupyter/scipy-notebook
 
@@ -86,25 +95,38 @@ and versioning strategy.
 `jupyter/scipy-notebook` includes popular packages from the scientific Python ecosystem.
 
 - Everything in `jupyter/minimal-notebook` and its ancestor images
-- [dask](https://dask.org/), [pandas](https://pandas.pydata.org/),
-  [numexpr](https://github.com/pydata/numexpr), [matplotlib](https://matplotlib.org/),
-  [scipy](https://www.scipy.org/), [seaborn](https://seaborn.pydata.org/),
-  [scikit-learn](https://scikit-learn.org/stable/), [scikit-image](https://scikit-image.org),
-  [sympy](https://www.sympy.org/en/index.html), [cython](https://cython.org),
-  [patsy](https://patsy.readthedocs.io/en/latest/),
-  [statsmodel](https://www.statsmodels.org/stable/index.html),
+- [beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/),
+  [bokeh](https://docs.bokeh.org/en/latest/),
+  [bottleneck](https://bottleneck.readthedocs.io/en/latest/),
   [cloudpickle](https://github.com/cloudpipe/cloudpickle),
-  [dill](https://pypi.org/project/dill/), [numba](https://numba.pydata.org/),
-  [bokeh](https://docs.bokeh.org/en/latest/), [sqlalchemy](https://www.sqlalchemy.org/),
-  [hdf5](https://www.h5py.org), [vincent](https://vincent.readthedocs.io/en/latest/),
-  [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/),
+  [conda-forge::blas=\*=openblas](https://www.openblas.net),
+  [cython](https://cython.org),
+  [dask](https://dask.org/),
+  [dill](https://pypi.org/project/dill/),
+  [h5py](https://www.h5py.org),
+  [matplotlib-base](https://matplotlib.org/),
+  [numba](https://numba.pydata.org/),
+  [numexpr](https://github.com/pydata/numexpr),
+  [pandas](https://pandas.pydata.org/),
+  [patsy](https://patsy.readthedocs.io/en/latest/),
   [protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial),
-  [xlrd](https://www.python-excel.org), [bottleneck](https://bottleneck.readthedocs.io/en/latest/),
-  and [pytables](https://www.pytables.org/) packages
-- [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/) and
-  [ipympl](https://github.com/matplotlib/ipympl) for interactive visualizations and
-  plots in Python notebooks
-- [Facets](https://github.com/PAIR-code/facets) for visualizing machine learning datasets
+  [pytables](https://www.pytables.org/),
+  [scikit-image](https://scikit-image.org),
+  [scikit-learn](https://scikit-learn.org/stable/),
+  [scipy](https://www.scipy.org/),
+  [seaborn](https://seaborn.pydata.org/),
+  [sqlalchemy](https://www.sqlalchemy.org/),
+  [statsmodel](https://www.statsmodels.org/stable/index.html),
+  [sympy](https://www.sympy.org/en/index.html),
+  [vincent](https://vincent.readthedocs.io/en/latest/),
+  [widgetsnbextension](https://ipywidgets.readthedocs.io/en/latest/user_install.html#installing-in-classic-jupyter-notebook),
+  [xlrd](https://www.python-excel.org)
+  packages
+- [ipympl](https://github.com/matplotlib/ipympl) and
+  [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/)
+  for interactive visualizations and plots in Python notebooks
+- [Facets](https://github.com/PAIR-code/facets)
+  for visualizing machine learning datasets
 
 ### jupyter/tensorflow-notebook
 
@@ -115,8 +137,7 @@ and versioning strategy.
 `jupyter/tensorflow-notebook` includes popular Python deep learning libraries.
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
-- [tensorflow](https://www.tensorflow.org/) and [keras](https://keras.io/) machine learning
-  libraries
+- [tensorflow](https://www.tensorflow.org/) machine learning library
 
 ### jupyter/datascience-notebook
 
@@ -129,10 +150,13 @@ communities.
 
 - Everything in the `jupyter/scipy-notebook` and `jupyter/r-notebook` images, and their ancestor
   images
+- [rpy2](https://rpy2.github.io/doc/latest/html/index.html) package
 - The [Julia](https://julialang.org/) compiler and base environment
 - [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebooks
-- [HDF5](https://github.com/JuliaIO/HDF5.jl), [Gadfly](https://gadflyjl.org/stable/), and
-  [RDatasets](https://github.com/JuliaStats/RDatasets.jl) packages
+- [HDF5](https://github.com/JuliaIO/HDF5.jl),
+  [Gadfly](https://gadflyjl.org/stable/),
+  [RDatasets](https://github.com/JuliaStats/RDatasets.jl)
+  packages
 
 ### jupyter/pyspark-notebook
 
@@ -144,6 +168,7 @@ communities.
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [Apache Spark](https://spark.apache.org/) with Hadoop binaries
+- [pyarrow](https://arrow.apache.org/docs/python/) library
 
 ### jupyter/all-spark-notebook
 
@@ -155,11 +180,11 @@ communities.
 
 - Everything in `jupyter/pyspark-notebook` and its ancestor images
 - [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
-- [Apache Toree](https://toree.apache.org/) and
-  [spylon-kernel](https://github.com/vericast/spylon-kernel) to support Scala code in Jupyter
-  notebooks
-- [ggplot2](https://ggplot2.tidyverse.org), [sparklyr](https://spark.rstudio.com), and
-  [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html) packages
+- [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html),
+  [sparklyr](https://spark.rstudio.com),
+  [ggplot2](https://ggplot2.tidyverse.org)
+  packages
+- [spylon-kernel](https://github.com/vericast/spylon-kernel) to support Scala code in Jupyter notebooks
 
 ### Image Relationships
 
@@ -173,7 +198,7 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 ### Builds
 
 Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on GitHub
-Actions. These images are for testing purposes only and are not saved for use. When pull requests
+Actions. These images are for testing purposes only and are not saved for further use. When pull requests
 merge to master, all images rebuild on Docker Hub and become available to `docker pull` from
 Docker Hub.
 
@@ -185,14 +210,12 @@ The `latest` tag in each Docker Hub repository tracks the master branch `HEAD` r
 Every image on Docker Hub also receives a 12-character tag which corresponds with the git commit SHA
 that triggered the image build. You can inspect the state of the `jupyter/docker-stacks` repository
 for that commit to review the definition of the image (e.g., images with tag `33add21fab64` were built
-from
-<https://github.com/jupyter/docker-stacks/tree/33add21fab64>.
+from <https://github.com/jupyter/docker-stacks/tree/33add21fab64>.
 
 You must refer to git-SHA image tags when stability and reproducibility are important in your work.
-(e.g. `FROM jupyter/scipy-notebook:33add21fab64`,
-`docker run -it --rm jupyter/scipy-notebook:33add21fab64`). You should only use `latest` when a
-one-off container instance is acceptable (e.g., you want to briefly try a new library in a
-notebook).
+(e.g. `FROM jupyter/scipy-notebook:33add21fab64`, `docker run -it --rm jupyter/scipy-notebook:33add21fab64`).
+You should only use `latest` when a one-off container instance is acceptable
+(e.g., you want to briefly try a new library in a notebook).
 
 ## Community Stacks
 
