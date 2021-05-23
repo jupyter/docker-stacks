@@ -15,6 +15,8 @@ if [[ -n "${JUPYTERHUB_API_TOKEN}" ]]; then
 elif [[ -n "${JUPYTER_ENABLE_LAB}" ]]; then
     # shellcheck disable=SC1091
     . /usr/local/bin/start.sh $wrapper jupyter lab "$@"
+elif [[ -n "${NTERACT}" ]]; then
+    . /usr/local/bin/start.sh $wrapper jupyter nteract "$@"
 else
     echo "WARN: Jupyter Notebook deprecation notice https://github.com/jupyter/docker-stacks#jupyter-notebook-deprecation-notice."
     # shellcheck disable=SC1091

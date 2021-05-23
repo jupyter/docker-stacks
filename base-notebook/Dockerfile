@@ -123,7 +123,7 @@ RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${m
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# Install Jupyter Notebook, Lab, and Hub
+# Install Jupyter Notebook, Lab, nteract, and Hub
 # Generate a notebook server config
 # Cleanup temporary files
 # Correct permissions
@@ -132,7 +132,8 @@ RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${m
 RUN conda install --quiet --yes \
     'notebook=6.3.0' \
     'jupyterhub=1.4.1' \
-    'jupyterlab=3.0.15' && \
+    'jupyterlab=3.0.15' \
+    'nteract_on_jupyter=2.1.3' && \
     conda clean --all -f -y && \
     npm cache clean --force && \
     jupyter notebook --generate-config && \
