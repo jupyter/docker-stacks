@@ -21,7 +21,7 @@ RUN apt-get update --yes && \
 
 USER $NB_UID
 
-# R packages
+# R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
     'r-base=4.0.3' \
     'r-ggplot2=3.3*' \
