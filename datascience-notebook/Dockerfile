@@ -67,10 +67,13 @@ RUN conda install --quiet --yes \
     'r-randomforest=4.6*' \
     'r-rcurl=1.98*' \
     'r-rmarkdown=2.7*' \
+    'r-rodbc=1.3*' \
     'r-rsqlite=2.2*' \
     'r-shiny=1.6*' \
+    'r-tidymodels=0.1*' \
     'r-tidyverse=1.3*' \
-    'rpy2=3.4*' && \
+    'rpy2=3.4*' \
+    'unixodbc=2.3.*' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
