@@ -3,6 +3,7 @@ name: Build Docker Images
 on:
   pull_request:
     paths-ignore:
+      - ".github/ISSUE_TEMPLATE/**"
       - "*.md"
       - "binder/**"
       - "docs/**"
@@ -10,7 +11,9 @@ on:
   push:
     branches:
       - master
+      - main
     paths-ignore:
+      - ".github/ISSUE_TEMPLATE/**"
       - "*.md"
       - "binder/**"
       - "docs/**"
