@@ -18,16 +18,16 @@ USER $NB_UID
 RUN conda install --quiet --yes \
     'altair=4.1.*' \
     'beautifulsoup4=4.9.*' \
-    'conda-forge::blas=*=openblas' \
     'bokeh=2.3.*' \
     'bottleneck=1.3.*' \
     'cloudpickle=1.6.*' \
+    'conda-forge::blas=*=openblas' \
     'cython=0.29.*' \
     'dask=2021.5.*' \
     'dill=0.3.*' \
     'h5py=3.2.*' \
-    'ipywidgets=7.6.*' \
     'ipympl=0.7.*'\
+    'ipywidgets=7.6.*' \
     'matplotlib-base=3.4.*' \
     'numba=0.53.*' \
     'numexpr=2.7.*' \

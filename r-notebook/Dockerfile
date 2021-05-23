@@ -23,7 +23,7 @@ RUN ln -s /bin/tar /bin/gtar
 
 USER $NB_UID
 
-# R packages
+# R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
     'r-base=4.0.5' \
     'r-caret=6.*' \
@@ -41,9 +41,9 @@ RUN conda install --quiet --yes \
     'r-rodbc=1.3*' \
     'r-rsqlite=2.2*' \
     'r-shiny=1.6*' \
+    'r-tidymodels=0.1*' \
     'r-tidyverse=1.3*' \
-    'unixodbc=2.3.*' \
-    'r-tidymodels=0.1*' && \
+    'unixodbc=2.3.*' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
