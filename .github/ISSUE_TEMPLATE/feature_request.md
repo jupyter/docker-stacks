@@ -1,5 +1,3 @@
-# Feature request
-
 ---
 
 name: Feature request

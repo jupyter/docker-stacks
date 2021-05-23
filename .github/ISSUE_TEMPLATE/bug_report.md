@@ -1,5 +1,3 @@
-# Bug report
-
 ---
 
 name: Bug report
