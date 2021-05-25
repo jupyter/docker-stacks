@@ -102,8 +102,8 @@ This means that so long as a set of notebook files provides one of these files l
 A final step is:
 
 ```bash
-fix-permissions $CONDA_DIR
-fix-permissions /home/$NB_USER
+fix-permissions "${CONDA_DIR}"
+fix-permissions "/home/${NB_USER}"
 ```
 
 This fixes up permissions on any new files created by the build. This is necessary to ensure that when the image is run, you can still install additional files. This is important for when an image is run in `sudo` mode, or it is hosted in a more secure container platform such as Kubernetes/OpenShift where it will be run as a set user ID that isn't known in advance.

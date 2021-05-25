@@ -49,4 +49,7 @@ RUN conda install --quiet --yes \
     fix-permissions "/home/${NB_USER}"
 
 # Install e1071 R package (dependency of the caret R package)
-RUN conda install --quiet --yes r-e1071
+RUN conda install --quiet --yes r-e1071 && \
+    conda clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"

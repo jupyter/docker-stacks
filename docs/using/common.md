@@ -105,13 +105,23 @@ You can bypass the provided scripts and specify an arbitrary start command. If y
 
 The default Python 3.x [Conda environment](https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html) resides in `/opt/conda`. The `/opt/conda/bin` directory is part of the default `jovyan` user's `$PATH`. That directory is also whitelisted for use in `sudo` commands by the `start.sh` script.
 
-The `jovyan` user has full read/write access to the `/opt/conda` directory. You can use either `conda`, `mamba` or `pip` to install new packages without any additional permissions.
+The `jovyan` user has full read/write access to the `/opt/conda` directory. You can use either `pip`, `conda` or `mamba` to install new packages without any additional permissions.
 
 ```bash
-# install a package into the default (python 3.x) environment
-pip install some-package
-conda install some-package
-mamba install some-package
+# install a package into the default (python 3.x) environment and cleanup after the installation
+pip install --quiet --no-cache-dir some-package && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+conda install --quiet --yes some-package && \
+    conda clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+mamba install --quiet --yes some-package && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 ### Using alternative channels
@@ -126,5 +136,8 @@ conda install --channel defaults humanize
 # configure conda to add default channels at the top of the list
 conda config --system --prepend channels defaults
 # install a package
-conda install humanize
+conda install --quiet --yes humanize && \
+    conda clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
