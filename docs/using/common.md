@@ -137,7 +137,7 @@ conda install --channel defaults humanize
 conda config --system --prepend channels defaults
 # install a package
 conda install --quiet --yes humanize && \
-    mamba clean --all -f -y && \
+    conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
