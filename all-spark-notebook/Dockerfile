@@ -28,13 +28,13 @@ RUN mamba install --quiet --yes \
     'r-irkernel=1.2*' \
     'r-rcurl=1.98*' \
     'r-sparklyr=1.6*' && \
-    conda clean --all -f -y && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
 # Spylon-kernel
 RUN mamba install --quiet --yes 'spylon-kernel=0.4*' && \
-    conda clean --all -f -y && \
+    mamba clean --all -f -y && \
     python -m spylon_kernel install --sys-prefix && \
     rm -rf "/home/${NB_USER}/.local" && \
     fix-permissions "${CONDA_DIR}" && \
