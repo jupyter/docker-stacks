@@ -80,7 +80,7 @@ JupyterLab, where `hostname` is the name of the computer running docker and `tok
 token printed in the console. Docker destroys the container after notebook server exit, but any
 files written to `~/work` in the container remain intact on the host.
 
-    docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes -v "$PWD":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
+    docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
 
 ## Contributing
 

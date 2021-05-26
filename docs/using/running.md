@@ -55,7 +55,7 @@ d67fe77f1a84
 **Example 2** This command pulls the `jupyter/r-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host. It then starts a container running a Jupyter Notebook server and exposes the server on host port 10000. The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the the correct host port (10000).
 
 ```bash
-$ docker run --rm -p 10000:8888 -v "$PWD":/home/jovyan/work jupyter/r-notebook:33add21fab64
+$ docker run --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:33add21fab64
 
 Executing the command: jupyter notebook
 [I 19:31:09.573 NotebookApp] Writing notebook server cookie secret to /home/jovyan/.local/share/jupyter/runtime/notebook_cookie_secret

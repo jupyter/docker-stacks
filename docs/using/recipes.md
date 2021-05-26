@@ -84,17 +84,17 @@ FROM jupyter/scipy-notebook:latest
 # Create a Python 2.x environment using conda including at least the ipython kernel
 # and the kernda utility. Add any additional packages you want available for use
 # in a Python 2 notebook to the first line here (e.g., pandas, matplotlib, etc.)
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/python2 python=2.7 ipython ipykernel kernda && \
+RUN conda create --quiet --yes -p "${CONDA_DIR}/envs/python2" python=2.7 ipython ipykernel kernda && \
     conda clean --all -f -y
 
 USER root
 
 # Create a global kernelspec in the image and modify it so that it properly activates
 # the python2 conda environment.
-RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install && \
-$CONDA_DIR/envs/python2/bin/kernda -o -y /usr/local/share/jupyter/kernels/python2/kernel.json
+RUN "${CONDA_DIR}/envs/python2/bin/python" -m ipykernel install && \
+    "${CONDA_DIR}/envs/python2/bin/kernda" -o -y /usr/local/share/jupyter/kernels/python2/kernel.json
 
-USER $NB_USER
+USER ${NB_UID}
 ```
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/440>
@@ -113,28 +113,28 @@ ARG conda_env=python36
 ARG py_ver=3.6
 
 # you can add additional libraries you want conda to install by listing them below the first line and ending with "&& \"
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/$conda_env python=$py_ver ipython ipykernel && \
+RUN conda create --quiet --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
     conda clean --all -f -y
 
 # alternatively, you can comment out the lines above and uncomment those below
 # if you'd prefer to use a YAML file present in the docker build context
 
-# COPY --chown=${NB_UID}:${NB_GID} environment.yml /home/$NB_USER/tmp/
-# RUN cd /home/$NB_USER/tmp/ && \
-#     conda env create -p $CONDA_DIR/envs/$conda_env -f environment.yml && \
+# COPY --chown=${NB_UID}:${NB_GID} environment.yml "/home/${NB_USER}/tmp/"
+# RUN cd "/home/${NB_USER}/tmp/" && \
+#     conda env create -p "${CONDA_DIR}/envs/${conda_env}" -f environment.yml && \
 #     conda clean --all -f -y
 
 
 # create Python 3.x environment and link it to jupyter
-RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=${conda_env} && \
+RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --name="${conda_env}" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
 # any additional pip installs can be added by uncommenting the following line
-# RUN $CONDA_DIR/envs/${conda_env}/bin/pip install
+# RUN "${CONDA_DIR}/envs/${conda_env}/bin/pip" install
 
 # prepend conda environment to path
-ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
+ENV PATH "${CONDA_DIR}/envs/${conda_env}/bin:${PATH}"
 
 # if you want this environment to be the default one, uncomment the following line:
 # ENV CONDA_DEFAULT_ENV ${conda_env}
@@ -266,7 +266,7 @@ RUN rm /etc/dpkg/dpkg.cfg.d/excludes && \
     dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install --yes --no-install-recommends --reinstall man && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-USER $NB_UID
+USER ${NB_UID}
 ```
 
 Adding the documentation on top of an existing singleuser image wastes a lot of space and requires
@@ -428,7 +428,7 @@ RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > 
 # Add hadoop binaries
     wget https://mirrors.ukfast.co.uk/sites/ftp.apache.org/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
     tar -xvf hadoop-2.7.3.tar.gz -C /usr/local && \
-    chown -R $NB_USER:users /usr/local/hadoop-2.7.3 && \
+    chown -R "${NB_USER}:users" /usr/local/hadoop-2.7.3 && \
     rm -f hadoop-2.7.3.tar.gz && \
 # Install os dependencies required for pydoop, pyhive
     apt-get update --yes && \
@@ -447,13 +447,13 @@ RUN echo "spark.driver.extraJavaOptions -Dhdp.version=2.5.3.0-37" >> /usr/local/
     echo "spark.yarn.am.extraJavaOptions -Dhdp.version=2.5.3.0-37" >> /usr/local/spark/conf/spark-defaults.conf && \
     echo "spark.master=yarn" >>  /usr/local/spark/conf/spark-defaults.conf && \
     echo "spark.hadoop.yarn.timeline-service.enabled=false" >> /usr/local/spark/conf/spark-defaults.conf && \
-    chown -R $NB_USER:users /usr/local/spark/conf/spark-defaults.conf && \
+    chown -R "${NB_USER}:users" /usr/local/spark/conf/spark-defaults.conf && \
     # Create an alternative HADOOP_CONF_HOME so we can mount as a volume and repoint
     # using ENV var if needed
     mkdir -p /etc/hadoop/conf/ && \
-    chown $NB_USER:users /etc/hadoop/conf/
+    chown "${NB_USER}":users /etc/hadoop/conf/
 
-USER $NB_USER
+USER ${NB_UID}
 
 # Install useful jupyter extensions and python libraries like :
 # - Dashboards
@@ -468,7 +468,7 @@ RUN pip install --quiet --no-cache-dir jupyter_dashboards faker && \
 USER root
 # Ensure we overwrite the kernel config so that toree connects to cluster
 RUN jupyter toree install --sys-prefix --spark_opts="--master yarn --deploy-mode client --driver-memory 512m  --executor-memory 512m  --executor-cores 1 --driver-java-options -Dhdp.version=2.5.3.0-37 --conf spark.hadoop.yarn.timeline-service.enabled=false"
-USER $NB_USER
+USER ${NB_UID}
 ```
 
 Credit: [britishbadger](https://github.com/britishbadger) from
@@ -503,7 +503,7 @@ NB: this works for classic notebooks only
 # Update with your base image of choice
 FROM jupyter/minimal-notebook:latest
 
-USER $NB_USER
+USER ${NB_UID}
 
 RUN pip install --quiet --no-cache-dir jupyter_contrib_nbextensions && \
     jupyter contrib nbextension install --user && \
@@ -530,7 +530,7 @@ RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends swig && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-USER $NB_UID
+USER ${NB_UID}
 
 RUN pip install --quiet --no-cache-dir auto-sklearn && \
     fix-permissions "${CONDA_DIR}" && \
@@ -548,11 +548,11 @@ ARG DELTA_CORE_VERSION="0.8.0"
 
 USER root
 
-RUN echo "spark.jars.packages io.delta:delta-core_2.12:${DELTA_CORE_VERSION}" >> $SPARK_HOME/conf/spark-defaults.conf && \
-    echo 'spark.sql.extensions io.delta.sql.DeltaSparkSessionExtension' >> $SPARK_HOME/conf/spark-defaults.conf && \
-    echo 'spark.sql.catalog.spark_catalog org.apache.spark.sql.delta.catalog.DeltaCatalog' >> $SPARK_HOME/conf/spark-defaults.conf
+RUN echo "spark.jars.packages io.delta:delta-core_2.12:${DELTA_CORE_VERSION}" >> "${SPARK_HOME}/conf/spark-defaults.conf" && \
+    echo 'spark.sql.extensions io.delta.sql.DeltaSparkSessionExtension' >> "${SPARK_HOME}/conf/spark-defaults.conf" && \
+    echo 'spark.sql.catalog.spark_catalog org.apache.spark.sql.delta.catalog.DeltaCatalog' >> "${SPARK_HOME}/conf/spark-defaults.conf"
 
-USER $NB_UID
+USER ${NB_UID}
 
 # Run pyspark and exit to trigger the download of the delta lake jars
 RUN echo "quit()" > /tmp/init-delta.py && \
