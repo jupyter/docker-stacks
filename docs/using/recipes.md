@@ -544,18 +544,22 @@ Please note that the [Delta Lake](https://delta.io/) packages are only available
 ```dockerfile
 FROM jupyter/pyspark-notebook:latest
 
-ARG DELTA_CORE_VERSION="0.8.0"
+ARG DELTA_CORE_VERSION="1.0.0"
+RUN pip install --quiet --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
+     fix-permissions "${HOME}" && \
+     fix-permissions "${CONDA_DIR}"
 
 USER root
 
-RUN echo "spark.jars.packages io.delta:delta-core_2.12:${DELTA_CORE_VERSION}" >> "${SPARK_HOME}/conf/spark-defaults.conf" && \
-    echo 'spark.sql.extensions io.delta.sql.DeltaSparkSessionExtension' >> "${SPARK_HOME}/conf/spark-defaults.conf" && \
+RUN echo 'spark.sql.extensions io.delta.sql.DeltaSparkSessionExtension' >> "${SPARK_HOME}/conf/spark-defaults.conf" && \
     echo 'spark.sql.catalog.spark_catalog org.apache.spark.sql.delta.catalog.DeltaCatalog' >> "${SPARK_HOME}/conf/spark-defaults.conf"
 
 USER ${NB_UID}
 
-# Run pyspark and exit to trigger the download of the delta lake jars
-RUN echo "quit()" > /tmp/init-delta.py && \
-    spark-submit /tmp/init-delta.py && \
+# Trigger download of delta lake files
+RUN echo "from pyspark.sql import SparkSession" > /tmp/init-delta.py && \
+    echo "from delta import *" >> /tmp/init-delta.py && \
+    echo "spark = configure_spark_with_delta_pip(SparkSession.builder).getOrCreate()" >> /tmp/init-delta.py && \
+    python /tmp/init-delta.py && \
     rm /tmp/init-delta.py
 ```
