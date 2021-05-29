@@ -90,15 +90,15 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     mkdir -p $CONDA_DIR && \
     chown $NB_USER:$NB_GID $CONDA_DIR && \
     chmod g+w /etc/passwd && \
-    fix-permissions $HOME && \
-    fix-permissions $CONDA_DIR
+    fix-permissions "${HOME}" && \
+    fix-permissions "${CONDA_DIR}"
 
 USER $NB_UID
 ARG PYTHON_VERSION=default
 
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/$NB_USER/work" && \
-    fix-permissions "/home/$NB_USER"
+    fix-permissions "/home/${NB_USER}"
 
 # Install conda as jovyan and check the sha256 sum provided on the download site
 WORKDIR /tmp
@@ -120,8 +120,8 @@ RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${m
     conda update --all --quiet --yes && \
     conda clean --all -f -y && \
     rm -rf /home/$NB_USER/.cache/yarn && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 # Install Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
@@ -138,8 +138,8 @@ RUN conda install --quiet --yes \
     jupyter notebook --generate-config && \
     jupyter lab clean && \
     rm -rf /home/$NB_USER/.cache/yarn && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 EXPOSE 8888
 

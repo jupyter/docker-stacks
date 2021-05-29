@@ -32,7 +32,9 @@ Create a new Dockerfile like the one shown below.
 # Start from a core stack version
 FROM jupyter/datascience-notebook:33add21fab64
 # Install in the default python3 environment
-RUN pip install 'ggplot==0.6.8'
+RUN pip install --quiet --no-cache-dir 'flake8==3.9.2' && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 Then build a new image.
@@ -49,9 +51,9 @@ packages desired. Next, create a new Dockerfile like the one shown below.
 FROM jupyter/datascience-notebook:33add21fab64
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
-RUN pip install --requirement /tmp/requirements.txt && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+RUN pip install --quiet --no-cache-dir --requirement /tmp/requirements.txt && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 For conda, the Dockerfile is similar:
@@ -62,8 +64,9 @@ FROM jupyter/datascience-notebook:33add21fab64
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN conda install --yes --file /tmp/requirements.txt && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    conda clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
@@ -124,8 +127,8 @@ RUN conda create --quiet --yes -p $CONDA_DIR/envs/$conda_env python=$py_ver ipyt
 
 # create Python 3.x environment and link it to jupyter
 RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=${conda_env} && \
-    fix-permissions $CONDA_DIR && \
-    fix-permissions /home/$NB_USER
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 # any additional pip installs can be added by uncommenting the following line
 # RUN $CONDA_DIR/envs/${conda_env}/bin/pip install
@@ -154,7 +157,9 @@ Run jupyterlab using a command such as
 FROM jupyter/scipy-notebook:latest
 
 # Install the Dask dashboard
-RUN pip install dask-labextension
+RUN pip install --quiet --no-cache-dir dask-labextension && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 # Dask Scheduler & Bokeh ports
 EXPOSE 8787
@@ -192,7 +197,10 @@ notebooks, with no conversion, adding javascript Reveal.js:
 
 ```bash
 # Add Live slideshows with RISE
-RUN conda install -c damianavila82 rise
+RUN conda install --quiet --yes -c damianavila82 rise && \
+    conda clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 Credit: [Paolo D.](https://github.com/pdonorio) based on
@@ -204,11 +212,16 @@ You need to install conda's gcc for Python xgboost to work properly. Otherwise, 
 exception about libgomp.so.1 missing GOMP_4.0.
 
 ```bash
-%%bash
-conda install -y gcc
-pip install xgboost
+conda install --quiet --yes gcc && \
+    conda clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
-import xgboost
+pip install --quiet --no-cache-dir xgboost && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+# run "import xgboost" in python
 ```
 
 ## Running behind a nginx proxy
@@ -308,7 +321,9 @@ version in the Hub itself.
 
 ```dockerfile
 FROM jupyter/base-notebook:33add21fab64
-RUN pip install jupyterhub==0.8.0b1
+RUN pip install --quiet --no-cache-dir jupyterhub==1.4.1 && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 Credit: [MinRK](https://github.com/jupyter/docker-stacks/issues/423#issuecomment-322767742)
@@ -444,9 +459,11 @@ USER $NB_USER
 # - Dashboards
 # - PyDoop
 # - PyHive
-RUN pip install jupyter_dashboards faker && \
+RUN pip install --quiet --no-cache-dir jupyter_dashboards faker && \
     jupyter dashboards quick-setup --sys-prefix && \
-    pip2 install pyhive pydoop thrift sasl thrift_sasl faker
+    pip2 install --quiet --no-cache-dir pyhive pydoop thrift sasl thrift_sasl faker && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 USER root
 # Ensure we overwrite the kernel config so that toree connects to cluster
@@ -488,10 +505,12 @@ FROM jupyter/minimal-notebook:latest
 
 USER $NB_USER
 
-RUN pip install jupyter_contrib_nbextensions && \
+RUN pip install --quiet --no-cache-dir jupyter_contrib_nbextensions && \
     jupyter contrib nbextension install --user && \
     # can modify or enable additional extensions here
-    jupyter nbextension enable spellchecker/main --user
+    jupyter nbextension enable spellchecker/main --user && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/675>
@@ -513,7 +532,9 @@ RUN apt-get update --yes && \
 
 USER $NB_UID
 
-RUN pip install --quiet --no-cache-dir auto-sklearn
+RUN pip install --quiet --no-cache-dir auto-sklearn && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 ## Enable Delta Lake in Spark notebooks
@@ -523,18 +544,22 @@ Please note that the [Delta Lake](https://delta.io/) packages are only available
 ```dockerfile
 FROM jupyter/pyspark-notebook:latest
 
-ARG DELTA_CORE_VERSION="0.8.0"
+ARG DELTA_CORE_VERSION="1.0.0"
+RUN pip install --quiet --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
+     fix-permissions "${HOME}" && \
+     fix-permissions "${CONDA_DIR}"
 
 USER root
 
-RUN echo "spark.jars.packages io.delta:delta-core_2.12:${DELTA_CORE_VERSION}" >> $SPARK_HOME/conf/spark-defaults.conf && \
-    echo 'spark.sql.extensions io.delta.sql.DeltaSparkSessionExtension' >> $SPARK_HOME/conf/spark-defaults.conf && \
+RUN echo 'spark.sql.extensions io.delta.sql.DeltaSparkSessionExtension' >> $SPARK_HOME/conf/spark-defaults.conf && \
     echo 'spark.sql.catalog.spark_catalog org.apache.spark.sql.delta.catalog.DeltaCatalog' >> $SPARK_HOME/conf/spark-defaults.conf
 
 USER $NB_UID
 
-# Run pyspark and exit to trigger the download of the delta lake jars
-RUN echo "quit()" > /tmp/init-delta.py && \
-    spark-submit /tmp/init-delta.py && \
+# Trigger download of delta lake files
+RUN echo "from pyspark.sql import SparkSession" > /tmp/init-delta.py && \
+    echo "from delta import *" >> /tmp/init-delta.py && \
+    echo "spark = configure_spark_with_delta_pip(SparkSession.builder).getOrCreate()" >> /tmp/init-delta.py && \
+    python /tmp/init-delta.py && \
     rm /tmp/init-delta.py
 ```
