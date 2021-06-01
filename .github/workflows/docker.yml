@@ -33,11 +33,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: main
-      - name: Clone Wiki
-        uses: actions/checkout@v2
-        with:
-          repository: ${{github.repository}}.wiki
-          path: wiki
       - name: Set Up Python
         uses: actions/setup-python@v2
         with:
@@ -51,8 +46,20 @@ jobs:
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
+      - name: Clone Wiki
+        uses: actions/checkout@v2
+        with:
+          repository: ${{github.repository}}.wiki
+          path: wiki
       - name: Run Post-Build Hooks
         run: make -C main hook-all
+      - name: Push Wiki to GitHub
+        if: github.ref == 'refs/heads/master'
+        # Pass GITHUB_REPOSITORY directly to avoid conflict with GitHub Actions built-in env var
+        run: make -C main git-commit GITHUB_REPOSITORY='${{github.repository}}.wiki'
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          LOCAL_PATH: ../wiki
       - name: Login to Docker Hub
         if: github.ref == 'refs/heads/master'
         run: >
@@ -61,10 +68,3 @@ jobs:
       - name: Push Images to DockerHub
         if: github.ref == 'refs/heads/master'
         run: make -C main push-all
-      - name: Push Wiki to GitHub
-        if: github.ref == 'refs/heads/master'
-        # Pass GITHUB_REPOSITORY directly to avoid conflict with GitHub Actions built-in env var
-        run: make -C main git-commit GITHUB_REPOSITORY='${{github.repository}}.wiki'
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          LOCAL_PATH: ../wiki
