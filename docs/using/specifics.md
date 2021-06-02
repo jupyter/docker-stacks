@@ -237,11 +237,11 @@ However, it has to be done by `root` so it should only be considered to build cu
 
 ```dockerfile
 USER root
-RUN echo "spark.jars.packages org.elasticsearch:elasticsearch-spark-30_2.12:7.13.0" >> $SPARK_HOME/conf/spark-defaults.conf
-USER $NB_UID
+RUN echo "spark.jars.packages org.elasticsearch:elasticsearch-spark-30_2.12:7.13.0" >> "${SPARK_HOME}/conf/spark-defaults.conf"
+USER ${NB_UID}
 ```
 
-Jars will be downloaded dynamically at the creation of the Spark session and stored by default in `$HOME/.ivy2/jars` (can be changed by setting `spark.jars.ivy`).
+Jars will be downloaded dynamically at the creation of the Spark session and stored by default in `${HOME}/.ivy2/jars` (can be changed by setting `spark.jars.ivy`).
 
 _Note: This example is given for [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/hadoop/current/install.html)._
 
