@@ -212,6 +212,39 @@ rdd.sum()
 // 5050
 ```
 
+### Define Spark Dependencies
+
+Spark dependencies can be declared thanks to the `spark.jars.packages` property
+(see [Spark Configuration](https://spark.apache.org/docs/latest/configuration.html#runtime-environment) for more information).
+
+They can be defined as a comma-separated list of Maven coordinates at the creation of the Spark session.
+
+```python
+from pyspark.sql import SparkSession
+
+spark = (
+    SparkSession.builder.appName("elasticsearch")
+    .config(
+        "spark.jars.packages",
+        "org.elasticsearch:elasticsearch-spark-30_2.12:7.13.0"
+    )
+    .getOrCreate()
+)
+```
+
+Dependencies can also be defined in the `spark-defaults.conf`.
+However, it has to be done by `root` so it should only be considered to build custom images.
+
+```dockerfile
+USER root
+RUN echo "spark.jars.packages org.elasticsearch:elasticsearch-spark-30_2.12:7.13.0" >> "${SPARK_HOME}/conf/spark-defaults.conf"
+USER ${NB_UID}
+```
+
+Jars will be downloaded dynamically at the creation of the Spark session and stored by default in `${HOME}/.ivy2/jars` (can be changed by setting `spark.jars.ivy`).
+
+_Note: This example is given for [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/hadoop/current/install.html)._
+
 ## Tensorflow
 
 The `jupyter/tensorflow-notebook` image supports the use of
