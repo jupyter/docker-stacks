@@ -21,7 +21,7 @@ RUN apt-get update --yes && \
 # Fix for devtools https://github.com/conda-forge/r-devtools-feedstock/issues/4
 RUN ln -s /bin/tar /bin/gtar
 
-USER $NB_UID
+USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \

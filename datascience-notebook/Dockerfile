@@ -27,7 +27,7 @@ RUN apt-get update --yes && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Julia dependencies
-# install Julia packages in /opt/julia instead of $HOME
+# install Julia packages in /opt/julia instead of ${HOME}
 ENV JULIA_DEPOT_PATH=/opt/julia \
     JULIA_PKGDIR=/opt/julia \
     JULIA_VERSION="${julia_version}"
@@ -44,13 +44,13 @@ RUN mkdir "/opt/julia-${JULIA_VERSION}" && \
 
 # Show Julia where conda libraries are \
 RUN mkdir /etc/julia && \
-    echo "push!(Libdl.DL_LOAD_PATH, \"$CONDA_DIR/lib\")" >> /etc/julia/juliarc.jl && \
+    echo "push!(Libdl.DL_LOAD_PATH, \"${CONDA_DIR}/lib\")" >> /etc/julia/juliarc.jl && \
     # Create JULIA_PKGDIR \
     mkdir "${JULIA_PKGDIR}" && \
     chown "${NB_USER}" "${JULIA_PKGDIR}" && \
     fix-permissions "${JULIA_PKGDIR}"
 
-USER $NB_UID
+USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
@@ -91,4 +91,4 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     rm -rf "${HOME}/.local" && \
     fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
 
-WORKDIR $HOME
+WORKDIR "${HOME}"
