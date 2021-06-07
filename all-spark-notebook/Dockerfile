@@ -8,8 +8,8 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 USER root
 
 # RSpark config
-ENV R_LIBS_USER $SPARK_HOME/R/lib
-RUN fix-permissions $R_LIBS_USER
+ENV R_LIBS_USER "${SPARK_HOME}/R/lib"
+RUN fix-permissions "${R_LIBS_USER}"
 
 # R pre-requisites
 RUN apt-get update --yes && \
@@ -19,16 +19,15 @@ RUN apt-get update --yes && \
     gcc && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-USER $NB_UID
+USER ${NB_UID}
 
-# R packages
+# R packages including IRKernel which gets installed globally.
 RUN conda install --quiet --yes \
     'r-base=4.0.3' \
     'r-ggplot2=3.3*' \
     'r-irkernel=1.1*' \
     'r-rcurl=1.98*' \
-    'r-sparklyr=1.6*' \
-    && \
+    'r-sparklyr=1.6*' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"

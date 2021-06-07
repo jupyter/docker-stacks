@@ -77,7 +77,7 @@ The supplied `assemble` script performs a few key steps.
 The first steps copy files into the location they need to be when the image is run, from the directory where they are initially placed by the `s2i` command.
 
 ```bash
-cp -Rf /tmp/src/. /home/$NB_USER
+cp -Rf /tmp/src/. "/home/${NB_USER}"
 
 rm -rf /tmp/src
 ```
@@ -85,12 +85,12 @@ rm -rf /tmp/src
 The next steps are:
 
 ```bash
-if [ -f /home/$NB_USER/environment.yml ]; then
-    conda env update --name root --file /home/$NB_USER/environment.yml
+if [ -f "/home/${NB_USER}/environment.yml" ]; then
+    conda env update --name root --file "/home/${NB_USER}/environment.yml"
     conda clean --all -f -y
 else
-    if [ -f /home/$NB_USER/requirements.txt ]; then
-        pip --no-cache-dir install -r /home/$NB_USER/requirements.txt
+    if [ -f "/home/${NB_USER}/requirements.txt" ]; then
+        pip --no-cache-dir install -r "/home/${NB_USER}/requirements.txt"
     fi
 fi
 ```
@@ -102,8 +102,8 @@ This means that so long as a set of notebook files provides one of these files l
 A final step is:
 
 ```bash
-fix-permissions $CONDA_DIR
-fix-permissions /home/$NB_USER
+fix-permissions "${CONDA_DIR}"
+fix-permissions "/home/${NB_USER}"
 ```
 
 This fixes up permissions on any new files created by the build. This is necessary to ensure that when the image is run, you can still install additional files. This is important for when an image is run in `sudo` mode, or it is hosted in a more secure container platform such as Kubernetes/OpenShift where it will be run as a set user ID that isn't known in advance.
