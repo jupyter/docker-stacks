@@ -53,7 +53,7 @@ if [[ "${LETSENCRYPT}" == yes || "${SECURE}" == yes ]]; then
     fi
     export PORT=${PORT:=443}
 else
-    CONFIG="notebook.yml"
+    CONFIG=notebook.yml
     export PORT=${PORT:=80}
 fi
 
