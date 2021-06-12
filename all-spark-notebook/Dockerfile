@@ -22,19 +22,19 @@ RUN apt-get update --yes && \
 USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
-RUN conda install --quiet --yes \
+RUN mamba install --quiet --yes \
     'r-base=4.0.3' \
     'r-ggplot2=3.3*' \
     'r-irkernel=1.1*' \
     'r-rcurl=1.98*' \
     'r-sparklyr=1.6*' && \
-    conda clean --all -f -y && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
 # Spylon-kernel
-RUN conda install --quiet --yes 'spylon-kernel=0.4*' && \
-    conda clean --all -f -y && \
+RUN mamba install --quiet --yes 'spylon-kernel=0.4*' && \
+    mamba clean --all -f -y && \
     python -m spylon_kernel install --sys-prefix && \
     rm -rf "/home/${NB_USER}/.local" && \
     fix-permissions "${CONDA_DIR}" && \
