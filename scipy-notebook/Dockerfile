@@ -23,7 +23,7 @@ RUN conda install --quiet --yes \
     'cloudpickle=1.6.*' \
     'conda-forge::blas=*=openblas' \
     'cython=0.29.*' \
-    'dask=2021.4.*' \
+    'dask=2021.5.*' \
     'dill=0.3.*' \
     'h5py=3.2.*' \
     'ipympl=0.7.*'\
@@ -33,7 +33,7 @@ RUN conda install --quiet --yes \
     'numexpr=2.7.*' \
     'pandas=1.2.*' \
     'patsy=0.5.*' \
-    'protobuf=3.15.*' \
+    'protobuf=3.17.*' \
     'pytables=3.6.*' \
     'scikit-image=0.18.*' \
     'scikit-learn=0.24.*' \

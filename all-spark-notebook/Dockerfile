@@ -23,9 +23,9 @@ USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
 RUN mamba install --quiet --yes \
-    'r-base=4.0.3' \
+    'r-base=4.0.5' \
     'r-ggplot2=3.3*' \
-    'r-irkernel=1.1*' \
+    'r-irkernel=1.2*' \
     'r-rcurl=1.98*' \
     'r-sparklyr=1.6*' && \
     mamba clean --all -f -y && \
