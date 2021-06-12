@@ -55,7 +55,7 @@ RUN cp -p "${SPARK_HOME}/conf/spark-defaults.conf.template" "${SPARK_HOME}/conf/
 USER ${NB_UID}
 
 # Install pyarrow
-RUN mamba install --quiet --yes --satisfied-skip-solve \
+RUN mamba install --quiet --yes \
     'pyarrow=4.0.*' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
