@@ -13,7 +13,7 @@ on:
       - ".github/workflows/sphinx.yml"
 
 jobs:
-  build:
+  build-docs:
     name: Build Sphinx Documentation
     runs-on: ubuntu-latest
     permissions:
