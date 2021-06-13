@@ -23,11 +23,11 @@ USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
 RUN mamba install --quiet --yes \
-    'r-base=4.0.5' \
+    'r-base=4.1.0' \
     'r-ggplot2=3.3*' \
     'r-irkernel=1.2*' \
     'r-rcurl=1.98*' \
-    'r-sparklyr=1.6*' && \
+    'r-sparklyr=1.7*' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"

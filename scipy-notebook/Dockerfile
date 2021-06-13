@@ -23,7 +23,7 @@ RUN conda install --quiet --yes \
     'cloudpickle=1.6.*' \
     'conda-forge::blas=*=openblas' \
     'cython=0.29.*' \
-    'dask=2021.5.*' \
+    'dask=2021.6.*' \
     'dill=0.3.*' \
     'h5py=3.2.*' \
     'ipympl=0.7.*'\
