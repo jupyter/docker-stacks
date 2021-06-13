@@ -26,7 +26,7 @@ USER root
 # Conda version
 ARG conda_version="4.10.1"
 # Miniforge installer patch version
-ARG miniforge_patch_number="0"
+ARG miniforge_patch_number="4"
 # Miniforge installer architecture
 ARG miniforge_arch="x86_64"
 # Package Manager and Python implementation to use (https://github.com/conda-forge/miniforge)
@@ -39,7 +39,7 @@ ARG miniforge_version="${conda_version}-${miniforge_patch_number}"
 # Miniforge installer
 ARG miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh"
 # Miniforge checksum
-ARG miniforge_checksum="d4065b376f81b83cfef0c7316f97bb83337e4ae27eb988828363a578226e3a62"
+ARG miniforge_checksum="9eb335cb559644a6e462c077ebc129af51b7329817574fb707b994dafdddf2af"
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)

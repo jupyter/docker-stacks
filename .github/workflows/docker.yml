@@ -22,7 +22,7 @@ on:
       - ".pre-commit-config.yaml"
 
 jobs:
-  build:
+  build-images:
     name: Build Docker Images
     runs-on: ubuntu-latest
     permissions:
