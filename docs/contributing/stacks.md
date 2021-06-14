@@ -82,18 +82,12 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
    pull_request:
      paths-ignore:
        - "*.md"
-       - "binder/**"
-       - "docs/**"
-       - "examples/**"
    push:
      branches:
        - master
        - main
      paths-ignore:
        - "*.md"
-       - "binder/**"
-       - "docs/**"
-       - "examples/**"
    ```
 
    This will trigger the CI pipeline whenever you push to your `main` or `master` branch and when any Pull Requests are made to your repository. For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/reference/events-that-trigger-workflows).
