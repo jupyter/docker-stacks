@@ -81,14 +81,12 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
    on:
    pull_request:
      paths-ignore:
-       - ".github/ISSUE_TEMPLATE/**"
        - "*.md"
    push:
      branches:
        - master
        - main
      paths-ignore:
-       - ".github/ISSUE_TEMPLATE/**"
        - "*.md"
    ```
 
