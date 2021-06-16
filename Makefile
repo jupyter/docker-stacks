@@ -4,6 +4,7 @@
 
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
+ARCH:=$(shell uname -m)
 OWNER?=jupyter
 
 # Need to list the images in build dependency order
@@ -29,7 +30,7 @@ help:
 
 build/%: DARGS?=
 build/%: ## build the latest image for a stack
-	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
+	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --push --platform linux/arm64,linux/amd64
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 
