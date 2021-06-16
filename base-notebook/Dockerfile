@@ -25,9 +25,7 @@ USER root
 # Conda version
 ARG conda_version="4.10.2"
 # Miniforge installer patch version
-ARG miniforge_patch_number="0"
-# Miniforge installer architecture
-#ARG miniforge_arch="x86_64"
+ARG miniforge_patch_number="5"
 # Package Manager and Python implementation to use (https://github.com/conda-forge/miniforge)
 # - conda only: either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
 # - conda + mamba: either Mambaforge to use Python or Mambaforge-pypy3 to use PyPy
