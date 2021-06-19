@@ -19,6 +19,7 @@ RUN apt-get update --yes && \
     libxrender1 \
     lmodern \
     netcat \
+    openssh-client \
     # ---- nbconvert dependencies ----
     texlive-xetex \
     texlive-fonts-recommended \
