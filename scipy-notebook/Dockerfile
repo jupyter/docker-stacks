@@ -16,34 +16,34 @@ USER ${NB_UID}
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
-    'altair=4.1.*' \
-    'beautifulsoup4=4.9.*' \
-    'bokeh=2.3.*' \
-    'bottleneck=1.3.*' \
-    'cloudpickle=1.6.*' \
+    'altair' \
+    'beautifulsoup4' \
+    'bokeh' \
+    'bottleneck' \
+    'cloudpickle' \
     'conda-forge::blas=*=openblas' \
-    'cython=0.29.*' \
-    'dask=2021.6.*' \
-    'dill=0.3.*' \
-    'h5py=3.2.*' \
-    'ipympl=0.7.*'\
-    'ipywidgets=7.6.*' \
-    'matplotlib-base=3.4.*' \
-    'numba=0.53.*' \
-    'numexpr=2.7.*' \
-    'pandas=1.2.*' \
-    'patsy=0.5.*' \
-    'protobuf=3.17.*' \
-    'pytables=3.6.*' \
-    'scikit-image=0.18.*' \
-    'scikit-learn=0.24.*' \
-    'scipy=1.6.*' \
-    'seaborn=0.11.*' \
-    'sqlalchemy=1.4.*' \
-    'statsmodels=0.12.*' \
-    'sympy=1.8.*' \
-    'widgetsnbextension=3.5.*'\
-    'xlrd=2.0.*' && \
+    'cython' \
+    'dask' \
+    'dill' \
+    'h5py' \
+    'ipympl'\
+    'ipywidgets' \
+    'matplotlib-base' \
+    'numba' \
+    'numexpr' \
+    'pandas' \
+    'patsy' \
+    'protobuf' \
+    'pytables' \
+    'scikit-image' \
+    'scikit-learn' \
+    'scipy' \
+    'seaborn' \
+    'sqlalchemy' \
+    'statsmodels' \
+    'sympy' \
+    'widgetsnbextension'\
+    'xlrd' && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"

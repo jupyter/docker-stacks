@@ -23,17 +23,17 @@ USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
 RUN mamba install --quiet --yes \
-    'r-base=4.1.0' \
-    'r-ggplot2=3.3*' \
-    'r-irkernel=1.2*' \
-    'r-rcurl=1.98*' \
-    'r-sparklyr=1.7*' && \
+    'r-base' \
+    'r-ggplot2' \
+    'r-irkernel' \
+    'r-rcurl' \
+    'r-sparklyr' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
 # Spylon-kernel
-RUN mamba install --quiet --yes 'spylon-kernel=0.4*' && \
+RUN mamba install --quiet --yes 'spylon-kernel' && \
     mamba clean --all -f -y && \
     python -m spylon_kernel install --sys-prefix && \
     rm -rf "/home/${NB_USER}/.local" && \
