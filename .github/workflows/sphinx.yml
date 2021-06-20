@@ -35,13 +35,13 @@ jobs:
       - name: Build Documentation
         run: make docs
       - name: Extract Source Strings
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || 'refs/heads/main'
         working-directory: docs
         run: |
           make gettext
           sphinx-intl update -p _build/gettext -l en
       - name: Push Strings to Master
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || 'refs/heads/main'
         run: make git-commit
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
