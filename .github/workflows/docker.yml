@@ -56,18 +56,18 @@ jobs:
       - name: Run Post-Build Hooks
         run: make -C main hook-all
       - name: Push Wiki to GitHub
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         # Pass GITHUB_REPOSITORY directly to avoid conflict with GitHub Actions built-in env var
         run: make -C main git-commit GITHUB_REPOSITORY='${{github.repository}}.wiki'
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           LOCAL_PATH: ../wiki
       - name: Login to Docker Hub
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         uses: docker/login-action@v1
         with:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
       - name: Push Images to DockerHub
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         run: make -C main push-all

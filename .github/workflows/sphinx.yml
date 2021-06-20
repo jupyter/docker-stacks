@@ -41,7 +41,7 @@ jobs:
           sphinx-build -M gettext ./ ./_build/
           sphinx-intl update -p ./_build/gettext -l en
       - name: Push Strings to Master
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         run: make git-commit
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
