@@ -6,13 +6,13 @@ of the Docker images.
 ## How the Tests Work
 
 GitHub executes `make build-test-all` against pull requests submitted to the `jupyter/docker-stacks`
-repository. This `make` command builds every docker image. After building each image, the `make`
-command executes `pytest` to run both image-specific tests like those in
+repository.
+This `make` command builds every docker image.
+After building each image, the `make` command executes `pytest` to run both image-specific tests like those in
 [base-notebook/test/](https://github.com/jupyter/docker-stacks/tree/master/base-notebook/test) and
-common tests defined in [test/](https://github.com/jupyter/docker-stacks/tree/master/test). Both
-kinds of tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/reference/fixtures.html)
-defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/master/conftest.py) file
-at the root of the projects.
+common tests defined in [test/](https://github.com/jupyter/docker-stacks/tree/master/test).
+Both kinds of tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/reference/fixtures.html)
+defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/master/conftest.py) file at the root of the projects.
 
 ## Contributing New Tests
 
@@ -22,7 +22,8 @@ Please follow the process below to add new tests:
    [test/](https://github.com/jupyter/docker-stacks/tree/master/test) or create a new module.
 2. If your test should run against a single image, add your test code to one of the modules in
    `some-notebook/test/` or create a new module.
-3. Build one or more images you intend to test and run the tests locally. If you use `make`, call:
+3. Build one or more images you intend to test and run the tests locally.
+   If you use `make`, call:
 
    ```bash
    make build/somestack-notebook

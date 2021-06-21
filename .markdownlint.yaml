@@ -4,4 +4,4 @@ default: true
 # MD013/line-length - Line length
 MD013:
   # Number of characters
-  line_length: 1000
+  line_length: 200
