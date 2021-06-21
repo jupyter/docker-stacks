@@ -16,7 +16,7 @@ You can try a [relatively recent build of the jupyter/base-notebook image on myb
 by simply clicking the preceding link.
 The image used in binder was last updated on 22 May 2021.
 Otherwise, the two examples below may help you get started if you [have Docker installed](https://docs.docker.com/install/),
-know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use,
+know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use
 and want to launch a single Jupyter Notebook server in a container.
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) describes additional uses and features in detail.
