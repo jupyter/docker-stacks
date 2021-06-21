@@ -6,13 +6,18 @@ This page provides details about features specific to one or more images.
 
 ### Specific Docker Image Options
 
-- `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open [SparkUI (Spark Monitoring and Instrumentation UI)](https://spark.apache.org/docs/latest/monitoring.html) at default port `4040`, this option map `4040` port inside docker container to `4040` port on host machine . Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports. For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
+- `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open
+  [SparkUI (Spark Monitoring and Instrumentation UI)](https://spark.apache.org/docs/latest/monitoring.html) at default port `4040`,
+  this option map `4040` port inside docker container to `4040` port on host machine.
+  Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports.
+  For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
 
 ### Build an Image with a Different Version of Spark
 
 You can build a `pyspark-notebook` image (and also the downstream `all-spark-notebook` image) with a different version of Spark by overriding the default value of the following arguments at build time.
 
-- Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum, see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
+- Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum,
+  see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
   - `spark_version`: The Spark version to install (`3.0.0`).
   - `hadoop_version`: The Hadoop version (`3.2`).
   - `spark_checksum`: The package checksum (`BFE4540...`).
@@ -46,7 +51,8 @@ docker run -it --rm jupyter/pyspark-notebook:spark-2.4.7 pyspark --version
 
 ### Usage Examples
 
-The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images support the use of [Apache Spark](https://spark.apache.org/) in Python, R, and Scala notebooks. The following sections provide some examples of how to get started using them.
+The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images support the use of [Apache Spark](https://spark.apache.org/) in Python, R, and Scala notebooks.
+The following sections provide some examples of how to get started using them.
 
 #### Using Spark Local Mode
 
@@ -133,16 +139,18 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
    deployed, run the same version of Spark.
 1. [Deploy Spark in Standalone Mode](https://spark.apache.org/docs/latest/spark-standalone.html).
 2. Run the Docker container with `--net=host` in a location that is network addressable by all of
-   your Spark workers. (This is a [Spark networking
-   requirement](https://spark.apache.org/docs/latest/cluster-overview.html#components).)
-   - NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See <https://github.com/jupyter/docker-stacks/issues/64> for details.
+   your Spark workers.
+   (This is a [Spark networking requirement](https://spark.apache.org/docs/latest/cluster-overview.html#components).)
+   - NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`.
+     See <https://github.com/jupyter/docker-stacks/issues/64> for details.
 
 **Note**: In the following examples we are using the Spark master URL `spark://master:7077` that shall be replaced by the URL of the Spark master.
 
 ##### Standalone Mode in Python
 
 The **same Python version** needs to be used on the notebook (where the driver is located) and on the Spark workers.
-The python version used at driver and worker side can be adjusted by setting the environment variables `PYSPARK_PYTHON` and / or `PYSPARK_DRIVER_PYTHON`, see [Spark Configuration][spark-conf] for more information.
+The python version used at driver and worker side can be adjusted by setting the environment variables `PYSPARK_PYTHON` and / or `PYSPARK_DRIVER_PYTHON`,
+see [Spark Configuration][spark-conf] for more information.
 
 ```python
 from pyspark.sql import SparkSession

@@ -9,9 +9,13 @@ This section provides details about the second.
 
 ## Using the Docker CLI
 
-You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command line interface](https://docs.docker.com/engine/reference/commandline/cli/). There are numerous ways to configure containers using the CLI. The following are some common patterns.
+You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command line interface](https://docs.docker.com/engine/reference/commandline/cli/).
+There are numerous ways to configure containers using the CLI.
+The following are some common patterns.
 
-**Example 1** This command pulls the `jupyter/scipy-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host. It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888. The server logs appear in the terminal and include a URL to the notebook server.
+**Example 1** This command pulls the `jupyter/scipy-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host.
+It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888.
+The server logs appear in the terminal and include a URL to the notebook server.
 
 ```bash
 $ docker run -p 8888:8888 jupyter/scipy-notebook:33add21fab64
@@ -52,7 +56,9 @@ $ docker rm d67fe77f1a84
 d67fe77f1a84
 ```
 
-**Example 2** This command pulls the `jupyter/r-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host. It then starts a container running a Jupyter Notebook server and exposes the server on host port 10000. The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the the correct host port (10000).
+**Example 2** This command pulls the `jupyter/r-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host.
+It then starts a container running a Jupyter Notebook server and exposes the server on host port 10000.
+The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the the correct host port (10000).
 
 ```bash
 $ docker run --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:33add21fab64
@@ -74,9 +80,12 @@ Executing the command: jupyter notebook
         http://localhost:8888/?token=3b8dce890cb65570fb0d9c4a41ae067f7604873bd604f5ac
 ```
 
-Pressing `Ctrl-C` shuts down the notebook server and immediately destroys the Docker container. Files written to `~/work` in the container remain touched. Any other changes made in the container are lost.
+Pressing `Ctrl-C` shuts down the notebook server and immediately destroys the Docker container.
+Files written to `~/work` in the container remain touched.
+Any other changes made in the container are lost.
 
-**Example 3** This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Docker Hub if an image tagged `latest` is not already present on the local host. It then starts a container named `notebook` running a JupyterLab server and exposes the server on a randomly selected port.
+**Example 3** This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Docker Hub if an image tagged `latest` is not already present on the local host.
+It then starts a container named `notebook` running a JupyterLab server and exposes the server on a randomly selected port.
 
 ```bash
 docker run -d -P --name notebook jupyter/all-spark-notebook
@@ -112,12 +121,23 @@ notebook
 
 ## Using Binder
 
-[Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control. You can use any of the Jupyter Docker Stacks images as a basis for a Binder-compatible Dockerfile. See the [docker-stacks example](https://mybinder.readthedocs.io/en/latest/sample_repos.html#using-a-docker-image-from-the-jupyter-docker-stacks-repository) and [Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html) sections in the [Binder documentation](https://mybinder.readthedocs.io/en/latest/index.html) for instructions.
+[Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control.
+You can use any of the Jupyter Docker Stacks images as a basis for a Binder-compatible Dockerfile.
+See the
+[docker-stacks example](https://mybinder.readthedocs.io/en/latest/sample_repos.html#using-a-docker-image-from-the-jupyter-docker-stacks-repository) and
+[Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html) sections in the
+[Binder documentation](https://mybinder.readthedocs.io/en/latest/index.html) for instructions.
 
 ## Using JupyterHub
 
-You can configure JupyterHub to launcher Docker containers from the Jupyter Docker Stacks images. If you've been following the [Zero to JupyterHub with Kubernetes](https://zero-to-jupyterhub.readthedocs.io/en/latest/) guide, see the [Use an existing Docker image](https://zero-to-jupyterhub.readthedocs.io/en/latest/jupyterhub/customizing/user-environment.html#choose-and-use-an-existing-docker-image) section for details. If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://github.com/jupyterhub/dockerspawner#picking-or-building-a-docker-image) instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner) instead.
+You can configure JupyterHub to launcher Docker containers from the Jupyter Docker Stacks images.
+If you've been following the [Zero to JupyterHub with Kubernetes](https://zero-to-jupyterhub.readthedocs.io/en/latest/) guide,
+see the [Use an existing Docker image](https://zero-to-jupyterhub.readthedocs.io/en/latest/jupyterhub/customizing/user-environment.html#choose-and-use-an-existing-docker-image) section for details.
+If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://github.com/jupyterhub/dockerspawner#picking-or-building-a-docker-image)
+instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner) instead.
 
 ## Using Other Tools and Services
 
-You can use the Jupyter Docker Stacks with any Docker-compatible technology (e.g., [Docker Compose](https://docs.docker.com/compose/), [docker-py](https://github.com/docker/docker-py), your favorite cloud container service). See the documentation of the tool, library, or service for details about how to reference, configure, and launch containers from these images.
+You can use the Jupyter Docker Stacks with any Docker-compatible technology
+(e.g., [Docker Compose](https://docs.docker.com/compose/), [docker-py](https://github.com/docker/docker-py), your favorite cloud container service).
+See the documentation of the tool, library, or service for details about how to reference, configure, and launch containers from these images.

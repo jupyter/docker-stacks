@@ -1,19 +1,16 @@
 # Contributed Recipes
 
-Users sometimes share interesting ways of using the Jupyter Docker Stacks. We encourage users to
-[contribute these recipes](../contributing/recipes.md) to the documentation in case they prove
+Users sometimes share interesting ways of using the Jupyter Docker Stacks.
+We encourage users to [contribute these recipes](../contributing/recipes.md) to the documentation in case they prove
 useful to other members of the community by submitting a pull request to `docs/using/recipes.md`.
 The sections below capture this knowledge.
 
 ## Using `sudo` within a container
 
-Password authentication is disabled for the `NB_USER` (e.g., `jovyan`). This choice was made to
-avoid distributing images with a weak default password that users ~might~ will forget to change
-before running a container on a publicly accessible host.
+Password authentication is disabled for the `NB_USER` (e.g., `jovyan`).
+This choice was made to avoid distributing images with a weak default password that users ~might~ will forget to change before running a container on a publicly accessible host.
 
-You can grant the within-container `NB_USER` passwordless `sudo` access by adding
-`-e GRANT_SUDO=yes` and `--user root` to your Docker command line or appropriate container
-orchestrator config.
+You can grant the within-container `NB_USER` passwordless `sudo` access by adding `-e GRANT_SUDO=yes` and `--user root` to your Docker command line or appropriate container orchestrator config.
 
 For example:
 
@@ -21,8 +18,8 @@ For example:
 docker run -it -e GRANT_SUDO=yes --user root jupyter/minimal-notebook
 ```
 
-**You should only enable `sudo` if you trust the user and/or if the container is running on an
-isolated host.** See [Docker security documentation](https://docs.docker.com/engine/security/userns-remap/) for more information about running containers as `root`.
+**You should only enable `sudo` if you trust the user and/or if the container is running on an isolated host.**
+See [Docker security documentation](https://docs.docker.com/engine/security/userns-remap/) for more information about running containers as `root`.
 
 ## Using `pip install` or `conda install` in a Child Docker image
 
@@ -44,7 +41,8 @@ docker build --rm -t jupyter/my-datascience-notebook .
 ```
 
 To use a requirements.txt file, first create your `requirements.txt` file with the listing of
-packages desired. Next, create a new Dockerfile like the one shown below.
+packages desired.
+Next, create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
@@ -73,9 +71,8 @@ Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://git
 
 ## Add a Python 2.x environment
 
-Python 2.x was removed from all images on August 10th, 2017, starting in tag `cc9feab481f7`. You can
-add a Python 2.x environment by defining your own Dockerfile inheriting from one of the images like
-so:
+Python 2.x was removed from all images on August 10th, 2017, starting in tag `cc9feab481f7`.
+You can add a Python 2.x environment by defining your own Dockerfile inheriting from one of the images like so:
 
 ```dockerfile
 # Choose your desired base image
@@ -150,7 +147,8 @@ Run jupyterlab using a command such as
 
 ## Dask JupyterLab Extension
 
-[Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes. Create the Dockerfile as:
+[Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes.
+Create the Dockerfile as:
 
 ```dockerfile
 # Start from a core stack version
@@ -208,8 +206,8 @@ Credit: [Paolo D.](https://github.com/pdonorio) based on
 
 ## xgboost
 
-You need to install conda's gcc for Python xgboost to work properly. Otherwise, you'll get an
-exception about libgomp.so.1 missing GOMP_4.0.
+You need to install conda's gcc for Python xgboost to work properly.
+Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0.
 
 ```bash
 conda install --quiet --yes gcc && \
@@ -233,25 +231,25 @@ Sometimes it is useful to run the Jupyter instance behind a nginx proxy, for ins
 - you may have many different services in addition to Jupyter running on the same server, and want
   to nginx to help improve server performance in manage the connections
 
-Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2)
-to get started. You'll need a server, a `.crt` and `.key` file for your server, and `docker` &
-`docker-compose` installed. Then just download the files at that gist and run `docker-compose up -d`
-to test it out. Customize the `nginx.conf` file to set the desired paths and add other services.
+Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
+You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
+Then just download the files at that gist and run `docker-compose up -d` to test it out.
+Customize the `nginx.conf` file to set the desired paths and add other services.
 
 ## Host volume mounts and notebook errors
 
 If you are mounting a host directory as `/home/jovyan/work` in your container and you receive
 permission errors or connection errors when you create a notebook, be sure that the `jovyan` user
-(UID=1000 by default) has read/write access to the directory on the host. Alternatively, specify the
-UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the
+(UID=1000 by default) has read/write access to the directory on the host.
+Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the
 [Common Features, Docker Options section](../using/common.html#Docker-Options)
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 
 ## Manpage installation
 
-Most containers, including our Ubuntu base image, ship without manpages installed to save space. You
-can use the following dockerfile to inherit from one of our images to enable manpages:
+Most containers, including our Ubuntu base image, ship without manpages installed to save space.
+You can use the following dockerfile to inherit from one of our images to enable manpages:
 
 ```dockerfile
 # Choose your desired base image
@@ -467,21 +465,29 @@ RUN pip install --quiet --no-cache-dir jupyter_dashboards faker && \
 
 USER root
 # Ensure we overwrite the kernel config so that toree connects to cluster
-RUN jupyter toree install --sys-prefix --spark_opts="--master yarn --deploy-mode client --driver-memory 512m  --executor-memory 512m  --executor-cores 1 --driver-java-options -Dhdp.version=2.5.3.0-37 --conf spark.hadoop.yarn.timeline-service.enabled=false"
+RUN jupyter toree install --sys-prefix --spark_opts="\
+    --master yarn
+    --deploy-mode client
+    --driver-memory 512m
+    --executor-memory 512m
+    --executor-cores 1
+    --driver-java-options
+    -Dhdp.version=2.5.3.0-37
+    --conf spark.hadoop.yarn.timeline-service.enabled=false
+"
 USER ${NB_UID}
 ```
 
-Credit: [britishbadger](https://github.com/britishbadger) from
-[docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
+Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
 
 ## Run Jupyter Notebook/Lab inside an already secured environment (i.e., with no token)
 
 (Adapted from [issue 728](https://github.com/jupyter/docker-stacks/issues/728))
 
-The default security is very good. There are use cases, encouraged by containers, where the jupyter
-container and the system it runs within, lie inside the security boundary. In these use cases it is
-convenient to launch the server without a password or token. In this case, you should use the
-`start.sh` script to launch the server with no token:
+The default security is very good.
+There are use cases, encouraged by containers, where the jupyter container and the system it runs within, lie inside the security boundary.
+In these use cases it is convenient to launch the server without a password or token.
+In this case, you should use the `start.sh` script to launch the server with no token:
 
 For jupyterlab:
 
@@ -517,7 +523,8 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/675>
 
 ## Enable auto-sklearn notebooks
 
-Using `auto-sklearn` requires `swig`, which the other notebook images lack, so it cant be experimented with. Also, there is no Conda package for `auto-sklearn`.
+Using `auto-sklearn` requires `swig`, which the other notebook images lack, so it cant be experimented with.
+Also, there is no Conda package for `auto-sklearn`.
 
 ```dockerfile
 ARG BASE_CONTAINER=jupyter/scipy-notebook
@@ -539,7 +546,8 @@ RUN pip install --quiet --no-cache-dir auto-sklearn && \
 
 ## Enable Delta Lake in Spark notebooks
 
-Please note that the [Delta Lake](https://delta.io/) packages are only available for Spark version > `3.0`. By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
+Please note that the [Delta Lake](https://delta.io/) packages are only available for Spark version > `3.0`.
+By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
 
 ```dockerfile
 FROM jupyter/pyspark-notebook:latest

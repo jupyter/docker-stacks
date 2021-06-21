@@ -13,10 +13,8 @@ This section provides details about the first.
 
 ## Core Stacks
 
-The Jupyter team maintains a set of Docker image definitions in the
-<https://github.com/jupyter/docker-stacks> GitHub
-repository. The following sections describe these images including their contents, relationships,
-and versioning strategy.
+The Jupyter team maintains a set of Docker image definitions in the <https://github.com/jupyter/docker-stacks> GitHub repository.
+The following sections describe these images including their contents, relationships, and versioning strategy.
 
 ### jupyter/base-notebook
 
@@ -24,8 +22,8 @@ and versioning strategy.
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/base-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
-`jupyter/base-notebook` is a small image supporting the
-[options common across all core stacks](common.md). It is the basis for all other stacks.
+`jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.md).
+It is the basis for all other stacks.
 
 - Minimally-functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
 - [Miniforge](https://github.com/conda-forge/miniforge) Python 3.x in `/opt/conda` with two package managers
@@ -37,8 +35,7 @@ and versioning strategy.
   with ownership over the `/home/jovyan` and `/opt/conda` paths
 - `tini` as the container entrypoint and a `start-notebook.sh` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub
-- A `start.sh` script useful for running alternative commands in the container (e.g. `ipython`,
-  `jupyter kernelgateway`, `jupyter lab`)
+- A `start.sh` script useful for running alternative commands in the container (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 - Options for a self-signed HTTPS certificate and passwordless sudo
 
 ### jupyter/minimal-notebook
@@ -188,29 +185,26 @@ communities.
 
 ### Image Relationships
 
-The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM`
-statements in their Dockerfiles). Any given image inherits the complete content of all ancestor
-images pointing to it.
+The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles).
+Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
 diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFzTEPgjAQhuHdX9Gws5sQjGzujsaYKxzmQrlr2msMGv-71K0srO_3XGud9NNA8DSfgzESCFlBSdi0xkvQAKTNugw4QnL6GIU10hvX-Zh7Z24OLLq2SjaxpvP10lX35vCf6pOxELFmUbQiUz4oQhYzMc3gCrRt2cWe_FKosmSjyFHC6OS1AwdQWCtyj7sfh523_BI9hKlQ25YdOFdv5fcH0kiEMA)
 
 ### Builds
 
-Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on GitHub
-Actions. These images are for testing purposes only and are not saved for further use. When pull requests
-merge to master, all images rebuild on Docker Hub and become available to `docker pull` from
-Docker Hub.
+Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on GitHub Actions.
+These images are for testing purposes only and are not saved for further use.
+When pull requests merge to master, all images rebuild on Docker Hub and become available to `docker pull` from Docker Hub.
 
 ### Versioning
 
 The `latest` tag in each Docker Hub repository tracks the master branch `HEAD` reference on GitHub.
 `latest` is a moving target, by definition, and will have backward-incompatible changes regularly.
 
-Every image on Docker Hub also receives a 12-character tag which corresponds with the git commit SHA
-that triggered the image build. You can inspect the state of the `jupyter/docker-stacks` repository
-for that commit to review the definition of the image (e.g., images with tag `33add21fab64` were built
-from <https://github.com/jupyter/docker-stacks/tree/33add21fab64>.
+Every image on Docker Hub also receives a 12-character tag which corresponds with the git commit SHA that triggered the image build.
+You can inspect the state of the `jupyter/docker-stacks` repository for that commit to review the definition of the image
+(e.g., images with tag `33add21fab64` were built from <https://github.com/jupyter/docker-stacks/tree/33add21fab64>.
 
 You must refer to git-SHA image tags when stability and reproducibility are important in your work.
 (e.g. `FROM jupyter/scipy-notebook:33add21fab64`, `docker run -it --rm jupyter/scipy-notebook:33add21fab64`).
@@ -220,18 +214,17 @@ You should only use `latest` when a one-off container instance is acceptable
 ## Community Stacks
 
 The core stacks are just a tiny sample of what's possible when combining Jupyter with other
-technologies. We encourage members of the Jupyter community to create their own stacks based on the
+technologies.
+We encourage members of the Jupyter community to create their own stacks based on the
 core images and link them below.
 
 - [csharp-notebook is a community Jupyter Docker Stack image. Try C# in Jupyter Notebooks](https://github.com/tlinnet/csharp-notebook).
-  The image includes more than 200 Jupyter Notebooks with example C# code and can readily be tried
-  online via mybinder.org. Click here to launch
-  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master).
+  The image includes more than 200 Jupyter Notebooks with example C# code and can readily be tried online via mybinder.org.
+  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master).
 
 - [education-notebook is a community Jupyter Docker Stack image](https://github.com/umsi-mads/education-notebook).
-  The image includes nbgrader and RISE on top of the datascience-notebook image. Click here to
-  launch it on
-  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
+  The image includes nbgrader and RISE on top of the datascience-notebook image.
+  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
 
 - **crosscompass/ihaskell-notebook**
 
@@ -242,36 +235,34 @@ core images and link them below.
   `crosscompass/ihaskell-notebook` is based on [IHaskell](https://github.com/gibiansky/IHaskell).
   Includes popular packages and example notebooks.
 
-  Try it on
-  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
+  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
 
 - [java-notebook is a community Jupyter Docker Stack image](https://github.com/jbindinga/java-notebook).
-  The image includes [IJava](https://github.com/SpencerPark/IJava) kernel on top of the
-  minimal-notebook image. Click here to launch it on
-  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jbindinga/java-notebook/master).
+  The image includes [IJava](https://github.com/SpencerPark/IJava) kernel on top of the minimal-notebook image.
+  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jbindinga/java-notebook/master).
 
-- [sage-notebook](https://github.com/sharpTrick/sage-notebook) is a community Jupyter Docker Stack
-  image with the [sagemath](https://www.sagemath.org) kernel on top of the minimal-notebook image. Click
-  here to launch it on
-  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master).
+- [sage-notebook](https://github.com/sharpTrick/sage-notebook)
+  is a community Jupyter Docker Stack image with the [sagemath](https://www.sagemath.org) kernel on top of the minimal-notebook image.
+  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master).
 
 - [GPU-Jupyter](https://github.com/iot-salzburg/gpu-jupyter/): Leverage Jupyter Notebooks with the
-  power of your NVIDIA GPU and perform GPU calculations using Tensorflow and Pytorch in
-  collaborative notebooks. This is done by generating a Dockerfile, that consists of the
-  **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule
-  and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it.
+  power of your NVIDIA GPU and perform GPU calculations using Tensorflow and Pytorch in collaborative notebooks.
+  This is done by generating a Dockerfile, that consists of the **nvidia/cuda** base image,
+  the well-maintained **docker-stacks** that is integrated as submodule and
+  GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it.
 
-- [PRP GPU Jupyter repo](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp) and [Registry](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/container_registry): PRP (Pacific Research Platform) maintained registry for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages, and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.
+- [PRP GPU Jupyter repo](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp) and [Registry](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/container_registry)
+  PRP (Pacific Research Platform) maintained registry for jupyter stack based on NVIDIA CUDA-enabled image.
+  Added the PRP image with Pytorch and some other python packages, and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.
 
-- [cgspatial-notebook](https://github.com/SCiO-systems/cgspatial-notebook) is a community Jupyter
-  Docker Stack image. The image includes major geospatial Python & R libraries on top of the
-  datascience-notebook image. Try it on
-  binder:[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/SCiO-systems/cgspatial-notebook/master)
+- [cgspatial-notebook](https://github.com/SCiO-systems/cgspatial-notebook) is a community Jupyter Docker Stack image.
+  The image includes major geospatial Python & R libraries on top of the datascience-notebook image.
+  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/SCiO-systems/cgspatial-notebook/master)
 
-- [kotlin-notebook](https://github.com/knonm/kotlin-notebook) is a community Jupyter
-  Docker Stack image. The image includes [Kotlin kernel for Jupyter/IPython](https://github.com/Kotlin/kotlin-jupyter) on top of the
-  `base-notebook` image. Try it on
-  Binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/knonm/kotlin-notebook/main)
+- [kotlin-notebook](https://github.com/knonm/kotlin-notebook) is a community Jupyter Docker Stack image.
+  The image includes [Kotlin kernel for Jupyter/IPython](https://github.com/Kotlin/kotlin-jupyter) on top of the
+  `base-notebook` image.
+  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/knonm/kotlin-notebook/main)
 
 See the [contributing guide](../contributing/stacks.md) for information about how to create your own
 Jupyter Docker Stack.

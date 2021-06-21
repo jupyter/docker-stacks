@@ -12,44 +12,45 @@ containing Jupyter applications and interactive computing tools.
 
 ## Quick Start
 
-You can try a
-[relatively recent build of the jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb)
-by simply clicking the preceding link. The image used in binder was last updated on 22 May 2021.
-Otherwise, the two examples below may help you get started if
-you [have Docker installed](https://docs.docker.com/install/) know
-[which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you
-want to use, and want to launch a single Jupyter Notebook server in a container.
+You can try a [relatively recent build of the jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb)
+by simply clicking the preceding link.
+The image used in binder was last updated on 22 May 2021.
+Otherwise, the two examples below may help you get started if you [have Docker installed](https://docs.docker.com/install/),
+know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use
+and want to launch a single Jupyter Notebook server in a container.
 
-The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) describes additional
-uses and features in detail.
+The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) describes additional uses and features in detail.
 
-**Example 1:** This command pulls the `jupyter/scipy-notebook` image tagged `33add21fab64` from
-Docker Hub if it is not already present on the local host. It then starts a container running a
-Jupyter Notebook server and exposes the server on host port 8888. The server logs appear in the
-terminal. Visiting `http://<hostname>:8888/?token=<token>` in a browser loads the Jupyter Notebook
-dashboard page, where `hostname` is the name of the computer running docker and `token` is the
-secret token printed in the console. The container remains intact for restart after the notebook
-server exits.
+**Example 1:** This command pulls the `jupyter/scipy-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host.
+It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888.
+The server logs appear in the terminal.
+Visiting `http://<hostname>:8888/?token=<token>` in a browser loads the Jupyter Notebook dashboard page,
+where `hostname` is the name of the computer running docker and `token` is the secret token printed in the console.
+The container remains intact for restart after the notebook server exits.
 
-    docker run -p 8888:8888 jupyter/scipy-notebook:33add21fab64
+```bash
+docker run -p 8888:8888 jupyter/scipy-notebook:33add21fab64
+```
 
-**Example 2:** This command performs the same operations as **Example 1**, but it exposes the server
-on host port 10000 instead of port 8888. Visiting `http://<hostname>:10000/?token=<token>` in a
-browser loads JupyterLab, where `hostname` is the name of the computer running docker and `token` is
-the secret token printed in the console.::
+**Example 2:** This command performs the same operations as **Example 1**, but it exposes the server on host port 10000 instead of port 8888.
+Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
+where `hostname` is the name of the computer running docker and `token` is the secret token printed in the console.
 
-    docker run -p 10000:8888 jupyter/scipy-notebook:33add21fab64
+```bash
+docker run -p 10000:8888 jupyter/scipy-notebook:33add21fab64
+```
 
-**Example 3:** This command pulls the `jupyter/datascience-notebook` image tagged `33add21fab64`
-from Docker Hub if it is not already present on the local host. It then starts an _ephemeral_
-container running a Jupyter Notebook server and exposes the server on host port 10000. The command
-mounts the current working directory on the host as `/home/jovyan/work` in the container. The server
-logs appear in the terminal. Visiting `http://<hostname>:10000/?token=<token>` in a browser loads
-JupyterLab, where `hostname` is the name of the computer running docker and `token` is the secret
-token printed in the console. Docker destroys the container after notebook server exit, but any
-files written to `~/work` in the container remain intact on the host.
+**Example 3:** This command pulls the `jupyter/datascience-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host.
+It then starts an _ephemeral_ container running a Jupyter Notebook server and exposes the server on host port 10000.
+The command mounts the current working directory on the host as `/home/jovyan/work` in the container.
+The server logs appear in the terminal.
+Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
+where `hostname` is the name of the computer running docker and `token` is the secret token printed in the console.
+Docker destroys the container after notebook server exit, but any files written to `~/work` in the container remain intact on the host.
 
-    docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
+```bash
+docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
+```
 
 ## Contributing
 
@@ -59,13 +60,12 @@ maintained stacks.
 
 ## Maintainer Help Wanted
 
-We value all positive contributions to the Docker stacks project, from
-[bug reports](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/issues.html) to
-[pull requests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/packages.html)
-to
-[translations](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/translations.html)
-to help answering questions. We'd also like to invite members of the community to help with two
-maintainer activities:
+We value all positive contributions to the Docker stacks project,
+from [bug reports](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/issues.html)
+to [pull requests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/packages.html)
+to [translations](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/translations.html)
+to help answering questions.
+We'd also like to invite members of the community to help with two maintainer activities:
 
 - Issue triage: Reading and providing a first response to issues, labeling issues appropriately,
   redirecting cross-project questions to Jupyter Discourse
@@ -73,9 +73,8 @@ maintainer activities:
   to improve the contribution, deciding if the contribution should take another form (e.g., a recipe
   instead of a permanent change to the images)
 
-Anyone in the community can jump in and help with these activities at any time. We will happily
-grant additional permissions (e.g., ability to merge PRs) to anyone who shows an on-going interest
-in working on the project.
+Anyone in the community can jump in and help with these activities at any time
+We will happily grant additional permissions (e.g., ability to merge PRs) to anyone who shows an on-going interest in working on the project.
 
 ## Jupyter Notebook Deprecation Notice
 
@@ -85,7 +84,8 @@ more information is available in the [documentation](https://jupyter-docker-stac
 
 At some point, JupyterLab will become the default for all of the Jupyter Docker stack images, however a new environment variable will be introduced to switch back to Jupyter Notebook if needed.
 
-After the change of default, and according to the Jupyter Notebook project status and its compatibility with JupyterLab, these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another _classic-like_ UI built atop JupyterLab.
+After the change of default, and according to the Jupyter Notebook project status and its compatibility with JupyterLab,
+these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another _classic-like_ UI built atop JupyterLab.
 
 This change is tracked in the issue [#1217](https://github.com/jupyter/docker-stacks/issues/1217), please check its content for more information.
 
