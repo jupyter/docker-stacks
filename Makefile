@@ -60,7 +60,7 @@ dev-env: ## install libraries required to build docs and run tests
 	@pip install -r requirements-dev.txt
 
 docs: ## build HTML documentation
-	make -C docs html
+	sphinx-build docs/ docs/_build/
 
 git-commit: LOCAL_PATH?=.
 git-commit: GITHUB_SHA?=$(shell git rev-parse HEAD)
