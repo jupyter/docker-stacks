@@ -2,15 +2,23 @@
 
 This example provides templates for deploying the Jupyter Project docker-stacks images to OpenShift.
 
-## Prerequsites
+## Prerequisites
 
-Any OpenShift 3 environment. The templates were tested with OpenShift 3.7. It is believed they should work with at least OpenShift 3.6 or later.
+Any OpenShift 3 environment.
+The templates were tested with OpenShift 3.7.
+It is believed they should work with at least OpenShift 3.6 or later.
 
-Do be aware that the Jupyter Project docker-stacks images are very large. The OpenShift environment you are using must provide sufficient quota on the per user space for images and the file system for running containers. If the quota is too small, the pulling of the images to a node in the OpenShift cluster when deploying them, will fail due to lack of space. Even if the image is able to be run, if the quota is only just larger than the space required for the image, you will not be able to install many packages into the container before running out of space.
+Do be aware that the Jupyter Project docker-stacks images are very large.
+The OpenShift environment you are using must provide sufficient quota on the per user space for images and the file system for running containers.
+If the quota is too small, the pulling of the images to a node in the OpenShift cluster when deploying them, will fail due to lack of space.
+Even if the image is able to be run, if the quota is only just larger than the space required for the image, you will not be able to install many packages into the container before running out of space.
 
-OpenShift Online, the public hosted version of OpenShift from Red Hat has a quota of only 3GB for the image and container file system. As a result, only the `minimal-notebook` can be started and there is little space remaining to install additional packages. Although OpenShift Online is suitable for demonstrating these templates work, what you can do in that environment will be limited due to the size of the images.
+OpenShift Online, the public hosted version of OpenShift from Red Hat has a quota of only 3GB for the image and container file system.
+As a result, only the `minimal-notebook` can be started and there is little space remaining to install additional packages.
+Although OpenShift Online is suitable for demonstrating these templates work, what you can do in that environment will be limited due to the size of the images.
 
-If you want to experiment with using Jupyter Notebooks in an OpenShift environment, you should instead use [Minishift](https://www.openshift.org/minishift/). Minishift provides you the ability to run OpenShift in a virtual machine on your own local computer.
+If you want to experiment with using Jupyter Notebooks in an OpenShift environment, you should instead use [Minishift](https://www.openshift.org/minishift/).
+Minishift provides you the ability to run OpenShift in a virtual machine on your own local computer.
 
 ## Loading the Templates
 
@@ -22,7 +30,8 @@ oc create -f https://raw.githubusercontent.com/jupyter-on-openshift/docker-stack
 
 This should create the `jupyter-notebook` template
 
-The template can be used from the command line using the `oc new-app` command, or from the OpenShift web console by selecting _Add to Project_. This `README` is only going to explain deploying from the command line.
+The template can be used from the command line using the `oc new-app` command, or from the OpenShift web console by selecting _Add to Project_.
+This `README` is only going to explain deploying from the command line.
 
 ## Deploying a Notebook
 
@@ -56,7 +65,8 @@ The output will be similar to:
     Run 'oc status' to view your app.
 ```
 
-When no template parameters are provided, the name of the deployed notebook will be `notebook`. The image used will be:
+When no template parameters are provided, the name of the deployed notebook will be `notebook`.
+The image used will be:
 
 ```lang-none
 jupyter/minimal-notebook:latest
@@ -129,7 +139,10 @@ Setting the environment variable will trigger a new deployment and the Jupyter L
 
 ## Adding Persistent Storage
 
-You can upload notebooks and other files using the web interface of the notebook. Any uploaded files or changes you make to them will be lost when the notebook instance is restarted. If you want to save your work, you need to add persistent storage to the notebook. To add persistent storage run:
+You can upload notebooks and other files using the web interface of the notebook.
+Any uploaded files or changes you make to them will be lost when the notebook instance is restarted.
+If you want to save your work, you need to add persistent storage to the notebook.
+To add persistent storage run:
 
 ```bash
 oc set volume dc/mynotebook --add \
@@ -162,7 +175,8 @@ If you are using a persistent volume, you can also create a configuration file a
 
 This will be merged at the end of the configuration from the config map.
 
-Because the configuration is Python code, ensure any indenting is correct. Any errors in the configuration file will cause the notebook to fail when starting.
+Because the configuration is Python code, ensure any indenting is correct.
+Any errors in the configuration file will cause the notebook to fail when starting.
 
 If the error is in the config map, edit it again to fix it and trigger a new deployment if necessary by running:
 
@@ -182,7 +196,9 @@ Then run:
 oc debug dc/mynotebook
 ```
 
-to run the notebook in debug mode. This will provide you with an interactive terminal session inside a running container, but the notebook will not have been started. Edit the configuration file in the volume to fix any errors and exit the terminal session.
+to run the notebook in debug mode.
+This will provide you with an interactive terminal session inside a running container, but the notebook will not have been started.
+Edit the configuration file in the volume to fix any errors and exit the terminal session.
 
 Start up the notebook again.
 
@@ -192,7 +208,8 @@ oc scale dc/mynotebook --replicas 1
 
 ## Changing the Notebook Password
 
-The password for the notebook is supplied as a template parameter, or if not supplied will be automatically generated by the template. It will be passed into the container through an environment variable.
+The password for the notebook is supplied as a template parameter, or if not supplied will be automatically generated by the template.
+It will be passed into the container through an environment variable.
 
 If you want to change the password, you can do so by editing the environment variable on the deployment configuration.
 
@@ -206,9 +223,11 @@ If using a persistent volume, you could instead setup a password in the file `/h
 
 ## Deploying from a Custom Image
 
-If you want to deploy a custom variant of the Jupyter Project docker-stacks images, you can replace the image name with that of your own. If the image is not stored on Docker Hub, but some other public image registry, prefix the name of the image with the image registry host details.
+If you want to deploy a custom variant of the Jupyter Project docker-stacks images, you can replace the image name with that of your own.
+If the image is not stored on Docker Hub, but some other public image registry, prefix the name of the image with the image registry host details.
 
-If the image is in your OpenShift project, because you imported the image into OpenShift, or used the docker build strategy of OpenShift to build a derived custom image, you can use the name of the image stream for the image name, including any image tag if necessary.
+If the image is in your OpenShift project, because you imported the image into OpenShift, or used the docker build strategy of OpenShift to build a derived custom image,
+you can use the name of the image stream for the image name, including any image tag if necessary.
 
 This can be illustrated by first importing an image into the OpenShift project.
 
@@ -225,4 +244,5 @@ oc new-app --template jupyter-notebook \
   --param NOTEBOOK_PASSWORD=mypassword
 ```
 
-Importing an image into OpenShift before deploying it means that when a notebook is started, the image need only be pulled from the internal OpenShift image registry rather than Docker Hub for each deployment. Because the images are so large, this can speed up deployments when the image hasn't previously been deployed to a node in the OpenShift cluster.
+Importing an image into OpenShift before deploying it means that when a notebook is started, the image need only be pulled from the internal OpenShift image registry rather than Docker Hub for each deployment.
+Because the images are so large, this can speed up deployments when the image hasn't previously been deployed to a node in the OpenShift cluster.

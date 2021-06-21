@@ -9,16 +9,15 @@ To build new images and publish them to the Docker Hub registry, do the followin
 3. Monitor the merge commit GitHub Actions status.
    **Note**: we think, GitHub Actions are quite reliable, so please, investigate, if some error occurs.
    The process of building docker images in PRs is exactly the same after merging to master, except there is an additional `push` step.
-4. Try to avoid merging another PR to master until all pending builds complete. This way you will know which commit
-   might have broken the build and also have correct tags for moving tags (like `python` version).
+4. Try to avoid merging another PR to master until all pending builds complete.
+   This way you will know which commit might have broken the build and also have correct tags for moving tags (like `python` version).
 
 ## Updating the Ubuntu Base Image
 
-When there's a security fix in the Ubuntu base image or after some time passes, it's a good idea to
-update the pinned SHA in the
+When there's a security fix in the Ubuntu base image or after some time passes, it's a good idea to update the pinned SHA in the
 [jupyter/base-notebook Dockerfile](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/Dockerfile).
-Submit it as a regular PR and go through the build process. Expect the build to take a while to
-complete: every image layer will rebuild.
+Submit it as a regular PR and go through the build process.
+Expect the build to take a while to complete: every image layer will rebuild.
 
 ## Adding a New Core Image to Docker Hub
 

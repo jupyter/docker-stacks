@@ -20,4 +20,7 @@ Example: Add a package [altair](https://altair-viz.github.io).
 
 **How does this change will affect users?**
 
-Example: Altair is a declarative statistical visualization library for Python, based on Vega and Vega-Lite, and the source is available on GitHub. With Altair, you can spend more time understanding your data and its meaning. Altair’s API is simple, friendly and consistent and built on top of the powerful Vega-Lite visualization grammar. This elegant simplicity produces beautiful and effective visualizations with a minimal amount of code.
+Example: Altair is a declarative statistical visualization library for Python, based on Vega and Vega-Lite, and the source is available on GitHub.
+With Altair, you can spend more time understanding your data and its meaning.
+Altair’s API is simple, friendly and consistent and built on top of the powerful Vega-Lite visualization grammar.
+This elegant simplicity produces beautiful and effective visualizations with a minimal amount of code.

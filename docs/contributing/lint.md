@@ -51,7 +51,9 @@ The following rules are ignored by default for all images in the `.hadolint.yaml
 
 For other rules, the preferred way to do it is to flag ignored rules in the `Dockerfile`.
 
-> It is also possible to ignore rules by using a special comment directly above the Dockerfile instruction you want to make an exception for. Ignore rule comments look like `# hadolint ignore=DL3001,SC1081`. For example:
+> It is also possible to ignore rules by using a special comment directly above the Dockerfile instruction you want to make an exception for.
+> Ignore rule comments look like `# hadolint ignore=DL3001,SC1081`.
+> For example:
 
 ```dockerfile
 FROM ubuntu

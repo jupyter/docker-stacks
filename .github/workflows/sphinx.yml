@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - master
+      - main
     paths:
       - "docs/**"
       - ".github/workflows/sphinx.yml"
@@ -35,11 +36,10 @@ jobs:
       - name: Build Documentation
         run: make docs
       - name: Extract Source Strings
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         working-directory: docs
         run: |
-          make gettext
-          sphinx-intl update -p _build/gettext -l en
+          sphinx-build -M gettext ./ ./_build/
+          sphinx-intl update -p ./_build/gettext -l en
       - name: Push Strings to Master
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         run: make git-commit
