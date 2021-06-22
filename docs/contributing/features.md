@@ -42,6 +42,7 @@ If there's agreement that the feature belongs in one or more of the core stacks:
    If you use `make`, call:
 
    ```bash
+   OWNER={yourdockerhubusername}
    make build/somestack-notebook
    ```
 
