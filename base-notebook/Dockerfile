@@ -34,11 +34,11 @@ ARG miniforge_python="Mambaforge"
 # Miniforge archive to install
 ARG miniforge_version="${conda_version}-${miniforge_patch_number}"
 # Miniforge installer
-RUN export arch=$(uname -m) && \
+RUN export miniforge_arch=$(uname -m) && \
     if [ "$arch" == "aarm64" ]; then \
-      arch="arm64"; \
+      miniforge_arch="arm64"; \
     fi; \
-RUN export miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${arch}.sh"
+RUN export miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh"
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
@@ -104,7 +104,7 @@ WORKDIR /tmp
 
 # Prerequisites installation: conda, mamba, pip, tini
 RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}" && \
-    /bin/bash "${miniforge_installer}" -f -b -p ${CONDA_DIR} && \
+    /bin/bash "${miniforge_installer}" -f -b -p "${CONDA_DIR}" && \
     rm "${miniforge_installer}" && \
     # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
     echo "conda ${CONDA_VERSION}" >> "${CONDA_DIR}/conda-meta/pinned" && \
