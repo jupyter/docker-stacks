@@ -10,7 +10,6 @@ USER root
 # Install all OS dependencies for fully functional notebook server
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
-    build-essential \
     vim-tiny \
     git \
     inkscape \
