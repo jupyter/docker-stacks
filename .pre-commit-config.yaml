@@ -3,6 +3,12 @@ ci:
   skip: [hadolint-docker]
 
 repos:
+  # Autoformat: Python code
+  - repo: https://github.com/ambv/black
+    rev: 21.6b0
+    hooks:
+      - id: black
+        args: [--target-version=py36]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
