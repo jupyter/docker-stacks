@@ -13,7 +13,7 @@ THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 @pytest.mark.parametrize(
     "test_file",
     # TODO: add local_sparklyr
-    ["local_pyspark", "local_spylon", "local_sparkR", "issue_1168"],
+    ["local_pyspark", "local_spylon", "local_sparkR", "issue_1168"]
 )
 def test_nbconvert(container, test_file):
     """Check if Spark notebooks can be executed"""
