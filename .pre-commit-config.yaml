@@ -22,13 +22,6 @@ repos:
     hooks:
       - id: prettier
 
-  # Check: YAML
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
-    hooks:
-      - id: check-yaml
-        files: .*\.(yaml|yml)$
-
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
     rev: v2.5.0
