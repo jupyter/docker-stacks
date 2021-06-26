@@ -12,11 +12,11 @@ def test_units(container):
     """Various units tests
     Add a py file in the {image}/test/units dir and it will be automatically tested
     """
-    host_data_dir = os.path.join(THIS_DIR, "../", container.image_name(), "test/units")
+    host_data_dir = os.path.join(THIS_DIR, "../", container.image_name, "test/units")
     cont_data_dir = "/home/jovyan/data"
 
     if not os.path.exists(host_data_dir):
-        LOGGER.info(f"Not found unit tests for image: {container.image_name()}")
+        LOGGER.info(f"Not found unit tests for image: {container.image_name}")
         return
 
     command = "sleep infinity"
