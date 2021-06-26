@@ -3,7 +3,7 @@
 We test our images using `pytest` module.
 
 `conftest.py` and `pytest.ini` in the root of our repository define the environment in which tests are run.
-More info on pytest can be found [here](https://docs.pytest.org/en/latest/reference/index.html).
+More info on pytest can be found [here](https://docs.pytest.org/en/latest/contents.html).
 
 There are two kinds of tests we use:
 
