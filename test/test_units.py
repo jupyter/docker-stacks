@@ -12,7 +12,9 @@ def test_units(container):
     """Various units tests
     Add a py file in the {image}/test/units dir and it will be automatically tested
     """
-    host_data_dir = os.path.join(THIS_DIR, "../", container.image_name, "test/units")
+    short_image_name = container.image_name[container.image_name.find('/') + 1:]
+    host_data_dir = os.path.join(THIS_DIR, f"../{short_image_name}/test/units")
+    LOGGER.info(f"Searching for units tests in {host_data_dir}")
     cont_data_dir = "/home/jovyan/data"
 
     if not os.path.exists(host_data_dir):
@@ -26,7 +28,7 @@ def test_units(container):
         command=["start.sh", "bash", "-c", command],
     )
     for test_file in os.listdir(host_data_dir):
-        LOGGER.info("Running unit test: {test_file}")
+        LOGGER.info(f"Running unit test: {test_file}")
         command = f"python {cont_data_dir}/{test_file}"
         cmd = running_container.exec_run(command)
         assert cmd.exit_code == 0, f"Command {command} failed"
