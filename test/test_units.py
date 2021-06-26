@@ -21,15 +21,14 @@ def test_units(container):
         LOGGER.info(f"Not found unit tests for image: {container.image_name}")
         return
 
-    command = "sleep infinity"
-    running_container = container.run(
-        volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
-        tty=True,
-        command=["start.sh", "bash", "-c", command],
-    )
     for test_file in os.listdir(host_data_dir):
         LOGGER.info(f"Running unit test: {test_file}")
-        command = f"python {cont_data_dir}/{test_file}"
-        cmd = running_container.exec_run(command)
-        assert cmd.exit_code == 0, f"Command {command} failed"
-        LOGGER.debug(cmd.output.decode("utf-8"))
+
+        c = container.run(
+            tty=True,
+            command=['start.sh', 'python', f'{cont_data_dir}/{test_file}']
+        )
+        rv = c.wait(timeout=30)
+        assert rv == 0 or rv["StatusCode"] == 0
+        logs = c.logs(stdout=True).decode('utf-8')
+        LOGGER.debug(logs)
