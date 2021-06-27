@@ -57,11 +57,10 @@ jobs:
         run: make -C main hook-all
       - name: Push Wiki to GitHub
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-        # Pass GITHUB_REPOSITORY directly to avoid conflict with GitHub Actions built-in env var
-        run: make -C main git-commit GITHUB_REPOSITORY='${{github.repository}}.wiki'
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          LOCAL_PATH: ../wiki
+        uses: stefanzweifel/git-auto-commit-action@5dd17c3b53a58c1cb5eaab903826abe94765ccd6 # dependabot updates to latest release
+        with:
+          commit_message: "[ci skip] Automated publish for ${{github.sha}}"
+          repository: wiki/
       - name: Login to Docker Hub
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         uses: docker/login-action@v1
