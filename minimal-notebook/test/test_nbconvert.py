@@ -16,8 +16,8 @@ THIS_DIR = os.path.dirname(os.path.realpath(__file__))
         ("notebook_math", "pdf"),
         ("notebook_math", "html"),
         ("notebook_svg", "pdf"),
-        ("notebook_svg", "html")
-    ]
+        ("notebook_svg", "html"),
+    ],
 )
 def test_nbconvert(container, test_file, output_format):
     """Check if nbconvert is able to convert a notebook file"""

@@ -13,8 +13,8 @@ LOGGER = logging.getLogger(__name__)
     [
         "@bokeh/jupyter_bokeh",
         "@jupyter-widgets/jupyterlab-manager",
-        "jupyter-matplotlib"
-    ]
+        "jupyter-matplotlib",
+    ],
 )
 def test_check_extension(container, extension):
     """Basic check of each extension

@@ -14,8 +14,8 @@ LOGGER = logging.getLogger(__name__)
         ("conda", "--version"),
         ("mamba", "--version"),
         ("npm", "--version"),
-        ("pip", "--version")
-    ]
+        ("pip", "--version"),
+    ],
 )
 def test_package_manager(container, package_manager, version_arg):
     """Test the notebook start-notebook script"""
