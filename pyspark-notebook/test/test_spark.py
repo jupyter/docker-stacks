@@ -25,6 +25,6 @@ def test_pyspark(container):
         command=['start.sh', 'python', '-c', 'import pyspark']
     )
     rv = c.wait(timeout=30)
-    assert rv == 0 or rv["StatusCode"] == 0, "pyspark not in PYTHONPATH"
     logs = c.logs(stdout=True).decode('utf-8')
     LOGGER.debug(logs)
+    assert rv == 0 or rv["StatusCode"] == 0, "pyspark not in PYTHONPATH"
