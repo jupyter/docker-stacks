@@ -40,16 +40,8 @@ jobs:
         run: |
           sphinx-build -M gettext ./ ./_build/
           sphinx-intl update -p ./_build/gettext -l en
-      - name: Get last commit hash
-        id: last-commit-hash
-        run: |
-          echo "::set-output name=hash::$(git rev-parse HEAD)"
-      - name: Echo sha
-        run: |
-          echo "SHA_TAG $GITHUB_SHA"
-          echo "Calculates SHA_TAG ${{steps.last-commit-hash.outputs.hash}}"
       - name: Push Strings to Master
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "[ci skip] Automated publish for ${{steps.last-commit-hash.outputs.hash}}"
+          commit_message: "[ci skip] Automated publish for $GITHUB_SHA"
