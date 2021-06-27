@@ -35,11 +35,11 @@ def test_matplotlib(container, test_file, expected_file, description):
     )
     command = f"python {cont_data_dir}/{test_file}"
     cmd = running_container.exec_run(command)
-    assert cmd.exit_code == 0, f"Command {command} failed"
     LOGGER.debug(cmd.output.decode("utf-8"))
+    assert cmd.exit_code == 0, f"Command {command} failed"
     # Checking if the file is generated
     # https://stackoverflow.com/a/15895594/4413446
     command = f"test -s {output_dir}/{expected_file}"
     cmd = running_container.exec_run(command)
-    assert cmd.exit_code == 0, f"Command {command} failed"
     LOGGER.debug(cmd.output.decode("utf-8"))
+    assert cmd.exit_code == 0, f"Command {command} failed"

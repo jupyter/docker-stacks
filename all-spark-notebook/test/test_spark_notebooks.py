@@ -32,8 +32,8 @@ def test_nbconvert(container, test_file):
         command=["start.sh", "bash", "-c", command],
     )
     rv = c.wait(timeout=timeout_ms / 10 + 10)
-    assert rv == 0 or rv["StatusCode"] == 0, f"Command {command} failed"
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
+    assert rv == 0 or rv["StatusCode"] == 0, f"Command {command} failed"
     expected_file = f"{output_dir}/{test_file}.md"
     assert expected_file in logs, f"Expected file {expected_file} not generated"

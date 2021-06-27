@@ -32,8 +32,8 @@ class DockerRunner:
     def run_simple_command(container, cmd: str, print_result: bool = True):
         logger.info(f"Running cmd: '{cmd}' on container: {container}")
         out = container.exec_run(cmd)
-        assert out.exit_code == 0, f"Command: {cmd} failed"
         result = out.output.decode("utf-8").rstrip()
         if print_result:
             logger.info(f"Command result: {result}")
+        assert out.exit_code == 0, f"Command: {cmd} failed"
         return result
