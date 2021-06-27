@@ -1,6 +1,8 @@
 name: Build Docker Images
 
 on:
+  repository_dispatch:
+    types: [cron-docker-update]
   pull_request:
     paths-ignore:
       - ".github/ISSUE_TEMPLATE/**"

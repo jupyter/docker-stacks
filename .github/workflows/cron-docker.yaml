@@ -1,0 +1,26 @@
+name: Create a commit to update SHA tag and dispatch to launch Docker images build
+
+on:
+  schedule:
+    # weekly
+    - cron: "0 0 * * 0"
+
+jobs:
+  build-images:
+    name: Create a commit to update SHA tag and dispatch to launch Docker images build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Clone Main Repo
+        uses: actions/checkout@v2
+      - name: Create an empty commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Empty commit to update sha tag
+          commit_options: "--allow-empty"
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{secrets.REPO_ACCESS_TOKEN}}
+          event-type: cron-docker-update
