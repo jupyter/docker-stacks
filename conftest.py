@@ -33,10 +33,10 @@ def docker_client():
 @pytest.fixture(scope='session')
 def image_name():
     """Image name to test"""
-    return os.getenv('TEST_IMAGE', 'jupyter/base-notebook')
+    return os.getenv('TEST_IMAGE')
 
 
-class TrackedContainer(object):
+class TrackedContainer:
     """Wrapper that collects docker container configuration and delays
     container creation/execution.
 

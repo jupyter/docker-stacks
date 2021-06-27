@@ -7,6 +7,7 @@ import pytest
 import os
 
 LOGGER = logging.getLogger(__name__)
+THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
 @pytest.mark.parametrize(
@@ -16,7 +17,7 @@ LOGGER = logging.getLogger(__name__)
 )
 def test_nbconvert(container, test_file):
     """Check if Spark notebooks can be executed"""
-    host_data_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+    host_data_dir = os.path.join(THIS_DIR, "data")
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
     timeout_ms = 600
@@ -31,8 +32,8 @@ def test_nbconvert(container, test_file):
         command=["start.sh", "bash", "-c", command],
     )
     rv = c.wait(timeout=timeout_ms / 10 + 10)
-    assert rv == 0 or rv["StatusCode"] == 0, f"Command {command} failed"
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
+    assert rv == 0 or rv["StatusCode"] == 0, f"Command {command} failed"
     expected_file = f"{output_dir}/{test_file}.md"
     assert expected_file in logs, f"Expected file {expected_file} not generated"
