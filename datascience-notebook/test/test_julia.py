@@ -15,5 +15,5 @@ def test_julia(container):
     command = "julia --version"
     cmd = running_container.exec_run(command)
     output = cmd.output.decode("utf-8")
-    assert cmd.exit_code == 0, f"Command {command} failed {output}"
     LOGGER.debug(output)
+    assert cmd.exit_code == 0, f"Command {command} failed {output}"
