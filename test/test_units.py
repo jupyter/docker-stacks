@@ -30,6 +30,6 @@ def test_units(container):
             command=['start.sh', 'python', f'{cont_data_dir}/{test_file}']
         )
         rv = c.wait(timeout=30)
-        assert rv == 0 or rv["StatusCode"] == 0
         logs = c.logs(stdout=True).decode('utf-8')
         LOGGER.debug(logs)
+        assert rv == 0 or rv["StatusCode"] == 0
