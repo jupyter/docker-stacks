@@ -8,7 +8,11 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
-    "env,expected_server", [(["JUPYTER_ENABLE_LAB=yes"], "lab"), (None, "notebook"), ],
+    "env,expected_server",
+    [
+        (["JUPYTER_ENABLE_LAB=yes"], "lab"),
+        (None, "notebook"),
+    ],
 )
 def test_start_notebook(container, http_client, env, expected_server):
     """Test the notebook start-notebook script"""
