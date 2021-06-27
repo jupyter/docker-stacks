@@ -7,23 +7,23 @@ import pytest
 import os
 
 LOGGER = logging.getLogger(__name__)
+THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
-@pytest.mark.parametrize("test_file,expected_file,description",
-                         [
-                             ("matplotlib_1.py", "test.png",
-                              "Test that matplotlib is able to plot a graph and write it as an image ..."),
-                             ("matplotlib_fonts_1.py", "test_fonts.png",
-                              "Test cm-super latex labels in matplotlib ...")
-                         ])
+@pytest.mark.parametrize(
+    "test_file,expected_file,description",
+    [
+        ("matplotlib_1.py", "test.png", "Test that matplotlib is able to plot a graph and write it as an image ..."),
+        ("matplotlib_fonts_1.py", "test_fonts.png", "Test cm-super latex labels in matplotlib ...")
+    ]
+)
 def test_matplotlib(container, test_file, expected_file, description):
     """Various tests performed on matplotlib
 
     - Test that matplotlib is able to plot a graph and write it as an image
     - Test matplotlib latex fonts, which depend on the cm-super package
     """
-    host_data_dir = os.path.join(os.path.dirname(
-        os.path.realpath(__file__)), "data")
+    host_data_dir = os.path.join(THIS_DIR, "data")
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
     LOGGER.info(description)
