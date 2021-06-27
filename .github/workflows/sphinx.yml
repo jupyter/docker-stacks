@@ -44,4 +44,4 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: "[ci skip] Automated publish for $GITHUB_SHA"
+          commit_message: "[ci skip] Automated publish for ${{github.sha}}"
