@@ -14,7 +14,9 @@ def _get_program_version(container, program: str) -> str:
 
 def _get_env_variable(container, variable: str) -> str:
     env = DockerRunner.run_simple_command(
-        container, cmd="env", print_result=False
+        container,
+        cmd="env",
+        print_result=False,
     ).split()
     for env_entry in env:
         if env_entry.startswith(variable):
