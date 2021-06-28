@@ -51,7 +51,10 @@ def test_uid_change(container):
 def test_gid_change(container):
     """Container should change the GID of the default user."""
     c = container.run(
-        tty=True, user="root", environment=["NB_GID=110"], command=["start.sh", "id"]
+        tty=True,
+        user="root",
+        environment=["NB_GID=110"],
+        command=["start.sh", "id"],
     )
     c.wait(timeout=10)
     logs = c.logs(stdout=True).decode("utf-8")
@@ -160,7 +163,11 @@ def test_sudo_path(container):
 
 def test_sudo_path_without_grant(container):
     """Container should include /opt/conda/bin in the sudo secure_path."""
-    c = container.run(tty=True, user="root", command=["start.sh", "which", "jupyter"])
+    c = container.run(
+        tty=True,
+        user="root",
+        command=["start.sh", "which", "jupyter"],
+    )
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
@@ -171,7 +178,11 @@ def test_group_add(container, tmpdir):
     """Container should run with the specified uid, gid, and secondary
     group.
     """
-    c = container.run(user="1010:1010", group_add=["users"], command=["start.sh", "id"])
+    c = container.run(
+        user="1010:1010",
+        group_add=["users"],
+        command=["start.sh", "id"],
+    )
     rv = c.wait(timeout=5)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")

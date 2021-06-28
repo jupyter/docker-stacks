@@ -49,7 +49,8 @@ class CondaPackageHelper:
         """Start the TrackedContainer and return an instance of a running container"""
         LOGGER.info(f"Starting container {container.image_name} ...")
         return container.run(
-            tty=True, command=["start.sh", "bash", "-c", "sleep infinity"]
+            tty=True,
+            command=["start.sh", "bash", "-c", "sleep infinity"],
         )
 
     @staticmethod
