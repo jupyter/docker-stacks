@@ -16,11 +16,11 @@ def _get_env_variable(container, variable: str) -> str:
     env = DockerRunner.run_simple_command(
         container,
         cmd="env",
-        print_result=False
+        print_result=False,
     ).split()
     for env_entry in env:
         if env_entry.startswith(variable):
-            return env_entry[len(variable) + 1:]
+            return env_entry[len(variable) + 1 :]
     raise KeyError(variable)
 
 
@@ -29,15 +29,16 @@ def _get_pip_package_version(container, package: str) -> str:
     package_info = DockerRunner.run_simple_command(
         container,
         cmd=f"pip show {package}",
-        print_result=False
+        print_result=False,
     )
     version_line = package_info.split("\n")[1]
     assert version_line.startswith(VERSION_PREFIX)
-    return version_line[len(VERSION_PREFIX):]
+    return version_line[len(VERSION_PREFIX) :]
 
 
 class TaggerInterface:
     """Common interface for all taggers"""
+
     @staticmethod
     def tag_value(container) -> str:
         raise NotImplementedError
@@ -52,7 +53,10 @@ class SHATagger(TaggerInterface):
 class UbuntuVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container) -> str:
-        os_release = DockerRunner.run_simple_command(container, "cat /etc/os-release").split("\n")
+        os_release = DockerRunner.run_simple_command(
+            container,
+            "cat /etc/os-release",
+        ).split("\n")
         for line in os_release:
             if line.startswith("VERSION_ID"):
                 return "ubuntu-" + line.split("=")[1].strip('"')

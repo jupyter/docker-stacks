@@ -10,7 +10,7 @@ def test_julia(container):
     LOGGER.info("Test that julia is correctly installed ...")
     running_container = container.run(
         tty=True,
-        command=["start.sh", "bash", "-c", "sleep infinity"]
+        command=["start.sh", "bash", "-c", "sleep infinity"],
     )
     command = "julia --version"
     cmd = running_container.exec_run(command)

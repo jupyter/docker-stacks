@@ -62,22 +62,6 @@ dev-env: ## install libraries required to build docs and run tests
 docs: ## build HTML documentation
 	sphinx-build docs/ docs/_build/
 
-git-commit: LOCAL_PATH?=.
-git-commit: GITHUB_SHA?=$(shell git rev-parse HEAD)
-git-commit: GITHUB_REPOSITORY?=jupyter/docker-stacks
-git-commit: GITHUB_TOKEN?=
-git-commit: ## commit outstading git changes and push to remote
-	@git config --global user.name "GitHub Actions"
-	@git config --global user.email "actions@users.noreply.github.com"
-
-	@echo "Publishing outstanding changes in $(LOCAL_PATH) to $(GITHUB_REPOSITORY)"
-	@cd $(LOCAL_PATH) && \
-		git remote add publisher https://$(GITHUB_TOKEN)@github.com/$(GITHUB_REPOSITORY).git && \
-		git checkout master && \
-		git add -A -- . && \
-		git commit -m "[ci skip] Automated publish for $(GITHUB_SHA)" || exit 0
-	@cd $(LOCAL_PATH) && git push -u publisher master
-
 hook/%: WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
 	python3 -m tagging.tag_image --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \

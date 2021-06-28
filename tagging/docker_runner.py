@@ -8,7 +8,12 @@ logger = logging.getLogger(__name__)
 
 
 class DockerRunner:
-    def __init__(self, image_name: str, docker_client=docker.from_env(), command: str = "sleep infinity"):
+    def __init__(
+        self,
+        image_name: str,
+        docker_client=docker.from_env(),
+        command: str = "sleep infinity",
+    ):
         self.container = None
         self.image_name = image_name
         self.command = command
@@ -17,7 +22,9 @@ class DockerRunner:
     def __enter__(self):
         logger.info(f"Creating container for image {self.image_name} ...")
         self.container = self.docker_client.containers.run(
-            image=self.image_name, command=self.command, detach=True,
+            image=self.image_name,
+            command=self.command,
+            detach=True,
         )
         logger.info(f"Container {self.container.name} created")
         return self.container

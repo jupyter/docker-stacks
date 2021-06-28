@@ -42,8 +42,6 @@ jobs:
           sphinx-intl update -p ./_build/gettext -l en
       - name: Push Strings to Master
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-        run: make git-commit
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          GITHUB_REPOSITORY: ${{github.repository}}
-          LOCAL_PATH: ./docs/locale/en
+        uses: stefanzweifel/git-auto-commit-action@5dd17c3b53a58c1cb5eaab903826abe94765ccd6 # dependabot updates to latest release
+        with:
+          commit_message: "[ci skip] Automated publish for ${{github.sha}}"

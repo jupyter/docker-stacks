@@ -10,7 +10,7 @@ def test_pandoc(container):
     """Pandoc shall be able to convert MD to HTML."""
     c = container.run(
         tty=True,
-        command=["start.sh", "bash", "-c", 'echo "**BOLD**" | pandoc']
+        command=["start.sh", "bash", "-c", 'echo "**BOLD**" | pandoc'],
     )
     c.wait(timeout=10)
     logs = c.logs(stdout=True).decode("utf-8")

@@ -13,9 +13,17 @@ THIS_DIR = os.path.dirname(os.path.realpath(__file__))
 @pytest.mark.parametrize(
     "test_file,expected_file,description",
     [
-        ("matplotlib_1.py", "test.png", "Test that matplotlib is able to plot a graph and write it as an image ..."),
-        ("matplotlib_fonts_1.py", "test_fonts.png", "Test cm-super latex labels in matplotlib ...")
-    ]
+        (
+            "matplotlib_1.py",
+            "test.png",
+            "Test that matplotlib is able to plot a graph and write it as an image ...",
+        ),
+        (
+            "matplotlib_fonts_1.py",
+            "test_fonts.png",
+            "Test cm-super latex labels in matplotlib ...",
+        ),
+    ],
 )
 def test_matplotlib(container, test_file, expected_file, description):
     """Various tests performed on matplotlib

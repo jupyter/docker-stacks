@@ -3,47 +3,58 @@ ci:
   skip: [hadolint-docker]
 
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+  # Autoformat: Python code
+  - repo: https://github.com/ambv/black
+    rev: 21.6b0
     hooks:
-      - id: check-yaml
-        files: .*\.(yaml|yml)$
+      - id: black
+        args: [--target-version=py39]
+
+  # Autoformat: YAML, JSON, Markdown, etc.
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.3.2
+    hooks:
+      - id: prettier
+
+  # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
     rev: v2.5.0
     hooks:
       - id: hadolint-docker
         # FIXME: remove after https://github.com/hadolint/hadolint/issues/628 is resolved
         entry: hadolint/hadolint:v2.5.0 hadolint
+
+  # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.26.1
     hooks:
       - id: yamllint
         args: ["-d {extends: relaxed, rules: {line-length: disable}}", "-s"]
         files: \.(yaml|yml)$
+
+  # Lint: Bash scripts
   - repo: https://github.com/openstack-dev/bashate.git
     rev: 2.0.0
     hooks:
       - id: bashate
         args: ["--ignore=E006"]
+
+  # Lint: Shell scripts
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.7.2.1
     hooks:
       - id: shellcheck
         args: ["-x"]
+
+  # Lint: Python
   - repo: https://github.com/PyCQA/flake8
     rev: 3.9.2
     hooks:
       - id: flake8
-  - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.5.7
-    hooks:
-      - id: autopep8
+
+  # Lint: Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
     rev: v0.27.1
     hooks:
       - id: markdownlint
         args: ["--fix"]
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.3.1
-    hooks:
-      - id: prettier

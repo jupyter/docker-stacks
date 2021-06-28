@@ -11,59 +11,55 @@ LOGGER = logging.getLogger(__name__)
 def test_cli_args(container, http_client):
     """Container should respect notebook server command line args
     (e.g., disabling token security)"""
-    c = container.run(
-        command=["start-notebook.sh", "--NotebookApp.token=''"]
-    )
-    resp = http_client.get('http://localhost:8888')
+    c = container.run(command=["start-notebook.sh", "--NotebookApp.token=''"])
+    resp = http_client.get("http://localhost:8888")
     resp.raise_for_status()
-    logs = c.logs(stdout=True).decode('utf-8')
+    logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
-    assert 'login_submit' not in resp.text
+    assert "login_submit" not in resp.text
 
 
-@pytest.mark.filterwarnings('ignore:Unverified HTTPS request')
+@pytest.mark.filterwarnings("ignore:Unverified HTTPS request")
 def test_unsigned_ssl(container, http_client):
     """Container should generate a self-signed SSL certificate
     and notebook server should use it to enable HTTPS.
     """
-    container.run(
-        environment=['GEN_CERT=yes']
-    )
+    container.run(environment=["GEN_CERT=yes"])
     # NOTE: The requests.Session backing the http_client fixture does not retry
     # properly while the server is booting up. An SSL handshake error seems to
     # abort the retry logic. Forcing a long sleep for the moment until I have
     # time to dig more.
     time.sleep(5)
-    resp = http_client.get('https://localhost:8888', verify=False)
+    resp = http_client.get("https://localhost:8888", verify=False)
     resp.raise_for_status()
-    assert 'login_submit' in resp.text
+    assert "login_submit" in resp.text
 
 
 def test_uid_change(container):
     """Container should change the UID of the default user."""
     c = container.run(
         tty=True,
-        user='root',
-        environment=['NB_UID=1010'],
-        command=['start.sh', 'bash', '-c', 'id && touch /opt/conda/test-file']
+        user="root",
+        environment=["NB_UID=1010"],
+        command=["start.sh", "bash", "-c", "id && touch /opt/conda/test-file"],
     )
     # usermod is slow so give it some time
     c.wait(timeout=120)
-    assert 'uid=1010(jovyan)' in c.logs(stdout=True).decode('utf-8')
+    assert "uid=1010(jovyan)" in c.logs(stdout=True).decode("utf-8")
 
 
 def test_gid_change(container):
     """Container should change the GID of the default user."""
     c = container.run(
         tty=True,
-        user='root',
-        environment=['NB_GID=110'],
-        command=['start.sh', 'id']
+        user="root",
+        environment=["NB_GID=110"],
+        command=["start.sh", "id"],
     )
     c.wait(timeout=10)
-    logs = c.logs(stdout=True).decode('utf-8')
-    assert 'gid=110(jovyan)' in logs
-    assert 'groups=110(jovyan),100(users)' in logs
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "gid=110(jovyan)" in logs
+    assert "groups=110(jovyan),100(users)" in logs
 
 
 def test_nb_user_change(container):
@@ -72,11 +68,8 @@ def test_nb_user_change(container):
     running_container = container.run(
         tty=True,
         user="root",
-        environment=[
-            f"NB_USER={nb_user}",
-            "CHOWN_HOME=yes"
-        ],
-        command=['start.sh', 'bash', '-c', 'sleep infinity']
+        environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
+        command=["start.sh", "bash", "-c", "sleep infinity"],
     )
 
     # Give the chown time to complete. Use sleep, not wait, because the
@@ -98,25 +91,27 @@ def test_nb_user_change(container):
     expected_output = f"{nb_user} users"
     cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
     output = cmd.output.decode("utf-8").strip("\n")
-    assert output == expected_output, f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
+    assert (
+        output == expected_output
+    ), f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
 
 
 def test_chown_extra(container):
     """Container should change the UID/GID of CHOWN_EXTRA."""
     c = container.run(
         tty=True,
-        user='root',
+        user="root",
         environment=[
-            'NB_UID=1010',
-            'NB_GID=101',
-            'CHOWN_EXTRA=/opt/conda',
-            'CHOWN_EXTRA_OPTS=-R'
+            "NB_UID=1010",
+            "NB_GID=101",
+            "CHOWN_EXTRA=/opt/conda",
+            "CHOWN_EXTRA_OPTS=-R",
         ],
-        command=['start.sh', 'bash', '-c', 'stat -c \'%n:%u:%g\' /opt/conda/LICENSE.txt']
+        command=["start.sh", "bash", "-c", "stat -c '%n:%u:%g' /opt/conda/LICENSE.txt"],
     )
     # chown is slow so give it some time
     c.wait(timeout=120)
-    assert '/opt/conda/LICENSE.txt:1010:101' in c.logs(stdout=True).decode('utf-8')
+    assert "/opt/conda/LICENSE.txt:1010:101" in c.logs(stdout=True).decode("utf-8")
 
 
 def test_chown_home(container):
@@ -124,53 +119,59 @@ def test_chown_home(container):
     group to the current value of NB_UID and NB_GID."""
     c = container.run(
         tty=True,
-        user='root',
-        environment=[
-            'CHOWN_HOME=yes',
-            'CHOWN_HOME_OPTS=-R'
+        user="root",
+        environment=["CHOWN_HOME=yes", "CHOWN_HOME_OPTS=-R"],
+        command=[
+            "start.sh",
+            "bash",
+            "-c",
+            "chown root:root /home/jovyan && ls -alsh /home",
         ],
-        command=['start.sh', 'bash', '-c', 'chown root:root /home/jovyan && ls -alsh /home']
     )
     c.wait(timeout=120)
-    assert "Changing ownership of /home/jovyan to 1000:100 with options '-R'" in c.logs(stdout=True).decode('utf-8')
+    assert "Changing ownership of /home/jovyan to 1000:100 with options '-R'" in c.logs(
+        stdout=True
+    ).decode("utf-8")
 
 
 def test_sudo(container):
     """Container should grant passwordless sudo to the default user."""
     c = container.run(
         tty=True,
-        user='root',
-        environment=['GRANT_SUDO=yes'],
-        command=['start.sh', 'sudo', 'id']
+        user="root",
+        environment=["GRANT_SUDO=yes"],
+        command=["start.sh", "sudo", "id"],
     )
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
-    assert 'uid=0(root)' in c.logs(stdout=True).decode('utf-8')
+    assert "uid=0(root)" in c.logs(stdout=True).decode("utf-8")
 
 
 def test_sudo_path(container):
     """Container should include /opt/conda/bin in the sudo secure_path."""
     c = container.run(
         tty=True,
-        user='root',
-        environment=['GRANT_SUDO=yes'],
-        command=['start.sh', 'sudo', 'which', 'jupyter']
+        user="root",
+        environment=["GRANT_SUDO=yes"],
+        command=["start.sh", "sudo", "which", "jupyter"],
     )
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
-    assert c.logs(stdout=True).decode('utf-8').rstrip().endswith('/opt/conda/bin/jupyter')
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
 def test_sudo_path_without_grant(container):
     """Container should include /opt/conda/bin in the sudo secure_path."""
     c = container.run(
         tty=True,
-        user='root',
-        command=['start.sh', 'which', 'jupyter']
+        user="root",
+        command=["start.sh", "which", "jupyter"],
     )
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
-    assert c.logs(stdout=True).decode('utf-8').rstrip().endswith('/opt/conda/bin/jupyter')
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
 def test_group_add(container, tmpdir):
@@ -178,10 +179,11 @@ def test_group_add(container, tmpdir):
     group.
     """
     c = container.run(
-        user='1010:1010',
-        group_add=['users'],
-        command=['start.sh', 'id']
+        user="1010:1010",
+        group_add=["users"],
+        command=["start.sh", "id"],
     )
     rv = c.wait(timeout=5)
     assert rv == 0 or rv["StatusCode"] == 0
-    assert 'uid=1010 gid=1010 groups=1010,100(users)' in c.logs(stdout=True).decode('utf-8')
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
