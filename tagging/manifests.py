@@ -92,7 +92,8 @@ class RPackagesManifest(ManifestInterface):
                 quoted_output(container, "R --version"),
                 "",
                 quoted_output(
-                    container, "R --silent -e 'installed.packages(.Library)[, c(1,3)]'"
+                    container,
+                    "R --silent -e 'installed.packages(.Library)[, c(1,3)]'",
                 ),
             ]
         )
