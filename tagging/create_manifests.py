@@ -63,7 +63,8 @@ def create_manifest_file(
 
     commit_hash_tag = GitHelper.commit_hash_tag()
     manifest_file = os.path.join(
-        wiki_path, f"manifests/{short_image_name}-{commit_hash_tag}.md"
+        wiki_path,
+        f"manifests/{short_image_name}-{commit_hash_tag}.md",
     )
 
     markdown_pieces = [
