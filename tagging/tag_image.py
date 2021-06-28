@@ -32,7 +32,9 @@ if __name__ == "__main__":
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(
-        "--short-image-name", required=True, help="Short image name to apply tags for"
+        "--short-image-name",
+        required=True,
+        help="Short image name to apply tags for",
     )
     arg_parser.add_argument("--owner", required=True, help="Owner of the image")
     args = arg_parser.parse_args()
