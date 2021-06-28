@@ -21,7 +21,9 @@ def tag_image(short_image_name: str, owner: str) -> None:
         for tagger in taggers:
             tagger_name = tagger.__name__
             tag_value = tagger.tag_value(container)
-            logger.info(f"Applying tag tagger_name: {tagger_name} tag_value: {tag_value}")
+            logger.info(
+                f"Applying tag tagger_name: {tagger_name} tag_value: {tag_value}"
+            )
             docker["tag", image, f"{owner}/{short_image_name}:{tag_value}"]()
 
 
@@ -29,7 +31,9 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("--short-image-name", required=True, help="Short image name to apply tags for")
+    arg_parser.add_argument(
+        "--short-image-name", required=True, help="Short image name to apply tags for"
+    )
     arg_parser.add_argument("--owner", required=True, help="Owner of the image")
     args = arg_parser.parse_args()
 

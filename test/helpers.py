@@ -34,8 +34,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class CondaPackageHelper:
-    """Conda package helper permitting to get information about packages
-    """
+    """Conda package helper permitting to get information about packages"""
 
     def __init__(self, container):
         # if isinstance(container, TrackedContainer):
@@ -50,8 +49,7 @@ class CondaPackageHelper:
         """Start the TrackedContainer and return an instance of a running container"""
         LOGGER.info(f"Starting container {container.image_name} ...")
         return container.run(
-            tty=True,
-            command=["start.sh", "bash", "-c", "sleep infinity"]
+            tty=True, command=["start.sh", "bash", "-c", "sleep infinity"]
         )
 
     @staticmethod
@@ -76,7 +74,9 @@ class CondaPackageHelper:
         if self.specs is None:
             LOGGER.info("Grabing the list of specifications ...")
             self.specs = CondaPackageHelper._packages_from_json(
-                self._execute_command(CondaPackageHelper._conda_export_command(from_history=True))
+                self._execute_command(
+                    CondaPackageHelper._conda_export_command(from_history=True)
+                )
             )
         return self.specs
 
@@ -112,9 +112,7 @@ class CondaPackageHelper:
     def available_packages(self):
         """Return the available packages"""
         if self.available is None:
-            LOGGER.info(
-                "Grabing the list of available packages (can take a while) ..."
-            )
+            LOGGER.info("Grabing the list of available packages (can take a while) ...")
             # Keeping command line output since `conda search --outdated --json` is way too long ...
             self.available = CondaPackageHelper._extract_available(
                 self._execute_command(["conda", "search", "--outdated"])
@@ -146,10 +144,9 @@ class CondaPackageHelper:
                 current = min(inst_vs, key=CondaPackageHelper.semantic_cmp)
                 newest = avail_vs[-1]
                 if avail_vs and current != newest:
-                    if (
-                        CondaPackageHelper.semantic_cmp(current) <
-                        CondaPackageHelper.semantic_cmp(newest)
-                    ):
+                    if CondaPackageHelper.semantic_cmp(
+                        current
+                    ) < CondaPackageHelper.semantic_cmp(newest):
                         self.comparison.append(
                             {"Package": pkg, "Current": current, "Newest": newest}
                         )
@@ -162,6 +159,7 @@ class CondaPackageHelper:
         def mysplit(string):
             def version_substrs(x):
                 return re.findall(r"([A-z]+|\d+)", x)
+
             return list(chain(map(version_substrs, string.split("."))))
 
         def str_ord(string):

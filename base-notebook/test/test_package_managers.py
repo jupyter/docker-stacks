@@ -23,8 +23,7 @@ def test_package_manager(container, package_manager, version_arg):
         f"Test that the package manager {package_manager} is working properly ..."
     )
     c = container.run(
-        tty=True,
-        command=["start.sh", "bash", "-c", f"{package_manager} {version_arg}"]
+        tty=True, command=["start.sh", "bash", "-c", f"{package_manager} {version_arg}"]
     )
     rv = c.wait(timeout=5)
     logs = c.logs(stdout=True).decode("utf-8")

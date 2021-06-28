@@ -26,8 +26,7 @@ def test_check_extension(container, extension):
     """
     LOGGER.info(f"Checking the extension: {extension} ...")
     c = container.run(
-        tty=True,
-        command=["start.sh", "jupyter", "labextension", "check", extension]
+        tty=True, command=["start.sh", "jupyter", "labextension", "check", extension]
     )
     rv = c.wait(timeout=10)
     logs = c.logs(stdout=True).decode("utf-8")

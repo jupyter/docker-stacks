@@ -68,7 +68,7 @@ EXCLUDED_PACKAGES = [
     "protobuf",
     "r-irkernel",
     "unixodbc",
-    "bzip2"
+    "bzip2",
 ]
 
 
@@ -133,8 +133,9 @@ def _import_packages(package_helper, filtered_packages, check_function, max_fail
     for package in filtered_packages:
         LOGGER.info(f"Trying to import {package}")
         try:
-            assert check_function(package_helper, package) == 0, \
-                f"Package [{package}] import failed"
+            assert (
+                check_function(package_helper, package) == 0
+            ), f"Package [{package}] import failed"
         except AssertionError as err:
             failures[package] = err
     if len(failures) > max_failures:
