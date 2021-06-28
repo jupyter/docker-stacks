@@ -20,7 +20,10 @@ MARKDOWN_LINE_BREAK = "<br />"
 
 
 def append_build_history_line(
-    short_image_name: str, owner: str, wiki_path: str, all_tags: List[str]
+    short_image_name: str,
+    owner: str,
+    wiki_path: str,
+    all_tags: List[str],
 ) -> None:
     logger.info("Appending build history line")
 

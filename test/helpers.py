@@ -143,13 +143,15 @@ class CondaPackageHelper:
                     continue
                 current = min(inst_vs, key=CondaPackageHelper.semantic_cmp)
                 newest = avail_vs[-1]
-                if avail_vs and current != newest:
-                    if CondaPackageHelper.semantic_cmp(
-                        current
-                    ) < CondaPackageHelper.semantic_cmp(newest):
-                        self.comparison.append(
-                            {"Package": pkg, "Current": current, "Newest": newest}
-                        )
+                if (
+                    avail_vs
+                    and current != newest
+                    and CondaPackageHelper.semantic_cmp(current)
+                    < CondaPackageHelper.semantic_cmp(newest)
+                ):
+                    self.comparison.append(
+                        {"Package": pkg, "Current": current, "Newest": newest}
+                    )
         return self.comparison
 
     @staticmethod

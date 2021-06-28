@@ -97,7 +97,10 @@ def container(docker_client, image_name):
     Yields the container instance and kills it when the caller is done with it.
     """
     container = TrackedContainer(
-        docker_client, image_name, detach=True, ports={"8888/tcp": 8888}
+        docker_client,
+        image_name,
+        detach=True,
+        ports={"8888/tcp": 8888},
     )
     yield container
     container.remove()

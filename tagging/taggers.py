@@ -25,7 +25,9 @@ def _get_env_variable(container, variable: str) -> str:
 def _get_pip_package_version(container, package: str) -> str:
     VERSION_PREFIX = "Version: "
     package_info = DockerRunner.run_simple_command(
-        container, cmd=f"pip show {package}", print_result=False
+        container,
+        cmd=f"pip show {package}",
+        print_result=False,
     )
     version_line = package_info.split("\n")[1]
     assert version_line.startswith(VERSION_PREFIX)

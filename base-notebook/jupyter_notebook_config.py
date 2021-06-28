@@ -45,18 +45,13 @@ distinguished_name = req_distinguished_name
             "openssl",
             "req",
             "-new",
-            "-newkey",
-            "rsa:2048",
-            "-days",
-            "365",
+            "-newkey=rsa:2048",
+            "-days=365",
             "-nodes",
             "-x509",
-            "-subj",
-            "/C=XX/ST=XX/L=XX/O=generated/CN=generated",
-            "-keyout",
-            pem_file,
-            "-out",
-            pem_file,
+            "-subj=/C=XX/ST=XX/L=XX/O=generated/CN=generated",
+            f"-keyout={pem_file}",
+            f"-out={pem_file}",
         ]
     )
     # Restrict access to the file
