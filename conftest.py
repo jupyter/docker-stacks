@@ -79,7 +79,8 @@ class TrackedContainer:
         all_kwargs.update(kwargs)
         LOGGER.info(f"Running {self.image_name} with args {all_kwargs} ...")
         self.container = self.docker_client.containers.run(
-            self.image_name, **all_kwargs
+            self.image_name,
+            **all_kwargs,
         )
         return self.container
 
