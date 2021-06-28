@@ -107,7 +107,8 @@ class JuliaPackagesManifest(ManifestInterface):
                 "## Julia Packages",
                 "",
                 quoted_output(
-                    container, "julia -E 'using InteractiveUtils; versioninfo()'"
+                    container,
+                    "julia -E 'using InteractiveUtils; versioninfo()'",
                 ),
                 "",
                 quoted_output(container, "julia -E 'import Pkg; Pkg.status()'"),
