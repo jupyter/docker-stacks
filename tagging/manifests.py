@@ -78,7 +78,11 @@ class AptPackagesManifest(ManifestInterface):
     @staticmethod
     def markdown_piece(container) -> str:
         return "\n".join(
-            ["## Apt Packages", "", quoted_output(container, "apt list --installed")]
+            [
+                "## Apt Packages",
+                "",
+                quoted_output(container, "apt list --installed"),
+            ]
         )
 
 
