@@ -154,9 +154,8 @@ def test_sudo_path(container):
     )
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
-    assert (
-        c.logs(stdout=True).decode("utf-8").rstrip().endswith("/opt/conda/bin/jupyter")
-    )
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
 def test_sudo_path_without_grant(container):
@@ -164,9 +163,8 @@ def test_sudo_path_without_grant(container):
     c = container.run(tty=True, user="root", command=["start.sh", "which", "jupyter"])
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
-    assert (
-        c.logs(stdout=True).decode("utf-8").rstrip().endswith("/opt/conda/bin/jupyter")
-    )
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
 def test_group_add(container, tmpdir):
@@ -176,6 +174,5 @@ def test_group_add(container, tmpdir):
     c = container.run(user="1010:1010", group_add=["users"], command=["start.sh", "id"])
     rv = c.wait(timeout=5)
     assert rv == 0 or rv["StatusCode"] == 0
-    assert "uid=1010 gid=1010 groups=1010,100(users)" in c.logs(stdout=True).decode(
-        "utf-8"
-    )
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
