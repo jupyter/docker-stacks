@@ -54,7 +54,8 @@ class UbuntuVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container) -> str:
         os_release = DockerRunner.run_simple_command(
-            container, "cat /etc/os-release"
+            container,
+            "cat /etc/os-release",
         ).split("\n")
         for line in os_release:
             if line.startswith("VERSION_ID"):
