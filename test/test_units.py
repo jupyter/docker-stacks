@@ -12,7 +12,7 @@ def test_units(container):
     """Various units tests
     Add a py file in the {image}/test/units dir and it will be automatically tested
     """
-    short_image_name = container.image_name[container.image_name.rfind('/') + 1:]
+    short_image_name = container.image_name[container.image_name.rfind("/") + 1 :]
     host_data_dir = os.path.join(THIS_DIR, f"../{short_image_name}/test/units")
     LOGGER.info(f"Searching for units tests in {host_data_dir}")
     cont_data_dir = "/home/jovyan/data"
@@ -27,9 +27,9 @@ def test_units(container):
         c = container.run(
             volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
             tty=True,
-            command=['start.sh', 'python', f'{cont_data_dir}/{test_file}']
+            command=["start.sh", "python", f"{cont_data_dir}/{test_file}"],
         )
         rv = c.wait(timeout=30)
-        logs = c.logs(stdout=True).decode('utf-8')
+        logs = c.logs(stdout=True).decode("utf-8")
         LOGGER.debug(logs)
         assert rv == 0 or rv["StatusCode"] == 0

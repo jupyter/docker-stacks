@@ -24,7 +24,9 @@ def test_nbconvert(container, test_file, output_format):
     host_data_dir = os.path.join(THIS_DIR, "data")
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
-    LOGGER.info(f"Test that the example notebook {test_file} can be converted to {output_format} ...")
+    LOGGER.info(
+        f"Test that the example notebook {test_file} can be converted to {output_format} ..."
+    )
     command = f"jupyter nbconvert {cont_data_dir}/{test_file}.ipynb --output-dir {output_dir} --to {output_format}"
     c = container.run(
         volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},

@@ -19,7 +19,11 @@ def test_start_notebook(container, http_client, env, expected_server):
     LOGGER.info(
         f"Test that the start-notebook launches the {expected_server} server from the env {env} ..."
     )
-    c = container.run(tty=True, environment=env, command=["start-notebook.sh"])
+    c = container.run(
+        tty=True,
+        environment=env,
+        command=["start-notebook.sh"],
+    )
     resp = http_client.get("http://localhost:8888")
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
@@ -40,7 +44,10 @@ def test_tini_entrypoint(container, pid=1, command="tini"):
     https://superuser.com/questions/632979/if-i-know-the-pid-number-of-a-process-how-can-i-get-its-name
     """
     LOGGER.info(f"Test that {command} is launched as PID {pid} ...")
-    c = container.run(tty=True, command=["start.sh"])
+    c = container.run(
+        tty=True,
+        command=["start.sh"],
+    )
     # Select the PID 1 and get the corresponding command
     cmd = c.exec_run(f"ps -p {pid} -o comm=")
     output = cmd.output.decode("utf-8").strip("\n")

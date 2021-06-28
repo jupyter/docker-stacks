@@ -19,7 +19,12 @@ BUILD_TIMESTAMP = datetime.datetime.utcnow().isoformat()[:-7] + "Z"
 MARKDOWN_LINE_BREAK = "<br />"
 
 
-def append_build_history_line(short_image_name: str, owner: str, wiki_path: str, all_tags: List[str]) -> None:
+def append_build_history_line(
+    short_image_name: str,
+    owner: str,
+    wiki_path: str,
+    all_tags: List[str],
+) -> None:
     logger.info("Appending build history line")
 
     date_column = f"`{BUILD_TIMESTAMP}`"
@@ -28,11 +33,13 @@ def append_build_history_line(short_image_name: str, owner: str, wiki_path: str,
     )
     commit_hash = GitHelper.commit_hash()
     commit_hash_tag = GitHelper.commit_hash_tag()
-    links_column = MARKDOWN_LINE_BREAK.join([
-        f"[Git diff](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
-        f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/{short_image_name}/Dockerfile)",
-        f"[Build manifest](./{short_image_name}-{commit_hash_tag})"
-    ])
+    links_column = MARKDOWN_LINE_BREAK.join(
+        [
+            f"[Git diff](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
+            f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/{short_image_name}/Dockerfile)",
+            f"[Build manifest](./{short_image_name}-{commit_hash_tag})",
+        ]
+    )
     build_history_line = "|".join([date_column, image_column, links_column]) + "|"
 
     home_wiki_file = os.path.join(wiki_path, "Home.md")
@@ -49,16 +56,20 @@ def create_manifest_file(
     owner: str,
     wiki_path: str,
     manifests: List[ManifestInterface],
-    container
+    container,
 ) -> None:
     manifest_names = [manifest.__name__ for manifest in manifests]
     logger.info(f"Using manifests: {manifest_names}")
 
     commit_hash_tag = GitHelper.commit_hash_tag()
-    manifest_file = os.path.join(wiki_path, f"manifests/{short_image_name}-{commit_hash_tag}.md")
+    manifest_file = os.path.join(
+        wiki_path,
+        f"manifests/{short_image_name}-{commit_hash_tag}.md",
+    )
 
-    markdown_pieces = [ManifestHeader.create_header(short_image_name, owner, BUILD_TIMESTAMP)] + \
-        [manifest.markdown_piece(container) for manifest in manifests]
+    markdown_pieces = [
+        ManifestHeader.create_header(short_image_name, owner, BUILD_TIMESTAMP)
+    ] + [manifest.markdown_piece(container) for manifest in manifests]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
     with open(manifest_file, "w") as f:
@@ -81,7 +92,11 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("--short-image-name", required=True, help="Short image name to apply tags for")
+    arg_parser.add_argument(
+        "--short-image-name",
+        required=True,
+        help="Short image name to apply tags for",
+    )
     arg_parser.add_argument("--owner", required=True, help="Owner of the image")
     arg_parser.add_argument("--wiki-path", required=True, help="Path to the wiki pages")
     args = arg_parser.parse_args()

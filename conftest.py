@@ -14,26 +14,26 @@ from requests.adapters import HTTPAdapter
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def http_client():
     """Requests session with retries and backoff."""
     s = requests.Session()
     retries = Retry(total=5, backoff_factor=1)
-    s.mount('http://', HTTPAdapter(max_retries=retries))
-    s.mount('https://', HTTPAdapter(max_retries=retries))
+    s.mount("http://", HTTPAdapter(max_retries=retries))
+    s.mount("https://", HTTPAdapter(max_retries=retries))
     return s
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def docker_client():
     """Docker client configured based on the host environment"""
     return docker.from_env()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def image_name():
     """Image name to test"""
-    return os.getenv('TEST_IMAGE')
+    return os.getenv("TEST_IMAGE")
 
 
 class TrackedContainer:
@@ -78,7 +78,10 @@ class TrackedContainer:
         all_kwargs.update(self.kwargs)
         all_kwargs.update(kwargs)
         LOGGER.info(f"Running {self.image_name} with args {all_kwargs} ...")
-        self.container = self.docker_client.containers.run(self.image_name, **all_kwargs)
+        self.container = self.docker_client.containers.run(
+            self.image_name,
+            **all_kwargs,
+        )
         return self.container
 
     def remove(self):
@@ -87,7 +90,7 @@ class TrackedContainer:
             self.container.remove(force=True)
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope="function")
 def container(docker_client, image_name):
     """Notebook container with initial configuration appropriate for testing
     (e.g., HTTP port exposed to the host for HTTP calls).
@@ -98,9 +101,7 @@ def container(docker_client, image_name):
         docker_client,
         image_name,
         detach=True,
-        ports={
-            '8888/tcp': 8888
-        }
+        ports={"8888/tcp": 8888},
     )
     yield container
     container.remove()
