@@ -5,6 +5,10 @@
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
 OWNER?=jupyter
+# By default we still target single image amd64 & docker output type.
+# To cross build run make PLATFORM="linux/amd64,linux/arm64" BUILDX_OUTPUT_TYPE="registry"
+PLATFORM ?= "linux/amd64"
+BUILDX_OUTPUT_TYPE ?= "docker"
 
 # Need to list the images in build dependency order
 ALL_IMAGES:=base-notebook \
@@ -29,7 +33,7 @@ help:
 
 build/%: DARGS?=
 build/%: ## build the latest image for a stack
-	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --push --platform linux/arm64,linux/amd64
+	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --output=type="${BUILDX_OUTPUT_TYPE}" --platform "${PLATFORM}"
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 

@@ -30,15 +30,9 @@ ARG miniforge_patch_number="5"
 # - conda only: either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
 # - conda + mamba: either Mambaforge to use Python or Mambaforge-pypy3 to use PyPy
 ARG miniforge_python="Mambaforge"
-
 # Miniforge archive to install
 ARG miniforge_version="${conda_version}-${miniforge_patch_number}"
-# Miniforge installer
-RUN export miniforge_arch=$(uname -m) && \
-    if [ "$arch" == "aarm64" ]; then \
-      miniforge_arch="arm64"; \
-    fi; \
-RUN export miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh"
+
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
@@ -103,7 +97,14 @@ RUN mkdir "/home/${NB_USER}/work" && \
 WORKDIR /tmp
 
 # Prerequisites installation: conda, mamba, pip, tini
-RUN wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}" && \
+RUN set -x && \
+    # Miniforge installer
+    export miniforge_arch=$(uname -m) && \
+    if [ "$miniforge_arch" == "aarm64" ]; then \
+      miniforge_arch="arm64"; \
+    fi; \
+    export miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh" && \
+    wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}" && \
     /bin/bash "${miniforge_installer}" -f -b -p "${CONDA_DIR}" && \
     rm "${miniforge_installer}" && \
     # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
