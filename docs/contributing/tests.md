@@ -26,7 +26,6 @@ Please follow the process below to add new tests:
    If you use `make`, call:
 
    ```bash
-   OWNER={yourdockerhubusername}
    make build/somestack-notebook
    make test/somestack-notebook
    ```

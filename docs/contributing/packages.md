@@ -18,7 +18,6 @@ Please follow the process below to update a package version:
    If you use `make`, call:
 
    ```bash
-   OWNER={yourdockerhubusername}
    make build/somestack-notebook
    ```
 
