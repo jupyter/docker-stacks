@@ -2,7 +2,7 @@
 
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/all-spark-notebook.svg)](https://hub.docker.com/r/jupyter/all-spark-notebook/)
 [![docker stars](https://img.shields.io/docker/stars/jupyter/all-spark-notebook.svg)](https://hub.docker.com/r/jupyter/all-spark-notebook/)
-[![image metadata](https://images.microbadger.com/badges/image/jupyter/all-spark-notebook.svg)](https://microbadger.com/images/jupyter/all-spark-notebook "jupyter/all-spark-notebook image metadata")
+[![image size](https://img.shields.io/docker/image-size/jupyter/all-spark-notebook/latest)](https://hub.docker.com/r/jupyter/all-spark-notebook/ "jupyter/all-spark-notebook image size")
 
 GitHub Actions in the <https://github.com/jupyter/docker-stacks> project builds and pushes this image
 to Docker Hub.
