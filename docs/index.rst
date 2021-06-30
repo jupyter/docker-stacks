@@ -44,6 +44,11 @@ Docker destroys the container after notebook server exit, but any files written 
 
     docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
 
+Architectures
+-----------
+Currently published containers only support x86, however cross-platform image support for x86 & arm64 images is now present.
+
+
 Table of Contents
 -----------------
 
