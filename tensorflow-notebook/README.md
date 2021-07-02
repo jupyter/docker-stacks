@@ -2,7 +2,7 @@
 
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/tensorflow-notebook.svg)](https://hub.docker.com/r/jupyter/tensorflow-notebook/)
 [![docker stars](https://img.shields.io/docker/stars/jupyter/tensorflow-notebook.svg)](https://hub.docker.com/r/jupyter/tensorflow-notebook/)
-[![image metadata](https://images.microbadger.com/badges/image/jupyter/tensorflow-notebook.svg)](https://microbadger.com/images/jupyter/tensorflow-notebook "jupyter/tensorflow-notebook image metadata")
+[![image size](https://img.shields.io/docker/image-size/jupyter/tensorflow-notebook/latest)](https://hub.docker.com/r/jupyter/tensorflow-notebook/ "jupyter/tensorflow-notebook image size")
 
 GitHub Actions in the <https://github.com/jupyter/docker-stacks> project builds and pushes this image
 to Docker Hub.
