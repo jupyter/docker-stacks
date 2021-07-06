@@ -40,7 +40,6 @@ jobs:
               echo "REGISTRY=localhost:5000/" >> $GITHUB_ENV
           fi
       - uses: actions/checkout@v2
-
       # Setup docker to build for multiple platforms, see:
       # https://github.com/docker/build-push-action/tree/v2.4.0#usage
       # https://github.com/docker/build-push-action/blob/v2.4.0/docs/advanced/multi-platform.md
