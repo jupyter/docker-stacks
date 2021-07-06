@@ -98,11 +98,13 @@ WORKDIR /tmp
 # Prerequisites installation: conda, mamba, pip, tini
 RUN set -x && \
     # Miniforge installer
-    export miniforge_arch=$(uname -m) && \
+    miniforge_arch=$(uname -m) && \
+    export miniforge_arch && \
     if [ "$miniforge_arch" == "aarm64" ]; then \
       miniforge_arch="arm64"; \
     fi; \
-    export miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh" && \
+    miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh" && \
+    export miniforge_installer && \
     wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}" && \
     /bin/bash "${miniforge_installer}" -f -b -p "${CONDA_DIR}" && \
     rm "${miniforge_installer}" && \
