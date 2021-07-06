@@ -52,7 +52,7 @@ build-cross/%: ## build the latest image for a stack on x86 and ARM
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 
 build-all: $(foreach I,$(CROSS_IMAGES), build-cross/$(I) ) $(foreach I,$(X86_IMAGES), build/$(I) ) ## build all stacks
-build-test-all: build-all $(foreach I,$(ALL_IMAGES), test/$(I) ) ## build and test all stacks
+build-test-all: build-all test-all ## build and test all stacks
 
 check-outdated/%: ## check the outdated conda packages in a stack and produce a report (experimental)
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
