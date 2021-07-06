@@ -5,8 +5,7 @@
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
 ARG ROOT_CONTAINER=ubuntu:focal-20210609
 
-ARG BASE_CONTAINER=$ROOT_CONTAINER
-FROM $BASE_CONTAINER
+FROM $ROOT_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 ARG NB_USER="jovyan"

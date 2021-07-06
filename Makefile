@@ -6,11 +6,19 @@
 SHELL:=bash
 OWNER?=jupyter
 # By default we still target single image amd64 & docker output type.
-# To cross build run make PLATFORM="linux/amd64,linux/arm64" BUILDX_OUTPUT_TYPE="registry"
-PLATFORM ?= "linux/amd64"
-BUILDX_OUTPUT_TYPE ?= "docker"
 
 # Need to list the images in build dependency order
+# These are images we can cross-build
+CROSS_IMAGES:= base-notebook \
+	minimal-notebook
+# These images that aren't currently supported for cross-building, your help is welcome.
+X86_IMAGES:= r-notebook \
+	scipy-notebook \
+	tensorflow-notebook \
+	datascience-notebook \
+	pyspark-notebook \
+	all-spark-notebook
+# All of the images
 ALL_IMAGES:=base-notebook \
 	minimal-notebook \
 	r-notebook \
@@ -33,12 +41,18 @@ help:
 
 build/%: DARGS?=
 build/%: ## build the latest image for a stack
-	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --output=type="${BUILDX_OUTPUT_TYPE}" --platform "${PLATFORM}"
+	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --platform "linux/amd64" --build-arg OWNER="${OWNER}" --push
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 
-build-all: $(foreach I,$(ALL_IMAGES), build/$(I) ) ## build all stacks
-build-test-all: $(foreach I,$(ALL_IMAGES), build/$(I) test/$(I) ) ## build and test all stacks
+build-cross/%: DARGS?=
+build-cross/%: ## build the latest image for a stack on x86 and ARM
+	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --platform "linux/amd64,linux/arm64" --build-arg OWNER="${OWNER}" --push
+	@echo -n "Built image size: "
+	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
+
+build-all: $(foreach I,$(CROSS_IMAGES), build-cross/$(I) ) $(foreach I,$(X86_IMAGES), build/$(I) ) ## build all stacks
+build-test-all: build-all $(foreach I,$(ALL_IMAGES), test/$(I) ) ## build and test all stacks
 
 check-outdated/%: ## check the outdated conda packages in a stack and produce a report (experimental)
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
@@ -99,12 +113,6 @@ pull/%: ## pull a jupyter image
 	docker pull $(DARGS) $(OWNER)/$(notdir $@)
 
 pull-all: $(foreach I,$(ALL_IMAGES),pull/$(I) ) ## pull all images
-
-push/%: DARGS?=
-push/%: ## push all tags for a jupyter image
-	docker push --all-tags $(DARGS) $(OWNER)/$(notdir $@)
-
-push-all: $(foreach I,$(ALL_IMAGES),push/$(I) ) ## push all tagged images
 
 run/%: DARGS?=
 run/%: ## run a bash in interactive mode in a stack
