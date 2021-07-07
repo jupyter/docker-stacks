@@ -46,7 +46,7 @@ Docker destroys the container after notebook server exit, but any files written 
 
 Architectures
 -----------
-Currently published containers only support x86, however cross-platform image support for x86 & arm64 images is now present.
+Currently published containers only support x86, some containers may support cross-building with docker buildx.
 
 
 Table of Contents
