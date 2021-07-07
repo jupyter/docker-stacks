@@ -107,4 +107,4 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 
 ## Architectures
 
-Currently published containers only support x86, however cross-platform image support for x86 & arm64 images is now present.
+Currently published containers only support x86, some containers may support cross-building with docker buildx.
