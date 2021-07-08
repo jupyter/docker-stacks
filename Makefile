@@ -29,7 +29,7 @@ help:
 
 build/%: DARGS?=
 build/%: ## build the latest image for a stack
-	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@)
+	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest --build-arg OWNER=$(OWNER) ./$(notdir $@)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 
