@@ -104,3 +104,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 - [Jupyter Discourse Forum](https://discourse.jupyter.org/)
 - [Jupyter Website](https://jupyter.org)
 - [Images on DockerHub](https://hub.docker.com/u/jupyter)
+
+## Architectures
+
+Currently published containers only support x86, some containers may support cross-building with docker buildx.
