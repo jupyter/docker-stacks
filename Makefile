@@ -33,10 +33,12 @@ help:
 
 
 build/%: DARGS?=
-build/%: ## build the latest image for a stack
-	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest --build-arg OWNER=$(OWNER) ./$(notdir $@)
+build/%: ## build the latest image for a stack using the system's architecture
+	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
+	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
+	@echo "::endgroup::Build $(OWNER)/$(notdir $@) (system's architecture)"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 build-test-all: $(foreach I, $(ALL_IMAGES), build/$(I) test/$(I)) ## build and test all stacks
 
@@ -110,7 +112,9 @@ pull-all: $(foreach I, $(ALL_IMAGES), pull/$(I)) ## pull all images
 
 push/%: DARGS?=
 push/%: ## push all tags for a jupyter image
+	@echo "::group::Push $(OWNER)/$(notdir $@) (system's architecture)"
 	docker push --all-tags $(DARGS) $(OWNER)/$(notdir $@)
+	@echo "::endgroup::Push $(OWNER)/$(notdir $@) (system's architecture)"
 push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 
@@ -126,7 +130,9 @@ run-sudo/%: ## run a bash in interactive mode as root in a stack
 
 
 test/%: ## run tests against a stack (only common tests or common tests + specific tests)
+	@echo "::group::test/$(OWNER)/$(notdir $@)"
 	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
 	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test $(notdir $@)/test; fi
+	@echo "::endgroup::test/$(OWNER)/$(notdir $@)"
 
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks
