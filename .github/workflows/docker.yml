@@ -30,43 +30,52 @@ jobs:
     if: >
       !contains(github.event.head_commit.message, 'ci skip') &&
       !contains(github.event.pull_request.title, 'ci skip')
+
     steps:
       - name: Clone Main Repo
         uses: actions/checkout@v2
         with:
           path: main
+
       - name: Set Up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
+
       - name: Install Dev Dependencies
         run: |
           python -m pip install --upgrade pip
           make -C main dev-env
+
       - name: Build Docker Images
         run: make -C main build-test-all
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
+
       - name: Clone Wiki
         uses: actions/checkout@v2
         with:
           repository: ${{github.repository}}.wiki
           path: wiki
+
       - name: Run Post-Build Hooks
         run: make -C main hook-all
+
       - name: Push Wiki to GitHub
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@5dd17c3b53a58c1cb5eaab903826abe94765ccd6 # dependabot updates to latest release
         with:
           commit_message: "[ci skip] Automated publish for ${{github.sha}}"
           repository: wiki/
+
       - name: Login to Docker Hub
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9 # dependabot updates to latest release
         with:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
+
       - name: Push Images to DockerHub
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         run: make -C main push-all
