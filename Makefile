@@ -38,7 +38,7 @@ build/%: ## build the latest image for a stack using the system's architecture
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
-	@echo "::endgroup::Build $(OWNER)/$(notdir $@) (system's architecture)"
+	@echo "::endgroup::"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 build-test-all: $(foreach I, $(ALL_IMAGES), build/$(I) test/$(I)) ## build and test all stacks
 
@@ -114,7 +114,7 @@ push/%: DARGS?=
 push/%: ## push all tags for a jupyter image
 	@echo "::group::Push $(OWNER)/$(notdir $@) (system's architecture)"
 	docker push --all-tags $(DARGS) $(OWNER)/$(notdir $@)
-	@echo "::endgroup::Push $(OWNER)/$(notdir $@) (system's architecture)"
+	@echo "::endgroup::"
 push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 
@@ -133,6 +133,6 @@ test/%: ## run tests against a stack (only common tests or common tests + specif
 	@echo "::group::test/$(OWNER)/$(notdir $@)"
 	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
 	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test $(notdir $@)/test; fi
-	@echo "::endgroup::test/$(OWNER)/$(notdir $@)"
+	@echo "::endgroup::"
 
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks
