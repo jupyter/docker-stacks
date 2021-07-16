@@ -54,7 +54,7 @@ build/%: ## build the latest image for a stack using the system's architecture
 	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
-	@echo "::endgroup::Build $(OWNER)/$(notdir $@) (system's architecture)"
+	@echo "::endgroup::"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
 # Limitations on docker buildx build (using docker/buildx 0.5.1):
@@ -103,11 +103,11 @@ build-multi/%: ## build the latest image for a stack on both amd64 and arm64
 	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
-	@echo "::endgroup::Build $(OWNER)/$(notdir $@) (system's architecture)"
+	@echo "::endgroup::"
 
 	@echo "::group::Build $(OWNER)/$(notdir $@) (amd64,arm64)"
 	docker buildx build $(DARGS) --rm --force-rm -t build-multi-tmp-cache/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64"
-	@echo "::endgroup::Build $(OWNER)/$(notdir $@) (amd64,arm64)"
+	@echo "::endgroup::"
 build-all-multi: $(foreach I, $(MULTI_IMAGES), build-multi/$(I)) $(foreach I, $(AMD64_ONLY_IMAGES), build/$(I)) ## build all stacks
 
 
@@ -182,14 +182,14 @@ push/%: DARGS?=
 push/%: ## push all tags for a jupyter image
 	@echo "::group::Push $(OWNER)/$(notdir $@) (system's architecture)"
 	docker push --all-tags $(DARGS) $(OWNER)/$(notdir $@)
-	@echo "::endgroup::Push $(OWNER)/$(notdir $@) (system's architecture)"
+	@echo "::endgroup::"
 push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 push-multi/%: DARGS?=
 push-multi/%: ## push all tags for a jupyter image that support multiple architectures
 	@echo "::group::Push $(OWNER)/$(notdir $@) (amd64,arm64)"
 	docker buildx build $(DARGS) --rm --force-rm $($(subst -,_,$(notdir $@))_EXTRA_TAG_ARGS) -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64"
-	@echo "::endgroup::Push $(OWNER)/$(notdir $@) (amd64,arm64)"
+	@echo "::endgroup::"
 push-all-multi: $(foreach I, $(MULTI_IMAGES), push-multi/$(I)) $(foreach I, $(AMD64_ONLY_IMAGES), push/$(I)) ## push all tagged images
 
 
@@ -208,5 +208,5 @@ test/%: ## run tests against a stack (only common tests or common tests + specif
 	@echo "::group::test/$(OWNER)/$(notdir $@)"
 	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
 	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test $(notdir $@)/test; fi
-	@echo "::endgroup::test/$(OWNER)/$(notdir $@)"
+	@echo "::endgroup::"
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks
