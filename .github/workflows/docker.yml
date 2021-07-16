@@ -1,4 +1,4 @@
-name: Build Docker Images
+name: Build, test, and publish Docker Images
 
 on:
   pull_request:
@@ -22,8 +22,8 @@ on:
       - ".pre-commit-config.yaml"
 
 jobs:
-  build-images:
-    name: Build Docker Images
+  build-test-publish-images:
+    name: Build, test, and publish Docker Images
     runs-on: ubuntu-latest
     permissions:
       contents: write
