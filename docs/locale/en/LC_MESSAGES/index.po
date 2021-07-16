@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: docker-stacks latest\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-08 14:06+0000\n"
+"POT-Creation-Date: 2021-07-16 21:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,44 +19,44 @@ msgstr ""
 "Generated-By: Babel 2.9.1\n"
 
 # 22f1bd46933144e092bf92e3af4c6f4f
-#: ../../index.rst:55 259addd8d90e4cbeab357be9823cac05
+#: ../../index.rst:68 fabc87acbe0f41dab377dc8f86267e6c
 msgid "User Guide"
 msgstr ""
 
 # f35d75046f8c42ae8cab58d826154823
-#: ../../index.rst:65 2479218777044cfdb444b6a7e9cd5971
+#: ../../index.rst:78 b6430893279342f1b19741b52783f94d
 msgid "Contributor Guide"
 msgstr ""
 
 # a737afe726cd49c4986d75b7d74eeed3
-#: ../../index.rst:78 d089d107caef463c8e689748e60a47a7
+#: ../../index.rst:91 4c5c58c21e1148dfb0b825214ca6eb46
 msgid "Maintainer Guide"
 msgstr ""
 
-#: ../../index.rst:84
+#: ../../index.rst:97
 msgid "Issue Tracker on Github"
 msgstr ""
 
-#: ../../index.rst:84
+#: ../../index.rst:97
 msgid "Jupyter Discourse Forum"
 msgstr ""
 
-#: ../../index.rst:84
+#: ../../index.rst:97
 msgid "Jupyter Website"
 msgstr ""
 
 # 9cd216fa91ef40bbb957373faaf93732
-#: ../../index.rst:84 7674c75edb8e4f02a4834ba9fe620933
+#: ../../index.rst:97 64ff4e329da7487389e71c1af4391d37
 msgid "Getting Help"
 msgstr ""
 
 # a0aa0bcd999c4c5e96cc57fd77780f96
-#: ../../index.rst:2 a9c5366b811a4951b1a6d5edca0fea5c
+#: ../../index.rst:2 f8ef5f4fad4641598e64d9a9ffa57c03
 msgid "Jupyter Docker Stacks"
 msgstr ""
 
 # 5d06f458dc524214b2c97e865dd2dc81
-#: ../../index.rst:4 af64033317154bb69b9a295fe357741a
+#: ../../index.rst:4 a44b383ccc2c4998b562a459a4a0adf2
 msgid ""
 "Jupyter Docker Stacks are a set of ready-to-run Docker images containing "
 "Jupyter applications and interactive computing tools. You can use a stack"
@@ -64,26 +64,26 @@ msgid ""
 msgstr ""
 
 # c69f151c806e4cdf9bebda05b06c760e
-#: ../../index.rst:7 b02d3a54f9434efabb9ec7cf44573954
+#: ../../index.rst:7 1d597d5ac7a94919b4e48c6f68ea7691
 msgid "Start a personal Jupyter Notebook server in a local Docker container"
 msgstr ""
 
 # b26271409ab743b2a349b3a8ca95233e
-#: ../../index.rst:8 657f4e715fe5481fb2c06edd5c6fa6b5
+#: ../../index.rst:8 5c974b36fa2847e4908266fbe1a7fafa
 msgid "Run JupyterLab servers for a team using JupyterHub"
 msgstr ""
 
 # 4d60f4325fff4ffcad12703a4b9d6781
-#: ../../index.rst:9 faa40cd6f5694bbbaa1c71c8159b8811
+#: ../../index.rst:9 af0743ef75304950873ec17398f67ed7
 msgid "Write your own project Dockerfile"
 msgstr ""
 
 # 78b0d31eb6e9462888eef92e6a84cdb7
-#: ../../index.rst:12 f0b4531077c34bf6bb2dc8b62b368cc9
+#: ../../index.rst:12 972ec4d591df48838a47a2fbd22ee834
 msgid "Quick Start"
 msgstr ""
 
-#: ../../index.rst:14 feff58d1445d4f96ab11966c9249526c
+#: ../../index.rst:14 82f78dc15edc4a599e5e371d738a72ca
 msgid ""
 "You can try a `relatively recent build of the jupyter/base-notebook image"
 " on mybinder.org <https://mybinder.org/v2/gh/jupyter/docker-"
@@ -95,13 +95,13 @@ msgid ""
 msgstr ""
 
 # 051ed23ef62e41058a7c889604f96035
-#: ../../index.rst:20 cb7785be2f644bd5bc924904777f7e7a
+#: ../../index.rst:20 b7ecb438e9fc44dda4a7fc959b9b4554
 msgid ""
 "The other pages in this documentation describe additional uses and "
 "features in detail."
 msgstr ""
 
-#: ../../index.rst:22 2bef3917f97b4ea8bb59e87a49445850
+#: ../../index.rst:22 fcbea78689ea46f3830c901bbd9eaaed
 msgid ""
 "**Example 1:** This command pulls the ``jupyter/scipy-notebook`` image "
 "tagged ``33add21fab64`` from Docker Hub if it is not already present on "
@@ -114,7 +114,7 @@ msgid ""
 "the notebook server exits.::"
 msgstr ""
 
-#: ../../index.rst:31 2a72957ec0ef4905903a78e9273cd308
+#: ../../index.rst:31 e50b29d9626b41d08be2e882345e9269
 msgid ""
 "**Example 2:** This command performs the same operations as **Example "
 "1**, but it exposes the server on host port 10000 instead of port 8888. "
@@ -124,7 +124,7 @@ msgid ""
 "console.::"
 msgstr ""
 
-#: ../../index.rst:37 0b05aa95a5e94138aa8312d3c12dc95b
+#: ../../index.rst:37 52a90856db5f48a4a975650af24e2f4a
 msgid ""
 "**Example 3:** This command pulls the ``jupyter/datascience-notebook`` "
 "image tagged ``33add21fab64`` from Docker Hub if it is not already "
@@ -139,18 +139,38 @@ msgid ""
 "written to ``~/work`` in the container remain intact on the host.::"
 msgstr ""
 
-#: ../../index.rst:48 fafd366c8b474a2ca38075195adbdac1
-msgid "Architectures"
+#: ../../index.rst:48 9dad0faf14b341a7aad8c5a52ae43261
+msgid "CPU Architectures"
 msgstr ""
 
-#: ../../index.rst:49 b5ca90b4a1ff411b9f53843605376677
+#: ../../index.rst:50 df9d05f0078b4b869d77708eae01e8a1
 msgid ""
-"Currently published containers only support x86, some containers may "
-"support cross-building with docker buildx."
+"All published containers support amd64 (x86_64). The base-notebook and "
+"minimal-notebook containers also support arm64. The ambition is to have "
+"all containers support both amd64 and arm64."
+msgstr ""
+
+#: ../../index.rst:55 6373c2a057da444096488df7fc1a6b2c
+msgid "Caveats for arm64 images"
+msgstr ""
+
+#: ../../index.rst:57 513fab855cb4454ebd95bde481e6e637
+msgid ""
+"The manifests we publish in this projects wiki as well as the image tags "
+"for the multi platform images that also support arm, are all based on the"
+" amd64 version even though details about the installed packages versions "
+"could differ between architectures. For the status about this, see "
+"[#1401](https://github.com/jupyter/docker-stacks/issues/1401)."
+msgstr ""
+
+#: ../../index.rst:62 c971c7ea81f444eb8a80b720719dfd99
+msgid ""
+"Only the amd64 images are actively tested currently. For the status about"
+" this, see [#1402](https://github.com/jupyter/docker-stacks/issues/1402)."
 msgstr ""
 
 # 3ac1a41d185844b1b43315a4cc74efc8
-#: ../../index.rst:53 304d5b606a5c4df7be7709e50d7ea069
+#: ../../index.rst:66 bbb3dc2560aa4a3ca8fe6db279b97e42
 msgid "Table of Contents"
 msgstr ""
 
@@ -273,5 +293,14 @@ msgstr ""
 #~ "you want to use, and want to "
 #~ "launch a single Jupyter Notebook server"
 #~ " in a container."
+#~ msgstr ""
+
+#~ msgid "Architectures"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Currently published containers only support"
+#~ " x86, some containers may support "
+#~ "cross-building with docker buildx."
 #~ msgstr ""
 
