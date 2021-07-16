@@ -16,8 +16,6 @@ in a GitHub CI environment.
 import json
 import os
 
-from contextlib import contextmanager
-
 
 def _gwc(command_name, command_value="", **params):
     if not os.environ.get("GITHUB_ACTIONS"):
@@ -33,18 +31,6 @@ def _gwc(command_name, command_value="", **params):
         print(f"::{command_name} {comma_sep_params}::{command_value}")
     else:
         print(f"::{command_name}::{command_value}")
-
-
-@contextmanager
-def _gwc_group(group_name):
-    """
-    Entering the context prints the group command, and exiting the context
-    prints the endgroup command.<<
-    """
-    try:
-        yield _gwc("group", group_name)
-    finally:
-        _gwc("endgroup", group_name)
 
 
 def _gwc_set_env(env_name, env_value):
