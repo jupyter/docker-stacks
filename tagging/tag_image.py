@@ -6,7 +6,7 @@ import logging
 from plumbum.cmd import docker
 from .docker_runner import DockerRunner
 from .get_taggers_and_manifests import get_taggers_and_manifests
-from .github_workflow_commands import _gwc_set_env
+from .github_set_env import github_set_env
 
 
 logger = logging.getLogger(__name__)
@@ -39,7 +39,7 @@ def tag_image(short_image_name: str, owner: str) -> None:
         if tags:
             env_name = f'{short_image_name.replace("-", "_")}_EXTRA_TAG_ARGS'
             docker_build_tag_args = "-t " + " -t ".join(tags)
-            _gwc_set_env(env_name, docker_build_tag_args)
+            github_set_env(env_name, docker_build_tag_args)
 
 
 if __name__ == "__main__":
