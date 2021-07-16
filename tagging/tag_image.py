@@ -12,6 +12,10 @@ logger = logging.getLogger(__name__)
 
 
 def tag_image(short_image_name: str, owner: str) -> None:
+    """
+    Tags <owner>/<short_image_name>:latest with the tags reported by all taggers
+    for the given image.
+    """
     logger.info(f"Tagging image: {short_image_name}")
     taggers, _ = get_taggers_and_manifests(short_image_name)
 
