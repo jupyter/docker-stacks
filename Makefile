@@ -188,7 +188,7 @@ push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 push-multi/%: DARGS?=
 push-multi/%: ## push all tags for a jupyter image that support multiple architectures
 	@echo "::group::Push $(OWNER)/$(notdir $@) (amd64,arm64)"
-	docker buildx build $(DARGS) --rm --force-rm $($(subst -,_,$(notdir $@))_EXTRA_TAG_ARGS) -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64"
+	docker buildx build $(DARGS) --rm --force-rm $($(subst -,_,$(notdir $@))_EXTRA_TAG_ARGS) -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64" --push
 	@echo "::endgroup::"
 push-all-multi: $(foreach I, $(MULTI_IMAGES), push-multi/$(I)) $(foreach I, $(AMD64_ONLY_IMAGES), push/$(I)) ## push all tagged images
 
