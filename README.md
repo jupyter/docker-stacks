@@ -105,6 +105,18 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 - [Jupyter Website](https://jupyter.org)
 - [Images on DockerHub](https://hub.docker.com/u/jupyter)
 
-## Architectures
+## CPU Architectures
 
-Currently published containers only support x86, some containers may support cross-building with docker buildx.
+All published containers support amd64 (x86_64). The base-notebook and
+minimal-notebook containers also support arm64. The ambition is to have all
+containers support both amd64 and arm64.
+
+### Caveats for arm64 images
+
+- The manifests we publish in this projects wiki as well as the image tags for
+  the multi platform images that also support arm, are all based on the amd64
+  version even though details about the installed packages versions could differ
+  between architectures. For the status about this, see
+  [#1401](https://github.com/jupyter/docker-stacks/issues/1401).
+- Only the amd64 images are actively tested currently. For the status about
+  this, see [#1402](https://github.com/jupyter/docker-stacks/issues/1402).
