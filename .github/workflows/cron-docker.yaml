@@ -11,14 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Clone Main Repo
         uses: actions/checkout@v2
+
       - name: Create an empty commit
         uses: stefanzweifel/git-auto-commit-action@5dd17c3b53a58c1cb5eaab903826abe94765ccd6 # dependabot updates to latest release
         with:
           commit_message: Empty commit to update sha tag
           commit_options: "--allow-empty"
+
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@ce5485de42c9b2622d2ed064be479e8ed65e76f4 # dependabot updates to latest release
         with:
