@@ -38,7 +38,9 @@ def tag_image(short_image_name: str, owner: str) -> None:
 
         if tags:
             env_name = f'{short_image_name.replace("-", "_")}_EXTRA_TAG_ARGS'
-            docker_build_tag_args = "-t " + " -t ".join(tags)
+            docker_build_tag_args = " ".join(
+                [f"-t {owner}/{short_image_name}:{tag}" for tag in tags]
+            )
             github_set_env(env_name, docker_build_tag_args)
 
 
