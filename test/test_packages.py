@@ -69,6 +69,8 @@ EXCLUDED_PACKAGES = [
     "r-irkernel",
     "unixodbc",
     "bzip2",
+    "openssl",
+    "ca-certificates",
 ]
 
 
