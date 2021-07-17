@@ -58,9 +58,9 @@ Caveats for arm64 images
   the multi platform images that also support arm, are all based on the amd64
   version even though details about the installed packages versions could differ
   between architectures. For the status about this, see
-  [#1401](https://github.com/jupyter/docker-stacks/issues/1401).
+  `#1401 <https://github.com/jupyter/docker-stacks/issues/1401>`_.
 - Only the amd64 images are actively tested currently. For the status about
-  this, see [#1402](https://github.com/jupyter/docker-stacks/issues/1402).
+  this, see `#1402 <https://github.com/jupyter/docker-stacks/issues/1402>`_.
 
 Table of Contents
 -----------------
