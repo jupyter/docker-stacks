@@ -21,8 +21,6 @@ repos:
     rev: v2.6.1
     hooks:
       - id: hadolint-docker
-        # FIXME: remove after https://github.com/hadolint/hadolint/issues/628 is resolved
-        entry: hadolint/hadolint:v2.6.0 hadolint
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
