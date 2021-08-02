@@ -18,7 +18,7 @@ repos:
 
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
-    rev: v2.6.0
+    rev: v2.6.1
     hooks:
       - id: hadolint-docker
         # FIXME: remove after https://github.com/hadolint/hadolint/issues/628 is resolved
