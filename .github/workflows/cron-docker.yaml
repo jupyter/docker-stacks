@@ -1,4 +1,10 @@
-name: Create a commit to update SHA tag and dispatch to launch Docker images build
+# This workflows purpose is to make sure we rebuild our images regularly.
+#
+# This workflow makes an empty commit to ensure we get a new SHA tag, and it
+# explicitly dispatches the regular workflow that builds and pushes our images
+# because the commit we made in this workflow can't trigger the other workflow.
+#
+name: Weekly rebuild dispatch
 
 on:
   schedule:
@@ -6,7 +12,7 @@ on:
     - cron: "0 0 * * 0"
 
 jobs:
-  build-images:
+  commit-and-dispatch:
     name: Create a commit to update SHA tag and dispatch to launch Docker images build
     runs-on: ubuntu-latest
     permissions:
@@ -19,6 +25,7 @@ jobs:
       - name: Create an empty commit
         uses: stefanzweifel/git-auto-commit-action@5dd17c3b53a58c1cb5eaab903826abe94765ccd6 # dependabot updates to latest release
         with:
+          commit_author: GitHub Actions <actions@github.com>
           commit_message: Empty commit to update sha tag
           commit_options: "--allow-empty"
 
