@@ -5,7 +5,7 @@ ci:
 repos:
   # Autoformat: Python code
   - repo: https://github.com/psf/black
-    rev: 21.6b0
+    rev: 21.7b0
     hooks:
       - id: black
         args: [--target-version=py39]
@@ -18,11 +18,9 @@ repos:
 
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
-    rev: v2.6.0
+    rev: v2.6.1
     hooks:
       - id: hadolint-docker
-        # FIXME: remove after https://github.com/hadolint/hadolint/issues/628 is resolved
-        entry: hadolint/hadolint:v2.6.0 hadolint
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
@@ -54,7 +52,7 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.27.1
+    rev: v0.28.1
     hooks:
       - id: markdownlint
         args: ["--fix"]
