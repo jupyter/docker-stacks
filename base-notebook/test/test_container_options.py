@@ -198,7 +198,7 @@ def test_container_not_delete_bind_mount(container, tmp_path):
     p = d / "foo.txt"
     p.write_text("some-content")
 
-    c = container.run(
+    container.run(
         tty=True,
         user="root",
         working_dir="/home/",
