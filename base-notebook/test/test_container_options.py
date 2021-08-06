@@ -198,7 +198,7 @@ def test_container_not_delete_bind_mount(container, tmp_path):
     p = d / "foo.txt"
     p.write_text("some-content")
 
-    container.run(
+    c = container.run(
         tty=True,
         user="root",
         working_dir="/home/",
@@ -207,8 +207,9 @@ def test_container_not_delete_bind_mount(container, tmp_path):
             "CHOWN_HOME=yes",
         ],
         volumes={d: {"bind": "/home/jovyan/data", "mode": "rw"}},
-        command=["start.sh", "jupyter", "lab"],
+        command=["start.sh", "ls"],
     )
-    time.sleep(2)
+    rv = c.wait(timeout=5)
+    assert rv == 0 or rv["StatusCode"] == 0
     assert p.read_text() == "some-content"
     assert len(list(tmp_path.iterdir())) == 1
