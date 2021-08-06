@@ -42,6 +42,7 @@ RUN apt-get update --yes && \
     wget \
     ca-certificates \
     sudo \
+    rsync \
     locales \
     fonts-liberation \
     run-one && \
