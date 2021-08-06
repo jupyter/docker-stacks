@@ -209,8 +209,6 @@ def test_container_not_delete_bind_mount(container, tmp_path):
         volumes={d: {"bind": "/home/jovyan/data", "mode": "rw"}},
         command=["start.sh", "jupyter", "lab"],
     )
-
-    time.sleep(10)
-
+    time.sleep(2)
     assert p.read_text() == "some-content"
     assert len(list(tmp_path.iterdir())) == 1
