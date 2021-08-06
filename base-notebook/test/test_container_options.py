@@ -189,8 +189,8 @@ def test_group_add(container, tmpdir):
     assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
 
 def test_container_not_delete_bind_mount(container, tmp_path):
-    """Container should not delete files when using the -v bind mount flag
-    and mappint to /home/jovyan.
+    """Container should not delete host system files when using the (docker) 
+    -v bind mount flag and mapping to /home/jovyan.
     """
     d = tmp_path / "data"
     d.mkdir()
