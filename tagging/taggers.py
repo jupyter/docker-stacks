@@ -1,5 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+from datetime import datetime
 import logging
 from .git_helper import GitHelper
 from .docker_runner import DockerRunner
@@ -48,6 +49,12 @@ class SHATagger(TaggerInterface):
     @staticmethod
     def tag_value(container) -> str:
         return GitHelper.commit_hash_tag()
+
+
+class DateTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(container) -> str:
+        return datetime.utcnow().strftime("%Y-%m-%d")
 
 
 class UbuntuVersionTagger(TaggerInterface):
