@@ -3,7 +3,7 @@
 
 # Ubuntu 20.04 (focal)
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
-ARG ROOT_CONTAINER=ubuntu:focal-20210609
+ARG ROOT_CONTAINER=ubuntu:focal
 
 FROM $ROOT_CONTAINER
 
@@ -130,9 +130,9 @@ RUN set -x && \
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 RUN conda install --quiet --yes \
-    'notebook=6.4.0' \
-    'jupyterhub=1.4.1' \
-    'jupyterlab=3.0.16' && \
+    'notebook' \
+    'jupyterhub' \
+    'jupyterlab' && \
     conda clean --all -f -y && \
     npm cache clean --force && \
     jupyter notebook --generate-config && \
