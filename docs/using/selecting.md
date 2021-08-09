@@ -193,23 +193,21 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 
 ### Builds
 
-Pull requests to the `jupyter/docker-stacks` repository trigger builds of all images on GitHub Actions.
-These images are for testing purposes only and are not saved for further use.
-When pull requests merge to master, all images rebuild on Docker Hub and become available to `docker pull` from Docker Hub.
+Every Monday and whenever a pull requests is merged, images are rebuilt and pushed to the public container registry.
 
-### Versioning
+### Versioning via image tags
 
-The `latest` tag in each Docker Hub repository tracks the master branch `HEAD` reference on GitHub.
-`latest` is a moving target, by definition, and will have backward-incompatible changes regularly.
+Whenever a docker image is pushed to the container registry, it is tagged with:
 
-Every image on Docker Hub also receives a 12-character tag which corresponds with the git commit SHA that triggered the image build.
-You can inspect the state of the `jupyter/docker-stacks` repository for that commit to review the definition of the image
-(e.g., images with tag `33add21fab64` were built from <https://github.com/jupyter/docker-stacks/tree/33add21fab64>.
+- a `latest` tag
+- a 12-character git commit SHA like `b9f6ce795cfc`
+- a date formatted like `2021-08-29`
+- a set of software version tags like `python-3.9.6`, and `lab-3.0.16`
 
-You must refer to git-SHA image tags when stability and reproducibility are important in your work.
-(e.g. `FROM jupyter/scipy-notebook:33add21fab64`, `docker run -it --rm jupyter/scipy-notebook:33add21fab64`).
-You should only use `latest` when a one-off container instance is acceptable
-(e.g., you want to briefly try a new library in a notebook).
+For stability and reproducibility, you should either reference a date formatted
+tag from a date before the current date (in UTC time) or a git commit SHA older
+than the latest git commit SHA in the default branch of the
+jupyter/docker-stacks GitHub repository.
 
 ## Community Stacks
 
