@@ -24,7 +24,7 @@ repos:
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.26.1
+    rev: v1.26.2
     hooks:
       - id: yamllint
         args: ["-d {extends: relaxed, rules: {line-length: disable}}", "-s"]
