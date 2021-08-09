@@ -202,7 +202,7 @@ Whenever a docker image is pushed to the container registry, it is tagged with:
 - a `latest` tag
 - a 12-character git commit SHA like `b9f6ce795cfc`
 - a date formatted like `2021-08-29`
-- a set of software version tags like `python-3.9.6`, and `lab-3.0.16`
+- a set of software version tags like `python-3.9.6` and `lab-3.0.16`
 
 For stability and reproducibility, you should either reference a date formatted
 tag from a date before the current date (in UTC time) or a git commit SHA older
