@@ -100,7 +100,7 @@ build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 build-multi/%: DARGS?=
 build-multi/%: ## build the latest image for a stack on both amd64 and arm64
 	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
-	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
+	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --load
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 	@echo "::endgroup::"
