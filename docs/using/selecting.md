@@ -226,13 +226,13 @@ core images and link them below.
   The image includes nbgrader and RISE on top of the datascience-notebook image.
   Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
 
-- **crosscompass/ihaskell-notebook**
+- **jamesdbrock/ihaskell-notebook**
 
   [Source on GitHub](https://github.com/jamesdbrock/ihaskell-notebook) |
   [Dockerfile commit history](https://github.com/jamesdbrock/ihaskell-notebook/commits/master/Dockerfile) |
-  [Docker Hub image tags](https://hub.docker.com/r/crosscompass/ihaskell-notebook/tags)
+  [Github container registry](https://github.com/jamesdbrock/ihaskell-notebook/pkgs/container/ihaskell-notebook)
 
-  `crosscompass/ihaskell-notebook` is based on [IHaskell](https://github.com/gibiansky/IHaskell).
+  `jamesdbrock/ihaskell-notebook` is based on [IHaskell](https://github.com/gibiansky/IHaskell).
   Includes popular packages and example notebooks.
 
   Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
