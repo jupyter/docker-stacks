@@ -32,7 +32,7 @@ docker run -p 8888:8888 jupyter/scipy-notebook:33add21fab64
 ```
 
 **Example 2:** This command performs the same operations as **Example 1**, but it exposes the server on host port 10000 instead of port 8888.
-Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
+Visiting `http://<hostname>:10000/?token=<token>` in a browser loads Jupyter Notebook server,
 where `hostname` is the name of the computer running docker and `token` is the secret token printed in the console.
 
 ```bash

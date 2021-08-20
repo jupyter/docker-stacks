@@ -1,6 +1,9 @@
 name: Build, test, and publish Docker Images
 
 on:
+  schedule:
+    # Weekly, at 03:00 on Monday UTC time
+    - cron: "0 3 * * 1"
   pull_request:
     paths-ignore:
       - ".github/ISSUE_TEMPLATE/**"
@@ -78,19 +81,19 @@ jobs:
         run: make -C main hook-all
 
       - name: Push Wiki to GitHub
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: stefanzweifel/git-auto-commit-action@5dd17c3b53a58c1cb5eaab903826abe94765ccd6 # dependabot updates to latest release
         with:
           commit_message: "[ci skip] Automated publish for ${{github.sha}}"
           repository: wiki/
 
       - name: Login to Docker Hub
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9 # dependabot updates to latest release
         with:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
       - name: Push Images to DockerHub
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         run: make -C main push-all-multi

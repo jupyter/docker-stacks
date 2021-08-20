@@ -5,6 +5,7 @@ from typing import Optional, List
 from .taggers import (
     TaggerInterface,
     SHATagger,
+    DateTagger,
     UbuntuVersionTagger,
     PythonVersionTagger,
     JupyterNotebookVersionTagger,
@@ -39,6 +40,7 @@ ALL_IMAGES = {
         parent_image=None,
         taggers=[
             SHATagger,
+            DateTagger,
             UbuntuVersionTagger,
             PythonVersionTagger,
             JupyterNotebookVersionTagger,
