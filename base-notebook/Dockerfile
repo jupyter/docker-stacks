@@ -17,22 +17,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# ---- Miniforge installer ----
-# Default values can be overridden at build time
-# (ARGS are in lower case to distinguish them from ENV)
-# Check https://github.com/conda-forge/miniforge/releases
-# Conda version
-ARG conda_version="4.10.3"
-# Miniforge installer patch version
-ARG miniforge_patch_number="3"
-# Package Manager and Python implementation to use (https://github.com/conda-forge/miniforge)
-# - conda only: either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
-# - conda + mamba: either Mambaforge to use Python or Mambaforge-pypy3 to use PyPy
-ARG miniforge_python="Mambaforge"
-# Miniforge archive to install
-ARG miniforge_version="${conda_version}-${miniforge_patch_number}"
-
-
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
@@ -95,17 +79,18 @@ RUN mkdir "/home/${NB_USER}/work" && \
 # Install conda as jovyan and check the sha256 sum provided on the download site
 WORKDIR /tmp
 
+# ---- Miniforge installer ----
+# Check https://github.com/conda-forge/miniforge/releases
+# Package Manager and Python implementation to use (https://github.com/conda-forge/miniforge)
+# - conda only: either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
+# - conda + mamba: either Mambaforge to use Python or Mambaforge-pypy3 to use PyPy
+
 # Prerequisites installation: conda, mamba, pip, tini
 RUN set -x && \
     # Miniforge installer
     miniforge_arch=$(uname -m) && \
-    export miniforge_arch && \
-    if [ "$miniforge_arch" == "aarm64" ]; then \
-      miniforge_arch="arm64"; \
-    fi; \
-    miniforge_installer="${miniforge_python}-${miniforge_version}-Linux-${miniforge_arch}.sh" && \
-    export miniforge_installer && \
-    wget --quiet "https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/${miniforge_installer}" && \
+    miniforge_installer="Mambaforge-Linux-${miniforge_arch}.sh" && \
+    wget --quiet "https://github.com/conda-forge/miniforge/releases/latest/download/${miniforge_installer}" && \
     /bin/bash "${miniforge_installer}" -f -b -p "${CONDA_DIR}" && \
     rm "${miniforge_installer}" && \
     # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
