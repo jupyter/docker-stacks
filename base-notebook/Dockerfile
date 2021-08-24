@@ -19,6 +19,7 @@ USER root
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
+# Install tini: init for containers
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
@@ -43,9 +44,7 @@ ENV CONDA_DIR=/opt/conda \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
 ENV PATH="${CONDA_DIR}/bin:${PATH}" \
-    HOME="/home/${NB_USER}" \
-    CONDA_VERSION="${conda_version}" \
-    MINIFORGE_VERSION="${miniforge_version}"
+    HOME="/home/${NB_USER}"
 
 # Copy a script that we will use to correct permissions after running certain commands
 COPY fix-permissions /usr/local/bin/fix-permissions
@@ -85,8 +84,7 @@ WORKDIR /tmp
 # We're using Mambaforge installer, possible options:
 # - conda only: either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
 # - conda + mamba: either Mambaforge to use Python or Mambaforge-pypy3 to use PyPy
-
-# Prerequisites installation: conda, mamba, pip, tini
+# Installation: conda, mamba, pip
 RUN set -x && \
     # Miniforge installer
     miniforge_arch=$(uname -m) && \
@@ -95,14 +93,10 @@ RUN set -x && \
     /bin/bash "${miniforge_installer}" -f -b -p "${CONDA_DIR}" && \
     rm "${miniforge_installer}" && \
     # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
-    echo "conda ${CONDA_VERSION}" >> "${CONDA_DIR}/conda-meta/pinned" && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     if [[ "${PYTHON_VERSION}" != "default" ]]; then conda install --yes python="${PYTHON_VERSION}"; fi && \
     conda list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
-    conda install --quiet --yes \
-    "conda=${CONDA_VERSION}" \
-    'pip' && \
     conda update --all --quiet --yes && \
     conda clean --all -f -y && \
     rm -rf "/home/${NB_USER}/.cache/yarn" && \
