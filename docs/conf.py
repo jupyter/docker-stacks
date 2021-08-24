@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 # docker-stacks documentation build configuration file, created by
 # sphinx-quickstart on Fri Dec 29 20:32:10 2017.
