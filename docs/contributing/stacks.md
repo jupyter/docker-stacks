@@ -18,7 +18,7 @@ Feel free to follow it or pave your own path using alternative services and buil
 First, install [cookiecutter](https://github.com/cookiecutter/cookiecutter) using pip or conda:
 
 ```bash
-pip install cookiecutter  # or conda install cookiecutter
+pip install cookiecutter  # or mamba install cookiecutter
 ```
 
 Run the cookiecutter command pointing to the [jupyter/cookiecutter-docker-stacks](https://github.com/jupyter/cookiecutter-docker-stacks) project on GitHub.

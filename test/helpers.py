@@ -55,8 +55,8 @@ class CondaPackageHelper:
 
     @staticmethod
     def _conda_export_command(from_history=False):
-        """Return the conda export command with or without history"""
-        cmd = ["conda", "env", "export", "-n", "base", "--json", "--no-builds"]
+        """Return the mamba export command with or without history"""
+        cmd = ["mamba", "env", "export", "-n", "base", "--json", "--no-builds"]
         if from_history:
             cmd.append("--from-history")
         return cmd
@@ -92,7 +92,7 @@ class CondaPackageHelper:
         # dependencies = filter(lambda x:  isinstance(x, str), json.loads(env_export).get("dependencies"))
         dependencies = json.loads(env_export).get("dependencies")
         # Filtering packages installed through pip in this case it's a dict {'pip': ['toree==0.3.0']}
-        # Since we only manage packages installed through conda here
+        # Since we only manage packages installed through mamba here
         dependencies = filter(lambda x: isinstance(x, str), dependencies)
         packages_dict = dict()
         for split in map(lambda x: re.split("=?=", x), dependencies):
@@ -114,9 +114,9 @@ class CondaPackageHelper:
         """Return the available packages"""
         if self.available is None:
             LOGGER.info("Grabing the list of available packages (can take a while) ...")
-            # Keeping command line output since `conda search --outdated --json` is way too long ...
+            # Keeping command line output since `mamba search --outdated --json` is way too long ...
             self.available = CondaPackageHelper._extract_available(
-                self._execute_command(["conda", "search", "--outdated"])
+                self._execute_command(["mamba", "search", "--outdated"])
             )
         return self.available
 

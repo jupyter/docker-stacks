@@ -161,6 +161,11 @@ You can use either `pip`, `conda` or `mamba` to install new packages without any
 
 ```bash
 # install a package into the default (python 3.x) environment and cleanup after the installation
+mamba install --quiet --yes some-package && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
 pip install --quiet --no-cache-dir some-package && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -169,27 +174,22 @@ conda install --quiet --yes some-package && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
-
-mamba install --quiet --yes some-package && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
 ```
 
 ### Using alternative channels
 
 Conda is configured by default to use only the [`conda-forge`](https://anaconda.org/conda-forge) channel.
-However, alternative channels can be used either one shot by overwriting the default channel in the installation command or by configuring `conda` to use different channels.
+However, alternative channels can be used either one shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.
 The examples below show how to use the [anaconda default channels](https://repo.anaconda.com/pkgs/main) instead of `conda-forge` to install packages.
 
 ```bash
 # using defaults channels to install a package
-conda install --channel defaults humanize
+mamba install --channel defaults humanize
 # configure conda to add default channels at the top of the list
 conda config --system --prepend channels defaults
 # install a package
-conda install --quiet --yes humanize && \
-    conda clean --all -f -y && \
+mamba install --quiet --yes humanize && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```

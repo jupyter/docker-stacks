@@ -21,7 +21,7 @@ docker run -it -e GRANT_SUDO=yes --user root jupyter/minimal-notebook
 **You should only enable `sudo` if you trust the user and/or if the container is running on an isolated host.**
 See [Docker security documentation](https://docs.docker.com/engine/security/userns-remap/) for more information about running containers as `root`.
 
-## Using `pip install` or `conda install` in a Child Docker image
+## Using `mamba install` or `pip install` in a Child Docker image
 
 Create a new Dockerfile like the one shown below.
 
@@ -61,8 +61,8 @@ For conda, the Dockerfile is similar:
 FROM jupyter/datascience-notebook:33add21fab64
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
-RUN conda install --yes --file /tmp/requirements.txt && \
-    conda clean --all -f -y && \
+RUN mamba install --yes --file /tmp/requirements.txt && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
@@ -81,8 +81,8 @@ FROM jupyter/scipy-notebook:latest
 # Create a Python 2.x environment using conda including at least the ipython kernel
 # and the kernda utility. Add any additional packages you want available for use
 # in a Python 2 notebook to the first line here (e.g., pandas, matplotlib, etc.)
-RUN conda create --quiet --yes -p "${CONDA_DIR}/envs/python2" python=2.7 ipython ipykernel kernda && \
-    conda clean --all -f -y
+RUN mamba create --quiet --yes -p "${CONDA_DIR}/envs/python2" python=2.7 ipython ipykernel kernda && \
+    mamba clean --all -f -y
 
 USER root
 
@@ -109,17 +109,17 @@ FROM jupyter/minimal-notebook:latest
 ARG conda_env=python36
 ARG py_ver=3.6
 
-# you can add additional libraries you want conda to install by listing them below the first line and ending with "&& \"
-RUN conda create --quiet --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
-    conda clean --all -f -y
+# you can add additional libraries you want mamba to install by listing them below the first line and ending with "&& \"
+RUN mamba create --quiet --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
+    mamba clean --all -f -y
 
 # alternatively, you can comment out the lines above and uncomment those below
 # if you'd prefer to use a YAML file present in the docker build context
 
 # COPY --chown=${NB_UID}:${NB_GID} environment.yml "/home/${NB_USER}/tmp/"
 # RUN cd "/home/${NB_USER}/tmp/" && \
-#     conda env create -p "${CONDA_DIR}/envs/${conda_env}" -f environment.yml && \
-#     conda clean --all -f -y
+#     mamba env create -p "${CONDA_DIR}/envs/${conda_env}" -f environment.yml && \
+#     mamba clean --all -f -y
 
 
 # create Python 3.x environment and link it to jupyter
@@ -195,8 +195,8 @@ notebooks, with no conversion, adding javascript Reveal.js:
 
 ```bash
 # Add Live slideshows with RISE
-RUN conda install --quiet --yes -c damianavila82 rise && \
-    conda clean --all -f -y && \
+RUN mamba install --quiet --yes -c damianavila82 rise && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
@@ -206,12 +206,12 @@ Credit: [Paolo D.](https://github.com/pdonorio) based on
 
 ## xgboost
 
-You need to install conda's gcc for Python xgboost to work properly.
+You need to install conda-forge's gcc for Python xgboost to work properly.
 Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0.
 
 ```bash
-conda install --quiet --yes gcc && \
-    conda clean --all -f -y && \
+mamba install --quiet --yes gcc && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -520,29 +520,6 @@ RUN pip install --quiet --no-cache-dir jupyter_contrib_nbextensions && \
 ```
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/675>
-
-## Enable auto-sklearn notebooks
-
-Using `auto-sklearn` requires `swig`, which the other notebook images lack, so it cant be experimented with.
-Also, there is no Conda package for `auto-sklearn`.
-
-```dockerfile
-ARG BASE_CONTAINER=jupyter/scipy-notebook
-FROM jupyter/scipy-notebook:latest
-
-USER root
-
-# autosklearn requires swig, which no other image has
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends swig && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-USER ${NB_UID}
-
-RUN pip install --quiet --no-cache-dir auto-sklearn && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-```
 
 ## Enable Delta Lake in Spark notebooks
 

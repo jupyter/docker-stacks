@@ -12,7 +12,7 @@ The goal is to detect import errors that can be caused by incompatibilities betw
 - #1012: issue importing `sympy`
 - #966: isssue importing `pyarrow`
 
-This module checks dynamically, through the `CondaPackageHelper`, only the specified packages i.e. packages requested by `conda install` in the `Dockerfile`s.
+This module checks dynamically, through the `CondaPackageHelper`, only the specified packages i.e. packages requested by `mamba install` in the `Dockerfile`s.
 This means that it does not check dependencies. This choice is a tradeoff to cover the main requirements while achieving reasonable test duration.
 However it could be easily changed (or completed) to cover also dependencies `package_helper.installed_packages()` instead of `package_helper.specified_packages()`.
 
@@ -149,7 +149,7 @@ def _import_packages(package_helper, filtered_packages, check_function, max_fail
 @pytest.fixture(scope="function")
 def r_packages(packages):
     """Return an iterable of R packages"""
-    # package[2:] is to remove the leading "r-" appended by conda on R packages
+    # package[2:] is to remove the leading "r-" appended on R packages
     return map(
         lambda package: package_map(package[2:]), filter(r_package_predicate, packages)
     )

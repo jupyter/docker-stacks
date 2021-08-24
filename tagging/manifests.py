@@ -67,9 +67,9 @@ class CondaEnvironmentManifest(ManifestInterface):
                 "",
                 quoted_output(container, "python --version"),
                 "",
-                quoted_output(container, "conda info"),
+                quoted_output(container, "mamba info"),
                 "",
-                quoted_output(container, "conda list"),
+                quoted_output(container, "mamba list"),
             ]
         )
 
