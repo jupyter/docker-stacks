@@ -97,8 +97,9 @@ RUN set -x && \
     conda config --system --set show_channel_urls true && \
     if [[ "${PYTHON_VERSION}" != "default" ]]; then mamba install --quiet --yes python="${PYTHON_VERSION}"; fi && \
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
-    mamba update --all --quiet --yes && \
-    mamba clean --all -f -y && \
+    # Using conda to update all packages: https://github.com/mamba-org/mamba/issues/1092
+    conda update --all --quiet --yes && \
+    conda clean --all -f -y && \
     rm -rf "/home/${NB_USER}/.cache/yarn" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
