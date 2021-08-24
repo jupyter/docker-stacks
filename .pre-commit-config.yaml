@@ -3,6 +3,13 @@ ci:
   skip: [hadolint-docker]
 
 repos:
+  # Autoupdate: Python code
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.24.0
+    hooks:
+      - id: pyupgrade
+        args: [--py39-plus]
+
   # Autoformat: Python code
   - repo: https://github.com/psf/black
     rev: 21.7b0
