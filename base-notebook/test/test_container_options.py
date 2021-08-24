@@ -187,3 +187,29 @@ def test_group_add(container, tmpdir):
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
     assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
+
+
+def test_container_not_delete_bind_mount(container, tmp_path):
+    """Container should not delete host system files when using the (docker)
+    -v bind mount flag and mapping to /home/jovyan.
+    """
+    d = tmp_path / "data"
+    d.mkdir()
+    p = d / "foo.txt"
+    p.write_text("some-content")
+
+    c = container.run(
+        tty=True,
+        user="root",
+        working_dir="/home/",
+        environment=[
+            "NB_USER=user",
+            "CHOWN_HOME=yes",
+        ],
+        volumes={d: {"bind": "/home/jovyan/data", "mode": "rw"}},
+        command=["start.sh", "ls"],
+    )
+    rv = c.wait(timeout=5)
+    assert rv == 0 or rv["StatusCode"] == 0
+    assert p.read_text() == "some-content"
+    assert len(list(tmp_path.iterdir())) == 1

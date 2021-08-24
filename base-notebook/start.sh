@@ -53,8 +53,9 @@ if [ "$(id -u)" == 0 ] ; then
         # changing username, make sure homedir exists
         # (it could be mounted, and we shouldn't create it if it already exists)
         if [[ ! -e "/home/${NB_USER}" ]]; then
-            echo "Relocating home dir to /home/${NB_USER}"
-            mv /home/jovyan "/home/${NB_USER}" || ln -s /home/jovyan "/home/${NB_USER}"
+            echo "Copying home dir to /home/${NB_USER}"
+            mkdir "/home/${NB_USER}"
+            cp -R /home/jovyan "/home/${NB_USER}" || ln -s /home/jovyan "/home/${NB_USER}"
         fi
         # if workdir is in /home/jovyan, cd to /home/${NB_USER}
         if [[ "${PWD}/" == "/home/jovyan/"* ]]; then
