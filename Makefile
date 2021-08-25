@@ -13,11 +13,11 @@ OWNER?=jupyter
 # - linux/arm64
 MULTI_IMAGES:= \
 	base-notebook \
-	minimal-notebook
+	minimal-notebook \
+	r-notebook \
+	scipy-notebook
 # Images that can only be built on the amd64 architecture (aka. x86_64)
 AMD64_ONLY_IMAGES:= \
-	r-notebook \
-	scipy-notebook \
 	tensorflow-notebook \
 	datascience-notebook \
 	pyspark-notebook \
