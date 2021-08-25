@@ -34,7 +34,6 @@ RUN conda install --quiet --yes \
     'numexpr' \
     'pandas' \
     'patsy' \
-    'pooch=1.4.*' # this is a temporary fix before skimage feedstock update \
     'protobuf' \
     'pytables' \
     'scikit-image' \
