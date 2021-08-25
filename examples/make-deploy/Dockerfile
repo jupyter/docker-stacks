@@ -12,5 +12,5 @@ USER root
 USER ${NB_UID}
 
 # Switch back to jovyan to avoid accidental container runs as root
-# Add permanent pip/conda installs, data files, other user libs here
+# Add permanent mamba/pip/conda installs, data files, other user libs here
 # e.g., RUN pip install --quiet --no-cache-dir flake8

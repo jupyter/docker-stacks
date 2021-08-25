@@ -16,7 +16,7 @@ RUN apt-get update --yes && \
 USER ${NB_UID}
 
 # Install Python 3 packages
-RUN conda install --quiet --yes \
+RUN mamba install --quiet --yes \
     'altair' \
     'beautifulsoup4' \
     'bokeh' \
@@ -45,7 +45,7 @@ RUN conda install --quiet --yes \
     'sympy' \
     'widgetsnbextension'\
     'xlrd' && \
-    conda clean --all -f -y && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 

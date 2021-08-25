@@ -112,9 +112,9 @@ build-all-multi: $(foreach I, $(MULTI_IMAGES), build-multi/$(I)) $(foreach I, $(
 
 
 
-check-outdated/%: ## check the outdated conda packages in a stack and produce a report (experimental)
+check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report (experimental)
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
-check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check all the stacks for outdated conda packages
+check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check all the stacks for outdated packages
 
 
 

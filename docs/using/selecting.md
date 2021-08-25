@@ -28,7 +28,7 @@ It is the basis for all other stacks.
 - Minimally-functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
 - [Miniforge](https://github.com/conda-forge/miniforge) Python 3.x in `/opt/conda` with two package managers
   - [conda](https://github.com/conda/conda): "cross-platform, language-agnostic binary package manager".
-  - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++".
+  - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - No preinstalled scientific computing packages
 - Unprivileged user `jovyan` (`uid=1000`, configurable, see options) in group `users` (`gid=100`)
