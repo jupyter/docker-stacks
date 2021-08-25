@@ -38,7 +38,7 @@ RUN set -x && \
     julia_arch=$(uname -m) && \
     julia_short_arch="${julia_arch}" && \
     if [ "${julia_short_arch}" == "x86_64" ]; then \
-      julia_short_arch="x86"; \
+      julia_short_arch="x64"; \
     fi; \
     julia_installer="julia-${JULIA_VERSION}-linux-${julia_arch}.tar.gz" && \
     julia_major_minor=$(echo "${JULIA_VERSION}" | cut -d. -f 1,2) && \
