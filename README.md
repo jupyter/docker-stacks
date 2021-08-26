@@ -107,9 +107,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 
 ## CPU Architectures
 
-All published containers support amd64 (x86_64).
-The progress on arm images is tracked in [#1019](https://github.com/jupyter/docker-stacks/issues/1019).
-The ambition is to have all containers support both amd64 and arm64.
+All published containers support amd64 (x86_64) and aarch64, except for datascience and tensorflow, which only support amd64 for now.
 
 ### Caveats for arm64 images
 
