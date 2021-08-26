@@ -16,11 +16,11 @@ MULTI_IMAGES:= \
 	minimal-notebook \
 	r-notebook \
 	scipy-notebook \
-	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook
 # Images that can only be built on the amd64 architecture (aka. x86_64)
 AMD64_ONLY_IMAGES:= \
+	datascience-notebook \
 	tensorflow-notebook
 # All of the images
 ALL_IMAGES:= \
