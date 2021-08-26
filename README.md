@@ -107,7 +107,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 
 ## CPU Architectures
 
-All published containers support amd64 (x86_64) and aarch64 (except for tensorflow-notebook, which only supports amd64).
+All published containers support amd64 (x86_64) and aarch64, except for datascience and tensorflow, which only support amd64 for now.
 
 ### Caveats for arm64 images
 
