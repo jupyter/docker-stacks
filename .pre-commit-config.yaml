@@ -5,14 +5,14 @@ ci:
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.24.0
+    rev: v2.25.0
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black
-    rev: 21.7b0
+    rev: 21.8b0
     hooks:
       - id: black
         args: [--target-version=py39]
@@ -25,7 +25,7 @@ repos:
 
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
-    rev: v2.6.0
+    rev: v2.7.0
     hooks:
       - id: hadolint-docker
 
