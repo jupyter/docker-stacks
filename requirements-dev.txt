@@ -1,4 +1,4 @@
-docker
+docker==5.0.0
 myst-parser
 packaging
 plumbum
