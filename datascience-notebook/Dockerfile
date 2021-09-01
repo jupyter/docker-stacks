@@ -59,12 +59,12 @@ RUN mkdir /etc/julia && \
 USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
+# r-e1071: dependency of the caret R package
 RUN mamba install --quiet --yes \
     'r-base' \
     'r-caret' \
     'r-crayon' \
     'r-devtools' \
-    # r-e1071: dependency of the caret R package
     'r-e1071' \
     'r-forecast' \
     'r-hexbin' \
