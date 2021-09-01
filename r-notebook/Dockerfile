@@ -30,7 +30,8 @@ RUN mamba install --quiet --yes \
     'r-caret' \
     'r-crayon' \
     'r-devtools' \
-    'r-e1071'  # dependency of the caret R package \
+    # r-e1071: dependency of the caret R package
+    'r-e1071' \
     'r-forecast' \
     'r-hexbin' \
     'r-htmltools' \
