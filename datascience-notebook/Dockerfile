@@ -94,7 +94,7 @@ RUN set -x && \
             mamba clean --all -f -y && \
             fix-permissions "${CONDA_DIR}" && \
             fix-permissions "/home/${NB_USER}"; \
-    fi; \
+    fi;
 
 # Add Julia packages.
 # Install IJulia as jovyan and then move the kernelspec out
