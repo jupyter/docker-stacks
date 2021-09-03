@@ -48,10 +48,9 @@ help:
 
 
 
-build/%: DARGS?=
 build/%: ## build the latest image for a stack using the system's architecture
 	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
-	docker build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
+	docker build --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 	@echo "::endgroup::"
@@ -97,16 +96,15 @@ build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 #    without needing to update this Makefile, and if all tests succeeds we can
 #    do a publish job that creates a multi-platform image for us.
 #
-build-multi/%: DARGS?=
 build-multi/%: ## build the latest image for a stack on both amd64 and arm64
 	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
-	docker buildx build $(DARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --load
+	docker buildx build -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --load
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 	@echo "::endgroup::"
 
 	@echo "::group::Build $(OWNER)/$(notdir $@) (amd64,arm64)"
-	docker buildx build $(DARGS) --rm --force-rm -t build-multi-tmp-cache/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64"
+	docker buildx build -t build-multi-tmp-cache/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64"
 	@echo "::endgroup::"
 build-all-multi: $(foreach I, $(MULTI_IMAGES), build-multi/$(I)) $(foreach I, $(AMD64_ONLY_IMAGES), build/$(I)) ## build all stacks
 
@@ -128,11 +126,10 @@ cont-rm-all: ## remove all containers
 
 
 
-dev/%: ARGS?=
 dev/%: DARGS?=-e JUPYTER_ENABLE_LAB=yes
 dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
-	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@) $(ARGS)
+	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@)
 
 dev-env: ## install libraries required to build docs and run tests
 	@pip install -r requirements-dev.txt
@@ -173,34 +170,30 @@ pre-commit-install: ## set up the git hook scripts
 
 
 
-pull/%: DARGS?=
 pull/%: ## pull a jupyter image
-	docker pull $(DARGS) $(OWNER)/$(notdir $@)
+	docker pull $(OWNER)/$(notdir $@)
 pull-all: $(foreach I, $(ALL_IMAGES), pull/$(I)) ## pull all images
 
-push/%: DARGS?=
+
 push/%: ## push all tags for a jupyter image
 	@echo "::group::Push $(OWNER)/$(notdir $@) (system's architecture)"
-	docker push --all-tags $(DARGS) $(OWNER)/$(notdir $@)
+	docker push --all-tags $(OWNER)/$(notdir $@)
 	@echo "::endgroup::"
 push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
-push-multi/%: DARGS?=
 push-multi/%: ## push all tags for a jupyter image that support multiple architectures
 	@echo "::group::Push $(OWNER)/$(notdir $@) (amd64,arm64)"
-	docker buildx build $(DARGS) --rm --force-rm $($(subst -,_,$(notdir $@))_EXTRA_TAG_ARGS) -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64" --push
+	docker buildx build $($(subst -,_,$(notdir $@))_EXTRA_TAG_ARGS) -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64" --push
 	@echo "::endgroup::"
 push-all-multi: $(foreach I, $(MULTI_IMAGES), push-multi/$(I)) $(foreach I, $(AMD64_ONLY_IMAGES), push/$(I)) ## push all tagged images
 
 
 
-run/%: DARGS?=
 run/%: ## run a bash in interactive mode in a stack
-	docker run -it --rm $(DARGS) $(OWNER)/$(notdir $@) $(SHELL)
+	docker run -it --rm $(OWNER)/$(notdir $@) $(SHELL)
 
-run-sudo/%: DARGS?=
 run-sudo/%: ## run a bash in interactive mode as root in a stack
-	docker run -it --rm -u root $(DARGS) $(OWNER)/$(notdir $@) $(SHELL)
+	docker run -it --rm -u root $(OWNER)/$(notdir $@) $(SHELL)
 
 
 
