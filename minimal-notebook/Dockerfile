@@ -11,23 +11,26 @@ USER root
 # Install all OS dependencies for fully functional notebook server
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
-    vim-tiny \
+    # Common useful utilities
     git \
+    nano-tiny \
+    tzdata \
+    unzip \
+    vim-tiny \
+    # git-over-ssh
+    openssh-client \
+    # TODO: check if these are needed and describe
     inkscape \
     libsm6 \
     libxext-dev \
     libxrender1 \
     lmodern \
     netcat \
-    openssh-client \
-    # ---- nbconvert dependencies ----
+    # nbconvert dependencies
+    # https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex
     texlive-xetex \
     texlive-fonts-recommended \
-    texlive-plain-generic \
-    # ----
-    tzdata \
-    unzip \
-    nano-tiny && \
+    texlive-plain-generic && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create alternative for nano -> nano-tiny
