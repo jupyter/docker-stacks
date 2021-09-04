@@ -30,7 +30,7 @@ RUN apt-get update --yes && \
     # https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex
     texlive-xetex \
     texlive-fonts-recommended \
-    texlive-latex-recommended && \
+    texlive-plain-generic && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create alternative for nano -> nano-tiny
