@@ -42,7 +42,7 @@ jobs:
         uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # dependabot updates to latest release
 
       - name: Set up Docker Buildx (for multi-arch builds)
-        uses: docker/setup-buildx-action@abe5d8f79a1606a2d3e218847032f3f2b1726ab0 # dependabot updates to latest release
+        uses: docker/setup-buildx-action@94ab11c41e45d028884a99163086648e898eed25 # dependabot updates to latest release
 
       - name: Clone Main Repo
         uses: actions/checkout@v2
