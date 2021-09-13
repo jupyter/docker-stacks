@@ -5,7 +5,7 @@ ci:
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.25.0
+    rev: v2.26.0
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
@@ -19,7 +19,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.3.2
+    rev: v2.4.0
     hooks:
       - id: prettier
 
@@ -39,7 +39,7 @@ repos:
 
   # Lint: Bash scripts
   - repo: https://github.com/openstack-dev/bashate.git
-    rev: 2.0.0
+    rev: 2.1.0
     hooks:
       - id: bashate
         args: ["--ignore=E006"]
