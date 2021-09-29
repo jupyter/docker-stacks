@@ -52,7 +52,6 @@ docker run --rm \
             -p 10000:8888 \
             -e JUPYTER_ENABLE_LAB=yes \
             --user=root \
-            -e NB_UID=`id -u` \
             -v "${PWD}":/home/jovyan/work \
             jupyter/datascience-notebook:33add21fab64
 ```
