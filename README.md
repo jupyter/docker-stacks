@@ -51,7 +51,6 @@ Docker destroys the container after notebook server exit, but any files written 
 docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes --user=root -e NB_UID=`id -u` -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
 ```
 
-
 ## Contributing
 
 Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) for
