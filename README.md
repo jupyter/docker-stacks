@@ -48,8 +48,9 @@ where `hostname` is the name of the computer running docker and `token` is the s
 Docker destroys the container after notebook server exit, but any files written to `~/work` in the container remain intact on the host.
 
 ```bash
-docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
+docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes --user=root -e NB_UID=`id -u` -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
 ```
+
 
 ## Contributing
 
