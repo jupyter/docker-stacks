@@ -258,7 +258,7 @@ FROM $BASE_CONTAINER
 
 USER root
 
-# Remove the manpage blacklist, install man, install docs
+# Remove the manpage blocklist, install man, install docs
 RUN rm /etc/dpkg/dpkg.cfg.d/excludes && \
     apt-get update --yes && \
     dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install --yes --no-install-recommends --reinstall man && \
