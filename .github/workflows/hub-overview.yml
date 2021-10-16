@@ -1,0 +1,41 @@
+name: Update dockerhub overviews
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - "base-notebook/README.md"
+      - "minimal-notebook/README.md"
+      - "r-notebook/README.md"
+      - "scipy-notebook/README.md"
+      - "tensorflow-notebook/README.md"
+      - "datascience-notebook/README.md"
+      - "pyspark-notebook/README.md"
+      - "all-spark-notebook/README.md"
+
+jobs:
+  update-dockerhub-overview:
+    name: Update dockerhub overviews
+    runs-on: ubuntu-latest
+    if: >
+      !contains(github.event.head_commit.message, 'ci skip') &&
+      !contains(github.event.pull_request.title, 'ci skip')
+
+    steps:
+      - name: Clone Main Repo
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: push README to Dockerhub for base-notebook
+        uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # dependabot updates to latest release
+        env:
+          DOCKER_USER: ${{secrets.DOCKERHUB_USERNAME}}
+          DOCKER_PASS: ${{secrets.DOCKERHUB_TOKEN}}
+        with:
+          destination_container_repo: jupyter/base-notebook
+          provider: dockerhub
+          short_description: "Small base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
+          readme_file: "base-notebook/README.md"
