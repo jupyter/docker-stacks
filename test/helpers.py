@@ -116,7 +116,7 @@ class CondaPackageHelper:
             LOGGER.info("Grabing the list of available packages (can take a while) ...")
             # Keeping command line output since `mamba search --outdated --json` is way too long ...
             self.available = CondaPackageHelper._extract_available(
-                self._execute_command(["mamba", "search", "--outdated"])
+                self._execute_command(["mamba", "search", "--outdated", "--quiet"])
             )
         return self.available
 
