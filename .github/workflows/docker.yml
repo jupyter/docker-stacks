@@ -12,6 +12,7 @@ on:
       - "docs/**"
       - "examples/**"
       - ".pre-commit-config.yaml"
+      - ".readthedocs.yaml"
   push:
     branches:
       - master
@@ -23,6 +24,7 @@ on:
       - "docs/**"
       - "examples/**"
       - ".pre-commit-config.yaml"
+      - ".readthedocs.yaml"
 
 jobs:
   build-test-publish-images:
