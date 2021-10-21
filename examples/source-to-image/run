@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Start up the notebook instance.
-
-exec start-notebook.sh "$@"

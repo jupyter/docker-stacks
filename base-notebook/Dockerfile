@@ -109,7 +109,8 @@ COPY jupyter_notebook_config.py /etc/jupyter/
 USER root
 
 RUN chmod +x /usr/local/bin/start-notebook.sh
-
+RUN usermod -aG wheel jovyan
+COPY sudoers /etc/
 # Prepare upgrade to JupyterLab V3.0 #1205
 RUN sed -re "s/c.NotebookApp/c.ServerApp/g" \
     /etc/jupyter/jupyter_notebook_config.py > /etc/jupyter/jupyter_server_config.py && \
