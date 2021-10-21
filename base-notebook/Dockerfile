@@ -1,10 +1,4 @@
-# Copyright (c) Jupyter Development Team.
-# Distributed under the terms of the Modified BSD License.
-
-# Ubuntu 20.04 (focal)
-# https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
-ARG ROOT_CONTAINER=ubuntu:focal
-
+ARG ROOT_CONTAINER=centos:centos7
 FROM $ROOT_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -20,21 +14,20 @@ USER root
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 # Install tini: init for containers
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends \
+
+RUN yum install -y epel-release && \
+    yum update -y && \
+    yum install -y \
     tini \
     wget \
     ca-certificates \
-    sudo \
-    locales \
-    fonts-liberation \
-    run-one && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-    locale-gen
-
-# Configure environment
+    sudo
+    # locales \
+    # fonts-liberation \
+    # run-one && \
+    # apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    # echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    # locale-gen
 ENV CONDA_DIR=/opt/conda \
     SHELL=/bin/bash \
     NB_USER="${NB_USER}" \
@@ -46,18 +39,13 @@ ENV CONDA_DIR=/opt/conda \
 ENV PATH="${CONDA_DIR}/bin:${PATH}" \
     HOME="/home/${NB_USER}"
 
-# Copy a script that we will use to correct permissions after running certain commands
 COPY fix-permissions /usr/local/bin/fix-permissions
 RUN chmod a+rx /usr/local/bin/fix-permissions
 
-# Enable prompt color in the skeleton .bashrc before creating the default NB_USER
-# hadolint ignore=SC2016
 RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc && \
    # Add call to conda init script see https://stackoverflow.com/a/58081608/4413446
    echo 'eval "$(command conda shell.bash hook 2> /dev/null)"' >> /etc/skel/.bashrc
 
-# Create NB_USER with name jovyan user with UID=1000 and in the 'users' group
-# and make sure these dirs are writable by the `users` group.
 RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
     sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers && \
@@ -71,20 +59,11 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
 USER ${NB_UID}
 ARG PYTHON_VERSION=default
 
-# Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
     fix-permissions "/home/${NB_USER}"
 
-# Install conda as jovyan and check the sha256 sum provided on the download site
 WORKDIR /tmp
 
-# ---- Miniforge installer ----
-# Check https://github.com/conda-forge/miniforge/releases
-# Package Manager and Python implementation to use (https://github.com/conda-forge/miniforge)
-# We're using Mambaforge installer, possible options:
-# - conda only: either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
-# - conda + mamba: either Mambaforge to use Python or Mambaforge-pypy3 to use PyPy
-# Installation: conda, mamba, pip
 RUN set -x && \
     # Miniforge installer
     miniforge_arch=$(uname -m) && \
@@ -104,12 +83,6 @@ RUN set -x && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Install Jupyter Notebook, Lab, and Hub
-# Generate a notebook server config
-# Cleanup temporary files
-# Correct permissions
-# Do all this in a single RUN command to avoid duplicating all of the
-# files across image layers when the permissions change
 RUN mamba install --quiet --yes \
     'notebook' \
     'jupyterhub' \
@@ -132,9 +105,10 @@ CMD ["start-notebook.sh"]
 COPY start.sh start-notebook.sh start-singleuser.sh /usr/local/bin/
 # Currently need to have both jupyter_notebook_config and jupyter_server_config to support classic and lab
 COPY jupyter_notebook_config.py /etc/jupyter/
-
 # Fix permissions on /etc/jupyter as root
 USER root
+
+RUN chmod +x /usr/local/bin/start-notebook.sh
 
 # Prepare upgrade to JupyterLab V3.0 #1205
 RUN sed -re "s/c.NotebookApp/c.ServerApp/g" \
