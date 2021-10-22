@@ -30,6 +30,7 @@ RUN mamba install --quiet --yes \
     'ipympl'\
     'ipywidgets' \
     'matplotlib-base' \
+    'nltk' \
     'numba' \
     'numexpr' \
     'pandas' \
@@ -40,9 +41,11 @@ RUN mamba install --quiet --yes \
     'scikit-learn' \
     'scipy' \
     'seaborn' \
+    'snscrape' \
     'sqlalchemy' \
     'statsmodels' \
     'sympy' \
+    'textblob' \
     'widgetsnbextension'\
     'xlrd' && \
     mamba clean --all -f -y && \
