@@ -5,6 +5,7 @@
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
 OWNER?=jupyter
+VERSION?=latest
 
 # Need to list the images in build dependency order
 
@@ -48,11 +49,11 @@ help:
 
 
 
-build/%: ## build the latest image for a stack using the system's architecture
+build/%: ## build the $(VERSION) image for a stack using the system's architecture
 	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
-	docker build --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
+	docker build --rm --force-rm -t $(OWNER)/$(notdir $@):$(VERSION) ./$(notdir $@) --build-arg OWNER=$(OWNER)
 	@echo -n "Built image size: "
-	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
+	@docker images $(OWNER)/$(notdir $@):$(VERSION) --format "{{.Size}}"
 	@echo "::endgroup::"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
@@ -96,15 +97,15 @@ build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 #    without needing to update this Makefile, and if all tests succeeds we can
 #    do a publish job that creates a multi-platform image for us.
 #
-build-multi/%: ## build the latest image for a stack on both amd64 and arm64
+build-multi/%: ## build the $(VERSION) image for a stack on both amd64 and arm64
 	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
-	docker buildx build -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --load
+	docker buildx build -t $(OWNER)/$(notdir $@):$(VERSION) ./$(notdir $@) --build-arg OWNER=$(OWNER) --load
 	@echo -n "Built image size: "
-	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
+	@docker images $(OWNER)/$(notdir $@):$(VERSION) --format "{{.Size}}"
 	@echo "::endgroup::"
 
 	@echo "::group::Build $(OWNER)/$(notdir $@) (amd64,arm64)"
-	docker buildx build -t build-multi-tmp-cache/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64"
+	docker buildx build -t build-multi-tmp-cache/$(notdir $@):$(VERSION) ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64"
 	@echo "::endgroup::"
 build-all-multi: $(foreach I, $(MULTI_IMAGES), build-multi/$(I)) $(foreach I, $(AMD64_ONLY_IMAGES), build/$(I)) ## build all stacks
 
@@ -183,7 +184,7 @@ push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 push-multi/%: ## push all tags for a jupyter image that support multiple architectures
 	@echo "::group::Push $(OWNER)/$(notdir $@) (amd64,arm64)"
-	docker buildx build $($(subst -,_,$(notdir $@))_EXTRA_TAG_ARGS) -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64" --push
+	docker buildx build $($(subst -,_,$(notdir $@))_EXTRA_TAG_ARGS) -t $(OWNER)/$(notdir $@):$(VERSION) ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64" --push
 	@echo "::endgroup::"
 push-all-multi: $(foreach I, $(MULTI_IMAGES), push-multi/$(I)) $(foreach I, $(AMD64_ONLY_IMAGES), push/$(I)) ## push all tagged images
 
