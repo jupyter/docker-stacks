@@ -79,7 +79,7 @@ RUN mkdir "/home/${NB_USER}/work" && \
 WORKDIR /tmp
 
 # CONDA_MIRROR is a mirror prefix to speed up downloading
-# For example, people from mainland China chould set it as
+# For example, people from mainland China could set it as
 # https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease
 ARG CONDA_MIRROR=https://github.com/conda-forge/miniforge/releases/latest/download
 
