@@ -97,7 +97,7 @@ build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 #    without needing to update this Makefile, and if all tests succeeds we can
 #    do a publish job that creates a multi-platform image for us.
 #
-build/%: DOCKER_BUILD_ARGS?=
+build-multi/%: DOCKER_BUILD_ARGS?=
 build-multi/%: ## build the latest image for a stack on both amd64 and arm64
 	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
 	docker buildx build $(DOCKER_BUILD_ARGS) -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --load
