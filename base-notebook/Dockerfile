@@ -78,6 +78,11 @@ RUN mkdir "/home/${NB_USER}/work" && \
 # Install conda as jovyan and check the sha256 sum provided on the download site
 WORKDIR /tmp
 
+# CONDA_MIRROR is a mirror prefix to speed up downloading
+# For example, people from mainland China chould set it as
+# https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease
+ARG CONDA_MIRROR=https://github.com/conda-forge/miniforge/releases/latest/download
+
 # ---- Miniforge installer ----
 # Check https://github.com/conda-forge/miniforge/releases
 # Package Manager and Python implementation to use (https://github.com/conda-forge/miniforge)
@@ -89,7 +94,7 @@ RUN set -x && \
     # Miniforge installer
     miniforge_arch=$(uname -m) && \
     miniforge_installer="Mambaforge-Linux-${miniforge_arch}.sh" && \
-    wget --quiet "https://github.com/conda-forge/miniforge/releases/latest/download/${miniforge_installer}" && \
+    wget --quiet "${CONDA_MIRROR}/${miniforge_installer}" && \
     /bin/bash "${miniforge_installer}" -f -b -p "${CONDA_DIR}" && \
     rm "${miniforge_installer}" && \
     # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
