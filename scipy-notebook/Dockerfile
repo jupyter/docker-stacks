@@ -60,6 +60,17 @@ RUN git clone https://github.com/PAIR-code/facets.git && \
 # Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
 
+ARG CUSTOM_FONT=""
+RUN if [ "$CUSTOM_FONT" == "Source Han Sans CN" ]; then \
+       PYV=$(ls /opt/conda/lib | grep ^python); \
+       wget --quiet -P /opt/conda/lib/$PYV/site-packages/matplotlib/mpl-data/fonts/ttf/ https://mirrors.cloud.tencent.com/adobe-fonts/source-han-sans/SubsetOTF/CN/SourceHanSansCN-Normal.otf; \
+       sed -i 's/#font.family/font.family/g' /opt/conda/lib/$PYV/site-packages/matplotlib/mpl-data/matplotlibrc; \
+       sed -i 's/#font.sans-serif:/font.sans-serif: Source Han Sans CN,/g' /opt/conda/lib/$PYV/site-packages/matplotlib/mpl-data/matplotlibrc; \
+       sed -i 's/#axes.unicode_minus: True/axes.unicode_minus: False/g' /opt/conda/lib/$PYV/site-packages/matplotlib/mpl-data/matplotlibrc; \
+       rm -rf ~/.cache/matplotlib; \
+       python -c 'import matplotlib.font_manager;print("Font loaded: ",("Source Han Sans CN" in [f.name for f in matplotlib.font_manager.fontManager.ttflist]))'; \
+    fi
+
 RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
     fix-permissions "/home/${NB_USER}"
 
