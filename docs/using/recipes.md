@@ -557,12 +557,12 @@ The example below is a Dockerfile to load Source Han Sans with normal weight whi
 ```dockerfile
 FROM jupyter/scipy-notebook:latest
 
-RUN PYV=$(ls $CONDA_DIR/lib | grep ^python) && \
-    MPL_DATA=$CONDA_DIR/lib/$PYV/site-packages/matplotlib/mpl-data && \
-    wget --quiet -P $MPL_DATA/fonts/ttf/ https://mirrors.cloud.tencent.com/adobe-fonts/source-han-sans/SubsetOTF/CN/SourceHanSansCN-Normal.otf && \
-    sed -i 's/#font.family/font.family/g' $MPL_DATA/matplotlibrc && \
-    sed -i 's/#font.sans-serif:/font.sans-serif: Source Han Sans CN,/g' $MPL_DATA/matplotlibrc && \
-    sed -i 's/#axes.unicode_minus: True/axes.unicode_minus: False/g' $MPL_DATA/matplotlibrc && \
-    rm -rf ~/.cache/matplotlib && \
+RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
+    MPL_DATA="${CONDA_DIR}/lib/${PYV}/site-packages/matplotlib/mpl-data" && \
+    wget --quiet -P "${MPL_DATA}/fonts/ttf/" https://mirrors.cloud.tencent.com/adobe-fonts/source-han-sans/SubsetOTF/CN/SourceHanSansCN-Normal.otf && \
+    sed -i 's/#font.family/font.family/g' "${MPL_DATA}/matplotlibrc" && \
+    sed -i 's/#font.sans-serif:/font.sans-serif: Source Han Sans CN,/g' "${MPL_DATA}/matplotlibrc" && \
+    sed -i 's/#axes.unicode_minus: True/axes.unicode_minus: False/g' "${MPL_DATA}/matplotlibrc" && \
+    rm -rf "/home/${NB_USER}/.cache/matplotlib" && \
     python -c 'import matplotlib.font_manager;print("font loaded: ",("Source Han Sans CN" in [f.name for f in matplotlib.font_manager.fontManager.ttflist]))'
 ```
