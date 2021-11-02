@@ -78,8 +78,8 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
        - "*.md"
    push:
      branches:
-       - master
        - main
+       - master
      paths-ignore:
        - "*.md"
    ```
