@@ -21,15 +21,19 @@ USER root
 # features (e.g., download as all possible file formats)
 # Install tini: init for containers
 ENV DEBIAN_FRONTEND noninteractive
+
+ENV TINI_VERSION v0.19.0
+
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
-    tini \
     wget \
     ca-certificates \
     sudo \
     locales \
     fonts-liberation \
     run-one && \
+    wget --quiet -P /usr/bin/ https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini && \
+    chmod +x /usr/bin/tini && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
