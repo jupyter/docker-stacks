@@ -5,26 +5,46 @@ on:
     # Weekly, at 03:00 on Monday UTC time
     - cron: "0 3 * * 1"
   pull_request:
-    paths-ignore:
-      - ".github/ISSUE_TEMPLATE/**"
-      - "*.md"
-      - "binder/**"
-      - "docs/**"
-      - "examples/**"
-      - ".pre-commit-config.yaml"
-      - ".readthedocs.yaml"
+    paths:
+      - ".github/workflows/docker.yml"
+
+      - "all-spark-notebook/"
+      - "base-notebook/"
+      - "datascience-notebook/"
+      - "minimal-notebook/"
+      - "pyspark-notebook/"
+      - "r-notebook/"
+      - "scipy-notebook/"
+      - "tensorflow-notebook/"
+
+      - "tagging/"
+      - "test/"
+      - "conftest.py"
+      - "Makefile"
+      - "pytest.ini"
+      - "requirements-dev.txt"
   push:
     branches:
-      - master
       - main
-    paths-ignore:
-      - ".github/ISSUE_TEMPLATE/**"
-      - "*.md"
-      - "binder/**"
-      - "docs/**"
-      - "examples/**"
-      - ".pre-commit-config.yaml"
-      - ".readthedocs.yaml"
+      - master
+    paths:
+      - ".github/workflows/docker.yml"
+
+      - "all-spark-notebook/"
+      - "base-notebook/"
+      - "datascience-notebook/"
+      - "minimal-notebook/"
+      - "pyspark-notebook/"
+      - "r-notebook/"
+      - "scipy-notebook/"
+      - "tensorflow-notebook/"
+
+      - "tagging/"
+      - "test/"
+      - "conftest.py"
+      - "Makefile"
+      - "pytest.ini"
+      - "requirements-dev.txt"
 
 jobs:
   build-test-publish-images:
@@ -32,9 +52,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: >
-      !contains(github.event.head_commit.message, 'ci skip') &&
-      !contains(github.event.pull_request.title, 'ci skip')
 
     steps:
       # Setup docker to build for multiple platforms, see:
@@ -84,7 +101,7 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: stefanzweifel/git-auto-commit-action@abd87b7d94702070bef78dc1d56b6928b8fa9ecc # dependabot updates to latest release
         with:
-          commit_message: "[ci skip] Automated publish for ${{github.sha}}"
+          commit_message: "Automated publish for ${{github.sha}}"
           repository: wiki/
 
       - name: Login to Docker Hub
