@@ -67,7 +67,7 @@ if [ "$(id -u)" == 0 ] ; then
             echo "- home dir: /home/jovyan -> /home/${NB_USER}"
         fi
     elif ! id -u "${NB_USER}" &> /dev/null; then
-        echo "ERROR: Neither the jovyan user or '$NB_USER' exists."
+        echo "ERROR: Neither the jovyan user or '${NB_USER}' exists."
         echo "       This could be the result of stopping and starting, the"
         echo "       container with a different NB_USER environment variable."
         exit 1
@@ -128,15 +128,15 @@ if [ "$(id -u)" == 0 ] ; then
     fi
 
     # Update potentially outdated environment variables since image build
-    export XDG_CACHE_HOME=/home/$NB_USER/.cache
+    export XDG_CACHE_HOME="/home/${NB_USER}/.cache"
 
     # Add ${CONDA_DIR}/bin to sudo secure_path
     sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"\1:${CONDA_DIR}/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
 
     # Optionally grant passwordless sudo rights for the desired user
-    if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == 'yes' ]]; then
-        echo "Granting $NB_USER passwordless sudo rights!"
-        echo "$NB_USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/added-by-start-script
+    if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == "yes" ]]; then
+        echo "Granting ${NB_USER} passwordless sudo rights!"
+        echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/added-by-start-script
     fi
 
     # NOTE: This hook is run as the root user!
@@ -146,7 +146,7 @@ if [ "$(id -u)" == 0 ] ; then
     exec sudo --preserve-env --set-home --user "${NB_USER}" \
         PATH="${PATH}" XDG_CACHE_HOME="/home/${NB_USER}/.cache" \
         PYTHONPATH="${PYTHONPATH:-}" \
-    "${cmd[@]}"
+        "${cmd[@]}"
 
 # The container didn't start as the root user, so we will have to act as the
 # user we started as.
@@ -163,7 +163,7 @@ else
     fi
 
     # Warn about misconfiguration of: granting sudo rights
-    if [[ "${GRANT_SUDO}" == "1" || "${GRANT_SUDO}" == 'yes' ]]; then
+    if [[ "${GRANT_SUDO}" == "1" || "${GRANT_SUDO}" == "yes" ]]; then
         echo "WARNING: container must be started as root to grant sudo permissions!"
     fi
 
