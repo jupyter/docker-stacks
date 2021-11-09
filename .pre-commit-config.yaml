@@ -28,7 +28,7 @@ repos:
     rev: v2.8.0
     hooks:
       - id: hadolint-docker
-        entry: hadolint/hadolint:v2.7.0 hadolint
+        entry: hadolint/hadolint:v2.8.0 hadolint
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
