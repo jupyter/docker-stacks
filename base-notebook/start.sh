@@ -174,20 +174,21 @@ else
     #
     # ref: https://github.com/jupyter/docker-stacks/issues/552
     if ! whoami &> /dev/null; then
+        echo "There is no entry in /etc/passwd for our UID. Attempting to fix..."
         if [[ -w /etc/passwd ]]; then
+            echo "Renaming old jovyan user to nayvoj ($(id -u jovyan):$(id -g jovyan))"
             sed --in-place "s/^jovyan:/nayvoj:/" /etc/passwd
-            echo "Renamed old jovyan user to nayvoj (1000:100)"
 
             echo "jovyan:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /etc/passwd
-            echo "Added new jovyan user ($(id -u):$(id -g))"
+            echo "Added new jovyan user ($(id -u):$(id -g)). Fixed UID!"
         else
-            echo "WARNING: container must be started with group 'root' (0) to add a user entry in /etc/passwd!"
+            echo "WARNING: unable to fix missing /etc/passwd entry because we don't have write permission."
         fi
     fi
 
     # Warn if the user isn't able to write files to ${HOME}
     if [[ ! -w /home/jovyan ]]; then
-        echo "WARNING: container must be started with group 'users' (100) to be allowed to write to /home/jovyan!"
+        echo "WARNING: no write access to /home/jovyan. Try starting the container with group 'users' (100)."
     fi
 
     # NOTE: This hook is run as the user we started the container as!
