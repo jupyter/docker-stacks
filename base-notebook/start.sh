@@ -130,8 +130,32 @@ if [ "$(id -u)" == 0 ] ; then
     # Update potentially outdated environment variables since image build
     export XDG_CACHE_HOME="/home/${NB_USER}/.cache"
 
-    # Add ${CONDA_DIR}/bin to sudo secure_path
-    sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"\1:${CONDA_DIR}/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
+    # Notes on how we ensure that the environment that this container is started
+    # with is preserved (except vars listen in JUPYTER_ENV_VARS_TO_UNSET) when
+    # we transition from running as root to running as NB_USER.
+    #
+    # - We use `sudo` to execute the command as NB_USER. What then
+    #   happens to the environment will be determined by configuration in
+    #   /etc/sudoers and /etc/sudoers.d/* as well as flags we pass to the sudo
+    #   command. The behavior can be inspected with `sudo -V` run as root.
+    #
+    #   ref: `man sudo`    https://linux.die.net/man/8/sudo
+    #   ref: `man sudoers` https://www.sudo.ws/man/1.8.15/sudoers.man.html
+    #
+    # - We use the `--preserve-env` flag to pass through most environment
+    #   variables, but understand that exceptions are caused by the sudoers
+    #   configuration: `env_delete`, `env_check`, and `secure_path`.
+    #
+    # - We use the `--set-home` flag to set the HOME variable appropriatly.
+    #
+    # - We reduce the `env_delete` list of default variables to be deleted. It
+    #   has higher priority than the `--preserve-env` flag and `env_keep`
+    #   configuration.
+    #
+    # - We disable the `secure_path` which is set by default in /etc/sudoers as
+    #   it would override the PATH variable.
+    echo 'Defaults !secure_path' > /etc/sudoers.d/added-by-start-script
+    echo 'Defaults env_delete -= "PATH LD_* PYTHON*"' >> /etc/sudoers.d/added-by-start-script
 
     # Optionally grant passwordless sudo rights for the desired user
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == "yes" ]]; then
@@ -144,7 +168,7 @@ if [ "$(id -u)" == 0 ] ; then
 
     echo "Running as ${NB_USER}:" "${cmd[@]}"
     exec sudo --preserve-env --set-home --user "${NB_USER}" \
-        PATH="${PATH}" XDG_CACHE_HOME="/home/${NB_USER}/.cache" \
+        PATH="${PATH}" \
         PYTHONPATH="${PYTHONPATH:-}" \
         "${cmd[@]}"
 
