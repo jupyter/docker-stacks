@@ -145,7 +145,7 @@ if [ "$(id -u)" == 0 ] ; then
 
     echo "Running as ${NB_USER}:" "${cmd[@]}"
     exec sudo --preserve-env --set-home --user "${NB_USER}" \
-        PATH="${PATH}" XDG_CACHE_HOME="/home/${NB_USER}/.cache" \
+        PATH="${PATH}" \
         PYTHONPATH="${PYTHONPATH:-}" \
         "${cmd[@]}"
 
