@@ -177,9 +177,14 @@ else
         echo "There is no entry in /etc/passwd for our UID. Attempting to fix..."
         if [[ -w /etc/passwd ]]; then
             echo "Renaming old jovyan user to nayvoj ($(id -u jovyan):$(id -g jovyan))"
-            sed --in-place "s/^jovyan:/nayvoj:/" /etc/passwd
 
-            echo "jovyan:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /etc/passwd
+            # We cannot use "sed --in-place" since sed tries to create a temp file in
+            # /etc/ and we may not have write access. Apply sed on our own temp file:
+            sed --expression="s/^jovyan:/nayvoj:/" /etc/passwd > /tmp/passwd
+            echo "jovyan:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
+            cat /tmp/passwd > /etc/passwd
+            rm /tmp/passwd
+
             echo "Added new jovyan user ($(id -u):$(id -g)). Fixed UID!"
         else
             echo "WARNING: unable to fix missing /etc/passwd entry because we don't have write permission."
