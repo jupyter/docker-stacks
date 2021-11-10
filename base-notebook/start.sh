@@ -95,12 +95,13 @@ if [ "$(id -u)" == 0 ] ; then
             if cp -a /home/jovyan/. "/home/${NB_USER}/"; then
                 echo "Success!"
             else
-                echo "Failed!"
+                echo "Failed to copy data from /home/jovyan to /home/${NB_USER}!"
                 echo "Attempting to symlink /home/jovyan to /home/${NB_USER}..."
                 if ln -s /home/jovyan "/home/${NB_USER}"; then
-                    echo "Success!"
+                    echo "Success creating symlink!"
                 else
-                    echo "Failed!"
+                    echo "Failed to create symlink!"
+                    exit 1
                 fi
             fi
         fi
