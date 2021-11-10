@@ -168,6 +168,30 @@ if [ "$(id -u)" == 0 ] ; then
         PATH="${PATH}" \
         PYTHONPATH="${PYTHONPATH:-}" \
         "${cmd[@]}"
+        # Notes on how we ensure that the environment that this container is started
+        # with is preserved (except vars listen in JUPYTER_ENV_VARS_TO_UNSET) when
+        # we transition from running as root to running as NB_USER.
+        #
+        # - We use `sudo` to execute the command as NB_USER. What then
+        #   happens to the environment will be determined by configuration in
+        #   /etc/sudoers and /etc/sudoers.d/* as well as flags we pass to the sudo
+        #   command. The behavior can be inspected with `sudo -V` run as root.
+        #
+        #   ref: `man sudo`    https://linux.die.net/man/8/sudo
+        #   ref: `man sudoers` https://www.sudo.ws/man/1.8.15/sudoers.man.html
+        #
+        # - We use the `--preserve-env` flag to pass through most environment
+        #   variables, but understand that exceptions are caused by the sudoers
+        #   configuration: `env_delete`, `env_check`, and `secure_path`.
+        #
+        # - We use the `--set-home` flag to set the HOME variable appropriatly.
+        #
+        # - We reduce the `env_delete` list of default variables to be deleted. It
+        #   has higher priority than the `--preserve-env` flag and `env_keep`
+        #   configuration.
+        #
+        # - We disable the `secure_path` which is set by default in /etc/sudoers as
+        #   it would override the PATH variable.
         # Note on the purpose of "PATH=${PATH}":
         #   In case "${cmd[@]}" is "bash", then PATH will be used by this bash shell.
         #   However, PATH is irrelevant to how the above sudo command resolves the
