@@ -7,7 +7,6 @@ set -e
 if [[ -n "${JUPYTERHUB_API_TOKEN}" ]]; then
     echo "WARNING: using start-singleuser.sh instead of start-notebook.sh to start a server associated with JupyterHub."
     exec /usr/local/bin/start-singleuser.sh "$@"
-    exit
 fi
 
 wrapper=""
