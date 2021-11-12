@@ -43,7 +43,7 @@ run-hooks () {
 # JUPYTER_ENV_VARS_TO_UNSET.
 unset_explicit_env_vars () {
     if [ -n "${JUPYTER_ENV_VARS_TO_UNSET}" ]; then
-        for env_var_to_unset in $(echo "${JUPYTER_ENV_VARS_TO_UNSET}" | tr ',;:' ' '); do
+        for env_var_to_unset in $(echo "${JUPYTER_ENV_VARS_TO_UNSET}" | tr ',' ' '); do
             echo "Unset ${env_var_to_unset} due to JUPYTER_ENV_VARS_TO_UNSET"
             unset "${env_var_to_unset}"
         done
