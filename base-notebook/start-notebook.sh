@@ -18,7 +18,7 @@ if [[ -n "${JUPYTER_ENABLE_LAB}" ]]; then
     # shellcheck disable=SC1091,SC2086
     exec /usr/local/bin/start.sh ${wrapper} ${NOTEBOOK_ARGS} jupyter lab "$@"
 else
-    echo "WARN: Jupyter Notebook deprecation notice https://github.com/jupyter/docker-stacks#jupyter-notebook-deprecation-notice."
+    echo "WARNING: Jupyter Notebook deprecation notice https://github.com/jupyter/docker-stacks#jupyter-notebook-deprecation-notice."
     # shellcheck disable=SC1091,SC2086
     exec /usr/local/bin/start.sh ${wrapper} ${NOTEBOOK_ARGS} jupyter notebook "$@"
 fi
