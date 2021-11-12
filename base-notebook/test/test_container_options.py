@@ -249,14 +249,14 @@ def test_jupyter_env_vars_to_unset_as_root(container):
         environment=[
             "JUPYTER_ENV_VARS_TO_UNSET=SECRET_ANIMAL,UNUSED_ENV,SECRET_FRUIT",
             "FRUIT=bananas",
-            "SECRET_FRUIT=mango",
             "SECRET_ANIMAL=cats",
+            "SECRET_FRUIT=mango",
         ],
         command=[
             "start.sh",
             "bash",
             "-c",
-            "echo I like $FRUIT and ${SECRET_FRUIT:-stuff}, and love ${SECRET_LOVE:-to keep secrets}!",
+            "echo I like $FRUIT and ${SECRET_FRUIT:-stuff}, and love ${SECRET_ANIMAL:-to keep secrets}!",
         ],
     )
     rv = c.wait(timeout=10)
