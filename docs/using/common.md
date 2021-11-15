@@ -78,6 +78,8 @@ You do so by passing arguments to the `docker run` command.
   **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
 - `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
   You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
+- `-e JUPYTER_ENV_VARS_TO_UNSET=ADMIN_SECRET_1,ADMIN_SECRET_2` - Unsets specified environment variables in the default startup script.
+  The variables are unset after the hooks have executed but before the command provided to the startup script runs.
 
 ## Startup Hooks
 
