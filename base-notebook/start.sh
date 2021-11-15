@@ -5,8 +5,8 @@
 set -e
 
 # The _log function is passed everything this script wants to log. It will
-# always log errors and warnings, but can be silenced by setting
-# JUPYTER_DOCKER_STACKS_QUIET.
+# always log errors and warnings, but can be silenced for other messages
+# by setting JUPYTER_DOCKER_STACKS_QUIET environment variable.
 _log () {
     if [[ "$*" == "ERROR:"* ]] || [[ "$*" == "WARNING:"* ]] || [[ "$JUPYTER_DOCKER_STACKS_QUIET" == "" ]]; then
         echo "$@"
