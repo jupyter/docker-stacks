@@ -195,7 +195,7 @@ else
     #
     # ref: https://github.com/jupyter/docker-stacks/issues/552
     if ! whoami &> /dev/null; then
-        echo "There is no entry in /etc/passwd for our UID. Attempting to fix..."
+        _log "There is no entry in /etc/passwd for our UID. Attempting to fix..."
         if [[ -w /etc/passwd ]]; then
             _log "Renaming old jovyan user to nayvoj ($(id -u jovyan):$(id -g jovyan))"
 
