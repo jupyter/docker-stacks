@@ -240,25 +240,26 @@ def test_container_not_delete_bind_mount(container, tmp_path):
     assert len(list(tmp_path.iterdir())) == 1
 
 
-@pytest.mark.skip(reason="not yet implemented; TODO: cherry-pick b44b7ab")
-def test_jupyter_env_vars_to_unset_as_root(container):
+@pytest.mark.parametrize("enable_root", [False, True])
+def test_jupyter_env_vars_to_unset_as_root(container, enable_root):
     """Environment variables names listed in JUPYTER_ENV_VARS_TO_UNSET
     should be unset in the final environment."""
+    root_args = {"user": "root"} if enable_root else {}
     c = container.run(
         tty=True,
-        user="root",
         environment=[
             "JUPYTER_ENV_VARS_TO_UNSET=SECRET_ANIMAL,UNUSED_ENV,SECRET_FRUIT",
             "FRUIT=bananas",
-            "SECRET_FRUIT=mango",
             "SECRET_ANIMAL=cats",
+            "SECRET_FRUIT=mango",
         ],
         command=[
             "start.sh",
             "bash",
             "-c",
-            "echo I like $FRUIT and ${SECRET_FRUIT:-stuff}, and love ${SECRET_LOVE:-to keep secrets}!",
+            "echo I like $FRUIT and ${SECRET_FRUIT:-stuff}, and love ${SECRET_ANIMAL:-to keep secrets}!",
         ],
+        **root_args,
     )
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
