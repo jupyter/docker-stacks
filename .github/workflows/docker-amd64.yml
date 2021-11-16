@@ -1,9 +1,9 @@
-name: Build and test x86 Docker Images
+name: Build and test amd64 Docker Images
 
 on:
   pull_request:
     paths:
-      - ".github/workflows/docker-x86.yml"
+      - ".github/workflows/docker-amd64.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
@@ -25,7 +25,7 @@ on:
       - main
       - master
     paths:
-      - ".github/workflows/docker-x86.yml"
+      - ".github/workflows/docker-amd64.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
@@ -45,8 +45,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-test-x86-images:
-    name: Build and test x86 Docker Images
+  build-test-amd64-images:
+    name: Build and test amd64 Docker Images
     runs-on: ubuntu-latest
 
     steps:
