@@ -45,6 +45,7 @@ on:
       - "Makefile"
       - "pytest.ini"
       - "requirements-dev.txt"
+  workflow_dispatch:
 
 jobs:
   build-test-publish-images:

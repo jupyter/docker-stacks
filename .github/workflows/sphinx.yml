@@ -18,6 +18,7 @@ on:
       - "docs/**"
       - ".readthedocs.yaml"
       - "requirements-dev.txt"
+  workflow_dispatch:
 
 jobs:
   build-docs:
