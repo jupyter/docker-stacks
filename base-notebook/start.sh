@@ -3,14 +3,16 @@
 # Distributed under the terms of the Modified BSD License.
 
 set -e
-echo "Running: start.sh" "$@"
 
-# Exec the specified command or fall back on bash
-if [ $# -eq 0 ]; then
-    cmd=( "bash" )
-else
-    cmd=( "$@" )
-fi
+# The _log function is used for everything this script wants to log. It will
+# always log errors and warnings, but can be silenced for other messages
+# by setting JUPYTER_DOCKER_STACKS_QUIET environment variable.
+_log () {
+    if [[ "$*" == "ERROR:"* ]] || [[ "$*" == "WARNING:"* ]] || [[ "${JUPYTER_DOCKER_STACKS_QUIET}" == "" ]]; then
+        echo "$@"
+    fi
+}
+_log "Entered start.sh with args:" "$@"
 
 # The run-hooks function looks for .sh scripts to source and executable files to
 # run within a passed directory.
@@ -18,25 +20,25 @@ run-hooks () {
     if [[ ! -d "${1}" ]] ; then
         return
     fi
-    echo "${0}: running hooks in ${1} as uid / gid: $(id -u) / $(id -g)"
+    _log "${0}: running hooks in ${1} as uid / gid: $(id -u) / $(id -g)"
     for f in "${1}/"*; do
         case "${f}" in
             *.sh)
-                echo "${0}: running script ${f}"
+                _log "${0}: running script ${f}"
                 # shellcheck disable=SC1090
                 source "${f}"
                 ;;
             *)
                 if [[ -x "${f}" ]] ; then
-                    echo "${0}: running executable ${f}"
+                    _log "${0}: running executable ${f}"
                     "${f}"
                 else
-                    echo "${0}: ignoring non-executable ${f}"
+                    _log "${0}: ignoring non-executable ${f}"
                 fi
                 ;;
         esac
     done
-    echo "${0}: done running hooks in ${1}"
+    _log "${0}: done running hooks in ${1}"
 }
 
 # A helper function to unset env vars listed in the value of the env var
@@ -51,6 +53,13 @@ unset_explicit_env_vars () {
     fi
 }
 
+
+# Default to starting bash if no command was specified
+if [ $# -eq 0 ]; then
+    cmd=( "bash" )
+else
+    cmd=( "$@" )
+fi
 
 # NOTE: This hook will run as the user the container was started with!
 run-hooks /usr/local/bin/start-notebook.d
@@ -74,20 +83,18 @@ if [ "$(id -u)" == 0 ] ; then
     # Refit the jovyan user to the desired the user (NB_USER)
     if id jovyan &> /dev/null ; then
         if ! usermod --home "/home/${NB_USER}" --login "${NB_USER}" jovyan 2>&1 | grep "no changes" > /dev/null; then
-            echo "Updated the jovyan user:"
-            echo "- username: jovyan       -> ${NB_USER}"
-            echo "- home dir: /home/jovyan -> /home/${NB_USER}"
+            _log "Updated the jovyan user:"
+            _log "- username: jovyan       -> ${NB_USER}"
+            _log "- home dir: /home/jovyan -> /home/${NB_USER}"
         fi
     elif ! id -u "${NB_USER}" &> /dev/null; then
-        echo "ERROR: Neither the jovyan user or '${NB_USER}' exists."
-        echo "       This could be the result of stopping and starting, the"
-        echo "       container with a different NB_USER environment variable."
+        _log "ERROR: Neither the jovyan user or '${NB_USER}' exists. This could be the result of stopping and starting, the container with a different NB_USER environment variable."
         exit 1
     fi
     # Ensure the desired user (NB_USER) gets its desired user id (NB_UID) and is
     # a member of the desired group (NB_GROUP, NB_GID)
     if [ "${NB_UID}" != "$(id -u "${NB_USER}")" ] || [ "${NB_GID}" != "$(id -g "${NB_USER}")" ]; then
-        echo "Update ${NB_USER}'s UID:GID to ${NB_UID}:${NB_GID}"
+        _log "Update ${NB_USER}'s UID:GID to ${NB_UID}:${NB_GID}"
         # Ensure the desired group's existence
         if [ "${NB_GID}" != "$(id -g "${NB_USER}")" ]; then
             groupadd --force --gid "${NB_GID}" --non-unique "${NB_GROUP:-${NB_USER}}"
@@ -102,17 +109,17 @@ if [ "$(id -u)" == 0 ] ; then
     # directory to the new location if needed.
     if [[ "${NB_USER}" != "jovyan" ]]; then
         if [[ ! -e "/home/${NB_USER}" ]]; then
-            echo "Attempting to copy /home/jovyan to /home/${NB_USER}..."
+            _log "Attempting to copy /home/jovyan to /home/${NB_USER}..."
             mkdir "/home/${NB_USER}"
             if cp -a /home/jovyan/. "/home/${NB_USER}/"; then
-                echo "Success!"
+                _log "Success!"
             else
-                echo "Failed to copy data from /home/jovyan to /home/${NB_USER}!"
-                echo "Attempting to symlink /home/jovyan to /home/${NB_USER}..."
+                _log "Failed to copy data from /home/jovyan to /home/${NB_USER}!"
+                _log "Attempting to symlink /home/jovyan to /home/${NB_USER}..."
                 if ln -s /home/jovyan "/home/${NB_USER}"; then
-                    echo "Success creating symlink!"
+                    _log "Success creating symlink!"
                 else
-                    echo "Failed to create symlink!"
+                    _log "ERROR: Failed copy data from /home/jovyan to /home/${NB_USER} or to create symlink!"
                     exit 1
                 fi
             fi
@@ -120,7 +127,7 @@ if [ "$(id -u)" == 0 ] ; then
         # Ensure the current working directory is updated to the new path
         if [[ "${PWD}/" == "/home/jovyan/"* ]]; then
             new_wd="/home/${NB_USER}/${PWD:13}"
-            echo "Changing working directory to ${new_wd}"
+            _log "Changing working directory to ${new_wd}"
             cd "${new_wd}"
         fi
     fi
@@ -128,13 +135,13 @@ if [ "$(id -u)" == 0 ] ; then
     # Optionally ensure the desired user get filesystem ownership of it's home
     # folder and/or additional folders
     if [[ "${CHOWN_HOME}" == "1" || "${CHOWN_HOME}" == "yes" ]]; then
-        echo "Ensuring /home/${NB_USER} is owned by ${NB_UID}:${NB_GID} ${CHOWN_HOME_OPTS:+(chown options: ${CHOWN_HOME_OPTS})}"
+        _log "Ensuring /home/${NB_USER} is owned by ${NB_UID}:${NB_GID} ${CHOWN_HOME_OPTS:+(chown options: ${CHOWN_HOME_OPTS})}"
         # shellcheck disable=SC2086
         chown ${CHOWN_HOME_OPTS} "${NB_UID}:${NB_GID}" "/home/${NB_USER}"
     fi
     if [ -n "${CHOWN_EXTRA}" ]; then
         for extra_dir in $(echo "${CHOWN_EXTRA}" | tr ',' ' '); do
-            echo "Ensuring ${extra_dir} is owned by ${NB_UID}:${NB_GID} ${CHOWN_HOME_OPTS:+(chown options: ${CHOWN_HOME_OPTS})}"
+            _log "Ensuring ${extra_dir} is owned by ${NB_UID}:${NB_GID} ${CHOWN_HOME_OPTS:+(chown options: ${CHOWN_HOME_OPTS})}"
             # shellcheck disable=SC2086
             chown ${CHOWN_EXTRA_OPTS} "${NB_UID}:${NB_GID}" "${extra_dir}"
         done
@@ -148,7 +155,7 @@ if [ "$(id -u)" == 0 ] ; then
 
     # Optionally grant passwordless sudo rights for the desired user
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == "yes" ]]; then
-        echo "Granting ${NB_USER} passwordless sudo rights!"
+        _log "Granting ${NB_USER} passwordless sudo rights!"
         echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/added-by-start-script
     fi
 
@@ -156,7 +163,7 @@ if [ "$(id -u)" == 0 ] ; then
     run-hooks /usr/local/bin/before-notebook.d
 
     unset_explicit_env_vars
-    echo "Running as ${NB_USER}:" "${cmd[@]}"
+    _log "Running as ${NB_USER}:" "${cmd[@]}"
     exec sudo --preserve-env --set-home --user "${NB_USER}" \
         PATH="${PATH}" \
         PYTHONPATH="${PYTHONPATH:-}" \
@@ -167,18 +174,18 @@ if [ "$(id -u)" == 0 ] ; then
 else
     # Warn about misconfiguration of: desired username, user id, or group id
     if [[ -n "${NB_USER}" && "${NB_USER}" != "$(id -un)" ]]; then
-        echo "WARNING: container must be started as root to change the desired user's name with NB_USER!"
+        _log "WARNING: container must be started as root to change the desired user's name with NB_USER!"
     fi
     if [[ -n "${NB_UID}" && "${NB_UID}" != "$(id -u)" ]]; then
-        echo "WARNING: container must be started as root to change the desired user's id with NB_UID!"
+        _log "WARNING: container must be started as root to change the desired user's id with NB_UID!"
     fi
     if [[ -n "${NB_GID}" && "${NB_GID}" != "$(id -g)" ]]; then
-        echo "WARNING: container must be started as root to change the desired user's group id with NB_GID!"
+        _log "WARNING: container must be started as root to change the desired user's group id with NB_GID!"
     fi
 
     # Warn about misconfiguration of: granting sudo rights
     if [[ "${GRANT_SUDO}" == "1" || "${GRANT_SUDO}" == "yes" ]]; then
-        echo "WARNING: container must be started as root to grant sudo permissions!"
+        _log "WARNING: container must be started as root to grant sudo permissions!"
     fi
 
     # Attempt to ensure the user uid we currently run as has a named entry in
@@ -188,9 +195,9 @@ else
     #
     # ref: https://github.com/jupyter/docker-stacks/issues/552
     if ! whoami &> /dev/null; then
-        echo "There is no entry in /etc/passwd for our UID. Attempting to fix..."
+        _log "There is no entry in /etc/passwd for our UID. Attempting to fix..."
         if [[ -w /etc/passwd ]]; then
-            echo "Renaming old jovyan user to nayvoj ($(id -u jovyan):$(id -g jovyan))"
+            _log "Renaming old jovyan user to nayvoj ($(id -u jovyan):$(id -g jovyan))"
 
             # We cannot use "sed --in-place" since sed tries to create a temp file in
             # /etc/ and we may not have write access. Apply sed on our own temp file:
@@ -199,20 +206,20 @@ else
             cat /tmp/passwd > /etc/passwd
             rm /tmp/passwd
 
-            echo "Added new jovyan user ($(id -u):$(id -g)). Fixed UID!"
+            _log "Added new jovyan user ($(id -u):$(id -g)). Fixed UID!"
         else
-            echo "WARNING: unable to fix missing /etc/passwd entry because we don't have write permission."
+            _log "WARNING: unable to fix missing /etc/passwd entry because we don't have write permission."
         fi
     fi
 
     # Warn if the user isn't able to write files to ${HOME}
     if [[ ! -w /home/jovyan ]]; then
-        echo "WARNING: no write access to /home/jovyan. Try starting the container with group 'users' (100)."
+        _log "WARNING: no write access to /home/jovyan. Try starting the container with group 'users' (100)."
     fi
 
     # NOTE: This hook is run as the user we started the container as!
     run-hooks /usr/local/bin/before-notebook.d
     unset_explicit_env_vars
-    echo "Executing the command:" "${cmd[@]}"
+    _log "Executing the command:" "${cmd[@]}"
     exec "${cmd[@]}"
 fi
