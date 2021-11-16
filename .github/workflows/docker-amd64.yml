@@ -1,0 +1,78 @@
+name: Build and test amd64 Docker Images
+# This workflow runs a lot quicker, than building multi-images in docker.yml
+# This will allow us to conclude if things work or not far quicker,
+# when we don't expect there to be any platform specific breaking change.
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/docker-amd64.yml"
+
+      - "all-spark-notebook/**"
+      - "base-notebook/**"
+      - "datascience-notebook/**"
+      - "minimal-notebook/**"
+      - "pyspark-notebook/**"
+      - "r-notebook/**"
+      - "scipy-notebook/**"
+      - "tensorflow-notebook/**"
+
+      - "tagging/**"
+      - "test/**"
+      - "conftest.py"
+      - "Makefile"
+      - "pytest.ini"
+      - "requirements-dev.txt"
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - ".github/workflows/docker-amd64.yml"
+
+      - "all-spark-notebook/**"
+      - "base-notebook/**"
+      - "datascience-notebook/**"
+      - "minimal-notebook/**"
+      - "pyspark-notebook/**"
+      - "r-notebook/**"
+      - "scipy-notebook/**"
+      - "tensorflow-notebook/**"
+
+      - "tagging/**"
+      - "test/**"
+      - "conftest.py"
+      - "Makefile"
+      - "pytest.ini"
+      - "requirements-dev.txt"
+  workflow_dispatch:
+
+jobs:
+  build-test-amd64-images:
+    name: Build and test amd64 Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Main Repo
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Dev Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          make -C main dev-env
+
+      - name: Build Docker Images
+        run: make -C main build-all
+        env:
+          # Full logs for CI build
+          BUILDKIT_PROGRESS: plain
+
+      - name: Test Docker Images
+        run: make -C main test-all
