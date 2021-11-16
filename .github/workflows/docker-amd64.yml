@@ -1,4 +1,7 @@
 name: Build and test amd64 Docker Images
+# This workflow runs a lot quicker, than building multi-images in docker.yml
+# This will allow us to conclude if things work or not far quicker,
+# when we don't expect there to be any platform specific breaking change.
 
 on:
   pull_request:
