@@ -81,7 +81,11 @@ WORKDIR /tmp
 # CONDA_MIRROR is a mirror prefix to speed up downloading
 # For example, people from mainland China could set it as
 # https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease
-ARG CONDA_MIRROR=https://github.com/conda-forge/miniforge/releases/latest/download
+
+# Using fixed version of mamba, because the latest one has problems with arm under qemu
+# See: https://github.com/jupyter/docker-stacks/issues/1539
+ARG CONDA_MIRROR=https://github.com/conda-forge/miniforge/releases/download/4.10.3-7
+
 
 # ---- Miniforge installer ----
 # Check https://github.com/conda-forge/miniforge/releases
