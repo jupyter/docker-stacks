@@ -230,13 +230,56 @@ def test_sudo_path_without_grant(container):
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
-def test_group_add(container, tmpdir):
+def test_group_add(container):
     """Container should run with the specified uid, gid, and secondary
-    group.
+    group. It won't be possible to modify /etc/passwd since gid is nonzero, so
+    additionally verify that setting gid=0 is suggested in a warning.
     """
     c = container.run(
         user="1010:1010",
-        group_add=["users"],
+        group_add=["users"],  # Ensures write access to /home/jovyan
+        command=["start.sh", "id"],
+    )
+    rv = c.wait(timeout=5)
+    assert rv == 0 or rv["StatusCode"] == 0
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    warnings = [
+        warning for warning in logs.split("\n") if warning.startswith("WARNING")
+    ]
+    assert len(warnings) == 1
+    assert "Try setting gid=0" in warnings[0]
+    assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
+
+
+def test_set_uid(container):
+    """Container should run with the specified uid and NB_USER.
+    The /home/jovyan directory will not be writable since it's owned by 1000:users.
+    Additionally verify that "--group-add=users" is suggested in a warning to restore
+    write access.
+    """
+    c = container.run(
+        user="1010",
+        command=["start.sh", "id"],
+    )
+    rv = c.wait(timeout=5)
+    assert rv == 0 or rv["StatusCode"] == 0
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "uid=1010(jovyan) gid=0(root)" in logs
+    warnings = [
+        warning for warning in logs.split("\n") if warning.startswith("WARNING")
+    ]
+    assert len(warnings) == 1
+    assert "--group-add=users" in warnings[0]
+
+
+def test_set_uid_and_nb_user(container):
+    """Container should run with the specified uid and NB_USER."""
+    c = container.run(
+        user="1010",
+        environment=["NB_USER=kitten"],
+        group_add=["users"],  # Ensures write access to /home/jovyan
         command=["start.sh", "id"],
     )
     rv = c.wait(timeout=5)
@@ -244,7 +287,7 @@ def test_group_add(container, tmpdir):
     logs = c.logs(stdout=True).decode("utf-8")
     assert "ERROR" not in logs
     assert "WARNING" not in logs
-    assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
+    assert "uid=1010(kitten) gid=0(root)" in logs
 
 
 def test_container_not_delete_bind_mount(container, tmp_path):
