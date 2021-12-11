@@ -29,6 +29,8 @@ def test_package_manager(container, package_manager, version_arg):
     rv = c.wait(timeout=5)
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert (
         rv == 0 or rv["StatusCode"] == 0
     ), f"Package manager {package_manager} not working"

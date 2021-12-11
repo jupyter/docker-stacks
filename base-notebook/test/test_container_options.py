@@ -15,7 +15,13 @@ def test_cli_args(container, http_client):
     resp = http_client.get("http://localhost:8888")
     resp.raise_for_status()
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    warnings = [
+        warning for warning in logs.split("\n") if warning.startswith("WARNING")
+    ]
     LOGGER.debug(logs)
+    assert len(warnings) == 1
+    assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
     assert "login_submit" not in resp.text
 
 
@@ -24,7 +30,7 @@ def test_unsigned_ssl(container, http_client):
     """Container should generate a self-signed SSL certificate
     and notebook server should use it to enable HTTPS.
     """
-    container.run(environment=["GEN_CERT=yes"])
+    c = container.run(environment=["GEN_CERT=yes"])
     # NOTE: The requests.Session backing the http_client fixture does not retry
     # properly while the server is booting up. An SSL handshake error seems to
     # abort the retry logic. Forcing a long sleep for the moment until I have
@@ -33,6 +39,13 @@ def test_unsigned_ssl(container, http_client):
     resp = http_client.get("https://localhost:8888", verify=False)
     resp.raise_for_status()
     assert "login_submit" in resp.text
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    warnings = [
+        warning for warning in logs.split("\n") if warning.startswith("WARNING")
+    ]
+    assert len(warnings) == 1
+    assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
 
 
 def test_uid_change(container):
@@ -45,6 +58,9 @@ def test_uid_change(container):
     )
     # usermod is slow so give it some time
     rv = c.wait(timeout=120)
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert rv == 0 or rv["StatusCode"] == 0
     assert "uid=1010(jovyan)" in c.logs(stdout=True).decode("utf-8")
 
@@ -60,6 +76,8 @@ def test_gid_change(container):
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert "gid=110(jovyan)" in logs
     assert "groups=110(jovyan),100(users)" in logs
 
@@ -79,6 +97,8 @@ def test_nb_user_change(container):
     time.sleep(10)
     LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
     output = running_container.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in output
+    assert "WARNING" not in output
     assert (
         f"username: jovyan       -> {nb_user}" in output
     ), f"User is not changed to {nb_user}"
@@ -134,6 +154,8 @@ def test_chown_extra(container):
     rv = c.wait(timeout=120)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert "/home/jovyan/.bashrc:1010:101" in logs
     assert "/opt/conda/bin/jupyter:1010:101" in logs
 
@@ -156,6 +178,8 @@ def test_chown_home(container):
     rv = c.wait(timeout=120)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert "/home/kitten/.bashrc:1010:101" in logs
 
 
@@ -169,7 +193,10 @@ def test_sudo(container):
     )
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
-    assert "uid=0(root)" in c.logs(stdout=True).decode("utf-8")
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
+    assert "uid=0(root)" in logs
 
 
 def test_sudo_path(container):
@@ -183,6 +210,8 @@ def test_sudo_path(container):
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
@@ -196,6 +225,8 @@ def test_sudo_path_without_grant(container):
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
@@ -211,6 +242,8 @@ def test_group_add(container, tmpdir):
     rv = c.wait(timeout=5)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
 
 
@@ -235,6 +268,9 @@ def test_container_not_delete_bind_mount(container, tmp_path):
         command=["start.sh", "ls"],
     )
     rv = c.wait(timeout=5)
+    logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert rv == 0 or rv["StatusCode"] == 0
     assert p.read_text() == "some-content"
     assert len(list(tmp_path.iterdir())) == 1
@@ -264,4 +300,6 @@ def test_jupyter_env_vars_to_unset_as_root(container, enable_root):
     rv = c.wait(timeout=10)
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     assert "I like bananas and stuff, and love to keep secrets!" in logs
