@@ -286,8 +286,12 @@ def test_set_uid_and_nb_user(container):
     assert rv == 0 or rv["StatusCode"] == 0
     logs = c.logs(stdout=True).decode("utf-8")
     assert "ERROR" not in logs
-    assert "WARNING" not in logs
     assert "uid=1010(kitten) gid=0(root)" in logs
+    warnings = [
+        warning for warning in logs.split("\n") if warning.startswith("WARNING")
+    ]
+    assert len(warnings) == 1
+    assert "user is kitten but home is /home/jovyan" in warnings[0]
 
 
 def test_container_not_delete_bind_mount(container, tmp_path):

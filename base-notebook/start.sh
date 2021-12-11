@@ -199,6 +199,10 @@ else
             rm /tmp/passwd
 
             _log "Added new ${NB_USER} user ($(id -u):$(id -g)). Fixed UID!"
+
+            if [[ "${NB_USER}" != "jovyan" ]]; then
+                _log "WARNING: user is ${NB_USER} but home is /home/jovyan. You must run as root to rename the home directory!"
+            fi
         else
             _log "WARNING: unable to fix missing /etc/passwd entry because we don't have write permission. Try setting gid=0 with \"--user=$(id -u):0\"."
         fi
