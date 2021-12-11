@@ -81,11 +81,7 @@ WORKDIR /tmp
 # CONDA_MIRROR is a mirror prefix to speed up downloading
 # For example, people from mainland China could set it as
 # https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease
-
-# Using fixed version of mamba, because the latest one has problems with arm under qemu
-# See: https://github.com/jupyter/docker-stacks/issues/1539
-ARG CONDA_MIRROR=https://github.com/conda-forge/miniforge/releases/download/4.10.3-7
-
+ARG CONDA_MIRROR=https://github.com/conda-forge/miniforge/releases/latest/download
 
 # ---- Miniforge installer ----
 # Check https://github.com/conda-forge/miniforge/releases
@@ -106,6 +102,10 @@ RUN set -x && \
     conda config --system --set show_channel_urls true && \
     if [[ "${PYTHON_VERSION}" != "default" ]]; then mamba install --quiet --yes python="${PYTHON_VERSION}"; fi && \
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
+    # Using fixed version of mamba, because the latest one has problems with arm under qemu
+    # See: https://github.com/jupyter/docker-stacks/issues/1539
+    mamba install --quiet --yes 'mamba<0.18' && \
+    mamba list mamba | grep '^mamba ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
     # Using conda to update all packages: https://github.com/mamba-org/mamba/issues/1092
     conda update --all --quiet --yes && \
     conda clean --all -f -y && \
