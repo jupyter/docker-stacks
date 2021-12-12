@@ -56,13 +56,10 @@ jobs:
 
     steps:
       - name: Maximize build space
-        uses: easimon/maximize-build-space@b4d02c14493a9653fe7af06cc89ca5298071c66e # dependabot updates to latest release
-        with:
-          root-reserve-mb: 51200 # 50 GB
-          build-mount-path: /var/lib/docker # remaining space
-          remove-dotnet: "true"
-          remove-haskell: "true"
-          remove-android: "true"
+        run: |
+          rm -rf /usr/share/dotnet
+          rm -rf /usr/local/lib/android
+          rm -rf /opt/ghc
 
       # Setup docker to build for multiple platforms, see:
       # https://github.com/docker/build-push-action/tree/master#usage
