@@ -55,6 +55,12 @@ jobs:
       contents: write
 
     steps:
+      - name: Maximize build space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+
       # Setup docker to build for multiple platforms, see:
       # https://github.com/docker/build-push-action/tree/master#usage
       # https://github.com/docker/build-push-action/blob/master/docs/advanced/multi-platform.md

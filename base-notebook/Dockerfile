@@ -109,6 +109,18 @@ RUN set -x && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
+# Using fixed version of mamba in arm, because the latest one has problems with arm under qemu
+# See: https://github.com/jupyter/docker-stacks/issues/1539
+RUN set -x && \
+    arch=$(uname -m) && \
+    if [ "${arch}" == "aarch64" ]; then \
+        mamba install --quiet --yes \
+            'mamba<0.18' && \
+            mamba clean --all -f -y && \
+            fix-permissions "${CONDA_DIR}" && \
+            fix-permissions "/home/${NB_USER}"; \
+    fi;
+
 # Install Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
 # Cleanup temporary files
