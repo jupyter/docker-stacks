@@ -15,11 +15,11 @@ def test_cli_args(container, http_client):
     resp = http_client.get("http://localhost:8888")
     resp.raise_for_status()
     logs = c.logs(stdout=True).decode("utf-8")
+    LOGGER.debug(logs)
     assert "ERROR" not in logs
     warnings = [
         warning for warning in logs.split("\n") if warning.startswith("WARNING")
     ]
-    LOGGER.debug(logs)
     assert len(warnings) == 1
     assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
     assert "login_submit" not in resp.text
