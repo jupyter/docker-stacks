@@ -80,6 +80,7 @@ You do so by passing arguments to the `docker run` command.
   You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
 - `-e JUPYTER_ENV_VARS_TO_UNSET=ADMIN_SECRET_1,ADMIN_SECRET_2` - Unsets specified environment variables in the default startup script.
   The variables are unset after the hooks have executed but before the command provided to the startup script runs.
+- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to launch `jupyter lab` or `jupyter notebook`. This way any option, supported by `jupyter` could be used by the user.
 
 ## Startup Hooks
 
