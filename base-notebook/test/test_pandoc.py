@@ -14,5 +14,7 @@ def test_pandoc(container):
     )
     c.wait(timeout=10)
     logs = c.logs(stdout=True).decode("utf-8")
+    assert "ERROR" not in logs
+    assert "WARNING" not in logs
     LOGGER.debug(logs)
     assert "<p><strong>BOLD</strong></p>" in logs

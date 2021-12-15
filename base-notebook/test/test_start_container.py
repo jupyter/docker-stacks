@@ -27,6 +27,15 @@ def test_start_notebook(container, http_client, env, expected_server):
     resp = http_client.get("http://localhost:8888")
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
+    assert "ERROR" not in logs
+    if expected_server != "notebook":
+        assert "WARNING" not in logs
+    else:
+        warnings = [
+            warning for warning in logs.split("\n") if warning.startswith("WARNING")
+        ]
+        assert len(warnings) == 1
+        assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
     assert resp.status_code == 200, "Server is not listening"
     assert (
         f"Executing the command: jupyter {expected_server}" in logs
@@ -51,4 +60,6 @@ def test_tini_entrypoint(container, pid=1, command="tini"):
     # Select the PID 1 and get the corresponding command
     cmd = c.exec_run(f"ps -p {pid} -o comm=")
     output = cmd.output.decode("utf-8").strip("\n")
+    assert "ERROR" not in output
+    assert "WARNING" not in output
     assert output == command, f"{command} shall be launched as pid {pid}, got {output}"

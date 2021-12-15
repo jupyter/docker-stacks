@@ -16,6 +16,8 @@ def test_python_version(container, python_next_version="3.10"):
     )
     cmd = c.exec_run("python --version")
     output = cmd.output.decode("utf-8")
+    assert "ERROR" not in output
+    assert "WARNING" not in output
     actual_python_version = version.parse(output.split()[1])
     assert actual_python_version < version.parse(
         python_next_version

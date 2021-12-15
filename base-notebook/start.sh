@@ -172,21 +172,13 @@ if [ "$(id -u)" == 0 ] ; then
 # The container didn't start as the root user, so we will have to act as the
 # user we started as.
 else
-    # Warn about misconfiguration of: desired username, user id, or group id
-    if [[ -n "${NB_USER}" && "${NB_USER}" != "$(id -un)" ]]; then
-        _log "WARNING: container must be started as root to change the desired user's name with NB_USER!"
-    fi
-    if [[ -n "${NB_UID}" && "${NB_UID}" != "$(id -u)" ]]; then
-        _log "WARNING: container must be started as root to change the desired user's id with NB_UID!"
-    fi
-    if [[ -n "${NB_GID}" && "${NB_GID}" != "$(id -g)" ]]; then
-        _log "WARNING: container must be started as root to change the desired user's group id with NB_GID!"
-    fi
-
     # Warn about misconfiguration of: granting sudo rights
     if [[ "${GRANT_SUDO}" == "1" || "${GRANT_SUDO}" == "yes" ]]; then
         _log "WARNING: container must be started as root to grant sudo permissions!"
     fi
+
+    JOVYAN_UID="$(id -u jovyan 2>/dev/null)"  # The default UID for the jovyan user
+    JOVYAN_GID="$(id -g jovyan 2>/dev/null)"  # The default GID for the jovyan user
 
     # Attempt to ensure the user uid we currently run as has a named entry in
     # the /etc/passwd file, as it avoids software crashing on hard assumptions
@@ -195,26 +187,44 @@ else
     #
     # ref: https://github.com/jupyter/docker-stacks/issues/552
     if ! whoami &> /dev/null; then
-        _log "There is no entry in /etc/passwd for our UID. Attempting to fix..."
+        _log "There is no entry in /etc/passwd for our UID=$(id -u). Attempting to fix..."
         if [[ -w /etc/passwd ]]; then
             _log "Renaming old jovyan user to nayvoj ($(id -u jovyan):$(id -g jovyan))"
 
             # We cannot use "sed --in-place" since sed tries to create a temp file in
             # /etc/ and we may not have write access. Apply sed on our own temp file:
             sed --expression="s/^jovyan:/nayvoj:/" /etc/passwd > /tmp/passwd
-            echo "jovyan:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
+            echo "${NB_USER}:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
             cat /tmp/passwd > /etc/passwd
             rm /tmp/passwd
 
-            _log "Added new jovyan user ($(id -u):$(id -g)). Fixed UID!"
+            _log "Added new ${NB_USER} user ($(id -u):$(id -g)). Fixed UID!"
+
+            if [[ "${NB_USER}" != "jovyan" ]]; then
+                _log "WARNING: user is ${NB_USER} but home is /home/jovyan. You must run as root to rename the home directory!"
+            fi
         else
-            _log "WARNING: unable to fix missing /etc/passwd entry because we don't have write permission."
+            _log "WARNING: unable to fix missing /etc/passwd entry because we don't have write permission. Try setting gid=0 with \"--user=$(id -u):0\"."
         fi
+    fi
+
+    # Warn about misconfiguration of: desired username, user id, or group id.
+    # A misconfiguration occurs when the user modifies the default values of
+    # NB_USER, NB_UID, or NB_GID, but we cannot update those values because we
+    # are not root.
+    if [[ "${NB_USER}" != "jovyan" && "${NB_USER}" != "$(id -un)" ]]; then
+        _log "WARNING: container must be started as root to change the desired user's name with NB_USER=\"${NB_USER}\"!"
+    fi
+    if [[ "${NB_UID}" != "${JOVYAN_UID}" && "${NB_UID}" != "$(id -u)" ]]; then
+        _log "WARNING: container must be started as root to change the desired user's id with NB_UID=\"${NB_UID}\"!"
+    fi
+    if [[ "${NB_GID}" != "${JOVYAN_GID}" && "${NB_GID}" != "$(id -g)" ]]; then
+        _log "WARNING: container must be started as root to change the desired user's group id with NB_GID=\"${NB_GID}\"!"
     fi
 
     # Warn if the user isn't able to write files to ${HOME}
     if [[ ! -w /home/jovyan ]]; then
-        _log "WARNING: no write access to /home/jovyan. Try starting the container with group 'users' (100)."
+        _log "WARNING: no write access to /home/jovyan. Try starting the container with group 'users' (100), e.g. using \"--group-add=users\"."
     fi
 
     # NOTE: This hook is run as the user we started the container as!
