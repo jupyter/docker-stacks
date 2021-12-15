@@ -141,7 +141,7 @@ if [ "$(id -u)" == 0 ] ; then
     fi
     if [ -n "${CHOWN_EXTRA}" ]; then
         for extra_dir in $(echo "${CHOWN_EXTRA}" | tr ',' ' '); do
-            _log "Ensuring ${extra_dir} is owned by ${NB_UID}:${NB_GID} ${CHOWN_HOME_OPTS:+(chown options: ${CHOWN_HOME_OPTS})}"
+            _log "Ensuring ${extra_dir} is owned by ${NB_UID}:${NB_GID} ${CHOWN_EXTRA_OPTS:+(chown options: ${CHOWN_EXTRA_OPTS})}"
             # shellcheck disable=SC2086
             chown ${CHOWN_EXTRA_OPTS} "${NB_UID}:${NB_GID}" "${extra_dir}"
         done
