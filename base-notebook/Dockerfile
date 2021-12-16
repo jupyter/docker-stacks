@@ -23,7 +23,7 @@ USER root
 #   processes and such of the actual executable we want to start, see
 #   https://github.com/krallin/tini#why-tini for details.
 # - apt-get upgrade is run to patch known vulnerabilities in apt-get packages as
-#   the ubuntu base image is rebuilt too seldom (less than once a month)
+#   the ubuntu base image is rebuilt too seldom sometimes (less than once a month)
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --yes && \
     apt-get upgrade --yes && \
