@@ -47,7 +47,7 @@ repos:
 
   # Lint: Shell scripts
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.8.0.2
+    rev: v0.8.0.3
     hooks:
       - id: shellcheck
         args: ["-x"]
