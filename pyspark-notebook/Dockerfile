@@ -53,6 +53,10 @@ RUN cp -p "${SPARK_HOME}/conf/spark-defaults.conf.template" "${SPARK_HOME}/conf/
     echo 'spark.driver.extraJavaOptions -Dio.netty.tryReflectionSetAccessible=true' >> "${SPARK_HOME}/conf/spark-defaults.conf" && \
     echo 'spark.executor.extraJavaOptions -Dio.netty.tryReflectionSetAccessible=true' >> "${SPARK_HOME}/conf/spark-defaults.conf"
 
+# Configure IPython system-wide
+COPY ipython_kernel_config.py "/etc/ipython/"
+RUN fix-permissions "/etc/ipython/"
+
 USER ${NB_UID}
 
 # Install pyarrow
