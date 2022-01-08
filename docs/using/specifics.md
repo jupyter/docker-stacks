@@ -12,6 +12,27 @@ This page provides details about features specific to one or more images.
   Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports.
   For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
 
+#### IPython low-level output capture and forward
+
+Spark images (`pyspark-notebook` and `all-spark-notebook`) have been configured to disable IPython low-level output capture and forward system-wide.
+The rationale behind this choice is that Spark logs can be verbose, especially at startup when Ivy is used to load additional jars.
+Those logs are still available but only in the container's logs.
+
+If you want to make them appear in the notebook, you can overwrite the configuration in a user level IPython kernel profile.
+To do that you have to uncomment the following line in your `~/.ipython/profile_default/ipython_kernel_config.py` and restart the kernel.
+
+```Python
+c.IPKernelApp.capture_fd_output = True
+```
+
+If you have no IPython profile you can initiate a fresh one by running the following command.
+
+```bash
+ipython profile create
+# [ProfileCreate] Generating default config file: '/home/jovyan/.ipython/profile_default/ipython_config.py'
+# [ProfileCreate] Generating default config file: '/home/jovyan/.ipython/profile_default/ipython_kernel_config.py'
+```
+
 ### Build an Image with a Different Version of Spark
 
 You can build a `pyspark-notebook` image (and also the downstream `all-spark-notebook` image) with a different version of Spark by overriding the default value of the following arguments at build time.
