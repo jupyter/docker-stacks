@@ -11,7 +11,7 @@ Please follow the process below to suggest a new feature for inclusion in one of
 1. [Open a GitHub issue](https://github.com/jupyter/docker-stacks/issues) describing the feature
    you'd like to contribute.
 2. Discuss with the maintainers whether the addition makes sense in
-   [one of the core stacks](../using/selecting.md#core-stacks), as a
+   [one of the core stacks](../using/selecting.html#core-stacks), as a
    [recipe in the documentation](recipes.md), as a [community stack](stacks.md), or as something
    else entirely.
 
