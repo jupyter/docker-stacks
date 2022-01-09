@@ -108,7 +108,7 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: stefanzweifel/git-auto-commit-action@abd87b7d94702070bef78dc1d56b6928b8fa9ecc # dependabot updates to latest release
         with:
-          commit_message: "Automated publish for ${{github.sha}}"
+          commit_message: "Automated wiki publish for ${{github.sha}}"
           repository: wiki/
 
       - name: Login to Docker Hub

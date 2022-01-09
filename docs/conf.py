@@ -184,8 +184,3 @@ texinfo_documents = [
 
 # Anchors are often dynamic
 linkcheck_anchors = False
-
-# -- Translation ----------------------------------------------------------
-
-gettext_uuid = True
-locale_dirs = ["locale/"]

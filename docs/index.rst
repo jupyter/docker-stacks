@@ -80,7 +80,6 @@ Table of Contents
    contributing/issues
    contributing/packages
    contributing/recipes
-   contributing/translations
    contributing/lint
    contributing/tests
    contributing/features
