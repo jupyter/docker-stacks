@@ -4,7 +4,7 @@
 # With IPython >= 6.0.0, all outputs to stdout/stderr are captured.
 # It is the case for subprocesses and output of compiled libraries like Spark.
 # Those logs now both head to notebook logs and in notebooks outputs.
-# Logs are particularly verbose with Spark, this why we turn them off through this flag.
+# Logs are particularly verbose with Spark, that is why we turn them off through this flag.
 # <https://github.com/jupyter/docker-stacks/issues/1423>
 
 # Attempt to capture and forward low-level output, e.g. produced by Extension
