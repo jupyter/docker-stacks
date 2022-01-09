@@ -43,15 +43,3 @@ jobs:
 
       - name: Build Documentation
         run: make docs
-
-      - name: Extract Source Strings
-        working-directory: docs
-        run: |
-          sphinx-build -M gettext ./ ./_build/
-          sphinx-intl update -p ./_build/gettext -l en
-
-      - name: Push Strings to Master
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-        uses: stefanzweifel/git-auto-commit-action@abd87b7d94702070bef78dc1d56b6928b8fa9ecc # dependabot updates to latest release
-        with:
-          commit_message: "Automated publish for ${{github.sha}}"

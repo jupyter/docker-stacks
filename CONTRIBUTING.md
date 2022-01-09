@@ -7,6 +7,4 @@ information about how to contribute
 [recipes](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/recipes.html),
 [tests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/tests.html),
 [features](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/features.html),
-[translations](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/translations.html),
-and
 [community-maintained stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/stacks.html).

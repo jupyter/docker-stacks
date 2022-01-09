@@ -7,6 +7,4 @@ pytest
 requests
 sphinx>=2.1
 sphinx-copybutton
-sphinx-intl
 tabulate
-transifex-client
