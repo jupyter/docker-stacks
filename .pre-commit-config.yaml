@@ -16,6 +16,7 @@ repos:
     hooks:
       - id: black
         args: [--target-version=py39]
+        exclude: docs/conf.py
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier
