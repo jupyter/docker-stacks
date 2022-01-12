@@ -10,6 +10,7 @@ on:
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
+      - "datascience-python-r-notebook/**"
       - "datascience-notebook/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
@@ -32,6 +33,7 @@ on:
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
+      - "datascience-python-r-notebook/**"
       - "datascience-notebook/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"

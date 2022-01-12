@@ -59,8 +59,13 @@ ALL_IMAGES = {
     "tensorflow-notebook": ImageDescription(
         parent_image="scipy-notebook", taggers=[TensorflowVersionTagger]
     ),
-    "datascience-notebook": ImageDescription(
+    "datascience-python-r-notebook": ImageDescription(
         parent_image="scipy-notebook",
+        taggers=[RVersionTagger],
+        manifests=[RPackagesManifest],
+    ),
+    "datascience-notebook": ImageDescription(
+        parent_image="datascience-python-r-notebook",
         taggers=[RVersionTagger, JuliaVersionTagger],
         manifests=[RPackagesManifest, JuliaPackagesManifest],
     ),

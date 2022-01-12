@@ -10,6 +10,7 @@ on:
 
       - "all-spark-notebook/README.md"
       - "base-notebook/README.md"
+      - "datascience-python-r-notebook/README.md"
       - "datascience-notebook/README.md"
       - "minimal-notebook/README.md"
       - "pyspark-notebook/README.md"
