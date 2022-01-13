@@ -528,7 +528,7 @@ Please note that the [Delta Lake](https://delta.io/) packages are only available
 By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
 
 ```dockerfile
-FROM jupyter/pyspark-notebook:lab-3.1.18
+FROM jupyter/pyspark-notebook:latest
 
 ARG DELTA_CORE_VERSION="1.1.0"
 RUN pip install --quiet --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
