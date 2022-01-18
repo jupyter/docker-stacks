@@ -9,7 +9,7 @@ from pathlib import Path
 from conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
-THIS_DIR = Path(__file__).absolute()
+THIS_DIR = Path(__file__).parent.resolve()
 
 
 @pytest.mark.parametrize(
