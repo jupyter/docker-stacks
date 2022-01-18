@@ -6,8 +6,6 @@ import logging
 import pytest
 from pathlib import Path
 
-from conftest import TrackedContainer
-
 LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
@@ -21,9 +19,7 @@ THIS_DIR = Path(__file__).parent.resolve()
         ("notebook_svg", "html"),
     ],
 )
-def test_nbconvert(
-    container: TrackedContainer, test_file: str, output_format: str
-) -> None:
+def test_nbconvert(container, test_file: str, output_format: str) -> None:
     """Check if nbconvert is able to convert a notebook file"""
     host_data_dir = THIS_DIR / "data"
     cont_data_dir = "/home/jovyan/data"
