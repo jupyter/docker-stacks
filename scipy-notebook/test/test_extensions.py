@@ -4,6 +4,8 @@ import logging
 
 import pytest
 
+from conftest import TrackedContainer
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -16,7 +18,7 @@ LOGGER = logging.getLogger(__name__)
         "jupyter-matplotlib",
     ],
 )
-def test_check_extension(container, extension):
+def test_check_extension(container: TrackedContainer, extension: str) -> None:
     """Basic check of each extension
 
     The list of extensions can be obtained through this command

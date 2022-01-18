@@ -1,12 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 from datetime import datetime
-import logging
 from .git_helper import GitHelper
 from .docker_runner import DockerRunner
-
-
-logger = logging.getLogger(__name__)
 
 
 def _get_program_version(container, program: str) -> str:

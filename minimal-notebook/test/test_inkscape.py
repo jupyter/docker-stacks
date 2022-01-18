@@ -3,10 +3,12 @@
 
 import logging
 
+from conftest import TrackedContainer
+
 LOGGER = logging.getLogger(__name__)
 
 
-def test_inkscape(container):
+def test_inkscape(container: TrackedContainer) -> None:
     """Inkscape shall be installed to be able to convert SVG files."""
     LOGGER.info("Test that inkscape is working by printing its version ...")
     c = container.run(

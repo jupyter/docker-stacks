@@ -4,7 +4,7 @@ import docker
 import logging
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 class DockerRunner:
@@ -20,27 +20,27 @@ class DockerRunner:
         self.docker_client = docker_client
 
     def __enter__(self):
-        logger.info(f"Creating container for image {self.image_name} ...")
+        LOGGER.info(f"Creating container for image {self.image_name} ...")
         self.container = self.docker_client.containers.run(
             image=self.image_name,
             command=self.command,
             detach=True,
         )
-        logger.info(f"Container {self.container.name} created")
+        LOGGER.info(f"Container {self.container.name} created")
         return self.container
 
     def __exit__(self, exc_type, exc_value, traceback):
-        logger.info(f"Removing container {self.container.name} ...")
+        LOGGER.info(f"Removing container {self.container.name} ...")
         if self.container:
             self.container.remove(force=True)
-            logger.info(f"Container {self.container.name} removed")
+            LOGGER.info(f"Container {self.container.name} removed")
 
     @staticmethod
     def run_simple_command(container, cmd: str, print_result: bool = True):
-        logger.info(f"Running cmd: '{cmd}' on container: {container}")
+        LOGGER.info(f"Running cmd: '{cmd}' on container: {container}")
         out = container.exec_run(cmd)
         result = out.output.decode("utf-8").rstrip()
         if print_result:
-            logger.info(f"Command result: {result}")
+            LOGGER.info(f"Command result: {result}")
         assert out.exit_code == 0, f"Command: {cmd} failed"
         return result

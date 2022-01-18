@@ -2,11 +2,13 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 
+from conftest import TrackedContainer
+
 
 LOGGER = logging.getLogger(__name__)
 
 
-def test_spark_shell(container):
+def test_spark_shell(container: TrackedContainer) -> None:
     """Checking if Spark (spark-shell) is running properly"""
     c = container.run(
         tty=True,

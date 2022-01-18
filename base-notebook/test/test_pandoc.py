@@ -3,10 +3,12 @@
 
 import logging
 
+from conftest import TrackedContainer
+
 LOGGER = logging.getLogger(__name__)
 
 
-def test_pandoc(container):
+def test_pandoc(container: TrackedContainer) -> None:
     """Pandoc shall be able to convert MD to HTML."""
     c = container.run(
         tty=True,

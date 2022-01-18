@@ -4,10 +4,12 @@
 import logging
 
 import pytest
-import os
+from pathlib import Path
+
+from conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
-THIS_DIR = os.path.dirname(os.path.realpath(__file__))
+THIS_DIR = Path(__file__).parent.resolve()
 
 
 @pytest.mark.parametrize(
@@ -15,9 +17,9 @@ THIS_DIR = os.path.dirname(os.path.realpath(__file__))
     # TODO: add local_sparklyr
     ["local_pyspark", "local_spylon", "local_sparkR", "issue_1168"],
 )
-def test_nbconvert(container, test_file):
+def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
     """Check if Spark notebooks can be executed"""
-    host_data_dir = os.path.join(THIS_DIR, "data")
+    host_data_dir = THIS_DIR / "data"
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
     timeout_ms = 600
@@ -29,7 +31,7 @@ def test_nbconvert(container, test_file):
         + f"--execute {cont_data_dir}/{test_file}.ipynb"
     )
     c = container.run(
-        volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
+        volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
     )

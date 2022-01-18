@@ -4,10 +4,12 @@
 import logging
 
 import pytest
-import os
+from pathlib import Path
+
+from conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
-THIS_DIR = os.path.dirname(os.path.realpath(__file__))
+THIS_DIR = Path(__file__).parent.resolve()
 
 
 @pytest.mark.parametrize(
@@ -25,19 +27,21 @@ THIS_DIR = os.path.dirname(os.path.realpath(__file__))
         ),
     ],
 )
-def test_matplotlib(container, test_file, expected_file, description):
+def test_matplotlib(
+    container: TrackedContainer, test_file: str, expected_file: str, description: str
+):
     """Various tests performed on matplotlib
 
     - Test that matplotlib is able to plot a graph and write it as an image
     - Test matplotlib latex fonts, which depend on the cm-super package
     """
-    host_data_dir = os.path.join(THIS_DIR, "data")
+    host_data_dir = THIS_DIR / "data"
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
     LOGGER.info(description)
     command = "sleep infinity"
     running_container = container.run(
-        volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
+        volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
     )

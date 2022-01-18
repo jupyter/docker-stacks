@@ -2,7 +2,13 @@
 # Distributed under the terms of the Modified BSD License.
 
 
-def test_secured_server(container, http_client):
+import requests
+from conftest import TrackedContainer
+
+
+def test_secured_server(
+    container: TrackedContainer, http_client: requests.Session
+) -> None:
     """Notebook server should eventually request user login."""
     container.run()
     resp = http_client.get("http://localhost:8888")

@@ -4,11 +4,14 @@ import time
 import logging
 
 import pytest
+import requests
+
+from conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 
 
-def test_cli_args(container, http_client):
+def test_cli_args(container: TrackedContainer, http_client: requests.Session) -> None:
     """Container should respect notebook server command line args
     (e.g., disabling token security)"""
     c = container.run(command=["start-notebook.sh", "--NotebookApp.token=''"])
@@ -26,7 +29,9 @@ def test_cli_args(container, http_client):
 
 
 @pytest.mark.filterwarnings("ignore:Unverified HTTPS request")
-def test_unsigned_ssl(container, http_client):
+def test_unsigned_ssl(
+    container: TrackedContainer, http_client: requests.Session
+) -> None:
     """Container should generate a self-signed SSL certificate
     and notebook server should use it to enable HTTPS.
     """
@@ -48,7 +53,7 @@ def test_unsigned_ssl(container, http_client):
     assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
 
 
-def test_uid_change(container):
+def test_uid_change(container: TrackedContainer) -> None:
     """Container should change the UID of the default user."""
     c = container.run(
         tty=True,
@@ -65,7 +70,7 @@ def test_uid_change(container):
     assert "uid=1010(jovyan)" in c.logs(stdout=True).decode("utf-8")
 
 
-def test_gid_change(container):
+def test_gid_change(container: TrackedContainer) -> None:
     """Container should change the GID of the default user."""
     c = container.run(
         tty=True,
@@ -82,7 +87,7 @@ def test_gid_change(container):
     assert "groups=110(jovyan),100(users)" in logs
 
 
-def test_nb_user_change(container):
+def test_nb_user_change(container: TrackedContainer) -> None:
     """Container should change the user name (`NB_USER`) of the default user."""
     nb_user = "nayvoj"
     running_container = container.run(
@@ -131,7 +136,7 @@ def test_nb_user_change(container):
     ), f"Hidden folder .jupyter was not copied properly to {nb_user} home folder. stat: {output}, expected {expected_output}"
 
 
-def test_chown_extra(container):
+def test_chown_extra(container: TrackedContainer) -> None:
     """Container should change the UID/GID of a comma separated
     CHOWN_EXTRA list of folders."""
     c = container.run(
@@ -160,7 +165,7 @@ def test_chown_extra(container):
     assert "/opt/conda/bin/jupyter:1010:101" in logs
 
 
-def test_chown_home(container):
+def test_chown_home(container: TrackedContainer) -> None:
     """Container should change the NB_USER home directory owner and
     group to the current value of NB_UID and NB_GID."""
     c = container.run(
@@ -183,7 +188,7 @@ def test_chown_home(container):
     assert "/home/kitten/.bashrc:1010:101" in logs
 
 
-def test_sudo(container):
+def test_sudo(container: TrackedContainer) -> None:
     """Container should grant passwordless sudo to the default user."""
     c = container.run(
         tty=True,
@@ -199,7 +204,7 @@ def test_sudo(container):
     assert "uid=0(root)" in logs
 
 
-def test_sudo_path(container):
+def test_sudo_path(container: TrackedContainer) -> None:
     """Container should include /opt/conda/bin in the sudo secure_path."""
     c = container.run(
         tty=True,
@@ -215,7 +220,7 @@ def test_sudo_path(container):
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
-def test_sudo_path_without_grant(container):
+def test_sudo_path_without_grant(container: TrackedContainer) -> None:
     """Container should include /opt/conda/bin in the sudo secure_path."""
     c = container.run(
         tty=True,
@@ -230,7 +235,7 @@ def test_sudo_path_without_grant(container):
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
-def test_group_add(container):
+def test_group_add(container: TrackedContainer) -> None:
     """Container should run with the specified uid, gid, and secondary
     group. It won't be possible to modify /etc/passwd since gid is nonzero, so
     additionally verify that setting gid=0 is suggested in a warning.
@@ -252,7 +257,7 @@ def test_group_add(container):
     assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
 
 
-def test_set_uid(container):
+def test_set_uid(container: TrackedContainer) -> None:
     """Container should run with the specified uid and NB_USER.
     The /home/jovyan directory will not be writable since it's owned by 1000:users.
     Additionally verify that "--group-add=users" is suggested in a warning to restore
@@ -274,7 +279,7 @@ def test_set_uid(container):
     assert "--group-add=users" in warnings[0]
 
 
-def test_set_uid_and_nb_user(container):
+def test_set_uid_and_nb_user(container: TrackedContainer) -> None:
     """Container should run with the specified uid and NB_USER."""
     c = container.run(
         user="1010",
@@ -294,7 +299,7 @@ def test_set_uid_and_nb_user(container):
     assert "user is kitten but home is /home/jovyan" in warnings[0]
 
 
-def test_container_not_delete_bind_mount(container, tmp_path):
+def test_container_not_delete_bind_mount(container: TrackedContainer, tmp_path) -> None:
     """Container should not delete host system files when using the (docker)
     -v bind mount flag and mapping to /home/jovyan.
     """
@@ -324,7 +329,9 @@ def test_container_not_delete_bind_mount(container, tmp_path):
 
 
 @pytest.mark.parametrize("enable_root", [False, True])
-def test_jupyter_env_vars_to_unset_as_root(container, enable_root):
+def test_jupyter_env_vars_to_unset_as_root(
+    container: TrackedContainer, enable_root: bool
+) -> None:
     """Environment variables names listed in JUPYTER_ENV_VARS_TO_UNSET
     should be unset in the final environment."""
     root_args = {"user": "root"} if enable_root else {}

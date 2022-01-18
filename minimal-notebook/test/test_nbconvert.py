@@ -4,10 +4,10 @@
 import logging
 
 import pytest
-import os
+from pathlib import Path
 
 LOGGER = logging.getLogger(__name__)
-THIS_DIR = os.path.dirname(os.path.realpath(__file__))
+THIS_DIR = Path(__file__).parent.resolve()
 
 
 @pytest.mark.parametrize(
@@ -19,9 +19,9 @@ THIS_DIR = os.path.dirname(os.path.realpath(__file__))
         ("notebook_svg", "html"),
     ],
 )
-def test_nbconvert(container, test_file, output_format):
+def test_nbconvert(container, test_file: str, output_format: str) -> None:
     """Check if nbconvert is able to convert a notebook file"""
-    host_data_dir = os.path.join(THIS_DIR, "data")
+    host_data_dir = THIS_DIR / "data"
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
     LOGGER.info(
@@ -29,7 +29,7 @@ def test_nbconvert(container, test_file, output_format):
     )
     command = f"jupyter nbconvert {cont_data_dir}/{test_file}.ipynb --output-dir {output_dir} --to {output_format}"
     c = container.run(
-        volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
+        volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
     )

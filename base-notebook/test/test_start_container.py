@@ -3,6 +3,9 @@
 
 import logging
 import pytest
+import requests
+
+from conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 
@@ -14,7 +17,12 @@ LOGGER = logging.getLogger(__name__)
         (None, "notebook"),
     ],
 )
-def test_start_notebook(container, http_client, env, expected_server):
+def test_start_notebook(
+    container: TrackedContainer,
+    http_client: requests.Session,
+    env,
+    expected_server: str,
+) -> None:
     """Test the notebook start-notebook script"""
     LOGGER.info(
         f"Test that the start-notebook launches the {expected_server} server from the env {env} ..."
@@ -46,7 +54,9 @@ def test_start_notebook(container, http_client, env, expected_server):
         assert msg in logs, f"Expected warning message {msg} not printed"
 
 
-def test_tini_entrypoint(container, pid=1, command="tini"):
+def test_tini_entrypoint(
+    container: TrackedContainer, pid: int = 1, command: str = "tini"
+) -> None:
     """Check that tini is launched as PID 1
 
     Credits to the following answer for the ps options used in the test:
