@@ -3,8 +3,6 @@
 import docker
 import logging
 
-from conftest import TrackedContainer
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -38,9 +36,7 @@ class DockerRunner:
             LOGGER.info(f"Container {self.container.name} removed")
 
     @staticmethod
-    def run_simple_command(
-        container: TrackedContainer, cmd: str, print_result: bool = True
-    ):
+    def run_simple_command(container, cmd: str, print_result: bool = True):
         LOGGER.info(f"Running cmd: '{cmd}' on container: {container}")
         out = container.exec_run(cmd)
         result = out.output.decode("utf-8").rstrip()
