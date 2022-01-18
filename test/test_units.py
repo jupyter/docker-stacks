@@ -27,7 +27,7 @@ def test_units(container: TrackedContainer) -> None:
         LOGGER.info(f"Running unit test: {test_file}")
 
         c = container.run(
-            volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
+            volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
             tty=True,
             command=["start.sh", "python", f"{cont_data_dir}/{test_file}"],
         )
