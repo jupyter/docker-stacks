@@ -11,7 +11,7 @@ from .git_helper import GitHelper
 from .manifests import ManifestHeader, ManifestInterface
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 BUILD_TIMESTAMP = datetime.datetime.utcnow().isoformat()[:-7] + "Z"
@@ -24,7 +24,7 @@ def append_build_history_line(
     wiki_path: str,
     all_tags: list[str],
 ) -> None:
-    logger.info("Appending build history line")
+    LOGGER.info("Appending build history line")
 
     date_column = f"`{BUILD_TIMESTAMP}`"
     image_column = MARKDOWN_LINE_BREAK.join(
@@ -58,7 +58,7 @@ def create_manifest_file(
     container,
 ) -> None:
     manifest_names = [manifest.__name__ for manifest in manifests]
-    logger.info(f"Using manifests: {manifest_names}")
+    LOGGER.info(f"Using manifests: {manifest_names}")
 
     commit_hash_tag = GitHelper.commit_hash_tag()
     manifest_file = os.path.join(
@@ -76,7 +76,7 @@ def create_manifest_file(
 
 
 def create_manifests(short_image_name: str, owner: str, wiki_path: str) -> None:
-    logger.info(f"Creating manifests for image: {short_image_name}")
+    LOGGER.info(f"Creating manifests for image: {short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 
     image = f"{owner}/{short_image_name}:latest"
@@ -100,6 +100,6 @@ if __name__ == "__main__":
     arg_parser.add_argument("--wiki-path", required=True, help="Path to the wiki pages")
     args = arg_parser.parse_args()
 
-    logger.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
+    LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
     create_manifests(args.short_image_name, args.owner, args.wiki_path)

@@ -4,6 +4,8 @@
 import logging
 import pytest
 
+from conftest import TrackedContainer
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -17,7 +19,9 @@ LOGGER = logging.getLogger(__name__)
         ("pip", "--version"),
     ],
 )
-def test_package_manager(container, package_manager, version_arg):
+def test_package_manager(
+    container: TrackedContainer, package_manager: str, version_arg: tuple[str, ...]
+) -> None:
     """Test the notebook start-notebook script"""
     LOGGER.info(
         f"Test that the package manager {package_manager} is working properly ..."

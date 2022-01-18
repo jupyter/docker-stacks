@@ -1,12 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-import logging
 from plumbum.cmd import docker
 from .docker_runner import DockerRunner
 from .git_helper import GitHelper
-
-
-logger = logging.getLogger(__name__)
 
 
 def quoted_output(container, cmd: str) -> str:

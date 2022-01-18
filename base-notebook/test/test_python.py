@@ -4,10 +4,14 @@ import logging
 
 from packaging import version
 
+from conftest import TrackedContainer
+
 LOGGER = logging.getLogger(__name__)
 
 
-def test_python_version(container, python_next_version="3.10"):
+def test_python_version(
+    container: TrackedContainer, python_next_version: str = "3.10"
+) -> None:
     """Check that python version is lower than the next version"""
     LOGGER.info(f"Checking that python version is lower than {python_next_version}")
     c = container.run(

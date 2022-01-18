@@ -27,8 +27,11 @@ from collections import defaultdict
 from itertools import chain
 import logging
 import json
+from typing import Optional
 
 from tabulate import tabulate
+
+from conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 
@@ -36,16 +39,15 @@ LOGGER = logging.getLogger(__name__)
 class CondaPackageHelper:
     """Conda package helper permitting to get information about packages"""
 
-    def __init__(self, container):
-        # if isinstance(container, TrackedContainer):
+    def __init__(self, container: TrackedContainer):
         self.running_container = CondaPackageHelper.start_container(container)
-        self.specs = None
-        self.installed = None
-        self.available = None
-        self.comparison = None
+        self.requested: Optional[dict[str, set[str]]] = None
+        self.installed: Optional[dict[str, set[str]]] = None
+        self.available: Optional[dict[str, set[str]]] = None
+        self.comparison: list[dict[str, str]] = []
 
     @staticmethod
-    def start_container(container):
+    def start_container(container: TrackedContainer):
         """Start the TrackedContainer and return an instance of a running container"""
         LOGGER.info(f"Starting container {container.image_name} ...")
         return container.run(
@@ -54,32 +56,34 @@ class CondaPackageHelper:
         )
 
     @staticmethod
-    def _conda_export_command(from_history=False):
+    def _conda_export_command(from_history: bool) -> list[str]:
         """Return the mamba export command with or without history"""
         cmd = ["mamba", "env", "export", "-n", "base", "--json", "--no-builds"]
         if from_history:
             cmd.append("--from-history")
         return cmd
 
-    def installed_packages(self):
+    def installed_packages(self) -> dict[str, set[str]]:
         """Return the installed packages"""
         if self.installed is None:
             LOGGER.info("Grabing the list of installed packages ...")
             self.installed = CondaPackageHelper._packages_from_json(
-                self._execute_command(CondaPackageHelper._conda_export_command())
+                self._execute_command(
+                    CondaPackageHelper._conda_export_command(from_history=False)
+                )
             )
         return self.installed
 
-    def specified_packages(self):
-        """Return the specifications (i.e. packages installation requested)"""
-        if self.specs is None:
-            LOGGER.info("Grabing the list of specifications ...")
-            self.specs = CondaPackageHelper._packages_from_json(
+    def requested_packages(self) -> dict[str, set[str]]:
+        """Return the requested package (i.e. `mamba install <package>`)"""
+        if self.requested is None:
+            LOGGER.info("Grabing the list of manually requested packages ...")
+            self.requested = CondaPackageHelper._packages_from_json(
                 self._execute_command(
                     CondaPackageHelper._conda_export_command(from_history=True)
                 )
             )
-        return self.specs
+        return self.requested
 
     def _execute_command(self, command):
         """Execute a command on a running container"""
@@ -87,14 +91,14 @@ class CondaPackageHelper:
         return rc.output.decode("utf-8")
 
     @staticmethod
-    def _packages_from_json(env_export):
+    def _packages_from_json(env_export) -> dict[str, set[str]]:
         """Extract packages and versions from the lines returned by the list of specifications"""
         # dependencies = filter(lambda x:  isinstance(x, str), json.loads(env_export).get("dependencies"))
         dependencies = json.loads(env_export).get("dependencies")
         # Filtering packages installed through pip in this case it's a dict {'pip': ['toree==0.3.0']}
         # Since we only manage packages installed through mamba here
         dependencies = filter(lambda x: isinstance(x, str), dependencies)
-        packages_dict = dict()
+        packages_dict: dict[str, set[str]] = dict()
         for split in map(lambda x: re.split("=?=", x), dependencies):
             # default values
             package = split[0]
@@ -129,14 +133,16 @@ class CondaPackageHelper:
             ddict[pkg].add(version)
         return ddict
 
-    def check_updatable_packages(self, specifications_only=True):
+    def check_updatable_packages(
+        self, requested_only: bool = True
+    ) -> list[dict[str, str]]:
         """Check the updatable packages including or not dependencies"""
-        specs = self.specified_packages()
+        requested = self.requested_packages()
         installed = self.installed_packages()
         available = self.available_packages()
-        self.comparison = list()
+        self.comparison = []
         for pkg, inst_vs in installed.items():
-            if not specifications_only or pkg in specs:
+            if not requested_only or pkg in requested:
                 avail_vs = sorted(
                     list(available[pkg]), key=CondaPackageHelper.semantic_cmp
                 )
@@ -156,7 +162,7 @@ class CondaPackageHelper:
         return self.comparison
 
     @staticmethod
-    def semantic_cmp(version_string):
+    def semantic_cmp(version_string: str):
         """Manage semantic versioning for comparison"""
 
         def mysplit(string):
@@ -165,14 +171,14 @@ class CondaPackageHelper:
 
             return list(chain(map(version_substrs, string.split("."))))
 
-        def str_ord(string):
+        def str_ord(string: str) -> int:
             num = 0
             for char in string:
                 num *= 255
                 num += ord(char)
             return num
 
-        def try_int(version_str):
+        def try_int(version_str: str) -> int:
             try:
                 return int(version_str)
             except ValueError:
@@ -181,13 +187,13 @@ class CondaPackageHelper:
         mss = list(chain(*mysplit(version_string)))
         return tuple(map(try_int, mss))
 
-    def get_outdated_summary(self, specifications_only=True):
+    def get_outdated_summary(self, requested_only: bool = True) -> str:
         """Return a summary of outdated packages"""
-        nb_packages = len(self.specs if specifications_only else self.installed)
+        nb_packages = len(self.requested if requested_only else self.installed)
         nb_updatable = len(self.comparison)
         updatable_ratio = nb_updatable / nb_packages
         return f"{nb_updatable}/{nb_packages} ({updatable_ratio:.0%}) packages could be updated"
 
-    def get_outdated_table(self):
+    def get_outdated_table(self) -> str:
         """Return a table of outdated packages"""
         return tabulate(self.comparison, headers="keys")

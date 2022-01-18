@@ -9,7 +9,7 @@ from .get_taggers_and_manifests import get_taggers_and_manifests
 from .github_set_env import github_set_env
 
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
 
 def tag_image(short_image_name: str, owner: str) -> None:
@@ -20,7 +20,7 @@ def tag_image(short_image_name: str, owner: str) -> None:
     Tags are in a GitHub Actions environment also saved to environment variables
     in a format making it easy to append them.
     """
-    logger.info(f"Tagging image: {short_image_name}")
+    LOGGER.info(f"Tagging image: {short_image_name}")
     taggers, _ = get_taggers_and_manifests(short_image_name)
 
     image = f"{owner}/{short_image_name}:latest"
@@ -31,7 +31,7 @@ def tag_image(short_image_name: str, owner: str) -> None:
             tagger_name = tagger.__name__
             tag_value = tagger.tag_value(container)
             tags.append(tag_value)
-            logger.info(
+            LOGGER.info(
                 f"Applying tag tagger_name: {tagger_name} tag_value: {tag_value}"
             )
             docker["tag", image, f"{owner}/{short_image_name}:{tag_value}"]()
