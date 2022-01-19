@@ -11,10 +11,14 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
-    "env,expected_server",
+    "env,expected_server,expected_warning",
     [
-        (["JUPYTER_ENABLE_LAB=yes"], "lab"),
-        (None, "notebook"),
+        (["JUPYTER_ENABLE_LAB=yes"], "lab", True),
+        (None, "lab", False),
+        (["JUPYTER_CMD=lab"], "lab", False),
+        (["JUPYTER_CMD=notebook"], "notebook", False),
+        (["JUPYTER_CMD=server"], "server", False),
+        (["JUPYTER_CMD=nbclassic"], "nbclassic", False),
     ],
 )
 def test_start_notebook(
@@ -22,6 +26,7 @@ def test_start_notebook(
     http_client: requests.Session,
     env,
     expected_server: str,
+    expected_warning: bool,
 ) -> None:
     """Test the notebook start-notebook script"""
     LOGGER.info(
@@ -36,7 +41,7 @@ def test_start_notebook(
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
     assert "ERROR" not in logs
-    if expected_server != "notebook":
+    if not expected_warning:
         assert "WARNING" not in logs
     else:
         warnings = [
@@ -48,10 +53,6 @@ def test_start_notebook(
     assert (
         f"Executing the command: jupyter {expected_server}" in logs
     ), f"Not the expected command (jupyter {expected_server}) was launched"
-    # Checking warning messages
-    if not env:
-        msg = "WARNING: Jupyter Notebook deprecation notice"
-        assert msg in logs, f"Expected warning message {msg} not printed"
 
 
 def test_tini_entrypoint(

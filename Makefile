@@ -128,7 +128,6 @@ cont-rm-all: ## remove all containers
 
 
 
-dev/%: DARGS?=-e JUPYTER_ENABLE_LAB=yes
 dev/%: PORT?=8888
 dev/%: ## run a foreground container for a stack
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@)
