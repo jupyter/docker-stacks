@@ -30,9 +30,9 @@ LOGGER = logging.getLogger(__name__)
 def test_start_notebook(
     container: TrackedContainer,
     http_client: requests.Session,
-    env: Optional[list],
+    env: Optional[list[str]],
     expected_server: str,
-    expected_warnings: list,
+    expected_warnings: list[str],
 ) -> None:
     """Test the notebook start-notebook script"""
     LOGGER.info(
