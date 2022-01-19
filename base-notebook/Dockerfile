@@ -126,16 +126,19 @@ RUN set -x && \
             fix-permissions "/home/${NB_USER}"; \
     fi;
 
+ARG NOTEBOOK_VERSION=default
+ARG JUPYTERHUB_VERSION=default
+ARG JUPYTERLAB_VERSION=default
+
 # Install Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
 # Cleanup temporary files
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
-RUN mamba install --quiet --yes \
-    'notebook' \
-    'jupyterhub' \
-    'jupyterlab' && \
+RUN if [[ "${NOTEBOOK_VERSION}" != "default" ]]; then mamba install --quiet --yes notebook="${NOTEBOOK_VERSION}"; else mamba install --quiet --yes notebook; fi && \
+    if [[ "${JUPYTERHUB_VERSION}" != "default" ]]; then mamba install --quiet --yes jupyterhub="${JUPYTERHUB_VERSION}"; else mamba install --quiet --yes jupyterhub; fi && \
+    if [[ "${JUPYTERLAB_VERSION}" != "default" ]]; then mamba install --quiet --yes jupyterlab="${JUPYTERLAB_VERSION}"; else mamba install --quiet --yes jupyterlab; fi && \
     mamba clean --all -f -y && \
     npm cache clean --force && \
     jupyter notebook --generate-config && \
