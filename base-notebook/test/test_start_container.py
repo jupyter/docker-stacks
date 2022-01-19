@@ -2,8 +2,10 @@
 # Distributed under the terms of the Modified BSD License.
 
 import logging
+from typing import Optional
 import pytest
 import requests
+import re
 
 from conftest import TrackedContainer
 
@@ -11,22 +13,26 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
-    "env,expected_server,expected_warning",
+    "env,expected_server,expected_warnings",
     [
-        (["JUPYTER_ENABLE_LAB=yes"], "lab", True),
-        (None, "lab", False),
-        (["JUPYTER_CMD=lab"], "lab", False),
-        (["JUPYTER_CMD=notebook"], "notebook", False),
-        (["JUPYTER_CMD=server"], "server", False),
-        (["JUPYTER_CMD=nbclassic"], "nbclassic", False),
+        (
+            ["JUPYTER_ENABLE_LAB=yes"],
+            "lab",
+            ["WARNING: Jupyter Notebook deprecation notice"],
+        ),
+        (None, "lab", []),
+        (["JUPYTER_CMD=lab"], "lab", []),
+        (["JUPYTER_CMD=notebook"], "notebook", []),
+        (["JUPYTER_CMD=server"], "server", []),
+        (["JUPYTER_CMD=nbclassic"], "nbclassic", []),
     ],
 )
 def test_start_notebook(
     container: TrackedContainer,
     http_client: requests.Session,
-    env,
+    env: Optional[list],
     expected_server: str,
-    expected_warning: bool,
+    expected_warnings: list,
 ) -> None:
     """Test the notebook start-notebook script"""
     LOGGER.info(
@@ -38,17 +44,18 @@ def test_start_notebook(
         command=["start-notebook.sh"],
     )
     resp = http_client.get("http://localhost:8888")
+    # checking errors and warnings in logs
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
-    assert "ERROR" not in logs
-    if not expected_warning:
-        assert "WARNING" not in logs
-    else:
-        warnings = [
-            warning for warning in logs.split("\n") if warning.startswith("WARNING")
-        ]
-        assert len(warnings) == 1
-        assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
+    assert "ERROR" not in logs, "ERROR(s) found in logs"
+    for exp_warning in expected_warnings:
+        assert exp_warning in logs, f"Expected warning {exp_warning} not found in logs"
+    warnings = re.findall(r"^WARNING", logs, flags=re.MULTILINE)
+    assert len(expected_warnings) == len(
+        warnings
+    ), "Not found the number of expected warnings in logs"
+
+    # checking if the server is listening
     assert resp.status_code == 200, "Server is not listening"
     assert (
         f"Executing the command: jupyter {expected_server}" in logs
