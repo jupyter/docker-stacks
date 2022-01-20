@@ -2,8 +2,11 @@
 # Distributed under the terms of the Modified BSD License.
 
 import logging
+from typing import Optional
 import pytest
 import requests
+import re
+import time
 
 from conftest import TrackedContainer
 
@@ -11,47 +14,65 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
-    "env,expected_server",
+    "env,expected_command,expected_start,expected_warnings",
     [
-        (["JUPYTER_ENABLE_LAB=yes"], "lab"),
-        (None, "notebook"),
+        (
+            ["JUPYTER_ENABLE_LAB=yes"],
+            "jupyter lab",
+            True,
+            ["WARNING: JUPYTER_ENABLE_LAB is ignored"],
+        ),
+        (None, "jupyter lab", True, []),
+        (["DOCKER_STACKS_JUPYTER_CMD=lab"], "jupyter lab", True, []),
+        (["RESTARTABLE=yes"], "run-one-constantly jupyter lab", True, []),
+        (["DOCKER_STACKS_JUPYTER_CMD=notebook"], "jupyter notebook", True, []),
+        (["DOCKER_STACKS_JUPYTER_CMD=server"], "jupyter server", True, []),
+        (["DOCKER_STACKS_JUPYTER_CMD=nbclassic"], "jupyter nbclassic", True, []),
+        (
+            ["JUPYTERHUB_API_TOKEN=my_token"],
+            "jupyterhub-singleuser",
+            False,
+            ["WARNING: using start-singleuser.sh"],
+        ),
     ],
 )
 def test_start_notebook(
     container: TrackedContainer,
     http_client: requests.Session,
-    env,
-    expected_server: str,
+    env: Optional[list[str]],
+    expected_command: str,
+    expected_start: bool,
+    expected_warnings: list[str],
 ) -> None:
     """Test the notebook start-notebook script"""
     LOGGER.info(
-        f"Test that the start-notebook launches the {expected_server} server from the env {env} ..."
+        f"Test that the start-notebook launches the {expected_command} server from the env {env} ..."
     )
     c = container.run(
         tty=True,
         environment=env,
         command=["start-notebook.sh"],
     )
-    resp = http_client.get("http://localhost:8888")
+    # sleeping some time to let the server start
+    time.sleep(3)
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
-    assert "ERROR" not in logs
-    if expected_server != "notebook":
-        assert "WARNING" not in logs
-    else:
-        warnings = [
-            warning for warning in logs.split("\n") if warning.startswith("WARNING")
-        ]
-        assert len(warnings) == 1
-        assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
-    assert resp.status_code == 200, "Server is not listening"
+    # checking that the expected command is launched
     assert (
-        f"Executing the command: jupyter {expected_server}" in logs
-    ), f"Not the expected command (jupyter {expected_server}) was launched"
-    # Checking warning messages
-    if not env:
-        msg = "WARNING: Jupyter Notebook deprecation notice"
-        assert msg in logs, f"Expected warning message {msg} not printed"
+        f"Executing the command: {expected_command}" in logs
+    ), f"Not the expected command ({expected_command}) was launched"
+    # checking errors and warnings in logs
+    assert "ERROR" not in logs, "ERROR(s) found in logs"
+    for exp_warning in expected_warnings:
+        assert exp_warning in logs, f"Expected warning {exp_warning} not found in logs"
+    warnings = re.findall(r"^WARNING", logs, flags=re.MULTILINE)
+    assert len(expected_warnings) == len(
+        warnings
+    ), "Not found the number of expected warnings in logs"
+    # checking if the server is listening
+    if expected_start:
+        resp = http_client.get("http://localhost:8888")
+        assert resp.status_code == 200, "Server is not listening"
 
 
 def test_tini_entrypoint(

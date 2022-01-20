@@ -23,8 +23,7 @@ def test_cli_args(container: TrackedContainer, http_client: requests.Session) ->
     warnings = [
         warning for warning in logs.split("\n") if warning.startswith("WARNING")
     ]
-    assert len(warnings) == 1
-    assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
+    assert not warnings
     assert "login_submit" not in resp.text
 
 
@@ -49,8 +48,7 @@ def test_unsigned_ssl(
     warnings = [
         warning for warning in logs.split("\n") if warning.startswith("WARNING")
     ]
-    assert len(warnings) == 1
-    assert warnings[0].startswith("WARNING: Jupyter Notebook deprecation notice")
+    assert not warnings
 
 
 def test_uid_change(container: TrackedContainer) -> None:

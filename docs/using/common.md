@@ -69,7 +69,8 @@ You do so by passing arguments to the `docker run` command.
   (The `start-notebook.sh` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
   **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
 - `-e GEN_CERT=yes` - Instructs the startup script to generates a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
-- `-e JUPYTER_ENABLE_LAB=yes` - Instructs the startup script to run `jupyter lab` instead of the default `jupyter notebook` command.
+- `-e DOCKER_STACKS_JUPYTER_CMD=<jupyter command>` - Instructs the startup script to run `jupyter ${DOCKER_STACKS_JUPYTER_CMD}` instead of the default `jupyter lab` command.
+  See [Switching back to classic notebook or using a different startup command][switch_back] for available options.
   Useful in container orchestration environments where setting environment variables is easier than change command line parameters.
 - `-e RESTARTABLE=yes` - Runs Jupyter in a loop so that quitting Jupyter does not cause the container to exit.
   This may be useful when you need to install extensions that require restarting Jupyter.
@@ -130,7 +131,41 @@ For additional information about using SSL, see the following:
 
 ## Alternative Commands
 
-### start.sh
+### Switching back to classic notebook or using a different startup command
+
+JupyterLab built on top of Jupyter Server is now the default for all images of the stack.
+However, it is still possible to switch back to the classic notebook or to use a different startup command.
+This can be done by setting the environment variable `DOCKER_STACKS_JUPYTER_CMD` at container startup.
+The table below shows some options.
+
+| `DOCKER_STACKS_JUPYTER_CMD` | Backend          | Frontend         |
+| --------------------------- | ---------------- | ---------------- |
+| `lab` (default)             | Jupyter Server   | JupyterLab       |
+| `notebook`                  | Jupyter Notebook | Jupyter Notebook |
+| `nbclassic`                 | Jupyter Server   | Jupyter Notebook |
+| `server`                    | Jupyter Server   | None             |
+| `retro`\*                   | Jupyter Server   | RetroLab         |
+
+Notes:
+
+- \*Not installed at this time, but it could be the case in the future or in a community stack.
+- Any other valid `jupyter` command that starts the Jupyter server can be used.
+
+Example:
+
+```bash
+# Run Jupyter Notebook classic
+docker run -it --rm -p 8888:8888 -e DOCKER_STACKS_JUPYTER_CMD=notebook \
+       jupyter/base-notebook
+# Executing the command: jupyter notebook ...
+
+# Run Jupyter Notebook on Jupyter Server
+docker run -it --rm -p 8888:8888 -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
+       jupyter/base-notebook
+# Executing the command: jupyter nbclassic ...
+```
+
+### `start.sh`
 
 The `start-notebook.sh` script actually inherits most of its option handling capability from a more generic `start.sh` script.
 The `start.sh` script supports all of the features described above, but allows you to specify an arbitrary command to execute.
@@ -196,3 +231,5 @@ mamba install --quiet --yes humanize && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
+
+[switch_back]: common.html#switching-back-to-classic-notebook-or-using-a-different-startup-command

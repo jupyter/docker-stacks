@@ -137,14 +137,6 @@ ENV PATH "${CONDA_DIR}/envs/${conda_env}/bin:${PATH}"
 # ENV CONDA_DEFAULT_ENV ${conda_env}
 ```
 
-## Run JupyterLab
-
-JupyterLab is preinstalled as a notebook extension starting in tag
-[c33a7dc0eece](https://github.com/jupyter/docker-stacks/pull/355).
-
-Run jupyterlab using a command such as
-`docker run -it --rm -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes jupyter/datascience-notebook`
-
 ## Dask JupyterLab Extension
 
 [Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes.
