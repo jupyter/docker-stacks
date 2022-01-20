@@ -6,6 +6,7 @@ from typing import Optional
 import pytest
 import requests
 import re
+import time
 
 from conftest import TrackedContainer
 
@@ -13,40 +14,54 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.parametrize(
-    "env,expected_server,expected_warnings",
+    "env,expected_command,expected_start,expected_warnings",
     [
         (
             ["JUPYTER_ENABLE_LAB=yes"],
-            "lab",
-            ["WARNING: Jupyter Notebook deprecation notice"],
+            "jupyter lab",
+            True,
+            ["WARNING: JUPYTER_ENABLE_LAB is ignored"],
         ),
-        (None, "lab", []),
-        (["JUPYTER_CMD=lab"], "lab", []),
-        (["JUPYTER_CMD=notebook"], "notebook", []),
-        (["JUPYTER_CMD=server"], "server", []),
-        (["JUPYTER_CMD=nbclassic"], "nbclassic", []),
+        (None, "jupyter lab", True, []),
+        (["JUPYTER_CMD=lab"], "jupyter lab", True, []),
+        (["RESTARTABLE=yes"], "run-one-constantly jupyter lab", True, []),
+        (["JUPYTER_CMD=notebook"], "jupyter notebook", True, []),
+        (["JUPYTER_CMD=server"], "jupyter server", True, []),
+        (["JUPYTER_CMD=nbclassic"], "jupyter nbclassic", True, []),
+        (
+            ["JUPYTERHUB_API_TOKEN=my_token"],
+            "jupyterhub-singleuser",
+            False,
+            ["WARNING: using start-singleuser.sh"],
+        ),
     ],
 )
 def test_start_notebook(
     container: TrackedContainer,
     http_client: requests.Session,
     env: Optional[list],
-    expected_server: str,
+    expected_command: str,
+    expected_start: bool,
     expected_warnings: list,
 ) -> None:
     """Test the notebook start-notebook script"""
     LOGGER.info(
-        f"Test that the start-notebook launches the {expected_server} server from the env {env} ..."
+        f"Test that the start-notebook launches the {expected_command} server from the env {env} ..."
     )
     c = container.run(
         tty=True,
         environment=env,
         command=["start-notebook.sh"],
     )
-    resp = http_client.get("http://localhost:8888")
-    # checking errors and warnings in logs
+    # sleeping some time to let the server start
+    time.sleep(3)
     logs = c.logs(stdout=True).decode("utf-8")
     LOGGER.debug(logs)
+    # checking that the expected command is launched
+    assert (
+        f"Executing the command: {expected_command}" in logs
+    ), f"Not the expected command ({expected_command}) was launched"
+    # checking errors and warnings in logs
     assert "ERROR" not in logs, "ERROR(s) found in logs"
     for exp_warning in expected_warnings:
         assert exp_warning in logs, f"Expected warning {exp_warning} not found in logs"
@@ -54,12 +69,10 @@ def test_start_notebook(
     assert len(expected_warnings) == len(
         warnings
     ), "Not found the number of expected warnings in logs"
-
     # checking if the server is listening
-    assert resp.status_code == 200, "Server is not listening"
-    assert (
-        f"Executing the command: jupyter {expected_server}" in logs
-    ), f"Not the expected command (jupyter {expected_server}) was launched"
+    if expected_start:
+        resp = http_client.get("http://localhost:8888")
+        assert resp.status_code == 200, "Server is not listening"
 
 
 def test_tini_entrypoint(

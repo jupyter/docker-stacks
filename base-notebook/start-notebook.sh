@@ -18,8 +18,8 @@ if [[ "${RESTARTABLE}" == "yes" ]]; then
     wrapper="run-one-constantly"
 fi
 
-if [[ -n "${JUPYTER_ENABLE_LAB}" ]]; then
-    echo "WARNING: Jupyter Notebook deprecation notice https://github.com/jupyter/docker-stacks#jupyter-notebook-deprecation-notice."
+if [[ -v JUPYTER_ENABLE_LAB ]]; then
+    echo "WARNING: JUPYTER_ENABLE_LAB is ignored, use JUPYTER_CMD if you want to change the command used to start the server"
 fi
 
 # shellcheck disable=SC1091,SC2086
