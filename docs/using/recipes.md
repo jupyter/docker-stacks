@@ -137,29 +137,6 @@ ENV PATH "${CONDA_DIR}/envs/${conda_env}/bin:${PATH}"
 # ENV CONDA_DEFAULT_ENV ${conda_env}
 ```
 
-## Switching back to classic notebook or using a different startup command
-
-JupyterLab built on top of Jupyter Server is now the default for all images of the stack.
-However, it is still possible to switch back to the classic notebook or to use a different startup command.
-This can be done by setting the environment variable `JUPYTER_CMD` at container startup.
-
-- `JUPYTER_CMD=notebook`: Start Jupyter Notebook frontend and backend.
-- `JUPYTER_CMD=nbclassic`: Start Jupyter Notebook frontend and Jupyter Server backend.
-
-_Note: Any other valid `jupyter` command that starts the Jupyter server can be used._
-
-Example:
-
-```bash
-# Run Jupyter Notebook classic
-docker run -it --rm -p 8888:8888 -e JUPYTER_CMD=notebook jupyter/base-notebook
-# Executing the command: jupyter notebook
-
-# Run Jupyter Notebook on Jupyter Server
-docker run -it --rm -p 8888:8888 -e JUPYTER_CMD=nbclassic jupyter/base-notebook
-# Executing the command: jupyter nbclassic
-```
-
 ## Dask JupyterLab Extension
 
 [Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes.
