@@ -69,7 +69,7 @@ You do so by passing arguments to the `docker run` command.
   (The `start-notebook.sh` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
   **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
 - `-e GEN_CERT=yes` - Instructs the startup script to generates a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
-- `-e JUPYTER_CMD=<jupyter command>` - Instructs the startup script to run `jupyter ${JUPYTER_CMD}` instead of the default `jupyter lab` command.
+- `-e DOCKER_STACKS_JUPYTER_CMD=<jupyter command>` - Instructs the startup script to run `jupyter ${DOCKER_STACKS_JUPYTER_CMD}` instead of the default `jupyter lab` command.
   See [Switching back to classic notebook or using a different startup command][switch_back] for available options.
   Useful in container orchestration environments where setting environment variables is easier than change command line parameters.
 - `-e RESTARTABLE=yes` - Runs Jupyter in a loop so that quitting Jupyter does not cause the container to exit.
@@ -135,16 +135,16 @@ For additional information about using SSL, see the following:
 
 JupyterLab built on top of Jupyter Server is now the default for all images of the stack.
 However, it is still possible to switch back to the classic notebook or to use a different startup command.
-This can be done by setting the environment variable `JUPYTER_CMD` at container startup.
+This can be done by setting the environment variable `DOCKER_STACKS_JUPYTER_CMD` at container startup.
 The table below shows some options.
 
-| `JUPYTER_CMD`   | Backend          | Frontend         |
-| --------------- | ---------------- | ---------------- |
-| `lab` (default) | Jupyter Server   | JupyterLab       |
-| `notebook`      | Jupyter Notebook | Jupyter Notebook |
-| `nbclassic`     | Jupyter Server   | Jupyter Notebook |
-| `server`        | Jupyter Server   | None             |
-| `retro`\*       | Jupyter Server   | RetroLab         |
+| `DOCKER_STACKS_JUPYTER_CMD` | Backend          | Frontend         |
+| --------------------------- | ---------------- | ---------------- |
+| `lab` (default)             | Jupyter Server   | JupyterLab       |
+| `notebook`                  | Jupyter Notebook | Jupyter Notebook |
+| `nbclassic`                 | Jupyter Server   | Jupyter Notebook |
+| `server`                    | Jupyter Server   | None             |
+| `retro`\*                   | Jupyter Server   | RetroLab         |
 
 Notes:
 
@@ -155,12 +155,12 @@ Example:
 
 ```bash
 # Run Jupyter Notebook classic
-docker run -it --rm -p 8888:8888 -e JUPYTER_CMD=notebook \
+docker run -it --rm -p 8888:8888 -e DOCKER_STACKS_JUPYTER_CMD=notebook \
        jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
 # Run Jupyter Notebook on Jupyter Server
-docker run -it --rm -p 8888:8888 -e JUPYTER_CMD=nbclassic
+docker run -it --rm -p 8888:8888 -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
        jupyter/base-notebook
 # Executing the command: jupyter nbclassic ...
 ```

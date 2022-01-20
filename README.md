@@ -78,7 +78,7 @@ We will happily grant additional permissions (e.g., ability to merge PRs) to any
 
 Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), JupyterLab is now the default for all of the Jupyter Docker stack images.
 It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
-This can be done by passing the environment variable `JUPYTER_CMD=notebook` (or any other valid `jupyter` command) at container startup,
+This can be done by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` command) at container startup,
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#docker-options).
 
 According to the Jupyter Notebook project status and its compatibility with JupyterLab,

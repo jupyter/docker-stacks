@@ -6,7 +6,7 @@ set -e
 
 # The Jupyter command to launch
 # JupyterLab by default
-JUPYTER_CMD="${JUPYTER_CMD:=lab}"
+DOCKER_STACKS_JUPYTER_CMD="${DOCKER_STACKS_JUPYTER_CMD:=lab}"
 
 if [[ -n "${JUPYTERHUB_API_TOKEN}" ]]; then
     echo "WARNING: using start-singleuser.sh instead of start-notebook.sh to start a server associated with JupyterHub."
@@ -19,8 +19,8 @@ if [[ "${RESTARTABLE}" == "yes" ]]; then
 fi
 
 if [[ -v JUPYTER_ENABLE_LAB ]]; then
-    echo "WARNING: JUPYTER_ENABLE_LAB is ignored, use JUPYTER_CMD if you want to change the command used to start the server"
+    echo "WARNING: JUPYTER_ENABLE_LAB is ignored, use DOCKER_STACKS_JUPYTER_CMD if you want to change the command used to start the server"
 fi
 
 # shellcheck disable=SC1091,SC2086
-exec /usr/local/bin/start.sh ${wrapper} jupyter ${JUPYTER_CMD} ${NOTEBOOK_ARGS} "$@"
+exec /usr/local/bin/start.sh ${wrapper} jupyter ${DOCKER_STACKS_JUPYTER_CMD} ${NOTEBOOK_ARGS} "$@"
