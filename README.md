@@ -16,7 +16,7 @@ by simply clicking the preceding link.
 The image used in binder was last updated on 22 May 2021.
 Otherwise, three examples below may help you get started if you [have Docker installed](https://docs.docker.com/install/),
 know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use
-and want to launch a single Jupyter Notebook server in a container.
+and want to launch a single Jupyter Server in a container.
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) describes additional uses and features in detail.
 
@@ -25,7 +25,7 @@ It then starts a container running a Jupyter Server and exposes the server on ho
 The server logs appear in the terminal.
 Visiting `http://<hostname>:8888/?token=<token>` in a browser loads JupyterLab,
 where `hostname` is the name of the computer running docker and `token` is the secret token printed in the console.
-The container remains intact for restart after the notebook server exits.
+The container remains intact for restart after the Jupyter Server exits.
 
 ```bash
 docker run -p 8888:8888 jupyter/scipy-notebook:33add21fab64
