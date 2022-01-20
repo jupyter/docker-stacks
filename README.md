@@ -48,7 +48,7 @@ where `hostname` is the name of the computer running docker and `token` is the s
 Docker destroys the container after notebook server exit, but any files written to `~/work` in the container remain intact on the host.
 
 ```bash
-docker run --rm -p 10000:8888 -e JUPYTER_ENABLE_LAB=yes -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
+docker run --rm -p 10000:8888 -e -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
 ```
 
 ## Contributing
@@ -76,13 +76,12 @@ We will happily grant additional permissions (e.g., ability to merge PRs) to any
 
 ## Jupyter Notebook Deprecation Notice
 
-Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), we encourage users to transition to JupyterLab.
-This can be done by passing the environment variable `JUPYTER_ENABLE_LAB=yes` at container startup,
+Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), JupyterLab is now the default for all of the Jupyter Docker stack images.
+It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
+This can be done by passing the environment variable `JUPYTER_CMD=notebook` (or any other valid `jupyter` command) at container startup,
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#docker-options).
 
-At some point, JupyterLab will become the default for all of the Jupyter Docker stack images, however a new environment variable will be introduced to switch back to Jupyter Notebook if needed.
-
-After the change of default, and according to the Jupyter Notebook project status and its compatibility with JupyterLab,
+According to the Jupyter Notebook project status and its compatibility with JupyterLab,
 these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another _classic-like_ UI built atop JupyterLab.
 
 This change is tracked in the issue [#1217](https://github.com/jupyter/docker-stacks/issues/1217), please check its content for more information.

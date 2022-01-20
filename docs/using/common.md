@@ -69,7 +69,7 @@ You do so by passing arguments to the `docker run` command.
   (The `start-notebook.sh` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
   **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
 - `-e GEN_CERT=yes` - Instructs the startup script to generates a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
-- `-e JUPYTER_ENABLE_LAB=yes` - Instructs the startup script to run `jupyter lab` instead of the default `jupyter notebook` command.
+- `-e JUPYTER_CMD=yes` - Instructs the startup script to run `jupyter ${JUPYTER_CMD}` instead of the default `jupyter lab` command.
   Useful in container orchestration environments where setting environment variables is easier than change command line parameters.
 - `-e RESTARTABLE=yes` - Runs Jupyter in a loop so that quitting Jupyter does not cause the container to exit.
   This may be useful when you need to install extensions that require restarting Jupyter.
