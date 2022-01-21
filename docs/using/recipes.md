@@ -27,7 +27,7 @@ Create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:33add21fab64
+FROM jupyter/datascience-notebook:b418b67c225b
 # Install in the default python3 environment
 RUN pip install --quiet --no-cache-dir 'flake8==3.9.2' && \
     fix-permissions "${CONDA_DIR}" && \
@@ -46,7 +46,7 @@ Next, create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:33add21fab64
+FROM jupyter/datascience-notebook:b418b67c225b
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --quiet --no-cache-dir --requirement /tmp/requirements.txt && \
@@ -58,7 +58,7 @@ For conda, the Dockerfile is similar:
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:33add21fab64
+FROM jupyter/datascience-notebook:b418b67c225b
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN mamba install --yes --file /tmp/requirements.txt && \
@@ -311,7 +311,7 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:33add21fab64
+FROM jupyter/base-notebook:b418b67c225b
 RUN pip install --quiet --no-cache-dir jupyterhub==1.4.1 && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -485,13 +485,13 @@ In this case, you should use the `start.sh` script to launch the server with no 
 For jupyterlab:
 
 ```bash
-docker run jupyter/base-notebook:33add21fab64 start.sh jupyter lab --LabApp.token=''
+docker run jupyter/base-notebook:b418b67c225b start.sh jupyter lab --LabApp.token=''
 ```
 
 For jupyter classic:
 
 ```bash
-docker run jupyter/base-notebook:33add21fab64 start.sh jupyter notebook --NotebookApp.token=''
+docker run jupyter/base-notebook:b418b67c225b start.sh jupyter notebook --NotebookApp.token=''
 ```
 
 ## Enable nbextension spellchecker for markdown (or any other nbextension)

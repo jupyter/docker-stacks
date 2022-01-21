@@ -19,22 +19,22 @@ and want to launch a single Jupyter Server in a container.
 
 The other pages in this documentation describe additional uses and features in detail.
 
-**Example 1:** This command pulls the ``jupyter/scipy-notebook`` image tagged ``33add21fab64`` from Docker Hub if it is not already present on the local host.
+**Example 1:** This command pulls the ``jupyter/scipy-notebook`` image tagged ``b418b67c225b`` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Server and exposes the server on host port 8888.
 The server logs appear in the terminal.
 Visiting ``http://<hostname>:8888/?token=<token>`` in a browser loads JupyterLab,
 where ``hostname`` is the name of the computer running docker and ``token`` is the secret token printed in the console.
 The container remains intact for restart after the Jupyter Server exits.::
 
-    docker run -p 8888:8888 jupyter/scipy-notebook:33add21fab64
+    docker run -p 8888:8888 jupyter/scipy-notebook:b418b67c225b
 
 **Example 2:** This command performs the same operations as **Example 1**, but it exposes the server on host port 10000 instead of port 8888.
 Visiting ``http://<hostname>:10000/?token=<token>`` in a browser loads JupyterLab,
 where ``hostname`` is the name of the computer running docker and ``token`` is the secret token printed in the console.::
 
-    docker run -p 10000:8888 jupyter/scipy-notebook:33add21fab64
+    docker run -p 10000:8888 jupyter/scipy-notebook:b418b67c225b
 
-**Example 3:** This command pulls the ``jupyter/datascience-notebook`` image tagged ``33add21fab64`` from Docker Hub if it is not already present on the local host.
+**Example 3:** This command pulls the ``jupyter/datascience-notebook`` image tagged ``b418b67c225b`` from Docker Hub if it is not already present on the local host.
 It then starts an *ephemeral* container running a Jupyter Server and exposes the server on host port 10000.
 The command mounts the current working directory on the host as ``/home/jovyan/work`` in the container.
 The server logs appear in the terminal.
@@ -42,7 +42,7 @@ Visiting ``http://<hostname>:10000/lab?token=<token>`` in a browser loads Jupyte
 where ``hostname`` is the name of the computer running docker and ``token`` is the secret token printed in the console.
 Docker destroys the container after Jupyter Server exit, but any files written to ``~/work`` in the container remain intact on the host.::
 
-    docker run --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
+    docker run --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:b418b67c225b
 
 CPU Architectures
 -----------------
