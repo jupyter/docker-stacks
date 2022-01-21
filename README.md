@@ -13,14 +13,13 @@ containing Jupyter applications and interactive computing tools.
 
 You can try a [relatively recent build of the jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb)
 by simply clicking the preceding link.
-The image used in binder was last updated on 22 May 2021.
 Otherwise, three examples below may help you get started if you [have Docker installed](https://docs.docker.com/install/),
 know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use
 and want to launch a single Jupyter Server in a container.
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) describes additional uses and features in detail.
 
-**Example 1:** This command pulls the `jupyter/scipy-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host.
+**Example 1:** This command pulls the `jupyter/scipy-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Server and exposes the server on host port 8888.
 The server logs appear in the terminal.
 Visiting `http://<hostname>:8888/?token=<token>` in a browser loads JupyterLab,
@@ -28,7 +27,7 @@ where `hostname` is the name of the computer running docker and `token` is the s
 The container remains intact for restart after the Jupyter Server exits.
 
 ```bash
-docker run -p 8888:8888 jupyter/scipy-notebook:33add21fab64
+docker run -p 8888:8888 jupyter/scipy-notebook:b418b67c225b
 ```
 
 **Example 2:** This command performs the same operations as **Example 1**, but it exposes the server on host port 10000 instead of port 8888.
@@ -36,10 +35,10 @@ Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
 where `hostname` is the name of the computer running docker and `token` is the secret token printed in the console.
 
 ```bash
-docker run -p 10000:8888 jupyter/scipy-notebook:33add21fab64
+docker run -p 10000:8888 jupyter/scipy-notebook:b418b67c225b
 ```
 
-**Example 3:** This command pulls the `jupyter/datascience-notebook` image tagged `33add21fab64` from Docker Hub if it is not already present on the local host.
+**Example 3:** This command pulls the `jupyter/datascience-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
 It then starts an _ephemeral_ container running a Jupyter Server and exposes the server on host port 10000.
 The command mounts the current working directory on the host as `/home/jovyan/work` in the container.
 The server logs appear in the terminal.
@@ -48,7 +47,7 @@ where `hostname` is the name of the computer running docker and `token` is the s
 Docker destroys the container after Jupyter Server exit, but any files written to `~/work` in the container remain intact on the host.
 
 ```bash
-docker run --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:33add21fab64
+docker run --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:b418b67c225b
 ```
 
 ## Contributing

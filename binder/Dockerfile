@@ -3,11 +3,11 @@
 
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/base-notebook:33add21fab64
+ARG BASE_CONTAINER=$OWNER/base-notebook:b418b67c225b
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
-ENV TAG="33add21fab64"
+ENV TAG="b418b67c225b"
 
 WORKDIR "${HOME}"
 COPY binder/README.ipynb .
