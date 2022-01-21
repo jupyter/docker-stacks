@@ -23,9 +23,9 @@ Example:
     # [...]
     # test/test_packages.py::test_python_packages
     # --------------------------------------------------------------------------------------------- live log setup ----------------------------------------------------------------------------------------------
-    # 2020-03-08 09:56:04 [    INFO] Starting container jupyter/datascience-notebook ... (helpers.py:51)
+    # 2020-03-08 09:56:04 [    INFO] Starting container jupyter/datascience-notebook ... (package_helper.py:51)
     # 2020-03-08 09:56:04 [    INFO] Running jupyter/datascience-notebook with args {'detach': True, 'ports': {'8888/tcp': 8888}, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:78)
-    # 2020-03-08 09:56:04 [    INFO] Grabing the list of manually requested packages ... (helpers.py:76)
+    # 2020-03-08 09:56:04 [    INFO] Grabing the list of manually requested packages ... (package_helper.py:76)
     # ---------------------------------------------------------------------------------------------- live log call ----------------------------------------------------------------------------------------------
     # 2020-03-08 09:56:07 [    INFO] Testing the import of packages ... (test_packages.py:125)
     # 2020-03-08 09:56:07 [    INFO] Trying to import conda (test_packages.py:127)
@@ -40,7 +40,7 @@ import logging
 import pytest
 from conftest import TrackedContainer
 
-from helpers import CondaPackageHelper
+from package_helper import CondaPackageHelper
 
 LOGGER = logging.getLogger(__name__)
 
