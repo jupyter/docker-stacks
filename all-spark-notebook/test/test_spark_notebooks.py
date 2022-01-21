@@ -30,14 +30,11 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
         + f"--output-dir {output_dir} "
         + f"--execute {cont_data_dir}/{test_file}.ipynb"
     )
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=timeout_ms / 10 + 10,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
     )
-    rv = c.wait(timeout=timeout_ms / 10 + 10)
-    logs = c.logs(stdout=True).decode("utf-8")
-    LOGGER.debug(logs)
-    assert rv == 0 or rv["StatusCode"] == 0, f"Command {command} failed"
     expected_file = f"{output_dir}/{test_file}.md"
     assert expected_file in logs, f"Expected file {expected_file} not generated"

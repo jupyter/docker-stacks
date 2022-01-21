@@ -1,6 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+from typing import Optional
 import docker
+from docker.models.containers import Container
 import logging
 
 
@@ -14,12 +16,12 @@ class DockerRunner:
         docker_client=docker.from_env(),
         command: str = "sleep infinity",
     ):
-        self.container = None
-        self.image_name = image_name
-        self.command = command
-        self.docker_client = docker_client
+        self.container: Optional[Container] = None
+        self.image_name: str = image_name
+        self.command: str = command
+        self.docker_client: docker.DockerClient = docker_client
 
-    def __enter__(self):
+    def __enter__(self) -> Container:
         LOGGER.info(f"Creating container for image {self.image_name} ...")
         self.container = self.docker_client.containers.run(
             image=self.image_name,
@@ -29,14 +31,16 @@ class DockerRunner:
         LOGGER.info(f"Container {self.container.name} created")
         return self.container
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
         LOGGER.info(f"Removing container {self.container.name} ...")
         if self.container:
             self.container.remove(force=True)
             LOGGER.info(f"Container {self.container.name} removed")
 
     @staticmethod
-    def run_simple_command(container, cmd: str, print_result: bool = True):
+    def run_simple_command(
+        container: Container, cmd: str, print_result: bool = True
+    ) -> str:
         LOGGER.info(f"Running cmd: '{cmd}' on container: {container}")
         out = container.exec_run(cmd)
         result = out.output.decode("utf-8").rstrip()

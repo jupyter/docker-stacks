@@ -10,7 +10,7 @@ LOGGER = logging.getLogger(__name__)
 def test_julia(container: TrackedContainer) -> None:
     """Basic julia test"""
     LOGGER.info("Test that julia is correctly installed ...")
-    running_container = container.run(
+    running_container = container.run_detached(
         tty=True,
         command=["start.sh", "bash", "-c", "sleep infinity"],
     )

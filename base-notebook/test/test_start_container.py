@@ -48,14 +48,14 @@ def test_start_notebook(
     LOGGER.info(
         f"Test that the start-notebook launches the {expected_command} server from the env {env} ..."
     )
-    c = container.run(
+    running_container = container.run_detached(
         tty=True,
         environment=env,
         command=["start-notebook.sh"],
     )
     # sleeping some time to let the server start
     time.sleep(3)
-    logs = c.logs(stdout=True).decode("utf-8")
+    logs = running_container.logs().decode("utf-8")
     LOGGER.debug(logs)
     # checking that the expected command is launched
     assert (
@@ -84,12 +84,12 @@ def test_tini_entrypoint(
     https://superuser.com/questions/632979/if-i-know-the-pid-number-of-a-process-how-can-i-get-its-name
     """
     LOGGER.info(f"Test that {command} is launched as PID {pid} ...")
-    c = container.run(
+    running_container = container.run_detached(
         tty=True,
         command=["start.sh"],
     )
     # Select the PID 1 and get the corresponding command
-    cmd = c.exec_run(f"ps -p {pid} -o comm=")
+    cmd = running_container.exec_run(f"ps -p {pid} -o comm=")
     output = cmd.output.decode("utf-8").strip("\n")
     assert "ERROR" not in output
     assert "WARNING" not in output

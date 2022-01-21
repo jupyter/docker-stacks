@@ -5,6 +5,7 @@ import logging
 import typing
 
 import docker
+from docker.models.containers import Container
 import pytest
 import requests
 
@@ -59,7 +60,7 @@ class TrackedContainer:
         self.image_name = image_name
         self.kwargs = kwargs
 
-    def run(self, **kwargs: typing.Any):
+    def run_detached(self, **kwargs: typing.Any) -> Container:
         """Runs a docker container using the preconfigured image name
         and a mix of the preconfigured container options and those passed
         to this method.
@@ -84,6 +85,24 @@ class TrackedContainer:
             **all_kwargs,
         )
         return self.container
+
+    def run_and_wait(
+        self,
+        timeout: int,
+        no_warnings: bool = True,
+        no_errors: bool = True,
+        **kwargs: typing.Any,
+    ) -> str:
+        running_container = self.run_and_wait(**kwargs)
+        rv = running_container.wait(timeout=timeout)
+        logs = running_container.logs().decode("utf-8")
+        LOGGER.debug(logs)
+        if no_warnings:
+            assert "WARNING" not in logs
+        if no_errors:
+            assert "ERROR" not in logs
+        assert rv == 0 or rv["StatusCode"] == 0
+        return logs
 
     def remove(self):
         """Kills and removes the tracked docker container."""

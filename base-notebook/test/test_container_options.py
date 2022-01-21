@@ -1,5 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+import pathlib
 import time
 import logging
 
@@ -14,10 +15,12 @@ LOGGER = logging.getLogger(__name__)
 def test_cli_args(container: TrackedContainer, http_client: requests.Session) -> None:
     """Container should respect notebook server command line args
     (e.g., disabling token security)"""
-    c = container.run(command=["start-notebook.sh", "--NotebookApp.token=''"])
+    running_container = container.run_detached(
+        command=["start-notebook.sh", "--NotebookApp.token=''"]
+    )
     resp = http_client.get("http://localhost:8888")
     resp.raise_for_status()
-    logs = c.logs(stdout=True).decode("utf-8")
+    logs = running_container.logs().decode("utf-8")
     LOGGER.debug(logs)
     assert "ERROR" not in logs
     warnings = [
@@ -34,7 +37,7 @@ def test_unsigned_ssl(
     """Container should generate a self-signed SSL certificate
     and notebook server should use it to enable HTTPS.
     """
-    c = container.run(environment=["GEN_CERT=yes"])
+    running_container = container.run_detached(environment=["GEN_CERT=yes"])
     # NOTE: The requests.Session backing the http_client fixture does not retry
     # properly while the server is booting up. An SSL handshake error seems to
     # abort the retry logic. Forcing a long sleep for the moment until I have
@@ -43,7 +46,7 @@ def test_unsigned_ssl(
     resp = http_client.get("https://localhost:8888", verify=False)
     resp.raise_for_status()
     assert "login_submit" in resp.text
-    logs = c.logs(stdout=True).decode("utf-8")
+    logs = running_container.logs().decode("utf-8")
     assert "ERROR" not in logs
     warnings = [
         warning for warning in logs.split("\n") if warning.startswith("WARNING")
@@ -53,34 +56,25 @@ def test_unsigned_ssl(
 
 def test_uid_change(container: TrackedContainer) -> None:
     """Container should change the UID of the default user."""
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=120,  # usermod is slow so give it some time
         tty=True,
         user="root",
         environment=["NB_UID=1010"],
         command=["start.sh", "bash", "-c", "id && touch /opt/conda/test-file"],
     )
-    # usermod is slow so give it some time
-    rv = c.wait(timeout=120)
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
-    assert rv == 0 or rv["StatusCode"] == 0
-    assert "uid=1010(jovyan)" in c.logs(stdout=True).decode("utf-8")
+    assert "uid=1010(jovyan)" in logs
 
 
 def test_gid_change(container: TrackedContainer) -> None:
     """Container should change the GID of the default user."""
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=10,
         tty=True,
         user="root",
         environment=["NB_GID=110"],
         command=["start.sh", "id"],
     )
-    rv = c.wait(timeout=10)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
     assert "gid=110(jovyan)" in logs
     assert "groups=110(jovyan),100(users)" in logs
 
@@ -88,7 +82,7 @@ def test_gid_change(container: TrackedContainer) -> None:
 def test_nb_user_change(container: TrackedContainer) -> None:
     """Container should change the user name (`NB_USER`) of the default user."""
     nb_user = "nayvoj"
-    running_container = container.run(
+    running_container = container.run_detached(
         tty=True,
         user="root",
         environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
@@ -99,7 +93,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     # container sleeps forever.
     time.sleep(10)
     LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
-    output = running_container.logs(stdout=True).decode("utf-8")
+    output = running_container.logs().decode("utf-8")
     assert "ERROR" not in output
     assert "WARNING" not in output
     assert (
@@ -137,7 +131,8 @@ def test_nb_user_change(container: TrackedContainer) -> None:
 def test_chown_extra(container: TrackedContainer) -> None:
     """Container should change the UID/GID of a comma separated
     CHOWN_EXTRA list of folders."""
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=120,  # chown is slow so give it some time
         tty=True,
         user="root",
         environment=[
@@ -153,12 +148,6 @@ def test_chown_extra(container: TrackedContainer) -> None:
             "stat -c '%n:%u:%g' /home/jovyan/.bashrc /opt/conda/bin/jupyter",
         ],
     )
-    # chown is slow so give it some time
-    rv = c.wait(timeout=120)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
     assert "/home/jovyan/.bashrc:1010:101" in logs
     assert "/opt/conda/bin/jupyter:1010:101" in logs
 
@@ -166,7 +155,8 @@ def test_chown_extra(container: TrackedContainer) -> None:
 def test_chown_home(container: TrackedContainer) -> None:
     """Container should change the NB_USER home directory owner and
     group to the current value of NB_UID and NB_GID."""
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=120,  # chown is slow so give it some time
         tty=True,
         user="root",
         environment=[
@@ -178,58 +168,41 @@ def test_chown_home(container: TrackedContainer) -> None:
         ],
         command=["start.sh", "bash", "-c", "stat -c '%n:%u:%g' /home/kitten/.bashrc"],
     )
-    rv = c.wait(timeout=120)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
     assert "/home/kitten/.bashrc:1010:101" in logs
 
 
 def test_sudo(container: TrackedContainer) -> None:
     """Container should grant passwordless sudo to the default user."""
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=10,
         tty=True,
         user="root",
         environment=["GRANT_SUDO=yes"],
         command=["start.sh", "sudo", "id"],
     )
-    rv = c.wait(timeout=10)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
     assert "uid=0(root)" in logs
 
 
 def test_sudo_path(container: TrackedContainer) -> None:
     """Container should include /opt/conda/bin in the sudo secure_path."""
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=10,
         tty=True,
         user="root",
         environment=["GRANT_SUDO=yes"],
         command=["start.sh", "sudo", "which", "jupyter"],
     )
-    rv = c.wait(timeout=10)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
 def test_sudo_path_without_grant(container: TrackedContainer) -> None:
     """Container should include /opt/conda/bin in the sudo secure_path."""
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=10,
         tty=True,
         user="root",
         command=["start.sh", "which", "jupyter"],
     )
-    rv = c.wait(timeout=10)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
 
@@ -238,15 +211,13 @@ def test_group_add(container: TrackedContainer) -> None:
     group. It won't be possible to modify /etc/passwd since gid is nonzero, so
     additionally verify that setting gid=0 is suggested in a warning.
     """
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=5,
+        no_warnings=False,
         user="1010:1010",
         group_add=["users"],  # Ensures write access to /home/jovyan
         command=["start.sh", "id"],
     )
-    rv = c.wait(timeout=5)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
     warnings = [
         warning for warning in logs.split("\n") if warning.startswith("WARNING")
     ]
@@ -261,14 +232,12 @@ def test_set_uid(container: TrackedContainer) -> None:
     Additionally verify that "--group-add=users" is suggested in a warning to restore
     write access.
     """
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=5,
+        no_warnings=False,
         user="1010",
         command=["start.sh", "id"],
     )
-    rv = c.wait(timeout=5)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
     assert "uid=1010(jovyan) gid=0(root)" in logs
     warnings = [
         warning for warning in logs.split("\n") if warning.startswith("WARNING")
@@ -279,16 +248,14 @@ def test_set_uid(container: TrackedContainer) -> None:
 
 def test_set_uid_and_nb_user(container: TrackedContainer) -> None:
     """Container should run with the specified uid and NB_USER."""
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=5,
+        no_warnings=False,
         user="1010",
         environment=["NB_USER=kitten"],
         group_add=["users"],  # Ensures write access to /home/jovyan
         command=["start.sh", "id"],
     )
-    rv = c.wait(timeout=5)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
     assert "uid=1010(kitten) gid=0(root)" in logs
     warnings = [
         warning for warning in logs.split("\n") if warning.startswith("WARNING")
@@ -297,7 +264,9 @@ def test_set_uid_and_nb_user(container: TrackedContainer) -> None:
     assert "user is kitten but home is /home/jovyan" in warnings[0]
 
 
-def test_container_not_delete_bind_mount(container: TrackedContainer, tmp_path) -> None:
+def test_container_not_delete_bind_mount(
+    container: TrackedContainer, tmp_path: pathlib.Path
+) -> None:
     """Container should not delete host system files when using the (docker)
     -v bind mount flag and mapping to /home/jovyan.
     """
@@ -306,7 +275,8 @@ def test_container_not_delete_bind_mount(container: TrackedContainer, tmp_path) 
     p = d / "foo.txt"
     p.write_text("some-content")
 
-    c = container.run(
+    container.run_and_wait(
+        timeout=5,
         tty=True,
         user="root",
         working_dir="/home/",
@@ -317,11 +287,6 @@ def test_container_not_delete_bind_mount(container: TrackedContainer, tmp_path) 
         volumes={d: {"bind": "/home/jovyan/data", "mode": "rw"}},
         command=["start.sh", "ls"],
     )
-    rv = c.wait(timeout=5)
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
-    assert rv == 0 or rv["StatusCode"] == 0
     assert p.read_text() == "some-content"
     assert len(list(tmp_path.iterdir())) == 1
 
@@ -333,7 +298,8 @@ def test_jupyter_env_vars_to_unset_as_root(
     """Environment variables names listed in JUPYTER_ENV_VARS_TO_UNSET
     should be unset in the final environment."""
     root_args = {"user": "root"} if enable_root else {}
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=10,
         tty=True,
         environment=[
             "JUPYTER_ENV_VARS_TO_UNSET=SECRET_ANIMAL,UNUSED_ENV,SECRET_FRUIT",
@@ -349,9 +315,4 @@ def test_jupyter_env_vars_to_unset_as_root(
         ],
         **root_args,
     )
-    rv = c.wait(timeout=10)
-    assert rv == 0 or rv["StatusCode"] == 0
-    logs = c.logs(stdout=True).decode("utf-8")
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
     assert "I like bananas and stuff, and love to keep secrets!" in logs

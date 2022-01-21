@@ -26,15 +26,8 @@ def test_package_manager(
     LOGGER.info(
         f"Test that the package manager {package_manager} is working properly ..."
     )
-    c = container.run(
+    container.run_and_wait(
+        timeout=5,
         tty=True,
         command=["start.sh", "bash", "-c", f"{package_manager} {version_arg}"],
     )
-    rv = c.wait(timeout=5)
-    logs = c.logs(stdout=True).decode("utf-8")
-    LOGGER.debug(logs)
-    assert "ERROR" not in logs
-    assert "WARNING" not in logs
-    assert (
-        rv == 0 or rv["StatusCode"] == 0
-    ), f"Package manager {package_manager} not working"

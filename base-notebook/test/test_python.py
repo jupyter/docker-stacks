@@ -14,15 +14,12 @@ def test_python_version(
 ) -> None:
     """Check that python version is lower than the next version"""
     LOGGER.info(f"Checking that python version is lower than {python_next_version}")
-    c = container.run(
+    logs = container.run_and_wait(
+        timeout=5,
         tty=True,
-        command=["start.sh"],
+        command=["start.sh", "python", "--version"],
     )
-    cmd = c.exec_run("python --version")
-    output = cmd.output.decode("utf-8")
-    assert "ERROR" not in output
-    assert "WARNING" not in output
-    actual_python_version = version.parse(output.split()[1])
+    actual_python_version = version.parse(logs.split()[1])
     assert actual_python_version < version.parse(
         python_next_version
     ), f"Python version shall be lower than {python_next_version}"
