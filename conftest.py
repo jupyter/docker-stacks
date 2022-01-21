@@ -93,7 +93,7 @@ class TrackedContainer:
         no_errors: bool = True,
         **kwargs: typing.Any,
     ) -> str:
-        running_container = self.run_and_wait(**kwargs)
+        running_container = self.run_detached(**kwargs)
         rv = running_container.wait(timeout=timeout)
         logs = running_container.logs().decode("utf-8")
         LOGGER.debug(logs)
