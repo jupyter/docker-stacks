@@ -6,8 +6,12 @@
 [![Discourse badge](https://img.shields.io/discourse/https/discourse.jupyter.org/users.svg?color=%23f37626)](https://discourse.jupyter.org/ "Jupyter Discourse Forum")
 [![Binder badge](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb "Launch a jupyter/base-notebook container on mybinder.org")
 
-Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter)
-containing Jupyter applications and interactive computing tools.
+Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter) containing Jupyter applications and interactive computing tools.
+You can use a stack image to do any of the following (and more):
+
+- Start a personal Jupyter Notebook server in a local Docker container
+- Run JupyterLab servers for a team using JupyterHub
+- Write your own project Dockerfile
 
 ## Quick Start
 
