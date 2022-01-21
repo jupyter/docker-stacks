@@ -31,7 +31,7 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
         + f"--execute {cont_data_dir}/{test_file}.ipynb"
     )
     logs = container.run_and_wait(
-        timeout=timeout_ms / 10 + 10,
+        timeout=10,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
