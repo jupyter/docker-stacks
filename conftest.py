@@ -53,7 +53,10 @@ class TrackedContainer:
     """
 
     def __init__(
-        self, docker_client: docker.DockerClient, image_name: str, **kwargs: typing.Any
+        self,
+        docker_client: docker.DockerClient,
+        image_name: str,
+        **kwargs: typing.Any,
     ):
         self.container = None
         self.docker_client = docker_client
