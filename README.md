@@ -6,8 +6,12 @@
 [![Discourse badge](https://img.shields.io/discourse/https/discourse.jupyter.org/users.svg?color=%23f37626)](https://discourse.jupyter.org/ "Jupyter Discourse Forum")
 [![Binder badge](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb "Launch a jupyter/base-notebook container on mybinder.org")
 
-Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter)
-containing Jupyter applications and interactive computing tools.
+Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter) containing Jupyter applications and interactive computing tools.
+You can use a stack image to do any of the following (and more):
+
+- Start a personal Jupyter Notebook server in a local Docker container
+- Run JupyterLab servers for a team using JupyterHub
+- Write your own project Dockerfile
 
 ## Quick Start
 
@@ -70,7 +74,7 @@ We'd also like to invite members of the community to help with two maintainer ac
   to improve the contribution, deciding if the contribution should take another form (e.g., a recipe
   instead of a permanent change to the images)
 
-Anyone in the community can jump in and help with these activities at any time
+Anyone in the community can jump in and help with these activities at any time.
 We will happily grant additional permissions (e.g., ability to merge PRs) to anyone who shows an on-going interest in working on the project.
 
 ## Jupyter Notebook Deprecation Notice
@@ -104,7 +108,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 
 ## CPU Architectures
 
-All published containers support amd64 (x86_64) and aarch64, except for datascience and tensorflow, which only support amd64 for now.
+All published containers support amd64 (x86_64) and aarch64, except for `datascience-notebook` and `tensorflow-notebook`, which only support amd64 for now.
 
 ### Caveats for arm64 images
 
