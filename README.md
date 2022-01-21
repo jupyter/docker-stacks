@@ -74,7 +74,7 @@ We'd also like to invite members of the community to help with two maintainer ac
   to improve the contribution, deciding if the contribution should take another form (e.g., a recipe
   instead of a permanent change to the images)
 
-Anyone in the community can jump in and help with these activities at any time
+Anyone in the community can jump in and help with these activities at any time.
 We will happily grant additional permissions (e.g., ability to merge PRs) to anyone who shows an on-going interest in working on the project.
 
 ## Jupyter Notebook Deprecation Notice
