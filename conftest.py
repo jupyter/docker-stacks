@@ -101,7 +101,7 @@ class TrackedContainer:
         logs = running_container.logs().decode("utf-8")
         LOGGER.debug(logs)
         if no_warnings:
-            assert "WARNING" not in logs
+            assert not self.get_warnings(logs)
         if no_errors:
             assert "ERROR" not in logs
         assert rv == 0 or rv["StatusCode"] == 0
