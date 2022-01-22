@@ -107,6 +107,12 @@ class TrackedContainer:
         assert rv == 0 or rv["StatusCode"] == 0
         return logs
 
+    @staticmethod
+    def get_warnings(logs: str) -> list[str]:
+        return [
+            warning for warning in logs.split("\n") if warning.startswith("WARNING")
+        ]
+
     def remove(self):
         """Kills and removes the tracked docker container."""
         if self.container:

@@ -5,7 +5,6 @@ import logging
 from typing import Optional
 import pytest
 import requests
-import re
 import time
 
 from conftest import TrackedContainer
@@ -65,10 +64,8 @@ def test_start_notebook(
     assert "ERROR" not in logs, "ERROR(s) found in logs"
     for exp_warning in expected_warnings:
         assert exp_warning in logs, f"Expected warning {exp_warning} not found in logs"
-    warnings = re.findall(r"^WARNING", logs, flags=re.MULTILINE)
-    assert len(expected_warnings) == len(
-        warnings
-    ), "Not found the number of expected warnings in logs"
+    warnings = TrackedContainer.get_warnings(logs)
+    assert len(expected_warnings) == len(warnings)
     # checking if the server is listening
     if expected_start:
         resp = http_client.get("http://localhost:8888")

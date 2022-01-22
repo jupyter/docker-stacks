@@ -23,9 +23,7 @@ def test_cli_args(container: TrackedContainer, http_client: requests.Session) ->
     logs = running_container.logs().decode("utf-8")
     LOGGER.debug(logs)
     assert "ERROR" not in logs
-    warnings = [
-        warning for warning in logs.split("\n") if warning.startswith("WARNING")
-    ]
+    warnings = TrackedContainer.get_warnings(logs)
     assert not warnings
     assert "login_submit" not in resp.text
 
@@ -48,9 +46,7 @@ def test_unsigned_ssl(
     assert "login_submit" in resp.text
     logs = running_container.logs().decode("utf-8")
     assert "ERROR" not in logs
-    warnings = [
-        warning for warning in logs.split("\n") if warning.startswith("WARNING")
-    ]
+    warnings = TrackedContainer.get_warnings(logs)
     assert not warnings
 
 
@@ -218,9 +214,7 @@ def test_group_add(container: TrackedContainer) -> None:
         group_add=["users"],  # Ensures write access to /home/jovyan
         command=["start.sh", "id"],
     )
-    warnings = [
-        warning for warning in logs.split("\n") if warning.startswith("WARNING")
-    ]
+    warnings = TrackedContainer.get_warnings(logs)
     assert len(warnings) == 1
     assert "Try setting gid=0" in warnings[0]
     assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
@@ -239,9 +233,7 @@ def test_set_uid(container: TrackedContainer) -> None:
         command=["start.sh", "id"],
     )
     assert "uid=1010(jovyan) gid=0(root)" in logs
-    warnings = [
-        warning for warning in logs.split("\n") if warning.startswith("WARNING")
-    ]
+    warnings = TrackedContainer.get_warnings(logs)
     assert len(warnings) == 1
     assert "--group-add=users" in warnings[0]
 
@@ -257,9 +249,7 @@ def test_set_uid_and_nb_user(container: TrackedContainer) -> None:
         command=["start.sh", "id"],
     )
     assert "uid=1010(kitten) gid=0(root)" in logs
-    warnings = [
-        warning for warning in logs.split("\n") if warning.startswith("WARNING")
-    ]
+    warnings = TrackedContainer.get_warnings(logs)
     assert len(warnings) == 1
     assert "user is kitten but home is /home/jovyan" in warnings[0]
 
