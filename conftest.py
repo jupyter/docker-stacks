@@ -103,15 +103,17 @@ class TrackedContainer:
         if no_warnings:
             assert not self.get_warnings(logs)
         if no_errors:
-            assert "ERROR" not in logs
+            assert not self.get_errors(logs)
         assert rv == 0 or rv["StatusCode"] == 0
         return logs
 
     @staticmethod
     def get_warnings(logs: str) -> list[str]:
-        return [
-            warning for warning in logs.split("\n") if warning.startswith("WARNING")
-        ]
+        return [l for in logs.split("\n") if l.startswith("WARNING")]
+
+    @staticmethod
+    def get_errrors(logs: str) -> list[str]:
+        return [l for l in logs.split("\n") if l.startswith("ERROR")]
 
     def remove(self):
         """Kills and removes the tracked docker container."""
