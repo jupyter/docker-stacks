@@ -109,11 +109,11 @@ class TrackedContainer:
 
     @staticmethod
     def get_warnings(logs: str) -> list[str]:
-        return [l for l in logs.split("\n") if l.startswith("WARNING")]
+        return [line for line in logs.split("\n") if line.startswith("WARNING")]
 
     @staticmethod
-    def get_errrors(logs: str) -> list[str]:
-        return [l for l in logs.split("\n") if l.startswith("ERROR")]
+    def get_errors(logs: str) -> list[str]:
+        return [line for line in logs.split("\n") if line.startswith("ERROR")]
 
     def remove(self):
         """Kills and removes the tracked docker container."""
