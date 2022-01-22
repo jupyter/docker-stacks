@@ -22,16 +22,16 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
     host_data_dir = THIS_DIR / "data"
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
-    timeout_ms = 600
+    conversion_timeout_ms = 600
     LOGGER.info(f"Test that {test_file} notebook can be executed ...")
     command = (
         "jupyter nbconvert --to markdown "
-        + f"--ExecutePreprocessor.timeout={timeout_ms} "
+        + f"--ExecutePreprocessor.timeout={conversion_timeout_ms} "
         + f"--output-dir {output_dir} "
         + f"--execute {cont_data_dir}/{test_file}.ipynb"
     )
     logs = container.run_and_wait(
-        timeout=10,
+        timeout=60,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
