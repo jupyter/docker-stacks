@@ -37,10 +37,9 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
         tty=True,
         command=["start.sh", "bash", "-c", command],
     )
-    # Spark warning
     warnings = TrackedContainer.get_warnings(logs)
-    assert len(warnings) == 1
-    assert "An illegal reflective access operation has occurred" in warnings[0]
+    # Some Spark warnings
+    assert len(warnings) == 5
 
     expected_file = f"{output_dir}/{test_file}.md"
     assert expected_file in logs, f"Expected file {expected_file} not generated"

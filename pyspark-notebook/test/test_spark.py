@@ -16,9 +16,8 @@ def test_spark_shell(container: TrackedContainer) -> None:
         tty=True,
         command=["start.sh", "bash", "-c", 'spark-shell <<< "1+1"'],
     )
-    # Spark warning
     warnings = TrackedContainer.get_warnings(logs)
-    assert len(warnings) == 1
-    assert "An illegal reflective access operation has occurred" in warnings[0]
+    # Some Spark warnings
+    assert len(warnings) == 5
 
     assert "res0: Int = 2" in logs, "spark-shell does not work"

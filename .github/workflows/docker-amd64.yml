@@ -76,3 +76,13 @@ jobs:
 
       - name: Test Docker Images
         run: make -C main test-all
+
+      - name: Clone Wiki
+        uses: actions/checkout@v2
+        with:
+          repository: ${{github.repository}}.wiki
+          path: wiki
+
+      - name: Run Post-Build Hooks
+        id: hook-all
+        run: make -C main hook-all
