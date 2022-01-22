@@ -109,7 +109,7 @@ class TrackedContainer:
 
     @staticmethod
     def get_warnings(logs: str) -> list[str]:
-        return [l for in logs.split("\n") if l.startswith("WARNING")]
+        return [l for l in logs.split("\n") if l.startswith("WARNING")]
 
     @staticmethod
     def get_errrors(logs: str) -> list[str]:
