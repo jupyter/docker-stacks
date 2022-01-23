@@ -3,7 +3,7 @@
 
 import logging
 
-import pytest
+import pytest  # type: ignore
 from conftest import TrackedContainer
 
 from package_helper import CondaPackageHelper
@@ -12,7 +12,9 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.info
-def test_outdated_packages(container: TrackedContainer, requested_only: bool = True):
+def test_outdated_packages(
+    container: TrackedContainer, requested_only: bool = True
+) -> None:
     """Getting the list of updatable packages"""
     LOGGER.info(f"Checking outdated packages in {container.image_name} ...")
     pkg_helper = CondaPackageHelper(container)

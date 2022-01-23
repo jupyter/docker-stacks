@@ -1,15 +1,16 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 from datetime import datetime
+from docker.models.containers import Container
 from .git_helper import GitHelper
 from .docker_runner import DockerRunner
 
 
-def _get_program_version(container, program: str) -> str:
+def _get_program_version(container: Container, program: str) -> str:
     return DockerRunner.run_simple_command(container, cmd=f"{program} --version")
 
 
-def _get_env_variable(container, variable: str) -> str:
+def _get_env_variable(container: Container, variable: str) -> str:
     env = DockerRunner.run_simple_command(
         container,
         cmd="env",
@@ -21,7 +22,7 @@ def _get_env_variable(container, variable: str) -> str:
     raise KeyError(variable)
 
 
-def _get_pip_package_version(container, package: str) -> str:
+def _get_pip_package_version(container: Container, package: str) -> str:
     VERSION_PREFIX = "Version: "
     package_info = DockerRunner.run_simple_command(
         container,
@@ -37,25 +38,25 @@ class TaggerInterface:
     """Common interface for all taggers"""
 
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         raise NotImplementedError
 
 
 class SHATagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return GitHelper.commit_hash_tag()
 
 
 class DateTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return datetime.utcnow().strftime("%Y-%m-%d")
 
 
 class UbuntuVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         os_release = DockerRunner.run_simple_command(
             container,
             "cat /etc/os-release",
@@ -63,63 +64,64 @@ class UbuntuVersionTagger(TaggerInterface):
         for line in os_release:
             if line.startswith("VERSION_ID"):
                 return "ubuntu-" + line.split("=")[1].strip('"')
+        raise RuntimeError(f"did not find ubuntu version in: {os_release}")
 
 
 class PythonVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "python-" + _get_program_version(container, "python").split()[1]
 
 
 class JupyterNotebookVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "notebook-" + _get_program_version(container, "jupyter-notebook")
 
 
 class JupyterLabVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "lab-" + _get_program_version(container, "jupyter-lab")
 
 
 class JupyterHubVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "hub-" + _get_program_version(container, "jupyterhub")
 
 
 class RVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "r-" + _get_program_version(container, "R").split()[2]
 
 
 class TensorflowVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "tensorflow-" + _get_pip_package_version(container, "tensorflow")
 
 
 class JuliaVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "julia-" + _get_program_version(container, "julia").split()[2]
 
 
 class SparkVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "spark-" + _get_env_variable(container, "APACHE_SPARK_VERSION")
 
 
 class HadoopVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "hadoop-" + _get_env_variable(container, "HADOOP_VERSION")
 
 
 class JavaVersionTagger(TaggerInterface):
     @staticmethod
-    def tag_value(container) -> str:
+    def tag_value(container: Container) -> str:
         return "java-" + _get_program_version(container, "java").split()[1]

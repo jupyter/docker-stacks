@@ -27,7 +27,8 @@ from collections import defaultdict
 from itertools import chain
 import logging
 import json
-from typing import Optional
+from typing import Any, Optional
+from docker.models.containers import Container
 
 from tabulate import tabulate
 
@@ -40,14 +41,16 @@ class CondaPackageHelper:
     """Conda package helper permitting to get information about packages"""
 
     def __init__(self, container: TrackedContainer):
-        self.running_container = CondaPackageHelper.start_container(container)
+        self.running_container: Container = CondaPackageHelper.start_container(
+            container
+        )
         self.requested: Optional[dict[str, set[str]]] = None
         self.installed: Optional[dict[str, set[str]]] = None
         self.available: Optional[dict[str, set[str]]] = None
         self.comparison: list[dict[str, str]] = []
 
     @staticmethod
-    def start_container(container: TrackedContainer):
+    def start_container(container: TrackedContainer) -> Container:
         """Start the TrackedContainer and return an instance of a running container"""
         LOGGER.info(f"Starting container {container.image_name} ...")
         return container.run_detached(
@@ -85,13 +88,13 @@ class CondaPackageHelper:
             )
         return self.requested
 
-    def _execute_command(self, command):
+    def _execute_command(self, command: list[str]) -> str:
         """Execute a command on a running container"""
         rc = self.running_container.exec_run(command)
-        return rc.output.decode("utf-8")
+        return rc.output.decode("utf-8")  # type: ignore
 
     @staticmethod
-    def _packages_from_json(env_export) -> dict[str, set[str]]:
+    def _packages_from_json(env_export: str) -> dict[str, set[str]]:
         """Extract packages and versions from the lines returned by the list of specifications"""
         # dependencies = filter(lambda x:  isinstance(x, str), json.loads(env_export).get("dependencies"))
         dependencies = json.loads(env_export).get("dependencies")
@@ -114,7 +117,7 @@ class CondaPackageHelper:
             packages_dict[package] = version
         return packages_dict
 
-    def available_packages(self):
+    def available_packages(self) -> dict[str, set[str]]:
         """Return the available packages"""
         if self.available is None:
             LOGGER.info("Grabing the list of available packages (can take a while) ...")
@@ -125,11 +128,13 @@ class CondaPackageHelper:
         return self.available
 
     @staticmethod
-    def _extract_available(lines):
+    def _extract_available(lines: str) -> dict[str, set[str]]:
         """Extract packages and versions from the lines returned by the list of packages"""
         ddict = defaultdict(set)
         for line in lines.splitlines()[2:]:
-            pkg, version = re.match(r"^(\S+)\s+(\S+)", line, re.MULTILINE).groups()
+            match = re.match(r"^(\S+)\s+(\S+)", line, re.MULTILINE)
+            assert match is not None
+            pkg, version = match.groups()
             ddict[pkg].add(version)
         return ddict
 
@@ -162,11 +167,11 @@ class CondaPackageHelper:
         return self.comparison
 
     @staticmethod
-    def semantic_cmp(version_string: str):
+    def semantic_cmp(version_string: str) -> Any:
         """Manage semantic versioning for comparison"""
 
-        def mysplit(string):
-            def version_substrs(x):
+        def mysplit(string: str) -> list[Any]:
+            def version_substrs(x: str) -> list[str]:
                 return re.findall(r"([A-z]+|\d+)", x)
 
             return list(chain(map(version_substrs, string.split("."))))
@@ -189,7 +194,9 @@ class CondaPackageHelper:
 
     def get_outdated_summary(self, requested_only: bool = True) -> str:
         """Return a summary of outdated packages"""
-        nb_packages = len(self.requested if requested_only else self.installed)
+        packages = self.requested if requested_only else self.installed
+        assert packages is not None
+        nb_packages = len(packages)
         nb_updatable = len(self.comparison)
         updatable_ratio = nb_updatable / nb_packages
         return f"{nb_updatable}/{nb_packages} ({updatable_ratio:.0%}) packages could be updated"

@@ -37,8 +37,9 @@ Example:
 
 import logging
 
-import pytest
+import pytest  # type: ignore
 from conftest import TrackedContainer
+from typing import Callable, Iterable
 
 from package_helper import CondaPackageHelper
 
@@ -87,7 +88,7 @@ def packages(package_helper: CondaPackageHelper) -> dict[str, set[str]]:
     return package_helper.requested_packages()
 
 
-def package_map(package: str) -> str:
+def get_package_import_name(package: str) -> str:
     """Perform a mapping between the python package name and the name used for the import"""
     return PACKAGE_MAPPING.get(package, package)
 
@@ -113,7 +114,7 @@ def _check_import_package(
     """Generic function executing a command"""
     LOGGER.debug(f"Trying to import a package with [{command}] ...")
     rc = package_helper.running_container.exec_run(command)
-    return rc.exit_code
+    return rc.exit_code  # type: ignore
 
 
 def check_import_python_package(
@@ -130,10 +131,10 @@ def check_import_r_package(package_helper: CondaPackageHelper, package: str) -> 
     )
 
 
-def _import_packages(
+def _check_import_packages(
     package_helper: CondaPackageHelper,
-    filtered_packages: dict[str, set[str]],
-    check_function,
+    filtered_packages: Iterable[str],
+    check_function: Callable[[CondaPackageHelper, str], int],
     max_failures: int,
 ) -> None:
     """Test if packages can be imported
@@ -157,33 +158,36 @@ def _import_packages(
 
 
 @pytest.fixture(scope="function")
-def r_packages(packages: dict[str, set[str]]):
+def r_packages(packages: dict[str, set[str]]) -> Iterable[str]:
     """Return an iterable of R packages"""
     # package[2:] is to remove the leading "r-" appended on R packages
     return map(
-        lambda package: package_map(package[2:]), filter(r_package_predicate, packages)
+        lambda package: get_package_import_name(package[2:]),
+        filter(r_package_predicate, packages),
     )
 
 
 def test_r_packages(
-    package_helper: CondaPackageHelper, r_packages, max_failures: int = 0
-):
+    package_helper: CondaPackageHelper, r_packages: Iterable[str], max_failures: int = 0
+) -> None:
     """Test the import of specified R packages"""
-    return _import_packages(
+    _check_import_packages(
         package_helper, r_packages, check_import_r_package, max_failures
     )
 
 
 @pytest.fixture(scope="function")
-def python_packages(packages: dict[str, set[str]]):
+def python_packages(packages: dict[str, set[str]]) -> Iterable[str]:
     """Return an iterable of Python packages"""
-    return map(package_map, filter(python_package_predicate, packages))
+    return map(get_package_import_name, filter(python_package_predicate, packages))
 
 
 def test_python_packages(
-    package_helper: CondaPackageHelper, python_packages, max_failures: int = 0
-):
+    package_helper: CondaPackageHelper,
+    python_packages: Iterable[str],
+    max_failures: int = 0,
+) -> None:
     """Test the import of specified python packages"""
-    return _import_packages(
+    _check_import_packages(
         package_helper, python_packages, check_import_python_package, max_failures
     )

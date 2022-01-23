@@ -3,7 +3,7 @@
 import os
 
 
-def github_set_env(env_name, env_value):
+def github_set_env(env_name: str, env_value: str) -> None:
     if not os.environ.get("GITHUB_ACTIONS") or not os.environ.get("GITHUB_ENV"):
         return
 

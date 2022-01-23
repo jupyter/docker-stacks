@@ -10,4 +10,5 @@
 # Attempt to capture and forward low-level output, e.g. produced by Extension
 #  libraries.
 #  Default: True
+# type:ignore
 c.IPKernelApp.capture_fd_output = False  # noqa: F821

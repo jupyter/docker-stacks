@@ -5,6 +5,7 @@ import argparse
 import datetime
 import logging
 import os
+from docker.models.containers import Container
 from .docker_runner import DockerRunner
 from .get_taggers_and_manifests import get_taggers_and_manifests
 from .git_helper import GitHelper
@@ -55,9 +56,9 @@ def create_manifest_file(
     owner: str,
     wiki_path: str,
     manifests: list[ManifestInterface],
-    container,
+    container: Container,
 ) -> None:
-    manifest_names = [manifest.__name__ for manifest in manifests]
+    manifest_names = [manifest.__class__.__name__ for manifest in manifests]
     LOGGER.info(f"Using manifests: {manifest_names}")
 
     commit_hash_tag = GitHelper.commit_hash_tag()

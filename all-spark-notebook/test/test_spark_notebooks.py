@@ -3,7 +3,7 @@
 
 import logging
 
-import pytest
+import pytest  # type: ignore
 from pathlib import Path
 
 from conftest import TrackedContainer

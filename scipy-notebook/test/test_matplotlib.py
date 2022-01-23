@@ -3,7 +3,7 @@
 
 import logging
 
-import pytest
+import pytest  # type: ignore
 from pathlib import Path
 
 from conftest import TrackedContainer
@@ -29,7 +29,7 @@ THIS_DIR = Path(__file__).parent.resolve()
 )
 def test_matplotlib(
     container: TrackedContainer, test_file: str, expected_file: str, description: str
-):
+) -> None:
     """Various tests performed on matplotlib
 
     - Test that matplotlib is able to plot a graph and write it as an image

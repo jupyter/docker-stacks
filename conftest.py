@@ -2,11 +2,11 @@
 # Distributed under the terms of the Modified BSD License.
 import os
 import logging
-import typing
+from typing import Any, Optional
 
 import docker
 from docker.models.containers import Container
-import pytest
+import pytest  # type: ignore
 import requests
 
 from requests.packages.urllib3.util.retry import Retry
@@ -35,7 +35,7 @@ def docker_client() -> docker.DockerClient:
 @pytest.fixture(scope="session")
 def image_name() -> str:
     """Image name to test"""
-    return os.getenv("TEST_IMAGE")
+    return os.environ["TEST_IMAGE"]
 
 
 class TrackedContainer:
@@ -56,14 +56,14 @@ class TrackedContainer:
         self,
         docker_client: docker.DockerClient,
         image_name: str,
-        **kwargs: typing.Any,
+        **kwargs: Any,
     ):
-        self.container = None
-        self.docker_client = docker_client
-        self.image_name = image_name
-        self.kwargs = kwargs
+        self.container: Optional[Container] = None
+        self.docker_client: docker.DockerClient = docker_client
+        self.image_name: str = image_name
+        self.kwargs: Any = kwargs
 
-    def run_detached(self, **kwargs: typing.Any) -> Container:
+    def run_detached(self, **kwargs: Any) -> Container:
         """Runs a docker container using the preconfigured image name
         and a mix of the preconfigured container options and those passed
         to this method.
@@ -94,11 +94,12 @@ class TrackedContainer:
         timeout: int,
         no_warnings: bool = True,
         no_errors: bool = True,
-        **kwargs: typing.Any,
+        **kwargs: Any,
     ) -> str:
         running_container = self.run_detached(**kwargs)
         rv = running_container.wait(timeout=timeout)
         logs = running_container.logs().decode("utf-8")
+        assert isinstance(logs, str)
         LOGGER.debug(logs)
         if no_warnings:
             assert not self.get_warnings(logs)
@@ -119,14 +120,14 @@ class TrackedContainer:
     def _lines_starting_with(logs: str, pattern: str) -> list[str]:
         return [line for line in logs.splitlines() if line.startswith(pattern)]
 
-    def remove(self):
+    def remove(self) -> None:
         """Kills and removes the tracked docker container."""
         if self.container:
             self.container.remove(force=True)
 
 
 @pytest.fixture(scope="function")
-def container(docker_client: docker.DockerClient, image_name: str):
+def container(docker_client: docker.DockerClient, image_name: str) -> Container:
     """Notebook container with initial configuration appropriate for testing
     (e.g., HTTP port exposed to the host for HTTP calls).
 
