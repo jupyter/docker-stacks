@@ -109,11 +109,11 @@ class TrackedContainer:
 
     @staticmethod
     def get_errors(logs: str) -> list[str]:
-        return _lines_starting_with(logs, "ERROR")
+        return TrackedContainer._lines_starting_with(logs, "ERROR")
 
     @staticmethod
     def get_warnings(logs: str) -> list[str]:
-        return _lines_starting_with(logs, "WARNING")
+        return TrackedContainer._lines_starting_with(logs, "WARNING")
 
     @staticmethod
     def _lines_starting_with(logs: str, pattern: str) -> list[str]:
