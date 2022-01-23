@@ -108,12 +108,16 @@ class TrackedContainer:
         return logs
 
     @staticmethod
-    def get_warnings(logs: str) -> list[str]:
-        return [line for line in logs.split("\n") if line.startswith("WARNING")]
+    def get_errors(logs: str) -> list[str]:
+        return _lines_starting_with(logs, "ERROR")
 
     @staticmethod
-    def get_errors(logs: str) -> list[str]:
-        return [line for line in logs.split("\n") if line.startswith("ERROR")]
+    def get_warnings(logs: str) -> list[str]:
+        return _lines_starting_with(logs, "WARNING")
+
+    @staticmethod
+    def _lines_starting_with(logs: str, pattern: str) -> list[str]:
+        return [line for line in logs.splitlines() if line.startswith(pattern)]
 
     def remove(self):
         """Kills and removes the tracked docker container."""
