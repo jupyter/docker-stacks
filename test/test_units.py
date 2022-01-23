@@ -27,12 +27,9 @@ def test_units(container: TrackedContainer) -> None:
         test_file_name = test_file.name
         LOGGER.info(f"Running unit test: {test_file_name}")
 
-        c = container.run(
+        container.run_and_wait(
+            timeout=30,
             volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
             tty=True,
             command=["start.sh", "python", f"{cont_data_dir}/{test_file_name}"],
         )
-        rv = c.wait(timeout=30)
-        logs = c.logs(stdout=True).decode("utf-8")
-        LOGGER.debug(logs)
-        assert rv == 0 or rv["StatusCode"] == 0

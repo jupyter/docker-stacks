@@ -5,7 +5,6 @@ import logging
 from typing import Optional
 import pytest
 import requests
-import re
 import time
 
 from conftest import TrackedContainer
@@ -48,14 +47,14 @@ def test_start_notebook(
     LOGGER.info(
         f"Test that the start-notebook launches the {expected_command} server from the env {env} ..."
     )
-    c = container.run(
+    running_container = container.run_detached(
         tty=True,
         environment=env,
         command=["start-notebook.sh"],
     )
     # sleeping some time to let the server start
     time.sleep(3)
-    logs = c.logs(stdout=True).decode("utf-8")
+    logs = running_container.logs().decode("utf-8")
     LOGGER.debug(logs)
     # checking that the expected command is launched
     assert (
@@ -65,10 +64,8 @@ def test_start_notebook(
     assert "ERROR" not in logs, "ERROR(s) found in logs"
     for exp_warning in expected_warnings:
         assert exp_warning in logs, f"Expected warning {exp_warning} not found in logs"
-    warnings = re.findall(r"^WARNING", logs, flags=re.MULTILINE)
-    assert len(expected_warnings) == len(
-        warnings
-    ), "Not found the number of expected warnings in logs"
+    warnings = TrackedContainer.get_warnings(logs)
+    assert len(expected_warnings) == len(warnings)
     # checking if the server is listening
     if expected_start:
         resp = http_client.get("http://localhost:8888")
@@ -84,12 +81,12 @@ def test_tini_entrypoint(
     https://superuser.com/questions/632979/if-i-know-the-pid-number-of-a-process-how-can-i-get-its-name
     """
     LOGGER.info(f"Test that {command} is launched as PID {pid} ...")
-    c = container.run(
+    running_container = container.run_detached(
         tty=True,
         command=["start.sh"],
     )
     # Select the PID 1 and get the corresponding command
-    cmd = c.exec_run(f"ps -p {pid} -o comm=")
+    cmd = running_container.exec_run(f"ps -p {pid} -o comm=")
     output = cmd.output.decode("utf-8").strip("\n")
     assert "ERROR" not in output
     assert "WARNING" not in output

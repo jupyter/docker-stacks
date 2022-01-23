@@ -50,7 +50,7 @@ class CondaPackageHelper:
     def start_container(container: TrackedContainer):
         """Start the TrackedContainer and return an instance of a running container"""
         LOGGER.info(f"Starting container {container.image_name} ...")
-        return container.run(
+        return container.run_detached(
             tty=True,
             command=["start.sh", "bash", "-c", "sleep infinity"],
         )

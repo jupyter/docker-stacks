@@ -10,7 +10,7 @@ def test_secured_server(
     container: TrackedContainer, http_client: requests.Session
 ) -> None:
     """Notebook server should eventually request user login."""
-    container.run()
+    container.run_detached()
     resp = http_client.get("http://localhost:8888")
     resp.raise_for_status()
     assert "login_submit" in resp.text, "User login not requested"

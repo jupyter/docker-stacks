@@ -40,7 +40,7 @@ def test_matplotlib(
     output_dir = "/tmp"
     LOGGER.info(description)
     command = "sleep infinity"
-    running_container = container.run(
+    running_container = container.run_detached(
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
