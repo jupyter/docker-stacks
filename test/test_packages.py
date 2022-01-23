@@ -62,7 +62,6 @@ PACKAGE_MAPPING = {
 
 # List of packages that cannot be tested in a standard way
 EXCLUDED_PACKAGES = [
-    "tini",
     "python",
     "hdf5",
     "conda-forge::blas[build=openblas]",
