@@ -4,7 +4,7 @@ import pathlib
 import time
 import logging
 
-import pytest
+import pytest  # type: ignore
 import requests
 
 from conftest import TrackedContainer
@@ -303,6 +303,6 @@ def test_jupyter_env_vars_to_unset_as_root(
             "-c",
             "echo I like $FRUIT and ${SECRET_FRUIT:-stuff}, and love ${SECRET_ANIMAL:-to keep secrets}!",
         ],
-        **root_args,
+        **root_args,  # type: ignore
     )
     assert "I like bananas and stuff, and love to keep secrets!" in logs

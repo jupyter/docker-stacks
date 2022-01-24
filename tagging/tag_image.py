@@ -28,11 +28,11 @@ def tag_image(short_image_name: str, owner: str) -> None:
     with DockerRunner(image) as container:
         tags = []
         for tagger in taggers:
-            tagger_name = tagger.__name__
+            tagger_name = tagger.__class__.__name__
             tag_value = tagger.tag_value(container)
             tags.append(tag_value)
             LOGGER.info(
-                f"Applying tag tagger_name: {tagger_name} tag_value: {tag_value}"
+                f"Applying tag, tagger_name: {tagger_name} tag_value: {tag_value}"
             )
             docker["tag", image, f"{owner}/{short_image_name}:{tag_value}"]()
 

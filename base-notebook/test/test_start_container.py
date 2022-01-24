@@ -3,7 +3,7 @@
 
 import logging
 from typing import Optional
-import pytest
+import pytest  # type: ignore
 import requests
 import time
 

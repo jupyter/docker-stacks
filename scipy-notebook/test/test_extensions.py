@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 
-import pytest
+import pytest  # type: ignore
 
 from conftest import TrackedContainer
 
