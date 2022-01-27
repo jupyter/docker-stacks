@@ -26,9 +26,11 @@ docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp
 You may instruct the `start-notebook.sh` script to customize the container environment before launching the notebook server.
 You do so by passing arguments to the `docker run` command.
 
-- `-e NB_USER=<username>` - The desired username and associated home folder. Default value is `jovyan`. Setting `NB_USER` refits the `jovyan`
-  default user and ensures that the desired user has the correct file permissions for the new home directory that gets created at
-  `/home/<username>`. For this option to take effect you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
+- `-e NB_USER=<username>` - The desired username and associated home folder.
+  Default value is `jovyan`.
+  Setting `NB_USER` refits the `jovyan` default user and ensures that the desired user has the correct file permissions
+  for the new home directory that gets created at `/home/<username>`.
+  For this option to take effect you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
   and set the environment variable `-e CHOWN_HOME=yes`.
 
   Example usage:
@@ -37,10 +39,13 @@ You do so by passing arguments to the `docker run` command.
   docker run --rm -it -p 8888:8888 -e NB_USER="my-username" -e CHOWN_HOME=yes -w "/home/${NB_USER}" --user root jupyter/base-notebook:latest
   ```
 
-- `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value. Default value is `1000`.
-  This feature is useful when mounting host volumes with specific owner permissions. For this option to take effect, you must run the container
-  with `--user root`. (The startup script will `su ${NB_USER}` after adjusting the user ID.) You might consider using modern Docker options
-  `--user` and `--group-add` instead. See bullet points regarding `--user` and `--group-add`.
+- `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
+  Default value is `1000`.
+  This feature is useful when mounting host volumes with specific owner permissions.
+  For this option to take effect, you must run the container with `--user root`.
+  (The startup script will `su ${NB_USER}` after adjusting the user ID.)
+  You might consider using modern Docker options `--user` and `--group-add` instead.
+  See bullet points regarding `--user` and `--group-add`.
 
 - `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of`${NB_USER}` to `${NB_GID}`
   (the new group is added with a name of `${NB_GROUP}` if it is defined, otherwise the group is named `${NB_USER}`).
@@ -57,9 +62,12 @@ You do so by passing arguments to the `docker run` command.
 
 - `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
   For example, if setting `umask` to `002`, new files will be readable and writable by group members instead of just writable by the owner.
-  Wikipedia has a good article about [`umask`](https://en.wikipedia.org/wiki/Umask). While the default `umask` value should be sufficient for most use cases, you can set the `NB_UMASK` value to fit your requirements. _Note that `NB_UMASK` when set only applies to the Jupyter process itself - you cannot use it to set a
-  `umask` for additional files created during run-hooks. For example, via `pip` or `conda`. If you need to set a `umask` for these you must set `umask` for
-  each command._
+  Wikipedia has a good article about [`umask`](https://en.wikipedia.org/wiki/Umask).
+  While the default `umask` value should be sufficient for most use cases, you can set the `NB_UMASK` value to fit your requirements.
+  _Note that `NB_UMASK` when set only applies to the Jupyter process itself -
+  you cannot use it to set a `umask` for additional files created during run-hooks.
+  For example, via `pip` or `conda`.
+  If you need to set a `umask` for these you must set `umask` for each command._
 
 - `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
   This change will take effect even if the user home directory is mounted from the host using `-v` as described below.
