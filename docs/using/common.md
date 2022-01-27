@@ -21,16 +21,16 @@ For example, to set the base URL of the notebook server, you can run the followi
 docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.base_url=/some/path
 ```
 
-## Docker Options
+## Docker Environment Variable Options
+Several configurable environment variables exist that allow for customizing the container environment before 
+launching the notebook server. These environment variables are configured by passing arguments to the 
+`docker run` command.
 
-You may instruct the `start-notebook.sh` script to customize the container environment before launching
-the notebook server.
-You do so by passing arguments to the `docker run` command.
-
-- `-e NB_USER=jovyan` - Instructs the startup script to change the default container username from `jovyan` to the provided value.
+- `-e NB_USER=<username>` - Instructs the startup script to change the default container username from `jovyan` to the provided value.
   Causes the script to rename the `jovyan` user home folder.
   For this option to take effect, you must run the container with `--user root`, set the working directory `-w /home/${NB_USER}` and set the environment variable `-e CHOWN_HOME=yes` (see below for detail).
   This feature is useful when mounting host volumes with specific home folder.
+  Example usage:
 - `-e NB_UID=1000` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
   This feature is useful when mounting host volumes with specific owner permissions.
   For this option to take effect, you must run the container with `--user root`.
@@ -48,13 +48,13 @@ You do so by passing arguments to the `docker run` command.
   If you override the user/group logic, ensure the user stays in group `users` if you want them to be able to modify files in the image.
 - `-e NB_GROUP=<name>` - The name used for `${NB_GID}`, which defaults to `${NB_USER}`.
   This is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
-- `-e NB_UMASK=<umask>` - Configures Jupyter to use a different umask value from default, i.e. `022`.
-  For example, if setting umask to `002`, new files will be readable and writable by group members instead of just writable by the owner.
-  Wikipedia has a good article about [umask](https://en.wikipedia.org/wiki/Umask).
-  Feel free to read it in order to choose the value that better fits your needs.
-  Default value should fit most situations.
-  Note that `NB_UMASK` when set only applies to the Jupyter process itself - you cannot use it to set a umask for additional files created during run-hooks
-  e.g. via `pip` or `conda` - if you need to set a umask for these you must set `umask` for each command.
+
+- `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
+  For example, if setting `umask` to `002`, new files will be readable and writable by group members instead of just writable by the owner.
+  Wikipedia has a good article about [`umask`](https://en.wikipedia.org/wiki/Umask). While the default `umask` value should be sufficient for most use cases, you can set the `NB_UMASK` value to fit your requirements. _Note that `NB_UMASK` when set only applies to the Jupyter process itself - you cannot use it to set a 
+  `umask` for additional files created during run-hooks. For example, via `pip` or `conda`. If you need to set a `umask` for these you must set `umask` for 
+  each command._
+
 - `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
   This change will take effect even if the user home directory is mounted from the host using `-v` as described below.
   The change is **not** applied recursively by default.
