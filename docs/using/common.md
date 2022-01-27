@@ -26,11 +26,9 @@ Several configurable environment variables exist that allow for customizing the 
 launching the notebook server. These environment variables are configured by passing arguments to the 
 `docker run` command.
 
-- `-e NB_USER=<username>` - Instructs the startup script to change the default container username from `jovyan` to the provided value.
-  Causes the script to rename the `jovyan` user home folder.
-  For this option to take effect, you must run the container with `--user root`, set the working directory `-w /home/${NB_USER}` and set the environment variable `-e CHOWN_HOME=yes` (see below for detail).
-  This feature is useful when mounting host volumes with specific home folder.
-  Example usage:
+- `-e NB_USER=<username>` - The desired username and associated home folder. Default value is `jovyan`. Setting `NB_USER` refits the `jovyan`
+  default user and ensures that the desired user has the correct file permissions for the new home directory that gets created at 
+  `/home/<username>`. Use this environment variable argument when mounting host volumes with a specific home folder.
 - `-e NB_UID=1000` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
   This feature is useful when mounting host volumes with specific owner permissions.
   For this option to take effect, you must run the container with `--user root`.
