@@ -47,7 +47,7 @@ You do so by passing arguments to the `docker run` command.
   You might consider using modern Docker options `--user` and `--group-add` instead.
   See bullet points regarding `--user` and `--group-add`.
 
-- `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of`${NB_USER}` to `${NB_GID}`
+- `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of `${NB_USER}` to `${NB_GID}`
   (the new group is added with a name of `${NB_GROUP}` if it is defined, otherwise the group is named `${NB_USER}`).
   This feature is useful when mounting host volumes with specific group permissions.
   For this option to take effect, you must run the container with `--user root`.
