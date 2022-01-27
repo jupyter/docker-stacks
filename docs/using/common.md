@@ -37,12 +37,12 @@ arguments to the `docker run` command.
   docker run --rm -it -p 8888:8888 -e NB_USER="my-username" -e CHOWN_HOME=yes -w "/home/${NB_USER}" --user root jupyter/base-notebook:latest
   ```
 
-- `-e NB_UID=1000` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value. Default value is `1000`.
+- `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value. Default value is `1000`.
   This feature is useful when mounting host volumes with specific owner permissions. For this option to take effect, you must run the container
   with `--user root`. (The startup script will `su ${NB_USER}` after adjusting the user ID.) You might consider using the modern Docker options
   `--user` and `--group-add` instead. See bullet points regarding `--user` and `--group-add`.
 
-- `-e NB_GID=100` - Instructs the startup script to change the primary group of`${NB_USER}` to `${NB_GID}`
+- `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of`${NB_USER}` to `${NB_GID}`
   (the new group is added with a name of `${NB_GROUP}` if it is defined, otherwise the group is named `${NB_USER}`).
   This feature is useful when mounting host volumes with specific group permissions.
   For this option to take effect, you must run the container with `--user root`.
