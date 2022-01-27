@@ -28,13 +28,13 @@ arguments to the `docker run` command.
 
 - `-e NB_USER=<username>` - The desired username and associated home folder. Default value is `jovyan`. Setting `NB_USER` refits the `jovyan`
   default user and ensures that the desired user has the correct file permissions for the new home directory that gets created at
-  `/home/<username>`. For this option to take effect you must run the container with `--user root`, set the working directory `-w /home/${NB_USER}`
+  `/home/<username>`. For this option to take effect you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
   and set the environment variable `-e CHOWN_HOME=yes`.
 
   Example Usage:
 
   ```bash
-  docker run --rm -it -p 8888:8888 -e NB_USER="my-username" -e CHOWN_HOME=yes -w /home/${NB_USER} --user root jupyter/base-notebook:latest
+  docker run --rm -it -p 8888:8888 -e NB_USER="my-username" -e CHOWN_HOME=yes -w "/home/${NB_USER}" --user root jupyter/base-notebook:latest
   ```
 
 - `-e NB_UID=1000` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value. Default value is `1000`.
