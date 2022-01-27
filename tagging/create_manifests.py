@@ -54,6 +54,7 @@ def append_build_history_line(
 def create_manifest_file(
     short_image_name: str,
     owner: str,
+    platform: str,
     wiki_path: str,
     manifests: list[ManifestInterface],
     container: Container,
@@ -68,7 +69,7 @@ def create_manifest_file(
     )
 
     markdown_pieces = [
-        ManifestHeader.create_header(short_image_name, owner, BUILD_TIMESTAMP)
+        ManifestHeader.create_header(short_image_name, owner, platform, BUILD_TIMESTAMP)
     ] + [manifest.markdown_piece(container) for manifest in manifests]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
@@ -76,16 +77,20 @@ def create_manifest_file(
         f.write(markdown_content)
 
 
-def create_manifests(short_image_name: str, owner: str, wiki_path: str) -> None:
-    LOGGER.info(f"Creating manifests for image: {short_image_name}")
+def create_manifests(
+    short_image_name: str, owner: str, platform: str, tag: str, wiki_path: str
+) -> None:
+    LOGGER.info(f"Creating manifests for image: {short_image_name} [{platform}]")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 
-    image = f"{owner}/{short_image_name}:latest"
+    image = f"{owner}/{short_image_name}:{tag}"
 
-    with DockerRunner(image) as container:
+    with DockerRunner(image, platform) as container:
         all_tags = [tagger.tag_value(container) for tagger in taggers]
         append_build_history_line(short_image_name, owner, wiki_path, all_tags)
-        create_manifest_file(short_image_name, owner, wiki_path, manifests, container)
+        create_manifest_file(
+            short_image_name, owner, platform, wiki_path, manifests, container
+        )
 
 
 if __name__ == "__main__":
@@ -98,9 +103,23 @@ if __name__ == "__main__":
         help="Short image name to apply tags for",
     )
     arg_parser.add_argument("--owner", required=True, help="Owner of the image")
+    arg_parser.add_argument(
+        "--platform",
+        required=False,
+        default="linux/amd64",
+        help="Platform in the format os[/arch[/variant]]",
+    )
+    arg_parser.add_argument(
+        "--tag",
+        required=False,
+        default=GitHelper.commit_hash_tag(),
+        help="Image tag (default commit hash)",
+    )
     arg_parser.add_argument("--wiki-path", required=True, help="Path to the wiki pages")
     args = arg_parser.parse_args()
 
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
-    create_manifests(args.short_image_name, args.owner, args.wiki_path)
+    create_manifests(
+        args.short_image_name, args.owner, args.platform, args.tag, args.wiki_path
+    )

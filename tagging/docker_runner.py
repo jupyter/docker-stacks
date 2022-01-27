@@ -1,5 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+from platform import platform
 from typing import Optional
 from types import TracebackType
 import docker
@@ -14,11 +15,13 @@ class DockerRunner:
     def __init__(
         self,
         image_name: str,
+        platform: Optional[str] = None,
         docker_client: docker.DockerClient = docker.from_env(),
         command: str = "sleep infinity",
     ):
         self.container: Optional[Container] = None
         self.image_name: str = image_name
+        self.platform: Optional[str] = platform
         self.command: str = command
         self.docker_client: docker.DockerClient = docker_client
 
@@ -26,6 +29,7 @@ class DockerRunner:
         LOGGER.info(f"Creating container for image {self.image_name} ...")
         self.container = self.docker_client.containers.run(
             image=self.image_name,
+            platform=platform,
             command=self.command,
             detach=True,
         )

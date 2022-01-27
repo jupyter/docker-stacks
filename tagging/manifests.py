@@ -20,7 +20,9 @@ class ManifestHeader:
     """ManifestHeader doesn't fall under common interface and we run it separately"""
 
     @staticmethod
-    def create_header(short_image_name: str, owner: str, build_timestamp: str) -> str:
+    def create_header(
+        short_image_name: str, owner: str, platform: str, build_timestamp: str
+    ) -> str:
         commit_hash = GitHelper.commit_hash()
         commit_hash_tag = GitHelper.commit_hash_tag()
         commit_message = GitHelper.commit_message()
@@ -35,6 +37,7 @@ class ManifestHeader:
                 "",
                 "## Build Info",
                 "",
+                f"* OS / Architecture: {platform}",
                 f"* Build datetime: {build_timestamp}",
                 f"* Docker image: {owner}/{short_image_name}:{commit_hash_tag}",
                 f"* Docker image size: {image_size}",
