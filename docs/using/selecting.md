@@ -31,8 +31,7 @@ It is the basis for all other stacks and contains:
   - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - No preinstalled scientific computing packages
-<!-- TODO: Correct link to options doc -->
-- Unprivileged user `jovyan` (`uid=1000`, configurable, see options) in group `users` (`gid=100`)
+- Unprivileged user `jovyan` (`uid=1000`, configurable, [see options in the common features section](./common.md) of this documentation) in group `users` (`gid=100`)
   with ownership over the `/home/jovyan` and `/opt/conda` paths
 - `tini` as the container entrypoint and a `start-notebook.sh` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub

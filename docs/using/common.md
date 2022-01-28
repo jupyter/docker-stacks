@@ -197,14 +197,13 @@ If you do, keep in mind that features supported by the `start.sh` script and its
 
 The default Python 3.x [Conda environment](https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html) resides in `/opt/conda`.
 The `/opt/conda/bin` directory is part of the default `jovyan` user's `${PATH}`.
-TODO: Should whitelist be changes to allowlisted/welcome-listed
-That directory is also whitelisted for use in `sudo` commands by the `start.sh` script.
+That directory is also allowlisted for use in `sudo` commands by the `start.sh` script.
 
 The `jovyan` user has full read/write access to the `/opt/conda` directory.
 You can use either `pip`, `conda` or `mamba` to install new packages without any additional permissions.
 
 ```bash
-# install a package into the default (python 3.x) environment and cleanup after 
+# install a package into the default (python 3.x) environment and cleanup after
 # the installation
 mamba install --quiet --yes some-package && \
     mamba clean --all -f -y && \
