@@ -15,7 +15,8 @@ You can grant the within-container `NB_USER` passwordless `sudo` access by addin
 For example:
 
 ```bash
-docker run -it -e GRANT_SUDO=yes --user root jupyter/minimal-notebook
+docker run -it -e GRANT_SUDO=yes \
+    --user root jupyter/minimal-notebook
 ```
 
 **You should only enable `sudo` if you trust the user and/or if the container is running on an isolated host.**
@@ -167,14 +168,15 @@ docker build -t jupyter/scipy-dasklabextension:latest .
 Once built, run using the command:
 
 ```bash
-docker run -it --rm -p 8888:8888 -p 8787:8787 jupyter/scipy-dasklabextension:latest
+docker run -it --rm -p 8888:8888 \
+        -p 8787:8787 jupyter/scipy-dasklabextension:latest
 ```
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/999>
 
 ## Let's Encrypt a Notebook server
 
-See the README for the simple automation here
+See the README for a basic automation here
 <https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy>
 which includes steps for requesting and renewing a Let's Encrypt certificate.
 
@@ -225,14 +227,14 @@ Sometimes it is useful to run the Jupyter instance behind a nginx proxy, for ins
 
 Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
-Then just download the files at that gist and run `docker-compose up -d` to test it out.
+Then download the files at that gist and run `docker-compose up -d` to test it out.
 Customize the `nginx.conf` file to set the desired paths and add other services.
 
 ## Host volume mounts and notebook errors
 
 If you are mounting a host directory as `/home/jovyan/work` in your container and you receive
 permission errors or connection errors when you create a notebook, be sure that the `jovyan` user
-(UID=1000 by default) has read/write access to the directory on the host.
+(`UID=1000` by default) has read/write access to the directory on the host.
 Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the
 [Common Features, Docker Options section](../using/common.html#Docker-Options)
 
@@ -264,7 +266,7 @@ Adding the documentation on top of an existing singleuser image wastes a lot of 
 reinstalling every system package, which can take additional time and bandwidth; the
 `datascience-notebook` image has been shown to grow by almost 3GB when adding manapages in this way.
 Enabling manpages in the base Ubuntu layer prevents this container bloat.
-Just use previous `Dockerfile` with original ubuntu image as your base container:
+To achieve this, use the previous `Dockerfile` with the original ubuntu image (`ubuntu:focal`) as your base container:
 
 ```dockerfile
 # Ubuntu 20.04 (focal) from 2020-04-23
@@ -410,7 +412,7 @@ ENV HADOOP_CONF_HOME /usr/local/hadoop-2.7.3/etc/hadoop
 ENV HADOOP_CONF_DIR  /usr/local/hadoop-2.7.3/etc/hadoop
 
 USER root
-# Add proper open-jdk-8 not just the jre, needed for pydoop
+# Add proper open-jdk-8 not the jre only, needed for pydoop
 RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list && \
     apt-get update --yes && \
     apt-get install --yes --no-install-recommends -t jessie-backports openjdk-8-jdk && \
@@ -485,13 +487,15 @@ In this case, you should use the `start.sh` script to launch the server with no 
 For jupyterlab:
 
 ```bash
-docker run jupyter/base-notebook:b418b67c225b start.sh jupyter lab --LabApp.token=''
+docker run jupyter/base-notebook:b418b67c225b \
+        start.sh jupyter lab --LabApp.token=''
 ```
 
 For jupyter classic:
 
 ```bash
-docker run jupyter/base-notebook:b418b67c225b start.sh jupyter notebook --NotebookApp.token=''
+docker run jupyter/base-notebook:b418b67c225b \
+        start.sh jupyter notebook --NotebookApp.token=''
 ```
 
 ## Enable nbextension spellchecker for markdown (or any other nbextension)
