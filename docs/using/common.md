@@ -12,13 +12,17 @@ You can pass [Jupyter command line options](https://jupyter-notebook.readthedocs
 For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token, you can run the following:
 
 ```bash
-docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
+docker run -d -p 8888:8888 \
+    jupyter/base-notebook start-notebook.sh \
+    --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
 ```
 
 For example, to set the base URL of the notebook server, you can run the following:
 
 ```bash
-docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.base_url=/some/path
+docker run -d -p 8888:8888 \
+    jupyter/base-notebook start-notebook.sh \
+    --NotebookApp.base_url=/some/path
 ```
 
 ## Docker Options
@@ -90,15 +94,14 @@ or executables (`chmod +x`) to be run to the paths below:
 
 - `/usr/local/bin/start-notebook.d/` - handled before any of the standard options noted above
   are applied
-- `/usr/local/bin/before-notebook.d/` - handled after all of the standard options noted above are
-  applied and just before the notebook server launches
+- `/usr/local/bin/before-notebook.d/` - handled after all of the standard options noted above are applied and ran right before the notebook server launches
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
 script for execution details.
 
 ## SSL Certificates
 
-You may mount SSL key and certificate files into a container and configure Jupyter Notebook to use them to accept HTTPS connections.
+You may mount SSL keys and certificate files into a container and configure Jupyter Notebook to use them to accept HTTPS connections.
 For example, to mount a host folder containing a `notebook.key` and `notebook.crt` and use them, you might run the following:
 
 ```bash
@@ -119,7 +122,7 @@ docker run -d -p 8888:8888 \
     --NotebookApp.certfile=/etc/ssl/notebook.pem
 ```
 
-In either case, Jupyter Notebook expects the key and certificate to be a base64 encoded text file.
+In either case, Jupyter Notebook expects the key and certificate to be a **base64 encoded text file**.
 The certificate file or PEM may contain one or more certificates (e.g., server, intermediate, and root).
 
 For additional information about using SSL, see the following:
@@ -155,13 +158,15 @@ Example:
 
 ```bash
 # Run Jupyter Notebook classic
-docker run -it --rm -p 8888:8888 -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-       jupyter/base-notebook
+docker run -it --rm -p 8888:8888 \
+    -e DOCKER_STACKS_JUPYTER_CMD=notebook \
+     jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
 # Run Jupyter Notebook on Jupyter Server
-docker run -it --rm -p 8888:8888 -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
-       jupyter/base-notebook
+docker run -it --rm -p 8888:8888 \
+    -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
+     jupyter/base-notebook
 # Executing the command: jupyter nbclassic ...
 ```
 
@@ -192,13 +197,15 @@ If you do, keep in mind that features supported by the `start.sh` script and its
 
 The default Python 3.x [Conda environment](https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html) resides in `/opt/conda`.
 The `/opt/conda/bin` directory is part of the default `jovyan` user's `${PATH}`.
+TODO: Should whitelist be changes to allowlisted/welcome-listed
 That directory is also whitelisted for use in `sudo` commands by the `start.sh` script.
 
 The `jovyan` user has full read/write access to the `/opt/conda` directory.
 You can use either `pip`, `conda` or `mamba` to install new packages without any additional permissions.
 
 ```bash
-# install a package into the default (python 3.x) environment and cleanup after the installation
+# install a package into the default (python 3.x) environment and cleanup after 
+# the installation
 mamba install --quiet --yes some-package && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
