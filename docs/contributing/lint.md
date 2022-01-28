@@ -4,7 +4,7 @@ In order to enforce some rules **linters** are used in this project.
 Linters can be run either during the **development phase** (by the developer) and during **integration phase** (by GitHub Actions).
 To integrate and enforce this process in the project lifecycle we are using **git hooks** through [pre-commit][pre-commit].
 
-## Pre-commit hook
+## Using Pre-commit hooks
 
 ### Pre-commit hook installation
 
