@@ -315,7 +315,7 @@ def test_secure_path(container: TrackedContainer, tmp_path: pathlib.Path) -> Non
     d = tmp_path / "data"
     d.mkdir()
     p = d / "wrong_python.sh"
-    p.write_text("""#!/bin/bash\necho "Wrong python executable invoked!" """)
+    p.write_text('#!/bin/bash\necho "Wrong python executable invoked!"')
     p.chmod(0o755)
 
     logs = container.run_and_wait(
