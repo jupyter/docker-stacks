@@ -27,52 +27,61 @@ docker run -d -p 8888:8888 \
 
 ## Docker Options
 
-You may instruct the `start-notebook.sh` script to customize the container environment before launching
-the notebook server.
+You may instruct the `start-notebook.sh` script to customize the container environment before launching the notebook server.
 You do so by passing arguments to the `docker run` command.
 
-### User-related configurations
+- `-e NB_USER=<username>` - The desired username and associated home folder.
+  Default value is `jovyan`.
+  Setting `NB_USER` refits the `jovyan` default user and ensures that the desired user has the correct file permissions
+  for the new home directory that gets created at `/home/<username>`.
+  For this option to take effect you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
+  and set the environment variable `-e CHOWN_HOME=yes`.
 
-- `-e NB_USER=jovyan` - Instructs the startup script to change the default container username from `jovyan` to the provided value.
-  Setting this variable causes the script to rename the `jovyan` user home folder.
-  For this option to take effect, you **must** run the container with `--user root`, specify the working directory `-w /home/${NB_USER}`
-  and set the environment variable `-e CHOWN_HOME=yes` (see below for more details).
-  This feature is useful when bind-mounting host volumes onto specific home directories.
-- `-e NB_UID=1000` - Instructs the startup script to [switch the numeric user ID](https://docs.docker.com/engine/reference/run/#user) of `${NB_USER}` to the given value.
-  This feature is useful when bind-mounting host volumes with specific owner permissions.
-  You **must** run the container with `--user root` for this option to take effect.
+  Example usage:
+
+  ```bash
+  docker run --rm -it -p 8888:8888 -e NB_USER="my-username" -e CHOWN_HOME=yes -w "/home/${NB_USER}" --user root jupyter/base-notebook:latest
+  ```
+
+- `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
+  Default value is `1000`.
+  This feature is useful when mounting host volumes with specific owner permissions.
+  For this option to take effect, you must run the container with `--user root`.
   (The startup script will `su ${NB_USER}` after adjusting the user ID.)
-  Instead, you might consider using the modern Docker-native options [`--user`](https://docs.docker.com/engine/reference/run/#user) and
-  [`--group-add`](https://docs.docker.com/engine/reference/run/#additional-groups) - see the last bullet in this section for more details.
-- `-e NB_GID=100` - Instructs the startup script to change the primary group of`${NB_USER}` to `${NB_GID}`
-  (the new group is added with a name of `${NB_GROUP}` if it is defined; otherwise, the group is named `${NB_USER}`).
-  This feature is useful when bind-mounting host volumes with specific group permissions.
-  For this option to take effect, you **must** run the container with `--user root`.
+  You might consider using modern Docker options `--user` and `--group-add` instead.
+  See bullet points regarding `--user` and `--group-add`.
+
+- `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of `${NB_USER}` to `${NB_GID}`
+  (the new group is added with a name of `${NB_GROUP}` if it is defined, otherwise the group is named `${NB_USER}`).
+  This feature is useful when mounting host volumes with specific group permissions.
+  For this option to take effect, you must run the container with `--user root`.
   (The startup script will `su ${NB_USER}` after adjusting the group ID.)
-  Instead, you might consider using the modern Docker-native options [`--user`](https://docs.docker.com/engine/reference/run/#user) and
-  [`--group-add`](https://docs.docker.com/engine/reference/run/#additional-groups) - see the last bullet in this section for more details.
-  The user is added to the supplemental group `users` (gid 100) to allow write access to the home directory and `/opt/conda`.
-  If you override the user/group logic, you must ensure the user remains in the `users` group if you want them to be able to modify files in the image.
+  You might consider using modern Docker options `--user` and `--group-add` instead.
+  See the last bullet below for details.
+  The user is added to supplemental group `users` (gid 100) in order to allow write access to the home directory and `/opt/conda`.
+  If you override the user/group logic, ensure the user stays in group `users` if you want them to be able to modify files in the image.
+
 - `-e NB_GROUP=<name>` - The name used for `${NB_GID}`, which defaults to `${NB_USER}`.
-  Used only if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
-- `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
-  You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
+  This is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
 
-### Permissions-related configurations
+- `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
+  For example, if setting `umask` to `002`, new files will be readable and writable by group members instead of just writable by the owner.
+  Wikipedia has a good article about [`umask`](https://en.wikipedia.org/wiki/Umask).
+  While the default `umask` value should be sufficient for most use cases, you can set the `NB_UMASK` value to fit your requirements.
+  _Note that `NB_UMASK` when set only applies to the Jupyter process itself -
+  you cannot use it to set a `umask` for additional files created during run-hooks.
+  For example, via `pip` or `conda`.
+  If you need to set a `umask` for these you must set `umask` for each command._
 
-- `-e NB_UMASK=<umask>` - Configures Jupyter to use a different umask value from default, i.e. `022`.
-  For example, if setting umask to `002`, new files will be readable and writable by group members instead of the owner only.
-  [Check this Wikipedia article](https://en.wikipedia.org/wiki/Umask) for an in-depth description of `umask` and suitable values for multiple needs.
-  However, the default value of `022` should fit most situations.
-  Note that `NB_UMASK` when set only applies to the Jupyter process itself - you cannot use it to set a umask for additional files created during run-hooks
-  e.g. via `pip` or `conda` - if you need to set a umask for these you must set `umask` for each command.
 - `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
   This change will take effect even if the user home directory is mounted from the host using `-v` as described below.
-  Note that the change is **not** applied recursively by default.
-  You can modify the `chown` behavior by setting `CHOWN_HOME_OPTS` (e.g., `-e CHOWN_HOME_OPTS='-R'`).
+  The change is **not** applied recursively by default.
+  You can change modify the `chown` behavior by setting `CHOWN_HOME_OPTS` (e.g., `-e CHOWN_HOME_OPTS='-R'`).
+
 - `-e CHOWN_EXTRA="<some dir>,<some other dir>"` - Instructs the startup script to change the owner and group of each comma-separated container directory to the current value of `${NB_UID}` and `${NB_GID}`.
   The change is **not** applied recursively by default.
-  You can modify the `chown` behavior by setting `CHOWN_EXTRA_OPTS` (e.g., `-e CHOWN_EXTRA_OPTS='-R'`).
+  You can change modify the `chown` behavior by setting `CHOWN_EXTRA_OPTS` (e.g., `-e CHOWN_EXTRA_OPTS='-R'`).
+
 - `-e GRANT_SUDO=yes` - Instructs the startup script to grant the `NB_USER` user passwordless `sudo` capability.
   You do **not** need this option to allow the user to `conda` or `pip` install additional packages.
   This option is useful, however, when you wish to give `${NB_USER}` the ability to install OS packages with `apt` or modify other root-owned files in the container.
@@ -80,20 +89,26 @@ You do so by passing arguments to the `docker run` command.
   (The `start-notebook.sh` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
   **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
 
-### Additional runtime configurations
+- `-e GEN_CERT=yes` - Instructs the startup script to generates a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
 
-- `-e GEN_CERT=yes` - Instructs the startup script to generate a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
 - `-e DOCKER_STACKS_JUPYTER_CMD=<jupyter command>` - Instructs the startup script to run `jupyter ${DOCKER_STACKS_JUPYTER_CMD}` instead of the default `jupyter lab` command.
-  See [Switching back to the classic notebook or using a different startup command][switch_back] for available options.
-  This setting is helpful in container orchestration environments where setting environment variables is more straightforward than changing command line parameters.
+  See [Switching back to classic notebook or using a different startup command][switch_back] for available options.
+  Useful in container orchestration environments where setting environment variables is easier than change command line parameters.
+
 - `-e RESTARTABLE=yes` - Runs Jupyter in a loop so that quitting Jupyter does not cause the container to exit.
-  This may be useful when installing extensions that require restarting Jupyter.
-- `-v /some/host/folder/for/work:/home/jovyan/work` - Mounts a host machine directory as a folder in the container.
-  This configuration is useful for preserving notebooks and other work even after the container is destroyed.
+  This may be useful when you need to install extensions that require restarting Jupyter.
+
+- `-v /some/host/folder/for/work:/home/jovyan/work` - Mounts a host machine directory as folder in the container.
+  Useful when you want to preserve notebooks and other work even after the container is destroyed.
   **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
+
+- `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
+  You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
+
 - `-e JUPYTER_ENV_VARS_TO_UNSET=ADMIN_SECRET_1,ADMIN_SECRET_2` - Unsets specified environment variables in the default startup script.
-  The variables are unset after the hooks have been executed but before the command provided to the startup script runs.
-- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to launch `jupyter lab` or `jupyter notebook`. This way, the user could use any option supported by `jupyter`.
+  The variables are unset after the hooks have executed but before the command provided to the startup script runs.
+
+- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to launch `jupyter lab` or `jupyter notebook`. This way any option, supported by `jupyter` could be used by the user.
 
 ## Startup Hooks
 

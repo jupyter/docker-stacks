@@ -107,8 +107,8 @@ To add a conda environment with a different version and make it accessible to Ju
 FROM jupyter/minimal-notebook:latest
 
 # name your environment and choose python 3.x version
-ARG conda_env=python36
-ARG py_ver=3.6
+ARG conda_env=python37
+ARG py_ver=3.7
 
 # you can add additional libraries you want mamba to install by listing them below the first line and ending with "&& \"
 RUN mamba create --quiet --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
