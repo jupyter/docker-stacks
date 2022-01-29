@@ -306,3 +306,24 @@ def test_jupyter_env_vars_to_unset_as_root(
         **root_args,  # type: ignore
     )
     assert "I like bananas and stuff, and love to keep secrets!" in logs
+
+
+def test_secure_path(container: TrackedContainer, tmp_path: pathlib.Path) -> None:
+    """Make sure that the sudo command has conda's python (not system's) on path.
+    See <https://github.com/jupyter/docker-stacks/issues/1053>.
+    """
+    d = tmp_path / "data"
+    d.mkdir()
+    p = d / "wrong_python.sh"
+    p.write_text("""#!/bin/bash\necho "Wrong python executable invoked!" """)
+    p.chmod(0o755)
+
+    logs = container.run_and_wait(
+        timeout=5,
+        tty=True,
+        user="root",
+        volumes={p: {"bind": "/usr/bin/python", "mode": "ro"}},
+        command=["start.sh", "python", "--version"],
+    )
+    assert "Wrong python" not in logs
+    assert "Python" in logs
