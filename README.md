@@ -27,9 +27,9 @@ The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) d
 
 This command pulls the `jupyter/scipy-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host:
 
-  ```bash
-  docker run -p 8888:8888 jupyter/scipy-notebook:b418b67c225b
-  ```
+```bash
+docker run -p 8888:8888 jupyter/scipy-notebook:b418b67c225b
+```
 
 It then starts a container running a Jupyter Server and exposes the server on host port 8888.
 The server logs appear in the terminal.
