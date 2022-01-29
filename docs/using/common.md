@@ -69,6 +69,9 @@ You do so by passing arguments to the `docker run` command.
 - `-e NB_GROUP=<name>` - The name used for `${NB_GID}`, which defaults to `${NB_USER}`.
   This is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
 
+- `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
+  You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
+
 ## Permision-specific configurations
 
 - `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
