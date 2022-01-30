@@ -150,8 +150,8 @@ if [ "$(id -u)" == 0 ] ; then
     # Update potentially outdated environment variables since image build
     export XDG_CACHE_HOME="/home/${NB_USER}/.cache"
 
-    # Add ${CONDA_DIR}/bin to sudo secure_path
-    sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"\1:${CONDA_DIR}/bin\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
+    # Prepend ${CONDA_DIR}/bin to sudo secure_path
+    sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"${CONDA_DIR}/bin:\1\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
 
     # Optionally grant passwordless sudo rights for the desired user
     if [[ "$GRANT_SUDO" == "1" || "$GRANT_SUDO" == "yes" ]]; then
@@ -168,6 +168,12 @@ if [ "$(id -u)" == 0 ] ; then
         PATH="${PATH}" \
         PYTHONPATH="${PYTHONPATH:-}" \
         "${cmd[@]}"
+        # Note on the purpose of "PATH=${PATH}":
+        #   In case "${cmd[@]}" is "bash", then PATH will be used by this bash shell.
+        #   However, PATH is irrelevant to how the above sudo command resolves the
+        #   path of "${cmd[@]}". Sudo's path resolution is done via the "secure_path"
+        #   variable set above in /etc/sudoers.d/path.
+
 
 # The container didn't start as the root user, so we will have to act as the
 # user we started as.
