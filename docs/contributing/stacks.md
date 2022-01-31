@@ -126,7 +126,7 @@ you merge a GitHub pull request to the master branch of your project.
     ![GitHub - Actions/New secret page with the Name field set to "DOCKERHUB_TOKEN"](../_static/github-secret-token.png)
 16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the _value_ field with your DockerHub username.
     Once you have completed these steps, your repository secrets section should look something like this:
-    ![GitHub - Repositosy secrets page showing the existing "DOCKERHUB_TOKEN" and "DOCKERHUB_USERNAME" secrets](../_static/github-secrets-completed.png)
+    ![GitHub - Repository secrets page showing the existing "DOCKERHUB_TOKEN" and "DOCKERHUB_USERNAME" secrets](../_static/github-secrets-completed.png)
 
 ## Defining Your Image
 
