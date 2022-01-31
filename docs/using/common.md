@@ -33,10 +33,10 @@ You do so by passing arguments to the `docker run` command.
 ### User-related configurations
 
 - `-e NB_USER=<username>` - The desired username and associated home folder.
-  Default value is `jovyan`.
+  The default value is `jovyan`.
   Setting `NB_USER` refits the `jovyan` default user and ensures that the desired user has the correct file permissions
-  for the new home directory that gets created at `/home/<username>`.
-  For this option to take effect you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
+  for the new home directory created at `/home/<username>`.
+  For this option to take effect, you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
   and set the environment variable `-e CHOWN_HOME=yes`.
 
   Example usage:
@@ -48,7 +48,7 @@ You do so by passing arguments to the `docker run` command.
   ```
 
 - `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
-  Default value is `1000`.
+  The default value is `1000`.
   This feature is useful when mounting host volumes with specific owner permissions.
   For this option to take effect, you must run the container with `--user root`.
   (The startup script will `su ${NB_USER}` after adjusting the user ID.)
@@ -57,17 +57,17 @@ You do so by passing arguments to the `docker run` command.
   See bullet points regarding `--user` and `--group-add`.
 
 - `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of `${NB_USER}` to `${NB_GID}`
-  (the new group is added with a name of `${NB_GROUP}` if it is defined, otherwise the group is named `${NB_USER}`).
+  (the new group is added with a name of `${NB_GROUP}` if it is defined. Otherwise, the group is named `${NB_USER}`).
   This feature is useful when mounting host volumes with specific group permissions.
   For this option to take effect, you must run the container with `--user root`.
   (The startup script will `su ${NB_USER}` after adjusting the group ID.)
   You might consider using modern Docker options `--user` and `--group-add` instead.
   See bullet points regarding `--user` and `--group-add`.
-  The user is added to supplemental group `users` (gid 100) in order to allow write access to the home directory and `/opt/conda`.
+  The user is added to supplemental group `users` (gid 100) to grant write access to the home directory and `/opt/conda`.
   If you override the user/group logic, ensure the user stays in the group `users` if you want them to be able to modify files in the image.
 
 - `-e NB_GROUP=<name>` - The name used for `${NB_GID}`, which defaults to `${NB_USER}`.
-  This is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
+  This group name is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
 
 - `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
   You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
@@ -81,7 +81,7 @@ You do so by passing arguments to the `docker run` command.
   _Note that `NB_UMASK` when set only applies to the Jupyter process itself -
   you cannot use it to set a `umask` for additional files created during run-hooks.
   For example, via `pip` or `conda`.
-  If you need to set a `umask` for these you must set `umask` for each command._
+  If you need to set a `umask` for these, you must set the `umask` value for each command._
 
 - `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
   This change will take effect even if the user home directory is mounted from the host using `-v` as described below.
@@ -128,7 +128,7 @@ script for execution details.
 
 ## SSL Certificates
 
-You may mount SSL keys and certificate files into a container and configure the Jupyter Notebook to use them to accept HTTPS connections.
+You may mount an SSL key and certificate file into a container and configure the Jupyter Notebook to use them to accept HTTPS connections.
 For example, to mount a host folder containing a `notebook.key` and `notebook.crt` and use them, you might run the following:
 
 ```bash
@@ -165,7 +165,7 @@ For additional information about using SSL, see the following:
 
 JupyterLab built on top of Jupyter Server is now the default for all the images of the stack.
 However, it is still possible to switch back to the classic notebook or use a different startup command.
-This can be done by setting the environment variable `DOCKER_STACKS_JUPYTER_CMD` at container startup.
+You can achieve this by setting the environment variable `DOCKER_STACKS_JUPYTER_CMD` at container startup.
 The table below shows some options.
 
 | `DOCKER_STACKS_JUPYTER_CMD` | Backend          | Frontend         |
@@ -184,13 +184,13 @@ Notes:
 Example:
 
 ```bash
-# Run Jupyter Notebook classic
+# Run Jupyter Notebook on Jupyter Server
 docker run -it --rm -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
      jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
-# Run Jupyter Notebook on Jupyter Server
+# Run Jupyter Notebook classic
 docker run -it --rm -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
      jupyter/base-notebook
@@ -213,7 +213,7 @@ Or, to run JupyterLab instead of the classic notebook, run the following:
 docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter lab
 ```
 
-This script is particularly useful when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.
+This script is handy when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.
 
 ### Others
 
@@ -224,7 +224,7 @@ If you do, keep in mind that features supported by the `start.sh` script and its
 
 The default Python 3.x [Conda environment](https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html) resides in `/opt/conda`.
 The `/opt/conda/bin` directory is part of the default `jovyan` user's `${PATH}`.
-That directory is also allow listed for use in `sudo` commands by the `start.sh` script.
+That directory is also searched for binaries when run using `sudo` (`sudo my_binary` will search for `my_binary` in `/opt/conda/bin/`
 
 The `jovyan` user has full read/write access to the `/opt/conda` directory.
 You can use either `pip`, `conda` or `mamba` to install new packages without any additional permissions.
@@ -250,7 +250,7 @@ conda install --quiet --yes some-package && \
 ### Using alternative channels
 
 Conda is configured by default to use only the [`conda-forge`](https://anaconda.org/conda-forge) channel.
-However, alternative channels can be used either one-shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.
+However, you can use alternative channels either one-shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.
 The examples below show how to use the [anaconda default channels](https://repo.anaconda.com/pkgs/main) instead of `conda-forge` to install packages.
 
 ```bash
