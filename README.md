@@ -25,38 +25,24 @@ The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) d
 
 **Example 1:**
 
-This command pulls the `jupyter/scipy-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host:
-
-```bash
-docker run -p 8888:8888 jupyter/scipy-notebook:b418b67c225b
-```
-
-It then starts a container running a Jupyter Server and exposes the server on host port 8888.
-The server logs appear in the terminal.
-
-Visiting `http://<hostname>:8888/?token=<token>` in a browser loads JupyterLab,
-where:
-
-- `hostname` is the name of the computer running docker
-- `token` is the secret token printed in the console
-
-The container remains intact for restart after the Jupyter Server exits.
-
-**Example 2:**
-
-This command performs the same operations as **Example 1**, but it exposes the server on host port 10000 instead of port 8888.
+This command pulls the `jupyter/scipy-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
+It then starts a container running a Jupyter Server and exposes the container's internal port `8888` to port `10000` of the host machine:
 
 ```bash
 docker run -p 10000:8888 jupyter/scipy-notebook:b418b67c225b
 ```
 
+You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) to `-p 8888:8888`.
+
 Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
 where:
 
-- `hostname` is the name of the computer running docker
+- `hostname` is the name of the computer running Docker
 - `token` is the secret token printed in the console.
 
-**Example 3:**
+The container remains intact for restart after the Jupyter Server exits.
+
+**Example 2:**
 
 This command pulls the `jupyter/datascience-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
 It then starts an _ephemeral_ container running a Jupyter Server and exposes the server on host port 10000.
@@ -65,16 +51,13 @@ It then starts an _ephemeral_ container running a Jupyter Server and exposes the
 docker run --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:b418b67c225b
 ```
 
-The use of the `-v` flag in the command mounts the current working directory on the host (`S{PWD}` in the example command) as `/home/jovyan/work` in the container.
+The use of the `-v` flag in the command mounts the current working directory on the host (`{PWD}` in the example command) as `/home/jovyan/work` in the container.
 The server logs appear in the terminal.
 
-Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
-where:
+Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
 
-- `hostname` is the name of the computer running docker
-- `token` is the secret token printed in the console.
-
-Due to the usage of the flag `--rm` Docker destroys the container after Jupyter Server exit, but any files written to `~/work` in the container remain intact on the host.
+Due to the usage of [the flag `--rm`](https://docs.docker.com/engine/reference/run/#clean-up---rm) Docker automatically cleans up the container and removes the file
+system when the container exits, but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
 
 ## Contributing
 
@@ -90,26 +73,26 @@ to [pull requests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contri
 to help answering questions.
 We'd also like to invite members of the community to help with two maintainer activities:
 
-- Issue triage: Reading and providing a first response to issues, labeling issues appropriately,
+- **Issue triaging**: Reading and providing a first response to issues, labeling issues appropriately,
   redirecting cross-project questions to Jupyter Discourse
-- Pull request reviews: Reading proposed documentation and code changes, working with the submitter
+- **Pull request reviews**: Reading proposed documentation and code changes, working with the submitter
   to improve the contribution, deciding if the contribution should take another form (e.g., a recipe
   instead of a permanent change to the images)
 
 Anyone in the community can jump in and help with these activities at any time.
-We will happily grant additional permissions (e.g., ability to merge PRs) to anyone who shows an on-going interest in working on the project.
+We will happily grant additional permissions (e.g., ability to merge PRs) to anyone who shows an ongoing interest in working on the project.
 
 ## Jupyter Notebook Deprecation Notice
 
 Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), JupyterLab is now the default for all of the Jupyter Docker stack images.
 It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
-This can be done by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` command) at container startup,
+You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` command) at container startup,
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#docker-options).
 
 According to the Jupyter Notebook project status and its compatibility with JupyterLab,
 these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another _classic-like_ UI built atop JupyterLab.
 
-This change is tracked in the issue [#1217](https://github.com/jupyter/docker-stacks/issues/1217), please check its content for more information.
+This change is tracked in the issue [#1217](https://github.com/jupyter/docker-stacks/issues/1217); please check its content for more information.
 
 ## Alternatives
 
