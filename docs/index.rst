@@ -13,6 +13,7 @@ Table of Contents
    using/common
    using/specifics
    using/recipes
+   using/troubleshooting
 
 .. toctree::
    :maxdepth: 2
