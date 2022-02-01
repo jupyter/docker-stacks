@@ -23,7 +23,7 @@ The following sections describe these images including their contents, relations
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
 `jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.md).
-It is the basis for all other stacks.
+It is the basis for all other stacks and contains:
 
 - Minimally-functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
 - [Miniforge](https://github.com/conda-forge/miniforge) Python 3.x in `/opt/conda` with two package managers
@@ -31,7 +31,7 @@ It is the basis for all other stacks.
   - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - No preinstalled scientific computing packages
-- Unprivileged user `jovyan` (`uid=1000`, configurable, see options) in group `users` (`gid=100`)
+- Unprivileged user `jovyan` (`uid=1000`, configurable, [see options in the common features section](./common.md) of this documentation) in group `users` (`gid=100`)
   with ownership over the `/home/jovyan` and `/opt/conda` paths
 - `tini` as the container entrypoint and a `start-notebook.sh` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub
@@ -46,6 +46,8 @@ It is the basis for all other stacks.
 
 `jupyter/minimal-notebook` adds command line tools useful when working in Jupyter applications.
 
+It contains:
+
 - Everything in `jupyter/base-notebook`
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 - [git](https://git-scm.com/),
@@ -58,7 +60,7 @@ It is the basis for all other stacks.
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/r-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/r-notebook/tags/)
 
-`jupyter/r-notebook` includes popular packages from the R ecosystem.
+`jupyter/r-notebook` includes popular packages from the R ecosystem listed below:
 
 - Everything in `jupyter/minimal-notebook` and its ancestor images
 - The [R](https://www.r-project.org/) interpreter and base environment
@@ -193,7 +195,7 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 
 ### Builds
 
-Every Monday and whenever a pull requests is merged, images are rebuilt and pushed to the public container registry.
+Every Monday and whenever a pull requests is merged, images are rebuilt and pushed to [the public container registry](https://hub.docker.com/r/jupyter).
 
 ### Versioning via image tags
 
@@ -207,11 +209,11 @@ Whenever a docker image is pushed to the container registry, it is tagged with:
 For stability and reproducibility, you should either reference a date formatted
 tag from a date before the current date (in UTC time) or a git commit SHA older
 than the latest git commit SHA in the default branch of the
-jupyter/docker-stacks GitHub repository.
+[jupyter/docker-stacks GitHub repository](https://github.com/jupyter/docker-stacks/).
 
 ## Community Stacks
 
-The core stacks are just a tiny sample of what's possible when combining Jupyter with other
+The core stacks are but a tiny sample of what's possible when combining Jupyter with other
 technologies.
 We encourage members of the Jupyter community to create their own stacks based on the
 core images and link them below.

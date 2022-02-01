@@ -1,10 +1,10 @@
 # Common Features
 
-A container launched from any Jupyter Docker Stacks image runs a Jupyter Notebook server by default.
+By default, a container launched from any Jupyter Docker Stacks image runs a Jupyter Notebook server.
 The container does so by executing a `start-notebook.sh` script.
-This script configures the internal container environment and then runs `jupyter notebook`, passing it any command line arguments received.
+This script configures the internal container environment and then runs `jupyter notebook`, passing any command line arguments received.
 
-This page describes the options supported by the startup script as well as how to bypass it to run alternative commands.
+This page describes the options supported by the startup script and how to bypass it to run alternative commands.
 
 ## Notebook Options
 
@@ -12,13 +12,17 @@ You can pass [Jupyter command line options](https://jupyter-notebook.readthedocs
 For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token, you can run the following:
 
 ```bash
-docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
+docker run -d -p 8888:8888 \
+    jupyter/base-notebook start-notebook.sh \
+    --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
 ```
 
 For example, to set the base URL of the notebook server, you can run the following:
 
 ```bash
-docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp.base_url=/some/path
+docker run -d -p 8888:8888 \
+    jupyter/base-notebook start-notebook.sh \
+    --NotebookApp.base_url=/some/path
 ```
 
 ## Docker Options
@@ -26,85 +30,89 @@ docker run -d -p 8888:8888 jupyter/base-notebook start-notebook.sh --NotebookApp
 You may instruct the `start-notebook.sh` script to customize the container environment before launching the notebook server.
 You do so by passing arguments to the `docker run` command.
 
+### User-related configurations
+
 - `-e NB_USER=<username>` - The desired username and associated home folder.
-  Default value is `jovyan`.
+  The default value is `jovyan`.
   Setting `NB_USER` refits the `jovyan` default user and ensures that the desired user has the correct file permissions
-  for the new home directory that gets created at `/home/<username>`.
-  For this option to take effect you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
+  for the new home directory created at `/home/<username>`.
+  For this option to take effect, you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
   and set the environment variable `-e CHOWN_HOME=yes`.
 
   Example usage:
 
   ```bash
-  docker run --rm -it -p 8888:8888 -e NB_USER="my-username" -e CHOWN_HOME=yes -w "/home/${NB_USER}" --user root jupyter/base-notebook:latest
+  docker run --rm -it -p 8888:8888 \
+      -e NB_USER="my-username" -e CHOWN_HOME=yes \
+      -w "/home/${NB_USER}" --user root jupyter/base-notebook:latest
   ```
 
 - `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
-  Default value is `1000`.
+  The default value is `1000`.
   This feature is useful when mounting host volumes with specific owner permissions.
   For this option to take effect, you must run the container with `--user root`.
   (The startup script will `su ${NB_USER}` after adjusting the user ID.)
-  You might consider using modern Docker options `--user` and `--group-add` instead.
+  Instead, you might consider using the modern Docker-native options [`--user`](https://docs.docker.com/engine/reference/run/#user) and
+  [`--group-add`](https://docs.docker.com/engine/reference/run/#additional-groups) - see the last bullet in this section for more details.
   See bullet points regarding `--user` and `--group-add`.
 
 - `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of `${NB_USER}` to `${NB_GID}`
-  (the new group is added with a name of `${NB_GROUP}` if it is defined, otherwise the group is named `${NB_USER}`).
+  (the new group is added with a name of `${NB_GROUP}` if it is defined. Otherwise, the group is named `${NB_USER}`).
   This feature is useful when mounting host volumes with specific group permissions.
   For this option to take effect, you must run the container with `--user root`.
   (The startup script will `su ${NB_USER}` after adjusting the group ID.)
   You might consider using modern Docker options `--user` and `--group-add` instead.
-  See the last bullet below for details.
-  The user is added to supplemental group `users` (gid 100) in order to allow write access to the home directory and `/opt/conda`.
-  If you override the user/group logic, ensure the user stays in group `users` if you want them to be able to modify files in the image.
+  See bullet points regarding `--user` and `--group-add`.
+  The user is added to supplemental group `users` (gid 100) to grant write access to the home directory and `/opt/conda`.
+  If you override the user/group logic, ensure the user stays in the group `users` if you want them to be able to modify files in the image.
 
 - `-e NB_GROUP=<name>` - The name used for `${NB_GID}`, which defaults to `${NB_USER}`.
-  This is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
-
-- `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
-  For example, if setting `umask` to `002`, new files will be readable and writable by group members instead of just writable by the owner.
-  Wikipedia has a good article about [`umask`](https://en.wikipedia.org/wiki/Umask).
-  While the default `umask` value should be sufficient for most use cases, you can set the `NB_UMASK` value to fit your requirements.
-  _Note that `NB_UMASK` when set only applies to the Jupyter process itself -
-  you cannot use it to set a `umask` for additional files created during run-hooks.
-  For example, via `pip` or `conda`.
-  If you need to set a `umask` for these you must set `umask` for each command._
-
-- `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
-  This change will take effect even if the user home directory is mounted from the host using `-v` as described below.
-  The change is **not** applied recursively by default.
-  You can change modify the `chown` behavior by setting `CHOWN_HOME_OPTS` (e.g., `-e CHOWN_HOME_OPTS='-R'`).
-
-- `-e CHOWN_EXTRA="<some dir>,<some other dir>"` - Instructs the startup script to change the owner and group of each comma-separated container directory to the current value of `${NB_UID}` and `${NB_GID}`.
-  The change is **not** applied recursively by default.
-  You can change modify the `chown` behavior by setting `CHOWN_EXTRA_OPTS` (e.g., `-e CHOWN_EXTRA_OPTS='-R'`).
-
-- `-e GRANT_SUDO=yes` - Instructs the startup script to grant the `NB_USER` user passwordless `sudo` capability.
-  You do **not** need this option to allow the user to `conda` or `pip` install additional packages.
-  This option is useful, however, when you wish to give `${NB_USER}` the ability to install OS packages with `apt` or modify other root-owned files in the container.
-  For this option to take effect, you must run the container with `--user root`.
-  (The `start-notebook.sh` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
-  **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
-
-- `-e GEN_CERT=yes` - Instructs the startup script to generates a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
-
-- `-e DOCKER_STACKS_JUPYTER_CMD=<jupyter command>` - Instructs the startup script to run `jupyter ${DOCKER_STACKS_JUPYTER_CMD}` instead of the default `jupyter lab` command.
-  See [Switching back to classic notebook or using a different startup command][switch_back] for available options.
-  Useful in container orchestration environments where setting environment variables is easier than change command line parameters.
-
-- `-e RESTARTABLE=yes` - Runs Jupyter in a loop so that quitting Jupyter does not cause the container to exit.
-  This may be useful when you need to install extensions that require restarting Jupyter.
-
-- `-v /some/host/folder/for/work:/home/jovyan/work` - Mounts a host machine directory as folder in the container.
-  Useful when you want to preserve notebooks and other work even after the container is destroyed.
-  **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
+  This group name is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
 
 - `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
   You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
 
-- `-e JUPYTER_ENV_VARS_TO_UNSET=ADMIN_SECRET_1,ADMIN_SECRET_2` - Unsets specified environment variables in the default startup script.
-  The variables are unset after the hooks have executed but before the command provided to the startup script runs.
+## Permision-specific configurations
 
-- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to launch `jupyter lab` or `jupyter notebook`. This way any option, supported by `jupyter` could be used by the user.
+- `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
+  For example, if setting `umask` to `002`, new files will be readable and writable by group members instead of the owner only.
+  [Check this Wikipedia article](https://en.wikipedia.org/wiki/Umask) for an in-depth description of `umask` and suitable values for multiple needs.
+  While the default `umask` value should be sufficient for most use cases, you can set the `NB_UMASK` value to fit your requirements.
+  _Note that `NB_UMASK` when set only applies to the Jupyter process itself -
+  you cannot use it to set a `umask` for additional files created during run-hooks.
+  For example, via `pip` or `conda`.
+  If you need to set a `umask` for these, you must set the `umask` value for each command._
+
+- `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
+  This change will take effect even if the user home directory is mounted from the host using `-v` as described below.
+  The change is **not** applied recursively by default.
+  You can modify the `chown` behavior by setting `CHOWN_HOME_OPTS` (e.g., `-e CHOWN_HOME_OPTS='-R'`).
+
+- `-e CHOWN_EXTRA="<some dir>,<some other dir>"` - Instructs the startup script to change the owner and group of each comma-separated container directory to the current value of `${NB_UID}` and `${NB_GID}`.
+  The change is **not** applied recursively by default.
+  You can modify the `chown` behavior by setting `CHOWN_EXTRA_OPTS` (e.g., `-e CHOWN_EXTRA_OPTS='-R'`).
+
+- `-e GRANT_SUDO=yes` - Instructs the startup script to grant the `NB_USER` user passwordless `sudo` capability.
+  You do **not** need this option to allow the user to `conda` or `pip` install additional packages.
+  This option is useful, however, when you wish to give `${NB_USER}` the ability to install OS packages with `apt` or modify other root-owned files in the container.
+  For this option to take effect, you **must** run the container with `--user root`.
+  (The `start-notebook.sh` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
+  **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
+
+### Additional runtime configurations
+
+- `-e GEN_CERT=yes` - Instructs the startup script to generate a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
+- `-e DOCKER_STACKS_JUPYTER_CMD=<jupyter command>` - Instructs the startup script to run `jupyter ${DOCKER_STACKS_JUPYTER_CMD}` instead of the default `jupyter lab` command.
+  See [Switching back to the classic notebook or using a different startup command][switch_back] for available options.
+  This setting is helpful in container orchestration environments where setting environment variables is more straightforward than changing command line parameters.
+- `-e RESTARTABLE=yes` - Runs Jupyter in a loop so that quitting Jupyter does not cause the container to exit.
+  This may be useful when installing extensions that require restarting Jupyter.
+- `-v /some/host/folder/for/work:/home/jovyan/work` - Mounts a host machine directory as a folder in the container.
+  This configuration is useful for preserving notebooks and other work even after the container is destroyed.
+  **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
+- `-e JUPYTER_ENV_VARS_TO_UNSET=ADMIN_SECRET_1,ADMIN_SECRET_2` - Unsets specified environment variables in the default startup script.
+  The variables are unset after the hooks have been executed but before the command provided to the startup script runs.
+- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to launch `jupyter lab` or `jupyter notebook`. This way, the user could use any option supported by `jupyter`.
 
 ## Startup Hooks
 
@@ -113,15 +121,14 @@ or executables (`chmod +x`) to be run to the paths below:
 
 - `/usr/local/bin/start-notebook.d/` - handled before any of the standard options noted above
   are applied
-- `/usr/local/bin/before-notebook.d/` - handled after all of the standard options noted above are
-  applied and just before the notebook server launches
+- `/usr/local/bin/before-notebook.d/` - handled after all of the standard options noted above are applied and ran right before the notebook server launches
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
 script for execution details.
 
 ## SSL Certificates
 
-You may mount SSL key and certificate files into a container and configure Jupyter Notebook to use them to accept HTTPS connections.
+You may mount an SSL key and certificate file into a container and configure the Jupyter Notebook to use them to accept HTTPS connections.
 For example, to mount a host folder containing a `notebook.key` and `notebook.crt` and use them, you might run the following:
 
 ```bash
@@ -142,7 +149,7 @@ docker run -d -p 8888:8888 \
     --NotebookApp.certfile=/etc/ssl/notebook.pem
 ```
 
-In either case, Jupyter Notebook expects the key and certificate to be a base64 encoded text file.
+In either case, Jupyter Notebook expects the key and certificate to be a **base64 encoded text file**.
 The certificate file or PEM may contain one or more certificates (e.g., server, intermediate, and root).
 
 For additional information about using SSL, see the following:
@@ -154,11 +161,11 @@ For additional information about using SSL, see the following:
 
 ## Alternative Commands
 
-### Switching back to classic notebook or using a different startup command
+### Switching back to the classic notebook or using a different startup command
 
-JupyterLab built on top of Jupyter Server is now the default for all images of the stack.
-However, it is still possible to switch back to the classic notebook or to use a different startup command.
-This can be done by setting the environment variable `DOCKER_STACKS_JUPYTER_CMD` at container startup.
+JupyterLab built on top of Jupyter Server is now the default for all the images of the stack.
+However, it is still possible to switch back to the classic notebook or use a different startup command.
+You can achieve this by setting the environment variable `DOCKER_STACKS_JUPYTER_CMD` at container startup.
 The table below shows some options.
 
 | `DOCKER_STACKS_JUPYTER_CMD` | Backend          | Frontend         |
@@ -177,21 +184,23 @@ Notes:
 Example:
 
 ```bash
-# Run Jupyter Notebook classic
-docker run -it --rm -p 8888:8888 -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-       jupyter/base-notebook
+# Run Jupyter Notebook on Jupyter Server
+docker run -it --rm -p 8888:8888 \
+    -e DOCKER_STACKS_JUPYTER_CMD=notebook \
+     jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
-# Run Jupyter Notebook on Jupyter Server
-docker run -it --rm -p 8888:8888 -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
-       jupyter/base-notebook
+# Run Jupyter Notebook classic
+docker run -it --rm -p 8888:8888 \
+    -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
+     jupyter/base-notebook
 # Executing the command: jupyter nbclassic ...
 ```
 
 ### `start.sh`
 
-The `start-notebook.sh` script actually inherits most of its option handling capability from a more generic `start.sh` script.
-The `start.sh` script supports all of the features described above, but allows you to specify an arbitrary command to execute.
+The `start-notebook.sh` script inherits most of its option handling capability from a more generic `start.sh` script.
+The `start.sh` script supports all of the features described above but allows you to specify an arbitrary command to execute.
 For example, to run the text-based `ipython` console in a container, do the following:
 
 ```bash
@@ -204,7 +213,7 @@ Or, to run JupyterLab instead of the classic notebook, run the following:
 docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter lab
 ```
 
-This script is particularly useful when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.
+This script is handy when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.
 
 ### Others
 
@@ -215,13 +224,14 @@ If you do, keep in mind that features supported by the `start.sh` script and its
 
 The default Python 3.x [Conda environment](https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html) resides in `/opt/conda`.
 The `/opt/conda/bin` directory is part of the default `jovyan` user's `${PATH}`.
-That directory is also whitelisted for use in `sudo` commands by the `start.sh` script.
+That directory is also searched for binaries when run using `sudo` (`sudo my_binary` will search for `my_binary` in `/opt/conda/bin/`
 
 The `jovyan` user has full read/write access to the `/opt/conda` directory.
 You can use either `pip`, `conda` or `mamba` to install new packages without any additional permissions.
 
 ```bash
-# install a package into the default (python 3.x) environment and cleanup after the installation
+# install a package into the default (python 3.x) environment and cleanup after
+# the installation
 mamba install --quiet --yes some-package && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
@@ -240,7 +250,7 @@ conda install --quiet --yes some-package && \
 ### Using alternative channels
 
 Conda is configured by default to use only the [`conda-forge`](https://anaconda.org/conda-forge) channel.
-However, alternative channels can be used either one shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.
+However, you can use alternative channels either one-shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.
 The examples below show how to use the [anaconda default channels](https://repo.anaconda.com/pkgs/main) instead of `conda-forge` to install packages.
 
 ```bash
