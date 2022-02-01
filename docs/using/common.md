@@ -135,7 +135,7 @@ For example, to mount a host folder containing a `notebook.key` and `notebook.cr
 docker run -d -p 8888:8888 \
     -v /some/host/folder:/etc/ssl/notebook \
     jupyter/base-notebook start-notebook.sh \
-    --NotebookApp.keyfile=/etc/ssl/notebook/notebook.key
+    --NotebookApp.keyfile=/etc/ssl/notebook/notebook.key \
     --NotebookApp.certfile=/etc/ssl/notebook/notebook.crt
 ```
 
@@ -187,13 +187,13 @@ Example:
 # Run Jupyter Notebook on Jupyter Server
 docker run -it --rm -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-     jupyter/base-notebook
+    jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
 # Run Jupyter Notebook classic
 docker run -it --rm -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
-     jupyter/base-notebook
+    jupyter/base-notebook
 # Executing the command: jupyter nbclassic ...
 ```
 
@@ -207,10 +207,10 @@ For example, to run the text-based `ipython` console in a container, do the foll
 docker run -it --rm jupyter/base-notebook start.sh ipython
 ```
 
-Or, to run JupyterLab instead of the classic notebook, run the following:
+Or, to run Jupyter Notebook classic instead of the JupyterLab, run the following:
 
 ```bash
-docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter lab
+docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter notebook
 ```
 
 This script is handy when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.

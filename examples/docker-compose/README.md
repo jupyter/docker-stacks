@@ -108,8 +108,8 @@ The following command will create a certificate chain and store it in a Docker v
 
 ```bash
 FQDN=host.mydomain.com EMAIL=myemail@somewhere.com \
-  SECRETS_VOLUME=mydomain-secrets \
-  bin/letsencrypt.sh
+    SECRETS_VOLUME=mydomain-secrets \
+    bin/letsencrypt.sh
 ```
 
 Now run `up.sh` with the `--letsencrypt` option.
@@ -128,8 +128,8 @@ To hit their staging servers, set the environment variable `CERT_SERVER=--stagin
 
 ```bash
 FQDN=host.mydomain.com EMAIL=myemail@somewhere.com \
-  CERT_SERVER=--staging \
-  bin/letsencrypt.sh
+    CERT_SERVER=--staging \
+    bin/letsencrypt.sh
 ```
 
 Also, be aware that Let's Encrypt certificates are short lived (90 days).

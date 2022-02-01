@@ -13,9 +13,9 @@ This can be achieved by using the generic task used to install all Python develo
 
 ```sh
 # Install all development dependencies for the project
-$ make dev-env
+make dev-env
 # It can also be installed directly
-$ pip install pre-commit
+pip install pre-commit
 ```
 
 Then the git hooks scripts configured for the project in `.pre-commit-config.yaml` need to be installed in the local git repository.
@@ -29,7 +29,7 @@ make pre-commit-install
 Now pre-commit (and so configured hooks) will run automatically on `git commit` on each changed file.
 However it is also possible to trigger it against all files.
 
-- Note: Hadolint pre-commit uses docker to run, so docker should be running while running this command.
+_Note: Hadolint pre-commit uses docker to run, so docker should be running while running this command._
 
 ```sh
 make pre-commit-all
@@ -37,7 +37,7 @@ make pre-commit-all
 
 ## Image Lint
 
-To comply with [Docker best practices][dbp], we are using the [Hadolint][hadolint] tool to analyse each `Dockerfile` .
+To comply with [Docker best practices][dbp], we are using the [Hadolint][hadolint] tool to analyse each `Dockerfile`.
 
 ### Ignoring Rules
 

@@ -112,6 +112,7 @@ RUN set -x && \
     conda config --system --set auto_update_conda false && \
     conda config --system --set show_channel_urls true && \
     if [[ "${PYTHON_VERSION}" != "default" ]]; then mamba install --quiet --yes python="${PYTHON_VERSION}"; fi && \
+    # Pin major.minor version of python
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
     # Using conda to update all packages: https://github.com/mamba-org/mamba/issues/1092
     conda update --all --quiet --yes && \

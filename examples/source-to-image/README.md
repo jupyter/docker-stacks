@@ -31,11 +31,11 @@ As an example of how S2I can be used to create a custom image with a bundled set
 
 ```bash
 s2i build \
-  --scripts-url https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image \
-  --context-dir docs/source/examples/Notebook \
-  https://github.com/jupyter/notebook \
-  jupyter/minimal-notebook:latest \
-  notebook-examples
+    --scripts-url https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image \
+    --context-dir docs/source/examples/Notebook \
+    https://github.com/jupyter/notebook \
+    jupyter/minimal-notebook:latest \
+    notebook-examples
 ```
 
 This example command will pull down the Git repository <https://github.com/jupyter/notebook>
@@ -45,30 +45,30 @@ The base image which the files will be combined with is `jupyter/minimal-noteboo
 The resulting image from running the command can be seen by running `docker images` command:
 
 ```bash
-$ docker images
-REPOSITORY         TAG     IMAGE ID      CREATED        SIZE
-notebook-examples  latest  f5899ed1241d  2 minutes ago  2.59GB
+docker images
+# REPOSITORY         TAG     IMAGE ID      CREATED        SIZE
+# notebook-examples  latest  f5899ed1241d  2 minutes ago  2.59GB
 ```
 
 You can now run the image.
 
 ```bash
-$ docker run --rm -p 8888:8888 notebook-examples
-Executing the command: jupyter notebook
-[I 01:14:50.532 NotebookApp] Writing notebook server cookie secret to /home/jovyan/.local/share/jupyter/runtime/notebook_cookie_secret
-[W 01:14:50.724 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
-[I 01:14:50.747 NotebookApp] JupyterLab beta preview extension loaded from /opt/conda/lib/python3.6/site-packages/jupyterlab
-[I 01:14:50.747 NotebookApp] JupyterLab application directory is /opt/conda/share/jupyter/lab
-[I 01:14:50.754 NotebookApp] Serving notebooks from local directory: /home/jovyan
-[I 01:14:50.754 NotebookApp] 0 active kernels
-[I 01:14:50.754 NotebookApp] The Jupyter Notebook is running at:
-[I 01:14:50.754 NotebookApp] http://[all ip addresses on your system]:8888/?token=04646d5c5e928da75842cd318d4a3c5aa1f942fc5964323a
-[I 01:14:50.754 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
-[C 01:14:50.755 NotebookApp]
+docker run --rm -p 8888:8888 notebook-examples
+# Executing the command: jupyter notebook
+# [I 01:14:50.532 NotebookApp] Writing notebook server cookie secret to /home/jovyan/.local/share/jupyter/runtime/notebook_cookie_secret
+# [W 01:14:50.724 NotebookApp] WARNING: The notebook server is listening on all IP addresses and not using encryption. This is not recommended.
+# [I 01:14:50.747 NotebookApp] JupyterLab beta preview extension loaded from /opt/conda/lib/python3.6/site-packages/jupyterlab
+# [I 01:14:50.747 NotebookApp] JupyterLab application directory is /opt/conda/share/jupyter/lab
+# [I 01:14:50.754 NotebookApp] Serving notebooks from local directory: /home/jovyan
+# [I 01:14:50.754 NotebookApp] 0 active kernels
+# [I 01:14:50.754 NotebookApp] The Jupyter Notebook is running at:
+# [I 01:14:50.754 NotebookApp] http://[all ip addresses on your system]:8888/?token=04646d5c5e928da75842cd318d4a3c5aa1f942fc5964323a
+# [I 01:14:50.754 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+# [C 01:14:50.755 NotebookApp]
 
-    Copy/paste this URL into your browser when you connect for the first time,
-    to login with a token:
-        http://localhost:8888/?token=04646d5c5e928da75842cd318d4a3c5aa1f942fc5964323a
+#     Copy/paste this URL into your browser when you connect for the first time,
+#     to login with a token:
+#         http://localhost:8888/?token=04646d5c5e928da75842cd318d4a3c5aa1f942fc5964323a
 ```
 
 Open your browser on the URL displayed, and you will find the notebooks from the Git repository and can work with them.
@@ -159,11 +159,11 @@ To use the OpenShift command line to build into an image, and deploy, the set of
 
 ```bash
 oc new-app --template jupyter-notebook-quickstart \
-  --param APPLICATION_NAME=notebook-examples \
-  --param GIT_REPOSITORY_URL=https://github.com/jupyter/notebook \
-  --param CONTEXT_DIR=docs/source/examples/Notebook \
-  --param BUILDER_IMAGE=jupyter/minimal-notebook:latest \
-  --param NOTEBOOK_PASSWORD=mypassword
+    --param APPLICATION_NAME=notebook-examples \
+    --param GIT_REPOSITORY_URL=https://github.com/jupyter/notebook \
+    --param CONTEXT_DIR=docs/source/examples/Notebook \
+    --param BUILDER_IMAGE=jupyter/minimal-notebook:latest \
+    --param NOTEBOOK_PASSWORD=mypassword
 ```
 
 You can provide a password using the `NOTEBOOK_PASSWORD` parameter.
