@@ -6,7 +6,7 @@ and the documentation below to help you get started defining, building, and shar
 
 Following these steps will:
 
-1. Setup a project on GitHub containing a Dockerfile based on of the images we provide.
+1. Setup a project on GitHub containing a Dockerfile based on any of the images we provide.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your repository.
 3. Configure Docker Hub to build and host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.html#community-stacks) in this documentation to include your image.
