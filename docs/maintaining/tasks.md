@@ -14,7 +14,7 @@ To build new images and publish them to the Docker Hub registry, do the followin
 
 ## Updating the Ubuntu Base Image
 
-Latest LTS Ubuntu base image version is used as the base image for `minimal-notebook`.
+Latest LTS Ubuntu docker image is used as the base image for `minimal-notebook`.
 We rebuild our images automatically each week, which means they receive the updates quite frequently.
 
 When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger images rebuild [here](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
