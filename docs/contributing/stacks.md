@@ -119,7 +119,11 @@ you merge a GitHub pull request to the master branch of your project.
 11. Enter a meaningful name for your token and click on **Create**
     ![DockerHub - New Access Token page with the name field set to "my-jupyter-docker-token"](../_static/docker-org-create-token.png)
 12. Copy the personal access token displayed on the next screen.
-    **Note that you will not be able to see it again after you close the pop-up window**.
+
+    ```{note}
+    you will not be able to see it again after you close the pop-up window**.
+    ```
+
 13. Head back to your GitHub repository and click on the **Settings tab**.
     ![GitHub page with the the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/github-create-secrets.png)
 14. Click on the **Secrets** section and then on the **New repository secret** button on the top right corner (see image above).
