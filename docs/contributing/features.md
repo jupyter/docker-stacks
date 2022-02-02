@@ -37,8 +37,9 @@ Roughly speaking, we evaluate new features based on the following criteria:
 If there's agreement that the feature belongs in one or more of the core stacks:
 
 1. Implement the feature in a local clone of the `jupyter/docker-stacks` project.
-2. Please build the image locally before submitting a pull request
-   Building the image locally shortens the debugging cycle by taking some load off GitHub Actions, which graciously provide free build services for open source projects like this one.
+2. Please, build the image locally before submitting a pull request.
+   It shortens the debugging cycle by taking some load off GitHub Actions,
+   which graciously provides free build services for open source projects like this one.
    If you use `make`, call:
 
    ```bash

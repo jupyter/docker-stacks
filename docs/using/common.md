@@ -72,16 +72,19 @@ You do so by passing arguments to the `docker run` command.
 - `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
   You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
 
-## Permision-specific configurations
+## Permission-specific configurations
 
 - `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
   For example, if setting `umask` to `002`, new files will be readable and writable by group members instead of the owner only.
   [Check this Wikipedia article](https://en.wikipedia.org/wiki/Umask) for an in-depth description of `umask` and suitable values for multiple needs.
   While the default `umask` value should be sufficient for most use cases, you can set the `NB_UMASK` value to fit your requirements.
-  _Note that `NB_UMASK` when set only applies to the Jupyter process itself -
+
+  ```{note}
+  `NB_UMASK` when set only applies to the Jupyter process itself -
   you cannot use it to set a `umask` for additional files created during run-hooks.
   For example, via `pip` or `conda`.
   If you need to set a `umask` for these, you must set the `umask` value for each command._
+  ```
 
 - `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
   This change will take effect even if the user home directory is mounted from the host using `-v` as described below.
@@ -135,7 +138,7 @@ For example, to mount a host folder containing a `notebook.key` and `notebook.cr
 docker run -d -p 8888:8888 \
     -v /some/host/folder:/etc/ssl/notebook \
     jupyter/base-notebook start-notebook.sh \
-    --NotebookApp.keyfile=/etc/ssl/notebook/notebook.key
+    --NotebookApp.keyfile=/etc/ssl/notebook/notebook.key \
     --NotebookApp.certfile=/etc/ssl/notebook/notebook.crt
 ```
 
@@ -187,13 +190,13 @@ Example:
 # Run Jupyter Notebook on Jupyter Server
 docker run -it --rm -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-     jupyter/base-notebook
+    jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
 # Run Jupyter Notebook classic
 docker run -it --rm -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
-     jupyter/base-notebook
+    jupyter/base-notebook
 # Executing the command: jupyter nbclassic ...
 ```
 
@@ -207,10 +210,10 @@ For example, to run the text-based `ipython` console in a container, do the foll
 docker run -it --rm jupyter/base-notebook start.sh ipython
 ```
 
-Or, to run JupyterLab instead of the classic notebook, run the following:
+Or, to run Jupyter Notebook classic instead of JupyterLab, run the following:
 
 ```bash
-docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter lab
+docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter notebook
 ```
 
 This script is handy when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.

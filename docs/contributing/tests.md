@@ -5,14 +5,20 @@ of the Docker images.
 
 ## How the Tests Work
 
-GitHub executes `make build-test-all` against pull requests submitted to the `jupyter/docker-stacks`
-repository.
+GitHub Action executes `make build-test-all` against pull requests submitted to the `jupyter/docker-stacks` repository.
 This `make` command builds every docker image.
 After building each image, the `make` command executes `pytest` to run both image-specific tests like those in
 [base-notebook/test/](https://github.com/jupyter/docker-stacks/tree/master/base-notebook/test) and
 common tests defined in [test/](https://github.com/jupyter/docker-stacks/tree/master/test).
 Both kinds of tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/reference/fixtures.html)
 defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/master/conftest.py) file at the root of the projects.
+
+## Unit tests
+
+If you want to run a python script in one of our images, you could add a unit test.
+You can do this by creating a `<somestack>-notebook/test/units/` directory, if it doesn't already exist and put your file there.
+These file will run automatically when tests are run.
+You could see an example for tensorflow package [here](https://github.com/jupyter/docker-stacks/blob/HEAD/tensorflow-notebook/test/units/unit_tensorflow.py).
 
 ## Contributing New Tests
 

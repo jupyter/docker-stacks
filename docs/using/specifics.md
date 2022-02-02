@@ -9,7 +9,11 @@ This page provides details about features specific to one or more images.
 - `-p 4040:4040` - The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images open
   [SparkUI (Spark Monitoring and Instrumentation UI)](https://spark.apache.org/docs/latest/monitoring.html) at default port `4040`,
   this option map `4040` port inside docker container to `4040` port on host machine.
-  Note every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports.
+
+  ```{note}
+  Every new spark context that is created is put onto an incrementing port (ie. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports.
+  ```
+
   For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
 
 #### IPython low-level output capture and forward
@@ -162,8 +166,10 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
 2. Run the Docker container with `--net=host` in a location that is network addressable by all of
    your Spark workers.
    (This is a [Spark networking requirement](https://spark.apache.org/docs/latest/cluster-overview.html#components).)
-   - NOTE: When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`.
-     See <https://github.com/jupyter/docker-stacks/issues/64> for details.
+
+   ```{note}
+   When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See <https://github.com/jupyter/docker-stacks/issues/64> for details._
+   ```
 
 **Note**: In the following examples we are using the Spark master URL `spark://master:7077` that shall be replaced by the URL of the Spark master.
 
@@ -243,6 +249,10 @@ rdd.sum()
 
 ### Define Spark Dependencies
 
+```{note}
+This example is given for [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/hadoop/current/install.html).
+```
+
 Spark dependencies can be declared thanks to the `spark.jars.packages` property
 (see [Spark Configuration](https://spark.apache.org/docs/latest/configuration.html#runtime-environment) for more information).
 
@@ -271,8 +281,6 @@ USER ${NB_UID}
 ```
 
 Jars will be downloaded dynamically at the creation of the Spark session and stored by default in `${HOME}/.ivy2/jars` (can be changed by setting `spark.jars.ivy`).
-
-_Note: This example is given for [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/hadoop/current/install.html)._
 
 ## Tensorflow
 

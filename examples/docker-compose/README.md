@@ -102,14 +102,17 @@ notebook/up.sh --secure --password a_secret
 Sure. If you want to secure access to publicly addressable notebook containers, you can generate a free certificate using the [Let's Encrypt](https://letsencrypt.org) service.
 
 This example includes the `bin/letsencrypt.sh` script, which runs the `letsencrypt` client to create a full-chain certificate and private key, and stores them in a Docker volume.
-_Note:_ The script hard codes several `letsencrypt` options, one of which automatically agrees to the Let's Encrypt Terms of Service.
+
+```{note}
+The script hard codes several `letsencrypt` options, one of which automatically agrees to the Let's Encrypt Terms of Service.
+```
 
 The following command will create a certificate chain and store it in a Docker volume named `mydomain-secrets`.
 
 ```bash
 FQDN=host.mydomain.com EMAIL=myemail@somewhere.com \
-  SECRETS_VOLUME=mydomain-secrets \
-  bin/letsencrypt.sh
+    SECRETS_VOLUME=mydomain-secrets \
+    bin/letsencrypt.sh
 ```
 
 Now run `up.sh` with the `--letsencrypt` option.
@@ -128,8 +131,8 @@ To hit their staging servers, set the environment variable `CERT_SERVER=--stagin
 
 ```bash
 FQDN=host.mydomain.com EMAIL=myemail@somewhere.com \
-  CERT_SERVER=--staging \
-  bin/letsencrypt.sh
+    CERT_SERVER=--staging \
+    bin/letsencrypt.sh
 ```
 
 Also, be aware that Let's Encrypt certificates are short lived (90 days).

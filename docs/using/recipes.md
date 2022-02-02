@@ -268,9 +268,7 @@ Enabling manpages in the base Ubuntu layer prevents this container bloat.
 To achieve this, use the previous `Dockerfile` with the original ubuntu image (`ubuntu:focal`) as your base container:
 
 ```dockerfile
-# Ubuntu 20.04 (focal) from 2020-04-23
-# https://github.com/docker-library/official-images/commit/4475094895093bcc29055409494cce1e11b52f94
-ARG BASE_CONTAINER=ubuntu:focal-20200423@sha256:238e696992ba9913d24cfc3727034985abd136e08ee3067982401acdc30cbf3f
+ARG BASE_CONTAINER=ubuntu:focal
 ```
 
 For Ubuntu 18.04 (bionic) and earlier, you may also require to a workaround for a mandb bug, which was fixed in mandb >= 2.8.6.1:

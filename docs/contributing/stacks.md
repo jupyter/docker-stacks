@@ -3,9 +3,10 @@
 We love to see the community create and share new Jupyter Docker images.
 We've put together a [cookiecutter project](https://github.com/jupyter/cookiecutter-docker-stacks)
 and the documentation below to help you get started defining, building, and sharing your Jupyter environments in Docker.
+
 Following these steps will:
 
-1. Setup a project on GitHub containing a Dockerfile based on either the `jupyter/base-notebook` or `jupyter/minimal-notebook` image.
+1. Setup a project on GitHub containing a Dockerfile based on any of the images we provide.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your repository.
 3. Configure Docker Hub to build and host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.html#community-stacks) in this documentation to include your image.
@@ -62,7 +63,7 @@ git init
 git add .
 git commit -m 'Seed repo'
 git remote add origin <url from github>
-git push -u origin master
+git push -u origin main
 ```
 
 ## Configuring GitHub actions
@@ -118,7 +119,11 @@ you merge a GitHub pull request to the master branch of your project.
 11. Enter a meaningful name for your token and click on **Create**
     ![DockerHub - New Access Token page with the name field set to "my-jupyter-docker-token"](../_static/docker-org-create-token.png)
 12. Copy the personal access token displayed on the next screen.
-    **Note that you will not be able to see it again after you close the pop-up window**.
+
+    ```{note}
+    you will not be able to see it again after you close the pop-up window**.
+    ```
+
 13. Head back to your GitHub repository and click on the **Settings tab**.
     ![GitHub page with the the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/github-create-secrets.png)
 14. Click on the **Secrets** section and then on the **New repository secret** button on the top right corner (see image above).
