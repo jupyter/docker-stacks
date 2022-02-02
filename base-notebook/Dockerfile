@@ -69,60 +69,62 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
    # Add call to conda init script see https://stackoverflow.com/a/58081608/4413446
    echo 'eval "$(command conda shell.bash hook 2> /dev/null)"' >> /etc/skel/.bashrc
 
+# Create NB_USER with name jovyan user with UID=1000 and in the 'users' group
+# and make sure these dirs are writable by the `users` group.
+# Setup work directory for backward-compatibility
+RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
+    sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
+    sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers && \
+    useradd -l -m -s /bin/bash -N -u "${NB_UID}" "${NB_USER}" && \
+    mkdir -p "${CONDA_DIR}" && \
+    chown "${NB_USER}:${NB_GID}" "${CONDA_DIR}" && \
+    chmod g+w /etc/passwd && \
+    mkdir "/home/${NB_USER}/work" && \
+    fix-permissions "${HOME}"
+
+USER ${NB_UID}
+ARG PYTHON_VERSION=3.9
+
 # Download and install Micromamba, and initialize Conda prefix.
 #   <https://github.com/mamba-org/mamba#micromamba>
-# Similar projects using Micromamba:
-#   - Micromamba-Docker: <https://github.com/mamba-org/micromamba-docker>
-#   - repo2docker: <https://github.com/jupyterhub/repo2docker>
-# hadolint ignore=DL3003
+#   Similar projects using Micromamba:
+#     - Micromamba-Docker: <https://github.com/mamba-org/micromamba-docker>
+#     - repo2docker: <https://github.com/jupyterhub/repo2docker>
+# Configure the environment
+# Install Python, Mamba, Jupyter Notebook, Lab, and Hub
+# Generate a notebook server config
+# Cleanup temporary files and remove Micromamba
+# Correct permissions
+# Do all this in a single RUN command to avoid duplicating all of the
+# files across image layers when the permissions change
+WORKDIR /tmp
 RUN set -x && \
-    cd /usr/local && \
     arch=$(uname -m) && \
     if [ "${arch}" == "x86_64" ]; then \
         # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
         arch="64"; \
     fi && \
-    wget --debug -qO- "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" | tar -xvj bin/micromamba && \
-    micromamba create --prefix="${CONDA_DIR}"
-
-# Create NB_USER with name jovyan user with UID=1000 and in the 'users' group
-# and make sure these dirs are writable by the `users` group.
-RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
-    sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
-    sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers && \
-    useradd -l -m -s /bin/bash -N -u "${NB_UID}" "${NB_USER}" && \
-    chown "${NB_USER}:${NB_GID}" "${CONDA_DIR}" && \
-    chmod g+w /etc/passwd && \
-    fix-permissions "${HOME}" && \
-    fix-permissions "${CONDA_DIR}"
-
-USER ${NB_UID}
-ARG PYTHON_VERSION=3.9
-
-# Setup work directory for backward-compatibility
-RUN mkdir "/home/${NB_USER}/work" && \
-    fix-permissions "/home/${NB_USER}"
-
-# Configure the environment
-# Install Python, Mamba, Jupyter Notebook, Lab, and Hub
-# Generate a notebook server config
-# Cleanup temporary files
-# Correct permissions
-# Do all this in a single RUN command to avoid duplicating all of the
-# files across image layers when the permissions change
-RUN set -x && \
+    wget -qO- "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" \
+        | tar -xvj bin/micromamba && \
+    # bin/micromamba create --prefix="${CONDA_DIR}" && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     # TODO: use `micromamba config` or report issue.
     echo "show_channel_urls: true" >> "${CONDA_DIR}/.condarc" && \
     echo "channels:" >> "${CONDA_DIR}/.condarc" && \
     echo "  - conda-forge" >> "${CONDA_DIR}/.condarc" && \    
-    micromamba install --prefix="${CONDA_DIR}" --quiet --yes \
+    bin/micromamba install \
+        --root-prefix="${CONDA_DIR}" \
+        --prefix="${CONDA_DIR}" \
+        --quiet --yes \
         "${PYTHON_SPECIFIER}" \
         'mamba' \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
+    # There should be just a single binary inside bin/
+    rm bin/micromamba && \
+    rmdir bin && \
     # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
     conda config --system --set auto_update_conda false && \
     # Pin major.minor version of python
