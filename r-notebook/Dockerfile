@@ -47,7 +47,7 @@ RUN mamba install --quiet --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# These packages are not easy to install under arm
+# `r-tidymodels` is not easy to install under arm
 # hadolint ignore=SC2039
 RUN set -x && \
     arch=$(uname -m) && \
