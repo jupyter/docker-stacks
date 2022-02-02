@@ -1,10 +1,11 @@
 # Troubleshooting Common Problems
 
-When troubleshooting, you may see unexpected behaviors or receive an error message. This section provides links for identifying the cause of the problem and how to resolve it.
+When troubleshooting, you may see unexpected behaviors or receive an error message. This section provides advice on
+how to identify and mitigate the cause of the problem and how to resolve it (for the most commlonly encountered issues).
 
-## Permission Issues
+Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](../using/common.html#Docker-Options) of the documentation.
 
-### Permission denied when mounting volumes
+## Permission denied when mounting volumes
 
 If you are running a Docker container while mounting a local volume or host directory using the `-v` flag like so:
 
@@ -19,6 +20,7 @@ you might face permissions issues when trying to access the mounted volume:
 
 ```bash
 # assuming we mounted the volume in /home/jovyan/stagingarea
+# root is the owner of the mounted volume
 $ ls -ld ~/stagingarea/
 drwxr-xr-x 2 root root 4096 Feb  1 12:55 stagingarea/
 
@@ -26,13 +28,18 @@ $ touch stagingarea/kale.txt
 touch: cannot touch 'stagingarea/kale.txt': Permission denied
 ```
 
+In this case the user of the container (`jovyan`) and the owner of the mounted volume (`root`) have different permission levels and ownership over the container's directories and mounts.
+
 **Some things to try:**
 
 1. **Change ownership of the volume mount**
 
-   You can change the ownership of the volume mount using the `chown` command. For example, to change the ownership of the volume mount to the jovyan user:
+   You can change the ownership of the volume mount using the `chown` command. In the case of the docker-stacks images, you can set the `CHOWN_EXTRA` and `CHOWN_EXTRA_OPTS` environment variables.
+
+   For example, to change the ownership of the volume mount to the jovyan user (non-privileged default user in the Docker images):
 
    ```bash
+   # running in detached mode - can also be run in interactive mode
    docker run -d \
        -v <my-vol>:<container-dir> \
        -p 8888:8888 \
@@ -44,11 +51,11 @@ touch: cannot touch 'stagingarea/kale.txt': Permission denied
 
    where:
 
-   - `CHOWN_EXTRA=<some-dir>`: will change the owner and group of the specified container directory (non recursive by default). You need to provide full paths starting with `/`.
-   - `CHOWN_EXTRA_OPTS=R`: will recursively the owner and group of of the directory specified in `CHOWN_EXTRA`.
-   - `--user root`: must run the container with the root user to perform the change of ownership.
+   - `CHOWN_EXTRA=<some-dir>`: will change the ownership and group of the specified container directory (non-recursive by default). You need to provide full paths starting with `/`.
+   - `CHOWN_EXTRA_OPTS="-R"`: will recursively change the ownership and group of the directory specified in `CHOWN_EXTRA`.
+   - `--user root`: you **must** run the container with the root user to change ownership at runtime.
 
-   so now accessing the mount should work as expected:
+   now accessing the mount should work as expected:
 
    ```bash
    # assuming we mounted the volume in /home/jovyan/stagingarea
@@ -56,23 +63,28 @@ touch: cannot touch 'stagingarea/kale.txt': Permission denied
    drwxr-xr-x 2 jovyan users 4096 Feb  1 12:55 stagingarea/
 
    $ touch stagingarea/kale.txt
+   # jovyan is now the owner of /home/jovyan/stagingarea
    $ ls -la ~/stagingarea/
    -rw-r--r-- 1 jovyan users    0 Feb  1 14:41 kale.txt
    ```
 
-   **Note**: If you are mounting your volume inside the `/home/` directory you can use the `-e CHOWN_HOME=yes` and `CHOWN_HOME_OPTS="-R"` flags instead of the
-   `-e CHOWN_EXTRA` and `-e CHOWN_EXTRA_OPTS` in the example above.
+   **Additional notes:**
+
+   - If you are mounting your volume inside the `/home/` directory, you can use the `-e CHOWN_HOME=yes` and `CHOWN_HOME_OPTS="-R"` flags instead of the `-e CHOWN_EXTRA`
+     and `-e CHOWN_EXTRA_OPTS` in the example above.
+   - This solution should work in most cases where you have created a docker volume (i.e. using the [`docker volume create --name <my-volume>`
+     command](https://docs.docker.com/storage/volumes/#create-and-manage-volumes)) and mounted it using the`-v` flag in `docker run`.
 
 2. **Matching the container's UID/GID with the host's**
 
-   Docker handles mounting host directories differently to mounting volumes, even though the syntax is essentially the same (i.e. `-v`).
+   Docker handles mounting host directories differently from mounting volumes, even though the syntax is essentially the same (i.e. `-v`).
 
-   When you initialize a Docker container using the flag `-v` the host directories are bind mounted directly into the container.
-   Therefore, the permissions and ownership are copied over and will be **exactly the same** as the ones in your local host
+   When you initialize a Docker container using the flag `-v`, the host directories are bind-mounted directly into the container.
+   Therefore, the permissions and ownership are copied over and will be **the same** as the ones in your local host
    (including user ids) which may result in permissions errors like the one displayed above.
 
    Suppose your local user has a `UID` and `GID` of `1234`. To fix the UID discrepancies between your local directories and the container's
-   directoriess, you need to set `NB_UID` and `NB_GID` to match the that of the local user:
+   directories, you can run the container with an explicit `NB_UID` and `NB_GID` to match the that of the local user:
 
    ```bash
    $ docker run -it --rm \
@@ -88,43 +100,93 @@ touch: cannot touch 'stagingarea/kale.txt': Permission denied
    Running as jovyan: bash
    ```
 
-   Some important things to notice:
+   where:
 
-   - You must use `--user root` to ensure that the `UID` is updated at runtime
-   - The caveat with this approach is that since these changes are applied at runtime, you will need to to re-run the same command
-     with the appropriate flags and environment variables if you need to recreate the container
+   - `NB_IUD` and `NB_GID` should match the local user's UID and GID.
+   - You must use `--user root` to ensure that the `UID` and `GID` are updated at runtime.
 
-     **Note** that this approach only updates the UID and GID of the existing jovyan user:
+   **Additional notes:**
+
+   - The caveat with this approach is that since these changes are applied at runtime, you will need to re-run the same command
+     with the appropriate flags and environment variables if you need to recreate the container (i.e. after removing/destroying it).
+
+   - This approach only updates the UID and GID of the **existing `jovyan` user** instead of creating a new user, so from the above example you'd get the following:
+
+     ```bash
+     $ id
+     uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
+     ```
+
+     If you need to specify a different user check the following section in this page.
+
+## Permission issues after changing the UID/GIU and USER in the container
+
+If on top of changing the UID and GID you also **need to create a new user**, you might be experiencing any of the following issues:
+
+- `root` is the owner of `/home` or a mounted volume
+- when starting the container, you get an error such as `Failed to change ownership of the home directory.`
+- getting permission denied when trying to `conda install` packages
+
+**Some things to try:**
+
+1. **Ensure the new user has ownership of `/home` and volume mounts**
+
+   For example, say you want to create a user `callisto` with a `GID` and `UID` of 1234, you will have to add the following flags to the docker run command:
 
    ```bash
-   $ id
-   uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
+    docker run -it --rm \
+        --user root \
+        -e NB_USER=callisto \
+        -e NB_UID=1234 \
+        -e NB_GID=1234 \
+        -e CHOWN_HOME=yes \
+        -e CHOWN_HOME_OPTS="-R" \
+        -w "/home/${NB_USER}" \
+        -v $(PWD)/test:/home/callisto/work \
+        jupyter/minimal-notebook
+
+    # expected output
+    Updated the jovyan user:
+    - username: jovyan       -> callisto
+    - home dir: /home/jovyan -> /home/callisto
+    Update callisto's UID:GID to 1234:1234
+    Attempting to copy /home/jovyan to /home/callisto...
+    Success!
+    Ensuring /home/callisto is owned by 1234:1234
+    Running as callisto: bash
    ```
 
-If on top of changing the UID and GID you also need to create a new user (and thus ensure this user has a home directory) you can use the following command:
+   where:
 
-```bash
- docker run -it --rm \
- --user root \
- -e NB_UID=1234 \
- -e NB_GID=1234 \
- -e NB_USER=trallard \
- -e CHOWN_HOME=yes \
- -e CHOWN_HOME_OPTS="-R" \
- -w "/home/${NB_USER}" \
- -v $(PWD)/test:/home/trallard/work \
-  jupyter/minimal-notebook start.sh
+   - `-e NB_USER=callisto`: will create a new user `callisto` and automatically add it to the `users` group (does not delete jovyan)
+   - `-e NB_UID=1234` and `-e NB_GID=1234`: will set the `UID` and `GID` of the new user (`callisto`) to `1234`
+   - `-e CHOWN_HOME_OPTS="-R"` and `-e CHOWN_HOME=yes`: ensure that the new user is the owner of the `/home` directory and subdirectories
+     (setting `CHOWN_HOME_OPTS="-R` will ensure this change is applied recursively)
+   - `-w "/home/${NB_USER}"` sets the working directory to be the new user's home
+   - **mounting volumes**: in this case, the `-v` flag is used to mount the local volume onto the `/home` directory; if you, however, are mounting these volumes elsewhere,
+     you also need to use the `-e CHOWN_EXTRA=<some-dir>` flag to avoid any permission issues (see section above)
 
- # expected output
- Updated the jovyan user:
- - username: jovyan       -> trallard
- - home dir: /home/jovyan -> /home/trallard
- Update trallard's UID:GID to 1234:1234
- Attempting to copy /home/jovyan to /home/trallard...
- Success!
- Ensuring /home/trallard is owned by 1234:1234
- Running as trallard: bash
-```
+2. **Dynamically assign the user ID and GID**
+
+   The above case ensures that the `/home` directory is owned by the a newly created user with an specific `UID` and `GID`, but if you want to assign the `UID` and `GID`
+   of the new user dynamically you can make the following adjustments:
+
+   ```bash
+   docker run -it --rm \
+       --user root \
+       -e NB_USER=callisto \
+       -e NB_UID="$(id -u)" \
+       -e NB_GID="$(id -g)"  \
+       -e CHOWN_HOME=yes \
+       -e CHOWN_HOME_OPTS="-R" \
+       -w "/home/${NB_USER}" \
+       -v $(PWD)/test:/home/callisto/work \
+       jupyter/minimal-notebook
+   ```
+
+   where:
+
+   - `"$(id -u)" and "$(id -g)"` will dynamically assign the `UID` and `GID` of the new user (`callisto`) to that of the local user executing the run command
 
 **Additional tips and troubleshooting commands:**
 
@@ -134,26 +196,26 @@ If on top of changing the UID and GID you also need to create a new user (and th
   -v $(PWD)/<my-vol>:/home/jovyan/work
   ```
 
-  in this example, we use the syntax `$(PWD)` which will be replaced with the full path to the current directory. The destination path should also be an absolute path starting with a `/` such as `home/jovyan/work`.
+  In this example, we use the syntax `$(PWD)`, which is replaced with the full path to the current directory. The destination path should also be an absolute path starting with a `/` such as `home/jovyan/work`.
 
 - You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_GID` and `-e NB_UID`:
 
   ```bash
   # note this will use the same UID from
-  # the user calling the command thus matching the local host
+  # the user calling the command, thus matching the local host
 
   docker run -it --rm \
-      --user "$(id -u)" --group-add users \ # $(id -u) prints the UID of the user that called docker run
+      --user "$(id -u)" --group-add users \
       -v <my-vol>:/home/jovyan/work jupyter/datascience-notebook
   ```
 
-  this command will not only launch the container with a specific user UID, but also add the that user to the `users` group so that it can modify the files in the default `/home` and `/opt/conda` directories.
+  This command will launch the container with a specific user UID and add that user to the `users` group so that it can modify the files in the default `/home` and `/opt/conda` directories.
   Further avoiding issues when trying to `conda install` additional packages.
 
 - Use `docker inspect <container_id>` and look for the [`Mounts` section](https://docs.docker.com/storage/volumes/#start-a-container-with-a-volume) to verify that the volume was created and mounted accordingly:
 
   ```json
-  # for example for a my-vol volume created with docker volume create <my-vol>
+  # for example, for a my-vol volume created with docker volume create <my-vol>
 
   "Mounts": [
         {
@@ -168,15 +230,3 @@ If on top of changing the UID and GID you also need to create a new user (and th
         }
     ],
   ```
-
-<!-- When you chown a file to a particular user/group using the username or group name, chown will look in /etc/passwd for the username and /etc/group for the group to attempt to map the name to an ID. If the username / group name doesn't exist in those files, chown will fail.
-
-docker run -it --rm \
-  -p 8888:8888 \
-  -v ~/Users/tania/docker-test:/home/jovyan/work jupyter/base-notebook \
-
-  docker run -d \
-  -p 8888:8888 \
-  --name stagingtest \
-  -v jupyter-staging:/home/jovyan/work \
-  jupyter/base-notebook  -->
