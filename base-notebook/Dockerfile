@@ -99,15 +99,22 @@ ARG PYTHON_VERSION=3.9
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 WORKDIR /tmp
-# hadolint ignore=DL4001
+# hadolint ignore=DL4001,DL3047
 RUN set -x && \
     arch=$(uname -m) && \
     if [ "${arch}" == "x86_64" ]; then \
         # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
         arch="64"; \
     fi && \
-    curl --verbose -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" > micromamba.tar.bz2 && \
+    uname -a && \
+    echo "${arch}" && \
+    wget --version && \
+    curl --version && \
     wget --debug -qO micromamba2.tar.bz2 "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" && \
+    ls -al && \
+    md5sum ./* && \
+    head -c 100 micromamba2.tar.bz2 && \
+    curl --verbose -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" > micromamba.tar.bz2 && \
     ls -al && \
     md5sum ./* && \
     tar -xvjf micromamba.tar.bz2 bin/micromamba && \
