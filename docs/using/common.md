@@ -72,7 +72,7 @@ You do so by passing arguments to the `docker run` command.
 - `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
   You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
 
-## Permision-specific configurations
+## Permission-specific configurations
 
 - `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
   For example, if setting `umask` to `002`, new files will be readable and writable by group members instead of the owner only.
