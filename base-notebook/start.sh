@@ -169,7 +169,7 @@ if [ "$(id -u)" == 0 ] ; then
         PYTHONPATH="${PYTHONPATH:-}" \
         "${cmd[@]}"
         # Notes on how we ensure that the environment that this container is started
-        # with is preserved (except vars listen in JUPYTER_ENV_VARS_TO_UNSET) when
+        # with is preserved (except vars listed in JUPYTER_ENV_VARS_TO_UNSET) when
         # we transition from running as root to running as NB_USER.
         #
         # - We use `sudo` to execute the command as NB_USER. What then
