@@ -67,7 +67,11 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
    # Add call to conda init script see https://stackoverflow.com/a/58081608/4413446
    echo 'eval "$(command conda shell.bash hook 2> /dev/null)"' >> /etc/skel/.bashrc
 
-# Download and install micromamba, and initialize Conda prefix
+# Download and install Micromamba, and initialize Conda prefix.
+#   <https://github.com/mamba-org/mamba#micromamba>
+# Similar projects using Micromamba:
+#   - Micromamba-Docker: <https://github.com/mamba-org/micromamba-docker>
+#   - repo2docker: <https://github.com/jupyterhub/repo2docker>
 # hadolint ignore=DL3003
 RUN set -x && \
     cd /usr/local && \
