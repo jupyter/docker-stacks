@@ -182,22 +182,18 @@ if [ "$(id -u)" == 0 ] ; then
         #
         # - We use the `--preserve-env` flag to pass through most environment
         #   variables, but understand that exceptions are caused by the sudoers
-        #   configuration: `env_delete`, `env_check`, and `secure_path`.
+        #   configuration: `env_delete` and `env_check`.
         #
-        # - We use the `--set-home` flag to set the HOME variable appropriatly.
+        # - We use the `--set-home` flag to set the HOME variable appropriately.
         #
-        # - We reduce the `env_delete` list of default variables to be deleted. It
-        #   has higher priority than the `--preserve-env` flag and `env_keep`
-        #   configuration.
+        # - To reduce the default list of variables deleted by sudo, we could have
+        #   used `env_delete` from /etc/sudoers. It has higher priority than the
+        #   `--preserve-env` flag and the `env_keep` configuration.
         #
-        # - We disable the `secure_path` which is set by default in /etc/sudoers as
-        #   it would override the PATH variable.
-        # Note on the purpose of "PATH=${PATH}":
-        #   In case "${cmd[@]}" is "bash", then PATH will be used by this bash shell.
-        #   However, PATH is irrelevant to how the above sudo command resolves the
-        #   path of "${cmd[@]}". Sudo's path resolution is done via the "secure_path"
-        #   variable set above in /etc/sudoers.d/path.
-
+        # - We preserve PATH and PYTHONPATH explicitly. Note however that PATH is
+        #   irrelevant to how the above sudo command resolves the path of `${cmd[@]}`.
+        #   Sudo uses the "secure_path" variable we modified above in
+        #   /etc/sudoers.d/path. (PATH is useful e.g. when `${cmd[@]}` is `bash`.)
 
 # The container didn't start as the root user, so we will have to act as the
 # user we started as.
