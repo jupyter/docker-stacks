@@ -41,6 +41,7 @@ RUN apt-get update --yes && \
     #   https://github.com/krallin/tini#why-tini for details.
     tini \
     wget \
+    curl \
     # - bzip2 is necessary to extract the micromamba executable.
     bzip2 && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
@@ -104,7 +105,7 @@ RUN set -x && \
         # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
         arch="64"; \
     fi && \
-    wget -qO- "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" \
+    curl -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" \
         | tar -xvj bin/micromamba && \
     # bin/micromamba create --prefix="${CONDA_DIR}" && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
