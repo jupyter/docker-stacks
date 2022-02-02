@@ -18,7 +18,7 @@ To build new images and publish them to the Docker Hub registry, do the followin
 Other images are directly or indirectly inherited from `minimal-notebook`.
 We rebuild our images automatically each week, which means they receive the updates quite frequently.
 
-When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger images rebuild [here](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
+When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger images rebuild [from the GitHub actions workflow UI](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
 Pushing `Run Workflow` button will trigger this process.
 
 ## Adding a New Core Image to Docker Hub

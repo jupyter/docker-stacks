@@ -6,7 +6,7 @@ This means that packages might have old versions.
 Images are rebuilt weekly, so usually, packages receive updates quite frequently.
 
 ```{note}
-We pin major.minor version of python, so it will stay the same even after `mamba update` command.
+We pin major.minor version of python, so this will stay the same even after invoking the `mamba update` command.
 ```
 
 ## Outdated packages

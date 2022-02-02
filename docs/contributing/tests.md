@@ -15,8 +15,8 @@ defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/maste
 
 ## Unit tests
 
-If you want to simply run a python script in one of our images, you could add a unit test.
-Simply create `<somestack>-notebook/test/units/` directory, if it doesn't already exist and put your file there.
+If you want to run a python script in one of our images, you could add a unit test.
+You can do this by creating a `<somestack>-notebook/test/units/` directory, if it doesn't already exist and put your file there.
 These file will run automatically when tests are run.
 You could see an example for tensorflow package [here](https://github.com/jupyter/docker-stacks/blob/HEAD/tensorflow-notebook/test/units/unit_tensorflow.py).
 
