@@ -162,6 +162,7 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
 2. Run the Docker container with `--net=host` in a location that is network addressable by all of
    your Spark workers.
    (This is a [Spark networking requirement](https://spark.apache.org/docs/latest/cluster-overview.html#components).)
+
    ```{note}
    When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See <https://github.com/jupyter/docker-stacks/issues/64> for details._
    ```
