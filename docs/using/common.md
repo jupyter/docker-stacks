@@ -207,7 +207,7 @@ For example, to run the text-based `ipython` console in a container, do the foll
 docker run -it --rm jupyter/base-notebook start.sh ipython
 ```
 
-Or, to run Jupyter Notebook classic instead of the JupyterLab, run the following:
+Or, to run Jupyter Notebook classic instead of JupyterLab, run the following:
 
 ```bash
 docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter notebook

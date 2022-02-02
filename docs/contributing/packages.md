@@ -5,7 +5,9 @@ The dependencies resolution is a difficult thing to do
 This means that packages might have old versions.
 Images are rebuilt weekly, so usually, packages receive updates quite frequently.
 
-_Note: We pin major.minor version of python, so it will stay the same even after `mamba update` command._
+```{note}
+We pin major.minor version of python, so it will stay the same even after `mamba update` command.
+```
 
 ## Outdated packages
 

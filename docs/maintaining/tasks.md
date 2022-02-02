@@ -22,7 +22,9 @@ Pushing `Run Workflow` button will trigger this process.
 
 ## Adding a New Core Image to Docker Hub
 
-_Note: in general, we do not add new core images and ask contributors to either create a [recipe](../using/recipes.md) or [community stack](../using/stacks.md)_
+```{note}
+In general, we do not add new core images and ask contributors to either create a [recipe](../using/recipes.md) or [community stack](../using/stacks.md).
+```
 
 When there's a new stack definition, do the following before merging the PR with the new stack:
 
