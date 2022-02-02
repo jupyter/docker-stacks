@@ -117,6 +117,8 @@ In this case the user of the container (`jovyan`) and the owner of the mounted v
      uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
      ```
 
+   - If you pass a numeric UID, it must be in the range of 0-2147483647
+
      If you need to specify a different user check the following section in this page.
 
 ## Permission issues after changing the UID/GIU and USER in the container
@@ -188,7 +190,7 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
 
    - `"$(id -u)" and "$(id -g)"` will dynamically assign the `UID` and `GID` of the new user (`callisto`) to that of the local user executing the run command
 
-**Additional tips and troubleshooting commands:**
+## Additional tips and troubleshooting commands
 
 - Use absolute paths when using the `-v` flag:
 
@@ -196,7 +198,8 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
   -v $(PWD)/<my-vol>:/home/jovyan/work
   ```
 
-  In this example, we use the syntax `$(PWD)`, which is replaced with the full path to the current directory. The destination path should also be an absolute path starting with a `/` such as `home/jovyan/work`.
+  In this example, we use the syntax `$(PWD)`, which is replaced with the full path to the current directory. The destination
+  path should also be an absolute path starting with a `/` such as `home/jovyan/work`.
 
 - You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_GID` and `-e NB_UID`:
 
@@ -215,7 +218,8 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
 - Use `docker inspect <container_id>` and look for the [`Mounts` section](https://docs.docker.com/storage/volumes/#start-a-container-with-a-volume) to verify that the volume was created and mounted accordingly:
 
   ```json
-  # for example, for a my-vol volume created with docker volume create <my-vol>
+  # for example, for a my-vol volume created with
+  # docker volume create --name <my-vol>
 
   "Mounts": [
         {
