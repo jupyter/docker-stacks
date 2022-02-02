@@ -82,7 +82,7 @@ RUN set -x && \
         # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
         arch="64"; \
     fi && \
-    wget -qO- "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" | tar -xvj bin/micromamba && \
+    wget --debug -qO- "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" | tar -xvj bin/micromamba && \
     micromamba create --prefix="${CONDA_DIR}"
 
 # Create NB_USER with name jovyan user with UID=1000 and in the 'users' group
