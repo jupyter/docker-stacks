@@ -98,10 +98,15 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     chown "${NB_USER}:${NB_GID}" "${CONDA_DIR}" && \
     chmod g+w /etc/passwd && \
     mkdir "/home/${NB_USER}/work" && \
-    fix-permissions "${HOME}"
+    fix-permissions "${HOME}" && \
+    fix-permissions "${CONDA_DIR}"
 
 USER ${NB_UID}
 ARG PYTHON_VERSION=3.9
+
+# Setup work directory for backward-compatibility
+RUN mkdir "/home/${NB_USER}/work" && \
+    fix-permissions "/home/${NB_USER}"
 
 # Download and install Micromamba, and initialize Conda prefix.
 #   <https://github.com/mamba-org/mamba#micromamba>
