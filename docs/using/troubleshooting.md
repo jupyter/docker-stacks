@@ -93,7 +93,7 @@ The following sections cover a few of these scenarios and how to fix them.
        -p 8888:8888 \
        -e NB_UID=1234 \
        -e NB_GID=5678 \
-       -v "$(PWD)"/test:/home/jovyan/work \
+       -v "${PWD}"/test:/home/jovyan/work \
        jupyter/minimal-notebook:latest
 
    # you should see an output similar to this
@@ -141,7 +141,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
         -e CHOWN_HOME=yes \
         -e CHOWN_HOME_OPTS="-R" \
         -w "/home/${NB_USER}" \
-        -v "$(PWD)"/test:/home/callisto/work \
+        -v "${PWD}"/test:/home/callisto/work \
         jupyter/minimal-notebook
 
     # Updated the jovyan user:
@@ -184,7 +184,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
        -e CHOWN_HOME=yes \
        -e CHOWN_HOME_OPTS="-R" \
        -w "/home/${NB_USER}" \
-       -v "$(PWD)"/test:/home/callisto/work \
+       -v "${PWD}"/test:/home/callisto/work \
        jupyter/minimal-notebook
    ```
 
@@ -197,7 +197,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
 - Pass absolute paths to the `-v` flag:
 
   ```bash
-  -v "$(PWD)"/<my-vol>:/home/jovyan/work
+  -v "${PWD}"/<my-vol>:/home/jovyan/work
   ```
 
   This example uses the syntax `$(PWD)`, which is replaced with the full path to the current directory at runtime. The destination
