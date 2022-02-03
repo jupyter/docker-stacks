@@ -272,10 +272,10 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
   ```bash
   # example log output from the docker run command
 
-  [...]
-  Or copy and paste one of these URLs:
-    http://3d4cf3809e3f:8888/?token=996426e890f8dc22fa6835a44442b6026cba02ee61fee6a2
-    or http://127.0.0.1:8888/?token=996426e890f8dc22fa6835a44442b6026cba02ee61fee6a2
+  # [...]
+  # Or copy and paste one of these URLs:
+  #   http://3d4cf3809e3f:8888/?token=996426e890f8dc22fa6835a44442b6026cba02ee61fee6a2
+  #   or http://127.0.0.1:8888/?token=996426e890f8dc22fa6835a44442b6026cba02ee61fee6a2
   ```
 
 **Some things to try:**
