@@ -16,7 +16,7 @@ Example: `jupyter/scipy-notebook`
 
 **What complete docker command do you run to launch the container (omitting sensitive values)?**
 
-Example: `docker run -it --rm -p 8888:8888 jupyter/all-spark-notebook:latest`
+Example: `docker run -it --rm -p 8888:8888 jupyter/all-spark-notebook`
 
 **What steps do you take once the container is running to reproduce the issue?**
 

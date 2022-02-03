@@ -1,29 +1,29 @@
 # Common Features
 
-By default, a container launched from any Jupyter Docker Stacks image runs a Jupyter Notebook server.
+By default, a container launched from any Jupyter Docker Stacks image runs a Jupyter Server with JupyterLab frontend.
 The container does so by executing a `start-notebook.sh` script.
-This script configures the internal container environment and then runs `jupyter notebook`, passing any command line arguments received.
+This script configures the internal container environment and then runs `jupyter lab`, passing any command line arguments received.
 
 This page describes the options supported by the startup script and how to bypass it to run alternative commands.
 
-## Notebook Options
+## Jupyter Server Options
 
-You can pass [Jupyter command line options](https://jupyter-notebook.readthedocs.io/en/stable/config.html#options) to the `start-notebook.sh` script when launching the container.
-For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token, you can run the following:
+You can pass [Jupyter server options](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html) to the `start-notebook.sh` script when launching the container.
 
-```bash
-docker run -d -p 8888:8888 \
-    jupyter/base-notebook start-notebook.sh \
-    --NotebookApp.password='sha1:74ba40f8a388:c913541b7ee99d15d5ed31d4226bf7838f83a50e'
-```
+1. For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token,
+   you can run the following (this hash was generated for `my-password` password):
 
-For example, to set the base URL of the notebook server, you can run the following:
+   ```bash
+   docker run -it --rm -p 8888:8888 jupyter/base-notebook \
+       start-notebook.sh --NotebookApp.password='sha1:7cca89c48283:e3c1f9fbc06d1d2aa59555dfd5beed925e30dd2c'
+   ```
 
-```bash
-docker run -d -p 8888:8888 \
-    jupyter/base-notebook start-notebook.sh \
-    --NotebookApp.base_url=/some/path
-```
+2. To set the [base URL](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html#running-the-notebook-with-a-customized-url-prefix) of the notebook server, you can run the following:
+
+   ```bash
+   docker run  -it --rm -p 8888:8888 jupyter/base-notebook \
+       start-notebook.sh --NotebookApp.base_url=/customized/url/prefix/
+   ```
 
 ## Docker Options
 
@@ -42,9 +42,13 @@ You do so by passing arguments to the `docker run` command.
   Example usage:
 
   ```bash
-  docker run --rm -it -p 8888:8888 \
-      -e NB_USER="my-username" -e CHOWN_HOME=yes \
-      -w "/home/${NB_USER}" --user root jupyter/base-notebook:latest
+  docker run -it --rm \
+      -p 8888:8888 \
+      --user root \
+      -e NB_USER="my-username" \
+      -e CHOWN_HOME=yes \
+      -w "/home/${NB_USER}" \
+      jupyter/base-notebook
   ```
 
 - `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
@@ -104,7 +108,8 @@ You do so by passing arguments to the `docker run` command.
 
 ### Additional runtime configurations
 
-- `-e GEN_CERT=yes` - Instructs the startup script to generate a self-signed SSL certificate and configure Jupyter Notebook to use it to accept encrypted HTTPS connections.
+- `-e GEN_CERT=yes` - Instructs the startup script to generate a self-signed SSL certificate.
+  Configures Jupyter Server to use it to accept encrypted HTTPS connections.
 - `-e DOCKER_STACKS_JUPYTER_CMD=<jupyter command>` - Instructs the startup script to run `jupyter ${DOCKER_STACKS_JUPYTER_CMD}` instead of the default `jupyter lab` command.
   See [Switching back to the classic notebook or using a different startup command][switch_back] for available options.
   This setting is helpful in container orchestration environments where setting environment variables is more straightforward than changing command line parameters.
@@ -115,29 +120,31 @@ You do so by passing arguments to the `docker run` command.
   **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
 - `-e JUPYTER_ENV_VARS_TO_UNSET=ADMIN_SECRET_1,ADMIN_SECRET_2` - Unsets specified environment variables in the default startup script.
   The variables are unset after the hooks have been executed but before the command provided to the startup script runs.
-- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to launch `jupyter lab` or `jupyter notebook`. This way, the user could use any option supported by `jupyter`.
+- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to add to `jupyter` commands.
+  This way, the user could use any option supported by `jupyter` subcommand.
 
 ## Startup Hooks
 
 You can further customize the container environment by adding shell scripts (`*.sh`) to be sourced
 or executables (`chmod +x`) to be run to the paths below:
 
-- `/usr/local/bin/start-notebook.d/` - handled before any of the standard options noted above
-  are applied
-- `/usr/local/bin/before-notebook.d/` - handled after all of the standard options noted above are applied and ran right before the notebook server launches
+- `/usr/local/bin/start-notebook.d/` - handled **before** any of the standard options noted above are applied
+- `/usr/local/bin/before-notebook.d/` - handled **after** all of the standard options noted above are applied
+  and ran right before the notebook server launches
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
 script for execution details.
 
 ## SSL Certificates
 
-You may mount an SSL key and certificate file into a container and configure the Jupyter Notebook to use them to accept HTTPS connections.
+You may mount an SSL key and certificate file into a container and configure the Jupyter Server to use them to accept HTTPS connections.
 For example, to mount a host folder containing a `notebook.key` and `notebook.crt` and use them, you might run the following:
 
 ```bash
-docker run -d -p 8888:8888 \
+docker run -it --rm -p 8888:8888 \
     -v /some/host/folder:/etc/ssl/notebook \
-    jupyter/base-notebook start-notebook.sh \
+    jupyter/base-notebook \
+    start-notebook.sh \
     --NotebookApp.keyfile=/etc/ssl/notebook/notebook.key \
     --NotebookApp.certfile=/etc/ssl/notebook/notebook.crt
 ```
@@ -146,9 +153,10 @@ Alternatively, you may mount a single PEM file containing both the key and certi
 For example:
 
 ```bash
-docker run -d -p 8888:8888 \
+docker run -it --rm -p 8888:8888 \
     -v /some/host/folder/notebook.pem:/etc/ssl/notebook.pem \
-    jupyter/base-notebook start-notebook.sh \
+    jupyter/base-notebook \
+    start-notebook.sh \
     --NotebookApp.certfile=/etc/ssl/notebook.pem
 ```
 
@@ -188,13 +196,15 @@ Example:
 
 ```bash
 # Run Jupyter Notebook on Jupyter Server
-docker run -it --rm -p 8888:8888 \
+docker run -it --rm \
+    -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
     jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
 # Run Jupyter Notebook classic
-docker run -it --rm -p 8888:8888 \
+docker run -it --rm \
+    -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
     jupyter/base-notebook
 # Executing the command: jupyter nbclassic ...
@@ -208,12 +218,6 @@ For example, to run the text-based `ipython` console in a container, do the foll
 
 ```bash
 docker run -it --rm jupyter/base-notebook start.sh ipython
-```
-
-Or, to run Jupyter Notebook classic instead of JupyterLab, run the following:
-
-```bash
-docker run -it --rm -p 8888:8888 jupyter/base-notebook start.sh jupyter notebook
 ```
 
 This script is handy when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.
@@ -230,7 +234,7 @@ The `/opt/conda/bin` directory is part of the default `jovyan` user's `${PATH}`.
 That directory is also searched for binaries when run using `sudo` (`sudo my_binary` will search for `my_binary` in `/opt/conda/bin/`
 
 The `jovyan` user has full read/write access to the `/opt/conda` directory.
-You can use either `pip`, `conda` or `mamba` to install new packages without any additional permissions.
+You can use either `mamba`, `pip` or `conda` (`mamba` is recommended) to install new packages without any additional permissions.
 
 ```bash
 # install a package into the default (python 3.x) environment and cleanup after

@@ -9,8 +9,9 @@
 Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter) containing Jupyter applications and interactive computing tools.
 You can use a stack image to do any of the following (and more):
 
+- Start a personal Jupyter Server with JupyterLab frontend (default)
+- Run JupyterLab for a team using JupyterHub
 - Start a personal Jupyter Notebook server in a local Docker container
-- Run JupyterLab servers for a team using JupyterHub
 - Write your own project Dockerfile
 
 ## Quick Start
@@ -48,7 +49,7 @@ This command pulls the `jupyter/datascience-notebook` image tagged `b418b67c225b
 It then starts an _ephemeral_ container running a Jupyter Server and exposes the server on host port 10000.
 
 ```bash
-docker run --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:b418b67c225b
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:b418b67c225b
 ```
 
 The use of the `-v` flag in the command mounts the current working directory on the host (`{PWD}` in the example command) as `/home/jovyan/work` in the container.
@@ -58,6 +59,7 @@ Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
 
 Due to the usage of [the flag `--rm`](https://docs.docker.com/engine/reference/run/#clean-up---rm) Docker automatically cleans up the container and removes the file
 system when the container exits, but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
+[The `-it` flag](https://docs.docker.com/engine/reference/commandline/run/#assign-name-and-allocate-pseudo-tty---name--it) allocates pseudo-TTY.
 
 ## Contributing
 
@@ -86,8 +88,8 @@ We will happily grant additional permissions (e.g., ability to merge PRs) to any
 
 Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), JupyterLab is now the default for all of the Jupyter Docker stack images.
 It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
-You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` command) at container startup,
-more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#docker-options).
+You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` subcommand) at container startup,
+more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#alternative-commands).
 
 According to the Jupyter Notebook project status and its compatibility with JupyterLab,
 these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another _classic-like_ UI built atop JupyterLab.
