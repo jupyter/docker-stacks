@@ -148,7 +148,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
     Updated the jovyan user:
     - username: jovyan       -> callisto
     - home dir: /home/jovyan -> /home/callisto
-    Update callisto's UID:GID to 1234:1234
+    Update callisto UID:GID to 1234:1234
     Attempting to copy /home/jovyan to /home/callisto...
     Success!
     Ensuring /home/callisto is owned by 1234:1234
