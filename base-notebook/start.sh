@@ -190,10 +190,11 @@ if [ "$(id -u)" == 0 ] ; then
         #   used `env_delete` from /etc/sudoers. It has higher priority than the
         #   `--preserve-env` flag and the `env_keep` configuration.
         #
-        # - We preserve PATH and PYTHONPATH explicitly. Note however that PATH is
-        #   irrelevant to how the above sudo command resolves the path of `${cmd[@]}`.
-        #   Sudo uses the "secure_path" variable we modified above in
-        #   /etc/sudoers.d/path. (PATH is useful e.g. when `${cmd[@]}` is `bash`.)
+        # - We preserve PATH and PYTHONPATH explicitly. Note however that sudo
+        #   resolves `${cmd[@]}` using the "secure_path" variable we modified
+        #   above in /etc/sudoers.d/path. Thus PATH is irrelevant to how the above
+        #   sudo command resolves the path of `${cmd[@]}`. The PATH will be relevant
+        #   for resolving paths of any subprocesses spawned by `${cmd[@]}`.
 
 # The container didn't start as the root user, so we will have to act as the
 # user we started as.
