@@ -21,11 +21,11 @@ you might face permissions issues when trying to access the mounted volume:
 ```bash
 # assuming we mounted the volume in /home/jovyan/stagingarea
 # root is the owner of the mounted volume
-$ ls -ld ~/stagingarea/
-drwxr-xr-x 2 root root 4096 Feb  1 12:55 stagingarea/
+ls -ld ~/stagingarea/
+# drwxr-xr-x 2 root root 4096 Feb  1 12:55 stagingarea/
 
-$ touch stagingarea/kale.txt
-touch: cannot touch 'stagingarea/kale.txt': Permission denied
+touch stagingarea/kale.txt
+# touch: cannot touch 'stagingarea/kale.txt': Permission denied
 ```
 
 In this case, the user of the container (`jovyan`) and the owner of the mounted volume (`root`) have different permission levels and ownership over the container's directories and mounts.
@@ -60,13 +60,13 @@ The following sections cover a few of these scenarios and how to fix them.
 
    ```bash
    # assuming we mounted the volume in /home/jovyan/stagingarea
-   $ ls -ld ~/stagingarea
-   drwxr-xr-x 2 jovyan users 4096 Feb  1 12:55 stagingarea/
+   ls -ld ~/stagingarea
+   # drwxr-xr-x 2 jovyan users 4096 Feb  1 12:55 stagingarea/
 
-   $ touch stagingarea/kale.txt
+   touch stagingarea/kale.txt
    # jovyan is now the owner of /home/jovyan/stagingarea
-   $ ls -la ~/stagingarea/
-   -rw-r--r-- 1 jovyan users    0 Feb  1 14:41 kale.txt
+   # ls -la ~/stagingarea/
+   # -rw-r--r-- 1 jovyan users    0 Feb  1 14:41 kale.txt
    ```
 
    ```{admonition} Additional notes
@@ -88,7 +88,7 @@ The following sections cover a few of these scenarios and how to fix them.
    directories, you can run the container with an explicit `NB_UID` and `NB_GID` to match the that of the local user:
 
    ```bash
-   $ docker run -it --rm \
+   docker run -it --rm \
        --user root \
        -p 8888:8888 \
        -e NB_UID=1234 \
@@ -97,8 +97,8 @@ The following sections cover a few of these scenarios and how to fix them.
        jupyter/minimal-notebook:latest
 
    # you should see an output similar to this
-   Update jovyan's UID:GID to 1234:1234
-   Running as jovyan: bash
+   # Update jovyan's UID:GID to 1234:1234
+   # Running as jovyan: bash
    ```
 
    where:
@@ -106,15 +106,16 @@ The following sections cover a few of these scenarios and how to fix them.
    - `NB_IUD` and `NB_GID` should match the local user's UID and GID.
    - You **must** use `--user root` to ensure that the `UID` and `GID` are updated at runtime.
 
-   ````{admonition} Additional notes
-   - The caveat with this approach is that since these changes are applied at runtime, you will need to re-run the same command
-     with the appropriate flags and environment variables if you need to recreate the container (i.e. after removing/destroying it).
-   - If you pass a numeric UID, it **must** be in the range of 0-2147483647
-   - This approach only updates the UID and GID of the **existing `jovyan` user** instead of creating a new user. From the above example:
-     ```bash
-     id
-     # uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
-   ````
+````{admonition} Additional notes
+- The caveat with this approach is that since these changes are applied at runtime, you will need to re-run the same command
+   with the appropriate flags and environment variables if you need to recreate the container (i.e. after removing/destroying it).
+ - If you pass a numeric UID, it **must** be in the range of 0-2147483647
+ - This approach only updates the UID and GID of the **existing `jovyan` user** instead of creating a new user. From the above example:
+   ```bash
+   id
+   # uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
+   ```
+````
 
 ## Permission issues after changing the UID/GIU and USER in the container
 
@@ -197,7 +198,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
 - Pass absolute paths to the `-v` flag:
 
   ```bash
-  -v $(PWD)/<my-vol>:/home/jovyan/work
+  -v '$(PWD)'/<my-vol>:/home/jovyan/work
   ```
 
   This example uses the syntax `$(PWD)`, which is replaced with the full path to the current directory at runtime. The destination
@@ -243,14 +244,14 @@ If you have also **created a new user**, you might be experiencing any of the fo
 By default, the docker-stacks images have the conda channels priority set to `strict`. This may cause problems when trying to install packages from a channel with lower priority.
 
 ```bash
-$ conda config --show | grep priority
+conda config --show | grep priority
 # channel_priority: strict
 
 # to see its meaning
-$ conda config --describe channel_priority
+conda config --describe channel_priority
 
 # checking the current channels
-$ conda config --show default_channels
+conda config --show default_channels
 # default_channels:
 # - https://repo.anaconda.com/pkgs/main
 # - https://repo.anaconda.com/pkgs/r
@@ -262,7 +263,7 @@ You can install packages from other conda channels (e.g. bioconda) by disabling 
 
 ```bash
 # install by disabling channel priority at command level
-$ conda install --no-channel-priority -c bioconda bioconductor-geoquery
+conda install --no-channel-priority -c bioconda bioconductor-geoquery
 ```
 
 ## Tokens are being rejected
