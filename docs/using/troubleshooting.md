@@ -84,7 +84,7 @@ The following sections cover a few of these scenarios and how to fix them.
    Therefore, the permissions and ownership are copied over and will be **the same** as the ones in your local host
    (including user ids) which may result in permissions errors when trying to access directories or create/modify files inside.
 
-   Suppose your local user has a `UID` and `GID` of `1234`. To fix the UID discrepancies between your local directories and the container's
+   Suppose your local user has a `UID` and `GID` of `1234` and `5678`, respectively. To fix the UID discrepancies between your local directories and the container's
    directories, you can run the container with an explicit `NB_UID` and `NB_GID` to match the that of the local user:
 
    ```bash
@@ -92,12 +92,12 @@ The following sections cover a few of these scenarios and how to fix them.
        --user root \
        -p 8888:8888 \
        -e NB_UID=1234 \
-       -e NB_GID=1234 \
+       -e NB_GID=5678 \
        -v '$(PWD)'/test:/home/jovyan/work \
        jupyter/minimal-notebook:latest
 
    # you should see an output similar to this
-   # Update jovyan's UID:GID to 1234:1234
+   # Update jovyan's UID:GID to 1234:5678
    # Running as jovyan: bash
    ```
 
@@ -113,7 +113,7 @@ The following sections cover a few of these scenarios and how to fix them.
  - This approach only updates the UID and GID of the **existing `jovyan` user** instead of creating a new user. From the above example:
    ```bash
    id
-   # uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
+   # uid=1234(jovyan) gid=5678(jovyan) groups=5678(jovyan),100(users)
    ```
 ````
 
