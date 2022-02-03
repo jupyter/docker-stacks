@@ -1,7 +1,7 @@
 # Troubleshooting Common Problems
 
 When troubleshooting, you may see unexpected behaviors or receive an error message. This section provides advice on
-how to identify and mitigate the cause of the problem and how to resolve it (for the most commonly encountered issues).
+how to identify and fix some of the most commonly encountered issues.
 
 Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](../using/common.html#Docker-Options) of the documentation.
 
@@ -28,8 +28,8 @@ $ touch stagingarea/kale.txt
 touch: cannot touch 'stagingarea/kale.txt': Permission denied
 ```
 
-In this case the user of the container (`jovyan`) and the owner of the mounted volume (`root`) have different permission levels and ownership over the container's directories and mounts.
-The following sections cover a few of these scenarios and suggestions to fix these problems.
+In this case, the user of the container (`jovyan`) and the owner of the mounted volume (`root`) have different permission levels and ownership over the container's directories and mounts.
+The following sections cover a few of these scenarios and how to fix them.
 
 **Some things to try:**
 
@@ -118,7 +118,7 @@ The following sections cover a few of these scenarios and suggestions to fix the
 
 ## Permission issues after changing the UID/GIU and USER in the container
 
-If on top of changing the UID and GID you also **need to create a new user**, you might be experiencing any of the following issues:
+If you have also **created a new user**, you might be experiencing any of the following issues:
 
 - `root` is the owner of `/home` or a mounted volume
 - when starting the container, you get an error such as `Failed to change ownership of the home directory.`
@@ -163,7 +163,7 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
    - `-w "/home/${NB_USER}"` sets the working directory to be the new user's home
 
    ```{admonition} Additional notes
-    In the example above, the `-v` flag is used to mount the local volume onto the `/home` directory of the new user.
+    In the example above, the `-v` flag is used to mount the local volume onto the new user's `/home` directory.
 
     However, if you are mounting a volume elsewhere, you also need to use the `-e CHOWN_EXTRA=<some-dir>` flag to avoid any permission
     issues (see the section [Permission denied when mounting volumes](../using/troubleshooting.html#permission-denied-when-mounting-volumes) in this page).
@@ -200,7 +200,7 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
   -v $(PWD)/<my-vol>:/home/jovyan/work
   ```
 
-  In this example, we use the syntax `$(PWD)`, which is replaced with the full path to the current directory at runtime. The destination
+  This example uses the syntax `$(PWD)`, which is replaced with the full path to the current directory at runtime. The destination
   path should also be an absolute path starting with a `/` such as `home/jovyan/work`.
 
 - You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_GID` and `-e NB_UID`:
@@ -215,7 +215,7 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
       -v <my-vol>:/home/jovyan/work jupyter/datascience-notebook
   ```
 
-  This command will launch the container with a specific user UID and add that user to the `users` group so that it can modify the files in the default `/home` and `/opt/conda` directories.
+  This command will launch the container with a specific user UID and add that user to the `users` group to modify the files in the default `/home` and `/opt/conda` directories.
   Further avoiding issues when trying to `conda install` additional packages.
 
 - Use `docker inspect <container_id>` and look for the [`Mounts` section](https://docs.docker.com/storage/volumes/#start-a-container-with-a-volume) to verify that the volume was created and mounted accordingly:
@@ -238,16 +238,54 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
     ],
   ```
 
+## Problems installing conda packages from specific channels
+
+By default, the docker-stacks images have the conda channels priority set to `strict`. This may cause problems when trying to install packages from a channel with lower priority.
+
+```bash
+$ conda config --show | grep priority
+# channel_priority: strict
+
+# to see its meaning
+$ conda config --describe channel_priority
+
+# checking the current channels
+$ conda config --show default_channels
+# default_channels:
+# - https://repo.anaconda.com/pkgs/main
+# - https://repo.anaconda.com/pkgs/r
+```
+
+**Installing packages from alternative channels:**
+
+You can install packages from other conda channels (e.g. bioconda) by disabling the `channel_priority` setting:
+
+```bash
+# install by disabling channel priority at command level
+$ conda install --no-channel-priority -c bioconda bioconductor-geoquery
+```
+
 ## Tokens are being rejected
 
-If you are a regular user of VSCode and the Jupyter extension you might experience either of these issues when using any of the docker-stacks images:
+If you are a regular user of VSCode and the Jupyter extension, you might experience either of these issues when using any of the docker-stacks images:
 
+- when clicking on the URL displayed on your command line logs, you face a "This site cannot be reached" page on your web browser
 - using the produced token and/or URL results in an "Invalid credentials" error on the Jupyter "Token authentication is enabled" page
-- when clicking on the URL displayed on your command line logs you face a "This site cannot be reached" page on your web browser
+
+  ```bash
+  # example log output from the docker run command
+
+  [...]
+  Or copy and paste one of these URLs:
+    http://3d4cf3809e3f:8888/?token=996426e890f8dc22fa6835a44442b6026cba02ee61fee6a2
+    or http://127.0.0.1:8888/?token=996426e890f8dc22fa6835a44442b6026cba02ee61fee6a2
+  ```
 
 **Some things to try:**
 
-1. The first thing you want to try is to check that there are no other Jupyter processes running in the background:
+1. **Find lingering Jupyter processes in the background**
+
+   The first thing you want to try is to check that no other Jupyter processes are running in the background:
 
    ```bash
    ps aux | grep jupyter
@@ -263,8 +301,10 @@ If you are a regular user of VSCode and the Jupyter extension you might experien
    kill 3412
    ```
 
-2. Alternatively - you might want to ensure that the "Jupyter: Auto Start" setting is turned off to avoid this issue in the future.
+2. **Turn off Jupyter auto start in VSCode**
+
+   Alternatively - you might want to ensure that the `Jupyter: Auto Start` setting is turned off to avoid this issue in the future.
 
    You can achieve this from the `Preferences > Jupyter` menu in VScode:
 
-   ![VSCode Preferences UI - Jupyter:Disable Jupyter Auto Start checkbox unchecked](../_static/using/troubleshooting/vscode-jupyter-settings.png)
+   ![VSCode Preferences UI - Jupyter: Disable Jupyter Auto Start checkbox unchecked](../_static/using/troubleshooting/vscode-jupyter-settings.png)
