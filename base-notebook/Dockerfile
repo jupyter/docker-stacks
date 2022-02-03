@@ -10,7 +10,7 @@ ARG ROOT_CONTAINER=ubuntu:focal
 # Download them in a separate stage with alpine.
 # Context: <https://github.com/jupyter/docker-stacks/pull/1594#issuecomment-1028426999>
 FROM alpine as download_micromamba_stage
-WORKDIR /tmp
+# hadolint ignore=DL3018
 RUN set -x && \
     arch=$(uname -m) && \
     if [ "${arch}" = "x86_64" ]; then \
@@ -18,8 +18,9 @@ RUN set -x && \
         arch="64"; \
     fi && \
     echo $arch && \
-    apk add --no-cache curl==7.80.0-r0 && \
-    curl -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" > micromamba.tar.bz2
+    apk add --no-cache curl && \
+    curl -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" \
+        -o /tmp/micromamba.tar.bz2
 ## END MICROMAMBA WORKAROUND
 
 FROM $ROOT_CONTAINER
@@ -58,7 +59,6 @@ RUN apt-get update --yes && \
     #   https://github.com/krallin/tini#why-tini for details.
     tini \
     wget \
-    curl \
     # - bzip2 is necessary to extract the micromamba executable.
     bzip2 && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
@@ -115,19 +115,14 @@ ARG PYTHON_VERSION=3.9
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
-WORKDIR /tmp
 COPY --chown="${NB_UID}:${NB_GID}" --from=download_micromamba_stage /tmp/micromamba.tar.bz2 /tmp
-# hadolint ignore=DL4001,DL3047
+COPY --chown="${NB_UID}:${NB_GID}"  initial-condarc "${CONDA_DIR}/.condarc"
 RUN set -x && \
-    tar -xvjf micromamba.tar.bz2 bin/micromamba && \
-    # bin/micromamba create --prefix="${CONDA_DIR}" && \
+    tar -xvjf /tmp/micromamba.tar.bz2 \
+        --directory=/tmp --strip-components=1 bin/micromamba && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
-    # TODO: use `micromamba config` or report issue.
-    echo "show_channel_urls: true" >> "${CONDA_DIR}/.condarc" && \
-    echo "channels:" >> "${CONDA_DIR}/.condarc" && \
-    echo "  - conda-forge" >> "${CONDA_DIR}/.condarc" && \    
-    bin/micromamba install \
+    /tmp/micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --quiet --yes \
@@ -136,12 +131,9 @@ RUN set -x && \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
-    rm micromamba.tar.bz2 && \
+    rm /tmp/micromamba.tar.bz2 && \
     # There should be just a single binary inside bin/
-    rm bin/micromamba && \
-    rmdir bin && \
-    # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
-    conda config --system --set auto_update_conda false && \
+    rm /tmp/micromamba && \
     # Pin major.minor version of python
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
     jupyter notebook --generate-config && \
