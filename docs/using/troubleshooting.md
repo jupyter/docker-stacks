@@ -112,8 +112,8 @@ The following sections cover a few of these scenarios and how to fix them.
    - If you pass a numeric UID, it must be in the range of 0-2147483647
    - This approach only updates the UID and GID of the **existing `jovyan` user** instead of creating a new user. From the above example:
      ```bash
-     $ id
-     uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
+     id
+     # uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
    ````
 
 ## Permission issues after changing the UID/GIU and USER in the container
