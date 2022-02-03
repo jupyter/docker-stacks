@@ -112,7 +112,6 @@ RUN mkdir "/home/${NB_USER}/work" && \
 #   Similar projects using Micromamba:
 #     - Micromamba-Docker: <https://github.com/mamba-org/micromamba-docker>
 #     - repo2docker: <https://github.com/jupyterhub/repo2docker>
-# Configure the environment
 # Install Python, Mamba, Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
 # Cleanup temporary files and remove Micromamba
