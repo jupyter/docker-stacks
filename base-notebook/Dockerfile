@@ -5,6 +5,23 @@
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
 ARG ROOT_CONTAINER=ubuntu:focal
 
+## BEGIN MICROMAMBA WORKAROUND
+# For some reason, downloading micromamba with wget or curl leads to a segfault.
+# Download them in a separate stage with alpine.
+# Context: <https://github.com/jupyter/docker-stacks/pull/1594#issuecomment-1028426999>
+FROM alpine as download_micromamba_stage
+WORKDIR /tmp
+RUN set -x && \
+    arch=$(uname -m) && \
+    if [ "${arch}" = "x86_64" ]; then \
+        # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
+        arch="64"; \
+    fi && \
+    echo $arch && \
+    apk add --no-cache curl==7.80.0-r0 && \
+    curl -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" > micromamba.tar.bz2
+## END MICROMAMBA WORKAROUND
+
 FROM $ROOT_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -99,24 +116,9 @@ ARG PYTHON_VERSION=3.9
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 WORKDIR /tmp
+COPY --chown="${NB_UID}:${NB_GID}" --from=download_micromamba_stage /tmp/micromamba.tar.bz2 /tmp
 # hadolint ignore=DL4001,DL3047
 RUN set -x && \
-    arch=$(uname -m) && \
-    if [ "${arch}" == "x86_64" ]; then \
-        # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
-        arch="64"; \
-    fi && \
-    uname -a && \
-    echo "${arch}" && \
-    wget --version && \
-    curl --version && \
-    wget --debug -qO micromamba2.tar.bz2 "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" && \
-    ls -al && \
-    md5sum ./* && \
-    head -c 100 micromamba2.tar.bz2 && \
-    curl --verbose -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" > micromamba.tar.bz2 && \
-    ls -al && \
-    md5sum ./* && \
     tar -xvjf micromamba.tar.bz2 bin/micromamba && \
     # bin/micromamba create --prefix="${CONDA_DIR}" && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
@@ -134,6 +136,7 @@ RUN set -x && \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
+    rm micromamba.tar.bz2 && \
     # There should be just a single binary inside bin/
     rm bin/micromamba && \
     rmdir bin && \
