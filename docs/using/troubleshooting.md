@@ -132,6 +132,7 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
 
    ```bash
     docker run -it --rm \
+        -p 8888:8888 \
         --user root \
         -e NB_USER=callisto \
         -e NB_UID=1234 \
@@ -175,6 +176,7 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
 
    ```bash
    docker run -it --rm \
+       -p 8888:8888 \
        --user root \
        -e NB_USER=callisto \
        -e NB_UID="$(id -u)" \
@@ -190,7 +192,7 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
 
    - `"$(id -u)" and "$(id -g)"` will dynamically assign the `UID` and `GID` of the user executing the `docker run` command to the new user (`callisto`)
 
-## Additional tips and troubleshooting commands
+## Additional tips and troubleshooting commands for permission-related errors
 
 - Pass absolute paths to the `-v` flag:
 
@@ -208,6 +210,7 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
   # the user calling the command, thus matching the local host
 
   docker run -it --rm \
+      -p 8888:8888 \
       --user "$(id -u)" --group-add users \
       -v <my-vol>:/home/jovyan/work jupyter/datascience-notebook
   ```
@@ -234,3 +237,34 @@ If on top of changing the UID and GID you also **need to create a new user**, yo
         }
     ],
   ```
+
+## Tokens are being rejected
+
+If you are a regular user of VSCode and the Jupyter extension you might experience either of these issues when using any of the docker-stacks images:
+
+- using the produced token and/or URL results in an "Invalid credentials" error on the Jupyter "Token authentication is enabled" page
+- when clicking on the URL displayed on your command line logs you face a "This site cannot be reached" page on your web browser
+
+**Some things to try:**
+
+1. The first thing you want to try is to check that there are no other Jupyter processes running in the background:
+
+   ```bash
+   ps aux | grep jupyter
+   ```
+
+   If there are existing processes running, you can kill them with:
+
+   ```bash
+   # example output from the above command
+   # my-user 3412 ... --daemon-module=vscode_datascience_helpers.jupyter_daemon
+
+   # using the pid from the above log
+   kill 3412
+   ```
+
+2. Alternatively - you might want to ensure that the "Jupyter: Auto Start" setting is turned off to avoid this issue in the future.
+
+   You can achieve this from the `Preferences > Jupyter` menu in VScode:
+
+   ![VSCode Preferences UI - Jupyter:Disable Jupyter Auto Start checkbox unchecked](../_static/using/troubleshooting/vscode-jupyter-settings.png)
