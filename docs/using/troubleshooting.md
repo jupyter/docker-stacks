@@ -114,7 +114,7 @@ The following sections cover a few of these scenarios and how to fix them.
      ```bash
      $ id
      uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
-   ````
+     ```
 
 ## Permission issues after changing the UID/GIU and USER in the container
 
