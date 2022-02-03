@@ -117,7 +117,7 @@ The following sections cover a few of these scenarios and how to fix them.
    ```
 ````
 
-## Permission issues after changing the UID/GIU and USER in the container
+## Permission issues after changing the UID/GID and USER in the container
 
 If you have also **created a new user**, you might be experiencing any of the following issues:
 
