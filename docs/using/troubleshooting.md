@@ -106,7 +106,7 @@ The following sections cover a few of these scenarios and how to fix them.
    - `NB_IUD` and `NB_GID` should match the local user's UID and GID.
    - You must use `--user root` to ensure that the `UID` and `GID` are updated at runtime.
 
-   ````{admonition} Additional notes
+   ```{admonition} Additional notes
    - The caveat with this approach is that since these changes are applied at runtime, you will need to re-run the same command
      with the appropriate flags and environment variables if you need to recreate the container (i.e. after removing/destroying it).
    - If you pass a numeric UID, it must be in the range of 0-2147483647
@@ -115,7 +115,6 @@ The following sections cover a few of these scenarios and how to fix them.
      $ id
      uid=1234(jovyan) gid=1234(jovyan) groups=1234(jovyan),100(users)
      ```
-   ````
 
 ## Permission issues after changing the UID/GIU and USER in the container
 
