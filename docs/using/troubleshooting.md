@@ -203,7 +203,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
   This example uses the syntax `$(PWD)`, which is replaced with the full path to the current directory at runtime. The destination
   path should also be an absolute path starting with a `/` such as `home/jovyan/work`.
 
-- You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_GID` and `-e NB_UID`:
+- You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_UID` and `-e NB_GID`:
 
   ```bash
   # note this will use the same UID from
