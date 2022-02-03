@@ -52,7 +52,7 @@ The following sections cover a few of these scenarios and how to fix them.
 
    where:
 
-   - `CHOWN_EXTRA=<some-dir>`: will change the ownership and group of the specified container directory (non-recursive by default). You need to provide full paths starting with `/`.
+   - `CHOWN_EXTRA=<some-dir>,<some-other-dir>`: will change the ownership and group of the specified container directory (non-recursive by default). You need to provide full paths starting with `/`.
    - `CHOWN_EXTRA_OPTS="-R"`: will recursively change the ownership and group of the directory specified in `CHOWN_EXTRA`.
    - `--user root`: you **must** run the container with the root user to change ownership at runtime.
 
@@ -70,10 +70,10 @@ The following sections cover a few of these scenarios and how to fix them.
    ```
 
    ```{admonition} Additional notes
-      - If you are mounting your volume inside the `/home/` directory, you can use the `-e CHOWN_HOME=yes` and `CHOWN_HOME_OPTS="-R"` flags instead of the `-e CHOWN_EXTRA`
-        and `-e CHOWN_EXTRA_OPTS` in the example above.
-      - This solution should work in most cases where you have created a docker volume (i.e. using the [`docker volume create --name <my-volume>`
-        command](https://docs.docker.com/storage/volumes/#create-and-manage-volumes)) and mounted it using the`-v` flag in `docker run`.
+      - If you are mounting your volume inside the `/home/` directory, you can use the `-e CHOWN_HOME=yes` and `CHOWN_HOME_OPTS="-R"` flags
+      instead of the `-e CHOWN_EXTRA` and `-e CHOWN_EXTRA_OPTS` in the example above.
+      - This solution should work in most cases where you have created a docker volume
+      (i.e. using the [`docker volume create --name <my-volume>`command](https://docs.docker.com/storage/volumes/#create-and-manage-volumes)) and mounted it using the`-v` flag in `docker run`.
    ```
 
 2. **Matching the container's UID/GID with the host's**
@@ -93,7 +93,7 @@ The following sections cover a few of these scenarios and how to fix them.
        -p 8888:8888 \
        -e NB_UID=1234 \
        -e NB_GID=1234 \
-       -v $(PWD)/test:/home/jovyan/work \
+       -v '$(PWD)'/test:/home/jovyan/work \
        jupyter/minimal-notebook:latest
 
    # you should see an output similar to this
@@ -104,12 +104,12 @@ The following sections cover a few of these scenarios and how to fix them.
    where:
 
    - `NB_IUD` and `NB_GID` should match the local user's UID and GID.
-   - You must use `--user root` to ensure that the `UID` and `GID` are updated at runtime.
+   - You **must** use `--user root` to ensure that the `UID` and `GID` are updated at runtime.
 
    ````{admonition} Additional notes
    - The caveat with this approach is that since these changes are applied at runtime, you will need to re-run the same command
      with the appropriate flags and environment variables if you need to recreate the container (i.e. after removing/destroying it).
-   - If you pass a numeric UID, it must be in the range of 0-2147483647
+   - If you pass a numeric UID, it **must** be in the range of 0-2147483647
    - This approach only updates the UID and GID of the **existing `jovyan` user** instead of creating a new user. From the above example:
      ```bash
      id
@@ -140,7 +140,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
         -e CHOWN_HOME=yes \
         -e CHOWN_HOME_OPTS="-R" \
         -w "/home/${NB_USER}" \
-        -v $(PWD)/test:/home/callisto/work \
+        -v' $(PWD)'/test:/home/callisto/work \
         jupyter/minimal-notebook
 
     # expected output
