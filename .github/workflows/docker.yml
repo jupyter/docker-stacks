@@ -83,7 +83,7 @@ jobs:
       - name: Install Dev Dependencies
         run: |
           python -m pip install --upgrade pip
-          make -C main dev-env
+          make -C main install-dev-env
 
       - name: Build Docker Images
         run: make -C main build-all-multi
