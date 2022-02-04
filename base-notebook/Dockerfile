@@ -122,6 +122,7 @@ COPY --chown="${NB_UID}:${NB_GID}" initial-condarc "${CONDA_DIR}/.condarc"
 WORKDIR /tmp
 RUN set -x && \
     tar -xvjf micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
+    rm micromamba.tar.bz2 && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     MAMBA_SPECIFIER="mamba" && \
@@ -141,7 +142,6 @@ RUN set -x && \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
-    rm micromamba.tar.bz2 && \
     rm micromamba && \
     # Pin major.minor version of python
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
