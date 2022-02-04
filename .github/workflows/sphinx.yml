@@ -7,7 +7,7 @@ on:
 
       - "docs/**"
       - ".readthedocs.yaml"
-      - "requirements-dev.txt"
+      - "requirements-docs.txt"
   push:
     branches:
       - main
@@ -17,7 +17,7 @@ on:
 
       - "docs/**"
       - ".readthedocs.yaml"
-      - "requirements-dev.txt"
+      - "requirements-docs.txt"
   workflow_dispatch:
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
       - name: Install Dev Dependencies
         run: |
           python -m pip install --upgrade pip
-          make dev-env
+          make install-docs-env
 
       - name: Build Documentation
         run: make docs
