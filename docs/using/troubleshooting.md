@@ -1,6 +1,7 @@
 # Troubleshooting Common Problems
 
-When troubleshooting, you may see unexpected behaviors or receive an error message. This section provides advice on
+When troubleshooting, you may see unexpected behaviors or receive an error message.
+This section provides advice on
 how to identify and fix some of the most commonly encountered issues.
 
 Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](../using/common.html#Docker-Options) of the documentation.
@@ -12,7 +13,6 @@ If you are running a Docker container while mounting a local volume or host dire
 ```bash
 docker run -it --rm \
     -p 8888:8888 \
-    -v <my-vol>:<container-dir> \
     jupyter/minimal-notebook:latest
 ```
 
