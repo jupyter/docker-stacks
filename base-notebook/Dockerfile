@@ -119,12 +119,20 @@ RUN mkdir "/home/${NB_USER}/work" && \
 # files across image layers when the permissions change
 COPY --chown="${NB_UID}:${NB_GID}" --from=download_micromamba_stage /tmp/micromamba.tar.bz2 /tmp
 COPY --chown="${NB_UID}:${NB_GID}" initial-condarc "${CONDA_DIR}/.condarc"
+WORKDIR /tmp
 RUN set -x && \
-    tar -xvjf /tmp/micromamba.tar.bz2 \
-        --directory=/tmp --strip-components=1 bin/micromamba && \
+    tar -xvjf micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
-    /tmp/micromamba install \
+    MAMBA_SPECIFIER="mamba" && \
+    # Using fixed version of mamba in arm, because the latest one has problems with arm under qemu
+    # See: https://github.com/jupyter/docker-stacks/issues/1539
+    arch=$(uname -m) && \
+    if [ "${arch}" == "aarch64" ]; then \
+        MAMBA_SPECIFIER='mamba<0.18'; \
+    fi && \
+    # Install the packages
+    ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --quiet --yes \
@@ -133,9 +141,8 @@ RUN set -x && \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
-    rm /tmp/micromamba.tar.bz2 && \
-    # There should be just a single binary inside bin/
-    rm /tmp/micromamba && \
+    rm micromamba.tar.bz2 && \
+    rm micromamba && \
     # Pin major.minor version of python
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
     jupyter notebook --generate-config && \
