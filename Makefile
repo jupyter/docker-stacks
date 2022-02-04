@@ -191,11 +191,11 @@ push-all-multi: $(foreach I, $(MULTI_IMAGES), push-multi/$(I)) $(foreach I, $(AM
 
 
 
-run/%: ## run a bash in interactive mode in a stack
+run-shell/%: ## run a bash in interactive mode in a stack
 	docker run -it --rm $(OWNER)/$(notdir $@) $(SHELL)
 
-run-sudo/%: ## run a bash in interactive mode as root in a stack
-	docker run -it --rm -u root $(OWNER)/$(notdir $@) $(SHELL)
+run-sudo-shell/%: ## run a bash in interactive mode as root in a stack
+	docker run -it --rm --user root $(OWNER)/$(notdir $@) $(SHELL)
 
 
 
