@@ -10,6 +10,10 @@ ARG ROOT_CONTAINER=ubuntu:focal
 # Download them in a separate stage with alpine.
 # Context: <https://github.com/jupyter/docker-stacks/pull/1594#issuecomment-1028426999>
 FROM alpine as download_micromamba_stage
+
+# ARG MICROMAMBA_VERSION=latest
+ARG MICROMAMBA_VERSION=0.17.0
+
 # hadolint ignore=DL3018
 RUN set -x && \
     arch=$(uname -m) && \
@@ -19,7 +23,7 @@ RUN set -x && \
     fi && \
     echo $arch && \
     apk add --no-cache curl && \
-    curl -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" \
+    curl -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/${MICROMAMBA_VERSION}" \
         -o /tmp/micromamba.tar.bz2
 ## END MICROMAMBA WORKAROUND
 
