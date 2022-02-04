@@ -67,20 +67,18 @@ html_static_path = ["_static"]
 # sphinx-quickstart --project "docker-stacks" --author "Project Jupyter" -v "latest" -r "latest" -l en --no-sep --no-makefile --no-batchfile
 # These are custom options for this project
 
-extensions = ["myst_parser", "sphinx_copybutton"]
+html_theme = "sphinx_rtd_theme"
+
+extensions = ["myst_parser", "sphinx_copybutton", "sphinx_rtd_theme"]
 source_suffix = {
     ".rst": "restructuredtext",
     ".md": "markdown",
 }
 pygments_style = "sphinx"
 
+html_logo = "_static/jupyter-logo.svg"
+
 html_theme_options = {
-    "description": "Jupyter Docker Stacks",
-    "fixed_sidebar": False,
-    "show_relbars": True,
-    "github_user": "jupyter",
-    "github_repo": "docker-stacks",
-    "github_type": "star",
-    "logo": "jupyter-logo.svg",
-    "logo_text_align": "left",
+    "logo_only": True,
+    "display_version": False,
 }

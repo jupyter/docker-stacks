@@ -6,5 +6,6 @@ pre-commit
 pytest
 requests
 sphinx
+sphinx_rtd_theme
 sphinx-copybutton
 tabulate
