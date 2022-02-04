@@ -118,7 +118,7 @@ RUN mkdir "/home/${NB_USER}/work" && \
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 COPY --chown="${NB_UID}:${NB_GID}" --from=download_micromamba_stage /tmp/micromamba.tar.bz2 /tmp
-COPY --chown="${NB_UID}:${NB_GID}"  initial-condarc "${CONDA_DIR}/.condarc"
+COPY --chown="${NB_UID}:${NB_GID}" initial-condarc "${CONDA_DIR}/.condarc"
 RUN set -x && \
     tar -xvjf /tmp/micromamba.tar.bz2 \
         --directory=/tmp --strip-components=1 bin/micromamba && \
