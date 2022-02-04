@@ -10,10 +10,10 @@ define RUN_NOTEBOOK
 @docker volume create --name $(WORK_VOLUME) > /dev/null
 -@docker rm -f $(NAME) 2> /dev/null
 @docker run -d -p $(PORT):8888 \
-		--name $(NAME) \
-		-v $(WORK_VOLUME):/home/jovyan/work \
-		$(DOCKER_ARGS) \
-		$(IMAGE) bash -c "$(PRE_CMD) chown jovyan /home/jovyan/work && start-notebook.sh $(ARGS)" > /dev/null
+	--name $(NAME) \
+	-v $(WORK_VOLUME):/home/jovyan/work \
+	$(DOCKER_ARGS) \
+	$(IMAGE) bash -c "$(PRE_CMD) chown jovyan /home/jovyan/work && start-notebook.sh $(ARGS)" > /dev/null
 @echo "DONE: Notebook '$(NAME)' listening on $$(docker-machine ip $$(docker-machine active)):$(PORT)"
 endef
 

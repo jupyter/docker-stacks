@@ -24,7 +24,7 @@ set -e
 : "${SECRETS_VOLUME:=my-notebook-secrets}"
 docker volume create --name "${SECRETS_VOLUME}" 1>/dev/null
 # Generate the cert and save it to the Docker volume
-docker run --rm -it \
+docker run -it --rm \
     -p 80:80 \
     -v "${SECRETS_VOLUME}":/etc/letsencrypt \
     quay.io/letsencrypt/letsencrypt:latest \
@@ -41,7 +41,7 @@ docker run --rm -it \
 # Set permissions so nobody can read the cert and key.
 # Also symlink the certs into the root of the /etc/letsencrypt
 # directory so that the FQDN doesn't have to be known later.
-docker run --rm -it \
+docker run -it --rm \
     -v "${SECRETS_VOLUME}":/etc/letsencrypt \
     ubuntu:20.04 \
     bash -c "ln -s /etc/letsencrypt/live/${FQDN}/* /etc/letsencrypt/ && \

@@ -9,13 +9,15 @@ The sections below capture this knowledge.
 Password authentication is disabled for the `NB_USER` (e.g., `jovyan`).
 We made this choice to avoid distributing images with a weak default password that users ~might~ will forget to change before running a container on a publicly accessible host.
 
-You can grant the within-container `NB_USER` passwordless `sudo` access by adding `-e GRANT_SUDO=yes` and `--user root` to your Docker command line or appropriate container orchestrator config.
+You can grant the within-container `NB_USER` passwordless `sudo` access by adding `--user root` and `-e GRANT_SUDO=yes` to your Docker command line or appropriate container orchestrator config.
 
 For example:
 
 ```bash
-docker run -it -e GRANT_SUDO=yes \
-    --user root jupyter/minimal-notebook
+docker run -it --rm \
+    --user root \
+    -e GRANT_SUDO=yes \
+    jupyter/minimal-notebook
 ```
 
 **You should only enable `sudo` if you trust the user and/or if the container is running on an isolated host.**
@@ -167,7 +169,8 @@ docker build -t jupyter/scipy-dasklabextension:latest .
 Once built, run using the command:
 
 ```bash
-docker run -it --rm -p 8888:8888 \
+docker run -it --rm \
+    -p 8888:8888 \
     -p 8787:8787 jupyter/scipy-dasklabextension:latest
 ```
 
@@ -484,14 +487,16 @@ In this case, you should use the `start.sh` script to launch the server with no 
 For JupyterLab:
 
 ```bash
-docker run jupyter/base-notebook:b418b67c225b \
+docker run -it --rm \
+    jupyter/base-notebook:b418b67c225b \
     start.sh jupyter lab --LabApp.token=''
 ```
 
 For jupyter classic:
 
 ```bash
-docker run jupyter/base-notebook:b418b67c225b \
+docker run -it --rm \
+    jupyter/base-notebook:b418b67c225b \
     start.sh jupyter notebook --NotebookApp.token=''
 ```
 
