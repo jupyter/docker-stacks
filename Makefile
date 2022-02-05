@@ -36,7 +36,11 @@ ALL_IMAGES:= \
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
 
+current_arch := $(shell uname -m)
+export ARCH ?= $(shell case $(current_arch) in (x86_64) echo "amd64" ;; (i386) echo "386";; (aarch64|arm64) echo "arm64" ;; (armv6*) echo "arm/v6";; (armv7*) echo "arm/v7";; (ppc64*|s390*|riscv*) echo $(current_arch);; (*) echo "UNKNOWN-CPU";; esac)
 
+# Base "docker buildx base" command to be reused everywhere
+bake_base_cli := docker buildx bake -f docker-bake.hcl
 
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 help:
@@ -51,11 +55,14 @@ help:
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ## build the latest image for a stack using the system's architecture
 	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
+	$(bake_base_cli) --load --set '*.platform=linux/$(ARCH)' $(notdir $@)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 	@echo "::endgroup::"
-build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
+build-all: ## build all stacks using the system's architecture
+	@echo "::group::Build $(OWNER)/* (system's architecture: $(ARCH))"
+	$(bake_base_cli) --load --set '*.platform=linux/$(ARCH)'
+	@echo "::endgroup::"
 
 # Limitations on docker buildx build (using docker/buildx 0.5.1):
 #
@@ -99,16 +106,23 @@ build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 #
 build-multi/%: DOCKER_BUILD_ARGS?=
 build-multi/%: ## build the latest image for a stack on both amd64 and arm64
-	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture)"
-	docker buildx build $(DOCKER_BUILD_ARGS) -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --load
+	@echo "::group::Build $(OWNER)/$(notdir $@) (amd64,arm64)"
+	$(bake_base_cli) $(notdir $@)
+	@echo "::endgroup::"
+
+	@echo "::group::Build $(OWNER)/$(notdir $@) (system's architecture: $(ARCH))"
+	$(bake_base_cli) --load --set '*.platform=linux/$(ARCH)' $(notdir $@)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 	@echo "::endgroup::"
 
-	@echo "::group::Build $(OWNER)/$(notdir $@) (amd64,arm64)"
-	docker buildx build $(DOCKER_BUILD_ARGS) -t build-multi-tmp-cache/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER) --platform "linux/amd64,linux/arm64"
+build-all-multi: ## build all stacks
+	@echo "::group::Build $(OWNER)/* (amd64,arm64)"
+	$(bake_base_cli)
 	@echo "::endgroup::"
-build-all-multi: $(foreach I, $(MULTI_IMAGES), build-multi/$(I)) $(foreach I, $(AMD64_ONLY_IMAGES), build/$(I)) ## build all stacks
+	@echo "::group::Build $(OWNER)/* (system's architecture: $(ARCH))"
+	$(bake_base_cli) --load --set '*.platform=linux/$(ARCH)'
+	@echo "::endgroup::"
 
 
 
