@@ -7,9 +7,13 @@ set -e
 # The _log function is used for everything this script wants to log. It will
 # always log errors and warnings, but can be silenced for other messages
 # by setting JUPYTER_DOCKER_STACKS_QUIET environment variable.
+# If the message is ERROR, we stop the execution and `exit 1`
 _log () {
     if [[ "$*" == "ERROR:"* ]] || [[ "$*" == "WARNING:"* ]] || [[ "${JUPYTER_DOCKER_STACKS_QUIET}" == "" ]]; then
         echo "$@"
+    fi
+    if [[ "$*" == "ERROR:"* ]]; then
+        exit 1
     fi
 }
 _log "Entered start.sh with args:" "$@"
@@ -33,7 +37,7 @@ run-hooks () {
                     _log "${0}: running executable ${f}"
                     "${f}"
                 else
-                    _log "${0}: ignoring non-executable ${f}"
+                    _log "WARNING: ${0}: ignoring non-executable ${f}"
                 fi
                 ;;
         esac
@@ -46,7 +50,7 @@ run-hooks () {
 unset_explicit_env_vars () {
     if [ -n "${JUPYTER_ENV_VARS_TO_UNSET}" ]; then
         for env_var_to_unset in $(echo "${JUPYTER_ENV_VARS_TO_UNSET}" | tr ',' ' '); do
-            echo "Unset ${env_var_to_unset} due to JUPYTER_ENV_VARS_TO_UNSET"
+            _log "Unset ${env_var_to_unset} due to JUPYTER_ENV_VARS_TO_UNSET"
             unset "${env_var_to_unset}"
         done
         unset JUPYTER_ENV_VARS_TO_UNSET
@@ -89,7 +93,6 @@ if [ "$(id -u)" == 0 ] ; then
         fi
     elif ! id -u "${NB_USER}" &> /dev/null; then
         _log "ERROR: Neither the jovyan user or '${NB_USER}' exists. This could be the result of stopping and starting, the container with a different NB_USER environment variable."
-        exit 1
     fi
     # Ensure the desired user (NB_USER) gets its desired user id (NB_UID) and is
     # a member of the desired group (NB_GROUP, NB_GID)
@@ -114,13 +117,12 @@ if [ "$(id -u)" == 0 ] ; then
             if cp -a /home/jovyan/. "/home/${NB_USER}/"; then
                 _log "Success!"
             else
-                _log "Failed to copy data from /home/jovyan to /home/${NB_USER}!"
+                _log "WARNING: Failed to copy data from /home/jovyan to /home/${NB_USER}!"
                 _log "Attempting to symlink /home/jovyan to /home/${NB_USER}..."
                 if ln -s /home/jovyan "/home/${NB_USER}"; then
                     _log "Success creating symlink!"
                 else
                     _log "ERROR: Failed copy data from /home/jovyan to /home/${NB_USER} or to create symlink!"
-                    exit 1
                 fi
             fi
         fi
@@ -201,7 +203,7 @@ if [ "$(id -u)" == 0 ] ; then
 else
     # Warn about misconfiguration of: granting sudo rights
     if [[ "${GRANT_SUDO}" == "1" || "${GRANT_SUDO}" == "yes" ]]; then
-        _log "WARNING: container must be started as root to grant sudo permissions!"
+        _log "ERROR: container must be started as root to grant sudo permissions!"
     fi
 
     JOVYAN_UID="$(id -u jovyan 2>/dev/null)"  # The default UID for the jovyan user
@@ -228,30 +230,30 @@ else
             _log "Added new ${NB_USER} user ($(id -u):$(id -g)). Fixed UID!"
 
             if [[ "${NB_USER}" != "jovyan" ]]; then
-                _log "WARNING: user is ${NB_USER} but home is /home/jovyan. You must run as root to rename the home directory!"
+                _log "ERROR: user is ${NB_USER} but home is /home/jovyan. You must run as root to rename the home directory!"
             fi
         else
-            _log "WARNING: unable to fix missing /etc/passwd entry because we don't have write permission. Try setting gid=0 with \"--user=$(id -u):0\"."
+            _log "ERROR: unable to fix missing /etc/passwd entry because we don't have write permission. Try setting gid=0 with \"--user=$(id -u):0\"."
         fi
     fi
 
-    # Warn about misconfiguration of: desired username, user id, or group id.
+    # Fail on misconfiguration of: desired username, user id, or group id.
     # A misconfiguration occurs when the user modifies the default values of
     # NB_USER, NB_UID, or NB_GID, but we cannot update those values because we
     # are not root.
     if [[ "${NB_USER}" != "jovyan" && "${NB_USER}" != "$(id -un)" ]]; then
-        _log "WARNING: container must be started as root to change the desired user's name with NB_USER=\"${NB_USER}\"!"
+        _log "ERROR: container must be started as root to change the desired user's name with NB_USER=\"${NB_USER}\"!"
     fi
     if [[ "${NB_UID}" != "${JOVYAN_UID}" && "${NB_UID}" != "$(id -u)" ]]; then
-        _log "WARNING: container must be started as root to change the desired user's id with NB_UID=\"${NB_UID}\"!"
+        _log "ERROR: container must be started as root to change the desired user's id with NB_UID=\"${NB_UID}\"!"
     fi
     if [[ "${NB_GID}" != "${JOVYAN_GID}" && "${NB_GID}" != "$(id -g)" ]]; then
-        _log "WARNING: container must be started as root to change the desired user's group id with NB_GID=\"${NB_GID}\"!"
+        _log "ERROR: container must be started as root to change the desired user's group id with NB_GID=\"${NB_GID}\"!"
     fi
 
-    # Warn if the user isn't able to write files to ${HOME}
+    # Fail if the user isn't able to write files to ${HOME}
     if [[ ! -w /home/jovyan ]]; then
-        _log "WARNING: no write access to /home/jovyan. Try starting the container with group 'users' (100), e.g. using \"--group-add=users\"."
+        _log "ERROR: no write access to /home/jovyan. Try starting the container with group 'users' (100), e.g. using \"--group-add=users\"."
     fi
 
     # NOTE: This hook is run as the user we started the container as!
