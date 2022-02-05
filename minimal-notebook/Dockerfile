@@ -17,15 +17,13 @@ RUN apt-get update --yes && \
     tzdata \
     unzip \
     vim-tiny \
+    # Inkscape is installed to be able to convert SVG files
+    inkscape \
     # git-over-ssh
     openssh-client \
-    # TODO: check if these are needed and describe
-    inkscape \
-    libsm6 \
-    libxext-dev \
-    libxrender1 \
-    lmodern \
-    netcat \
+    # less is needed to run help in R
+    # see: https://github.com/jupyter/docker-stacks/issues/1588
+    less \
     # nbconvert dependencies
     # https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex
     texlive-xetex \

@@ -1,10 +1,7 @@
 docker
-myst-parser
 packaging
 plumbum
 pre-commit
 pytest
 requests
-sphinx
-sphinx-copybutton
 tabulate

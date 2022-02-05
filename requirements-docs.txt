@@ -1,0 +1,3 @@
+myst-parser
+sphinx
+sphinx-copybutton
