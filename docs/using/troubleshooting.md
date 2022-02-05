@@ -13,6 +13,7 @@ If you are running a Docker container while mounting a local volume or host dire
 ```bash
 docker run -it --rm \
     -p 8888:8888 \
+    -v <my-vol>:<container-dir> \
     jupyter/minimal-notebook:latest
 ```
 
