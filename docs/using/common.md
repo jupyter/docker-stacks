@@ -36,7 +36,7 @@ You do so by passing arguments to the `docker run` command.
   The default value is `jovyan`.
   Setting `NB_USER` refits the `jovyan` default user and ensures that the desired user has the correct file permissions
   for the new home directory created at `/home/<username>`.
-  For this option to take effect, you must run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
+  For this option to take effect, you **must** run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
   and set the environment variable `-e CHOWN_HOME=yes`.
 
   Example usage:
@@ -54,7 +54,7 @@ You do so by passing arguments to the `docker run` command.
 - `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
   The default value is `1000`.
   This feature is useful when mounting host volumes with specific owner permissions.
-  For this option to take effect, you must run the container with `--user root`.
+  For this option to take effect, you **must** run the container with `--user root`.
   (The startup script will `su ${NB_USER}` after adjusting the user ID.)
   Instead, you might consider using the modern Docker-native options [`--user`](https://docs.docker.com/engine/reference/run/#user) and
   [`--group-add`](https://docs.docker.com/engine/reference/run/#additional-groups) - see the last bullet in this section for more details.
@@ -63,7 +63,7 @@ You do so by passing arguments to the `docker run` command.
 - `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of `${NB_USER}` to `${NB_GID}`
   (the new group is added with a name of `${NB_GROUP}` if it is defined. Otherwise, the group is named `${NB_USER}`).
   This feature is useful when mounting host volumes with specific group permissions.
-  For this option to take effect, you must run the container with `--user root`.
+  For this option to take effect, you **must** run the container with `--user root`.
   (The startup script will `su ${NB_USER}` after adjusting the group ID.)
   You might consider using modern Docker options `--user` and `--group-add` instead.
   See bullet points regarding `--user` and `--group-add`.
@@ -87,7 +87,7 @@ You do so by passing arguments to the `docker run` command.
   `NB_UMASK` when set only applies to the Jupyter process itself -
   you cannot use it to set a `umask` for additional files created during run-hooks.
   For example, via `pip` or `conda`.
-  If you need to set a `umask` for these, you must set the `umask` value for each command._
+  If you need to set a `umask` for these, you **must** set the `umask` value for each command._
   ```
 
 - `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
