@@ -1,0 +1,111 @@
+name: Build and test Docker Images
+
+on:
+  schedule:
+    # Weekly, at 03:00 on Monday UTC time
+    - cron: "0 3 * * 1"
+  pull_request:
+    paths:
+      - ".github/workflows/docker.yml"
+
+      - "all-spark-notebook/**"
+      - "base-notebook/**"
+      - "datascience-notebook/**"
+      - "minimal-notebook/**"
+      - "pyspark-notebook/**"
+      - "r-notebook/**"
+      - "scipy-notebook/**"
+      - "tensorflow-notebook/**"
+
+      - "tagging/**"
+      - "test/**"
+      - "conftest.py"
+      - "Makefile"
+      - "pytest.ini"
+      - "requirements-dev.txt"
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - ".github/workflows/docker.yml"
+
+      - "all-spark-notebook/**"
+      - "base-notebook/**"
+      - "datascience-notebook/**"
+      - "minimal-notebook/**"
+      - "pyspark-notebook/**"
+      - "r-notebook/**"
+      - "scipy-notebook/**"
+      - "tensorflow-notebook/**"
+
+      - "tagging/**"
+      - "test/**"
+      - "conftest.py"
+      - "Makefile"
+      - "pytest.ini"
+      - "requirements-dev.txt"
+  workflow_dispatch:
+
+jobs:
+  build-images:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Maximize build space 🛠
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+
+      # Setup docker to build for multiple platforms, see:
+      # https://github.com/docker/build-push-action/tree/master#usage
+      # https://github.com/docker/build-push-action/blob/master/docs/advanced/multi-platform.md
+      - name: Set up QEMU (for docker buildx) 🐳
+        uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # dependabot updates to latest release
+
+      - name: Set up Docker Buildx (for multi-arch builds) 🐳
+        uses: docker/setup-buildx-action@94ab11c41e45d028884a99163086648e898eed25 # dependabot updates to latest release
+      - name: Cache Docker layers 🧠
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Clone main repo ⚡️
+        uses: actions/checkout@v2
+        with:
+          path: main
+
+      - name: Setup Python 🐍
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Dev Dependencies 📦
+        run: |
+          python -m pip install --upgrade pip
+          make -C main install-dev-env
+
+      - name: Build Docker Images
+        run: make -C main build-all-multi
+        env:
+          # Full logs for CI build
+          BUILDKIT_PROGRESS: plain
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+
+      # This ugly bit is necessary if you don't want your cache to grow forever
+      # till it hits GitHub's limit of 5GB.
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
