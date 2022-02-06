@@ -264,5 +264,9 @@ core images and link them below.
   `base-notebook` image.
   Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/knonm/kotlin-notebook/main)
 
+- [transformers_notebook](https://github.com/ToluClassics/transformers_notebook): Easily run JupyterLab Notebooks pre-installed with the
+  [Transformers Library](https://huggingface.co/docs/transformers/index)
+  and other popular NLP frameworks such as **Tensorflow**, **Keras**, **Jax** and **PyTorch** by running a Docker container.
+
 See the [contributing guide](../contributing/stacks.md) for information about how to create your own
 Jupyter Docker Stack.
