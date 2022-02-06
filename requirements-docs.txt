@@ -1,3 +1,8 @@
-myst-parser
-sphinx
-sphinx-copybutton
+# ReadTheDocs environment contains old package versions preinstalled
+# So, to ensure we have modern packages, we pin minimum versions of the packages we need
+docutils>=0.17
+myst-parser>=0.16.1
+sphinx>=4.4.0
+# sphinx-book-theme>=0.2.0
+git+https://github.com/executablebooks/sphinx-book-theme@master#egg=sphinx-book-theme
+sphinx-copybutton>=0.4.0
