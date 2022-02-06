@@ -213,60 +213,51 @@ than the latest git commit SHA in the default branch of the
 
 ## Community Stacks
 
-The core stacks are but a tiny sample of what's possible when combining Jupyter with other
-technologies.
-We encourage members of the Jupyter community to create their own stacks based on the
-core images and link them below.
+The core stacks are but a tiny sample of what's possible when combining Jupyter with other technologies.
+We encourage members of the Jupyter community to create their own stacks based on the core images and link them below.
+See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.
 
-- [csharp-notebook is a community Jupyter Docker Stack image. Try C# in Jupyter Notebooks](https://github.com/tlinnet/csharp-notebook).
-  The image includes more than 200 Jupyter Notebooks with example C# code and can readily be tried online via mybinder.org.
-  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master).
+| Flavor         | Binder                  | Description                                                                                               |
+| -------------- | ----------------------- | --------------------------------------------------------------------------------------------------------- |
+| [csharp]       | [![bb]][csharp_b]       | More than 200 Jupyter Notebooks with example **C#** code                                                  |
+| [education]    | [![bb]][education_b]    | **`nbgrader`** and `RISE` on top of the `datascience-notebook` image                                      |
+| [ihaskell]     | [![bb]][ihaskell_b]     | Based on [**IHaskell**][ihaskell_project]. Includes popular packages and example notebooks                |
+| [java]         | [![bb]][java_b]         | [**IJava**][ijava] kernel on top of the `minimal-notebook` image                                          |
+| [sage]         | [![bb]][sage_b]         | [**sagemath**][sagemath] kernel on top of the `minimal-notebook` image                                    |
+| [cgspatial]    | [![bb]][cgspatial_b]    | Major **geospatial** Python & R libraries on top of the `datascience-notebook` image                      |
+| [kotlin]       | [![bb]][kotlin_b]       | [**Kotlin** kernel for Jupyter/IPython][kotlin_kernel] on top of the `base-notebook` image                |
+| [transformers] | [![bb]][transformers_b] | [**Transformers**][transformers_lib] and NLP libraries such as `Tensorflow`, `Keras`, `Jax` and `PyTorch` |
 
-- [education-notebook is a community Jupyter Docker Stack image](https://github.com/umsi-mads/education-notebook).
-  The image includes nbgrader and RISE on top of the datascience-notebook image.
-  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/umsi-mads/education-notebook/master).
+[bb]: https://mybinder.org/badge_logo.svg
+[csharp]: https://github.com/tlinnet/csharp-notebook
+[csharp_b]: https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master
+[education]: https://github.com/umsi-mads/education-notebook
+[education_b]: https://mybinder.org/v2/gh/umsi-mads/education-notebook/master
+[ihaskell]: https://github.com/jamesdbrock/ihaskell-notebook
+[ihaskell_b]: https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb
+[ihaskell_project]: https://github.com/gibiansky/IHaskell
+[java]: https://github.com/jbindinga/java-notebook
+[java_b]: https://mybinder.org/v2/gh/jbindinga/java-notebook/master
+[ijava]: https://github.com/SpencerPark/IJava
+[sage]: https://github.com/sharpTrick/sage-notebook
+[sage_b]: https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master
+[sagemath]: https://www.sagemath.org
+[cgspatial]: https://github.com/SCiO-systems/cgspatial-notebook
+[cgspatial_b]: https://mybinder.org/v2/gh/SCiO-systems/cgspatial-notebook/master
+[kotlin]: https://github.com/knonm/kotlin-notebook
+[kotlin_b]: https://mybinder.org/v2/gh/knonm/kotlin-notebook/main
+[kotlin_kernel]: https://github.com/Kotlin/kotlin-jupyter
+[transformers]: https://github.com/ToluClassics/transformers_notebook
+[transformers_b]: https://mybinder.org/v2/gh/ToluClassics/transformers_notebook/main
+[transformers_lib]: https://huggingface.co/docs/transformers/index
 
-- **jamesdbrock/ihaskell-notebook**
+### GPU enabled notebooks
 
-  [Source on GitHub](https://github.com/jamesdbrock/ihaskell-notebook) |
-  [Dockerfile commit history](https://github.com/jamesdbrock/ihaskell-notebook/commits/master/Dockerfile) |
-  [Github container registry](https://github.com/jamesdbrock/ihaskell-notebook/pkgs/container/ihaskell-notebook)
+| Flavor             | Description                                                                                                                                                                                                                                                                                                                                               |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [GPU-Jupyter][gpu] | Power of your NVIDIA GPU and GPU calculations using Tensorflow and Pytorch in collaborative notebooks. This is done by generating a Dockerfile, that consists of the **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it |
+| [PRP-GPU][prp_gpu] | PRP (Pacific Research Platform) maintained [registry][prp_reg] for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages, and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.                                                                     |
 
-  `jamesdbrock/ihaskell-notebook` is based on [IHaskell](https://github.com/gibiansky/IHaskell).
-  Includes popular packages and example notebooks.
-
-  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb)
-
-- [java-notebook is a community Jupyter Docker Stack image](https://github.com/jbindinga/java-notebook).
-  The image includes [IJava](https://github.com/SpencerPark/IJava) kernel on top of the minimal-notebook image.
-  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jbindinga/java-notebook/master).
-
-- [sage-notebook](https://github.com/sharpTrick/sage-notebook)
-  is a community Jupyter Docker Stack image with the [sagemath](https://www.sagemath.org) kernel on top of the minimal-notebook image.
-  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/sharpTrick/sage-notebook/master).
-
-- [GPU-Jupyter](https://github.com/iot-salzburg/gpu-jupyter/): Leverage Jupyter Notebooks with the
-  power of your NVIDIA GPU and perform GPU calculations using Tensorflow and Pytorch in collaborative notebooks.
-  This is done by generating a Dockerfile, that consists of the **nvidia/cuda** base image,
-  the well-maintained **docker-stacks** that is integrated as submodule and
-  GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it.
-
-- [PRP GPU Jupyter repo](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp) and [Registry](https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/container_registry)
-  PRP (Pacific Research Platform) maintained registry for jupyter stack based on NVIDIA CUDA-enabled image.
-  Added the PRP image with Pytorch and some other python packages, and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.
-
-- [cgspatial-notebook](https://github.com/SCiO-systems/cgspatial-notebook) is a community Jupyter Docker Stack image.
-  The image includes major geospatial Python & R libraries on top of the datascience-notebook image.
-  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/SCiO-systems/cgspatial-notebook/master)
-
-- [kotlin-notebook](https://github.com/knonm/kotlin-notebook) is a community Jupyter Docker Stack image.
-  The image includes [Kotlin kernel for Jupyter/IPython](https://github.com/Kotlin/kotlin-jupyter) on top of the
-  `base-notebook` image.
-  Try it on [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/knonm/kotlin-notebook/main)
-
-- [transformers_notebook](https://github.com/ToluClassics/transformers_notebook): Easily run JupyterLab Notebooks pre-installed with the
-  [Transformers Library](https://huggingface.co/docs/transformers/index)
-  and other popular NLP frameworks such as **Tensorflow**, **Keras**, **Jax** and **PyTorch** by running a Docker container.
-
-See the [contributing guide](../contributing/stacks.md) for information about how to create your own
-Jupyter Docker Stack.
+[gpu]: https://github.com/iot-salzburg/gpu-jupyter
+[prp_gpu]: https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp
+[prp_reg]: https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/container_registry
