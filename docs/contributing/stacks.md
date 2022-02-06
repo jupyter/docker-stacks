@@ -86,7 +86,7 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
    ```
 
    This will trigger the CI pipeline whenever you push to your `main` or `master` branch and when any Pull Requests are made to your repository.
-   For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/reference/events-that-trigger-workflows).
+   For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
 2. Commit your changes and push to GitHub.
 3. Head back to your repository and click on the **Actions** tab.

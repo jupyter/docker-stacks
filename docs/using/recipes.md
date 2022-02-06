@@ -69,7 +69,7 @@ RUN mamba install --yes --file /tmp/requirements.txt && \
     fix-permissions "/home/${NB_USER}"
 ```
 
-Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
+Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#r15960081)
 
 ## Add a Python 2.x environment
 
