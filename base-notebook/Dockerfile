@@ -134,7 +134,8 @@ RUN set -x && \
     # See: https://github.com/jupyter/docker-stacks/issues/1539
     arch=$(uname -m) && \
     if [ "${arch}" == "aarch64" ]; then \
-        MAMBA_SPECIFIER='mamba<0.18'; \
+        # MAMBA_SPECIFIER='mamba<0.18'; \
+        MAMBA_SPECIFIER='mamba'; \
     fi && \
     # Install the packages
     ./micromamba install \
