@@ -36,10 +36,11 @@ ALL_IMAGES:= \
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
 
+# The current architecture
 current_arch := $(shell uname -m)
 export ARCH ?= $(shell case $(current_arch) in (x86_64) echo "amd64" ;; (i386) echo "386";; (aarch64|arm64) echo "arm64" ;; (armv6*) echo "arm/v6";; (armv7*) echo "arm/v7";; (ppc64*|s390*|riscv*) echo $(current_arch);; (*) echo "UNKNOWN-CPU";; esac)
 
-# Base "docker buildx base" command to be reused everywhere
+# Base `docker buildx bake` command to be reused everywhere
 bake_base_cli := docker buildx bake -f docker-bake.hcl
 
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
@@ -126,6 +127,13 @@ build-all-multi: ## build all stacks
 
 
 
+get-image-size/%: ## get the size of an image
+	@echo "Built image size: $(OWNER)/$(notdir $@)"
+	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
+get-all-image-size: $(foreach I, $(ALL_IMAGES), get-image-size/$(I)) ## get the size of all images
+
+
+
 check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report (experimental)
 	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
 check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check all the stacks for outdated packages
@@ -185,6 +193,13 @@ pre-commit-all: ## run pre-commit hook on all files
 pre-commit-install: ## set up the git hook scripts
 	@pre-commit --version
 	@pre-commit install
+
+
+
+print/%: ## print image definition
+	$(bake_base_cli) --print $(notdir $@)
+print-all: ## print all images definition
+	$(bake_base_cli) --print
 
 
 
