@@ -238,7 +238,7 @@ If you are mounting a host directory as `/home/jovyan/work` in your container an
 permission errors or connection errors when you create a notebook, be sure that the `jovyan` user
 (`UID=1000` by default) has read/write access to the directory on the host.
 Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the
-[Common Features, Docker Options section](../using/common.html#Docker-Options)
+[Common Features, Docker Options section](../using/common.html#docker-options)
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 

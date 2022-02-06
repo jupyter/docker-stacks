@@ -4,7 +4,7 @@ When troubleshooting, you may see unexpected behaviors or receive an error messa
 This section provides advice on
 how to identify and fix some of the most commonly encountered issues.
 
-Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](../using/common.html#Docker-Options) of the documentation.
+Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](../using/common.html#docker-options) of the documentation.
 
 ## Permission denied when mounting volumes
 
