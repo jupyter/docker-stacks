@@ -2,7 +2,7 @@
 
 By default, a container launched from any Jupyter Docker Stacks image runs a Jupyter Server with JupyterLab frontend.
 The container does so by executing a `start-notebook.sh` script.
-This script configures the internal container environment and then runs `jupyter lab`, passing any command line arguments received.
+This script configures the internal container environment and then runs `jupyter lab`, passing any command-line arguments received.
 
 This page describes the options supported by the startup script and how to bypass it to run alternative commands.
 
@@ -39,7 +39,7 @@ You do so by passing arguments to the `docker run` command.
   For this option to take effect, you **must** run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
   and set the environment variable `-e CHOWN_HOME=yes`.
 
-  Example usage:
+  _Example usage:_
 
   ```bash
   docker run -it --rm \
@@ -54,7 +54,7 @@ You do so by passing arguments to the `docker run` command.
 - `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
   The default value is `1000`.
   This feature is useful when mounting host volumes with specific owner permissions.
-  For this option to take effect, you **must** run the container with `--user root`.
+  You **must** run the container with `--user root` for this option to take effect.
   (The startup script will `su ${NB_USER}` after adjusting the user ID.)
   Instead, you might consider using the modern Docker-native options [`--user`](https://docs.docker.com/engine/reference/run/#user) and
   [`--group-add`](https://docs.docker.com/engine/reference/run/#additional-groups) - see the last bullet in this section for more details.
@@ -63,9 +63,9 @@ You do so by passing arguments to the `docker run` command.
 - `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of `${NB_USER}` to `${NB_GID}`
   (the new group is added with a name of `${NB_GROUP}` if it is defined. Otherwise, the group is named `${NB_USER}`).
   This feature is useful when mounting host volumes with specific group permissions.
-  For this option to take effect, you **must** run the container with `--user root`.
+  You **must** run the container with `--user root` for this option to take effect.
   (The startup script will `su ${NB_USER}` after adjusting the group ID.)
-  You might consider using modern Docker options `--user` and `--group-add` instead.
+  Instead, you might consider using modern Docker options `--user` and `--group-add`.
   See bullet points regarding `--user` and `--group-add`.
   The user is added to supplemental group `users` (gid 100) to grant write access to the home directory and `/opt/conda`.
   If you override the user/group logic, ensure the user stays in the group `users` if you want them to be able to modify files in the image.
@@ -101,8 +101,8 @@ You do so by passing arguments to the `docker run` command.
 
 - `-e GRANT_SUDO=yes` - Instructs the startup script to grant the `NB_USER` user passwordless `sudo` capability.
   You do **not** need this option to allow the user to `conda` or `pip` install additional packages.
-  This option is useful, however, when you wish to give `${NB_USER}` the ability to install OS packages with `apt` or modify other root-owned files in the container.
-  For this option to take effect, you **must** run the container with `--user root`.
+  This option is helpful for cases when you wish to give `${NB_USER}` the ability to install OS packages with `apt` or modify other root-owned files in the container.
+  You **must** run the container with `--user root` for this option to take effect.
   (The `start-notebook.sh` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
   **You should only enable `sudo` if you trust the user or if the container is running on an isolated host.**
 
@@ -257,14 +257,16 @@ conda install --quiet --yes some-package && \
 ### Using alternative channels
 
 Conda is configured by default to use only the [`conda-forge`](https://anaconda.org/conda-forge) channel.
-However, you can use alternative channels either one-shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.
+However, you can use alternative channels, either one-shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.
 The examples below show how to use the [anaconda default channels](https://repo.anaconda.com/pkgs/main) instead of `conda-forge` to install packages.
 
 ```bash
 # using defaults channels to install a package
 mamba install --channel defaults humanize
+
 # configure conda to add default channels at the top of the list
 conda config --system --prepend channels defaults
+
 # install a package
 mamba install --quiet --yes humanize && \
     mamba clean --all -f -y && \
