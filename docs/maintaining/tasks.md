@@ -33,7 +33,7 @@ When there's a new stack definition, do the following before merging the PR with
    [in the documentation](https://github.com/jupyter/docker-stacks/blob/master/docs/using/selecting.md#image-relationships).
    The image links to the [blockdiag source](http://interactive.blockdiag.com/) used to create it.
 2. Ensure the PR updates the [Makefile](https://github.com/jupyter/docker-stacks/blob/master/Makefile) which is used to build the stacks in order on GitHub Actions.
-3. Ensure necessary tags / manifests are added for the new image in the [tagging](https://github.com/jupyter/docker-stacks/blob/master/tagging) folder.
+3. Ensure necessary tags / manifests are added for the new image in the [tagging](https://github.com/jupyter/docker-stacks/tree/master/tagging) folder.
 4. Create a new repository in the `jupyter` org on Docker Hub named after the stack folder in the
    git repo.
 5. Grant the `stacks` team permission to write to the repo.
