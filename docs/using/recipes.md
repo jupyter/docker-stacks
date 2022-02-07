@@ -69,7 +69,7 @@ RUN mamba install --yes --file /tmp/requirements.txt && \
     fix-permissions "/home/${NB_USER}"
 ```
 
-Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#commitcomment-15960081)
+Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#r15960081)
 
 ## Add a Python 2.x environment
 
@@ -238,7 +238,7 @@ If you are mounting a host directory as `/home/jovyan/work` in your container an
 permission errors or connection errors when you create a notebook, be sure that the `jovyan` user
 (`UID=1000` by default) has read/write access to the directory on the host.
 Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the
-[Common Features, Docker Options section](../using/common.html#Docker-Options)
+[Common Features, Docker Options section](../using/common.html#docker-options)
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 

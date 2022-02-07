@@ -4,7 +4,7 @@ When troubleshooting, you may see unexpected behaviors or receive an error messa
 This section provides advice on
 how to identify and fix some of the most commonly encountered issues.
 
-Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](../using/common.html#Docker-Options) of the documentation.
+Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](../using/common.html#docker-options) of the documentation.
 
 ## Permission denied when mounting volumes
 
@@ -86,7 +86,7 @@ The following sections cover a few of these scenarios and how to fix them.
    (including user ids) which may result in permissions errors when trying to access directories or create/modify files inside.
 
    Suppose your local user has a `UID` and `GID` of `1234` and `5678`, respectively. To fix the UID discrepancies between your local directories and the container's
-   directories, you can run the container with an explicit `NB_UID` and `NB_GID` to match the that of the local user:
+   directories, you can run the container with an explicit `NB_UID` and `NB_GID` to match that of the local user:
 
    ```bash
    docker run -it --rm \
@@ -202,7 +202,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
   ```
 
   This example uses the syntax `$(PWD)`, which is replaced with the full path to the current directory at runtime. The destination
-  path should also be an absolute path starting with a `/` such as `home/jovyan/work`.
+  path should also be an absolute path starting with a `/` such as `/home/jovyan/work`.
 
 - You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_UID` and `-e NB_GID`:
 
@@ -262,6 +262,8 @@ You can install packages from other conda channels (e.g. bioconda) by disabling 
 # install by disabling channel priority at command level
 conda install --no-channel-priority -c bioconda bioconductor-geoquery
 ```
+
+Additional details are provided in the [Using alternative channels](../using/common.html#using-alternative-channels) section of the [Common features](./common.md) page.
 
 ## Tokens are being rejected
 
