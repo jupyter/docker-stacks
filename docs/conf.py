@@ -86,4 +86,5 @@ source_suffix = {
 }
 pygments_style = "sphinx"
 
+# MyST configuration reference: https://myst-parser.readthedocs.io/en/latest/sphinx/reference.html
 myst_heading_anchors = 3
