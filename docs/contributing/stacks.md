@@ -86,7 +86,7 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
    ```
 
    This will trigger the CI pipeline whenever you push to your `main` or `master` branch and when any Pull Requests are made to your repository.
-   For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/reference/events-that-trigger-workflows).
+   For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
 2. Commit your changes and push to GitHub.
 3. Head back to your repository and click on the **Actions** tab.
@@ -148,11 +148,10 @@ Refer to Docker Hub to build your master or main branch that you can `docker pul
 
 ## Sharing Your Image
 
-Finally, if you'd like to add a link to your project to this documentation site, please do the
-following:
+Finally, if you'd like to add a link to your project to this documentation site, please do the following:
 
 1. Clone the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
 2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section.
-3. Add a bullet with a link to your project and a short description of what your Docker image contains.
+3. Add a table entry with a link to your project, binder link and a short description of what your Docker image contains.
 4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)(PR) with your changes.
    Maintainers will respond and work with you to address any formatting or content issues.

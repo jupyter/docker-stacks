@@ -3,8 +3,8 @@
 [![Github actions badge](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml/badge.svg)](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml "Docker images build status")
 [![Read the Docs badge](https://img.shields.io/readthedocs/jupyter-docker-stacks.svg)](https://jupyter-docker-stacks.readthedocs.io/en/latest/ "Documentation build status")
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/jupyter/docker-stacks/master.svg)](https://results.pre-commit.ci/latest/github/jupyter/docker-stacks/master "pre-commit.ci build status")
-[![Discourse badge](https://img.shields.io/discourse/https/discourse.jupyter.org/users.svg?color=%23f37626)](https://discourse.jupyter.org/ "Jupyter Discourse Forum")
-[![Binder badge](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb "Launch a jupyter/base-notebook container on mybinder.org")
+[![Discourse badge](https://img.shields.io/discourse/users.svg?color=%23f37626&server=https%3A%2F%2Fdiscourse.jupyter.org)](https://discourse.jupyter.org/ "Jupyter Discourse Forum")
+[![Binder badge](https://static.mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb "Launch a jupyter/base-notebook container on mybinder.org")
 
 Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter) containing Jupyter applications and interactive computing tools.
 You can use a stack image to do any of the following (and more):
@@ -22,7 +22,7 @@ Otherwise, the examples below may help you get started if you [have Docker insta
 know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use
 and want to launch a single Jupyter Server in a container.
 
-The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) describes additional uses and features in detail.
+The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) describes additional uses and features in detail.
 
 **Example 1:**
 
@@ -63,7 +63,7 @@ system when the container exits, but any changes made to the `~/work` directory 
 
 ## Contributing
 
-Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/) for
+Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) for
 information about how to contribute package updates, recipes, features, tests, and community
 maintained stacks.
 
@@ -98,7 +98,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 
 ## Alternatives
 
-- [jupyter/repo2docker](https://github.com/jupyter/repo2docker) - Turn git repositories into
+- [jupyter/repo2docker](https://github.com/jupyterhub/repo2docker) - Turn git repositories into
   Jupyter-enabled Docker Images
 - [openshift/source-to-image](https://github.com/openshift/source-to-image) - A tool for
   building/building artifacts from source and injecting into docker images
@@ -107,7 +107,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 
 ## Resources
 
-- [Documentation on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/)
+- [Documentation on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
 - [Issue Tracker on GitHub](https://github.com/jupyter/docker-stacks)
 - [Jupyter Discourse Forum](https://discourse.jupyter.org/)
 - [Jupyter Website](https://jupyter.org)
