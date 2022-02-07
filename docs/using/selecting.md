@@ -14,7 +14,7 @@ This section provides details about the first.
 ## Core Stacks
 
 The Jupyter team maintains a set of Docker image definitions in the <https://github.com/jupyter/docker-stacks> GitHub repository.
-The following sections describe these images including their contents, relationships, and versioning strategy.
+The following sections describe these images, including their contents, relationships, and versioning strategy.
 
 ### jupyter/base-notebook
 
@@ -44,7 +44,7 @@ It is the basis for all other stacks and contains:
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/minimal-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/minimal-notebook/tags/)
 
-`jupyter/minimal-notebook` adds command line tools useful when working in Jupyter applications.
+`jupyter/minimal-notebook` adds command-line tools useful when working in Jupyter applications.
 
 It contains:
 
@@ -195,7 +195,7 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 
 ### Builds
 
-Every Monday and whenever a pull requests is merged, images are rebuilt and pushed to [the public container registry](https://hub.docker.com/r/jupyter).
+Every Monday and whenever a pull request is merged, images are rebuilt and pushed to [the public container registry](https://hub.docker.com/r/jupyter).
 
 ### Versioning via image tags
 
@@ -253,10 +253,10 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 
 ### GPU enabled notebooks
 
-| Flavor             | Description                                                                                                                                                                                                                                                                                                                                               |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [GPU-Jupyter][gpu] | Power of your NVIDIA GPU and GPU calculations using Tensorflow and Pytorch in collaborative notebooks. This is done by generating a Dockerfile, that consists of the **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it |
-| [PRP-GPU][prp_gpu] | PRP (Pacific Research Platform) maintained [registry][prp_reg] for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages, and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.                                                                     |
+| Flavor             | Description                                                                                                                                                                                                                                                                                                                                              |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [GPU-Jupyter][gpu] | Power of your NVIDIA GPU and GPU calculations using Tensorflow and Pytorch in collaborative notebooks. This is done by generating a Dockerfile that consists of the **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it |
+| [PRP-GPU][prp_gpu] | PRP (Pacific Research Platform) maintained [registry][prp_reg] for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.                                                                     |
 
 [gpu]: https://github.com/iot-salzburg/gpu-jupyter
 [prp_gpu]: https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp

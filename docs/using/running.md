@@ -9,11 +9,13 @@ This section provides details about the second.
 
 ## Using the Docker CLI
 
-You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command line interface](https://docs.docker.com/engine/reference/commandline/cli/).
+You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command-line interface](https://docs.docker.com/engine/reference/commandline/cli/).
 There are numerous ways to configure containers using the CLI.
 The following are some common patterns.
 
-**Example 1** This command pulls the `jupyter/scipy-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
+**Example 1:**
+
+This command pulls the `jupyter/scipy-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888.
 The server logs appear in the terminal and include a URL to the notebook server.
 
@@ -49,27 +51,34 @@ docker rm 221331c047c4
 # 221331c047c4
 ```
 
-**Example 2** This command pulls the `jupyter/r-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
+**Example 2:**
+
+This command pulls the `jupyter/r-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Notebook server and exposes the server on host port 10000.
-The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the the correct host port (10000).
+The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
 docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:b418b67c225b
 ```
 
 Pressing `Ctrl-C` twice shuts down the notebook server and immediately destroys the Docker container.
-Files written to `~/work` in the container remain touched.
-Any other changes made in the container are lost.
+New files and changes in `~/work` in the container will be preserved.
+Any other changes made in the container will be lost.
 
-**Example 3** This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Docker Hub if an image tagged `latest` is not already present on the local host.
+**Example 3:**
+
+This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Docker Hub if an image tagged `latest` is not already present on the local host.
 It then starts a container named `notebook` running a JupyterLab server and exposes the server on a randomly selected port.
-The `-d` flag mean to run the container in detached mode.
 
 ```bash
 docker run -d -P --name notebook jupyter/all-spark-notebook
 ```
 
-The assigned port and notebook server token are visible using other Docker commands.
+where:
+
+- `-d`: will run the container in detached mode
+
+You can also use the following docker commands to see the port and notebook server token:
 
 ```bash
 # get the random host port assigned to the container port 8888
@@ -84,9 +93,9 @@ docker logs --tail 3 notebook
     #  or http://127.0.0.1:8888/lab?token=d336fa63c03f064ff15ce7b269cab95b2095786cf9ab2ba3
 ```
 
-Together, the URL to visit on the host machine to access the server in this case is <http://127.0.0.1:49153/lab?token=d336fa63c03f064ff15ce7b269cab95b2095786cf9ab2ba3>.
+Together, the URL to visit on the host machine to access the server, in this case, is <http://127.0.0.1:49153/lab?token=d336fa63c03f064ff15ce7b269cab95b2095786cf9ab2ba3>.
 
-The container runs in the background until stopped and/or removed by additional Docker commands.
+The container runs in the background until stopped and/or removed by additional Docker commands:
 
 ```bash
 # stop the container
