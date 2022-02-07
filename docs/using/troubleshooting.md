@@ -263,6 +263,8 @@ You can install packages from other conda channels (e.g. bioconda) by disabling 
 conda install --no-channel-priority -c bioconda bioconductor-geoquery
 ```
 
+Additional details are provided in the [Using alternative channels](../using/common.html#using-alternative-channels) section of the [Common features](./common.md) page.
+
 ## Tokens are being rejected
 
 If you are a regular user of VSCode and the Jupyter extension, you might experience either of these issues when using any of the docker-stacks images:
