@@ -103,9 +103,16 @@ class TrackedContainer:
         LOGGER.debug(logs)
         if no_warnings:
             assert not self.get_warnings(logs)
+        else:
+            assert self.get_warnings(logs)
+
+        success = rv == 0 or rv["StatusCode"] == 0
         if no_errors:
             assert not self.get_errors(logs)
-        assert rv == 0 or rv["StatusCode"] == 0
+            assert success, rv
+        else:
+            assert self.get_errors(logs)
+            assert not success, rv
         return logs
 
     @staticmethod
