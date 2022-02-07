@@ -138,10 +138,10 @@ install-dev-env: ## install libraries required to build images and run tests
 
 
 docs: ## build HTML documentation
-	sphinx-build -W docs/ docs/_build/
+	sphinx-build -W --keep-going --color docs/ docs/_build/
 
 linkcheck-docs: ## check broken links
-	sphinx-build -b linkcheck docs/ docs/_build/
+	sphinx-build -W --keep-going --color -b linkcheck docs/ docs/_build/
 
 install-docs-env: ## install libraries required to build docs
 	@pip install -r requirements-docs.txt

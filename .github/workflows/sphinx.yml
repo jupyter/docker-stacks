@@ -1,6 +1,9 @@
-name: Build Sphinx Documentation
+name: Build Sphinx Documentation and check links
 
 on:
+  schedule:
+    # Weekly, at 03:00 on Monday UTC time
+    - cron: "0 3 * * 1"
   pull_request:
     paths:
       - ".github/workflows/sphinx.yml"
@@ -43,3 +46,6 @@ jobs:
 
       - name: Build Documentation
         run: make docs
+
+      - name: Check Documentation URLs
+        run: make linkcheck-docs
