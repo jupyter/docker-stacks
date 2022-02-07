@@ -85,3 +85,5 @@ source_suffix = {
     ".md": "markdown",
 }
 pygments_style = "sphinx"
+
+myst_heading_anchors = 3

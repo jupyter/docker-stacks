@@ -8,10 +8,10 @@ community with the cost of maintaining the images over time.
 
 Please follow the process below to suggest a new feature for inclusion in one of the core stacks:
 
-1. [Open a GitHub issue](https://github.com/jupyter/docker-stacks/issues/new?assignees=&labels=type%3AEnhancement&template=feature_request.md&title=) describing the feature
-   you'd like to contribute.
+1. Open a [GitHub feature request issue](https://github.com/jupyter/docker-stacks/issues/new?assignees=&labels=type%3AEnhancement&template=feature_request.md&title=)
+   describing the feature you'd like to contribute.
 2. Discuss with the maintainers whether the addition makes sense in
-   [one of the core stacks](../using/selecting.html#core-stacks), as a
+   [one of the core stacks](../using/selecting.md#core-stacks), as a
    [recipe in the documentation](recipes.md), as a [community stack](stacks.md), or as something
    else entirely.
 

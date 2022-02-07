@@ -34,7 +34,7 @@ In general, we do not add new core images and ask contributors to either create 
 When there's a new stack definition, do the following before merging the PR with the new stack:
 
 1. Ensure the PR includes an update to the stack overview diagram
-   [in the documentation](https://github.com/jupyter/docker-stacks/blob/master/docs/using/selecting.md#image-relationships).
+   [in the documentation](../using/selecting.md#image-relationships).
    The image links to the [blockdiag source](http://interactive.blockdiag.com/) used to create it.
 2. Ensure the PR updates the [Makefile](https://github.com/jupyter/docker-stacks/blob/master/Makefile), which is used to build the stacks in order on GitHub Actions.
 3. Ensure necessary tags / manifests are added for the new image in the [tagging](https://github.com/jupyter/docker-stacks/tree/master/tagging) folder.

@@ -274,4 +274,4 @@ mamba install --quiet --yes humanize && \
     fix-permissions "/home/${NB_USER}"
 ```
 
-[switch_back]: common.html#switching-back-to-classic-notebook-or-using-a-different-startup-command
+[switch_back]: #switching-back-to-the-classic-notebook-or-using-a-different-startup-command
