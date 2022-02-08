@@ -15,7 +15,7 @@ USER root
 # Default values can be overridden at build time
 # (ARGS are in lower case to distinguish them from ENV)
 # Check https://julialang.org/downloads/
-ARG julia_version="1.7.1"
+ARG julia_version="1.7.2"
 
 # R pre-requisites
 RUN apt-get update --yes && \
