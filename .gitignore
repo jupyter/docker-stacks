@@ -64,3 +64,6 @@ dockerspawner.tar.gz
 .ipynb_checkpoints/
 .vscode/
 .pytest_cache/
+
+# doit
+.doit.db
