@@ -101,7 +101,7 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/440>
 ## Add a Python 3.x environment
 
 The default version of Python that ships with conda/ubuntu may not be the version you want.
-The instructions o add a conda environment with a different version and make it accessible to Jupyter are very similar to Python 2.x. Still, they are slightly simpler (no need to switch to `root`):
+The instructions to add a conda environment with a different version and make it accessible to Jupyter are very similar to Python 2.x. Still, they are slightly simpler (no need to switch to `root`):
 
 ```dockerfile
 # Choose your desired base image
@@ -136,7 +136,7 @@ RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --na
 ENV PATH "${CONDA_DIR}/envs/${conda_env}/bin:${PATH}"
 
 # if you want this environment to be the default one, uncomment the following line:
-# ENV CONDA_DEFAULT_ENV ${conda_env}
+# RUN echo "conda activate ${conda_env}" >> "${HOME}/.bashrc"
 ```
 
 ## Dask JupyterLab Extension
