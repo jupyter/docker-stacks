@@ -71,43 +71,16 @@ RUN mamba install --yes --file /tmp/requirements.txt && \
 
 Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#r15960081)
 
-## Add a Python 2.x environment
+## Add a custom conda environment and Jupyter kernel
 
-Python 2.x was removed from all images on August 10th, 2017, starting in tag `cc9feab481f7`.
-You can add a Python 2.x environment by defining your Dockerfile inheriting from one of the images like so:
-
-```dockerfile
-# Choose your desired base image
-FROM jupyter/scipy-notebook:latest
-
-# Create a Python 2.x environment using conda, including the ipython kernel
-# and the kernda utility. Add any additional packages you want available for use
-# in a Python 2 notebook to the first line here (e.g., pandas, matplotlib, etc.)
-RUN mamba create --quiet --yes -p "${CONDA_DIR}/envs/python2" python=2.7 ipython ipykernel kernda && \
-    mamba clean --all -f -y
-
-USER root
-
-# Create a global kernelspec in the image and modify it so that it properly activates
-# the python2 conda environment.
-RUN "${CONDA_DIR}/envs/python2/bin/python" -m ipykernel install && \
-    "${CONDA_DIR}/envs/python2/bin/kernda" -o -y /usr/local/share/jupyter/kernels/python2/kernel.json
-
-USER ${NB_UID}
-```
-
-Ref: <https://github.com/jupyter/docker-stacks/issues/440>
-
-## Add a Python 3.x environment
-
-The default version of Python that ships with conda/ubuntu may not be the version you want.
-The instructions to add a conda environment with a different version and make it accessible to Jupyter are very similar to Python 2.x. Still, they are slightly simpler (no need to switch to `root`):
+The default version of Python that ships with the image may not be the version you want.
+The instructions below permit to add a conda environment with a different Python version and make it accessible to Jupyter.
 
 ```dockerfile
 # Choose your desired base image
 FROM jupyter/minimal-notebook:latest
 
-# name your environment and choose python 3.x version
+# name your environment and choose the python version
 ARG conda_env=python37
 ARG py_ver=3.7
 
@@ -123,17 +96,13 @@ RUN mamba create --quiet --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_v
 #     mamba env create -p "${CONDA_DIR}/envs/${conda_env}" -f environment.yml && \
 #     mamba clean --all -f -y
 
-
-# create Python 3.x environment and link it to jupyter
+# create Python kernel and link it to jupyter
 RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --name="${conda_env}" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
 # any additional pip installs can be added by uncommenting the following line
-# RUN "${CONDA_DIR}/envs/${conda_env}/bin/pip" install
-
-# prepend conda environment to path
-ENV PATH "${CONDA_DIR}/envs/${conda_env}/bin:${PATH}"
+# RUN "${CONDA_DIR}/envs/${conda_env}/bin/pip" install --quiet --no-cache-dir
 
 # if you want this environment to be the default one, uncomment the following line:
 # RUN echo "conda activate ${conda_env}" >> "${HOME}/.bashrc"
