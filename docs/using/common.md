@@ -87,7 +87,7 @@ You do so by passing arguments to the `docker run` command.
   `NB_UMASK` when set only applies to the Jupyter process itself -
   you cannot use it to set a `umask` for additional files created during run-hooks.
   For example, via `pip` or `conda`.
-  If you need to set a `umask` for these, you **must** set the `umask` value for each command._
+  If you need to set a `umask` for these, you **must** set the `umask` value for each command.
   ```
 
 - `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
