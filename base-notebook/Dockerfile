@@ -165,7 +165,7 @@ COPY jupyter_server_config.py /etc/jupyter/
 # Fix permissions on /etc/jupyter as root
 USER root
 
-# Legacy for Jupyter Notebook Server #1205
+# Legacy for Jupyter Notebook Server, see: [#1205](https://github.com/jupyter/docker-stacks/issues/1205)
 RUN sed -re "s/c.ServerApp/c.NotebookApp/g" \
     /etc/jupyter/jupyter_server_config.py > /etc/jupyter/jupyter_notebook_config.py && \
     fix-permissions /etc/jupyter/
