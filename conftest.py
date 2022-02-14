@@ -108,6 +108,14 @@ class TrackedContainer:
         assert rv == 0 or rv["StatusCode"] == 0
         return logs
 
+    def get_host_port(self, container_port: str) -> str:
+        """Returns the host port associated with the tracked container's port."""
+        assert isinstance(self.container, Container)
+        self.container.reload()
+        return self.container.attrs["NetworkSettings"]["Ports"][container_port][0][
+            "HostPort"
+        ]
+
     @staticmethod
     def get_errors(logs: str) -> list[str]:
         return TrackedContainer._lines_starting_with(logs, "ERROR")
@@ -137,7 +145,6 @@ def container(docker_client: docker.DockerClient, image_name: str) -> Container:
         docker_client,
         image_name,
         detach=True,
-        ports={"8888/tcp": 8888},
     )
     yield container
     container.remove()
