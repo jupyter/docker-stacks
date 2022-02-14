@@ -5,3 +5,4 @@ pre-commit
 pytest
 requests
 tabulate
+doit

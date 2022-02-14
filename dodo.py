@@ -123,7 +123,7 @@ def task_manifest():
     for image in P.TEST_IMAGES:
 
         yield dict(
-            name=f"tagging:{image}",
+            name=f"tags:{image}",
             doc="Create tags for the images",
             actions=[
                 U.do(
