@@ -109,6 +109,7 @@ class TrackedContainer:
         return logs
 
     def get_host_port(self, container_port: str) -> str:
+        """Returns the host port associated with the tracked container's port."""
         assert isinstance(self.container, Container)
         self.container.reload()
         return self.container.attrs["NetworkSettings"]["Ports"][container_port][0][

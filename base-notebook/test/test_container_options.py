@@ -20,7 +20,7 @@ def test_cli_args(container: TrackedContainer, http_client: requests.Session) ->
         ports={"8888/tcp": None},
     )
     host_port = container.get_host_port("8888/tcp")
-    resp = http_client.get("http://localhost:" + host_port)
+    resp = http_client.get(f"http://localhost:{host_port}")
     resp.raise_for_status()
     logs = running_container.logs().decode("utf-8")
     LOGGER.debug(logs)
@@ -47,7 +47,7 @@ def test_unsigned_ssl(
     # abort the retry logic. Forcing a long sleep for the moment until I have
     # time to dig more.
     time.sleep(5)
-    resp = http_client.get("https://localhost:" + host_port, verify=False)
+    resp = http_client.get(f"https://localhost:{host_port}", verify=False)
     resp.raise_for_status()
     assert "login_submit" in resp.text
     logs = running_container.logs().decode("utf-8")

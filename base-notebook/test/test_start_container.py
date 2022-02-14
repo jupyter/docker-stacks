@@ -70,7 +70,7 @@ def test_start_notebook(
     # checking if the server is listening
     if expected_start:
         host_port = container.get_host_port("8888/tcp")
-        resp = http_client.get("http://localhost:" + host_port)
+        resp = http_client.get(f"http://localhost:{host_port}")
         assert resp.status_code == 200, "Server is not listening"
 
 
