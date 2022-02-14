@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import subprocess
+import os
 import doit
 import doit.tools
 
@@ -16,22 +18,24 @@ DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docker"]}
 
 
 def task_docs():
-    """Build Sphinx documentation 📝"""
+    """Build Sphinx documentation 📝
+    setting uptodate to False will force the task to run every time
+    """
 
-    yield dict(
-        name="docs:build",
+    return dict(
         file_dep=[*P.DOCS_MD, *P.DOCS_RST, *P.DOCS_PY],
         actions=[U.do("sphinx-build", "-W", P.DOCS, "docs/_build/html")],
-        targets=["_build/"],
+        targets=[P.DOCS_TARGET],
         uptodate=[False],
     )
 
 
-@doit.create_after("docs")
-def task_check():
-    """Checks for any broken links in the Sphinx documentation 🔗"""
-    yield dict(
-        name="docs:links",
+# https://pydoit.org/task-creation.html#delayed-task-creation
+@doit.create_after(executed="docs")
+def task_check_links():
+    """Checks for any broken links in the Sphinx documentation 🔗
+    only created after the docs are built"""
+    return dict(
         file_dep=[*P.DOCS.rglob("_build/*.html")],
         actions=[
             U.do(
@@ -53,34 +57,106 @@ def task_check():
 # -----------------------------------------------------------------------------
 
 
-def task_build_docker():
-    """Build Docker images for system's architecture ⛏"""
+def task_docker():
     for image in P.TEST_IMAGES:
-        tag = f"{P.OWNER}/{image}:latest"
-        dockerfile = P.ROOT / image / "Dockerfile"
+
+        tags = [
+            f"{P.OWNER}/{image}:latest",
+            f"{P.OWNER}/{image}:{U.GET_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
+        ]
+
+        image_dir = P.ROOT / image
+        dockerfile = str(image_dir / "Dockerfile")
+
+        def set_env(image):
+            """We need this env variable later on for the tests"""
+            os.environ["TEST_IMAGE"] = image
+            print(os.environ.get("TEST_IMAGE"))
 
         yield dict(
-            name="(system's architecture): " + image,
+            name=f"build:{image}",
+            doc="Build thre latest image for a stack using the system's acrchitecture",
             actions=[
                 U.do(
                     "docker",
                     "buildx",
                     "build",
-                    "-t",
-                    str(tag),
-                    str(P.ROOT / image),
+                    *["-t" + tag for tag in tags],
+                    "-f",
+                    dockerfile,
                     "--build-arg",
                     "OWNER=" + P.OWNER,
+                    str(image_dir),
                 )
             ],
             file_dep=[dockerfile],
-            targets=[image],
             uptodate=[False],
+        )
+
+        yield dict(
+            name=f"build_summary:{image}",
+            doc="Brief summary of the image built - defaulting to using the latest tag",
+            actions=[
+                ["echo", "\n \n Build complete, image size:"],
+                U.do("docker", "images", tags[0], "--format", "{{.Size}}"),
+            ],
+        )
+
+        yield dict(
+            name=f"test:{image}",
+            doc="Run tests for images",
+            actions=[
+                (set_env, [image]),
+                U.do(
+                    *P.PYM,
+                    "pytest",
+                    "-m not info",
+                    "test",
+                    image + "/test",
+                ),
+            ],
+        )
+
+
+def task_manifest():
+    """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
+    for image in P.TEST_IMAGES:
+
+        yield dict(
+            name=f"tagging:{image}",
+            doc="Create tags for the images",
+            actions=[
+                U.do(
+                    *P.PYM,
+                    "tagging.tag_image",
+                    "--short-image-name",
+                    image,
+                    "--owner",
+                    P.OWNER,
+                ),
+            ],
+        )
+
+        yield dict(
+            name=f"manifest:{image}",
+            doc="Create the manifest file for the images",
+            actions=[
+                U.do(
+                    *P.PYM,
+                    "tagging.create_manifests",
+                    "--short-image-name",
+                    image,
+                    "--owner",
+                    P.OWNER,
+                    "--wiki-path",
+                    P.WIKI,
+                )
+            ],
         )
 
 
 # -----------------------------------------------------------------------------
-# Support classes
+# Support classes and methods
 # -----------------------------------------------------------------------------
 
 
@@ -92,12 +168,17 @@ class P:
 
     # docs
     DOCS = ROOT / "docs"
+    DOCS_TARGET = ROOT / "docs/_build/html"
     README = ROOT / "README.md"
     DOCS_PY = sorted(DOCS.rglob("*.py"))
     DOCS_RST = sorted(DOCS.rglob("*.rst"))
     DOCS_SRC_MD = sorted(DOCS.rglob("*.md"))
     DOCS_MD = sorted([*DOCS_SRC_MD, README])
 
+    # wiki
+    WIKI = ROOT / "wiki"
+
+    # tests
     TESTS = ROOT / "tests"
     SCRIPTS = ROOT / "scripts"
     TAGGING = ROOT / "tagging"
@@ -122,11 +203,28 @@ class P:
 
     OWNER = "jupyter"
 
+    PYM = ["python", "-m"]
+
 
 class U:
-    """Supporting methods (a.k.a utilities)"""
+    """Supporting methods and variables"""
 
     @staticmethod
     def do(*args, cwd=P.ROOT, **kwargs):
         """wrap a CmdAction for consistency across OS"""
         return doit.tools.CmdAction(list(args), shell=False, cwd=str(Path(cwd)))
+
+    # CI specific
+    IS_CI = bool(os.environ.get("CI", 0))
+
+    SOURCE_DATE_EPOCH = (
+        subprocess.check_output(["git", "log", "-1", "--format=%ct"])
+        .decode("utf-8")
+        .strip()
+    )
+
+    GET_COMMIT_SHA = (
+        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+        .decode("utf-8")
+        .strip()
+    )
