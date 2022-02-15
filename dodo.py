@@ -140,7 +140,7 @@ def task__create_manifest():
         yield dict(
             name=f"manifest:{image}",
             doc="Create the manifest file for the images",
-            targets=[P.WIKI_TARGETS],
+            targets=[P.WIKI_TARGET],
             actions=[
                 U.do(
                     *P.PYM,
