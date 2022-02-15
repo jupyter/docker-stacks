@@ -30,6 +30,7 @@ on:
       - trallard/* #testing while developing
     paths:
       - ".github/workflows/docker.yml"
+      - ".github/workflows/build-test-docker.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
