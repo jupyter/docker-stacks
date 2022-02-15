@@ -97,13 +97,13 @@ jobs:
           cache-to: type=gha,mode=max
 
   create-manifests:
+    name: Create tags and manifests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout wiki 📃
+      - name: Clone main repo ⚡️
         uses: actions/checkout@v2
         with:
-          repository: ${{github.repository}}.wiki
-          path: wiki
+          path: main
 
       - name: Setup Python 🐍
         uses: actions/setup-python@v2
@@ -115,6 +115,12 @@ jobs:
           python -m pip install --upgrade pip
           make -C main install-dev-env
 
-      - name: Create tags and manifest
+      - name: Checkout wiki 📃
+        uses: actions/checkout@v2
+        with:
+          repository: ${{github.repository}}.wiki
+          path: wiki
+
+      - name: Create tags and manifest 🏷
         run: |
           python -m doit -f main/dodo.py manifest
