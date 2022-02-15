@@ -207,7 +207,7 @@ run-sudo-shell/%: ## run a bash in interactive mode as root in a stack
 
 test/%: ## run tests against a stack (only common tests or common tests + specific tests)
 	@echo "::group::test/$(OWNER)/$(notdir $@)"
-	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
-	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test $(notdir $@)/test; fi
+	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -n auto -m "not info" test; \
+	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -n auto -m "not info" test $(notdir $@)/test; fi
 	@echo "::endgroup::"
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks

@@ -1,7 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+from contextlib import closing
 import os
 import logging
+import socket
 from typing import Any, Optional
 
 import docker
@@ -14,6 +16,14 @@ from requests.adapters import HTTPAdapter
 
 
 LOGGER = logging.getLogger(__name__)
+
+
+def find_free_port() -> str:
+    """Returns the available host port. Can be called in multiple threads/processes."""
+    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+        s.bind(("", 0))
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        return s.getsockname()[1]
 
 
 @pytest.fixture(scope="session")
@@ -107,14 +117,6 @@ class TrackedContainer:
             assert not self.get_errors(logs)
         assert rv == 0 or rv["StatusCode"] == 0
         return logs
-
-    def get_host_port(self, container_port: str) -> str:
-        """Returns the host port associated with the tracked container's port."""
-        assert isinstance(self.container, Container)
-        self.container.reload()
-        return self.container.attrs["NetworkSettings"]["Ports"][container_port][0][
-            "HostPort"
-        ]
 
     @staticmethod
     def get_errors(logs: str) -> list[str]:
