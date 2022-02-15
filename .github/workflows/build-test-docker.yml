@@ -140,8 +140,8 @@ jobs:
           python -m pip install --upgrade pip
           make -C main install-dev-env
 
-      - name: Run tests
-        run: python -m doit -f main/dodo.py
+      - name: Run tests ✅
+        run: python -m doit -f main/dodo.py test_docker
 
   create-manifests:
     name: Create tags and manifests
@@ -179,4 +179,4 @@ jobs:
 
       - name: Create tags and manifest 🏷
         run: |
-          python -m doit -f main/dodo.py manifest
+          python -m doit -f main/dodo.py create_manifest

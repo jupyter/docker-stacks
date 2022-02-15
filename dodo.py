@@ -93,7 +93,6 @@ def task_docker_build():
         )
 
 
-@doit.create_after(executed="docker_build")
 def task_test_docker():
     """Test Docker images - need to be run after `docker_build`"""
 
@@ -104,6 +103,7 @@ def task_test_docker():
     yield dict(
         name=f"test:{image}",
         doc="Run tests for images",
+        uptodate=[False],
         actions=[
             (U.set_env, [image]),
             U.do(
@@ -140,6 +140,7 @@ def task__create_manifest():
         yield dict(
             name=f"manifest:{image}",
             doc="Create the manifest file for the images",
+            targets=[P.WIKI_TARGETS],
             actions=[
                 U.do(
                     *P.PYM,
@@ -177,6 +178,7 @@ class P:
 
     # wiki
     WIKI = ROOT.parent / "wiki"
+    WIKI_TARGET = WIKI / "*.md"
 
     # tests
     TESTS = ROOT / "tests"
