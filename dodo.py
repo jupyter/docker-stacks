@@ -53,25 +53,15 @@ def task_check_links():
 
 
 # -----------------------------------------------------------------------------
-# Docker related
+# Docker related tasks
 # -----------------------------------------------------------------------------
 
 
-def task_docker():
+def task_docker_build():
+    """Build Docker images using the system's architecture"""
     for image in P.TEST_IMAGES:
 
-        tags = [
-            f"{P.OWNER}/{image}:latest",
-            f"{P.OWNER}/{image}:{U.GET_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
-        ]
-
-        image_dir = P.ROOT / image
-        dockerfile = str(image_dir / "Dockerfile")
-
-        def set_env(image):
-            """We need this env variable later on for the tests"""
-            os.environ["TEST_IMAGE"] = image
-            print(os.environ.get("TEST_IMAGE"))
+        IMAGE_TAGS, IMAGE_DIR, DOCKERFILE = U.image_meta(image)
 
         yield dict(
             name=f"build:{image}",
@@ -81,15 +71,15 @@ def task_docker():
                     "docker",
                     "buildx",
                     "build",
-                    *["-t" + tag for tag in tags],
+                    *["-t" + tag for tag in IMAGE_TAGS],
                     "-f",
-                    dockerfile,
+                    DOCKERFILE,
                     "--build-arg",
                     "OWNER=" + P.OWNER,
-                    str(image_dir),
-                )
+                    str(IMAGE_DIR),
+                ),
             ],
-            file_dep=[dockerfile],
+            file_dep=[DOCKERFILE],
             uptodate=[False],
         )
 
@@ -97,28 +87,38 @@ def task_docker():
             name=f"build_summary:{image}",
             doc="Brief summary of the image built - defaulting to using the latest tag",
             actions=[
-                ["echo", "\n \n Build complete, image size:"],
-                U.do("docker", "images", tags[0], "--format", "{{.Size}}"),
-            ],
-        )
-
-        yield dict(
-            name=f"test:{image}",
-            doc="Run tests for images",
-            actions=[
-                (set_env, [image]),
-                U.do(
-                    *P.PYM,
-                    "pytest",
-                    "-m not info",
-                    "test",
-                    image + "/test",
-                ),
+                ["echo", "\n \n ⚡️ Build complete, image size:"],
+                U.do("docker", "images", IMAGE_TAGS[0], "--format", "{{.Size}}"),
             ],
         )
 
 
-def task_manifest():
+@doit.create_after(executed="docker_build")
+def task_test_docker():
+    """Test Docker images - need to be run after `docker_build`"""
+
+    for image in P.TEST_IMAGES:
+
+        IMAGE_TAGS, IMAGE_DIR, DOCKERFILE = U.image_meta(image)
+
+    yield dict(
+        name=f"test:{image}",
+        doc="Run tests for images",
+        actions=[
+            (U.set_env, [image]),
+            U.do(
+                *P.PYM,
+                "pytest",
+                "-m",
+                "not info",
+                "test",
+                image + "/test",
+            ),
+        ],
+    )
+
+
+def task__create_manifest():
     """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
     for image in P.TEST_IMAGES:
 
@@ -217,6 +217,7 @@ class U:
     # CI specific
     IS_CI = bool(os.environ.get("CI", 0))
 
+    # git specific - used for tagging
     SOURCE_DATE_EPOCH = (
         subprocess.check_output(["git", "log", "-1", "--format=%ct"])
         .decode("utf-8")
@@ -228,3 +229,22 @@ class U:
         .decode("utf-8")
         .strip()
     )
+
+    # utility methods
+    @staticmethod
+    def image_meta(image):
+        """Get the image tags and other supporting meta for build, testing and tagging"""
+        tags = [
+            f"{P.OWNER}/{image}:latest",
+            f"{P.OWNER}/{image}:{U.GET_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
+        ]
+        image_dir = P.ROOT / image
+        dockerfile = str(image_dir / "Dockerfile")
+
+        return tags, image_dir, dockerfile
+
+    @staticmethod
+    def set_env(image):
+        """We need this env variable later on for the tests"""
+        os.environ["TEST_IMAGE"] = image
+        print(os.environ.get("TEST_IMAGE"))
