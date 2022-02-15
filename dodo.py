@@ -118,7 +118,7 @@ def task_test_docker():
     )
 
 
-def task__create_manifest():
+def task_create_manifest():
     """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
     for image in P.TEST_IMAGES:
 
