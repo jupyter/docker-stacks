@@ -27,6 +27,7 @@ on:
     branches:
       - main
       - master
+      - trallard/* #testing while developing
     paths:
       - ".github/workflows/docker.yml"
 
@@ -86,26 +87,16 @@ jobs:
           python -m pip install --upgrade pip
           make -C main install-dev-env
 
-      # https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#local-cache
+      # https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#github-cache
       - name: Build Docker Images 🛠
-        run: python -m doit docker
+        run: python -m doit -f main/dodo.py docker
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-      # This ugly bit is necessary if you don't want your cache to grow forever
-      # till it hits GitHub's limit of 5GB.
-      # Temp fix
-      # https://github.com/docker/build-push-action/issues/252
-      # https://github.com/moby/buildkit/issues/1896
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
-  manifests:
+  create-manifests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout wiki 📃
@@ -126,4 +117,4 @@ jobs:
 
       - name: Create tags and manifest
         run: |
-          python -m doit manifest
+          python -m doit -f main/dodo.py manifest
