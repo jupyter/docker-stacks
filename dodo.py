@@ -176,7 +176,7 @@ class P:
     DOCS_MD = sorted([*DOCS_SRC_MD, README])
 
     # wiki
-    WIKI = ROOT / "wiki"
+    WIKI = ROOT.parent / "wiki"
 
     # tests
     TESTS = ROOT / "tests"
