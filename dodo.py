@@ -77,6 +77,7 @@ def task_docker_build():
                     "--build-arg",
                     "OWNER=" + P.OWNER,
                     str(IMAGE_DIR),
+                    "--load",
                 ),
             ],
             file_dep=[DOCKERFILE],
@@ -96,7 +97,11 @@ def task_docker_build():
             yield dict(
                 name=f"saving:{image}",
                 doc="Save the Docker image and store it in the CI artifacts",
-                actions=[U.do("docker", "save", "-o", P.CI_IMG / image, IMAGE_TAGS[0])],
+                actions=[
+                    U.do("echo", "Saving image to artifacts 💾"),
+                    U.do("mkdir", "-p", P.CI_IMG / image),
+                    U.do("docker", "save", "-o", P.CI_IMG / image, IMAGE_TAGS[0]),
+                ],
             )
 
 
@@ -201,6 +206,7 @@ class P:
     CI = ROOT / ".github"
     CI_IMG = CI / "workflows" / "docker_images"
 
+    # Docker-related
     # Images supporting the following architectures:
     # - linux/amd64
     # - linux/arm64
@@ -219,6 +225,7 @@ class P:
     OWNER = "jupyter"
 
     PYM = ["python", "-m"]
+    PIP = [*PYM, "pip"]
 
 
 class U:
