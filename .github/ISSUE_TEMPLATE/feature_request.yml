@@ -6,10 +6,11 @@ title: "[ENH]: <title>"
 body:
   - type: markdown
     attributes:
-      value: >-
+      value: |
         Hi! Thanks for using the Jupyter Docker Stacks and taking some time to contribute to this project.
 
-        We'd appreciate it if you could check out the [Suggesting a new feature](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/features.html#suggesting-a-new-feature) section in the documentation for our preferred processes before submitting a feature request.
+        We'd appreciate it if you could check out the [Suggesting a new feature](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/features.html#suggesting-a-new-feature)
+        section in the documentation for our preferred processes before submitting a feature request.
 
   - type: dropdown
     id: docker_images
@@ -26,13 +27,14 @@ body:
         - r-notebook
         - scipy-notebook
         - tensorflow-notebook
+        - new community stack
     validations:
       required: true
 
   - type: textarea
     attributes:
       label: What changes are you proposing?
-      description: >-
+      description: |
         Example:
           - Add the [altair](https://altair-viz.github.io) package to the image.
     validations:
@@ -41,11 +43,11 @@ body:
   - type: textarea
     attributes:
       label: How does this affect the user?
-      description: >-
+      description: |
         Example:
           - Altair is a declarative statistical visualization library for Python, based on Vega and Vega-Lite, and the source is available on GitHub.
           - With Altair, you can spend more time understanding your data and its meaning.
-          - Altair’s API is simple, friendly and consistent and built on top of the powerful Vega-Lite visualization grammar.
+          - Altair's API is simple, friendly and consistent and built on top of the powerful Vega-Lite visualization grammar.
           - This elegant simplicity produces beautiful and effective visualizations with a minimal amount of code.
     validations:
       required: true
@@ -53,7 +55,7 @@ body:
   - type: textarea
     attributes:
       label: Anything else?
-      description: >-
+      description: |
         Links? References? Anything that will give us more context about the feature you are proposing.
     validations:
       required: false

@@ -9,7 +9,8 @@ body:
       value: |
         Hi! Thanks for using the Jupyter Docker Stacks and taking some time to contribute to this project.
 
-        We'd appreciate it if you could check out the [Troubleshooting common problems](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/troubleshooting.html) section in the documentation.
+        We'd appreciate it if you could check out the [Troubleshooting common problems](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/troubleshooting.html) section in the documentation,
+        as well as [existing issues](https://github.com/jupyter/docker-stacks/issues) prior to submitting an issue to avoid duplication.
 
         Please answer the following sections to help us troubleshoot the problem.
 
@@ -34,6 +35,9 @@ body:
   - type: input
     attributes:
       label: OS system you are using
+      placeholder: |
+        Example:
+        Linux - Ubuntu
     validations:
       required: true
 
@@ -63,7 +67,7 @@ body:
   - type: textarea
     attributes:
       label: command_output
-      render: sh-session
+      render: bash session
       description: |
         Provide the output of the steps above, including the commands
         themselves and Docker's output/traceback etc. If you're familiar with
