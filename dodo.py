@@ -111,11 +111,15 @@ def task_docker_test():
 
         image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
 
-        yield dict(
-            name=f"inspect:{image}",
-            doc="Inspect the image - this ensures it is available for docker commands",
-            actions=[(U.inspect_image, [image_tags[0]])],
-        )
+        if U.IS_CI:
+            yield dict(
+                name=f"load:{image}",
+                doc="Load and inspect the image - this ensures it is available for docker commands",
+                actions=[
+                    (U.do("docker", "load", "--input", tar_file)),
+                    (U.inspect_image, [image_tags[0]]),
+                ],
+            )
 
         yield dict(
             name=f"test:{image}",

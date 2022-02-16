@@ -116,7 +116,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: docker-images
-          path: built_docker_images
+          path: |
+            main/.github/built_docker_images/
           retention-days: 1
 
   test-images:
@@ -147,8 +148,15 @@ jobs:
           python -m pip install --upgrade pip
           make -C main install-dev-env
 
+      - name: Download built  images
+        uses: actions/download-artifact@v2
+        with:
+          name: docker-images
+          path: |
+            main/.github/built_docker_images/
+
       - name: Run tests ✅
-        run: python -m doit -f main/dodo.py test_docker
+        run: python -m doit -f main/dodo.py docker_test
 
   create-manifests:
     name: Create tags and manifests
