@@ -126,7 +126,7 @@ def task_docker_test():
             doc="Run tests for images",
             uptodate=[False],
             actions=[
-                (U.set_env, [image]),
+                (U.set_env, [f"{P.OWNER}/{image}"]),
                 U.do(
                     *P.PYM,
                     "pytest",

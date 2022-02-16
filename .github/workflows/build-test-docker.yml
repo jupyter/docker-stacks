@@ -194,4 +194,4 @@ jobs:
 
       - name: Create tags and manifest 🏷
         run: |
-          python -m doit -f main/dodo.py create_manifest
+          python -m doit -f main/dodo.py docker_create_manifest
