@@ -112,6 +112,13 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Save Docker image as artifact 💾
+        uses: actions/upload-artifact@v2
+        with:
+          name: docker-images
+          path: workflows/docker_images
+          retention-days: 1
+
   test-images:
     name: Test Docker images
     runs-on: ubuntu-latest

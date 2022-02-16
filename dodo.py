@@ -1,7 +1,7 @@
+import os
+import subprocess
 from pathlib import Path
 
-import subprocess
-import os
 import doit
 import doit.tools
 
@@ -17,7 +17,7 @@ DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docker"]}
 # -----------------------------------------------------------------------------
 
 
-def task_docs():
+def task_build_docs():
     """Build Sphinx documentation 📝
     setting uptodate to False will force the task to run every time
     """
@@ -31,8 +31,8 @@ def task_docs():
 
 
 # https://pydoit.org/task-creation.html#delayed-task-creation
-@doit.create_after(executed="docs")
-def task_check_links():
+@doit.create_after(executed="build_docs")
+def task_docs_check_links():
     """Checks for any broken links in the Sphinx documentation 🔗
     only created after the docs are built"""
     return dict(
@@ -92,33 +92,45 @@ def task_docker_build():
             ],
         )
 
+        if U.IS_CI:
+            yield dict(
+                name=f"saving:{image}",
+                doc="Save the Docker image and store it in the CI artifacts",
+                actions=[U.do("docker", "save", "-o", P.CI_IMG / image, IMAGE_TAGS[0])],
+            )
 
-def task_test_docker():
+
+def task_docker_test():
     """Test Docker images - need to be run after `docker_build`"""
-
     for image in P.TEST_IMAGES:
 
         IMAGE_TAGS, IMAGE_DIR, DOCKERFILE = U.image_meta(image)
 
-    yield dict(
-        name=f"test:{image}",
-        doc="Run tests for images",
-        uptodate=[False],
-        actions=[
-            (U.set_env, [image]),
-            U.do(
-                *P.PYM,
-                "pytest",
-                "-m",
-                "not info",
-                "test",
-                image + "/test",
-            ),
-        ],
-    )
+        yield dict(
+            name=f"inspect:{image}",
+            doc="Inspect the image - this ensures it is available for docker commands",
+            actions=[(U.inspect_image, [IMAGE_TAGS[0]])],
+        )
+
+        yield dict(
+            name=f"test:{image}",
+            doc="Run tests for images",
+            uptodate=[False],
+            actions=[
+                (U.set_env, [image]),
+                U.do(
+                    *P.PYM,
+                    "pytest",
+                    "-m",
+                    "not info",
+                    "test",
+                    image + "/test",
+                ),
+            ],
+        )
 
 
-def task_create_manifest():
+def task_docker_create_manifest():
     """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
     for image in P.TEST_IMAGES:
 
@@ -187,6 +199,7 @@ class P:
 
     # CI
     CI = ROOT / ".github"
+    CI_IMG = CI / "workflows" / "docker_images"
 
     # Images supporting the following architectures:
     # - linux/amd64
@@ -250,3 +263,10 @@ class U:
         """We need this env variable later on for the tests"""
         os.environ["TEST_IMAGE"] = image
         print(os.environ.get("TEST_IMAGE"))
+
+    @staticmethod
+    def inspect_image(image):
+        try:
+            subprocess.check_call(["docker", "image", "inspect", image])
+        except subprocess.CalledProcessError:
+            print(f"Image not found: {image}")
