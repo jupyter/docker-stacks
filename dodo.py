@@ -198,7 +198,7 @@ class P:
     DOCS_MD = sorted([*DOCS_SRC_MD, README])
 
     # wiki
-    WIKI = ROOT.parent / "wiki"
+    WIKI = ROOT / "wiki"
     WIKI_TARGET = WIKI / "*.md"
 
     # tests

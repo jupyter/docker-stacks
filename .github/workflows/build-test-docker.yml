@@ -115,7 +115,7 @@ jobs:
       - name: Save Docker image as artifact 💾
         uses: actions/upload-artifact@v2
         with:
-          name: docker-images
+          name: docker-images-${{ github.sha }}
           path: |
             main/.github/built_docker_images/
           retention-days: 1
@@ -151,7 +151,7 @@ jobs:
       - name: Download built  images
         uses: actions/download-artifact@v2
         with:
-          name: docker-images
+          name: docker-images-${{ github.sha }}
           path: |
             main/.github/built_docker_images/
 
