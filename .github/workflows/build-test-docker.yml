@@ -116,7 +116,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: docker-images
-          path: workflows/docker_images
+          path: built_docker_images
           retention-days: 1
 
   test-images:

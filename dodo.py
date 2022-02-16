@@ -61,7 +61,7 @@ def task_docker_build():
     """Build Docker images using the system's architecture"""
     for image in P.TEST_IMAGES:
 
-        IMAGE_TAGS, IMAGE_DIR, DOCKERFILE = U.image_meta(image)
+        image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
 
         yield dict(
             name=f"build:{image}",
@@ -71,16 +71,16 @@ def task_docker_build():
                     "docker",
                     "buildx",
                     "build",
-                    *["-t" + tag for tag in IMAGE_TAGS],
+                    *["-t" + tag for tag in image_tags],
                     "-f",
-                    DOCKERFILE,
+                    dockerfile,
                     "--build-arg",
                     "OWNER=" + P.OWNER,
-                    str(IMAGE_DIR),
+                    str(image_dir),
                     "--load",
                 ),
             ],
-            file_dep=[DOCKERFILE],
+            file_dep=[dockerfile],
             uptodate=[False],
         )
 
@@ -89,7 +89,7 @@ def task_docker_build():
             doc="Brief summary of the image built - defaulting to using the latest tag",
             actions=[
                 ["echo", "\n \n ⚡️ Build complete, image size:"],
-                U.do("docker", "images", IMAGE_TAGS[0], "--format", "{{.Size}}"),
+                U.do("docker", "images", image_tags[0], "--format", "{{.Size}}"),
             ],
         )
 
@@ -98,9 +98,9 @@ def task_docker_build():
                 name=f"saving:{image}",
                 doc="Save the Docker image and store it in the CI artifacts",
                 actions=[
-                    U.do("echo", "Saving image to artifacts 💾"),
+                    U.do("echo", f"Saving image to: {P.CI_IMG / image}"),
                     U.do("mkdir", "-p", P.CI_IMG / image),
-                    U.do("docker", "save", "-o", P.CI_IMG / image, IMAGE_TAGS[0]),
+                    U.do("docker", "save", "-o", tar_file, *image_tags),
                 ],
             )
 
@@ -109,12 +109,12 @@ def task_docker_test():
     """Test Docker images - need to be run after `docker_build`"""
     for image in P.TEST_IMAGES:
 
-        IMAGE_TAGS, IMAGE_DIR, DOCKERFILE = U.image_meta(image)
+        image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
 
         yield dict(
             name=f"inspect:{image}",
             doc="Inspect the image - this ensures it is available for docker commands",
-            actions=[(U.inspect_image, [IMAGE_TAGS[0]])],
+            actions=[(U.inspect_image, [image_tags[0]])],
         )
 
         yield dict(
@@ -204,7 +204,7 @@ class P:
 
     # CI
     CI = ROOT / ".github"
-    CI_IMG = CI / "workflows" / "docker_images"
+    CI_IMG = CI / "built_docker_images"
 
     # Docker-related
     # Images supporting the following architectures:
@@ -262,8 +262,9 @@ class U:
         ]
         image_dir = P.ROOT / image
         dockerfile = str(image_dir / "Dockerfile")
+        tar_file = str(P.CI_IMG / image / f"{image}-{U.GET_COMMIT_SHA}.tar")
 
-        return tags, image_dir, dockerfile
+        return tags, image_dir, dockerfile, tar_file
 
     @staticmethod
     def set_env(image):
