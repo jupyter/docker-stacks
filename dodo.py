@@ -111,6 +111,9 @@ def task_docker_test():
 
         image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
 
+        if Path(image + "/test").exists():
+            U.PYTEST_ARGS += [f"{image}/test"]
+
         if U.IS_CI:
             yield dict(
                 name=f"load:{image}",
@@ -127,7 +130,7 @@ def task_docker_test():
             uptodate=[False],
             actions=[
                 (U.set_env, [f"{P.OWNER}/{image}"]),
-                (U.find_test_dir, [image]),
+                (U.do(*U.PYTEST_ARGS)),
             ],
         )
 
@@ -141,7 +144,7 @@ def task_docker_create_manifest():
             doc="Create tags for the images",
             actions=[
                 U.do(
-                    *P.PYM,
+                    *U.PYM,
                     "tagging.tag_image",
                     "--short-image-name",
                     image,
@@ -157,7 +160,7 @@ def task_docker_create_manifest():
             targets=[P.WIKI_TARGET],
             actions=[
                 U.do(
-                    *P.PYM,
+                    *U.PYM,
                     "tagging.create_manifests",
                     "--short-image-name",
                     image,
@@ -221,9 +224,6 @@ class P:
 
     OWNER = "jupyter"
 
-    PYM = ["python", "-m"]
-    PIP = [*PYM, "pip"]
-
 
 class U:
     """Supporting methods and variables"""
@@ -235,6 +235,11 @@ class U:
 
     # CI specific
     IS_CI = bool(os.environ.get("CI", 0))
+
+    # args
+    PYTEST_ARGS = ["pytest", "-m", "not info", "test"]
+    PYM = ["python", "-m"]
+    PIP = [*PYM, "pip"]
 
     # git specific - used for tagging
     SOURCE_DATE_EPOCH = (
@@ -278,11 +283,3 @@ class U:
             )
         except subprocess.CalledProcessError:
             print(f"Image not found: {image}")
-
-    @staticmethod
-    def find_test_dir(image):
-        if Path(image + "/tests").exists():
-            test_args = ["pytest", "-m", "not info", "test", image + "/test"]
-        else:
-            test_args = ["pytest", "-m", "not info", "test"]
-        return test_args
