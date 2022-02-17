@@ -19,9 +19,7 @@ on:
 
       - "tagging/**"
       - "test/**"
-      - "conftest.py"
       - "Makefile"
-      - "pytest.ini"
       - "requirements-dev.txt"
   push:
     branches:
@@ -41,9 +39,7 @@ on:
 
       - "tagging/**"
       - "test/**"
-      - "conftest.py"
       - "Makefile"
-      - "pytest.ini"
       - "requirements-dev.txt"
   workflow_dispatch:
 

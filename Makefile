@@ -205,9 +205,8 @@ run-sudo-shell/%: ## run a bash in interactive mode as root in a stack
 
 
 
-test/%: ## run tests against a stack (only common tests or common tests + specific tests)
+test/%: ## run tests against a stack
 	@echo "::group::test/$(OWNER)/$(notdir $@)"
-	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest --numprocesses=auto -m "not info" test; \
-	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest --numprocesses=auto -m "not info" test $(notdir $@)/test; fi
+	tests/run_tests.py --short-image-name "$(notdir $@)" --owner "$(OWNER)"
 	@echo "::endgroup::"
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks
