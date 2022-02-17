@@ -127,14 +127,7 @@ def task_docker_test():
             uptodate=[False],
             actions=[
                 (U.set_env, [f"{P.OWNER}/{image}"]),
-                U.do(
-                    *P.PYM,
-                    "pytest",
-                    "-m",
-                    "not info",
-                    "test",
-                    image + "/test",
-                ),
+                (U.find_test_dir, [image]),
             ],
         )
 
@@ -198,7 +191,7 @@ class P:
     DOCS_MD = sorted([*DOCS_SRC_MD, README])
 
     # wiki
-    WIKI = ROOT / "wiki"
+    WIKI = ROOT.parent / "wiki"
     WIKI_TARGET = WIKI / "*.md"
 
     # tests
@@ -278,7 +271,18 @@ class U:
 
     @staticmethod
     def inspect_image(image):
+        """Since we are sharing artifacts across jobs we need to make sure that these are loaded properly. The easies way to check this is to run `docker inspect` on the image"""
         try:
-            subprocess.check_call(["docker", "image", "inspect", image])
+            subprocess.check_call(
+                ["docker", "image", "inspect", image], stdout=subprocess.DEVNULL
+            )
         except subprocess.CalledProcessError:
             print(f"Image not found: {image}")
+
+    @staticmethod
+    def find_test_dir(image):
+        if Path(image + "/tests").exists():
+            test_args = ["pytest", "-m", "not info", "test", image + "/test"]
+        else:
+            test_args = ["pytest", "-m", "not info", "test"]
+        return test_args
