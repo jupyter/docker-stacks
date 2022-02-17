@@ -3,14 +3,11 @@
 # Distributed under the terms of the Modified BSD License.
 import argparse
 import logging
-from pathlib import Path
 
 import plumbum
 from plumbum.cmd import pytest
 
 from images_hierarchy import get_test_dirs
-
-THIS_DIR = Path(__file__).parent.resolve()
 
 
 LOGGER = logging.getLogger(__name__)
@@ -27,7 +24,6 @@ def test_image(short_image_name: str, owner: str) -> None:
                 "auto",
                 "-m",
                 "not info",
-                THIS_DIR / "test_units.py",
                 test_dirs,
             ]
             & plumbum.FG
