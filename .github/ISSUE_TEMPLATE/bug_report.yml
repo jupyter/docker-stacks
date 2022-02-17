@@ -34,10 +34,10 @@ body:
 
   - type: input
     attributes:
-      label: OS system you are using
+      label: OS system and architecture running docker image
       placeholder: |
         Example:
-        Linux - Ubuntu
+        Ubuntu/aarch64
     validations:
       required: true
 
