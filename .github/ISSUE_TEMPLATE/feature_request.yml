@@ -47,7 +47,7 @@ body:
       label: How does this affect the user?
       description: |
         How will the proposed feature affect the user's workflow?
-        How will this feature make the image more robust,secure,etc.?
+        How will this feature make the image more robust, secure, etc.?
       placeholder: |
         Example:
           - Altair is a declarative statistical visualization library for Python, based on Vega and Vega-Lite, and the source is available on GitHub.
