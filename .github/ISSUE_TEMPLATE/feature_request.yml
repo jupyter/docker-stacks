@@ -35,6 +35,8 @@ body:
     attributes:
       label: What changes are you proposing?
       description: |
+        Be concise and feel free to add supporting links or references.
+      placeholder: |
         Example:
           - Add the [altair](https://altair-viz.github.io) package to the image.
     validations:
@@ -44,6 +46,9 @@ body:
     attributes:
       label: How does this affect the user?
       description: |
+        How will the proposed feature affect the user's workflow?
+        How will this feature make the image more robust,secure,etc.?
+      placeholder: |
         Example:
           - Altair is a declarative statistical visualization library for Python, based on Vega and Vega-Lite, and the source is available on GitHub.
           - With Altair, you can spend more time understanding your data and its meaning.
