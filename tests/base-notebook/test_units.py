@@ -25,7 +25,7 @@ def test_units(container: TrackedContainer) -> None:
 
         if not host_data_dir.exists():
             LOGGER.info(f"Not found unit tests for image: {container.image_name}")
-            return
+            continue
 
         for test_file in host_data_dir.iterdir():
             test_file_name = test_file.name
