@@ -1,6 +1,6 @@
 name: Bug report
 description: Create a report to help us improve
-title: "BUG - <title>"
+title: "[BUG] - <title>"
 labels: ["type:Bug"]
 
 body:
@@ -17,7 +17,7 @@ body:
   - type: dropdown
     id: docker_images
     attributes:
-      label: What docker image are you using?
+      label: What docker image(s) are you using?
       description: Select as many images as applicable
       multiple: true
       options:
@@ -54,12 +54,15 @@ body:
 
   - type: textarea
     attributes:
-      label: How to Reproduce
+      label: How to Reproduce the problem?
       description: Please provide steps to reproduce this bug (once the container is running).
       placeholder: |
         Example:
+
         1. Visit <http://localhost:8888>
+
         2. Start an R notebook
+
         3. ...
     validations:
       required: true

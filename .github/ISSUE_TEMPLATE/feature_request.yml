@@ -15,7 +15,7 @@ body:
   - type: dropdown
     id: docker_images
     attributes:
-      label: What docker images is this feature applicable to?
+      label: What docker image(s) is this feature applicable to?
       description: Select as many images as applicable
       multiple: true
       options:
