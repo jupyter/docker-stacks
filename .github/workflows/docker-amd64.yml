@@ -18,7 +18,7 @@ on:
       - "tensorflow-notebook/**"
 
       - "tagging/**"
-      - "test/**"
+      - "tests/**"
       - "Makefile"
       - "requirements-dev.txt"
   push:
@@ -38,7 +38,7 @@ on:
       - "tensorflow-notebook/**"
 
       - "tagging/**"
-      - "test/**"
+      - "tests**"
       - "Makefile"
       - "requirements-dev.txt"
   workflow_dispatch:
