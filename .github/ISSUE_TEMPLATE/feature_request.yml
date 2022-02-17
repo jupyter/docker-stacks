@@ -1,7 +1,7 @@
 name: Feature request
 description: Suggest a new feature for this project
-labels: ["type:Enhancement"]
 title: "[ENH]: <title>"
+labels: ["type:Enhancement"]
 
 body:
   - type: markdown
