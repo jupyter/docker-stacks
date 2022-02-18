@@ -11,7 +11,7 @@ We use `pytest` module to run tests on the image.
 `conftest.py` and `pytest.ini` in the `tests` folder define the environment in which tests are run.
 More info on `pytest` can be found [here](https://docs.pytest.org/en/latest/contents.html).
 
-All the actual test files are located in folders like `tests/<somestack>-notebook`.
+All the actual test files are located in folders like `tests/<somestack>-notebook/`.
 
 ```{note}
 If your test is located in `tests/<somestack>-notebook`, it will be run against `jupyter/<somestack>-notebook` image and against all the images inherited from this image.
