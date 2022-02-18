@@ -14,7 +14,7 @@ More info on `pytest` can be found [here](https://docs.pytest.org/en/latest/cont
 All the actual test files are located in folders like `tests/<somestack>-notebook/`.
 
 ```{note}
-If your test is located in `tests/<somestack>-notebook`, it will be run against `jupyter/<somestack>-notebook` image and against all the images inherited from this image.
+If your test is located in `tests/<somestack>-notebook/`, it will be run against `jupyter/<somestack>-notebook` image and against all the images inherited from this image.
 ```
 
 Many tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/reference/fixtures.html)
@@ -24,14 +24,14 @@ defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/maste
 
 If you want to run a python script in one of our images, you could add a unit test.
 You can do this by creating a `tests/<somestack>-notebook/units/` directory, if it doesn't already exist and put your file there.
-Files in this folder will run automatically when tests are run.
+Files in this folder will be executed in container when tests are run.
 You could see an example for tensorflow package [here](https://github.com/jupyter/docker-stacks/blob/HEAD/tests/tensorflow-notebook/units/unit_tensorflow.py).
 
 ## Contributing New Tests
 
 Please follow the process below to add new tests:
 
-1. Add your test code to one of the modules in `<somestack>-notebook/tests/` directory or create a new module.
+1. Add your test code to one of the modules in `tests/<somestack>-notebook/` directory or create a new module.
 2. Build one or more images you intend to test and run the tests locally.
    If you use `make`, call:
 
