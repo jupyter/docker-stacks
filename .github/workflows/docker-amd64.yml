@@ -38,7 +38,7 @@ on:
       - "tensorflow-notebook/**"
 
       - "tagging/**"
-      - "tests**"
+      - "tests/**"
       - "Makefile"
       - "requirements-dev.txt"
   workflow_dispatch:
