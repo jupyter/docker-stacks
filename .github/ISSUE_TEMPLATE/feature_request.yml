@@ -1,0 +1,66 @@
+name: Feature request
+description: Suggest a new feature for this project
+title: "[ENH]: <title>"
+labels: ["type:Enhancement"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hi! Thanks for using the Jupyter Docker Stacks and taking some time to contribute to this project.
+
+        We'd appreciate it if you could check out the [Suggesting a new feature](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/features.html#suggesting-a-new-feature)
+        section in the documentation for our preferred processes before submitting a feature request.
+
+  - type: dropdown
+    id: docker_images
+    attributes:
+      label: What docker image(s) is this feature applicable to?
+      description: Select as many images as applicable
+      multiple: true
+      options:
+        - all-spark-notebook
+        - base-notebook
+        - datascience-notebook
+        - minimal-notebook
+        - pyspark-notebook
+        - r-notebook
+        - scipy-notebook
+        - tensorflow-notebook
+        - new community stack
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: What changes are you proposing?
+      description: |
+        Be concise and feel free to add supporting links or references.
+      placeholder: |
+        Example:
+          - Add the [altair](https://altair-viz.github.io) package to the image.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: How does this affect the user?
+      description: |
+        How will the proposed feature affect the user's workflow?
+        How will this feature make the image more robust, secure, etc.?
+      placeholder: |
+        Example:
+          - Altair is a declarative statistical visualization library for Python, based on Vega and Vega-Lite, and the source is available on GitHub.
+          - With Altair, you can spend more time understanding your data and its meaning.
+          - Altair's API is simple, friendly and consistent and built on top of the powerful Vega-Lite visualization grammar.
+          - This elegant simplicity produces beautiful and effective visualizations with a minimal amount of code.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: |
+        Links? References? Anything that will give us more context about the feature you are proposing.
+    validations:
+      required: false
