@@ -1,12 +1,10 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-import logging
 from pathlib import Path
 
 from conftest import TrackedContainer
 
-LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
