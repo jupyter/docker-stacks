@@ -1,7 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+from contextlib import closing
 import os
 import logging
+import socket
 from typing import Any, Optional
 
 import docker
@@ -14,6 +16,14 @@ from requests.adapters import HTTPAdapter
 
 
 LOGGER = logging.getLogger(__name__)
+
+
+def find_free_port() -> str:
+    """Returns the available host port. Can be called in multiple threads/processes."""
+    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+        s.bind(("", 0))
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        return s.getsockname()[1]
 
 
 @pytest.fixture(scope="session")
@@ -137,7 +147,6 @@ def container(docker_client: docker.DockerClient, image_name: str) -> Container:
         docker_client,
         image_name,
         detach=True,
-        ports={"8888/tcp": 8888},
     )
     yield container
     container.remove()

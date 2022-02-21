@@ -155,12 +155,12 @@ If you want to set any custom configuration for the notebook, you can edit the c
 oc edit configmap/mynotebook-cfg
 ```
 
-The `data` field of the config map contains Python code used as the `jupyter_notebook_config.py` file.
+The `data` field of the config map contains Python code used as the `jupyter_server_config.py` file.
 
 If you are using a persistent volume, you can also create a configuration file at:
 
 ```lang-none
-/home/jovyan/.jupyter/jupyter_notebook_config.py
+/home/jovyan/.jupyter/jupyter_server_config.py
 ```
 
 This will be merged at the end of the configuration from the config map.
@@ -209,7 +209,7 @@ oc set env dc/mynotebook JUPYTER_NOTEBOOK_PASSWORD=mypassword
 
 This will trigger a new deployment so ensure you have downloaded any work if not using a persistent volume.
 
-If using a persistent volume, you could instead setup a password in the file `/home/jovyan/.jupyter/jupyter_notebook_config.py` as per guidelines in <https://jupyter-notebook.readthedocs.io/en/stable/public_server.html>.
+If using a persistent volume, you could instead setup a password in the file `/home/jovyan/.jupyter/jupyter_server_config.py` as per guidelines in <https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html>.
 
 ## Deploying from a Custom Image
 

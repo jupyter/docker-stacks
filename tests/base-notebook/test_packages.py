@@ -18,19 +18,18 @@ However it could be easily changed (or completed) to cover also dependencies `pa
 
 Example:
 
-    $ make test/datascience-notebook
+    $ make test/base-notebook
 
     # [...]
     # test/test_packages.py::test_python_packages
-    # --------------------------------------------------------------------------------------------- live log setup ----------------------------------------------------------------------------------------------
-    # 2020-03-08 09:56:04 [    INFO] Starting container jupyter/datascience-notebook ... (package_helper.py:51)
-    # 2020-03-08 09:56:04 [    INFO] Running jupyter/datascience-notebook with args {'detach': True, 'ports': {'8888/tcp': 8888}, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:78)
-    # 2020-03-08 09:56:04 [    INFO] Grabing the list of manually requested packages ... (package_helper.py:76)
-    # ---------------------------------------------------------------------------------------------- live log call ----------------------------------------------------------------------------------------------
-    # 2020-03-08 09:56:07 [    INFO] Testing the import of packages ... (test_packages.py:125)
-    # 2020-03-08 09:56:07 [    INFO] Trying to import conda (test_packages.py:127)
-    # 2020-03-08 09:56:07 [    INFO] Trying to import notebook (test_packages.py:127)
-    # 2020-03-08 09:56:08 [    INFO] Trying to import jupyterhub (test_packages.py:127)
+    # tests/base-notebook/test_packages.py::test_python_packages
+    # ---------------------------------------------------------------------------------------------- live log setup ----------------------------------------------------------------------------------------------
+    # 2022-02-17 16:44:36 [    INFO] Starting container jupyter/base-notebook ... (package_helper.py:55)
+    # 2022-02-17 16:44:36 [    INFO] Running jupyter/base-notebook with args {'detach': True, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:95)
+    # 2022-02-17 16:44:37 [    INFO] Grabing the list of manually requested packages ... (package_helper.py:83)
+    # ---------------------------------------------------------------------------------------------- live log call -----------------------------------------------------------------------------------------------
+    # 2022-02-17 16:44:38 [    INFO] Testing the import of packages ... (test_packages.py:144)
+    # 2022-02-17 16:44:38 [    INFO] Trying to import mamba (test_packages.py:146)
     # [...]
 
 """
