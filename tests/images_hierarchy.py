@@ -5,7 +5,8 @@ from typing import Optional
 
 THIS_DIR = Path(__file__).parent.resolve()
 
-
+# Please, take a look at the hierarchy of the images here:
+# https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#image-relationships
 ALL_IMAGES = {
     "base-notebook": None,
     "minimal-notebook": "base-notebook",
