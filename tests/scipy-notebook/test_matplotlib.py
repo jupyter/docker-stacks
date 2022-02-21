@@ -35,7 +35,7 @@ def test_matplotlib(
     - Test that matplotlib is able to plot a graph and write it as an image
     - Test matplotlib latex fonts, which depend on the cm-super package
     """
-    host_data_dir = THIS_DIR / "data"
+    host_data_dir = THIS_DIR / "data/matplotlib"
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
     LOGGER.info(description)
