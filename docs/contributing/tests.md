@@ -4,7 +4,11 @@ We greatly appreciate pull requests that extend the automated tests that vet the
 
 ## How the Tests Work
 
-GitHub Action executes `make build-test-all` against pull requests submitted to the `jupyter/docker-stacks` repository.
+A [GitHub Action workflow](https://github.com/jupyter/docker-stacks/blob/master/.github/workflows/docker.yml)
+runs the following commands against pull requests submitted to the `jupyter/docker-stacks` repository:
+
+1. ` make -C main build-all-multi` - which builds all the Docker images
+2. `make -C main test-all` - which tests the newly created Docker images
 This `make` command builds and then tests every docker image.
 
 We use `pytest` module to run tests on the image.
@@ -14,7 +18,7 @@ More info on `pytest` can be found [here](https://docs.pytest.org/en/latest/cont
 All the actual test files are located in folders like `tests/<somestack>-notebook/`.
 
 ```{note}
-If your test is located in `tests/<somestack>-notebook/`, it will be run against `jupyter/<somestack>-notebook` image and against all the images inherited from this image.
+If your test is located in `tests/<somestack>-notebook/`, it will be run against `jupyter/<somestack>-notebook` image and against all the [images inherited from this image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#image-relationships. 
 ```
 
 Many tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/reference/fixtures.html)
@@ -24,8 +28,8 @@ defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/maste
 
 If you want to run a python script in one of our images, you could add a unit test.
 You can do this by creating a `tests/<somestack>-notebook/units/` directory, if it doesn't already exist and put your file there.
-Files in this folder will be executed in container when tests are run.
-You could see an example for tensorflow package [here](https://github.com/jupyter/docker-stacks/blob/HEAD/tests/tensorflow-notebook/units/unit_tensorflow.py).
+Files in this folder will be executed in the container when tests are run.
+You could see an [example for the TensorFlow package here](https://github.com/jupyter/docker-stacks/blob/HEAD/tests/tensorflow-notebook/units/unit_tensorflow.py).
 
 ## Contributing New Tests
 
