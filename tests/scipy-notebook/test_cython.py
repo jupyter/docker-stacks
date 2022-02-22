@@ -2,16 +2,12 @@
 # Distributed under the terms of the Modified BSD License.
 
 from pathlib import Path
-import pytest
 
 from conftest import TrackedContainer
 
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-@pytest.mark.skip(
-    reason="Skipping because we still pull previous image during the build stage :("
-)
 def test_cython(container: TrackedContainer) -> None:
     host_data_dir = THIS_DIR / "data/cython"
     cont_data_dir = "/home/jovyan/data"
