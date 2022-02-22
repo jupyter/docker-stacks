@@ -115,7 +115,7 @@ def task_docker_save_images():
                 U.do(
                     "docker",
                     "save",
-                    subprocess.check_call(["docker", "images", "-q"]).decode("utf-8"),
+                    subprocess.check_call(["docker", "images", "-q"]),
                     "-o",
                     str(ci_img_tar),
                 ),
