@@ -9,7 +9,7 @@ import doit
 import doit.tools
 
 # global doit config
-DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docker"]}
+DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 
 
 # dependencies: input to the task execution -> keeps tracks of the state of file dependencies and saves the signature of them every time the tasks are run so if there are no modifications to the files the execution of the task is skipped  (indicated by -- after running doit)
@@ -86,7 +86,6 @@ def task_docker_build():
                     str(image_dir),
                     "--load",
                 ),
-                U.do("echo", "::endgroup::"),
             ],
             file_dep=[dockerfile],
             uptodate=[False],
@@ -98,6 +97,7 @@ def task_docker_build():
             actions=[
                 ["echo", "\n \n ⚡️ Build complete, image size:"],
                 U.do("docker", "images", image_tags[0], "--format", "{{.Size}}"),
+                U.do("echo", "::endgroup::"),
             ],
         )
 
@@ -105,14 +105,20 @@ def task_docker_build():
 @doit.create_after(executed="docker_build")
 def task_docker_save_images():
     if U.IS_CI:
-        yield dict(
-            name="saving_images",
+        ci_img_tar = P.CI_IMG_TAR / f"docker_images_{U.GIT_COMMIT_SHA}.tar"
+        return dict(
+            name="save_images",
             doc="Save the built Docker images - these will be stored as CI artifacts",
-            targets=[P.CI_IMG_TAR],
+            targets=[ci_img_tar],
             actions=[
                 U.do("echo", f"Saving images to: {P.CI_IMG}"),
                 U.do("mkdir", "-p", P.CI_IMG),
-                U.do("docker", "save", "-o", P.CI_IMG_TAR),
+                U.do(
+                    "docker",
+                    "save",
+                    "-o",
+                    str(ci_img_tar),
+                ),
             ],
         )
 
@@ -182,7 +188,7 @@ def task_docker_create_manifest():
         )
 
 
-def task_docker_push_images():
+def task_docker_push_image():
     """Push all tags for a Jupyter image - only should be done after they have been tested"""
     # TODO: need to add a flag to identify the registry to which we are pushing as need to preped gchr.io accordingly
     for image in P.ALL_IMAGES:
@@ -227,14 +233,10 @@ class P:
 
     # tests
     TESTS = ROOT / "tests"
-    SCRIPTS = ROOT / "scripts"
-    TAGGING = ROOT / "tagging"
 
     # CI
     CI = ROOT / ".github"
     CI_IMG = CI / "built_docker_images"
-    #  CI artifacts
-    CI_IMG_TAR = CI_IMG / "built_docker_images" / "docker_images-{U.GIT_COMMIT_SHA}.tar"
 
     # Docker-related
     # Images supporting the following architectures:
