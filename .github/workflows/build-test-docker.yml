@@ -100,13 +100,14 @@ jobs:
       - name: Build Docker Images 🛠
         run: |
           python -m doit -f main/dodo.py docker_build
+          python -m doit -f main/dodo.py docker_save_images
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Save Docker image as artifact 💾
+      - name: Save Docker images as artifact 💾
         uses: actions/upload-artifact@v2
         with:
           name: docker-images-${{ github.sha }}
@@ -142,7 +143,7 @@ jobs:
           python -m pip install --upgrade pip
           make -C main install-dev-env
 
-      - name: Download built  images
+      - name: Download built images 📥
         uses: actions/download-artifact@v2
         with:
           name: docker-images-${{ github.sha }}
@@ -151,6 +152,15 @@ jobs:
 
       - name: Run tests ✅
         run: python -m doit -f main/dodo.py docker_test
+
+      - name: Login to GHCR
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        uses: docker/login-action@6af3c118c8376c675363897acf1757f7a9be6583 # dependabot updates to latest release
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          # TODO: need a PAT
+          password: ${{ secrets.GCR_PAT }}
 
   create-manifests:
     name: Create tags and manifests

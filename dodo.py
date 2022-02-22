@@ -68,7 +68,7 @@ def task_docker_build():
 
         yield dict(
             name=f"build:{image}",
-            doc="Build thre latest image for a stack using the system's acrchitecture ⛏",
+            doc="Build the latest image for a stack using the system's acrchitecture ⛏",
             actions=[
                 U.do(
                     "echo",
@@ -101,16 +101,20 @@ def task_docker_build():
             ],
         )
 
-        if U.IS_CI:
-            yield dict(
-                name=f"saving:{image}",
-                doc="Save the Docker image and store it in the CI artifacts",
-                actions=[
-                    U.do("echo", f"Saving image to: {P.CI_IMG / image}"),
-                    U.do("mkdir", "-p", P.CI_IMG / image),
-                    U.do("docker", "save", "-o", tar_file, *image_tags),
-                ],
-            )
+
+@doit.create_after(executed="docker_build")
+def task_docker_save_images():
+    if U.IS_CI:
+        yield dict(
+            name="saving_images",
+            doc="Save the built Docker images - these will be stored as CI artifacts",
+            targets=[P.CI_IMG_TAR],
+            actions=[
+                U.do("echo", f"Saving images to: {P.CI_IMG}"),
+                U.do("mkdir", "-p", P.CI_IMG),
+                U.do("docker", "save", "-o", P.CI_IMG_TAR),
+            ],
+        )
 
 
 def task_docker_test():
@@ -178,6 +182,25 @@ def task_docker_create_manifest():
         )
 
 
+def task_docker_push_images():
+    """Push all tags for a Jupyter image - only should be done after they have been tested"""
+    # TODO: need to add a flag to identify the registry to which we are pushing as need to preped gchr.io accordingly
+    for image in P.ALL_IMAGES:
+
+        yield dict(
+            name=f"push:{image}",
+            doc="Push the image to the specified registry",
+            actions=[
+                U.do(
+                    "echo",
+                    f"::group::Push {P.OWNER}/{image}- system's architecture",
+                ),
+                U.do("docker", "push", "--all-tags", f"{P.OWNER}/{image}"),
+                U.do("echo", "::endgroup::"),
+            ],
+        )
+
+
 # -----------------------------------------------------------------------------
 # Support classes and methods
 # -----------------------------------------------------------------------------
@@ -210,6 +233,8 @@ class P:
     # CI
     CI = ROOT / ".github"
     CI_IMG = CI / "built_docker_images"
+    #  CI artifacts
+    CI_IMG_TAR = CI_IMG / "built_docker_images" / "docker_images-{U.GIT_COMMIT_SHA}.tar"
 
     # Docker-related
     # Images supporting the following architectures:
@@ -224,15 +249,20 @@ class P:
         "all-spark-notebook",
     ]
 
+    # TODO: uncomment after initial tests
+    # ALL_IMAGES = [
+    #     "base-notebook",
+    #     "minimal-notebook",
+    #     "scipy-notebook",
+    #     "r-notebook",
+    #     "tensorflow-notebook",
+    #     "datascience-notebook",
+    #     "pyspark-notebook",
+    #     "all-spark-notebook",
+    # ]
     ALL_IMAGES = [
         "base-notebook",
         "minimal-notebook",
-        "scipy-notebook",
-        "r-notebook",
-        "tensorflow-notebook",
-        "datascience-notebook",
-        "pyspark-notebook",
-        "all-spark-notebook",
     ]
 
     AMD64_IMAGES = ["datascience-notebook", "tensorflow-notebook"]
