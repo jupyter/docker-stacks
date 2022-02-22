@@ -1,3 +1,6 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
 import os
 import subprocess
 from pathlib import Path
@@ -65,7 +68,7 @@ def task_docker_build():
 
         yield dict(
             name=f"build:{image}",
-            doc="Build thre latest image for a stack using the system's acrchitecture",
+            doc="Build thre latest image for a stack using the system's acrchitecture ⛏",
             actions=[
                 U.do(
                     "docker",
@@ -110,9 +113,6 @@ def task_docker_test():
     for image in P.TEST_IMAGES:
 
         image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
-
-        if Path(image + "/test").exists():
-            U.PYTEST_ARGS += [f"{image}/test"]
 
         if U.IS_CI:
             yield dict(
@@ -213,14 +213,30 @@ class P:
     MULTI_IMAGES = [
         "base-notebook",
         "minimal-notebook",
-        "pyspark-notebook",
-        "r-notebook",
         "scipy-notebook",
+        "r-notebook",
+        "pyspark-notebook",
         "all-spark-notebook",
     ]
+
+    ALL_IMAGES = [
+        "base-notebook",
+        "minimal-notebook",
+        "scipy-notebook",
+        "r-notebook",
+        "tensorflow-notebook",
+        "datascience-notebook",
+        "pyspark-notebook",
+        "all-spark-notebook",
+    ]
+
     AMD64_IMAGES = ["datascience-notebook", "tensorflow-notebook"]
-    ALL_IMAGES = MULTI_IMAGES + AMD64_IMAGES
-    TEST_IMAGES = ["base-notebook"]
+
+    TEST_IMAGES = [
+        "base-notebook",
+        "minimal-notebook",
+        "scipy-notebook",
+    ]
 
     OWNER = "jupyter"
 
