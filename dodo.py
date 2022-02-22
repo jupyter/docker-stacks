@@ -3,6 +3,7 @@
 
 import os
 import subprocess
+from subprocess import PIPE
 from pathlib import Path
 
 import doit
@@ -106,6 +107,11 @@ def task_docker_save_images():
     """Save the built Docker images - these will be stored as CI artifacts"""
     if U.IS_CI:
         ci_img_tar = P.CI_IMG / f"docker_images_{U.GIT_COMMIT_SHA}.tar"
+        images_ids = (
+            subprocess.run(["docker", "images", "-q"], stdout=PIPE)
+            .stdout.decode("utf-8")
+            .splitlines()
+        )
 
         return dict(
             targets=[ci_img_tar],
@@ -115,7 +121,7 @@ def task_docker_save_images():
                 U.do(
                     "docker",
                     "save",
-                    subprocess.check_call(["docker", "images", "-q"]),
+                    *images_ids,
                     "-o",
                     str(ci_img_tar),
                 ),
