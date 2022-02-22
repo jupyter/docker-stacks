@@ -115,6 +115,7 @@ def task_docker_save_images():
                 U.do(
                     "docker",
                     "save",
+                    "$(docker images -q)",
                     "-o",
                     str(ci_img_tar),
                 ),
