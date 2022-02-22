@@ -102,13 +102,12 @@ def task_docker_build():
         )
 
 
-@doit.create_after(executed="docker_build")
 def task_docker_save_images():
+    """Save the built Docker images - these will be stored as CI artifacts"""
     if U.IS_CI:
         ci_img_tar = P.CI_IMG / f"docker_images_{U.GIT_COMMIT_SHA}.tar"
+
         return dict(
-            name="save_images",
-            doc="Save the built Docker images - these will be stored as CI artifacts",
             targets=[ci_img_tar],
             actions=[
                 U.do("echo", f"Saving images to: {P.CI_IMG}"),
