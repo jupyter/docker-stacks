@@ -62,7 +62,7 @@ def task_docs_check_links():
 
 def task_docker_build():
     """Build Docker images using the system's architecture"""
-    for image in P.TEST_IMAGES:
+    for image in P.ALL_IMAGES:
 
         image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
 
@@ -70,6 +70,10 @@ def task_docker_build():
             name=f"build:{image}",
             doc="Build thre latest image for a stack using the system's acrchitecture ⛏",
             actions=[
+                U.do(
+                    "echo",
+                    f"::group::Build {P.OWNER}/{image}- using system's architecture",
+                ),
                 U.do(
                     "docker",
                     "buildx",
@@ -82,6 +86,7 @@ def task_docker_build():
                     str(image_dir),
                     "--load",
                 ),
+                U.do("echo", "::endgroup::"),
             ],
             file_dep=[dockerfile],
             uptodate=[False],
@@ -110,7 +115,7 @@ def task_docker_build():
 
 def task_docker_test():
     """Test Docker images - need to be run after `docker_build`"""
-    for image in P.TEST_IMAGES:
+    for image in P.ALL_IMAGES:
 
         image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
 
@@ -137,7 +142,7 @@ def task_docker_test():
 
 def task_docker_create_manifest():
     """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
-    for image in P.TEST_IMAGES:
+    for image in P.ALL_IMAGES:
 
         yield dict(
             name=f"tags:{image}",
@@ -157,7 +162,7 @@ def task_docker_create_manifest():
         yield dict(
             name=f"manifest:{image}",
             doc="Create the manifest file for the images",
-            targets=[P.WIKI_TARGET],
+            targets=[P.WIKI_MANIFEST / f"{image}-{U.GIT_COMMIT_HASH_TAG}.md"],
             actions=[
                 U.do(
                     *U.PYM,
@@ -195,7 +200,7 @@ class P:
 
     # wiki
     WIKI = ROOT.parent / "wiki"
-    WIKI_TARGET = WIKI / "*.md"
+    WIKI_MANIFEST = WIKI / "manifests"
 
     # tests
     TESTS = ROOT / "tests"
@@ -232,12 +237,6 @@ class P:
 
     AMD64_IMAGES = ["datascience-notebook", "tensorflow-notebook"]
 
-    TEST_IMAGES = [
-        "base-notebook",
-        "minimal-notebook",
-        "scipy-notebook",
-    ]
-
     OWNER = "jupyter"
 
 
@@ -264,23 +263,29 @@ class U:
         .strip()
     )
 
-    GET_COMMIT_SHA = (
+    GIT_COMMIT_SHA = (
         subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
         .decode("utf-8")
         .strip()
     )
 
+    GIT_COMMIT_HASH_TAG = (
+        subprocess.check_output(["git", "rev-parse", "HEAD"])
+        .decode("utf-8")
+        .strip()[:12]
+    )
+
     # utility methods
     @staticmethod
     def image_meta(image):
-        """Get the image tags and other supporting meta for build, testing and tagging"""
+        """Get the image tags and other supporting meta for building, testing and tagging"""
         tags = [
             f"{P.OWNER}/{image}:latest",
-            f"{P.OWNER}/{image}:{U.GET_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
+            f"{P.OWNER}/{image}:{U.GIT_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
         ]
         image_dir = P.ROOT / image
         dockerfile = str(image_dir / "Dockerfile")
-        tar_file = str(P.CI_IMG / image / f"{image}-{U.GET_COMMIT_SHA}.tar")
+        tar_file = str(P.CI_IMG / image / f"{image}-{U.GIT_COMMIT_SHA}.tar")
 
         return tags, image_dir, dockerfile, tar_file
 

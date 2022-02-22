@@ -19,17 +19,13 @@ on:
 
       - "tagging/**"
       - "test/**"
-      - "conftest.py"
       - "Makefile"
-      - "pytest.ini"
       - "requirements-dev.txt"
   push:
     branches:
       - main
       - master
-      - trallard/* #testing while developing
     paths:
-      - ".github/workflows/docker.yml"
       - ".github/workflows/build-test-docker.yml"
 
       - "all-spark-notebook/**"
@@ -43,9 +39,7 @@ on:
 
       - "tagging/**"
       - "test/**"
-      - "conftest.py"
       - "Makefile"
-      - "pytest.ini"
       - "dodo.py"
       - "requirements-dev.txt"
   workflow_dispatch:
@@ -88,7 +82,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-dev.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
@@ -134,7 +128,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-dev.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
@@ -172,7 +166,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-dev.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
 
