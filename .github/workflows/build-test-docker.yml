@@ -149,7 +149,7 @@ jobs:
       - name: Download built images 📥
         uses: actions/download-artifact@v2
         with:
-          name: docker-images-${{ env.SHORT_SHA )}
+          name: docker-images-${{ env.SHORT_SHA }}
           path: |
             main/.github/built_docker_images/
 
@@ -202,6 +202,17 @@ jobs:
       - name: Create tags and manifest 🏷
         run: |
           python -m doit -f main/dodo.py docker_create_manifest
+
+      - name: Save manifests as artifact 💾
+        uses: actions/upload-artifact@v2
+        with:
+          name: docker-images-manifest-${{ env.SHORT_SHA }}
+          path: |
+            wiki/manifests/base-notebook-${{ env.SHORT_SHA }}.md
+            wiki/manifests/minimal-notebook-${{ env.SHORT_SHA }}.md
+            wiki/manifests/home.md
+          # TODO: decide on a retention policy - also might make the above a smart regex
+          retention-days: 1
 
       - name: Push Wiki to GitHub 📤
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
