@@ -56,7 +56,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      sha8: ${{ steps.slug.outputs.sha8 }}
+      short_sha: ${{ steps.slug.outputs.short_sha }}
       hash_tag: ${{ steps.slug.outputs.hash_tag }}
     steps:
       - name: Maximize build space 🛠
@@ -113,13 +113,13 @@ jobs:
       - name: Get short SHA
         id: slug
         run: |
-          echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+          echo "::set-output name=short_sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
           echo "::set-output name=hash_tag::$(echo ${GITHUB_SHA} | cut -c1-12)"
 
       - name: Save Docker images as artifact 💾
         uses: actions/upload-artifact@v2
         with:
-          name: docker-images-${{ steps.slug.outputs.sha8 }}
+          name: docker-images-${{ steps.slug.outputs.short_sha }}
           path: |
             main/.github/built_docker_images/
           # TODO: decide on a retention policy
@@ -156,7 +156,7 @@ jobs:
       - name: Download built images 📥
         uses: actions/download-artifact@v2
         with:
-          name: docker-images-${{ needs.build-images.outputs.sha8 }}
+          name: docker-images-${{ needs.build-images.outputs.short_sha }}
           path: |
             main/.github/built_docker_images/
 
@@ -213,11 +213,9 @@ jobs:
       - name: Save manifests as artifact 💾
         uses: actions/upload-artifact@v2
         with:
-          name: docker-images-manifest-${{ needs.build-images.outputs.sha8 }}
+          name: docker-images-manifest-${{ needs.build-images.outputs.short_sha }}
           path: |
-            wiki/manifests/base-notebook-${{ needs.build-images.outputs.hash_tag }}.md
-            wiki/manifests/minimal-notebook-${{ needs.build-images.outputs.hash_tag }}.md
-            wiki/manifests/home.md
+            wiki/manifests/
           # TODO: decide on a retention policy - also might make the above a smart regex
           retention-days: 1
 
