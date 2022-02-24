@@ -43,6 +43,10 @@ on:
       - "requirements-dev.txt"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-test-publish-images:
     name: Build, test, and publish Docker Images
