@@ -202,6 +202,7 @@ jobs:
       - name: Create tags and manifest 🏷
         run: |
           python -m doit -f main/dodo.py docker_create_manifest
+          echo "SHORT_SHA=`git rev-parse --short HEAD`" >> $GITHUB_ENV
 
       - name: Save manifests as artifact 💾
         uses: actions/upload-artifact@v2

@@ -65,7 +65,7 @@ def task_docker_build():
     """Build Docker images using the system's architecture"""
     for image in P.ALL_IMAGES:
 
-        image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
+        image_tags, image_dir, dockerfile = U.image_meta(image)
 
         yield dict(
             name=f"build:{image}",
@@ -322,9 +322,8 @@ class U:
         ]
         image_dir = P.ROOT / image
         dockerfile = str(image_dir / "Dockerfile")
-        tar_file = str(P.CI_IMG / image / f"{image}-{U.GIT_COMMIT_SHA}.tar")
 
-        return tags, image_dir, dockerfile, tar_file
+        return tags, image_dir, dockerfile
 
     @staticmethod
     def set_env(image):
