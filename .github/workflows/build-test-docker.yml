@@ -111,7 +111,7 @@ jobs:
       - name: Save Docker images as artifact 💾
         uses: actions/upload-artifact@v2
         with:
-          name: docker-images-${SHORT_SHA}
+          name: docker-images-${{ env.SHORT_SHA }}
           path: |
             main/.github/built_docker_images/
           # TODO: decide on a retention policy
@@ -149,7 +149,7 @@ jobs:
       - name: Download built images 📥
         uses: actions/download-artifact@v2
         with:
-          name: docker-images-${SHORT_SHA}
+          name: docker-images-${{ env.SHORT_SHA )}
           path: |
             main/.github/built_docker_images/
 
