@@ -106,7 +106,6 @@ def task_docker_build():
 def task_docker_save_images():
     """Save the built Docker images - these will be stored as CI artifacts"""
     if U.IS_CI:
-        ci_img_tar = P.CI_IMG / f"docker_images_{U.GIT_COMMIT_SHA}.tar"
         images_ids = (
             subprocess.run(["docker", "images", "-q"], stdout=PIPE)
             .stdout.decode("utf-8")
@@ -114,7 +113,7 @@ def task_docker_save_images():
         )
 
         return dict(
-            targets=[ci_img_tar],
+            targets=[U.CI_IMAGE_TAR],
             actions=[
                 U.do("echo", f"Saving images to: {P.CI_IMG}"),
                 U.do("mkdir", "-p", P.CI_IMG),
@@ -123,7 +122,7 @@ def task_docker_save_images():
                     "save",
                     *images_ids,
                     "-o",
-                    str(ci_img_tar),
+                    str(U.CI_IMAGE_TAR),
                 ),
             ],
         )
@@ -131,23 +130,21 @@ def task_docker_save_images():
 
 def task_docker_test():
     """Test Docker images - need to be run after `docker_build`"""
+
+    if U.IS_CI:
+        yield dict(
+            name="load_images",
+            doc="Load built and saved images - since we are passing them across workflows we are storing them as artifacts in GitHub Actions",
+            actions=[
+                (U.do("docker", "load", "--input", U.CI_IMAGE_TAR),),
+            ],
+        )
+
     for image in P.ALL_IMAGES:
-
-        image_tags, image_dir, dockerfile, tar_file = U.image_meta(image)
-
-        if U.IS_CI:
-            yield dict(
-                name=f"load:{image}",
-                doc="Load and inspect the image - this ensures it is available for docker commands",
-                actions=[
-                    (U.do("docker", "load", "--input", tar_file)),
-                    (U.inspect_image, [image_tags[0]]),
-                ],
-            )
 
         yield dict(
             name=f"test:{image}",
-            doc="Run tests for images",
+            doc="Run the test suite for the images - will always run the tests if an image is built",
             uptodate=[False],
             actions=[
                 (U.set_env, [f"{P.OWNER}/{image}"]),
@@ -196,7 +193,7 @@ def task_docker_create_manifest():
 
 def task_docker_push_image():
     """Push all tags for a Jupyter image - only should be done after they have been tested"""
-    # TODO: need to add a flag to identify the registry to which we are pushing as need to preped gchr.io accordingly
+    # TODO: need to add a flag to identify the registry to which we are pushing as need to preped gchr.io for intermediate steps
     for image in P.ALL_IMAGES:
 
         yield dict(
@@ -245,6 +242,8 @@ class P:
     CI_IMG = CI / "built_docker_images"
 
     # Docker-related
+    OWNER = "jupyter"
+
     # Images supporting the following architectures:
     # - linux/amd64
     # - linux/arm64
@@ -275,16 +274,9 @@ class P:
 
     AMD64_IMAGES = ["datascience-notebook", "tensorflow-notebook"]
 
-    OWNER = "jupyter"
-
 
 class U:
     """Supporting methods and variables"""
-
-    @staticmethod
-    def do(*args, cwd=P.ROOT, **kwargs):
-        """wrap a CmdAction for consistency across OS"""
-        return doit.tools.CmdAction(list(args), shell=False, cwd=str(Path(cwd)))
 
     # CI specific
     IS_CI = bool(os.environ.get("CI", 0))
@@ -313,7 +305,14 @@ class U:
         .strip()[:12]
     )
 
+    CI_IMAGE_TAR = P.CI_IMG / f"docker_images_{GIT_COMMIT_SHA}.tar"
+
     # utility methods
+    @staticmethod
+    def do(*args, cwd=P.ROOT, **kwargs):
+        """wrap a CmdAction for consistency across OS"""
+        return doit.tools.CmdAction(list(args), shell=False, cwd=str(Path(cwd)))
+
     @staticmethod
     def image_meta(image):
         """Get the image tags and other supporting meta for building, testing and tagging"""
