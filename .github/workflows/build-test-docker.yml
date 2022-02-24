@@ -55,6 +55,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      sha8: ${{ steps.slug.outputs.sha8 }}
     steps:
       - name: Maximize build space 🛠
         run: |
@@ -101,17 +103,20 @@ jobs:
         run: |
           python -m doit -f main/dodo.py docker_build
           python -m doit -f main/dodo.py docker_save_images
-          echo "SHORT_SHA=`git rev-parse --short HEAD`" >> $GITHUB_ENV
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Get short SHA
+        id: slug
+        run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+
       - name: Save Docker images as artifact 💾
         uses: actions/upload-artifact@v2
         with:
-          name: docker-images-${{ env.SHORT_SHA }}
+          name: docker-images-${{ needs.build-images.outputs.sha8 }}
           path: |
             main/.github/built_docker_images/
           # TODO: decide on a retention policy
@@ -144,12 +149,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           make -C main install-dev-env
-          echo "SHORT_SHA=`git rev-parse --short HEAD`" >> $GITHUB_ENV
 
       - name: Download built images 📥
         uses: actions/download-artifact@v2
         with:
-          name: docker-images-${{ env.SHORT_SHA }}
+          name: docker-images-${{ needs.build-images.outputs.sha8 }}
           path: |
             main/.github/built_docker_images/
 
@@ -202,15 +206,14 @@ jobs:
       - name: Create tags and manifest 🏷
         run: |
           python -m doit -f main/dodo.py docker_create_manifest
-          echo "SHORT_SHA=`git rev-parse --short HEAD`" >> $GITHUB_ENV
 
       - name: Save manifests as artifact 💾
         uses: actions/upload-artifact@v2
         with:
-          name: docker-images-manifest-${{ env.SHORT_SHA }}
+          name: docker-images-manifest-${{ needs.build-images.outputs.sha8 }}
           path: |
-            wiki/manifests/base-notebook-${{ env.SHORT_SHA }}.md
-            wiki/manifests/minimal-notebook-${{ env.SHORT_SHA }}.md
+            wiki/manifests/base-notebook-${{ needs.build-images.outputs.sha8 }}.md
+            wiki/manifests/minimal-notebook-${{ needs.build-images.outputs.sha8 }}.md
             wiki/manifests/home.md
           # TODO: decide on a retention policy - also might make the above a smart regex
           retention-days: 1
