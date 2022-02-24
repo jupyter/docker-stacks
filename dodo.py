@@ -136,7 +136,7 @@ def task_docker_test():
             name="load_images",
             doc="Load built and saved images - since we are passing them across workflows we are storing them as artifacts in GitHub Actions",
             actions=[
-                (U.do("docker", "load", "--input", U.CI_IMAGE_TAR),),
+                (U.do("docker", "load", "--input", str(U.CI_IMAGE_TAR)),),
             ],
         )
 
