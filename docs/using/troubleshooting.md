@@ -141,6 +141,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
         -e NB_GID=1234 \
         -e CHOWN_HOME=yes \
         -e CHOWN_HOME_OPTS="-R" \
+        -e COPY_HOME="yes" \
         -w "/home/${NB_USER}" \
         -v "${PWD}"/test:/home/callisto/work \
         jupyter/minimal-notebook
@@ -159,6 +160,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
 
    - `-e NB_USER=callisto`: will create a new user `callisto` and automatically add it to the `users` group (does not delete jovyan)
    - `-e NB_UID=1234` and `-e NB_GID=1234`: will set the `UID` and `GID` of the new user (`callisto`) to `1234`
+   - `-e COPY_HOME=yes`: ensure that the new user will have the same files as the old user in its `/home` directory
    - `-e CHOWN_HOME_OPTS="-R"` and `-e CHOWN_HOME=yes`: ensure that the new user is the owner of the `/home` directory and subdirectories
      (setting `CHOWN_HOME_OPTS="-R` will ensure this change is applied recursively)
    - `-w "/home/${NB_USER}"` sets the working directory to be the new user's home

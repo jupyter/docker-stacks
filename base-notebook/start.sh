@@ -76,6 +76,7 @@ if [ "$(id -u)" == 0 ] ; then
     # - NB_GID: a group id we want our user to belong to
     # - NB_GROUP: the groupname we want for the group
     # - GRANT_SUDO: a boolean ("1" or "yes") to grant the user sudo rights
+    # - COPY_HOME: a boolean ("1" or "yes") to copy the original home files
     # - CHOWN_HOME: a boolean ("1" or "yes") to chown the user's home folder
     # - CHOWN_EXTRA: a comma separated list of paths to chown
     # - CHOWN_HOME_OPTS / CHOWN_EXTRA_OPTS: arguments to the chown commands
@@ -108,9 +109,9 @@ if [ "$(id -u)" == 0 ] ; then
     # directory if it doesn't already exist, and update the current working
     # directory to the new location if needed.
     if [[ "${NB_USER}" != "jovyan" ]]; then
-        if [[ ! -e "/home/${NB_USER}" ]]; then
+        if [[ ! -e "/home/${NB_USER}"  ||  "${COPY_HOME}" == "yes" || "${COPY_HOME}" == "1" ]]; then
             _log "Attempting to copy /home/jovyan to /home/${NB_USER}..."
-            mkdir "/home/${NB_USER}"
+            mkdir -p "/home/${NB_USER}"
             if cp -a /home/jovyan/. "/home/${NB_USER}/"; then
                 _log "Success!"
             else
