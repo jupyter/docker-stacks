@@ -7,14 +7,16 @@ from subprocess import PIPE
 from pathlib import Path
 
 import doit
-import doit.tools
+from doit import task_params
+from doit.tools import create_folder
+from doit.tools import CmdAction
 
 # global doit config
 DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 
 
 # dependencies: input to the task execution -> keeps tracks of the state of file dependencies and saves the signature of them every time the tasks are run so if there are no modifications to the files the execution of the task is skipped  (indicated by -- after running doit)
-# target: output produces by the task execution
+# target: output produced by the task execution
 
 # -----------------------------------------------------------------------------
 # Documentation and wiki tasks
@@ -106,17 +108,13 @@ def task_docker_build():
 def task_docker_save_images():
     """Save the built Docker images - these will be stored as CI artifacts"""
     if U.IS_CI:
-        images_ids = (
-            subprocess.run(["docker", "images", "-q"], stdout=PIPE)
-            .stdout.decode("utf-8")
-            .splitlines()
-        )
+        images_ids = U.get_images()
 
         return dict(
             targets=[U.CI_IMAGE_TAR],
             actions=[
                 U.do("echo", f"Saving images to: {P.CI_IMG}"),
-                U.do("mkdir", "-p", P.CI_IMG),
+                create_folder(P.CI_IMG),
                 U.do(
                     "docker",
                     "save",
@@ -131,12 +129,13 @@ def task_docker_save_images():
 def task_docker_test():
     """Test Docker images - need to be run after `docker_build`"""
 
-    if U.IS_CI:
+    if U.IS_CI & U.CI_IMAGE_TAR.exists():
         yield dict(
             name="load_images",
             doc="Load built and saved images - since we are passing them across workflows we are storing them as artifacts in GitHub Actions",
             actions=[
                 (U.do("docker", "load", "--input", str(U.CI_IMAGE_TAR)),),
+                (U.inspect_image, [U.get_images()[-1]]),
             ],
         )
 
@@ -191,20 +190,34 @@ def task_docker_create_manifest():
         )
 
 
-def task_docker_push_image():
+@task_params(
+    [
+        dict(
+            name="registry",
+            short="r",
+            long="registry",
+            default="dockerhub",
+            type=str,
+        )
+    ]
+)
+def task_docker_push_image(registry):
     """Push all tags for a Jupyter image - only should be done after they have been tested"""
-    # TODO: need to add a flag to identify the registry to which we are pushing as need to preped gchr.io for intermediate steps
     for image in P.ALL_IMAGES:
-
         yield dict(
             name=f"push:{image}",
             doc="Push the image to the specified registry",
             actions=[
                 U.do(
                     "echo",
-                    f"::group::Push {P.OWNER}/{image}- system's architecture",
+                    f"::group::Push {U.registry_image(registry, image)} system's architecture",
                 ),
-                U.do("docker", "push", "--all-tags", f"{P.OWNER}/{image}"),
+                U.do(
+                    "docker",
+                    "push",
+                    "--all-tags",
+                    f"{U.registry_image(registry, image)}",
+                ),
                 U.do("echo", "::endgroup::"),
             ],
         )
@@ -239,10 +252,11 @@ class P:
 
     # CI
     CI = ROOT / ".github"
-    CI_IMG = CI / "built_docker_images"
+    CI_IMG = CI / "built-docker-images"
 
     # Docker-related
     OWNER = "jupyter"
+    DOCKER_REGISTRY = "dockerhub"
 
     # Images supporting the following architectures:
     # - linux/amd64
@@ -284,7 +298,6 @@ class U:
     # args
     PYTEST_ARGS = ["pytest", "-m", "not info", "test"]
     PYM = ["python", "-m"]
-    PIP = [*PYM, "pip"]
 
     # git specific - used for tagging
     SOURCE_DATE_EPOCH = (
@@ -305,13 +318,15 @@ class U:
         .strip()[:12]
     )
 
-    CI_IMAGE_TAR = P.CI_IMG / f"docker_images_{GIT_COMMIT_SHA}.tar"
+    CI_IMAGE_TAR = P.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar"
 
     # utility methods
     @staticmethod
     def do(*args, cwd=P.ROOT, **kwargs):
         """wrap a CmdAction for consistency across OS"""
-        return doit.tools.CmdAction(list(args), shell=False, cwd=str(Path(cwd)))
+        return CmdAction(
+            list(map(str, args)), shell=False, cwd=str(Path(cwd).resolve()), **kwargs
+        )
 
     @staticmethod
     def image_meta(image):
@@ -340,3 +355,22 @@ class U:
             )
         except subprocess.CalledProcessError:
             print(f"Image not found: {image}")
+
+    @staticmethod
+    def get_images():
+        """Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.  Here we get all the images present in the local system"""
+
+        images_ids = (
+            subprocess.run(["docker", "images", "-q"], stdout=PIPE)
+            .stdout.decode("utf-8")
+            .splitlines()
+        )
+        return images_ids
+
+    @staticmethod
+    def registry_image(registry, image):
+        return (
+            f"{registry}/{P.OWNER}/{image}"
+            if registry != P.DOCKER_REGISTRY
+            else f"{P.OWNER}/{image}"
+        )

@@ -172,6 +172,10 @@ jobs:
           # TODO: need a PAT to be able to push to GHCR
           password: ${{ secrets.GHCR_PAT }}
 
+      - name: Push images to GHCR 📤
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        run: python -m doit -f main/dodo.py docker_push_image -r ghcr.io
+
   create-manifests:
     name: Create tags and manifests
     runs-on: ubuntu-latest
