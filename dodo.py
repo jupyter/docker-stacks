@@ -8,7 +8,6 @@ from pathlib import Path
 
 import doit
 from doit import task_params
-from doit.tools import create_folder
 from doit.tools import CmdAction
 
 # global doit config
@@ -114,7 +113,6 @@ def task_docker_save_images():
             targets=[U.CI_IMAGE_TAR],
             actions=[
                 U.do("echo", f"Saving images to: {P.CI_IMG}"),
-                create_folder(P.CI_IMG),
                 U.do(
                     "docker",
                     "save",
