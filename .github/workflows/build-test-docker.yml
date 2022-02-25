@@ -121,7 +121,7 @@ jobs:
         with:
           name: docker-images-${{ steps.slug.outputs.short_sha }}
           path: |
-            main/.github/built_docker_images/
+            main/.github/built-docker-images/
           # TODO: decide on a retention policy
           retention-days: 1
 
@@ -158,7 +158,7 @@ jobs:
         with:
           name: docker-images-${{ needs.build-images.outputs.short_sha }}
           path: |
-            main/.github/built_docker_images/
+            main/.github/built-docker-images/
 
       - name: Run tests ✅
         run: python -m doit -f main/dodo.py docker_test
