@@ -9,6 +9,7 @@ from subprocess import PIPE
 import doit
 from doit import task_params
 from doit.tools import CmdAction
+from tests.images_hierarchy import get_test_dirs
 
 # global doit config
 DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
@@ -123,7 +124,7 @@ def task_docker_save_images():
                     "save",
                     *images_ids,
                     "-o",
-                    str(U.CI_IMAGE_TAR),
+                    U.CI_IMAGE_TAR,
                 ),
             ],
         )
@@ -132,7 +133,7 @@ def task_docker_save_images():
 def task_docker_test():
     """Test Docker images - needs to be run after `docker_build`"""
 
-    if U.IS_CI & U.CI_IMAGE_TAR.exists():
+    if U.IS_CI & Path(U.CI_IMAGE_TAR).exists():
         """Since we are running in a CI environment and within a separate job than the one where the images are built,
         we need to load the images from the CI_IMAGE_TAR"""
 
@@ -140,12 +141,15 @@ def task_docker_test():
             name="load_images",
             doc="Load and inspect Docker images",
             actions=[
-                (U.do("docker", "load", "--input", str(U.CI_IMAGE_TAR)),),
+                U.do("docker", "load", "--input", U.CI_IMAGE_TAR),
                 (U.inspect_image, [U.get_images()[-1]]),
+                U.do("docker", "images"),
             ],
         )
 
     for image in P.ALL_IMAGES:
+
+        test_dirs = get_test_dirs(image)
 
         yield dict(
             name=f"test:{image}",
@@ -153,7 +157,12 @@ def task_docker_test():
             uptodate=[False],
             actions=[
                 (U.set_env, [f"{P.OWNER}/{image}"]),
-                (U.do(*U.PYTEST_ARGS)),
+                (
+                    U.do(
+                        *U.PYTEST_ARGS,
+                        *test_dirs,
+                    )
+                ),
             ],
         )
 
@@ -255,6 +264,7 @@ class P:
 
     # tests
     TESTS = ROOT / "tests"
+    TESTS_RUN = TESTS / "run_tests.py"
 
     # CI
     CI = ROOT / ".github"
@@ -302,8 +312,8 @@ class U:
     IS_CI = bool(os.environ.get("CI", 0))
 
     # args
-    PYTEST_ARGS = ["pytest", "-m", "not info", "test"]
     PYM = ["python", "-m"]
+    PYTEST_ARGS = ["pytest", "-m", "not info"]
 
     # git specific - used for tagging
     SOURCE_DATE_EPOCH = (
@@ -325,7 +335,7 @@ class U:
     )
 
     # tar file to store the images in
-    CI_IMAGE_TAR = P.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar"
+    CI_IMAGE_TAR = str(P.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar")
 
     # utility methods
     @staticmethod
