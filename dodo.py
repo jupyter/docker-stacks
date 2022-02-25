@@ -3,8 +3,8 @@
 
 import os
 import subprocess
-from subprocess import PIPE
 from pathlib import Path
+from subprocess import PIPE
 
 import doit
 from doit import task_params
@@ -14,7 +14,9 @@ from doit.tools import CmdAction
 DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 
 
-# dependencies: input to the task execution -> keeps tracks of the state of file dependencies and saves the signature of them every time the tasks are run so if there are no modifications to the files the execution of the task is skipped  (indicated by -- after running doit)
+# dependencies: input to the task execution -> keeps tracks of the state of file dependencies and saves the signature
+# of them every time the tasks are run so if there are no modifications to the files the execution of the task is skipped
+# (indicated by -- after running doit)
 # target: output produced by the task execution
 
 # -----------------------------------------------------------------------------
@@ -105,7 +107,9 @@ def task_docker_build():
 
 
 def task_docker_save_images():
-    """Save the built Docker images - these will be stored as CI artifacts"""
+    """Save the built Docker images - these will be stored as CI artifacts.
+    This is needed to pass images across jobs in GitHub Actions as each job runs in a separate container."""
+
     if U.IS_CI:
         images_ids = U.get_images()
 
@@ -113,6 +117,7 @@ def task_docker_save_images():
             targets=[U.CI_IMAGE_TAR],
             actions=[
                 U.do("echo", f"Saving images to: {P.CI_IMG}"),
+                U.do("mkdir", "-p", P.CI_IMG),
                 U.do(
                     "docker",
                     "save",
@@ -125,12 +130,15 @@ def task_docker_save_images():
 
 
 def task_docker_test():
-    """Test Docker images - need to be run after `docker_build`"""
+    """Test Docker images - needs to be run after `docker_build`"""
 
     if U.IS_CI & U.CI_IMAGE_TAR.exists():
+        """Since we are running in a CI environment and within a separate job than the one where the images are built,
+        we need to load the images from the CI_IMAGE_TAR"""
+
         yield dict(
             name="load_images",
-            doc="Load built and saved images - since we are passing them across workflows we are storing them as artifacts in GitHub Actions",
+            doc="Load and inspect Docker images",
             actions=[
                 (U.do("docker", "load", "--input", str(U.CI_IMAGE_TAR)),),
                 (U.inspect_image, [U.get_images()[-1]]),
@@ -316,6 +324,7 @@ class U:
         .strip()[:12]
     )
 
+    # tar file to store the images in
     CI_IMAGE_TAR = P.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar"
 
     # utility methods
@@ -346,7 +355,8 @@ class U:
 
     @staticmethod
     def inspect_image(image):
-        """Since we are sharing artifacts across jobs we need to make sure that these are loaded properly. The easies way to check this is to run `docker inspect` on the image"""
+        """Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
+        The easies way to check this is to run `docker inspect` on the image"""
         try:
             subprocess.check_call(
                 ["docker", "image", "inspect", image], stdout=subprocess.DEVNULL
@@ -356,7 +366,10 @@ class U:
 
     @staticmethod
     def get_images():
-        """Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.  Here we get all the images present in the local system"""
+        """
+        Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
+        Here we get all the images present in the local system
+        """
 
         images_ids = (
             subprocess.run(["docker", "images", "-q"], stdout=PIPE)
@@ -367,6 +380,9 @@ class U:
 
     @staticmethod
     def registry_image(registry, image):
+        """In CI we want to push images to GHCR and DockerHub in different steps
+        so we need to ensure we pass the correct registry"""
+
         return (
             f"{registry}/{P.OWNER}/{image}"
             if registry != P.DOCKER_REGISTRY
