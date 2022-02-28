@@ -50,6 +50,7 @@ concurrency:
 jobs:
   build-test-publish-images:
     name: Build, test, and publish Docker Images
+    if: github.event_name != 'schedule' || (github.event_name == 'schedule' && github.repository == 'jupyter/docker-stacks')
     runs-on: ubuntu-latest
     permissions:
       contents: write
