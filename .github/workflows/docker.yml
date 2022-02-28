@@ -43,9 +43,15 @@ on:
       - "requirements-dev.txt"
   workflow_dispatch:
 
+concurrency:
+  # only cancel in-progress jobs or runs for the current workflow - matches against branch & tags
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-test-publish-images:
     name: Build, test, and publish Docker Images
+    if: github.event_name != 'schedule' || (github.event_name == 'schedule' && github.repository == 'jupyter/docker-stacks')
     runs-on: ubuntu-latest
     permissions:
       contents: write
