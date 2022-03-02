@@ -73,7 +73,7 @@ jobs:
         uses: docker/setup-buildx-action@94ab11c41e45d028884a99163086648e898eed25 # dependabot updates to latest release
 
       - name: Clone Main Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: main
 
@@ -97,7 +97,7 @@ jobs:
         run: make -C main test-all
 
       - name: Clone Wiki
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: ${{github.repository}}.wiki
           path: wiki
