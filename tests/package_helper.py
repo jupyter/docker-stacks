@@ -106,13 +106,14 @@ class CondaPackageHelper:
             # default values
             package = split[0]
             version = set()
-            # checking if it's a proper version by testing if the first char is a digit
+            # This normally means we have package=version notation
             if len(split) > 1:
+                # checking if it's a proper version by testing if the first char is a digit
                 if split[1][0].isdigit():
                     # package + version case
                     version = set(split[1:])
+                # The split was incorrect and the package shall not be splitted
                 else:
-                    # The split was incorrect and the package shall not be splitted
                     package = f"{split[0]}={split[1]}"
             packages_dict[package] = version
         return packages_dict
