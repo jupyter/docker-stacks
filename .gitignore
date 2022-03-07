@@ -157,7 +157,6 @@ cython_debug/
 #       Please, add the content only below these lines           #
 ##################################################################
 
-
 # Mac OS X
 .DS_Store
 
