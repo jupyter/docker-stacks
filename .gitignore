@@ -152,9 +152,11 @@ cython_debug/
 #.idea/
 
 ##################################################################
-# The content above is copied from                               #
+#             The content above is copied from                   #
 # https://github.com/github/gitignore/blob/main/Python.gitignore #
-# Please, add the content only below                             #
+#       Please, add the content only below these lines           #
+##################################################################
+
 
 # Mac OS X
 .DS_Store
