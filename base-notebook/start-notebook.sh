@@ -18,7 +18,7 @@ if [[ "${RESTARTABLE}" == "yes" ]]; then
     wrapper="run-one-constantly"
 fi
 
-if [[ -v JUPYTER_ENABLE_LAB ]]; then
+if [ -z ${JUPYTER_ENABLE_LAB+x} ]; then
     echo "WARNING: JUPYTER_ENABLE_LAB is ignored, use DOCKER_STACKS_JUPYTER_CMD if you want to change the command used to start the server"
 fi
 
