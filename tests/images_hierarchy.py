@@ -23,7 +23,7 @@ def get_test_dirs(
     short_image_name: Optional[str],
 ) -> list[Path]:
     if short_image_name is None:
-        return []  # type: ignore
+        return []
 
     test_dirs = get_test_dirs(ALL_IMAGES[short_image_name])
     if (current_image_tests_dir := THIS_DIR / short_image_name).exists():
