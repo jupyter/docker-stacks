@@ -22,7 +22,10 @@ repos:
     rev: v0.931
     hooks:
       - id: mypy
-        additional_dependencies: ["pytest", "types-requests", "types-tabulate"]
+        args: [--config, ./mypy.ini]
+        additional_dependencies:
+          ["numpy", "pytest", "requests", "types-requests", "types-tabulate"]
+        stages: [manual]
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier

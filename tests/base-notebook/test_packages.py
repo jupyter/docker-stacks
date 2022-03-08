@@ -111,7 +111,9 @@ def r_package_predicate(package: str) -> bool:
     return not excluded_package_predicate(package) and package.startswith("r-")
 
 
-def _check_import_package(package_helper: CondaPackageHelper, command: list[str]):
+def _check_import_package(
+    package_helper: CondaPackageHelper, command: list[str]
+) -> None:
     """Generic function executing a command"""
     LOGGER.debug(f"Trying to import a package with [{command}] ...")
     exec_result = package_helper.running_container.exec_run(command)
@@ -120,12 +122,14 @@ def _check_import_package(package_helper: CondaPackageHelper, command: list[str]
     ), f"Import package failed, output: {exec_result.output}"
 
 
-def check_import_python_package(package_helper: CondaPackageHelper, package: str):
+def check_import_python_package(
+    package_helper: CondaPackageHelper, package: str
+) -> None:
     """Try to import a Python package from the command line"""
     _check_import_package(package_helper, ["python", "-c", f"import {package}"])
 
 
-def check_import_r_package(package_helper: CondaPackageHelper, package: str):
+def check_import_r_package(package_helper: CondaPackageHelper, package: str) -> None:
     """Try to import a R package from the command line"""
     _check_import_package(package_helper, ["R", "--slave", "-e", f"library({package})"])
 
