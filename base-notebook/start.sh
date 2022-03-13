@@ -259,8 +259,8 @@ else
     fi
 
     # Warn if the user isn't able to write files to ${HOME}
-    if [[ ! -w /home/jovyan ]]; then
-        _log "WARNING: no write access to /home/jovyan. Try starting the container with group 'users' (100), e.g. using \"--group-add=users\"."
+    if [[ ! -w ${HOME} ]]; then
+        _log "WARNING: no write access to ${HOME}. Try starting the container with group 'users' (100), e.g. using \"--group-add=users\"."
     fi
 
     # NOTE: This hook is run as the user we started the container as!
