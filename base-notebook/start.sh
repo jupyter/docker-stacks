@@ -53,6 +53,15 @@ unset_explicit_env_vars () {
     fi
 }
 
+get_user_id () {
+    id -u "${1}" 2>/dev/null
+    return 0
+}
+
+get_group_id () {
+    id -g "${1}" 2>/dev/null
+    return 0
+}
 
 # Default to starting bash if no command was specified
 if [ $# -eq 0 ]; then
@@ -204,8 +213,8 @@ else
         _log "WARNING: container must be started as root to grant sudo permissions!"
     fi
 
-    JOVYAN_UID="$(id -u jovyan 2>/dev/null)"  # The default UID for the jovyan user
-    JOVYAN_GID="$(id -g jovyan 2>/dev/null)"  # The default GID for the jovyan user
+    JOVYAN_UID="$(get_user_id jovyan)"  # The default UID for the jovyan user
+    JOVYAN_GID="$(get_group_id jovyan)"  # The default GID for the jovyan user
 
     # Attempt to ensure the user uid we currently run as has a named entry in
     # the /etc/passwd file, as it avoids software crashing on hard assumptions
