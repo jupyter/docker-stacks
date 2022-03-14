@@ -1,8 +1,16 @@
 ---
-ci:
-  skip: [hadolint-docker]
-
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
 repos:
+  # `pre-commit sample-config` default hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.31.1
@@ -81,3 +89,6 @@ repos:
     hooks:
       - id: markdownlint
         args: ["--fix"]
+
+ci:
+  skip: [hadolint-docker]
