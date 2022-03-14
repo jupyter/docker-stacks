@@ -90,5 +90,7 @@ repos:
       - id: markdownlint
         args: ["--fix"]
 
+# Docker hooks do not work in pre-commit.ci
+# See: <https://github.com/pre-commit-ci/issues/issues/11>
 ci:
   skip: [hadolint-docker]
