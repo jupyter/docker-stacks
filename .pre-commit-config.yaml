@@ -1,11 +1,20 @@
 ---
-ci:
-  skip: [hadolint-docker]
-
+# pre-commit is a tool to perform a predefined set of tasks manually and/or
+# automatically before git commits are made.
+#
+# Config reference: https://pre-commit.com/#pre-commit-configyaml---top-level
+#
+# Common tasks
+#
+# - Run on all files:   pre-commit run --all-files
+# - Register git hooks: pre-commit install --install-hooks
+#
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.31.0
+    rev: v2.31.1
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
@@ -19,16 +28,34 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.931
+    rev: v0.940
     hooks:
       - id: mypy
-        additional_dependencies: ["pytest", "types-requests", "types-tabulate"]
+        args: [--config, ./mypy.ini]
+        additional_dependencies:
+          ["numpy", "pytest", "requests", "types-requests", "types-tabulate"]
+        # Unfortunately, `pre-commit` only runs on changed files
+        # This doesn't work well with `mypy --follow-imports error`
+        # See: https://github.com/pre-commit/mirrors-mypy/issues/34#issuecomment-1062160321
+        #
+        # To workaround this we run `mypy` only in manual mode
+        # So it won't run as part of `git commit` command
+        # But it will still be run as part of `pre-commit` workflow and give expected results
+        stages: [manual]
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.5.1
     hooks:
       - id: prettier
+
+  # `pre-commit sample-config` default hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
 
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
@@ -71,3 +98,8 @@ repos:
     hooks:
       - id: markdownlint
         args: ["--fix"]
+
+# Docker hooks do not work in pre-commit.ci
+# See: <https://github.com/pre-commit-ci/issues/issues/11>
+ci:
+  skip: [hadolint-docker]

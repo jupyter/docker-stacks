@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Clone Main Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Fail to show, that we need manually update dockerhub overview page
         run: exit 1
