@@ -229,7 +229,6 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [transformers] | [![bb]][transformers_b] | [**Transformers**][transformers_lib] and NLP libraries such as `Tensorflow`, `Keras`, `Jax` and `PyTorch` |
 | [scraper]      | [![bb]][scraper_b]      | **Scraper** tools (`selenium`, `chromedriver`, `beatifulsoup4`, `requests`) on `minimal-notebook` image   |
 
-
 [bb]: https://static.mybinder.org/badge_logo.svg
 [csharp]: https://github.com/tlinnet/csharp-notebook
 [csharp_b]: https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master
@@ -254,7 +253,6 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [transformers_lib]: https://huggingface.co/docs/transformers/index
 [scraper]: https://github.com/rgriffogoes/scraper-notebook
 [scraper_b]: https://mybinder.org/v2/gh/rgriffogoes/scraper-notebook/main
-
 
 ### GPU enabled notebooks
 
