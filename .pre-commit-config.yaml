@@ -53,8 +53,6 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0
     hooks:
-      - id: check-executables-have-shebangs
-      - id: check-shebang-scripts-are-executable
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-added-large-files
