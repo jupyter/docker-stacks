@@ -227,6 +227,8 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [cgspatial]    | [![bb]][cgspatial_b]    | Major **geospatial** Python & R libraries on top of the `datascience-notebook` image                      |
 | [kotlin]       | [![bb]][kotlin_b]       | [**Kotlin** kernel for Jupyter/IPython][kotlin_kernel] on top of the `base-notebook` image                |
 | [transformers] | [![bb]][transformers_b] | [**Transformers**][transformers_lib] and NLP libraries such as `Tensorflow`, `Keras`, `Jax` and `PyTorch` |
+| [scraper]      | [![bb]][scraper_b]      | **Scraper** tools (`selenium`, `chromedriver`, `beatifulsoup4`, `requests`) on `minimal-notebook` image   |
+
 
 [bb]: https://static.mybinder.org/badge_logo.svg
 [csharp]: https://github.com/tlinnet/csharp-notebook
@@ -250,6 +252,9 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [transformers]: https://github.com/ToluClassics/transformers_notebook
 [transformers_b]: https://mybinder.org/v2/gh/ToluClassics/transformers_notebook/main
 [transformers_lib]: https://huggingface.co/docs/transformers/index
+[scraper]: https://github.com/rgriffogoes/scraper-notebook
+[scraper_b]: https://mybinder.org/v2/gh/rgriffogoes/scraper-notebook/main
+
 
 ### GPU enabled notebooks
 
