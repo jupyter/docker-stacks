@@ -172,8 +172,8 @@ If you have also **created a new user**, you might be experiencing any of the fo
 
 2. **Dynamically assign the user ID and GID**
 
-   The above case ensures that the `/home` directory is owned by the a newly created user with an specific `UID` and `GID`, but if you want to assign the `UID` and `GID`
-   of the new user dynamically you can make the following adjustments:
+   The above case ensures that the `/home` directory is owned by a newly created user with a specific `UID` and `GID`,
+   but if you want to assign the `UID` and `GID` of the new user dynamically you can make the following adjustments:
 
    ```bash
    docker run -it --rm \

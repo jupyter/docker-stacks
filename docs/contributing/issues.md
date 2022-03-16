@@ -10,7 +10,7 @@ Please review the following guidelines when reporting your problem.
   please search the [jupyter/docker-stacks issue tracker](https://github.com/jupyter/docker-stacks/issues)
   to see if someone else has already reported the same problem.
   If not, please open a [GitHub bug report issue](https://github.com/jupyter/docker-stacks/issues/new?assignees=&labels=type%3ABug&template=bug_report.md&title=)
-  and provide all of the information requested in the issue template.
+  and provide all the information requested in the issue template.
   Additionally, make sure to check the [Troubleshooting common error](../using/troubleshooting.md) page in the documentation before submitting an issue.
 - If the issue you're seeing is with one of the open-source libraries included in the Docker images and is reproducible outside the images,
   please file a bug with the appropriate open source project.

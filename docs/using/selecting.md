@@ -236,7 +236,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [education_b]: https://mybinder.org/v2/gh/umsi-mads/education-notebook/master
 [ihaskell]: https://github.com/jamesdbrock/ihaskell-notebook
 [ihaskell_b]: https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb
-[ihaskell_project]: https://github.com/gibiansky/IHaskell
+[ihaskell_project]: https://github.com/IHaskell/IHaskell
 [java]: https://github.com/jbindinga/java-notebook
 [java_b]: https://mybinder.org/v2/gh/jbindinga/java-notebook/master
 [ijava]: https://github.com/SpencerPark/IJava
