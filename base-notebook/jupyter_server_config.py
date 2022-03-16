@@ -1,11 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 # mypy: ignore-errors
-from jupyter_core.paths import jupyter_data_dir
-import subprocess
 import os
 import stat
+import subprocess
 
+from jupyter_core.paths import jupyter_data_dir
 
 c = get_config()  # noqa: F821
 c.ServerApp.ip = "0.0.0.0"

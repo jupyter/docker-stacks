@@ -5,10 +5,8 @@ import argparse
 import logging
 
 import plumbum
-from plumbum.cmd import pytest
-
 from images_hierarchy import get_test_dirs
-
+from plumbum.cmd import pytest
 
 LOGGER = logging.getLogger(__name__)
 

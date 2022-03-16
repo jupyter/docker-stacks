@@ -35,11 +35,10 @@ Example:
 """
 
 import logging
+from typing import Callable, Iterable
 
 import pytest  # type: ignore
 from conftest import TrackedContainer
-from typing import Callable, Iterable
-
 from package_helper import CondaPackageHelper
 
 LOGGER = logging.getLogger(__name__)
