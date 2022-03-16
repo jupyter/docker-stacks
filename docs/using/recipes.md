@@ -193,7 +193,7 @@ Sometimes it is helpful to run the Jupyter instance behind a nginx proxy, for ex
 
 - you would prefer to access the notebook at a server URL with a path
   (`https://example.com/jupyter`) rather than a port (`https://example.com:8888`)
-- you may have many different services in addition to Jupyter running on the same server, and want
+- you may have many services in addition to Jupyter running on the same server, and want
   to nginx to help improve server performance in managing the connections
 
 Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
@@ -203,11 +203,11 @@ Customize the `nginx.conf` file to set the desired paths and add other services.
 
 ## Host volume mounts and notebook errors
 
-If you are mounting a host directory as `/home/jovyan/work` in your container and you receive
-permission errors or connection errors when you create a notebook, be sure that the `jovyan` user
-(`UID=1000` by default) has read/write access to the directory on the host.
-Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the
-[Common Features, Docker Options section](common.md#docker-options)
+If you are mounting a host directory as `/home/jovyan/work` in your container,
+and you receive permission errors or connection errors when you create a notebook,
+be sure that the `jovyan` user (`UID=1000` by default) has read/write access to the directory on the host.
+Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option
+described in the [Common Features, Docker Options section](common.md#docker-options)
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 

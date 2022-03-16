@@ -11,7 +11,7 @@ We pin major.minor version of python, so this will stay the same even after invo
 
 ## Outdated packages
 
-In order to help identifying packages that can be updated you can use the following helper tool.
+In order to help to identify packages that can be updated you can use the following helper tool.
 It will list all the packages installed in the `Dockerfile` that can be updated -- dependencies are
 filtered to focus only on requested packages.
 
