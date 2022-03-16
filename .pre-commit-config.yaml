@@ -63,7 +63,6 @@ repos:
       - id: check-added-large-files
       - id: end-of-file-fixer
       - id: requirements-txt-fixer
-        args: [requirements-dev.txt, requirements-docs.txt]
       - id: trailing-whitespace
 
   # Lint: Dockerfile
