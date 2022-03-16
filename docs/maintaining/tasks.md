@@ -51,7 +51,7 @@ When there's a new stack definition, do the following before merging the PR with
 
 ## Pushing a Build Manually
 
-If automated build in Github Actions has got you down, do the following to push a build manually:
+If automated build in GitHub Actions has got you down, do the following to push a build manually:
 
 1. Clone this repository.
 2. Check out the git SHA you want to build and publish.

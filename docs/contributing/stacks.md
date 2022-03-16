@@ -6,7 +6,7 @@ and the documentation below to help you get started defining, building, and shar
 
 Following these steps will:
 
-1. Setup a project on GitHub containing a Dockerfile based on any of the images we provide.
+1. Set up a project on GitHub containing a Dockerfile based on any of the images we provide.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your repository.
 3. Configure Docker Hub to build and host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.md#community-stacks) in this documentation to include your image.
@@ -70,7 +70,7 @@ git push -u origin main
 
 The cookiecutter template comes with a `.github/workflows/docker.yml` file, which allows you to use GitHub actions to build your Docker image whenever you or someone else submits a pull request.
 
-1. By default the `.github/workflows/docker.yaml` file has the following triggers configuration:
+1. By default, the `.github/workflows/docker.yaml` file has the following triggers configuration:
 
    ```yaml
    on:
@@ -112,7 +112,7 @@ you merge a GitHub pull request to the master branch of your project.
 7. Select the GitHub organization and repository containing your image definition from the dropdowns.
    ![Dockerhub - Create Repository page focusing on the "Select Repository" dropdown menu](../_static/docker-github-settings.png)
 8. Click the **Create and Build** button.
-9. Click on your avatar on the top-right corner and select Account settings.
+9. Click on your avatar in the top-right corner and select Account settings.
    ![DockerHub page zoomed into the user's settings and accounts menu](../_static/docker-org-select.png)
 10. Click on **Security** and then click on the **New Access Token** button.
     ![DockerHub - Account page with the "Security" tab active and a rectangle highlighting the "New Access Token" button in the UI](../_static/docker-org-security.png)
@@ -126,7 +126,7 @@ you merge a GitHub pull request to the master branch of your project.
 
 13. Head back to your GitHub repository and click on the **Settings tab**.
     ![GitHub page with the the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/github-create-secrets.png)
-14. Click on the **Secrets** section and then on the **New repository secret** button on the top right corner (see image above).
+14. Click on the **Secrets** section and then on the **New repository secret** button in the top right corner (see image above).
 15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the **value** field.
     ![GitHub - Actions/New secret page with the Name field set to "DOCKERHUB_TOKEN"](../_static/github-secret-token.png)
 16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the _value_ field with your DockerHub username.

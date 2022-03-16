@@ -102,7 +102,7 @@ rdd.sum()
 
 ##### Local Mode in R
 
-In a R notebook with [SparkR][sparkr].
+In an R notebook with [SparkR][sparkr].
 
 ```R
 library(SparkR)
@@ -119,7 +119,7 @@ dapplyCollect(sdf,
 # 5050
 ```
 
-In a R notebook with [sparklyr][sparklyr].
+In an R notebook with [sparklyr][sparklyr].
 
 ```R
 library(sparklyr)
@@ -194,7 +194,7 @@ rdd.sum()
 
 ##### Standalone Mode in R
 
-In a R notebook with [SparkR][sparkr].
+In an R notebook with [SparkR][sparkr].
 
 ```R
 library(SparkR)
@@ -211,7 +211,7 @@ dapplyCollect(sdf,
 # 5050
 ```
 
-In a R notebook with [sparklyr][sparklyr].
+In an R notebook with [sparklyr][sparklyr].
 
 ```R
 library(sparklyr)

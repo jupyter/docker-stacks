@@ -99,6 +99,25 @@ repos:
       - id: markdownlint
         args: ["--fix"]
 
+  # Run tools on Jupyter notebooks
+
+  # strip output from Jupyter notebooks
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.5.0
+    hooks:
+      - id: nbstripout
+
+  # nbQA provides tools from the Python ecosystem like
+  # pyupgrade, black, and flake8, adjusted for notebooks.
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.3.1
+    hooks:
+      - id: nbqa-pyupgrade
+        args: [--py39-plus]
+      - id: nbqa-black
+        args: [--target-version=py39]
+      - id: nbqa-flake8
+
 # Docker hooks do not work in pre-commit.ci
 # See: <https://github.com/pre-commit-ci/issues/issues/11>
 ci:
