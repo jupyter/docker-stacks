@@ -194,7 +194,7 @@ Sometimes it is helpful to run the Jupyter instance behind a nginx proxy, for ex
 - you would prefer to access the notebook at a server URL with a path
   (`https://example.com/jupyter`) rather than a port (`https://example.com:8888`)
 - you may have many services in addition to Jupyter running on the same server, and want
-  to nginx to help improve server performance in managing the connections
+  nginx to help improve server performance in managing the connections
 
 Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
