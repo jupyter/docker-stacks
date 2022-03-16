@@ -1,4 +1,4 @@
-# Matplotlit: Test tex fonts
+# Matplotlib: Test tex fonts
 import os
 
 import matplotlib

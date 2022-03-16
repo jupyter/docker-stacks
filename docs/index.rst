@@ -37,6 +37,6 @@ Table of Contents
    :maxdepth: 2
    :caption: Getting Help
 
-   Issue Tracker on Github <https://github.com/jupyter/docker-stacks/issues>
+   Issue Tracker on GitHub <https://github.com/jupyter/docker-stacks/issues>
    Jupyter Discourse Forum <https://discourse.jupyter.org>
    Jupyter Website <https://jupyter.org>

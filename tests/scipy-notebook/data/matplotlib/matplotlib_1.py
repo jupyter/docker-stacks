@@ -1,5 +1,5 @@
-# Matplotlit: Create a simple plot example.
-# Refs: https://matplotlib.org/3.1.1/gallery/lines_bars_and_markers/simple_plot.html
+# Matplotlib: Create a simple plot example.
+# Refs: https://matplotlib.org/stable/gallery/lines_bars_and_markers/simple_plot.html
 
 import os
 

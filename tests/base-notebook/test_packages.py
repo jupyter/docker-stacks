@@ -10,11 +10,14 @@ It's a basic test aiming to prove that the package is working properly.
 The goal is to detect import errors that can be caused by incompatibilities between packages, for example:
 
 - #1012: issue importing `sympy`
-- #966: isssue importing `pyarrow`
+- #966: issue importing `pyarrow`
 
-This module checks dynamically, through the `CondaPackageHelper`, only the requested packages i.e. packages requested by `mamba install` in the `Dockerfile`s.
-This means that it does not check dependencies. This choice is a tradeoff to cover the main requirements while achieving reasonable test duration.
-However it could be easily changed (or completed) to cover also dependencies `package_helper.installed_packages()` instead of `package_helper.requested_packages()`.
+This module checks dynamically, through the `CondaPackageHelper`,
+only the requested packages i.e. packages requested by `mamba install` in the `Dockerfile`s.
+This means that it does not check dependencies.
+This choice is a tradeoff to cover the main requirements while achieving reasonable test duration.
+However it could be easily changed (or completed) to cover also dependencies.
+Use `package_helper.installed_packages()` instead of `package_helper.requested_packages()`.
 
 Example:
 
@@ -26,7 +29,7 @@ Example:
     # ---------------------------------------------------------------------------------------------- live log setup ----------------------------------------------------------------------------------------------
     # 2022-02-17 16:44:36 [    INFO] Starting container jupyter/base-notebook ... (package_helper.py:55)
     # 2022-02-17 16:44:36 [    INFO] Running jupyter/base-notebook with args {'detach': True, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:95)
-    # 2022-02-17 16:44:37 [    INFO] Grabing the list of manually requested packages ... (package_helper.py:83)
+    # 2022-02-17 16:44:37 [    INFO] Grabbing the list of manually requested packages ... (package_helper.py:83)
     # ---------------------------------------------------------------------------------------------- live log call -----------------------------------------------------------------------------------------------
     # 2022-02-17 16:44:38 [    INFO] Testing the import of packages ... (test_packages.py:144)
     # 2022-02-17 16:44:38 [    INFO] Trying to import mamba (test_packages.py:146)
@@ -96,7 +99,8 @@ def get_package_import_name(package: str) -> str:
 
 
 def excluded_package_predicate(package: str) -> bool:
-    """Return whether a package is excluded from the list (i.e. a package that cannot be tested with standard imports)"""
+    """Return whether a package is excluded from the list
+    (i.e. a package that cannot be tested with standard imports)"""
     return package in EXCLUDED_PACKAGES
 
 
@@ -140,7 +144,8 @@ def _check_import_packages(
 ) -> None:
     """Test if packages can be imported
 
-    Note: using a list of packages instead of a fixture for the list of packages since pytest prevents use of multiple yields
+    Note: using a list of packages instead of a fixture for the list of packages
+    since pytest prevents use of multiple yields
     """
     failures = {}
     LOGGER.info("Testing the import of packages ...")
