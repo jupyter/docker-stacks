@@ -22,18 +22,17 @@ def _get_env_variable(container: Container, variable: str) -> str:
     raise KeyError(variable)
 
 
-_PIP_VERSION_PREFIX = "Version: "
-
-
 def _get_pip_package_version(container: Container, package: str) -> str:
+    PIP_VERSION_PREFIX = "Version: "
+
     package_info = DockerRunner.run_simple_command(
         container,
         cmd=f"pip show {package}",
         print_result=False,
     )
     version_line = package_info.split("\n")[1]
-    assert version_line.startswith(_PIP_VERSION_PREFIX)
-    return version_line[len(_PIP_VERSION_PREFIX) :]
+    assert version_line.startswith(PIP_VERSION_PREFIX)
+    return version_line[len(PIP_VERSION_PREFIX) :]
 
 
 class TaggerInterface:
