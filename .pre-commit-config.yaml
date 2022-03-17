@@ -99,7 +99,7 @@ repos:
       - id: markdownlint
         args: ["--fix"]
 
-  # strip output from Jupyter notebooks
+  # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
     rev: 0.5.0
     hooks:
