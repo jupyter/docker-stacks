@@ -99,8 +99,6 @@ repos:
       - id: markdownlint
         args: ["--fix"]
 
-  # Run tools on Jupyter notebooks
-
   # strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
     rev: 0.5.0
@@ -117,6 +115,13 @@ repos:
       - id: nbqa-black
         args: [--target-version=py39]
       - id: nbqa-flake8
+
+  # Run black on python code blocks in documentation files.
+  - repo: https://github.com/asottile/blacken-docs
+    rev: v1.12.1
+    hooks:
+      - id: blacken-docs
+        args: [--target-version=py39]
 
 # Docker hooks do not work in pre-commit.ci
 # See: <https://github.com/pre-commit-ci/issues/issues/11>
