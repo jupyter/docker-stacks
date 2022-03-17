@@ -22,17 +22,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import json
+import logging
 import re
 from collections import defaultdict
 from itertools import chain
-import logging
-import json
 from typing import Any, Optional
-from docker.models.containers import Container
-
-from tabulate import tabulate
 
 from conftest import TrackedContainer
+from docker.models.containers import Container
+from tabulate import tabulate
 
 LOGGER = logging.getLogger(__name__)
 

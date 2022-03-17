@@ -2,11 +2,11 @@
 # Distributed under the terms of the Modified BSD License.
 
 import logging
+import time
 from typing import Optional
+
 import pytest  # type: ignore
 import requests
-import time
-
 from conftest import TrackedContainer, find_free_port
 
 LOGGER = logging.getLogger(__name__)
