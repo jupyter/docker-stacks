@@ -171,6 +171,8 @@ RUN sed -re "s/c.ServerApp/c.NotebookApp/g" \
     /etc/jupyter/jupyter_server_config.py > /etc/jupyter/jupyter_notebook_config.py && \
     fix-permissions /etc/jupyter/
 
+# This healtcheck works well for `lab`, `notebook`, `nbclassic`, `server` and `retro` jupyter commands
+# https://github.com/jupyter/docker-stacks/issues/915#issuecomment-1068528799
 HEALTHCHECK  --interval=15s --timeout=3s \
     CMD wget -O- --no-verbose --tries=1 http://localhost:8888/api || exit 1
 
