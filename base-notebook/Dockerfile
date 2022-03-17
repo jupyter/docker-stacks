@@ -171,6 +171,9 @@ RUN sed -re "s/c.ServerApp/c.NotebookApp/g" \
     /etc/jupyter/jupyter_server_config.py > /etc/jupyter/jupyter_notebook_config.py && \
     fix-permissions /etc/jupyter/
 
+HEALTHCHECK  --interval=15s --timeout=3s \
+    CMD wget -O- --no-verbose --tries=1 http://localhost:8888/api || exit 1
+
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
