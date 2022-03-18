@@ -143,7 +143,7 @@ sdf_len(sc, 100, repartition = 1) %>%
 Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
 options in a `%%init_spark` magic cell.
 
-```text
+```python
 %%init_spark
 # Configure Spark to use a local master
 launcher.master = "local"
@@ -234,7 +234,7 @@ sdf_len(sc, 100, repartition = 1) %>%
 Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
 options in a `%%init_spark` magic cell.
 
-```text
+```python
 %%init_spark
 # Configure Spark to use a local master
 launcher.master = "spark://master:7077"
