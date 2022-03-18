@@ -9,9 +9,9 @@ The templates were tested with OpenShift 3.7.
 It is believed they should work with at least OpenShift 3.6 or later.
 
 Do be aware that the Jupyter Project docker-stacks images are very large.
-The OpenShift environment you are using must provide sufficient quota on the per user space for images and the file system for running containers.
+The OpenShift environment you are using must provide sufficient quota on the per-user space for images and the file system for running containers.
 If the quota is too small, the pulling of the images to a node in the OpenShift cluster when deploying them, will fail due to lack of space.
-Even if the image is able to be run, if the quota is only just larger than the space required for the image, you will not be able to install many packages into the container before running out of space.
+Even if the image is able to run, if the quota is only just larger than the space required for the image, you will not be able to install many packages into the container before running out of space.
 
 OpenShift Online, the public hosted version of OpenShift from Red Hat has a quota of only 3GB for the image and container file system.
 As a result, only the `minimal-notebook` can be started and there is little space remaining to install additional packages.
@@ -87,7 +87,7 @@ NAME       HOST/PORT                                               PATH      SER
 notebook   notebook-jupyter.abcd.pro-us-east-1.openshiftapps.com             notebook   8888-tcp   edge/Redirect   None
 ```
 
-A secure route will be used to expose the notebook outside of the OpenShift cluster, so in this case the URL would be:
+A secure route will be used to expose the notebook outside the OpenShift cluster, so in this case the URL would be:
 
 ```lang-none
 https://notebook-jupyter.abcd.pro-us-east-1.openshiftapps.com/
@@ -174,7 +174,7 @@ If the error is in the config map, edit it again to fix it and trigger a new dep
 oc rollout latest dc/mynotebook
 ```
 
-If you make an error in the configuration file stored in the persistent volume, you will need to scale down the notebook so it isn't running.
+If you make an error in the configuration file stored in the persistent volume, you will need to scale down the notebook, so it isn't running.
 
 ```bash
 oc scale dc/mynotebook --replicas 0
@@ -209,7 +209,7 @@ oc set env dc/mynotebook JUPYTER_NOTEBOOK_PASSWORD=mypassword
 
 This will trigger a new deployment so ensure you have downloaded any work if not using a persistent volume.
 
-If using a persistent volume, you could instead setup a password in the file `/home/jovyan/.jupyter/jupyter_server_config.py` as per guidelines in <https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html>.
+If using a persistent volume, you could instead set up a password in the file `/home/jovyan/.jupyter/jupyter_server_config.py` as per guidelines in <https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html>.
 
 ## Deploying from a Custom Image
 

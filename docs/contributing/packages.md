@@ -1,7 +1,7 @@
 # Package Updates
 
 As a general rule, we do not pin package versions in our `Dockerfile`s.
-The dependencies resolution is a difficult thing to do.
+Dependency resolution is a difficult thing to do.
 This means that packages might have old versions.
 Images are rebuilt weekly, so usually, packages receive updates quite frequently.
 

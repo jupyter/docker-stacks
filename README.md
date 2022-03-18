@@ -72,7 +72,7 @@ maintained stacks.
 We value all positive contributions to the Docker stacks project,
 from [bug reports](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/issues.html)
 to [pull requests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/packages.html)
-to help answering questions.
+to help to answer questions.
 We'd also like to invite members of the community to help with two maintainer activities:
 
 - **Issue triaging**: Reading and providing a first response to issues, labeling issues appropriately,
@@ -86,7 +86,7 @@ We will happily grant additional permissions (e.g., ability to merge PRs) to any
 
 ## Jupyter Notebook Deprecation Notice
 
-Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), JupyterLab is now the default for all of the Jupyter Docker stack images.
+Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), JupyterLab is now the default for all the Jupyter Docker stack images.
 It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
 You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` subcommand) at container startup,
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#alternative-commands).
@@ -119,8 +119,8 @@ All published containers support amd64 (x86_64) and aarch64, except for `datasci
 
 ### Caveats for arm64 images
 
-- The manifests we publish in this projects wiki as well as the image tags for
-  the multi platform images that also support arm, are all based on the amd64
+- The manifests we publish in this project's wiki as well as the image tags for
+  the multi-platform images that also support arm, are all based on the amd64
   version even though details about the installed packages versions could differ
   between architectures. For the status about this, see
   [#1401](https://github.com/jupyter/docker-stacks/issues/1401).

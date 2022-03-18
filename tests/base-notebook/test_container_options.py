@@ -81,7 +81,7 @@ def test_gid_change(container: TrackedContainer) -> None:
 
 
 def test_nb_user_change(container: TrackedContainer) -> None:
-    """Container should change the user name (`NB_USER`) of the default user."""
+    """Container should change the username (`NB_USER`) of the default user."""
     nb_user = "nayvoj"
     running_container = container.run_detached(
         tty=True,
