@@ -1,12 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+import logging
 import pathlib
 import time
-import logging
 
 import pytest  # type: ignore
 import requests
-
 from conftest import TrackedContainer, find_free_port
 
 LOGGER = logging.getLogger(__name__)

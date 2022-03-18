@@ -1,19 +1,17 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from contextlib import closing
-import os
 import logging
+import os
 import socket
+from contextlib import closing
 from typing import Any, Optional
 
 import docker
-from docker.models.containers import Container
 import pytest  # type: ignore
 import requests
-
-from urllib3.util.retry import Retry
+from docker.models.containers import Container
 from requests.adapters import HTTPAdapter
-
+from urllib3.util.retry import Retry
 
 LOGGER = logging.getLogger(__name__)
 

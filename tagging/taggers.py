@@ -1,9 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 from datetime import datetime
+
 from docker.models.containers import Container
-from .git_helper import GitHelper
+
 from .docker_runner import DockerRunner
+from .git_helper import GitHelper
 
 
 def _get_program_version(container: Container, program: str) -> str:

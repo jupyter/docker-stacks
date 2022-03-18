@@ -3,11 +3,12 @@
 # Distributed under the terms of the Modified BSD License.
 import argparse
 import logging
+
 from plumbum.cmd import docker
+
 from .docker_runner import DockerRunner
 from .get_taggers_and_manifests import get_taggers_and_manifests
 from .github_set_env import github_set_env
-
 
 LOGGER = logging.getLogger(__name__)
 

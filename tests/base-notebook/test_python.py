@@ -2,9 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 
-from packaging import version  # type: ignore
-
 from conftest import TrackedContainer
+from packaging import version  # type: ignore
 
 LOGGER = logging.getLogger(__name__)
 
