@@ -130,6 +130,10 @@ repos:
     rev: v1.12.1
     hooks:
       - id: blacken-docs
+        # --skip-errors is added to allow us to have python syntax highlighting even if
+        # the python code blocks includes jupyter specific additions such as % or !
+        # See https://github.com/asottile/blacken-docs/issues/127 for an upstream
+        # feature request about this.
         args: [--target-version=py39, --skip-errors]
 
 # Docker hooks do not work in pre-commit.ci
