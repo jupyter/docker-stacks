@@ -80,7 +80,7 @@ def task_docs_check_links() -> dict[str, Any]:
 def task_docker_build() -> Generator[dict[str, Any], None, None]:
     """Build Docker images using the system's architecture"""
     for image in C.ALL_IMAGES:
-        meta = U.image_meta(image)
+        image_meta = U.image_meta(image)
 
         yield dict(
             name=f"build:{image}",
@@ -94,16 +94,16 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
                     "docker",
                     "buildx",
                     "build",
-                    *["-t" + tag for tag in meta.tags],
+                    *["-t" + tag for tag in image_meta.tags],
                     "-f",
-                    meta.dockerfile,
+                    image_meta.dockerfile,
                     "--build-arg",
                     "OWNER=" + C.OWNER,
-                    str(meta.image_dir),
+                    str(image_meta.image_dir),
                     "--load",
                 ),
             ],
-            file_dep=[str(meta.dockerfile)],
+            file_dep=[str(image_meta.dockerfile)],
             uptodate=[False],
         )
 
@@ -112,7 +112,7 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
             doc="Brief summary of the image built - defaulting to using the latest tag",
             actions=[
                 ["echo", "\n \n ⚡️ Build complete, image size:"],
-                U.do("docker", "images", meta.tags[0], "--format", "{{.Size}}"),
+                U.do("docker", "images", image_meta.tags[0], "--format", "{{.Size}}"),
                 U.do("echo", "::endgroup::"),
             ],
         )
@@ -357,10 +357,8 @@ class U:
             f"{C.OWNER}/{image}:latest",
             f"{C.OWNER}/{image}:{U.GIT_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
         ]
-        image_dir = Paths.ROOT / image
-        return ImageMeta(
-            tags=tags, image_dir=image_dir, dockerfile=image_dir / "Dockerfile"
-        )
+        dir = Paths.ROOT / image
+        return ImageMeta(tags=tags, dir=dir, dockerfile=dir / "Dockerfile")
 
     @staticmethod
     def inspect_image(image: str) -> None:
