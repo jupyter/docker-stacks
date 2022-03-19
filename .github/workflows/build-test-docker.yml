@@ -19,7 +19,6 @@ on:
 
       - "tagging/**"
       - "tests/**"
-      - "Makefile"
       - "dodo.py"
       - "requirements-dev.txt"
   push:
@@ -40,7 +39,6 @@ on:
 
       - "tagging/**"
       - "tests/**"
-      - "Makefile"
       - "dodo.py"
       - "requirements-dev.txt"
   workflow_dispatch:
@@ -88,7 +86,7 @@ jobs:
       - name: Install Dev Dependencies 📦
         run: |
           python -m pip install --upgrade pip
-          make -C main install-dev-env
+          python -m pip install -r main/requirements-dev.txt
 
       # https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#github-cache
       - name: Build Docker Images 🛠
@@ -134,7 +132,7 @@ jobs:
       - name: Install Dev Dependencies 📦
         run: |
           python -m pip install --upgrade pip
-          make -C main install-dev-env
+          python -m pip install -r main/requirements-dev.txt
 
       - name: Download built images 📥
         uses: actions/download-artifact@v2
@@ -177,7 +175,7 @@ jobs:
       - name: Install Dev Dependencies 📦
         run: |
           python -m pip install --upgrade pip
-          make -C main install-dev-env
+          python -m pip install -r main/requirements-dev.txt
 
       - name: Checkout wiki 📃
         uses: actions/checkout@v2
