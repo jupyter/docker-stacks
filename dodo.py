@@ -84,7 +84,7 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
 
         yield dict(
             name=f"build:{image}",
-            doc="Build the latest image for a stack using the system's acrchitecture ⛏",
+            doc="Build the latest image for a stack using the system's architecture ⛏",
             actions=[
                 U.do(
                     "echo",
