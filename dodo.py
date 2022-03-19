@@ -297,7 +297,7 @@ class DockerConfig:
 
     # Docker-related
     OWNER = "jupyter"
-    DOCKER_REGISTRY = "dockerhub"
+    DOCKERHUB_REGISTRY = "dockerhub"
 
     # Images supporting the following architectures:
     # - linux/amd64
@@ -413,6 +413,6 @@ class Utils:
 
         return (
             f"{registry}/{DockerConfig.OWNER}/{image}"
-            if registry != DockerConfig.DOCKER_REGISTRY
+            if registry != DockerConfig.DOCKERHUB_REGISTRY
             else f"{DockerConfig.OWNER}/{image}"
         )
