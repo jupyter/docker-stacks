@@ -32,18 +32,18 @@ def task_build_docs():
     """
 
     return dict(
-        file_dep=[*P.DOCS_MD, *P.DOCS_RST, *P.DOCS_PY],
+        file_dep=[*Paths.DOCS_MD, *Paths.DOCS_RST, *Paths.DOCS_PY],
         actions=[
             U.do(
                 "sphinx-build",
                 "-W",
                 "--keep-going",
                 "--color",
-                P.DOCS,
+                Paths.DOCS,
                 "docs/_build/",
             )
         ],
-        targets=[P.DOCS_TARGET],
+        targets=[Paths.DOCS_TARGET],
         uptodate=[False],
     )
 
@@ -54,7 +54,7 @@ def task_docs_check_links():
     """Checks for any broken links in the Sphinx documentation 🔗
     only created after the docs are built"""
     return dict(
-        file_dep=[*P.DOCS.rglob("_build/*.html")],
+        file_dep=[*Paths.DOCS.rglob("_build/*.html")],
         actions=[
             U.do(
                 "sphinx-build",
@@ -63,7 +63,7 @@ def task_docs_check_links():
                 "--color",
                 "-b",
                 "linkcheck",
-                P.DOCS,
+                Paths.DOCS,
                 "docs/_build",
             )
         ],
@@ -127,8 +127,8 @@ def task_docker_save_images():
         return dict(
             targets=[U.CI_IMAGE_TAR],
             actions=[
-                U.do("echo", f"Saving images to: {P.CI_IMG}"),
-                U.do("mkdir", "-p", P.CI_IMG),
+                U.do("echo", f"Saving images to: {Paths.CI_IMG}"),
+                U.do("mkdir", "-p", Paths.CI_IMG),
                 U.do(
                     "docker",
                     "save",
@@ -164,7 +164,7 @@ def task_docker_test():
             uptodate=[False],
             actions=[
                 U.do(
-                    P.TESTS_RUN,
+                    Paths.TESTS_RUN,
                     "--short-image-name",
                     image,
                     "--owner",
@@ -196,7 +196,7 @@ def task_docker_create_manifest():
         yield dict(
             name=f"manifest:{image}",
             doc="Create the manifest file for the images",
-            targets=[P.WIKI_MANIFEST / f"{image}-{U.GIT_COMMIT_HASH_TAG}.md"],
+            targets=[Paths.WIKI_MANIFEST / f"{image}-{U.GIT_COMMIT_HASH_TAG}.md"],
             actions=[
                 U.do(
                     *U.PYM,
@@ -206,7 +206,7 @@ def task_docker_create_manifest():
                     "--owner",
                     C.OWNER,
                     "--wiki-path",
-                    P.WIKI,
+                    Paths.WIKI,
                 )
             ],
         )
@@ -250,7 +250,7 @@ def task_docker_push_image(registry):
 # -----------------------------------------------------------------------------
 
 
-class P:
+class Paths:
     """Paths to project files and directories, used to provide consistency across the multiple doit tasks"""
 
     DODO = Path(__file__)
@@ -331,11 +331,11 @@ class U:
     GIT_COMMIT_HASH_TAG = GitHelper.commit_hash_tag()
 
     # tar file to store the images in
-    CI_IMAGE_TAR = str(P.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar")
+    CI_IMAGE_TAR = str(Paths.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar")
 
     # utility methods
     @staticmethod
-    def do(*args, cwd=P.ROOT, **kwargs):
+    def do(*args, cwd=Paths.ROOT, **kwargs):
         """wrap a CmdAction for consistency across OS"""
         return CmdAction(
             list(map(str, args)), shell=False, cwd=str(Path(cwd).resolve()), **kwargs
@@ -348,7 +348,7 @@ class U:
             f"{C.OWNER}/{image}:latest",
             f"{C.OWNER}/{image}:{U.GIT_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
         ]
-        image_dir = P.ROOT / image
+        image_dir = Paths.ROOT / image
         dockerfile = str(image_dir / "Dockerfile")
 
         return tags, image_dir, dockerfile
