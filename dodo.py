@@ -8,7 +8,6 @@ from pathlib import Path
 from subprocess import PIPE
 from typing import Any, Generator, Optional
 
-import doit
 from doit import task_params
 from doit.tools import CmdAction
 
@@ -34,7 +33,7 @@ def task_build_docs() -> dict[str, Any]:
     setting uptodate to False will force the task to run every time
     """
     return dict(
-        file_dep=[*Paths.DOCS_MD, *Paths.DOCS_RST, *Paths.DOCS_PY],
+        file_dep=Paths.DOCS_ALL_SOURCES,
         actions=[
             Utils.do(
                 *Utils.SPHINX,
@@ -43,19 +42,15 @@ def task_build_docs() -> dict[str, Any]:
             )
         ],
         targets=[Paths.DOCS_TARGET],
-        uptodate=[False],
     )
 
 
-# https://pydoit.org/task-creation.html#delayed-task-creation
-@doit.create_after(executed="build_docs")
 def task_docs_check_links() -> dict[str, Any]:
     """
     Checks for any broken links in the Sphinx documentation 🔗
-    only created after the docs are built
     """
     return dict(
-        file_dep=[*Paths.DOCS.rglob("_build/*.html")],
+        file_dep=Paths.DOCS_ALL_SOURCES,
         actions=[
             Utils.do(
                 *Utils.SPHINX,
@@ -271,11 +266,12 @@ class Paths:
     # docs
     DOCS = ROOT / "docs"
     DOCS_TARGET = ROOT / "docs/_build"
+
     README = ROOT / "README.md"
     DOCS_PY = sorted(DOCS.rglob("*.py"))
     DOCS_RST = sorted(DOCS.rglob("*.rst"))
     DOCS_SRC_MD = sorted(DOCS.rglob("*.md"))
-    DOCS_MD = sorted([*DOCS_SRC_MD, README])
+    DOCS_ALL_SOURCES = sorted([README, *DOCS_PY, *DOCS_RST, *DOCS_SRC_MD])
 
     # wiki
     WIKI = ROOT.parent / "wiki"
