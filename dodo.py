@@ -9,6 +9,7 @@ from subprocess import PIPE
 import doit
 from doit import task_params
 from doit.tools import CmdAction
+
 from tests.images_hierarchy import get_test_dirs
 
 # global doit config
