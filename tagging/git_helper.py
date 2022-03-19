@@ -17,6 +17,14 @@ class GitHelper:
     def commit_message() -> str:
         return git["log", -1, "--pretty=%B"]().strip()  # type: ignore
 
+    @staticmethod
+    def commit_timestamp() -> int:
+        return git["log", "-1", "--format=%ct"]().strip()  # type: ignore
+
+    @staticmethod
+    def short_commit_hash() -> str:
+        return git["rev-parse", "--short", "HEAD"]().strip()  # type: ignore
+
 
 if __name__ == "__main__":
     print("Git hash:", GitHelper.commit_hash())

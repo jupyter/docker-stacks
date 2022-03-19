@@ -10,6 +10,8 @@ import doit
 from doit import task_params
 from doit.tools import CmdAction
 
+from tagging.git_helper import GitHelper
+
 # global doit config
 DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 
@@ -320,23 +322,9 @@ class U:
     PYM = ["python3", "-m"]
 
     # git specific - used for tagging
-    SOURCE_DATE_EPOCH = (
-        subprocess.check_output(["git", "log", "-1", "--format=%ct"])
-        .decode("utf-8")
-        .strip()
-    )
-
-    GIT_COMMIT_SHA = (
-        subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
-        .decode("utf-8")
-        .strip()
-    )
-
-    GIT_COMMIT_HASH_TAG = (
-        subprocess.check_output(["git", "rev-parse", "HEAD"])
-        .decode("utf-8")
-        .strip()[:12]
-    )
+    SOURCE_DATE_EPOCH = GitHelper.commit_timestamp()
+    GIT_COMMIT_SHA = GitHelper.short_commit_hash()
+    GIT_COMMIT_HASH_TAG = GitHelper.commit_hash_tag()
 
     # tar file to store the images in
     CI_IMAGE_TAR = str(P.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar")
