@@ -3,8 +3,10 @@
 
 import os
 import subprocess
+from dataclasses import dataclass
 from pathlib import Path
 from subprocess import PIPE
+from typing import Any, Generator, Optional
 
 import doit
 from doit import task_params
@@ -26,7 +28,7 @@ DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 # -----------------------------------------------------------------------------
 
 
-def task_build_docs():
+def task_build_docs() -> dict[str, Any]:
     """Build Sphinx documentation 📝
     setting uptodate to False will force the task to run every time
     """
@@ -50,7 +52,7 @@ def task_build_docs():
 
 # https://pydoit.org/task-creation.html#delayed-task-creation
 @doit.create_after(executed="build_docs")
-def task_docs_check_links():
+def task_docs_check_links() -> dict[str, Any]:
     """Checks for any broken links in the Sphinx documentation 🔗
     only created after the docs are built"""
     return dict(
@@ -75,11 +77,10 @@ def task_docs_check_links():
 # -----------------------------------------------------------------------------
 
 
-def task_docker_build():
+def task_docker_build() -> Generator[dict[str, Any], None, None]:
     """Build Docker images using the system's architecture"""
     for image in C.ALL_IMAGES:
-
-        image_tags, image_dir, dockerfile = U.image_meta(image)
+        meta = U.image_meta(image)
 
         yield dict(
             name=f"build:{image}",
@@ -93,16 +94,16 @@ def task_docker_build():
                     "docker",
                     "buildx",
                     "build",
-                    *["-t" + tag for tag in image_tags],
+                    *["-t" + tag for tag in meta.tags],
                     "-f",
-                    dockerfile,
+                    meta.dockerfile,
                     "--build-arg",
                     "OWNER=" + C.OWNER,
-                    str(image_dir),
+                    str(meta.image_dir),
                     "--load",
                 ),
             ],
-            file_dep=[dockerfile],
+            file_dep=[str(meta.dockerfile)],
             uptodate=[False],
         )
 
@@ -111,13 +112,13 @@ def task_docker_build():
             doc="Brief summary of the image built - defaulting to using the latest tag",
             actions=[
                 ["echo", "\n \n ⚡️ Build complete, image size:"],
-                U.do("docker", "images", image_tags[0], "--format", "{{.Size}}"),
+                U.do("docker", "images", meta.tags[0], "--format", "{{.Size}}"),
                 U.do("echo", "::endgroup::"),
             ],
         )
 
 
-def task_docker_save_images():
+def task_docker_save_images() -> Optional[dict[str, Any]]:
     """Save the built Docker images - these will be stored as CI artifacts.
     This is needed to pass images across jobs in GitHub Actions as each job runs in a separate container."""
 
@@ -138,9 +139,10 @@ def task_docker_save_images():
                 ),
             ],
         )
+    return None
 
 
-def task_docker_test():
+def task_docker_test() -> Generator[dict[str, Any], None, None]:
     """Test Docker images - needs to be run after `docker_build`"""
 
     if U.IS_CI & Path(U.CI_IMAGE_TAR).exists():
@@ -174,7 +176,7 @@ def task_docker_test():
         )
 
 
-def task_docker_create_manifest():
+def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
     """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
     for image in C.ALL_IMAGES:
 
@@ -223,7 +225,7 @@ def task_docker_create_manifest():
         )
     ]
 )
-def task_docker_push_image(registry):
+def task_docker_push_image(registry: str) -> Generator[dict[str, Any], None, None]:
     """Push all tags for a Jupyter image - only should be done after they have been tested"""
     for image in C.ALL_IMAGES:
         yield dict(
@@ -316,6 +318,13 @@ class C:
     AMD64_IMAGES = ["datascience-notebook", "tensorflow-notebook"]
 
 
+@dataclass
+class ImageMeta:
+    tags: list[str]
+    image_dir: Path
+    dockerfile: Path
+
+
 class U:
     """Supporting methods and variables"""
 
@@ -335,32 +344,26 @@ class U:
 
     # utility methods
     @staticmethod
-    def do(*args, cwd=Paths.ROOT, **kwargs):
+    def do(*args: Any, cwd: Path = Paths.ROOT) -> CmdAction:
         """wrap a CmdAction for consistency across OS"""
         return CmdAction(
-            list(map(str, args)), shell=False, cwd=str(Path(cwd).resolve()), **kwargs
+            list(map(str, args)), shell=False, cwd=str(Path(cwd).resolve())
         )
 
     @staticmethod
-    def image_meta(image):
+    def image_meta(image: str) -> ImageMeta:
         """Get the image tags and other supporting meta for building, testing and tagging"""
         tags = [
             f"{C.OWNER}/{image}:latest",
             f"{C.OWNER}/{image}:{U.GIT_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
         ]
         image_dir = Paths.ROOT / image
-        dockerfile = str(image_dir / "Dockerfile")
-
-        return tags, image_dir, dockerfile
-
-    @staticmethod
-    def set_env(image):
-        """We need this env variable later on for the tests"""
-        os.environ["TEST_IMAGE"] = image
-        print(os.environ.get("TEST_IMAGE"))
+        return ImageMeta(
+            tags=tags, image_dir=image_dir, dockerfile=image_dir / "Dockerfile"
+        )
 
     @staticmethod
-    def inspect_image(image):
+    def inspect_image(image: str) -> None:
         """Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
         The easies way to check this is to run `docker inspect` on the image"""
         try:
@@ -371,7 +374,7 @@ class U:
             print(f"Image not found: {image}")
 
     @staticmethod
-    def get_images():
+    def get_images() -> list[str]:
         """
         Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
         Here we get all the images present in the local system
@@ -385,7 +388,7 @@ class U:
         return images_ids
 
     @staticmethod
-    def registry_image(registry, image):
+    def registry_image(registry: str, image: str) -> str:
         """In CI we want to push images to GHCR and DockerHub in different steps
         so we need to ensure we pass the correct registry"""
 
