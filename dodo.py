@@ -99,7 +99,7 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
                     image_meta.dockerfile,
                     "--build-arg",
                     "OWNER=" + C.OWNER,
-                    str(image_meta.image_dir),
+                    str(image_meta.dir),
                     "--load",
                 ),
             ],
@@ -321,7 +321,7 @@ class C:
 @dataclass
 class ImageMeta:
     tags: list[str]
-    image_dir: Path
+    dir: Path
     dockerfile: Path
 
 
@@ -346,9 +346,7 @@ class U:
     @staticmethod
     def do(*args: Any, cwd: Path = Paths.ROOT) -> CmdAction:
         """wrap a CmdAction for consistency across OS"""
-        return CmdAction(
-            list(map(str, args)), shell=False, cwd=str(Path(cwd).resolve())
-        )
+        return CmdAction(list(map(str, args)), shell=False, cwd=cwd)
 
     @staticmethod
     def image_meta(image: str) -> ImageMeta:
