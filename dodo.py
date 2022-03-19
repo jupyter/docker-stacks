@@ -70,7 +70,7 @@ def task_docs_check_links() -> dict[str, Any]:
 
 def task_docker_build() -> Generator[dict[str, Any], None, None]:
     """
-    Build Docker images using the system's architecture
+    Build Docker images using the system's architecture 🛠
     """
     for image in DockerConfig.ALL_IMAGES:
         image_meta = Utils.image_meta(image)
@@ -115,7 +115,7 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
 
 def task_docker_save_images() -> Optional[dict[str, Any]]:
     """
-    Save the built Docker images - these will be stored as CI artifacts.
+    Save the built Docker images - these will be stored as CI artifacts 💾
     This is needed to pass images across jobs in GitHub Actions as each job runs in a separate container.
     """
 
@@ -141,7 +141,7 @@ def task_docker_save_images() -> Optional[dict[str, Any]]:
 
 def task_docker_test() -> Generator[dict[str, Any], None, None]:
     """
-    Test Docker images - needs to be run after `docker_build`
+    Test Docker images - needs to be run after `docker_build` ✅
     """
     if Utils.IS_CI & Path(Utils.CI_IMAGE_TAR).exists():
         """
@@ -178,7 +178,8 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
 
 def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
     """
-    Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage
+    Build the manifest file and tags for the Docker images 🏷
+    This task can be run in parallel to the build stage
     """
     for image in DockerConfig.ALL_IMAGES:
         yield dict(
@@ -228,7 +229,7 @@ def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
 )
 def task_docker_push_image(registry: str) -> Generator[dict[str, Any], None, None]:
     """
-    Push all tags for a Jupyter image - only should be done after they have been tested
+    Push all tags for a Jupyter image - only should be done after they have been tested 📤
     """
     for image in DockerConfig.ALL_IMAGES:
         yield dict(
