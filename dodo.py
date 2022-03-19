@@ -33,7 +33,16 @@ def task_build_docs():
 
     return dict(
         file_dep=[*P.DOCS_MD, *P.DOCS_RST, *P.DOCS_PY],
-        actions=[U.do("sphinx-build", "-W", P.DOCS, "docs/_build/html")],
+        actions=[
+            U.do(
+                "sphinx-build",
+                "-W",
+                "--keep-going",
+                "--color",
+                P.DOCS,
+                "docs/_build/html",
+            )
+        ],
         targets=[P.DOCS_TARGET],
         uptodate=[False],
     )
