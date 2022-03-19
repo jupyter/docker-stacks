@@ -40,7 +40,7 @@ def task_build_docs():
                 "--keep-going",
                 "--color",
                 P.DOCS,
-                "docs/_build/html",
+                "docs/_build/",
             )
         ],
         targets=[P.DOCS_TARGET],
