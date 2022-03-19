@@ -162,7 +162,7 @@ def task_docker_test():
             uptodate=[False],
             actions=[
                 U.do(
-                    "tests/run_tests.py",
+                    P.TESTS_RUN,
                     "--short-image-name",
                     image,
                     "--owner",
@@ -318,7 +318,6 @@ class U:
 
     # args
     PYM = ["python", "-m"]
-    PYTEST_ARGS = ["pytest", "-m", "not info"]
 
     # git specific - used for tagging
     SOURCE_DATE_EPOCH = (
