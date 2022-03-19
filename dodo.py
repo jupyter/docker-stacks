@@ -77,7 +77,7 @@ def task_docs_check_links():
 
 def task_docker_build():
     """Build Docker images using the system's architecture"""
-    for image in P.ALL_IMAGES:
+    for image in C.ALL_IMAGES:
 
         image_tags, image_dir, dockerfile = U.image_meta(image)
 
@@ -87,7 +87,7 @@ def task_docker_build():
             actions=[
                 U.do(
                     "echo",
-                    f"::group::Build {P.OWNER}/{image}- using system's architecture",
+                    f"::group::Build {C.OWNER}/{image}- using system's architecture",
                 ),
                 U.do(
                     "docker",
@@ -97,7 +97,7 @@ def task_docker_build():
                     "-f",
                     dockerfile,
                     "--build-arg",
-                    "OWNER=" + P.OWNER,
+                    "OWNER=" + C.OWNER,
                     str(image_dir),
                     "--load",
                 ),
@@ -157,7 +157,7 @@ def task_docker_test():
             ],
         )
 
-    for image in P.ALL_IMAGES:
+    for image in C.ALL_IMAGES:
         yield dict(
             name=f"test:{image}",
             doc="Run the test suite for the images - will always run the tests if an image is built",
@@ -168,7 +168,7 @@ def task_docker_test():
                     "--short-image-name",
                     image,
                     "--owner",
-                    P.OWNER,
+                    C.OWNER,
                 )
             ],
         )
@@ -176,7 +176,7 @@ def task_docker_test():
 
 def task_docker_create_manifest():
     """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
-    for image in P.ALL_IMAGES:
+    for image in C.ALL_IMAGES:
 
         yield dict(
             name=f"tags:{image}",
@@ -188,7 +188,7 @@ def task_docker_create_manifest():
                     "--short-image-name",
                     image,
                     "--owner",
-                    P.OWNER,
+                    C.OWNER,
                 ),
             ],
         )
@@ -204,7 +204,7 @@ def task_docker_create_manifest():
                     "--short-image-name",
                     image,
                     "--owner",
-                    P.OWNER,
+                    C.OWNER,
                     "--wiki-path",
                     P.WIKI,
                 )
@@ -225,7 +225,7 @@ def task_docker_create_manifest():
 )
 def task_docker_push_image(registry):
     """Push all tags for a Jupyter image - only should be done after they have been tested"""
-    for image in P.ALL_IMAGES:
+    for image in C.ALL_IMAGES:
         yield dict(
             name=f"push:{image}",
             doc="Push the image to the specified registry",
@@ -276,6 +276,10 @@ class P:
     # CI
     CI = ROOT / ".github"
     CI_IMG = CI / "built-docker-images"
+
+
+class C:
+    """Configuration of images"""
 
     # Docker-related
     OWNER = "jupyter"
@@ -341,8 +345,8 @@ class U:
     def image_meta(image):
         """Get the image tags and other supporting meta for building, testing and tagging"""
         tags = [
-            f"{P.OWNER}/{image}:latest",
-            f"{P.OWNER}/{image}:{U.GIT_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
+            f"{C.OWNER}/{image}:latest",
+            f"{C.OWNER}/{image}:{U.GIT_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
         ]
         image_dir = P.ROOT / image
         dockerfile = str(image_dir / "Dockerfile")
@@ -386,7 +390,7 @@ class U:
         so we need to ensure we pass the correct registry"""
 
         return (
-            f"{registry}/{P.OWNER}/{image}"
-            if registry != P.DOCKER_REGISTRY
-            else f"{P.OWNER}/{image}"
+            f"{registry}/{C.OWNER}/{image}"
+            if registry != C.DOCKER_REGISTRY
+            else f"{C.OWNER}/{image}"
         )
