@@ -36,7 +36,7 @@ def task_build_docs() -> dict[str, Any]:
     return dict(
         file_dep=[*Paths.DOCS_MD, *Paths.DOCS_RST, *Paths.DOCS_PY],
         actions=[
-            U.do(
+            Utils.do(
                 "sphinx-build",
                 "-W",
                 "--keep-going",
@@ -58,7 +58,7 @@ def task_docs_check_links() -> dict[str, Any]:
     return dict(
         file_dep=[*Paths.DOCS.rglob("_build/*.html")],
         actions=[
-            U.do(
+            Utils.do(
                 "sphinx-build",
                 "-W",
                 "--keep-going",
@@ -79,18 +79,18 @@ def task_docs_check_links() -> dict[str, Any]:
 
 def task_docker_build() -> Generator[dict[str, Any], None, None]:
     """Build Docker images using the system's architecture"""
-    for image in C.ALL_IMAGES:
-        image_meta = U.image_meta(image)
+    for image in DockerConfig.ALL_IMAGES:
+        image_meta = Utils.image_meta(image)
 
         yield dict(
             name=f"build:{image}",
             doc="Build the latest image for a stack using the system's architecture ⛏",
             actions=[
-                U.do(
+                Utils.do(
                     "echo",
-                    f"::group::Build {C.OWNER}/{image}- using system's architecture",
+                    f"::group::Build {DockerConfig.OWNER}/{image}- using system's architecture",
                 ),
-                U.do(
+                Utils.do(
                     "docker",
                     "buildx",
                     "build",
@@ -98,7 +98,7 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
                     "-f",
                     image_meta.dockerfile,
                     "--build-arg",
-                    "OWNER=" + C.OWNER,
+                    "OWNER=" + DockerConfig.OWNER,
                     str(image_meta.dir),
                     "--load",
                 ),
@@ -112,8 +112,10 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
             doc="Brief summary of the image built - defaulting to using the latest tag",
             actions=[
                 ["echo", "\n \n ⚡️ Build complete, image size:"],
-                U.do("docker", "images", image_meta.tags[0], "--format", "{{.Size}}"),
-                U.do("echo", "::endgroup::"),
+                Utils.do(
+                    "docker", "images", image_meta.tags[0], "--format", "{{.Size}}"
+                ),
+                Utils.do("echo", "::endgroup::"),
             ],
         )
 
@@ -122,20 +124,20 @@ def task_docker_save_images() -> Optional[dict[str, Any]]:
     """Save the built Docker images - these will be stored as CI artifacts.
     This is needed to pass images across jobs in GitHub Actions as each job runs in a separate container."""
 
-    if U.IS_CI:
-        images_ids = U.get_images()
+    if Utils.IS_CI:
+        images_ids = Utils.get_images()
 
         return dict(
-            targets=[U.CI_IMAGE_TAR],
+            targets=[Utils.CI_IMAGE_TAR],
             actions=[
-                U.do("echo", f"Saving images to: {Paths.CI_IMG}"),
-                U.do("mkdir", "-p", Paths.CI_IMG),
-                U.do(
+                Utils.do("echo", f"Saving images to: {Paths.CI_IMG}"),
+                Utils.do("mkdir", "-p", Paths.CI_IMG),
+                Utils.do(
                     "docker",
                     "save",
                     *images_ids,
                     "-o",
-                    U.CI_IMAGE_TAR,
+                    Utils.CI_IMAGE_TAR,
                 ),
             ],
         )
@@ -145,7 +147,7 @@ def task_docker_save_images() -> Optional[dict[str, Any]]:
 def task_docker_test() -> Generator[dict[str, Any], None, None]:
     """Test Docker images - needs to be run after `docker_build`"""
 
-    if U.IS_CI & Path(U.CI_IMAGE_TAR).exists():
+    if Utils.IS_CI & Path(Utils.CI_IMAGE_TAR).exists():
         """Since we are running in a CI environment and within a separate job than the one where the images are built,
         we need to load the images from the CI_IMAGE_TAR"""
 
@@ -153,24 +155,24 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
             name="load_images",
             doc="Load and inspect Docker images",
             actions=[
-                U.do("docker", "load", "--input", U.CI_IMAGE_TAR),
-                (U.inspect_image, [U.get_images()[-1]]),
-                U.do("docker", "images"),
+                Utils.do("docker", "load", "--input", Utils.CI_IMAGE_TAR),
+                (Utils.inspect_image, [Utils.get_images()[-1]]),
+                Utils.do("docker", "images"),
             ],
         )
 
-    for image in C.ALL_IMAGES:
+    for image in DockerConfig.ALL_IMAGES:
         yield dict(
             name=f"test:{image}",
             doc="Run the test suite for the images - will always run the tests if an image is built",
             uptodate=[False],
             actions=[
-                U.do(
+                Utils.do(
                     Paths.TESTS_RUN,
                     "--short-image-name",
                     image,
                     "--owner",
-                    C.OWNER,
+                    DockerConfig.OWNER,
                 )
             ],
         )
@@ -178,19 +180,19 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
 
 def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
     """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
-    for image in C.ALL_IMAGES:
+    for image in DockerConfig.ALL_IMAGES:
 
         yield dict(
             name=f"tags:{image}",
             doc="Create tags for the images",
             actions=[
-                U.do(
-                    *U.PYM,
+                Utils.do(
+                    *Utils.PYM,
                     "tagging.tag_image",
                     "--short-image-name",
                     image,
                     "--owner",
-                    C.OWNER,
+                    DockerConfig.OWNER,
                 ),
             ],
         )
@@ -198,15 +200,15 @@ def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
         yield dict(
             name=f"manifest:{image}",
             doc="Create the manifest file for the images",
-            targets=[Paths.WIKI_MANIFEST / f"{image}-{U.GIT_COMMIT_HASH_TAG}.md"],
+            targets=[Paths.WIKI_MANIFEST / f"{image}-{Utils.GIT_COMMIT_HASH_TAG}.md"],
             actions=[
-                U.do(
-                    *U.PYM,
+                Utils.do(
+                    *Utils.PYM,
                     "tagging.create_manifests",
                     "--short-image-name",
                     image,
                     "--owner",
-                    C.OWNER,
+                    DockerConfig.OWNER,
                     "--wiki-path",
                     Paths.WIKI,
                 )
@@ -227,22 +229,22 @@ def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
 )
 def task_docker_push_image(registry: str) -> Generator[dict[str, Any], None, None]:
     """Push all tags for a Jupyter image - only should be done after they have been tested"""
-    for image in C.ALL_IMAGES:
+    for image in DockerConfig.ALL_IMAGES:
         yield dict(
             name=f"push:{image}",
             doc="Push the image to the specified registry",
             actions=[
-                U.do(
+                Utils.do(
                     "echo",
-                    f"::group::Push {U.registry_image(registry, image)} system's architecture",
+                    f"::group::Push {Utils.registry_image(registry, image)} system's architecture",
                 ),
-                U.do(
+                Utils.do(
                     "docker",
                     "push",
                     "--all-tags",
-                    f"{U.registry_image(registry, image)}",
+                    f"{Utils.registry_image(registry, image)}",
                 ),
-                U.do("echo", "::endgroup::"),
+                Utils.do("echo", "::endgroup::"),
             ],
         )
 
@@ -280,7 +282,7 @@ class Paths:
     CI_IMG = CI / "built-docker-images"
 
 
-class C:
+class DockerConfig:
     """Configuration of images"""
 
     # Docker-related
@@ -325,7 +327,7 @@ class ImageMeta:
     dockerfile: Path
 
 
-class U:
+class Utils:
     """Supporting methods and variables"""
 
     # CI specific
@@ -352,8 +354,8 @@ class U:
     def image_meta(image: str) -> ImageMeta:
         """Get the image tags and other supporting meta for building, testing and tagging"""
         tags = [
-            f"{C.OWNER}/{image}:latest",
-            f"{C.OWNER}/{image}:{U.GIT_COMMIT_SHA}_{U.SOURCE_DATE_EPOCH}",
+            f"{DockerConfig.OWNER}/{image}:latest",
+            f"{DockerConfig.OWNER}/{image}:{Utils.GIT_COMMIT_SHA}_{Utils.SOURCE_DATE_EPOCH}",
         ]
         dir = Paths.ROOT / image
         return ImageMeta(tags=tags, dir=dir, dockerfile=dir / "Dockerfile")
@@ -389,7 +391,7 @@ class U:
         so we need to ensure we pass the correct registry"""
 
         return (
-            f"{registry}/{C.OWNER}/{image}"
-            if registry != C.DOCKER_REGISTRY
-            else f"{C.OWNER}/{image}"
+            f"{registry}/{DockerConfig.OWNER}/{image}"
+            if registry != DockerConfig.DOCKER_REGISTRY
+            else f"{DockerConfig.OWNER}/{image}"
         )
