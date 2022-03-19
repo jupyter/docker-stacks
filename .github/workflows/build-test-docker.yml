@@ -80,14 +80,6 @@ jobs:
         with:
           path: main
 
-      - name: Cache dependencies 🧠
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-dev.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
       - name: Setup Python 🐍
         uses: actions/setup-python@v2
         with:
@@ -134,14 +126,6 @@ jobs:
         with:
           path: main
 
-      - name: Cache dependencies 🧠
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-dev.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
       - name: Setup Python 🐍
         uses: actions/setup-python@v2
         with:
@@ -184,14 +168,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: main
-
-      - name: Cache dependencies 🧠
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-dev.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
 
       - name: Setup Python 🐍
         uses: actions/setup-python@v2
