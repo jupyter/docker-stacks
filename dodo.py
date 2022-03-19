@@ -10,8 +10,6 @@ import doit
 from doit import task_params
 from doit.tools import CmdAction
 
-from tests.images_hierarchy import get_test_dirs
-
 # global doit config
 DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 
@@ -158,21 +156,18 @@ def task_docker_test():
         )
 
     for image in P.ALL_IMAGES:
-
-        test_dirs = get_test_dirs(image)
-
         yield dict(
             name=f"test:{image}",
             doc="Run the test suite for the images - will always run the tests if an image is built",
             uptodate=[False],
             actions=[
-                (U.set_env, [f"{P.OWNER}/{image}"]),
-                (
-                    U.do(
-                        *U.PYTEST_ARGS,
-                        *test_dirs,
-                    )
-                ),
+                U.do(
+                    "tests/run_tests.py",
+                    "--short-image-name",
+                    image,
+                    "--owner",
+                    P.OWNER,
+                )
             ],
         )
 
