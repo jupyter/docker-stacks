@@ -29,20 +29,17 @@ DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 
 
 def task_build_docs() -> dict[str, Any]:
-    """Build Sphinx documentation 📝
+    """
+    Build Sphinx documentation 📝
     setting uptodate to False will force the task to run every time
     """
-
     return dict(
         file_dep=[*Paths.DOCS_MD, *Paths.DOCS_RST, *Paths.DOCS_PY],
         actions=[
             Utils.do(
-                "sphinx-build",
-                "-W",
-                "--keep-going",
-                "--color",
+                *Utils.SPHINX,
                 Paths.DOCS,
-                "docs/_build/",
+                Paths.DOCS_TARGET,
             )
         ],
         targets=[Paths.DOCS_TARGET],
@@ -53,20 +50,19 @@ def task_build_docs() -> dict[str, Any]:
 # https://pydoit.org/task-creation.html#delayed-task-creation
 @doit.create_after(executed="build_docs")
 def task_docs_check_links() -> dict[str, Any]:
-    """Checks for any broken links in the Sphinx documentation 🔗
-    only created after the docs are built"""
+    """
+    Checks for any broken links in the Sphinx documentation 🔗
+    only created after the docs are built
+    """
     return dict(
         file_dep=[*Paths.DOCS.rglob("_build/*.html")],
         actions=[
             Utils.do(
-                "sphinx-build",
-                "-W",
-                "--keep-going",
-                "--color",
+                *Utils.SPHINX,
                 "-b",
                 "linkcheck",
                 Paths.DOCS,
-                "docs/_build",
+                Paths.DOCS_TARGET,
             )
         ],
     )
@@ -78,7 +74,9 @@ def task_docs_check_links() -> dict[str, Any]:
 
 
 def task_docker_build() -> Generator[dict[str, Any], None, None]:
-    """Build Docker images using the system's architecture"""
+    """
+    Build Docker images using the system's architecture
+    """
     for image in DockerConfig.ALL_IMAGES:
         image_meta = Utils.image_meta(image)
 
@@ -121,8 +119,10 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
 
 
 def task_docker_save_images() -> Optional[dict[str, Any]]:
-    """Save the built Docker images - these will be stored as CI artifacts.
-    This is needed to pass images across jobs in GitHub Actions as each job runs in a separate container."""
+    """
+    Save the built Docker images - these will be stored as CI artifacts.
+    This is needed to pass images across jobs in GitHub Actions as each job runs in a separate container.
+    """
 
     if Utils.IS_CI:
         images_ids = Utils.get_images()
@@ -145,11 +145,14 @@ def task_docker_save_images() -> Optional[dict[str, Any]]:
 
 
 def task_docker_test() -> Generator[dict[str, Any], None, None]:
-    """Test Docker images - needs to be run after `docker_build`"""
-
+    """
+    Test Docker images - needs to be run after `docker_build`
+    """
     if Utils.IS_CI & Path(Utils.CI_IMAGE_TAR).exists():
-        """Since we are running in a CI environment and within a separate job than the one where the images are built,
-        we need to load the images from the CI_IMAGE_TAR"""
+        """
+        Since we are running in a CI environment and within a separate job than the one where the images are built,
+        we need to load the images from the CI_IMAGE_TAR
+        """
 
         yield dict(
             name="load_images",
@@ -179,9 +182,10 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
 
 
 def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
-    """Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage"""
+    """
+    Build the manifest file and tags for the Docker images 🏷 - can be run in parallel to the build stage
+    """
     for image in DockerConfig.ALL_IMAGES:
-
         yield dict(
             name=f"tags:{image}",
             doc="Create tags for the images",
@@ -228,7 +232,9 @@ def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
     ]
 )
 def task_docker_push_image(registry: str) -> Generator[dict[str, Any], None, None]:
-    """Push all tags for a Jupyter image - only should be done after they have been tested"""
+    """
+    Push all tags for a Jupyter image - only should be done after they have been tested
+    """
     for image in DockerConfig.ALL_IMAGES:
         yield dict(
             name=f"push:{image}",
@@ -255,14 +261,16 @@ def task_docker_push_image(registry: str) -> Generator[dict[str, Any], None, Non
 
 
 class Paths:
-    """Paths to project files and directories, used to provide consistency across the multiple doit tasks"""
+    """
+    Paths to project files and directories, used to provide consistency across the multiple doit tasks
+    """
 
     DODO = Path(__file__)
     ROOT = DODO.parent
 
     # docs
     DOCS = ROOT / "docs"
-    DOCS_TARGET = ROOT / "docs/_build/html"
+    DOCS_TARGET = ROOT / "docs/_build"
     README = ROOT / "README.md"
     DOCS_PY = sorted(DOCS.rglob("*.py"))
     DOCS_RST = sorted(DOCS.rglob("*.rst"))
@@ -283,7 +291,9 @@ class Paths:
 
 
 class DockerConfig:
-    """Configuration of images"""
+    """
+    Configuration of images
+    """
 
     # Docker-related
     OWNER = "jupyter"
@@ -328,13 +338,16 @@ class ImageMeta:
 
 
 class Utils:
-    """Supporting methods and variables"""
+    """
+    Supporting methods and variables
+    """
 
     # CI specific
     IS_CI = bool(os.environ.get("CI", 0))
 
     # args
     PYM = ["python3", "-m"]
+    SPHINX = ["sphinx-build", "-W", "--keep-going", "--color"]
 
     # git specific - used for tagging
     SOURCE_DATE_EPOCH = GitHelper.commit_timestamp()
@@ -347,12 +360,16 @@ class Utils:
     # utility methods
     @staticmethod
     def do(*args: Any, cwd: Path = Paths.ROOT) -> CmdAction:
-        """wrap a CmdAction for consistency across OS"""
+        """
+        Wrap a CmdAction for consistency across OS
+        """
         return CmdAction(list(map(str, args)), shell=False, cwd=cwd)
 
     @staticmethod
     def image_meta(image: str) -> ImageMeta:
-        """Get the image tags and other supporting meta for building, testing and tagging"""
+        """
+        Get the image tags and other supporting meta for building, testing and tagging
+        """
         tags = [
             f"{DockerConfig.OWNER}/{image}:latest",
             f"{DockerConfig.OWNER}/{image}:{Utils.GIT_COMMIT_SHA}_{Utils.SOURCE_DATE_EPOCH}",
@@ -362,8 +379,10 @@ class Utils:
 
     @staticmethod
     def inspect_image(image: str) -> None:
-        """Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
-        The easies way to check this is to run `docker inspect` on the image"""
+        """
+        Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
+        The easies way to check this is to run `docker inspect` on the image
+        """
         try:
             subprocess.check_call(
                 ["docker", "image", "inspect", image], stdout=subprocess.DEVNULL
@@ -387,8 +406,10 @@ class Utils:
 
     @staticmethod
     def registry_image(registry: str, image: str) -> str:
-        """In CI we want to push images to GHCR and DockerHub in different steps
-        so we need to ensure we pass the correct registry"""
+        """
+        In CI we want to push images to GHCR and DockerHub in different steps
+        so we need to ensure we pass the correct registry
+        """
 
         return (
             f"{registry}/{DockerConfig.OWNER}/{image}"
