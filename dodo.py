@@ -317,7 +317,7 @@ class U:
     IS_CI = bool(os.environ.get("CI", 0))
 
     # args
-    PYM = ["python", "-m"]
+    PYM = ["python3", "-m"]
 
     # git specific - used for tagging
     SOURCE_DATE_EPOCH = (
