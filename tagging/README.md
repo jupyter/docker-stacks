@@ -55,6 +55,7 @@ All the taggers are inherited from `TaggerInterface`:
 ```python
 class TaggerInterface:
     """Common interface for all taggers"""
+
     @staticmethod
     def tag_value(container) -> str:
         raise NotImplementedError
@@ -84,6 +85,7 @@ All the other manifest classes are inherited from `ManifestInterface`:
 ```python
 class ManifestInterface:
     """Common interface for all manifests"""
+
     @staticmethod
     def markdown_piece(container) -> str:
         raise NotImplementedError
@@ -97,11 +99,9 @@ class ManifestInterface:
 class AptPackagesManifest(ManifestInterface):
     @staticmethod
     def markdown_piece(container) -> str:
-        return "\n".join([
-            "## Apt Packages",
-            "",
-            quoted_output(container, "apt list --installed")
-        ])
+        return "\n".join(
+            ["## Apt Packages", "", quoted_output(container, "apt list --installed")]
+        )
 ```
 
 - `quoted_output` simply runs the command inside container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece of file.

@@ -25,7 +25,7 @@ Those logs are still available but only in the container's logs.
 If you want to make them appear in the notebook, you can overwrite the configuration in a user level IPython kernel profile.
 To do that you have to uncomment the following line in your `~/.ipython/profile_default/ipython_kernel_config.py` and restart the kernel.
 
-```Python
+```python
 c.IPKernelApp.capture_fd_output = True
 ```
 
@@ -91,7 +91,7 @@ In a Python notebook.
 from pyspark.sql import SparkSession
 
 # Spark session & context
-spark = SparkSession.builder.master('local').getOrCreate()
+spark = SparkSession.builder.master("local").getOrCreate()
 sc = spark.sparkContext
 
 # Sum of the first 100 whole numbers
@@ -102,7 +102,7 @@ rdd.sum()
 
 ##### Local Mode in R
 
-In a R notebook with [SparkR][sparkr].
+In an R notebook with [SparkR][sparkr].
 
 ```R
 library(SparkR)
@@ -119,7 +119,7 @@ dapplyCollect(sdf,
 # 5050
 ```
 
-In a R notebook with [sparklyr][sparklyr].
+In an R notebook with [sparklyr][sparklyr].
 
 ```R
 library(sparklyr)
@@ -183,7 +183,7 @@ see [Spark Configuration][spark-conf] for more information.
 from pyspark.sql import SparkSession
 
 # Spark session & context
-spark = SparkSession.builder.master('spark://master:7077').getOrCreate()
+spark = SparkSession.builder.master("spark://master:7077").getOrCreate()
 sc = spark.sparkContext
 
 # Sum of the first 100 whole numbers
@@ -194,7 +194,7 @@ rdd.sum()
 
 ##### Standalone Mode in R
 
-In a R notebook with [SparkR][sparkr].
+In an R notebook with [SparkR][sparkr].
 
 ```R
 library(SparkR)
@@ -211,7 +211,7 @@ dapplyCollect(sdf,
 # 5050
 ```
 
-In a R notebook with [sparklyr][sparklyr].
+In an R notebook with [sparklyr][sparklyr].
 
 ```R
 library(sparklyr)
@@ -264,8 +264,7 @@ from pyspark.sql import SparkSession
 spark = (
     SparkSession.builder.appName("elasticsearch")
     .config(
-        "spark.jars.packages",
-        "org.elasticsearch:elasticsearch-spark-30_2.12:7.13.0"
+        "spark.jars.packages", "org.elasticsearch:elasticsearch-spark-30_2.12:7.13.0"
     )
     .getOrCreate()
 )
@@ -292,7 +291,7 @@ The `jupyter/tensorflow-notebook` image supports the use of
 ```python
 import tensorflow as tf
 
-hello = tf.Variable('Hello World!')
+hello = tf.Variable("Hello World!")
 
 sess = tf.Session()
 init = tf.global_variables_initializer()
@@ -306,7 +305,7 @@ sess.run(hello)
 ```python
 import tensorflow as tf
 
-hello = tf.Variable('Hello Distributed World!')
+hello = tf.Variable("Hello Distributed World!")
 
 server = tf.train.Server.create_local_server()
 sess = tf.Session(server.target)

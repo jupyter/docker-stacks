@@ -1,7 +1,8 @@
-# Matplotlit: Test tex fonts
+# Matplotlib: Test tex fonts
+import os
+
 import matplotlib
 import matplotlib.pyplot as plt
-import os
 
 matplotlib.rcParams["pgf.texsystem"] = "pdflatex"
 matplotlib.rcParams.update(

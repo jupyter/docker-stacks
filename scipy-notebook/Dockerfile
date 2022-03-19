@@ -6,11 +6,21 @@ FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
+# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
+# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 USER root
 
-# ffmpeg for matplotlib anim & dvipng+cm-super for latex labels
 RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends ffmpeg dvipng cm-super && \
+    apt-get install --yes --no-install-recommends \
+    # for cython: https://cython.readthedocs.io/en/latest/src/quickstart/install.html
+    build-essential \
+    # for latex labels
+    cm-super \
+    dvipng \
+    # for matplotlib anim
+    ffmpeg && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 USER ${NB_UID}

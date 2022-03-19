@@ -7,6 +7,11 @@ ARG BASE_CONTAINER=$OWNER/base-notebook:b418b67c225b
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
+
+# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
+# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 ENV TAG="b418b67c225b"
 
 WORKDIR "${HOME}"

@@ -1,19 +1,17 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from contextlib import closing
-import os
 import logging
+import os
 import socket
+from contextlib import closing
 from typing import Any, Optional
 
 import docker
-from docker.models.containers import Container
 import pytest  # type: ignore
 import requests
-
-from requests.packages.urllib3.util.retry import Retry
+from docker.models.containers import Container
 from requests.adapters import HTTPAdapter
-
+from urllib3.util.retry import Retry
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,7 +21,7 @@ def find_free_port() -> str:
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
         s.bind(("", 0))
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        return s.getsockname()[1]
+        return s.getsockname()[1]  # type: ignore
 
 
 @pytest.fixture(scope="session")
