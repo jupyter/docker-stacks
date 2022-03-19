@@ -58,7 +58,6 @@ jobs:
       contents: write
     outputs:
       short_sha: ${{ steps.slug.outputs.short_sha }}
-      hash_tag: ${{ steps.slug.outputs.hash_tag }}
     steps:
       - name: Maximize build space 🛠
         run: |
@@ -115,7 +114,6 @@ jobs:
         id: slug
         run: |
           echo "::set-output name=short_sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
-          echo "::set-output name=hash_tag::$(echo ${GITHUB_SHA} | cut -c1-12)"
 
       - name: Save Docker images as artifact 💾
         uses: actions/upload-artifact@v2
