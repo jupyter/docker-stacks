@@ -82,7 +82,7 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
             actions=[
                 Utils.do(
                     "echo",
-                    f"::group::Build {DockerConfig.OWNER}/{image}- using system's architecture",
+                    f"::group::Build {DockerConfig.OWNER}/{image} - using system's architecture",
                 ),
                 Utils.do(
                     "docker",
