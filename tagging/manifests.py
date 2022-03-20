@@ -1,10 +1,12 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+import plumbum
 from docker.models.containers import Container
-from plumbum.cmd import docker
 
 from .docker_runner import DockerRunner
 from .git_helper import GitHelper
+
+docker = plumbum.local["docker"]
 
 
 def quoted_output(container: Container, cmd: str) -> str:

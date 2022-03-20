@@ -6,7 +6,8 @@ import logging
 
 import plumbum
 from images_hierarchy import get_test_dirs
-from plumbum.cmd import pytest
+
+pytest = plumbum.local["pytest"]
 
 LOGGER = logging.getLogger(__name__)
 
