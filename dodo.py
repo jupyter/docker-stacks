@@ -245,7 +245,7 @@ def task_docker_push_image(registry: str) -> Generator[dict[str, Any], None, Non
                     "docker",
                     "push",
                     "--all-tags",
-                    f"{Utils.registry_image(registry, image)}",
+                    Utils.registry_image(registry, image),
                 ),
                 Utils.do("echo", "::endgroup::"),
             ],
