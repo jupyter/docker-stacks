@@ -20,7 +20,7 @@ def quoted_output(container: Container, cmd: str) -> str:
 
 
 class ManifestHeader:
-    """ManifestHeader doesn't fall under common interface and we run it separately"""
+    """ManifestHeader doesn't fall under common interface, and we run it separately"""
 
     @staticmethod
     def create_header(short_image_name: str, owner: str, build_timestamp: str) -> str:

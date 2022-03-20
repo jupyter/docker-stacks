@@ -1,7 +1,7 @@
 # Custom Jupyter Notebook images
 
 This example provides scripts for building custom Jupyter Notebook images containing notebooks, data files, and with Python packages required by the notebooks already installed.
-The scripts provided work with the Source-to-Image tool and you can create the images from the command line on your own computer.
+The scripts provided work with the Source-to-Image tool, and you can create the images from the command line on your own computer.
 Templates are also provided to enable running builds in OpenShift, as well as deploying the resulting image to OpenShift to make it available.
 
 The build scripts, when used with the Source-to-Image tool, provide similar capabilities to `repo2docker`.
@@ -96,7 +96,7 @@ fi
 This determines whether a `environment.yml` or `requirements.txt` file exists with the files and if so, runs the appropriate package management tool to install any Python packages listed in those files.
 
 This means that so long as a set of notebook files provides one of these files listing what Python packages they need,
-those packages will be automatically installed into the image so they are available when the image is run.
+those packages will be automatically installed into the image, so they are available when the image is run.
 
 A final step is:
 

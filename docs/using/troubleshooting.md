@@ -222,18 +222,20 @@ If you have also **created a new user**, you might be experiencing any of the fo
 - Use `docker inspect <container_id>` and look for the [`Mounts` section](https://docs.docker.com/storage/volumes/#start-a-container-with-a-volume) to verify that the volume was created and mounted accordingly:
 
   ```json
-  "Mounts": [
-        {
-            "Type": "volume",
-            "Name": "my-vol",
-            "Source": "/var/lib/docker/volumes/stagingarea/_data",
-            "Destination": "/home/jovyan/stagingarea",
-            "Driver": "local",
-            "Mode": "z",
-            "RW": true,
-            "Propagation": ""
-        }
-    ],
+  {
+    "Mounts": [
+      {
+        "Type": "volume",
+        "Name": "my-vol",
+        "Source": "/var/lib/docker/volumes/stagingarea/_data",
+        "Destination": "/home/jovyan/stagingarea",
+        "Driver": "local",
+        "Mode": "z",
+        "RW": true,
+        "Propagation": ""
+      }
+    ]
+  }
   ```
 
 ## Problems installing conda packages from specific channels
