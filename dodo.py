@@ -2,16 +2,17 @@
 # Distributed under the terms of the Modified BSD License.
 
 import os
-import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from subprocess import PIPE
 from typing import Any, Generator, Optional
 
+import plumbum
 from doit import task_params
 from doit.tools import CmdAction
 
 from tagging.git_helper import GitHelper
+
+docker = plumbum.local["docker"]
 
 # global doit config
 DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
@@ -378,13 +379,11 @@ class Utils:
     def inspect_image(image: str) -> None:
         """
         Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
-        The easies way to check this is to run `docker inspect` on the image
+        The easiest way to check this is to run `docker inspect` on the image
         """
         try:
-            subprocess.check_call(
-                ["docker", "image", "inspect", image], stdout=subprocess.DEVNULL
-            )
-        except subprocess.CalledProcessError:
+            (docker["image", "inspect", image] > "/dev/null")()
+        except plumbum.ProcessExecutionError:
             print(f"Image not found: {image}")
 
     @staticmethod
@@ -393,13 +392,7 @@ class Utils:
         Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
         Here we get all the images present in the local system
         """
-
-        images_ids = (
-            subprocess.run(["docker", "images", "-q"], stdout=PIPE)
-            .stdout.decode("utf-8")
-            .splitlines()
-        )
-        return images_ids
+        return docker["images", "-q"]().splitlines()  # type: ignore
 
     @staticmethod
     def registry_image(registry: str, image: str) -> str:
