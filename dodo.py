@@ -93,11 +93,11 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
                     image_meta.dockerfile,
                     "--build-arg",
                     "OWNER=" + DockerConfig.OWNER,
-                    str(image_meta.dir),
+                    image_meta.dir,
                     "--load",
                 ),
             ],
-            file_dep=[str(image_meta.dockerfile)],
+            file_dep=[image_meta.dockerfile],
             uptodate=[False],
         )
 
@@ -144,7 +144,7 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
     """
     Test Docker images - needs to be run after `docker_build` ✅
     """
-    if Utils.IS_CI & Path(Utils.CI_IMAGE_TAR).exists():
+    if Utils.IS_CI & Utils.CI_IMAGE_TAR.exists():
         """
         Since we are running in a CI environment and within a separate job than the one where the images are built,
         we need to load the images from the CI_IMAGE_TAR
@@ -353,7 +353,7 @@ class Utils:
     GIT_COMMIT_HASH_TAG = GitHelper.commit_hash_tag()
 
     # tar file to store the images in
-    CI_IMAGE_TAR = str(Paths.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar")
+    CI_IMAGE_TAR = Paths.CI_IMG / f"docker-images-{GIT_COMMIT_SHA}.tar"
 
     # utility methods
     @staticmethod
