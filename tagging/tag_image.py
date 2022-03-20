@@ -4,11 +4,13 @@
 import argparse
 import logging
 
-from plumbum.cmd import docker
+import plumbum
 
 from .docker_runner import DockerRunner
 from .get_taggers_and_manifests import get_taggers_and_manifests
 from .github_set_env import github_set_env
+
+docker = plumbum.local["docker"]
 
 LOGGER = logging.getLogger(__name__)
 
