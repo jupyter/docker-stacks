@@ -74,7 +74,7 @@ if [ "$(id -u)" == 0 ] ; then
     # - NB_USER: the desired username and associated home folder
     # - NB_UID: the desired user id
     # - NB_GID: a group id we want our user to belong to
-    # - NB_GROUP: the groupname we want for the group
+    # - NB_GROUP: a group name we want for the group
     # - GRANT_SUDO: a boolean ("1" or "yes") to grant the user sudo rights
     # - CHOWN_HOME: a boolean ("1" or "yes") to chown the user's home folder
     # - CHOWN_EXTRA: a comma separated list of paths to chown

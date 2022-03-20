@@ -133,7 +133,7 @@ def check_import_python_package(
 
 
 def check_import_r_package(package_helper: CondaPackageHelper, package: str) -> None:
-    """Try to import a R package from the command line"""
+    """Try to import an R package from the command line"""
     _check_import_package(package_helper, ["R", "--slave", "-e", f"library({package})"])
 
 

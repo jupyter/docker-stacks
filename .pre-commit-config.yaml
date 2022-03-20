@@ -45,7 +45,7 @@ repos:
         # This doesn't work well with `mypy --follow-imports error`
         # See: https://github.com/pre-commit/mirrors-mypy/issues/34#issuecomment-1062160321
         #
-        # To workaround this we run `mypy` only in manual mode
+        # To work around this we run `mypy` only in manual mode
         # So it won't run as part of `git commit` command
         # But it will still be run as part of `pre-commit` workflow and give expected results
         stages: [manual]
