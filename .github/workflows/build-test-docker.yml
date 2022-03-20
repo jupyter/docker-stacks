@@ -100,7 +100,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Get short SHA
+      - name: Get short SHA 🔖
         id: slug
         run: |
           echo "::set-output name=short_sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
