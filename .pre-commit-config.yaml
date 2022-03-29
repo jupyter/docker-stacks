@@ -70,7 +70,7 @@ repos:
     rev: v2.9.3
     hooks:
       - id: hadolint-docker
-        entry: hadolint/hadolint:v2.9.2 hadolint
+        entry: hadolint/hadolint:v2.9.3 hadolint
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
