@@ -79,7 +79,7 @@ jobs:
           path: main
 
       - name: Setup Python 🐍
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.x
 
@@ -111,7 +111,7 @@ jobs:
           name: docker-images-${{ steps.slug.outputs.short_sha }}
           path: |
             main/.github/built-docker-images/
-          # TODO: decide on a retention policy
+          # 1 day for now - might need extending later
           retention-days: 1
 
   test-images:
@@ -125,7 +125,7 @@ jobs:
           path: main
 
       - name: Setup Python 🐍
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.x
 
@@ -168,7 +168,7 @@ jobs:
           path: main
 
       - name: Setup Python 🐍
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.x
 
@@ -193,7 +193,7 @@ jobs:
           name: docker-images-manifest-${{ needs.build-images.outputs.short_sha }}
           path: |
             wiki/manifests/
-          # TODO: decide on a retention policy - also might make the above a smart regex
+          # 1 day for now - might need extending later
           retention-days: 1
 
       - name: Push Wiki to GitHub 📤

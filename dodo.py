@@ -18,11 +18,6 @@ docker = plumbum.local["docker"]
 DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 
 
-# dependencies: input to the task execution -> keeps tracks of the state of file dependencies and saves the signature
-# of them every time the tasks are run so if there are no modifications to the files the execution of the task is skipped
-# (indicated by -- after running doit)
-# target: output produced by the task execution
-
 # -----------------------------------------------------------------------------
 # Documentation and wiki tasks
 # -----------------------------------------------------------------------------
