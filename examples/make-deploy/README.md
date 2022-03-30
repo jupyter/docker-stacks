@@ -11,7 +11,7 @@ This folder contains a Makefile and a set of supporting files demonstrating how 
 
 ## Quickstart
 
-To show what's possible, here's how to run the `jupyter/minimal-notebook` on a brand new local virtualbox.
+To show what's possible, here's how to run the `jupyter/minimal-notebook` on a brand-new local virtualbox.
 
 ```bash
 # create a new VM
@@ -72,8 +72,8 @@ To hit their staging servers, set the environment variable `CERT_SERVER=--stagin
 make letsencrypt FQDN=host.mydomain.com EMAIL=myemail@somewhere.com CERT_SERVER=--staging
 ```
 
-Also, keep in mind Let's Encrypt certificates are short lived: 90 days at the moment.
-You'll need to manually setup a cron job to run the renewal steps at the moment.
+Also, keep in mind Let's Encrypt certificates are short-lived: 90 days at the moment.
+You'll need to manually set up a cron job to run the renewal steps at the moment.
 (You can reuse the first command above.)
 
 ### My pip/conda/apt-get installs disappear every time I restart the container. Can I make them permanent?

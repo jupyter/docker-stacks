@@ -19,6 +19,13 @@ repos:
       - id: pyupgrade
         args: [--py39-plus]
 
+  # Automatically sort python imports
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        args: [--profile, black]
+
   # Autoformat: Python code
   - repo: https://github.com/psf/black
     rev: 22.1.0
@@ -38,7 +45,7 @@ repos:
         # This doesn't work well with `mypy --follow-imports error`
         # See: https://github.com/pre-commit/mirrors-mypy/issues/34#issuecomment-1062160321
         #
-        # To workaround this we run `mypy` only in manual mode
+        # To work around this we run `mypy` only in manual mode
         # So it won't run as part of `git commit` command
         # But it will still be run as part of `pre-commit` workflow and give expected results
         stages: [manual]
@@ -53,16 +60,17 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
       - id: check-added-large-files
+      - id: end-of-file-fixer
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
 
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
-    rev: v2.8.0
+    rev: v2.9.1
     hooks:
       - id: hadolint-docker
-        entry: hadolint/hadolint:v2.8.0 hadolint
+        entry: hadolint/hadolint:v2.9.1 hadolint
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
@@ -98,6 +106,35 @@ repos:
     hooks:
       - id: markdownlint
         args: ["--fix"]
+
+  # Strip output from Jupyter notebooks
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.5.0
+    hooks:
+      - id: nbstripout
+
+  # nbQA provides tools from the Python ecosystem like
+  # pyupgrade, isort, black, and flake8, adjusted for notebooks.
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.3.1
+    hooks:
+      - id: nbqa-pyupgrade
+        args: [--py39-plus]
+      - id: nbqa-isort
+      - id: nbqa-black
+        args: [--target-version=py39]
+      - id: nbqa-flake8
+
+  # Run black on python code blocks in documentation files.
+  - repo: https://github.com/asottile/blacken-docs
+    rev: v1.12.1
+    hooks:
+      - id: blacken-docs
+        # --skip-errors is added to allow us to have python syntax highlighting even if
+        # the python code blocks includes jupyter specific additions such as % or !
+        # See https://github.com/asottile/blacken-docs/issues/127 for an upstream
+        # feature request about this.
+        args: [--target-version=py39, --skip-errors]
 
 # Docker hooks do not work in pre-commit.ci
 # See: <https://github.com/pre-commit-ci/issues/issues/11>

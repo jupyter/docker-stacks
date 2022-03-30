@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from plumbum.cmd import git
+import plumbum
+
+git = plumbum.local["git"]
 
 
 class GitHelper:
@@ -16,6 +18,14 @@ class GitHelper:
     @staticmethod
     def commit_message() -> str:
         return git["log", -1, "--pretty=%B"]().strip()  # type: ignore
+
+    @staticmethod
+    def commit_timestamp() -> int:
+        return git["log", "-1", "--format=%ct"]().strip()  # type: ignore
+
+    @staticmethod
+    def short_commit_hash() -> str:
+        return git["rev-parse", "--short", "HEAD"]().strip()  # type: ignore
 
 
 if __name__ == "__main__":

@@ -129,7 +129,7 @@ You can further customize the container environment by adding shell scripts (`*.
 or executables (`chmod +x`) to be run to the paths below:
 
 - `/usr/local/bin/start-notebook.d/` - handled **before** any of the standard options noted above are applied
-- `/usr/local/bin/before-notebook.d/` - handled **after** all of the standard options noted above are applied
+- `/usr/local/bin/before-notebook.d/` - handled **after** all the standard options noted above are applied
   and ran right before the notebook server launches
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
@@ -216,7 +216,7 @@ docker run -it --rm \
 ### `start.sh`
 
 The `start-notebook.sh` script inherits most of its option handling capability from a more generic `start.sh` script.
-The `start.sh` script supports all of the features described above but allows you to specify an arbitrary command to execute.
+The `start.sh` script supports all the features described above but allows you to specify an arbitrary command to execute.
 For example, to run the text-based `ipython` console in a container, do the following:
 
 ```bash

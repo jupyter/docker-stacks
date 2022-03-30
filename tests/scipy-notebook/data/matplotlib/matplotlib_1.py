@@ -1,11 +1,12 @@
-# Matplotlit: Create a simple plot example.
-# Refs: https://matplotlib.org/3.1.1/gallery/lines_bars_and_markers/simple_plot.html
+# Matplotlib: Create a simple plot example.
+# Refs: https://matplotlib.org/stable/gallery/lines_bars_and_markers/simple_plot.html
+
+import os
 
 # Optional test with [Matplotlib Jupyter Integration](https://github.com/matplotlib/ipympl)
 # %matplotlib widget
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 
 # Data for plotting
 t = np.arange(0.0, 2.0, 0.01)

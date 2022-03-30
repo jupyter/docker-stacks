@@ -163,5 +163,8 @@ cython_debug/
 # VS Code project configuration
 .vscode/
 
-# doit
+# PyCharm project configuration
+.idea/
+
+# doit database file
 .doit.db

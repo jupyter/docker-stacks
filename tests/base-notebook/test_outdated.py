@@ -5,7 +5,6 @@ import logging
 
 import pytest  # type: ignore
 from conftest import TrackedContainer
-
 from package_helper import CondaPackageHelper
 
 LOGGER = logging.getLogger(__name__)

@@ -1,4 +1,5 @@
 docker
+doit
 packaging
 plumbum
 pre-commit
@@ -8,4 +9,3 @@ pytest
 pytest-xdist
 requests
 tabulate
-doit

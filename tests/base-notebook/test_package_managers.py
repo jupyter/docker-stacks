@@ -2,8 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 
 import logging
-import pytest  # type: ignore
 
+import pytest  # type: ignore
 from conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)

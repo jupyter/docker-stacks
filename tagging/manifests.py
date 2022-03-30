@@ -1,9 +1,12 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from plumbum.cmd import docker
+import plumbum
 from docker.models.containers import Container
+
 from .docker_runner import DockerRunner
 from .git_helper import GitHelper
+
+docker = plumbum.local["docker"]
 
 
 def quoted_output(container: Container, cmd: str) -> str:
@@ -17,7 +20,7 @@ def quoted_output(container: Container, cmd: str) -> str:
 
 
 class ManifestHeader:
-    """ManifestHeader doesn't fall under common interface and we run it separately"""
+    """ManifestHeader doesn't fall under common interface, and we run it separately"""
 
     @staticmethod
     def create_header(short_image_name: str, owner: str, build_timestamp: str) -> str:
