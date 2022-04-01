@@ -1,6 +1,20 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
+"""
+Info: doit file to automate development tasks
+
+Command to list all the available tasks in the command line:
+doit list
+
+Get information on a single task:
+doit info <task-name>
+
+Targeted run of an individual task:
+Examples:
+    $ doit docs_build
+"""
+
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,7 +29,21 @@ from tagging.git_helper import GitHelper
 docker = plumbum.local["docker"]
 
 # global doit config
-DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
+DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["what"]}
+
+
+def task_what() -> dict[str, Any]:
+    """
+    Prints the help message for this file 📖
+    """
+    return dict(
+        actions=[
+            Utils.do(
+                "echo",
+                "Use `doit list` to see all available tasks or `doit help` for available commands",
+            )
+        ],
+    )
 
 
 # -----------------------------------------------------------------------------
@@ -104,7 +132,7 @@ def task_docs_check_links() -> dict[str, Any]:
 # Docker related tasks
 # -----------------------------------------------------------------------------
 
-
+# TODO: @trallard to add params for individual image creation
 def task_docker_build() -> Generator[dict[str, Any], None, None]:
     """
     Build Docker images using the system's architecture 🛠
@@ -153,7 +181,8 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
 def task_docker_save_images() -> Optional[dict[str, Any]]:
     """
     Save the built Docker images - these will be stored as CI artifacts 💾
-    This is needed to pass images across jobs in GitHub Actions as each job runs in a separate container.
+    This is needed to pass images across jobs in GitHub Actions as each job runs
+    in a separate container.
     """
 
     if Utils.IS_CI:
@@ -182,8 +211,9 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
     """
     if Utils.IS_CI & Utils.CI_IMAGE_TAR.exists():
         """
-        Since we are running in a CI environment and within a separate job than the one where the images are built,
-        we need to load the images from the CI_IMAGE_TAR
+        Since we are running in a CI environment and within a separate job than
+        the one where the images are built, we need to load the images from the
+        `CI_IMAGE_TAR`
         """
 
         yield dict(
@@ -261,6 +291,7 @@ def task_docker_create_manifest() -> Generator[dict[str, Any], None, None]:
             long="registry",
             default="dockerhub",
             type=str,
+            help="The registry to push the images, e.g: -r dockerhub or --registry quay",
         )
     ]
 )
