@@ -458,7 +458,7 @@ class Utils:
         try:
             (docker["image", "inspect", image] > "/dev/null")()
         except plumbum.ProcessExecutionError:
-            print(f"Image not found: {image}")
+            raise OSError(f"{image} not found")
 
     @staticmethod
     def get_images() -> list[str]:
