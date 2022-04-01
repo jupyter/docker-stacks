@@ -204,9 +204,6 @@ else
         _log "WARNING: container must be started as root to grant sudo permissions!"
     fi
 
-    JOVYAN_UID="$(id -u jovyan 2>/dev/null)"  # The default UID for the jovyan user
-    JOVYAN_GID="$(id -g jovyan 2>/dev/null)"  # The default GID for the jovyan user
-
     # Attempt to ensure the user uid we currently run as has a named entry in
     # the /etc/passwd file, as it avoids software crashing on hard assumptions
     # on such entry. Writing to the /etc/passwd was allowed for the root group
@@ -239,13 +236,13 @@ else
     # A misconfiguration occurs when the user modifies the default values of
     # NB_USER, NB_UID, or NB_GID, but we cannot update those values because we
     # are not root.
-    if [[ "${NB_USER}" != "jovyan" && "${NB_USER}" != "$(id -un)" ]]; then
+    if [[ "${NB_USER}" != "$(id -un)" && "${NB_USER}" != "jovyan" ]]; then
         _log "WARNING: container must be started as root to change the desired user's name with NB_USER=\"${NB_USER}\"!"
     fi
-    if [[ "${NB_UID}" != "${JOVYAN_UID}" && "${NB_UID}" != "$(id -u)" ]]; then
+    if [[ "${NB_UID}" != "$(id -u)" && "${NB_UID}" != "$(id -u jovyan)" ]]; then
         _log "WARNING: container must be started as root to change the desired user's id with NB_UID=\"${NB_UID}\"!"
     fi
-    if [[ "${NB_GID}" != "${JOVYAN_GID}" && "${NB_GID}" != "$(id -g)" ]]; then
+    if [[ "${NB_GID}" != "$(id -g)" && "${NB_GID}" != "(id -g jovyan)" ]]; then
         _log "WARNING: container must be started as root to change the desired user's group id with NB_GID=\"${NB_GID}\"!"
     fi
 
