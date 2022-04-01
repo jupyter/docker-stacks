@@ -82,7 +82,7 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions "${CONDA_DIR}"
 
 USER ${NB_UID}
-ARG PYTHON_VERSION=3.10
+ARG PYTHON_VERSION=3.9
 ARG MICROMAMBA_VERSION=latest
 
 # Setup work directory for backward-compatibility
