@@ -21,6 +21,42 @@ DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 # -----------------------------------------------------------------------------
 # Setup tasks
 # -----------------------------------------------------------------------------
+def task_setup_dev() -> dict[str, Any]:
+    """
+    Install libraries required for development 🔧
+    """
+    actions = [
+        Utils.do(
+            *Utils.PIP,
+            "--requirement",
+            Paths.REQS_DEV,
+        )
+    ]
+    if Utils.IS_CI:
+        actions.insert(0, Utils.do(*Utils.PIP, "--upgrade", "pip"))
+
+    return dict(actions=actions)
+
+
+def task_setup_docs() -> dict[str, Any]:
+    """
+    Install libraries required for building docs 🔧
+    """
+
+    actions = [
+        Utils.do(
+            *Utils.PIP,
+            "--requirement",
+            Paths.REQS_DOCS,
+        ),
+    ]
+    if Utils.IS_CI:
+        actions.insert(
+            0,
+            Utils.do(*Utils.PIP, "--upgrade", "pip"),
+        )
+
+    return dict(actions=actions)
 
 
 # -----------------------------------------------------------------------------
@@ -288,6 +324,10 @@ class Paths:
     CI = ROOT / ".github"
     CI_IMG = CI / "built-docker-images"
 
+    # Requirements
+    REQS_DEV = ROOT / "requirement-dev.txt"
+    REQS_DOCS = ROOT / "requirements-docs.txt"
+
 
 class DockerConfig:
     """
@@ -346,6 +386,7 @@ class Utils:
 
     # args
     PYM = ["python3", "-m"]
+    PIP = PYM + ["pip", "install"]
     SPHINX = ["sphinx-build", "-W", "--keep-going", "--color"]
 
     # git specific - used for tagging

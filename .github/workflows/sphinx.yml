@@ -44,13 +44,13 @@ jobs:
 
       - name: Install Doc Dependencies 📦
         run: |
-          python -m pip install --upgrade pip
-          make install-docs-env
+          python -m pip install doit plumbum
+          python -m doit setup_docs
 
       - name: Build Documentation 📖
         run: |
-          python -m doit dodo.py docs_build
+          python -m doit docs_build
 
       - name: Check Documentation URLs 🔗
         run: |
-          python -m doit dodo.py docs_check links
+          python -m doit docs_check_links

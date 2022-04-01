@@ -136,11 +136,6 @@ install-dev-env: ## install libraries required to build images and run tests
 	@pip install -r requirements-dev.txt
 
 
-install-docs-env: ## install libraries required to build docs
-	@pip install -r requirements-docs.txt
-
-
-
 hook/%: WIKI_PATH?=../wiki
 hook/%: ## run post-build hooks for an image
 	python3 -m tagging.tag_image --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
