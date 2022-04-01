@@ -3,7 +3,7 @@
 
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/base-notebook:b418b67c225b
+ARG BASE_CONTAINER=$OWNER/base-notebook:6b49f3337709
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -12,17 +12,6 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ENV TAG="b418b67c225b"
+ENV TAG="6b49f3337709"
 
-WORKDIR "${HOME}"
-COPY binder/README.ipynb .
-
-# Fix permissions on README.ipynb as root
-USER root
-
-RUN fix-permissions README.ipynb
-
-# Switch back to jovyan to avoid accidental container runs as root
-USER ${NB_UID}
-
-WORKDIR "${HOME}"
+COPY --chown=${NB_UID}:${NB_GID} binder/README.ipynb "${HOME}"/README.ipynb

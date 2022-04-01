@@ -16,7 +16,7 @@ You can use a stack image to do any of the following (and more):
 
 ## Quick Start
 
-You can try a [relatively recent build of the jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?filepath=README.ipynb)
+You can try a [relatively recent build of the jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/master?urlpath=lab/tree/README.ipynb)
 by simply clicking the preceding link.
 Otherwise, the examples below may help you get started if you [have Docker installed](https://docs.docker.com/install/),
 know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use
@@ -26,11 +26,11 @@ The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/
 
 **Example 1:**
 
-This command pulls the `jupyter/scipy-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `6b49f3337709` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Server and exposes the container's internal port `8888` to port `10000` of the host machine:
 
 ```bash
-docker run -p 10000:8888 jupyter/scipy-notebook:b418b67c225b
+docker run -p 10000:8888 jupyter/scipy-notebook:6b49f3337709
 ```
 
 You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) to `-p 8888:8888`.
@@ -45,11 +45,11 @@ The container remains intact for restart after the Jupyter Server exits.
 
 **Example 2:**
 
-This command pulls the `jupyter/datascience-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/datascience-notebook` image tagged `6b49f3337709` from Docker Hub if it is not already present on the local host.
 It then starts an _ephemeral_ container running a Jupyter Server and exposes the server on host port 10000.
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:b418b67c225b
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:6b49f3337709
 ```
 
 The use of the `-v` flag in the command mounts the current working directory on the host (`{PWD}` in the example command) as `/home/jovyan/work` in the container.

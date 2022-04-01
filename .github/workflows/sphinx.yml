@@ -9,6 +9,7 @@ on:
       - ".github/workflows/sphinx.yml"
 
       - "docs/**"
+      - "README.md"
       - ".readthedocs.yaml"
       - "requirements-docs.txt"
   push:
@@ -19,6 +20,7 @@ on:
       - ".github/workflows/sphinx.yml"
 
       - "docs/**"
+      - "README.md"
       - ".readthedocs.yaml"
       - "requirements-docs.txt"
   workflow_dispatch:
