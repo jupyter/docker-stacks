@@ -19,11 +19,16 @@ DOIT_CONFIG = {"verbosity": 2, "default_tasks": ["build_docs"]}
 
 
 # -----------------------------------------------------------------------------
+# Setup tasks
+# -----------------------------------------------------------------------------
+
+
+# -----------------------------------------------------------------------------
 # Documentation and wiki tasks
 # -----------------------------------------------------------------------------
 
 
-def task_build_docs() -> dict[str, Any]:
+def task_docs_build() -> dict[str, Any]:
     """
     Build Sphinx documentation 📝
     setting uptodate to False will force the task to run every time
@@ -254,7 +259,8 @@ def task_docker_push_image(registry: str) -> Generator[dict[str, Any], None, Non
 
 class Paths:
     """
-    Paths to project files and directories, used to provide consistency across the multiple doit tasks
+    Paths to project files and directories, used to provide consistency across
+    the multiple doit tasks
     """
 
     DODO = Path(__file__)
@@ -373,7 +379,8 @@ class Utils:
     @staticmethod
     def inspect_image(image: str) -> None:
         """
-        Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
+        Since we are sharing artifacts across jobs we need to make sure that
+        these are loaded properly.
         The easiest way to check this is to run `docker inspect` on the image
         """
         try:
@@ -384,7 +391,8 @@ class Utils:
     @staticmethod
     def get_images() -> list[str]:
         """
-        Since we are sharing artifacts across jobs we need to make sure that these are loaded properly.
+        Since we are sharing artifacts across jobs we need to make sure that these
+        are loaded properly.
         Here we get all the images present in the local system
         """
         return docker["images", "-q"]().splitlines()  # type: ignore
