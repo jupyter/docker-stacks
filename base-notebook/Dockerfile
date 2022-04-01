@@ -5,28 +5,6 @@
 # https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
 ARG ROOT_CONTAINER=ubuntu:focal
 
-## BEGIN MICROMAMBA WORKAROUND
-# For some reason, downloading micromamba with wget or curl leads to a segfault.
-# Download them in a separate stage with alpine.
-# Context: <https://github.com/jupyter/docker-stacks/pull/1594#issuecomment-1028426999>
-FROM alpine as download_micromamba_stage
-
-ARG MICROMAMBA_VERSION=latest
-# ARG MICROMAMBA_VERSION=0.17.0
-
-# hadolint ignore=DL3018
-RUN set -x && \
-    arch=$(uname -m) && \
-    if [ "${arch}" = "x86_64" ]; then \
-        # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
-        arch="64"; \
-    fi && \
-    echo $arch && \
-    apk add --no-cache curl && \
-    curl -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/${MICROMAMBA_VERSION}" \
-        -o /tmp/micromamba.tar.bz2
-## END MICROMAMBA WORKAROUND
-
 FROM $ROOT_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -105,6 +83,7 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
 
 USER ${NB_UID}
 ARG PYTHON_VERSION=3.10
+ARG MICROMAMBA_VERSION=latest
 
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
@@ -121,18 +100,26 @@ RUN mkdir "/home/${NB_USER}/work" && \
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
-COPY --chown="${NB_UID}:${NB_GID}" --from=download_micromamba_stage /tmp/micromamba.tar.bz2 /tmp
 COPY --chown="${NB_UID}:${NB_GID}" initial-condarc "${CONDA_DIR}/.condarc"
 WORKDIR /tmp
 RUN set -x && \
-    tar -xvjf micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
-    rm micromamba.tar.bz2 && \
+    arch=$(uname -m) && \
+    if [ "${arch}" = "x86_64" ]; then \
+        # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
+        arch="64"; \
+    fi && \
+    echo $arch && \
+    # curl -L "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/${MICROMAMBA_VERSION}" \
+    #     -o /tmp/micromamba.tar.bz2 && \
+    wget -qO /tmp/micromamba.tar.bz2 \
+        "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/${MICROMAMBA_VERSION}" && \
+    tar -xvjf /tmp/micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
+    rm /tmp/micromamba.tar.bz2 && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     MAMBA_SPECIFIER="mamba" && \
     # Using fixed version of mamba in arm, because the latest one has problems with arm under qemu
     # See: https://github.com/jupyter/docker-stacks/issues/1539
-    arch=$(uname -m) && \
     if [ "${arch}" == "aarch64" ]; then \
         # MAMBA_SPECIFIER='mamba<0.18'; \
         MAMBA_SPECIFIER='mamba'; \
@@ -141,9 +128,9 @@ RUN set -x && \
     ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
-        -vvv --yes \
+        --yes \
         "${PYTHON_SPECIFIER}" \
-        'mamba' \
+        "${MAMBA_SPECIFIER}" \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
