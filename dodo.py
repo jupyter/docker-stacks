@@ -221,6 +221,7 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
             doc="Load and inspect Docker images",
             actions=[
                 Utils.do("docker", "load", "--input", Utils.CI_IMAGE_TAR),
+                # TODO: @trallard to add a more robust inspect
                 (Utils.inspect_image, [Utils.get_images()[-1]]),
                 Utils.do("docker", "images"),
             ],
