@@ -242,7 +242,7 @@ else
     if [[ "${NB_UID}" != "$(id -u)" && "${NB_UID}" != "$(id -u jovyan)" ]]; then
         _log "WARNING: container must be started as root to change the desired user's id with NB_UID=\"${NB_UID}\"!"
     fi
-    if [[ "${NB_GID}" != "$(id -g)" && "${NB_GID}" != "(id -g jovyan)" ]]; then
+    if [[ "${NB_GID}" != "$(id -g)" && "${NB_GID}" != "$(id -g jovyan)" ]]; then
         _log "WARNING: container must be started as root to change the desired user's group id with NB_GID=\"${NB_GID}\"!"
     fi
 
