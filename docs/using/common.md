@@ -8,7 +8,7 @@ This page describes the options supported by the startup script and how to bypas
 
 ## Jupyter Server Options
 
-You can pass [Jupyter server options](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html) to the `start-notebook.sh` script when launching the container.
+You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html) to the `start-notebook.sh` script when launching the container.
 
 1. For example, to secure the Notebook server with a custom password hashed using `IPython.lib.passwd()` instead of the default token,
    you can run the following (this hash was generated for `my-password` password):
@@ -18,7 +18,7 @@ You can pass [Jupyter server options](https://jupyter-notebook.readthedocs.io/en
        start-notebook.sh --NotebookApp.password='sha1:7cca89c48283:e3c1f9fbc06d1d2aa59555dfd5beed925e30dd2c'
    ```
 
-2. To set the [base URL](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html#running-the-notebook-with-a-customized-url-prefix) of the notebook server, you can run the following:
+2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the notebook server, you can run the following:
 
    ```bash
    docker run  -it --rm -p 8888:8888 jupyter/base-notebook \
@@ -87,7 +87,7 @@ You do so by passing arguments to the `docker run` command.
   `NB_UMASK` when set only applies to the Jupyter process itself -
   you cannot use it to set a `umask` for additional files created during run-hooks.
   For example, via `pip` or `conda`.
-  If you need to set a `umask` for these, you **must** set the `umask` value for each command._
+  If you need to set a `umask` for these, you **must** set the `umask` value for each command.
   ```
 
 - `-e CHOWN_HOME=yes` - Instructs the startup script to change the `${NB_USER}` home directory owner and group to the current value of `${NB_UID}` and `${NB_GID}`.
@@ -129,7 +129,7 @@ You can further customize the container environment by adding shell scripts (`*.
 or executables (`chmod +x`) to be run to the paths below:
 
 - `/usr/local/bin/start-notebook.d/` - handled **before** any of the standard options noted above are applied
-- `/usr/local/bin/before-notebook.d/` - handled **after** all of the standard options noted above are applied
+- `/usr/local/bin/before-notebook.d/` - handled **after** all the standard options noted above are applied
   and ran right before the notebook server launches
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/start.sh)
@@ -165,10 +165,13 @@ The certificate file or PEM may contain one or more certificates (e.g., server, 
 
 For additional information about using SSL, see the following:
 
-- The [docker-stacks/examples](https://github.com/jupyter/docker-stacks/tree/master/examples) for information about how to use
+- The [docker-stacks/examples](https://github.com/jupyter/docker-stacks/tree/master/examples)
+  for information about how to use
   [Let's Encrypt](https://letsencrypt.org/) certificates when you run these stacks on a publicly visible domain.
-- The [jupyter_notebook_config.py](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/jupyter_notebook_config.py) file for how this Docker image generates a self-signed certificate.
-- The [Jupyter Notebook documentation](https://jupyter-notebook.readthedocs.io/en/latest/public_server.html#securing-a-notebook-server) for best practices about securing a public notebook server in general.
+- The [`jupyter_server_config.py`](https://github.com/jupyter/docker-stacks/blob/master/base-notebook/jupyter_server_config.py)
+  file for how this Docker image generates a self-signed certificate.
+- The [Jupyter Server documentation](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#securing-a-jupyter-server)
+  for best practices about securing a public notebook server in general.
 
 ## Alternative Commands
 
@@ -213,7 +216,7 @@ docker run -it --rm \
 ### `start.sh`
 
 The `start-notebook.sh` script inherits most of its option handling capability from a more generic `start.sh` script.
-The `start.sh` script supports all of the features described above but allows you to specify an arbitrary command to execute.
+The `start.sh` script supports all the features described above but allows you to specify an arbitrary command to execute.
 For example, to run the text-based `ipython` console in a container, do the following:
 
 ```bash
@@ -274,4 +277,4 @@ mamba install --quiet --yes humanize && \
     fix-permissions "/home/${NB_USER}"
 ```
 
-[switch_back]: common.html#switching-back-to-classic-notebook-or-using-a-different-startup-command
+[switch_back]: #switching-back-to-the-classic-notebook-or-using-a-different-startup-command

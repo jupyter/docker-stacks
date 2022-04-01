@@ -113,7 +113,7 @@ It contains:
   [pytables](https://www.pytables.org/),
   [scikit-image](https://scikit-image.org),
   [scikit-learn](https://scikit-learn.org/stable/),
-  [scipy](https://www.scipy.org/),
+  [scipy](https://scipy.org/),
   [seaborn](https://seaborn.pydata.org/),
   [sqlalchemy](https://www.sqlalchemy.org/),
   [statsmodel](https://www.statsmodels.org/stable/index.html),
@@ -195,7 +195,7 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 
 ### Builds
 
-Every Monday and whenever a pull request is merged, images are rebuilt and pushed to [the public container registry](https://hub.docker.com/r/jupyter).
+Every Monday and whenever a pull request is merged, images are rebuilt and pushed to [the public container registry](https://hub.docker.com/u/jupyter).
 
 ### Versioning via image tags
 
@@ -227,15 +227,16 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [cgspatial]    | [![bb]][cgspatial_b]    | Major **geospatial** Python & R libraries on top of the `datascience-notebook` image                      |
 | [kotlin]       | [![bb]][kotlin_b]       | [**Kotlin** kernel for Jupyter/IPython][kotlin_kernel] on top of the `base-notebook` image                |
 | [transformers] | [![bb]][transformers_b] | [**Transformers**][transformers_lib] and NLP libraries such as `Tensorflow`, `Keras`, `Jax` and `PyTorch` |
+| [scraper]      | [![bb]][scraper_b]      | **Scraper** tools (`selenium`, `chromedriver`, `beatifulsoup4`, `requests`) on `minimal-notebook` image   |
 
-[bb]: https://mybinder.org/badge_logo.svg
+[bb]: https://static.mybinder.org/badge_logo.svg
 [csharp]: https://github.com/tlinnet/csharp-notebook
 [csharp_b]: https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master
 [education]: https://github.com/umsi-mads/education-notebook
 [education_b]: https://mybinder.org/v2/gh/umsi-mads/education-notebook/master
 [ihaskell]: https://github.com/jamesdbrock/ihaskell-notebook
 [ihaskell_b]: https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb
-[ihaskell_project]: https://github.com/gibiansky/IHaskell
+[ihaskell_project]: https://github.com/IHaskell/IHaskell
 [java]: https://github.com/jbindinga/java-notebook
 [java_b]: https://mybinder.org/v2/gh/jbindinga/java-notebook/master
 [ijava]: https://github.com/SpencerPark/IJava
@@ -250,6 +251,8 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [transformers]: https://github.com/ToluClassics/transformers_notebook
 [transformers_b]: https://mybinder.org/v2/gh/ToluClassics/transformers_notebook/main
 [transformers_lib]: https://huggingface.co/docs/transformers/index
+[scraper]: https://github.com/rgriffogoes/scraper-notebook
+[scraper_b]: https://mybinder.org/v2/gh/rgriffogoes/scraper-notebook/main
 
 ### GPU enabled notebooks
 
@@ -259,5 +262,5 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [PRP-GPU][prp_gpu] | PRP (Pacific Research Platform) maintained [registry][prp_reg] for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.                                                                     |
 
 [gpu]: https://github.com/iot-salzburg/gpu-jupyter
-[prp_gpu]: https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/-/tree/prp
-[prp_reg]: https://gitlab.nautilus.optiputer.net/prp/jupyter-stack/container_registry
+[prp_gpu]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/-/tree/prp
+[prp_reg]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/container_registry

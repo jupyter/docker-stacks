@@ -4,7 +4,7 @@ When troubleshooting, you may see unexpected behaviors or receive an error messa
 This section provides advice on
 how to identify and fix some of the most commonly encountered issues.
 
-Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](../using/common.html#docker-options) of the documentation.
+Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](common.md#docker-options) of the documentation.
 
 ## Permission denied when mounting volumes
 
@@ -167,13 +167,13 @@ If you have also **created a new user**, you might be experiencing any of the fo
     In the example above, the `-v` flag is used to mount the local volume onto the new user's `/home` directory.
 
     However, if you are mounting a volume elsewhere, you also need to use the `-e CHOWN_EXTRA=<some-dir>` flag to avoid any permission
-    issues (see the section [Permission denied when mounting volumes](../using/troubleshooting.html#permission-denied-when-mounting-volumes) in this page).
+    issues (see the section [Permission denied when mounting volumes](#permission-denied-when-mounting-volumes) in this page).
    ```
 
 2. **Dynamically assign the user ID and GID**
 
-   The above case ensures that the `/home` directory is owned by the a newly created user with an specific `UID` and `GID`, but if you want to assign the `UID` and `GID`
-   of the new user dynamically you can make the following adjustments:
+   The above case ensures that the `/home` directory is owned by a newly created user with a specific `UID` and `GID`,
+   but if you want to assign the `UID` and `GID` of the new user dynamically you can make the following adjustments:
 
    ```bash
    docker run -it --rm \
@@ -222,18 +222,20 @@ If you have also **created a new user**, you might be experiencing any of the fo
 - Use `docker inspect <container_id>` and look for the [`Mounts` section](https://docs.docker.com/storage/volumes/#start-a-container-with-a-volume) to verify that the volume was created and mounted accordingly:
 
   ```json
-  "Mounts": [
-        {
-            "Type": "volume",
-            "Name": "my-vol",
-            "Source": "/var/lib/docker/volumes/stagingarea/_data",
-            "Destination": "/home/jovyan/stagingarea",
-            "Driver": "local",
-            "Mode": "z",
-            "RW": true,
-            "Propagation": ""
-        }
-    ],
+  {
+    "Mounts": [
+      {
+        "Type": "volume",
+        "Name": "my-vol",
+        "Source": "/var/lib/docker/volumes/stagingarea/_data",
+        "Destination": "/home/jovyan/stagingarea",
+        "Driver": "local",
+        "Mode": "z",
+        "RW": true,
+        "Propagation": ""
+      }
+    ]
+  }
   ```
 
 ## Problems installing conda packages from specific channels
@@ -263,7 +265,7 @@ You can install packages from other conda channels (e.g. bioconda) by disabling 
 conda install --no-channel-priority -c bioconda bioconductor-geoquery
 ```
 
-Additional details are provided in the [Using alternative channels](../using/common.html#using-alternative-channels) section of the [Common features](./common.md) page.
+Additional details are provided in the [Using alternative channels](../using/common.md#using-alternative-channels) section of the [Common features](common.md) page.
 
 ## Tokens are being rejected
 

@@ -113,7 +113,7 @@ build-all-multi: $(foreach I, $(MULTI_IMAGES), build-multi/$(I)) $(foreach I, $(
 
 
 check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report (experimental)
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest test/test_outdated.py
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests/base-notebook/test_outdated.py
 check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check all the stacks for outdated packages
 
 
@@ -138,10 +138,10 @@ install-dev-env: ## install libraries required to build images and run tests
 
 
 docs: ## build HTML documentation
-	sphinx-build -W docs/ docs/_build/
+	sphinx-build -W --keep-going --color docs/ docs/_build/
 
 linkcheck-docs: ## check broken links
-	sphinx-build -b linkcheck docs/ docs/_build/
+	sphinx-build -W --keep-going --color -b linkcheck docs/ docs/_build/
 
 install-docs-env: ## install libraries required to build docs
 	@pip install -r requirements-docs.txt
@@ -170,7 +170,7 @@ img-rm-dang: ## remove dangling images (tagged None)
 
 
 pre-commit-all: ## run pre-commit hook on all files
-	@pre-commit run --all-files || (printf "\n\n\n" && git --no-pager diff --color=always)
+	@pre-commit run --all-files --hook-stage manual
 pre-commit-install: ## set up the git hook scripts
 	@pre-commit --version
 	@pre-commit install
@@ -205,9 +205,8 @@ run-sudo-shell/%: ## run a bash in interactive mode as root in a stack
 
 
 
-test/%: ## run tests against a stack (only common tests or common tests + specific tests)
+test/%: ## run tests against a stack
 	@echo "::group::test/$(OWNER)/$(notdir $@)"
-	@if [ ! -d "$(notdir $@)/test" ]; then TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test; \
-	else TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest -m "not info" test $(notdir $@)/test; fi
+	tests/run_tests.py --short-image-name "$(notdir $@)" --owner "$(OWNER)"
 	@echo "::endgroup::"
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks

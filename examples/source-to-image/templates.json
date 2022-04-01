@@ -221,7 +221,7 @@
             }
           },
           "data": {
-            "jupyter_notebook_config.py": "import os\n\npassword = os.environ.get('JUPYTER_NOTEBOOK_PASSWORD')\n\nif password:\n    import notebook.auth\n    c.NotebookApp.password = notebook.auth.passwd(password)\n    del password\n    del os.environ['JUPYTER_NOTEBOOK_PASSWORD']\n\nimage_config_file = '/home/jovyan/.jupyter/jupyter_notebook_config.py'\n\nif os.path.exists(image_config_file):\n    with open(image_config_file) as fp:\n        exec(compile(fp.read(), image_config_file, 'exec'), globals())\n"
+            "jupyter_server_config.py": "import os\n\npassword = os.environ.get('JUPYTER_NOTEBOOK_PASSWORD')\n\nif password:\n    import notebook.auth\n    c.NotebookApp.password = notebook.auth.passwd(password)\n    del password\n    del os.environ['JUPYTER_NOTEBOOK_PASSWORD']\n\nimage_config_file = '/home/jovyan/.jupyter/jupyter_server_config.py'\n\nif os.path.exists(image_config_file):\n    with open(image_config_file) as fp:\n        exec(compile(fp.read(), image_config_file, 'exec'), globals())\n"
           }
         },
         {
@@ -275,7 +275,7 @@
                     "image": "${APPLICATION_NAME}:latest",
                     "command": [
                       "start-notebook.sh",
-                      "--config=/etc/jupyter/openshift/jupyter_notebook_config.py",
+                      "--config=/etc/jupyter/openshift/jupyter_server_config.py",
                       "--no-browser",
                       "--ip=0.0.0.0"
                     ],

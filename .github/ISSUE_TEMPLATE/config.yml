@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "📖 - Jupyter Docker Stacks documentation"
+    url: https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html
+    about: Go to the project's documentation
+  - name: "🔍 - Troubleshooting common problems"
+    url: https://jupyter-docker-stacks.readthedocs.io/en/latest/using/troubleshooting.html
+    about: Documentation section on troubleshooting commonly encountered errors
+  - name: "💬 - Jupyter community Discourse"
+    url: https://discourse.jupyter.org/
+    about: Interact with the rest of the Jupyter community
+  - name: "(maintainers only) Blank issue"
+    url: https://github.com/jupyter/docker-stacks/issues/new
+    about: For maintainers only

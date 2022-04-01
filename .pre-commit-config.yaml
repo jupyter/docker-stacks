@@ -1,41 +1,76 @@
 ---
-ci:
-  skip: [hadolint-docker]
-
+# pre-commit is a tool to perform a predefined set of tasks manually and/or
+# automatically before git commits are made.
+#
+# Config reference: https://pre-commit.com/#pre-commit-configyaml---top-level
+#
+# Common tasks
+#
+# - Run on all files:   pre-commit run --all-files
+# - Register git hooks: pre-commit install --install-hooks
+#
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.31.0
+    rev: v2.31.1
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
 
+  # Automatically sort python imports
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        args: [--profile, black]
+
   # Autoformat: Python code
   - repo: https://github.com/psf/black
-    rev: 22.1.0
+    rev: 22.3.0
     hooks:
       - id: black
         args: [--target-version=py39]
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.931
+    rev: v0.942
     hooks:
       - id: mypy
-        additional_dependencies: ["pytest", "types-requests", "types-tabulate"]
+        args: [--config, ./mypy.ini]
+        additional_dependencies:
+          ["numpy", "pytest", "requests", "types-requests", "types-tabulate"]
+        # Unfortunately, `pre-commit` only runs on changed files
+        # This doesn't work well with `mypy --follow-imports error`
+        # See: https://github.com/pre-commit/mirrors-mypy/issues/34#issuecomment-1062160321
+        #
+        # To work around this we run `mypy` only in manual mode
+        # So it won't run as part of `git commit` command
+        # But it will still be run as part of `pre-commit` workflow and give expected results
+        stages: [manual]
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.5.1
+    rev: v2.6.1
     hooks:
       - id: prettier
 
+  # `pre-commit sample-config` default hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: check-added-large-files
+      - id: end-of-file-fixer
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
-    rev: v2.8.0
+    rev: v2.10.0
     hooks:
       - id: hadolint-docker
-        entry: hadolint/hadolint:v2.8.0 hadolint
+        entry: hadolint/hadolint:v2.10.0 hadolint
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
@@ -54,7 +89,7 @@ repos:
 
   # Lint: Shell scripts
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.8.0.3
+    rev: v0.8.0.4
     hooks:
       - id: shellcheck
         args: ["-x"]
@@ -67,7 +102,41 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.30.0
+    rev: v0.31.1
     hooks:
       - id: markdownlint
         args: ["--fix"]
+
+  # Strip output from Jupyter notebooks
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.5.0
+    hooks:
+      - id: nbstripout
+
+  # nbQA provides tools from the Python ecosystem like
+  # pyupgrade, isort, black, and flake8, adjusted for notebooks.
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.3.1
+    hooks:
+      - id: nbqa-pyupgrade
+        args: [--py39-plus]
+      - id: nbqa-isort
+      - id: nbqa-black
+        args: [--target-version=py39]
+      - id: nbqa-flake8
+
+  # Run black on python code blocks in documentation files.
+  - repo: https://github.com/asottile/blacken-docs
+    rev: v1.12.1
+    hooks:
+      - id: blacken-docs
+        # --skip-errors is added to allow us to have python syntax highlighting even if
+        # the python code blocks includes jupyter specific additions such as % or !
+        # See https://github.com/asottile/blacken-docs/issues/127 for an upstream
+        # feature request about this.
+        args: [--target-version=py39, --skip-errors]
+
+# Docker hooks do not work in pre-commit.ci
+# See: <https://github.com/pre-commit-ci/issues/issues/11>
+ci:
+  skip: [hadolint-docker]

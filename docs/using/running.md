@@ -15,12 +15,12 @@ The following are some common patterns.
 
 **Example 1:**
 
-This command pulls the `jupyter/scipy-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `6b49f3337709` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888.
 The server logs appear in the terminal and include a URL to the notebook server.
 
 ```bash
-docker run -it -p 8888:8888 jupyter/scipy-notebook:b418b67c225b
+docker run -it -p 8888:8888 jupyter/scipy-notebook:6b49f3337709
 
 # Entered start.sh with args: jupyter lab
 
@@ -39,7 +39,7 @@ Pressing `Ctrl-C` twice shuts down the notebook server but leaves the container 
 # list containers
 docker ps -a
 # CONTAINER ID   IMAGE                                                 COMMAND                  CREATED          STATUS                     PORTS     NAMES
-# 221331c047c4   jupyter/scipy-notebook:b418b67c225b                   "tini -g -- start-no…"   11 seconds ago   Exited (0) 8 seconds ago             cranky_benz
+# 221331c047c4   jupyter/scipy-notebook:6b49f3337709                   "tini -g -- start-no…"   11 seconds ago   Exited (0) 8 seconds ago             cranky_benz
 
 # start the stopped container
 docker start -a 221331c047c4
@@ -53,12 +53,12 @@ docker rm 221331c047c4
 
 **Example 2:**
 
-This command pulls the `jupyter/r-notebook` image tagged `b418b67c225b` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/r-notebook` image tagged `6b49f3337709` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Notebook server and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:b418b67c225b
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:6b49f3337709
 ```
 
 Pressing `Ctrl-C` twice shuts down the notebook server and immediately destroys the Docker container.
@@ -121,7 +121,7 @@ See the
 You can configure JupyterHub to launcher Docker containers from the Jupyter Docker Stacks images.
 If you've been following the [Zero to JupyterHub with Kubernetes](https://zero-to-jupyterhub.readthedocs.io/en/latest/) guide,
 see the [Use an existing Docker image](https://zero-to-jupyterhub.readthedocs.io/en/latest/jupyterhub/customizing/user-environment.html#choose-and-use-an-existing-docker-image) section for details.
-If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://github.com/jupyterhub/dockerspawner#picking-or-building-a-docker-image)
+If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://jupyterhub-dockerspawner.readthedocs.io/en/latest/docker-image.html)
 instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner) instead.
 
 ## Using Other Tools and Services

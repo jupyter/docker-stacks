@@ -1,6 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 from typing import Optional
+
 from .images_hierarchy import ALL_IMAGES
 from .manifests import ManifestInterface
 from .taggers import TaggerInterface
