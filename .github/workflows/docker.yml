@@ -93,9 +93,6 @@ jobs:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
 
-      - name: Test Docker Images
-        run: make -C main test-all
-
       - name: Clone Wiki
         uses: actions/checkout@v3
         with:
