@@ -73,10 +73,8 @@ jobs:
       - name: Set up Docker Buildx (for multi-arch builds) 🐳
         uses: docker/setup-buildx-action@94ab11c41e45d028884a99163086648e898eed25 # dependabot updates to latest release
 
-      - name: Clone main repo ⚡️
+      - name: Clone docker-stacks repo ⚡️
         uses: actions/checkout@v3
-        with:
-          path: main
 
       - name: Setup Python 🐍
         uses: actions/setup-python@v3
@@ -86,14 +84,14 @@ jobs:
       - name: Install Dev Dependencies 📦
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r main/requirements-dev.txt
+          python -m pip install -r requirements-dev.txt
 
       # https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#github-cache
       - name: Build Docker Images 🛠
         id: build-images
         run: |
-          python -m doit -f main/dodo.py docker_build
-          python -m doit -f main/dodo.py docker_save_images
+          python -m doit -f dodo.py docker_build
+          python -m doit -f dodo.py docker_save_images
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
@@ -119,10 +117,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-images]
     steps:
-      - name: Clone main repo ⚡️
+      - name: Clone docker-stacks repo ⚡️
         uses: actions/checkout@v3
-        with:
-          path: main
 
       - name: Setup Python 🐍
         uses: actions/setup-python@v3
@@ -132,17 +128,17 @@ jobs:
       - name: Install Dev Dependencies 📦
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r main/requirements-dev.txt
+          python -m pip install -r requirements-dev.txt
 
       - name: Download built images 📥
         uses: actions/download-artifact@v3
         with:
           name: docker-images-${{ needs.build-images.outputs.short_sha }}
           path: |
-            main/.github/built-docker-images/
+            .github/built-docker-images/
 
       - name: Run tests ✅
-        run: python -m doit -f main/dodo.py docker_test
+        run: python -m doit -f dodo.py docker_test
 
       - name: Login to GHCR 🔐
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
@@ -155,14 +151,14 @@ jobs:
 
       - name: Push images to GHCR 📤
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: python -m doit -f main/dodo.py docker_push_image -r ghcr.io
+        run: python -m doit -f dodo.py docker_push_image -r ghcr.io
 
   create-manifests:
     name: Create tags and manifests
     runs-on: ubuntu-latest
     needs: [build-images]
     steps:
-      - name: Clone main repo ⚡️
+      - name: Clone docker-stacks repo ⚡️
         uses: actions/checkout@v3
         with:
           path: main
