@@ -239,10 +239,10 @@ else
     if [[ "${NB_USER}" != "$(id -un)" && "${NB_USER}" != "jovyan" ]]; then
         _log "WARNING: container must be started as root to change the desired user's name with NB_USER=\"${NB_USER}\"!"
     fi
-    if [[ "${NB_UID}" != "$(id -u)" && "${NB_UID}" != "$(id -u jovyan)" ]]; then
+    if [[ "${NB_UID}" != "$(id -u)" && "${NB_UID}" != "$(id -u jovyan 2>/dev/null)" ]]; then
         _log "WARNING: container must be started as root to change the desired user's id with NB_UID=\"${NB_UID}\"!"
     fi
-    if [[ "${NB_GID}" != "$(id -g)" && "${NB_GID}" != "$(id -g jovyan)" ]]; then
+    if [[ "${NB_GID}" != "$(id -g)" && "${NB_GID}" != "$(id -g jovyan 2>/dev/null)" ]]; then
         _log "WARNING: container must be started as root to change the desired user's group id with NB_GID=\"${NB_GID}\"!"
     fi
 
