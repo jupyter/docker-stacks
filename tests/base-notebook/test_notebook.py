@@ -3,7 +3,8 @@
 
 
 import requests
-from conftest import TrackedContainer, find_free_port
+
+from tests.conftest import TrackedContainer, find_free_port
 
 
 def test_secured_server(

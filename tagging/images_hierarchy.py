@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from typing import Optional
 
-from .manifests import (
+from tagging.manifests import (
     AptPackagesManifest,
     CondaEnvironmentManifest,
     JuliaPackagesManifest,
@@ -11,7 +11,7 @@ from .manifests import (
     RPackagesManifest,
     SparkInfoManifest,
 )
-from .taggers import (
+from tagging.taggers import (
     DateTagger,
     HadoopVersionTagger,
     JavaVersionTagger,

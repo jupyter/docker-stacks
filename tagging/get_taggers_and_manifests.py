@@ -2,9 +2,9 @@
 # Distributed under the terms of the Modified BSD License.
 from typing import Optional
 
-from .images_hierarchy import ALL_IMAGES
-from .manifests import ManifestInterface
-from .taggers import TaggerInterface
+from tagging.images_hierarchy import ALL_IMAGES
+from tagging.manifests import ManifestInterface
+from tagging.taggers import TaggerInterface
 
 
 def get_taggers_and_manifests(

@@ -7,7 +7,8 @@ from typing import Optional
 
 import pytest  # type: ignore
 import requests
-from conftest import TrackedContainer, find_free_port
+
+from tests.conftest import TrackedContainer, find_free_port
 
 LOGGER = logging.getLogger(__name__)
 
