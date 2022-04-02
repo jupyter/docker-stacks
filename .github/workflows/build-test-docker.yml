@@ -108,7 +108,7 @@ jobs:
         with:
           name: docker-images-${{ steps.slug.outputs.short_sha }}
           path: |
-            main/.github/built-docker-images/
+            .github/built-docker-images/
           # 1 day for now - might need extending later
           retention-days: 1
 
