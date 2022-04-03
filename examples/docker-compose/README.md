@@ -42,8 +42,8 @@ You can customize the docker-stack notebook image to deploy by modifying the `no
 For example, you can build and deploy a `jupyter/all-spark-notebook` by modifying the Dockerfile like so:
 
 ```dockerfile
-FROM jupyter/all-spark-notebook:b418b67c225b
-...
+FROM jupyter/all-spark-notebook:6b49f3337709
+# Your RUN commands and so on
 ```
 
 Once you modify the Dockerfile, don't forget to rebuild the image.
@@ -135,8 +135,8 @@ FQDN=host.mydomain.com EMAIL=myemail@somewhere.com \
     bin/letsencrypt.sh
 ```
 
-Also, be aware that Let's Encrypt certificates are short lived (90 days).
-If you need them for a longer period of time, you'll need to manually setup a cron job to run the renewal steps.
+Also, be aware that Let's Encrypt certificates are short-lived (90 days).
+If you need them for a longer period of time, you'll need to manually set up a cron job to run the renewal steps.
 (You can reuse the command above.)
 
 ### Can I deploy to any Docker Machine host?

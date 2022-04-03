@@ -29,7 +29,7 @@ Create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:b418b67c225b
+FROM jupyter/datascience-notebook:6b49f3337709
 # Install in the default python3 environment
 RUN pip install --quiet --no-cache-dir 'flake8==3.9.2' && \
     fix-permissions "${CONDA_DIR}" && \
@@ -48,7 +48,7 @@ Next, create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:b418b67c225b
+FROM jupyter/datascience-notebook:6b49f3337709
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --quiet --no-cache-dir --requirement /tmp/requirements.txt && \
@@ -60,7 +60,7 @@ For conda, the Dockerfile is similar:
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:b418b67c225b
+FROM jupyter/datascience-notebook:6b49f3337709
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN mamba install --yes --file /tmp/requirements.txt && \
@@ -193,8 +193,8 @@ Sometimes it is helpful to run the Jupyter instance behind a nginx proxy, for ex
 
 - you would prefer to access the notebook at a server URL with a path
   (`https://example.com/jupyter`) rather than a port (`https://example.com:8888`)
-- you may have many different services in addition to Jupyter running on the same server, and want
-  to nginx to help improve server performance in managing the connections
+- you may have many services in addition to Jupyter running on the same server, and want
+  nginx to help improve server performance in managing the connections
 
 Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
@@ -203,11 +203,11 @@ Customize the `nginx.conf` file to set the desired paths and add other services.
 
 ## Host volume mounts and notebook errors
 
-If you are mounting a host directory as `/home/jovyan/work` in your container and you receive
-permission errors or connection errors when you create a notebook, be sure that the `jovyan` user
-(`UID=1000` by default) has read/write access to the directory on the host.
-Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option described in the
-[Common Features, Docker Options section](common.md#docker-options)
+If you are mounting a host directory as `/home/jovyan/work` in your container,
+and you receive permission errors or connection errors when you create a notebook,
+be sure that the `jovyan` user (`UID=1000` by default) has read/write access to the directory on the host.
+Alternatively, specify the UID of the `jovyan` user on container startup using the `-e NB_UID` option
+described in the [Common Features, Docker Options section](common.md#docker-options)
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 
@@ -282,7 +282,7 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:b418b67c225b
+FROM jupyter/base-notebook:6b49f3337709
 RUN pip install --quiet --no-cache-dir jupyterhub==1.4.1 && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -300,34 +300,44 @@ A few suggestions have been made regarding using Docker Stacks with spark.
 
 Using Spark session for hadoop 2.7.3
 
-```py
+```python
 import os
+
 # !ls /usr/local/spark/jars/hadoop* # to figure out what version of hadoop
-os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
+os.environ[
+    "PYSPARK_SUBMIT_ARGS"
+] = '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
 
 import pyspark
+
 myAccessKey = input()
 mySecretKey = input()
 
-spark = pyspark.sql.SparkSession.builder \
-        .master("local[*]") \
-        .config("spark.hadoop.fs.s3a.access.key", myAccessKey) \
-        .config("spark.hadoop.fs.s3a.secret.key", mySecretKey) \
-        .getOrCreate()
+spark = (
+    pyspark.sql.SparkSession.builder.master("local[*]")
+    .config("spark.hadoop.fs.s3a.access.key", myAccessKey)
+    .config("spark.hadoop.fs.s3a.secret.key", mySecretKey)
+    .getOrCreate()
+)
 
 df = spark.read.parquet("s3://myBucket/myKey")
 ```
 
 Using Spark context for hadoop 2.6.0
 
-```py
+```python
 import os
-os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages com.amazonaws:aws-java-sdk:1.10.34,org.apache.hadoop:hadoop-aws:2.6.0 pyspark-shell'
+
+os.environ[
+    "PYSPARK_SUBMIT_ARGS"
+] = "--packages com.amazonaws:aws-java-sdk:1.10.34,org.apache.hadoop:hadoop-aws:2.6.0 pyspark-shell"
 
 import pyspark
+
 sc = pyspark.SparkContext("local[*]")
 
 from pyspark.sql import SQLContext
+
 sqlContext = SQLContext(sc)
 
 hadoopConf = sc._jsc.hadoopConfiguration()
@@ -346,14 +356,20 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/127>
 
 ```python
 import os
-os.environ['PYSPARK_SUBMIT_ARGS'] = '--jars /home/jovyan/spark-streaming-kafka-assembly_2.10-1.6.1.jar pyspark-shell'
+
+os.environ[
+    "PYSPARK_SUBMIT_ARGS"
+] = "--jars /home/jovyan/spark-streaming-kafka-assembly_2.10-1.6.1.jar pyspark-shell"
 import pyspark
 from pyspark.streaming.kafka import KafkaUtils
 from pyspark.streaming import StreamingContext
+
 sc = pyspark.SparkContext()
-ssc = StreamingContext(sc,1)
+ssc = StreamingContext(sc, 1)
 broker = "<my_broker_ip>"
-directKafkaStream = KafkaUtils.createDirectStream(ssc, ["test1"], {"metadata.broker.list": broker})
+directKafkaStream = KafkaUtils.createDirectStream(
+    ssc, ["test1"], {"metadata.broker.list": broker}
+)
 directKafkaStream.pprint()
 ssc.start()
 ```
@@ -430,14 +446,14 @@ RUN pip install --quiet --no-cache-dir jupyter_dashboards faker && \
 USER root
 # Ensure we overwrite the kernel config so that toree connects to cluster
 RUN jupyter toree install --sys-prefix --spark_opts="\
-    --master yarn
-    --deploy-mode client
-    --driver-memory 512m
-    --executor-memory 512m
-    --executor-cores 1
-    --driver-java-options
-    -Dhdp.version=2.5.3.0-37
-    --conf spark.hadoop.yarn.timeline-service.enabled=false
+    --master yarn \
+    --deploy-mode client \
+    --driver-memory 512m \
+    --executor-memory 512m \
+    --executor-cores 1 \
+    --driver-java-options \
+    -Dhdp.version=2.5.3.0-37 \
+    --conf spark.hadoop.yarn.timeline-service.enabled=false \
 "
 USER ${NB_UID}
 ```
@@ -457,7 +473,7 @@ For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:b418b67c225b \
+    jupyter/base-notebook:6b49f3337709 \
     start.sh jupyter lab --LabApp.token=''
 ```
 
@@ -465,7 +481,7 @@ For jupyter classic:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:b418b67c225b \
+    jupyter/base-notebook:6b49f3337709 \
     start.sh jupyter notebook --NotebookApp.token=''
 ```
 

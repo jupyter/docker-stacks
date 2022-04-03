@@ -4,7 +4,6 @@ import logging
 
 from conftest import TrackedContainer
 
-
 LOGGER = logging.getLogger(__name__)
 
 

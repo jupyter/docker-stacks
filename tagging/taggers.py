@@ -1,9 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 from datetime import datetime
+
 from docker.models.containers import Container
-from .git_helper import GitHelper
+
 from .docker_runner import DockerRunner
+from .git_helper import GitHelper
 
 
 def _get_program_version(container: Container, program: str) -> str:
@@ -23,15 +25,16 @@ def _get_env_variable(container: Container, variable: str) -> str:
 
 
 def _get_pip_package_version(container: Container, package: str) -> str:
-    VERSION_PREFIX = "Version: "
+    PIP_VERSION_PREFIX = "Version: "
+
     package_info = DockerRunner.run_simple_command(
         container,
         cmd=f"pip show {package}",
         print_result=False,
     )
     version_line = package_info.split("\n")[1]
-    assert version_line.startswith(VERSION_PREFIX)
-    return version_line[len(VERSION_PREFIX) :]
+    assert version_line.startswith(PIP_VERSION_PREFIX)
+    return version_line[len(PIP_VERSION_PREFIX) :]
 
 
 class TaggerInterface:

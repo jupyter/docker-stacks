@@ -27,7 +27,7 @@ make pre-commit-install
 ### Run
 
 Now pre-commit (and so configured hooks) will run automatically on `git commit` on each changed file.
-However it is also possible to trigger it against all files.
+However, it is also possible to trigger it against all files.
 
 ```{note}
 Hadolint pre-commit uses docker to run, so docker should be running while running this command.

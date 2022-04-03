@@ -15,7 +15,7 @@ MACHINE_NAME="${1}" && [ -z "${MACHINE_NAME}" ] && echo "${USAGE}" && exit ${E_B
 
 # Use SOFTLAYER_DOMAIN env var if domain name not set as second arg
 DOMAIN="${2:-$SOFTLAYER_DOMAIN}" && [ -z "${DOMAIN}" ] && \
-    echo "Must specify domain or set SOFTLAYER_DOMAIN environment varable" && \
+    echo "Must specify domain or set SOFTLAYER_DOMAIN environment variable" && \
     echo "${USAGE}" && exit ${E_BADARGS}
 
 IP=$(docker-machine ip "${MACHINE_NAME}")

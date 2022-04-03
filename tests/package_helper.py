@@ -22,17 +22,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import json
+import logging
 import re
 from collections import defaultdict
 from itertools import chain
-import logging
-import json
 from typing import Any, Optional
-from docker.models.containers import Container
-
-from tabulate import tabulate
 
 from conftest import TrackedContainer
+from docker.models.containers import Container
+from tabulate import tabulate
 
 LOGGER = logging.getLogger(__name__)
 
@@ -69,7 +68,7 @@ class CondaPackageHelper:
     def installed_packages(self) -> dict[str, set[str]]:
         """Return the installed packages"""
         if self.installed is None:
-            LOGGER.info("Grabing the list of installed packages ...")
+            LOGGER.info("Grabbing the list of installed packages ...")
             self.installed = CondaPackageHelper._packages_from_json(
                 self._execute_command(
                     CondaPackageHelper._conda_export_command(from_history=False)
@@ -80,7 +79,7 @@ class CondaPackageHelper:
     def requested_packages(self) -> dict[str, set[str]]:
         """Return the requested package (i.e. `mamba install <package>`)"""
         if self.requested is None:
-            LOGGER.info("Grabing the list of manually requested packages ...")
+            LOGGER.info("Grabbing the list of manually requested packages ...")
             self.requested = CondaPackageHelper._packages_from_json(
                 self._execute_command(
                     CondaPackageHelper._conda_export_command(from_history=True)
@@ -106,13 +105,14 @@ class CondaPackageHelper:
             # default values
             package = split[0]
             version = set()
-            # checking if it's a proper version by testing if the first char is a digit
+            # This normally means we have package=version notation
             if len(split) > 1:
+                # checking if it's a proper version by testing if the first char is a digit
                 if split[1][0].isdigit():
                     # package + version case
                     version = set(split[1:])
+                # The split was incorrect and the package shall not be split
                 else:
-                    # The split was incorrect and the package shall not be splitted
                     package = f"{split[0]}={split[1]}"
             packages_dict[package] = version
         return packages_dict
@@ -120,7 +120,9 @@ class CondaPackageHelper:
     def available_packages(self) -> dict[str, set[str]]:
         """Return the available packages"""
         if self.available is None:
-            LOGGER.info("Grabing the list of available packages (can take a while) ...")
+            LOGGER.info(
+                "Grabbing the list of available packages (can take a while) ..."
+            )
             # Keeping command line output since `mamba search --outdated --json` is way too long ...
             self.available = CondaPackageHelper._extract_available(
                 self._execute_command(["mamba", "search", "--outdated", "--quiet"])
@@ -170,7 +172,7 @@ class CondaPackageHelper:
     def semantic_cmp(version_string: str) -> Any:
         """Manage semantic versioning for comparison"""
 
-        def mysplit(string: str) -> list[Any]:
+        def my_split(string: str) -> list[Any]:
             def version_substrs(x: str) -> list[str]:
                 return re.findall(r"([A-z]+|\d+)", x)
 
@@ -189,7 +191,7 @@ class CondaPackageHelper:
             except ValueError:
                 return str_ord(version_str)
 
-        mss = list(chain(*mysplit(version_string)))
+        mss = list(chain(*my_split(version_string)))
         return tuple(map(try_int, mss))
 
     def get_outdated_summary(self, requested_only: bool = True) -> str:

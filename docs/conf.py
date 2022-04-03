@@ -97,6 +97,6 @@ linkcheck_ignore = [
 
 linkcheck_allowed_redirects = {
     r"https://results\.pre-commit\.ci/latest/github/jupyter/docker-stacks/master": r"https://results\.pre-commit\.ci/run/github/.*",  # Latest master CI build
-    r"https://github\.com/jupyter/docker-stacks/issues/new.*": r"https://github\.com/login.*",  # Github wants user to be logon to use this features
+    r"https://github\.com/jupyter/docker-stacks/issues/new.*": r"https://github\.com/login.*",  # GitHub wants user to be logon to use this features
     r"https://github\.com/orgs/jupyter/teams/docker-image-maintainers/members": r"https://github\.com/login.*",
 }

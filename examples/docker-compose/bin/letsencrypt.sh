@@ -9,11 +9,11 @@ set -e
 
 # Get domain and email from environment
 [ -z "${FQDN}" ] && \
-    echo "ERROR: Must set FQDN environment varable" && \
+    echo "ERROR: Must set FQDN environment variable" && \
     exit 1
 
 [ -z "${EMAIL}" ] && \
-    echo "ERROR: Must set EMAIL environment varable" && \
+    echo "ERROR: Must set EMAIL environment variable" && \
     exit 1
 
 # letsencrypt certificate server type (default is production).

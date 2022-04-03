@@ -170,7 +170,7 @@ img-rm-dang: ## remove dangling images (tagged None)
 
 
 pre-commit-all: ## run pre-commit hook on all files
-	@pre-commit run --all-files || (printf "\n\n\n" && git --no-pager diff --color=always)
+	@pre-commit run --all-files --hook-stage manual
 pre-commit-install: ## set up the git hook scripts
 	@pre-commit --version
 	@pre-commit install

@@ -1,11 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from typing import Optional
+import logging
 from types import TracebackType
+from typing import Optional
+
 import docker
 from docker.models.containers import Container
-import logging
-
 
 LOGGER = logging.getLogger(__name__)
 
