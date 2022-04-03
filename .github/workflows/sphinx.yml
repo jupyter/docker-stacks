@@ -12,6 +12,7 @@ on:
       - "README.md"
       - ".readthedocs.yaml"
       - "requirements-docs.txt"
+      - "dodo.py"
   push:
     branches:
       - main
@@ -23,6 +24,7 @@ on:
       - "README.md"
       - ".readthedocs.yaml"
       - "requirements-docs.txt"
+      - "dodo.py"
   workflow_dispatch:
 
 jobs:
