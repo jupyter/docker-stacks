@@ -90,8 +90,8 @@ jobs:
       - name: Build Docker Images 🛠
         id: build-images
         run: |
-          python -m doit -f dodo.py docker_build
-          python -m doit -f dodo.py docker_save_images
+          python -m doit docker_build
+          python -m doit docker_save_images
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
@@ -138,7 +138,7 @@ jobs:
             .github/built-docker-images/
 
       - name: Run tests ✅
-        run: python -m doit -f dodo.py docker_test
+        run: python -m doit docker_test
 
       - name: Login to GHCR 🔐
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
@@ -151,7 +151,7 @@ jobs:
 
       - name: Push images to GHCR 📤
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: python -m doit -f dodo.py docker_push_image -r ghcr.io
+        run: python -m doit docker_push_image -r ghcr.io
 
   create-manifests:
     name: Create tags and manifests
