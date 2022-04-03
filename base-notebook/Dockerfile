@@ -83,8 +83,11 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions "${CONDA_DIR}"
 
 USER ${NB_UID}
+
+# Pin versions here, or set them to "default"
 ARG PYTHON_VERSION=3.9
-ARG MICROMAMBA_VERSION=latest
+ARG MAMBA_VERSION=default
+ARG MICROMAMBA_VERSION=default
 
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
@@ -109,13 +112,15 @@ RUN set -x && \
         # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
         arch="64"; \
     fi && \
+    if [[ "${MICROMAMBA_VERSION}" == "default" ]]; then MICROMAMBA_VERSION="latest"; fi && \
     wget -qO /tmp/micromamba.tar.bz2 \
         "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/${MICROMAMBA_VERSION}" && \
     tar -xvjf /tmp/micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
     rm /tmp/micromamba.tar.bz2 && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
-    MAMBA_SPECIFIER="mamba" && \
+    MAMBA_SPECIFIER="mamba=${MAMBA_VERSION}" && \
+    if [[ "${MAMBA_VERSION}" == "default" ]]; then MAMBA_SPECIFIER="mamba"; fi && \
     # Using fixed version of mamba in arm, because the latest one has problems with arm under qemu
     # See: https://github.com/jupyter/docker-stacks/issues/1539
     if [ "${arch}" == "aarch64" ]; then \
