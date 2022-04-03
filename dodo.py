@@ -61,7 +61,10 @@ def task_setup_dev() -> dict[str, Any]:
         )
     ]
     if Utils.IS_CI:
-        actions.insert(0, Utils.do(*Utils.PIP, "--upgrade", "pip"))
+        actions.insert(
+            0,
+            Utils.do(*Utils.PIP, "--upgrade", "pip"),
+        )
 
     return dict(actions=actions)
 
