@@ -104,7 +104,7 @@ jobs:
           echo "::set-output name=short_sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
 
       - name: Save Docker images as artifact 💾
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: docker-images-${{ steps.slug.outputs.short_sha }}
           path: |
@@ -184,7 +184,7 @@ jobs:
           python -m doit -f main/dodo.py docker_create_manifest
 
       - name: Save manifests as artifact 💾
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: docker-images-manifest-${{ needs.build-images.outputs.short_sha }}
           path: |
