@@ -131,7 +131,7 @@ RUN set -x && \
     ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
-        --yes \
+        -vvv --yes \
         "${PYTHON_SPECIFIER}" \
         "${MAMBA_SPECIFIER}" \
         'notebook' \
