@@ -127,6 +127,8 @@ RUN set -x && \
         # MAMBA_SPECIFIER='mamba<0.18'; \
         MAMBA_SPECIFIER='mamba'; \
     fi && \
+    ./micromamba config set download_threads 1 && \
+    ./micromamba config set extract_threads 1 && \
     # Install the packages
     ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
@@ -137,6 +139,8 @@ RUN set -x && \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
+    ./micromamba config remove-key download_threads && \
+    ./micromamba config remove-key extract_threads && \
     rm micromamba && \
     # Pin major.minor version of python
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
