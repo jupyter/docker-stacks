@@ -1,5 +1,6 @@
 # ReadTheDocs environment contains old package versions preinstalled
-# So, to ensure we have modern packages, we pin minimum versions of the packages we need
+# So, to ensure we have modern packages, we pin minimum versions of some packages we need
+# doit and plumbum are used to launch doit tasks
 docutils>=0.17
 doit
 myst-parser>=0.16.1
