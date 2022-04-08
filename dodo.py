@@ -13,6 +13,7 @@ doit info <task-name>
 Targeted run of an individual task:
 Examples:
     $ doit docs_build
+    $ doit docker_push_image -r <registry, defaults to DockerHub>
 """
 
 import os
@@ -44,50 +45,6 @@ def task_what() -> dict[str, Any]:
             )
         ],
     )
-
-
-# -----------------------------------------------------------------------------
-# Setup tasks
-# -----------------------------------------------------------------------------
-def task_setup_dev() -> dict[str, Any]:
-    """
-    Install libraries required for development 🔧
-    """
-    actions = [
-        Utils.do(
-            *Utils.PIP,
-            "--requirement",
-            Paths.REQS_DEV,
-        )
-    ]
-    if Utils.IS_CI:
-        actions.insert(
-            0,
-            Utils.do(*Utils.PIP, "--upgrade", "pip"),
-        )
-
-    return dict(actions=actions)
-
-
-def task_setup_docs() -> dict[str, Any]:
-    """
-    Install libraries required for building docs 🔧
-    """
-
-    actions = [
-        Utils.do(
-            *Utils.PIP,
-            "--requirement",
-            Paths.REQS_DOCS,
-        ),
-    ]
-    if Utils.IS_CI:
-        actions.insert(
-            0,
-            Utils.do(*Utils.PIP, "--upgrade", "pip"),
-        )
-
-    return dict(actions=actions)
 
 
 # -----------------------------------------------------------------------------

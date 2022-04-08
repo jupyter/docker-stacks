@@ -46,8 +46,7 @@ jobs:
 
       - name: Install Doc Dependencies 📦
         run: |
-          python -m pip install doit plumbum
-          python -m doit setup_docs
+          python -m pip install - r "requirements-docs.txt"
 
       - name: Build Documentation 📖
         run: |
