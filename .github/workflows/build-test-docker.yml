@@ -137,6 +137,9 @@ jobs:
           path: |
             .github/built-docker-images/
 
+      - name: Load downloaded images to docker 📥
+        run: python -m doit docker_load_images
+
       - name: Run tests ✅
         run: python -m doit docker_test
 

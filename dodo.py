@@ -19,7 +19,7 @@ Examples:
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Generator, Optional
+from typing import Any, Generator
 
 import plumbum
 from doit import task_params
@@ -138,54 +138,62 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
         )
 
 
-def task_docker_save_images() -> Optional[dict[str, Any]]:
+def task_docker_save_images() -> dict[str, Any]:
     """
     Save the built Docker images - these will be stored as CI artifacts 💾
     This is needed to pass images across jobs in GitHub Actions as each job runs
     in a separate container.
     """
 
-    if Utils.IS_CI:
-        images_ids = Utils.get_images()
+    assert Utils.IS_CI
 
-        return dict(
-            targets=[Utils.CI_IMAGE_TAR],
-            actions=[
-                Utils.do("echo", f"Saving images to: {Paths.CI_IMG}"),
-                Utils.do("mkdir", "-p", Paths.CI_IMG),
-                Utils.do(
-                    "docker",
-                    "save",
-                    *images_ids,
-                    "-o",
-                    Utils.CI_IMAGE_TAR,
-                ),
-            ],
-        )
-    return None
+    images_ids = Utils.get_images()
+
+    return dict(
+        targets=[Utils.CI_IMAGE_TAR],
+        actions=[
+            Utils.do("echo", f"Saving images to: {Paths.CI_IMG}"),
+            Utils.do("mkdir", "-p", Paths.CI_IMG),
+            Utils.do(
+                "docker",
+                "save",
+                *images_ids,
+                "-o",
+                Utils.CI_IMAGE_TAR,
+            ),
+        ],
+    )
+
+
+def task_docker_load_images() -> dict[str, Any]:
+    """
+    Load docker images from previously downloaded artifacts 📥
+    Since we are running in a CI environment and within a separate job than
+    the one where the images are built, we need to load the images from the
+    `CI_IMAGE_TAR`
+    """
+
+    assert Utils.IS_CI
+    assert (
+        Utils.CI_IMAGE_TAR.exists()
+    ), f"not found images archive in: {Utils.CI_IMAGE_TAR}"
+
+    return dict(
+        name="load_images",
+        doc="Load and inspect Docker images",
+        actions=[
+            Utils.do("docker", "load", "--input", Utils.CI_IMAGE_TAR),
+            # TODO: @trallard to add a more robust inspect
+            (Utils.inspect_image, [Utils.get_images()[-1]]),
+            Utils.do("docker", "images"),
+        ],
+    )
 
 
 def task_docker_test() -> Generator[dict[str, Any], None, None]:
     """
     Test Docker images - needs to be run after `docker_build` ✅
     """
-    if Utils.IS_CI & Utils.CI_IMAGE_TAR.exists():
-        """
-        Since we are running in a CI environment and within a separate job than
-        the one where the images are built, we need to load the images from the
-        `CI_IMAGE_TAR`
-        """
-
-        yield dict(
-            name="load_images",
-            doc="Load and inspect Docker images",
-            actions=[
-                Utils.do("docker", "load", "--input", Utils.CI_IMAGE_TAR),
-                # TODO: @trallard to add a more robust inspect
-                (Utils.inspect_image, [Utils.get_images()[-1]]),
-                Utils.do("docker", "images"),
-            ],
-        )
 
     for image in DockerConfig.ALL_IMAGES:
         yield dict(
