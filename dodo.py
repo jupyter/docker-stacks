@@ -144,7 +144,6 @@ def task_docker_save_images() -> dict[str, Any]:
     This is needed to pass images across jobs in GitHub Actions as each job runs
     in a separate container.
     """
-
     assert Utils.IS_CI
 
     images_ids = Utils.get_images()
@@ -172,7 +171,6 @@ def task_docker_load_images() -> dict[str, Any]:
     the one where the images are built, we need to load the images from the
     `CI_IMAGE_TAR`
     """
-
     assert Utils.IS_CI
     assert (
         Utils.CI_IMAGE_TAR.exists()
@@ -194,7 +192,6 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
     """
     Test Docker images - needs to be run after `docker_build` ✅
     """
-
     for image in DockerConfig.ALL_IMAGES:
         yield dict(
             name=f"test:{image}",
@@ -444,7 +441,6 @@ class Utils:
         In CI we want to push images to GHCR and DockerHub in different steps
         so we need to ensure we pass the correct registry
         """
-
         return (
             f"{registry}/{DockerConfig.OWNER}/{image}"
             if registry != DockerConfig.DOCKERHUB_REGISTRY
