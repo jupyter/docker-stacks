@@ -144,13 +144,16 @@ def task_docker_save_images() -> dict[str, Any]:
     This is needed to pass images across jobs in GitHub Actions as each job runs
     in a separate container.
     """
-    assert Utils.IS_CI
+
+    def check_environment() -> None:
+        assert Utils.IS_CI
 
     images_ids = Utils.get_images()
 
     return dict(
         targets=[Utils.CI_IMAGE_TAR],
         actions=[
+            check_environment,
             Utils.do("echo", f"Saving images to: {Paths.CI_IMG}"),
             Utils.do("mkdir", "-p", Paths.CI_IMG),
             Utils.do(
@@ -171,15 +174,17 @@ def task_docker_load_images() -> dict[str, Any]:
     the one where the images are built, we need to load the images from the
     `CI_IMAGE_TAR`
     """
-    assert Utils.IS_CI
-    assert (
-        Utils.CI_IMAGE_TAR.exists()
-    ), f"not found images archive in: {Utils.CI_IMAGE_TAR}"
+
+    def check_environment() -> None:
+        assert Utils.IS_CI
+        assert (
+            Utils.CI_IMAGE_TAR.exists()
+        ), f"not found images archive in: {Utils.CI_IMAGE_TAR}"
 
     return dict(
-        name="load_images",
         doc="Load and inspect Docker images",
         actions=[
+            check_environment,
             Utils.do("docker", "load", "--input", Utils.CI_IMAGE_TAR),
             # TODO: @trallard to add a more robust inspect
             (Utils.inspect_image, [Utils.get_images()[-1]]),
