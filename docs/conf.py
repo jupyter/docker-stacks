@@ -91,6 +91,7 @@ myst_heading_anchors = 3
 
 linkcheck_ignore = [
     r".*github\.com.*#",  # javascript based anchors
+    r"https://docs.github\.com/.*",  # 403 error
     r"http://127\.0\.0\.1:49153/.*",  # example
     r"https://mybinder\.org/v2/gh/.*",  # lots of 500 errors
 ]

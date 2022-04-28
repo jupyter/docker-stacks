@@ -48,6 +48,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build-test-amd64-images:
     name: Build and test amd64 Docker Images
