@@ -67,7 +67,8 @@ So, `tag_value(container)` method gets a docker container as an input and return
 
 ```python
 from tagging.git_helper import GitHelper
-from tagging.taggers import import TaggerInterface
+from tagging.taggers import TaggerInterface
+
 
 class SHATagger(TaggerInterface):
     @staticmethod
