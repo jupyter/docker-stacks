@@ -68,11 +68,6 @@ EXCLUDED_PACKAGES = [
     "ca-certificates",
     "conda-forge::blas[build=openblas]",
     "hdf5",
-    # TODO(asalikhov)
-    # When we remove a workaround for arm regarding mamba, we can
-    # test installation of mamba as well and remove this exception.
-    # See: <https://github.com/jupyter/docker-stacks/issues/1539>
-    "mamba[version='<0.18']",
     "openssl",
     "protobuf",
     "python",
