@@ -121,24 +121,21 @@ RUN set -x && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     MAMBA_SPECIFIER="mamba=${MAMBA_VERSION}" && \
     if [[ "${MAMBA_VERSION}" == "default" ]]; then MAMBA_SPECIFIER="mamba"; fi && \
-    # Using fixed version of mamba in arm, because the latest one has problems with arm under qemu
-    # See: https://github.com/jupyter/docker-stacks/issues/1539
     if [ "${arch}" == "aarch64" ]; then \
-        # MAMBA_SPECIFIER='mamba<0.18'; \
-        MAMBA_SPECIFIER='mamba'; \
+        # Prevent libmamba from sporadically hanging on arm64 under QEMU
+        # <https://github.com/mamba-org/mamba/issues/1611>
+        ./micromamba config set extract_threads 1; \
     fi && \
-    ./micromamba config set lock_timeout 300 && \
     # Install the packages
     ./micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
-        -vv --yes \
+        --yes \
         "${PYTHON_SPECIFIER}" \
         "${MAMBA_SPECIFIER}" \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
-    ./micromamba config remove-key lock_timeout && \
     rm micromamba && \
     # Pin major.minor version of python
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
