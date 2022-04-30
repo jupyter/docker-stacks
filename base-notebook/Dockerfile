@@ -84,7 +84,7 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
 
 USER ${NB_UID}
 
-# Pin versions here, or set them to "default"
+# Pin python version here, or set it to "default"
 ARG PYTHON_VERSION=3.9
 
 # Setup work directory for backward-compatibility
@@ -115,6 +115,7 @@ RUN set -x && \
     tar -xvjf /tmp/micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
     rm /tmp/micromamba.tar.bz2 && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
+    if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     if [ "${arch}" == "aarch64" ]; then \
         # Prevent libmamba from sporadically hanging on arm64 under QEMU
         # <https://github.com/mamba-org/mamba/issues/1611>
