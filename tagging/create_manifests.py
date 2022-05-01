@@ -8,10 +8,10 @@ import os
 
 from docker.models.containers import Container
 
-from .docker_runner import DockerRunner
-from .get_taggers_and_manifests import get_taggers_and_manifests
-from .git_helper import GitHelper
-from .manifests import ManifestHeader, ManifestInterface
+from tagging.docker_runner import DockerRunner
+from tagging.get_taggers_and_manifests import get_taggers_and_manifests
+from tagging.git_helper import GitHelper
+from tagging.manifests import ManifestHeader, ManifestInterface
 
 LOGGER = logging.getLogger(__name__)
 

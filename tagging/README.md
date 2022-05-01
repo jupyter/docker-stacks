@@ -27,7 +27,7 @@ In this section we will briefly describe source code in this folder and give exa
 `DockerRunner` is a helper class to easily run a docker container and execute commands inside this container:
 
 ```python
-from .docker_runner import DockerRunner
+from tagging.docker_runner import DockerRunner
 
 with DockerRunner("ubuntu:bionic") as container:
     DockerRunner.run_simple_command(container, cmd="env", print_result=True)
@@ -38,7 +38,7 @@ with DockerRunner("ubuntu:bionic") as container:
 `GitHelper` methods are run in the current `git` repo and give the information about last commit hash and commit message:
 
 ```python
-from .git_helper import GitHelper
+from tagging.git_helper import GitHelper
 
 print("Git hash:", GitHelper.commit_hash())
 print("Git message:", GitHelper.commit_message())
@@ -66,6 +66,10 @@ So, `tag_value(container)` method gets a docker container as an input and return
 `SHATagger` example:
 
 ```python
+from tagging.git_helper import GitHelper
+from tagging.taggers import TaggerInterface
+
+
 class SHATagger(TaggerInterface):
     @staticmethod
     def tag_value(container):
@@ -96,6 +100,9 @@ class ManifestInterface:
 `AptPackagesManifest` example:
 
 ```python
+from tagging.manifests import ManifestInterface, quoted_output
+
+
 class AptPackagesManifest(ManifestInterface):
     @staticmethod
     def markdown_piece(container) -> str:

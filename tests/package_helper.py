@@ -29,9 +29,10 @@ from collections import defaultdict
 from itertools import chain
 from typing import Any, Optional
 
-from conftest import TrackedContainer
 from docker.models.containers import Container
 from tabulate import tabulate
+
+from tests.conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 
