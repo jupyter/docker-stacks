@@ -106,8 +106,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: docker-images-${{ steps.slug.outputs.short_sha }}
-          path: |
-            .github/built-docker-images/
+          path: .github/built-docker-images/
           # 1 day for now - might need extending later
           retention-days: 1
 
@@ -133,8 +132,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: docker-images-${{ needs.build-images.outputs.short_sha }}
-          path: |
-            .github/built-docker-images/
+          path: .github/built-docker-images/
 
       - name: Load downloaded images to docker 📥
         run: doit docker_load_images
@@ -186,8 +184,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: docker-images-manifest-${{ needs.build-images.outputs.short_sha }}
-          path: |
-            wiki/manifests/
+          path: wiki/manifests/
           # 1 day for now - might need extending later
           retention-days: 1
 
