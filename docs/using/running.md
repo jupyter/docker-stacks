@@ -123,7 +123,7 @@ uid=1000
 gid=100
 ```
 
-Set the shell variables _subuidSize_ and _subgidSize_ to the number of subordinate UIDs and GIDs respectfully.
+Set the shell variables _subuidSize_ and _subgidSize_ to the number of subordinate UIDs and GIDs respectively.
 
 ```bash
 subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
