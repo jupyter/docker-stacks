@@ -59,8 +59,6 @@ jobs:
     steps:
       - name: Clone Main Repo
         uses: actions/checkout@v3
-        with:
-          path: main
 
       - name: Set Up Python
         uses: actions/setup-python@v3
@@ -69,17 +67,17 @@ jobs:
 
       - name: Install Dev Dependencies
         run: |
-          python -m pip install --upgrade pip
-          make -C main install-dev-env
+          pip install --upgrade pip
+          pip install -r requirements-dev.txt
 
       - name: Build Docker Images
-        run: make -C main build-all
+        run: make build-all
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
 
       - name: Test Docker Images
-        run: make -C main test-all
+        run: make test-all
 
       - name: Clone Wiki
         uses: actions/checkout@v3
@@ -88,5 +86,4 @@ jobs:
           path: wiki
 
       - name: Run Post-Build Hooks
-        id: hook-all
-        run: make -C main hook-all
+        run: make hook-all
