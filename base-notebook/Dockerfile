@@ -26,6 +26,8 @@ RUN apt-get update --yes && \
     #   the ubuntu base image is rebuilt too seldom sometimes (less than once a month)
     apt-get upgrade --yes && \
     apt-get install --yes --no-install-recommends \
+    # - bzip2 is necessary to extract the micromamba executable.
+    bzip2 \
     ca-certificates \
     fonts-liberation \
     locales \
@@ -81,72 +83,60 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions "${CONDA_DIR}"
 
 USER ${NB_UID}
-ARG PYTHON_VERSION=default
+
+# Pin python version here, or set it to "default"
+ARG PYTHON_VERSION=3.9
 
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
     fix-permissions "/home/${NB_USER}"
 
-# Install conda as jovyan and check the sha256 sum provided on the download site
-WORKDIR /tmp
-
-# CONDA_MIRROR is a mirror prefix to speed up downloading
-# For example, people from mainland China could set it as
-# https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease
-ARG CONDA_MIRROR=https://github.com/conda-forge/miniforge/releases/latest/download
-
-# ---- Miniforge installer ----
-# Check https://github.com/conda-forge/miniforge/releases
-# Package Manager and Python implementation to use (https://github.com/conda-forge/miniforge)
-# We're using Mambaforge installer, possible options:
-# - conda only: either Miniforge3 to use Python or Miniforge-pypy3 to use PyPy
-# - conda + mamba: either Mambaforge to use Python or Mambaforge-pypy3 to use PyPy
-# Installation: conda, mamba, pip
-RUN set -x && \
-    # Miniforge installer
-    miniforge_arch=$(uname -m) && \
-    miniforge_installer="Mambaforge-Linux-${miniforge_arch}.sh" && \
-    wget --quiet "${CONDA_MIRROR}/${miniforge_installer}" && \
-    /bin/bash "${miniforge_installer}" -f -b -p "${CONDA_DIR}" && \
-    rm "${miniforge_installer}" && \
-    # Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
-    conda config --system --set auto_update_conda false && \
-    conda config --system --set show_channel_urls true && \
-    if [[ "${PYTHON_VERSION}" != "default" ]]; then mamba install --quiet --yes python="${PYTHON_VERSION}"; fi && \
-    # Pin major.minor version of python
-    mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
-    # Using conda to update all packages: https://github.com/mamba-org/mamba/issues/1092
-    conda update --all --quiet --yes && \
-    conda clean --all -f -y && \
-    rm -rf "/home/${NB_USER}/.cache/yarn" && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# Using fixed version of mamba in arm, because the latest one has problems with arm under qemu
-# See: https://github.com/jupyter/docker-stacks/issues/1539
-RUN set -x && \
-    arch=$(uname -m) && \
-    if [ "${arch}" == "aarch64" ]; then \
-        mamba install --quiet --yes \
-            'mamba<0.18' && \
-            mamba clean --all -f -y && \
-            fix-permissions "${CONDA_DIR}" && \
-            fix-permissions "/home/${NB_USER}"; \
-    fi;
-
-# Install Jupyter Notebook, Lab, and Hub
+# Download and install Micromamba, and initialize Conda prefix.
+#   <https://github.com/mamba-org/mamba#micromamba>
+#   Similar projects using Micromamba:
+#     - Micromamba-Docker: <https://github.com/mamba-org/micromamba-docker>
+#     - repo2docker: <https://github.com/jupyterhub/repo2docker>
+# Install Python, Mamba, Jupyter Notebook, Lab, and Hub
 # Generate a notebook server config
-# Cleanup temporary files
+# Cleanup temporary files and remove Micromamba
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
-RUN mamba install --quiet --yes \
-    'notebook' \
-    'jupyterhub' \
-    'jupyterlab' && \
+COPY --chown="${NB_UID}:${NB_GID}" initial-condarc "${CONDA_DIR}/.condarc"
+WORKDIR /tmp
+RUN set -x && \
+    arch=$(uname -m) && \
+    if [ "${arch}" = "x86_64" ]; then \
+        # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
+        arch="64"; \
+    fi && \
+    wget -qO /tmp/micromamba.tar.bz2 \
+        "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" && \
+    tar -xvjf /tmp/micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
+    rm /tmp/micromamba.tar.bz2 && \
+    PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
+    if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
+    if [ "${arch}" == "aarch64" ]; then \
+        # Prevent libmamba from sporadically hanging on arm64 under QEMU
+        # <https://github.com/mamba-org/mamba/issues/1611>
+        ./micromamba config set extract_threads 1; \
+    fi && \
+    # Install the packages
+    ./micromamba install \
+        --root-prefix="${CONDA_DIR}" \
+        --prefix="${CONDA_DIR}" \
+        --yes \
+        "${PYTHON_SPECIFIER}" \
+        'mamba' \
+        'notebook' \
+        'jupyterhub' \
+        'jupyterlab' && \
+    rm micromamba && \
+    # Pin major.minor version of python
+    mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
+    jupyter notebook --generate-config && \
     mamba clean --all -f -y && \
     npm cache clean --force && \
-    jupyter notebook --generate-config && \
     jupyter lab clean && \
     rm -rf "/home/${NB_USER}/.cache/yarn" && \
     fix-permissions "${CONDA_DIR}" && \
@@ -175,7 +165,7 @@ RUN sed -re "s/c.ServerApp/c.NotebookApp/g" \
 # This healtcheck works well for `lab`, `notebook`, `nbclassic`, `server` and `retro` jupyter commands
 # https://github.com/jupyter/docker-stacks/issues/915#issuecomment-1068528799
 HEALTHCHECK  --interval=15s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget -O- --no-verbose --tries=1 http://localhost:8888/api || exit 1
+    CMD wget -O- --no-verbose --tries=1 http://localhost:8888${JUPYTERHUB_SERVICE_PREFIX:-/}api || exit 1
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
