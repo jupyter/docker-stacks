@@ -129,7 +129,7 @@ def task_docker_build() -> Generator[dict[str, Any], None, None]:
             name=f"build_summary:{image}",
             doc="Brief summary of the image built - defaulting to using the latest tag",
             actions=[
-                ["echo", "\n \n ⚡️ Build complete, image size:"],
+                Utils.do("echo", "\n \n ⚡️ Build complete, image size:"),
                 Utils.do(
                     "docker", "images", image_meta.tags[0], "--format", "{{.Size}}"
                 ),
