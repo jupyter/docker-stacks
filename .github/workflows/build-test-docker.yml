@@ -100,8 +100,7 @@ jobs:
 
       - name: Get short SHA 🔖
         id: slug
-        run: |
-          echo "::set-output name=short_sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
+        run: echo "::set-output name=short_sha::$(echo ${GITHUB_SHA} | cut -c1-7)"
 
       - name: Save Docker images as artifact 💾
         uses: actions/upload-artifact@v3
@@ -181,8 +180,7 @@ jobs:
           path: wiki/
 
       - name: Create tags and manifest 🏷
-        run: |
-          doit -f dodo.py docker_create_manifest
+        run: doit docker_create_manifest
 
       - name: Save manifests as artifact 💾
         uses: actions/upload-artifact@v3

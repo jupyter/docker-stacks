@@ -50,9 +50,7 @@ jobs:
           pip install -r requirements-docs.txt
 
       - name: Build Documentation 📖
-        run: |
-          doit docs_build
+        run: doit docs_build
 
       - name: Check Documentation URLs 🔗
-        run: |
-          doit docs_check_links
+        run: doit docs_check_links
