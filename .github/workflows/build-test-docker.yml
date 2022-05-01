@@ -76,7 +76,7 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
 
-      - name: Setup Python 🐍
+      - name: Set Up Python 🐍
         uses: actions/setup-python@v3
         with:
           python-version: 3.x
@@ -119,7 +119,7 @@ jobs:
       - name: Checkout repo ⚡️
         uses: actions/checkout@v3
 
-      - name: Setup Python 🐍
+      - name: Set Up Python 🐍
         uses: actions/setup-python@v3
         with:
           python-version: 3.x
@@ -163,7 +163,7 @@ jobs:
       - name: Clone docker-stacks repo ⚡️
         uses: actions/checkout@v3
 
-      - name: Setup Python 🐍
+      - name: Set Up Python 🐍
         uses: actions/setup-python@v3
         with:
           python-version: 3.x
