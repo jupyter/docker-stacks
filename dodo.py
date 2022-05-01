@@ -203,7 +203,8 @@ def task_docker_test() -> Generator[dict[str, Any], None, None]:
             uptodate=[False],
             actions=[
                 Utils.do(
-                    Paths.TESTS_RUN,
+                    *Utils.PYM,
+                    "tests.run_tests",
                     "--short-image-name",
                     image,
                     "--owner",
@@ -316,10 +317,6 @@ class Paths:
     # wiki
     WIKI = ROOT / "wiki"
     WIKI_MANIFEST = WIKI / "manifests"
-
-    # tests
-    TESTS = ROOT / "tests"
-    TESTS_RUN = TESTS / "run_tests.py"
 
     # CI
     CI = ROOT / ".github"
