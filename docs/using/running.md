@@ -109,20 +109,6 @@ docker rm notebook
 
 ## Using the Podman CLI
 
-```{note}
-The `podman run` options `--uidmap` and `--gidmap` can be used to map the container user _jovyan_ to the regular user on the host when running rootless Podman.
-The same Podman command should not be run with sudo (i.e. running rootful Podman)
-because then the mapping would map the container user _jovyan_ to the root user on the host.
-It's good security practice to run programs with as few privileges as possible.
-```
-
-```{note}
-The `podman run` command in the example below, maps all subuids and subgids of the user into the container.
-That works fine but is actually more than needed.
-The `podman run` option `--userns=auto` will, for instance, not be possible to use as long as there are no unused subuids and subgids available.
-The example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them.
-```
-
 An alternative to using the Docker CLI is to use the Podman CLI. Podman is mostly compatible with Docker.
 
 **Example 4:**
@@ -154,6 +140,20 @@ podman run -it --rm -p 10000:8888 \
     --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
     --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
     docker.io/jupyter/r-notebook:6b49f3337709
+```
+
+```{warning}
+The `podman run` options `--uidmap` and `--gidmap` can be used to map the container user _jovyan_ to the regular user on the host when running rootless Podman.
+The same Podman command should not be run with sudo (i.e. running rootful Podman),
+because then the mapping would map the container user _jovyan_ to the root user on the host.
+It's a good security practice to run programs with as few privileges as possible.
+```
+
+```{note}
+The `podman run` command in the example above maps all subuids and subgids of the user into the container.
+That works fine but is actually more than needed.
+The `podman run` option `--userns=auto` will, for instance, not be possible to use as long as there are no unused subuids and subgids available.
+The example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them.
 ```
 
 Pressing `Ctrl-C` twice shuts down the notebook server and immediately destroys the Docker container.
