@@ -315,7 +315,7 @@ class Paths:
     DOCS_ALL_SOURCES = sorted([README, *DOCS_PY, *DOCS_RST, *DOCS_SRC_MD])
 
     # wiki
-    WIKI = ROOT.parent / "wiki"
+    WIKI = ROOT / "wiki"
     WIKI_MANIFEST = WIKI / "manifests"
 
     # tests
