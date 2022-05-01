@@ -182,7 +182,6 @@ def task_docker_load_images() -> dict[str, Any]:
         ), f"not found images archive in: {Utils.CI_IMAGE_TAR}"
 
     return dict(
-        doc="Load and inspect Docker images",
         actions=[
             check_environment,
             Utils.do("docker", "load", "--input", Utils.CI_IMAGE_TAR),
