@@ -3,8 +3,8 @@
 
 import logging
 
-from conftest import TrackedContainer
-from images_hierarchy import get_test_dirs
+from tests.conftest import TrackedContainer
+from tests.images_hierarchy import get_test_dirs
 
 LOGGER = logging.getLogger(__name__)
 

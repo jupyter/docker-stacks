@@ -46,12 +46,12 @@ jobs:
 
       - name: Install Doc Dependencies 📦
         run: |
-          python -m pip install -r requirements-docs.txt
+          pip install -r requirements-docs.txt
 
       - name: Build Documentation 📖
         run: |
-          python -m doit docs_build
+          doit docs_build
 
       - name: Check Documentation URLs 🔗
         run: |
-          python -m doit docs_check_links
+          doit docs_check_links

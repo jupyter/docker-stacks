@@ -3,8 +3,8 @@
 import plumbum
 from docker.models.containers import Container
 
-from .docker_runner import DockerRunner
-from .git_helper import GitHelper
+from tagging.docker_runner import DockerRunner
+from tagging.git_helper import GitHelper
 
 docker = plumbum.local["docker"]
 

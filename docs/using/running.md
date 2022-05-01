@@ -107,6 +107,59 @@ docker rm notebook
 # notebook
 ```
 
+## Using the Podman CLI
+
+An alternative to using the Docker CLI is to use the Podman CLI. Podman is mostly compatible with Docker.
+
+**Example 4:**
+
+If we use Podman instead of Docker in the situation given in _Example 2_, it would look like this:
+
+The example makes use of rootless Podman, in other words, the Podman command is run from a regular user account.
+In a Bash shell set the shell variables _uid_ and _gid_ to the UID and GID of the user _jovyan_ in the container.
+
+```bash
+uid=1000
+gid=100
+```
+
+Set the shell variables _subuidSize_ and _subgidSize_ to the number of subordinate UIDs and GIDs respectively.
+
+```bash
+subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
+subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
+```
+
+This command pulls the `docker.io/jupyter/r-notebook` image tagged `6b49f3337709` from Docker Hub if it is not already present on the local host.
+It then starts a container running a Jupyter Server and exposes the server on host port 10000.
+The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the correct host port (10000).
+
+```bash
+podman run -it --rm -p 10000:8888 \
+    -v "${PWD}":/home/jovyan/work --user $uid:$gid \
+    --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
+    --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
+    docker.io/jupyter/r-notebook:6b49f3337709
+```
+
+```{warning}
+The `podman run` options `--uidmap` and `--gidmap` can be used to map the container user _jovyan_ to the regular user on the host when running rootless Podman.
+The same Podman command should not be run with sudo (i.e. running rootful Podman),
+because then the mapping would map the container user _jovyan_ to the root user on the host.
+It's a good security practice to run programs with as few privileges as possible.
+```
+
+```{note}
+The `podman run` command in the example above maps all subuids and subgids of the user into the container.
+That works fine but is actually more than needed.
+The `podman run` option `--userns=auto` will, for instance, not be possible to use as long as there are no unused subuids and subgids available.
+The example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them.
+```
+
+Pressing `Ctrl-C` twice shuts down the notebook server and immediately destroys the Docker container.
+New files and changes in `~/work` in the container will be preserved.
+Any other changes made in the container will be lost.
+
 ## Using Binder
 
 [Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control.

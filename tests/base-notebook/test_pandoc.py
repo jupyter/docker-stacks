@@ -3,7 +3,7 @@
 
 import logging
 
-from conftest import TrackedContainer
+from tests.conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 

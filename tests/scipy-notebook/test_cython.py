@@ -3,7 +3,7 @@
 
 from pathlib import Path
 
-from conftest import TrackedContainer
+from tests.conftest import TrackedContainer
 
 THIS_DIR = Path(__file__).parent.resolve()
 
