@@ -83,7 +83,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ${{github.repository}}.wiki
-          path: wiki
+          path: wiki/
 
       - name: Run Post-Build Hooks
         run: make hook-all
