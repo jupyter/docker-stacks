@@ -5,7 +5,8 @@ import argparse
 import logging
 
 import plumbum
-from images_hierarchy import get_test_dirs
+
+from tests.images_hierarchy import get_test_dirs
 
 pytest = plumbum.local["pytest"]
 

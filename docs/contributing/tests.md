@@ -7,8 +7,8 @@ We greatly appreciate pull requests that extend the automated tests that vet the
 A [GitHub Action workflow](https://github.com/jupyter/docker-stacks/blob/master/.github/workflows/docker.yml)
 runs the following commands against pull requests submitted to the `jupyter/docker-stacks` repository:
 
-1. `make -C main build-all-multi` - which builds all the Docker images
-2. `make -C main test-all` - which tests the newly created Docker images
+1. `make build-all-multi` - which builds all the Docker images
+2. `make test-all` - which tests the newly created Docker images
    This `make` command builds and then tests every docker image.
 
 We use `pytest` module to run tests on the image.

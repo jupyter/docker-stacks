@@ -23,13 +23,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone Main Repo
-        uses: actions/checkout@v3
-
-      - name: Fail to show, that we need manually update dockerhub overview page
+      # Currently, it's impossible to automatically update descriptions
+      # https://github.com/docker/hub-tool/issues/172
+      - name: Fail to show, that for now we need to manually update dockerhub overview page 💩
         run: exit 1
 
-      - name: push README to Dockerhub for base-notebook
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+
+      - name: push README to Dockerhub for base-notebook 🐳
         uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # dependabot updates to latest release
         env:
           DOCKER_USER: ${{secrets.DOCKERHUB_USERNAME}}

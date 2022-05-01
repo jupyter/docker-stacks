@@ -5,7 +5,8 @@ import logging
 from pathlib import Path
 
 import pytest  # type: ignore
-from conftest import TrackedContainer
+
+from tests.conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
