@@ -13,7 +13,7 @@ doit info <task-name>
 Targeted run of an individual task:
 Examples:
     $ doit docs_build
-    $ doit docker_push_image -r <registry, defaults to DockerHub>
+    $ doit docker_push_image -r <registry, defaults to Docker Hub>
 """
 
 import os
@@ -443,7 +443,7 @@ class Utils:
     @staticmethod
     def registry_image(registry: str, image: str) -> str:
         """
-        In CI we want to push images to GHCR and DockerHub in different steps
+        In CI we want to push images to GHCR and Docker Hub in different steps
         so we need to ensure we pass the correct registry
         """
         return (
