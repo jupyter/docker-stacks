@@ -111,14 +111,16 @@ docker rm notebook
 
 ```{note}
 The `podman run` options `--uidmap` and `--gidmap` can be used to map the container user _jovyan_ to the regular user on the host when running rootless Podman.
-The same Podman command should not be run with sudo (i.e. running rootful Podman) because then the mapping would map the container user _jovyan_
-to the root user on the host. It's good security practice to run programs with as few privileges as possible.
+The same Podman command should not be run with sudo (i.e. running rootful Podman)
+because then the mapping would map the container user _jovyan_ to the root user on the host.
+It's good security practice to run programs with as few privileges as possible.
 ```
 
 ```{note}
-The `podman run` command in the example below, maps all subuids and subgids of the user into the container. That works fine but is actually more than needed.
-The `podman run` option `--userns=auto` will, for instance, not be possible to use as long as there are no unused subuids and subgids available. The
-example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them.
+The `podman run` command in the example below, maps all subuids and subgids of the user into the container.
+That works fine but is actually more than needed.
+The `podman run` option `--userns=auto` will, for instance, not be possible to use as long as there are no unused subuids and subgids available.
+The example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them.
 ```
 
 An alternative to using the Docker CLI is to use the Podman CLI. Podman is mostly compatible with Docker.
