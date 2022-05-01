@@ -1,0 +1,6 @@
+# Conda configuration see https://conda.io/projects/conda/en/latest/configuration.html
+
+auto_update_conda: false
+show_channel_urls: true
+channels:
+  - conda-forge
