@@ -74,8 +74,6 @@ jobs:
 
       - name: Clone Main Repo
         uses: actions/checkout@v3
-        with:
-          path: main
 
       - name: Set Up Python
         uses: actions/setup-python@v3
@@ -85,33 +83,32 @@ jobs:
       - name: Install Dev Dependencies
         run: |
           python -m pip install --upgrade pip
-          make -C main install-dev-env
+          python -m pip install -r requirements-dev.txt
 
       - name: Build Docker Images
-        run: make -C main build-all-multi
+        run: make build-all-multi
         env:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
 
       - name: Test Docker Images
-        run: make -C main test-all
+        run: make test-all
 
       - name: Clone Wiki
         uses: actions/checkout@v3
         with:
           repository: ${{github.repository}}.wiki
-          path: wiki
+          path: ../wiki
 
       - name: Run Post-Build Hooks
-        id: hook-all
-        run: make -C main hook-all
+        run: make hook-all
 
       - name: Push Wiki to GitHub
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: stefanzweifel/git-auto-commit-action@49620cd3ed21ee620a48530e81dba0d139c9cb80 # dependabot updates to latest release
         with:
           commit_message: "Automated wiki publish for ${{github.sha}}"
-          repository: wiki/
+          repository: ../wiki/
 
       - name: Login to Docker Hub
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
@@ -122,4 +119,4 @@ jobs:
 
       - name: Push Images to DockerHub
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: make -C main push-all-multi
+        run: make push-all-multi

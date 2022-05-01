@@ -13,7 +13,7 @@ This can be achieved by using the generic task used to install all Python develo
 
 ```sh
 # Install all development dependencies for the project
-make install-dev-env
+pip install requirements-dev.txt
 # It can also be installed directly
 pip install pre-commit
 ```

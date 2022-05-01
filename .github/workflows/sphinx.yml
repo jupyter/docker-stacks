@@ -34,21 +34,21 @@ jobs:
       contents: write
 
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
 
-      - name: Set Up Python
+      - name: Set Up Python 🐍
         uses: actions/setup-python@v3
         with:
-          python-version: "3.9"
+          python-version: 3.9
 
-      - name: Install Dev Dependencies
+      - name: Install Doc Dependencies 📦
         run: |
           python -m pip install --upgrade pip
-          make install-docs-env
+          python -m pip install -r requirements-docs.txt
 
-      - name: Build Documentation
+      - name: Build Documentation 📖
         run: make docs
 
-      - name: Check Documentation URLs
+      - name: Check Documentation URLs 🔗
         run: make linkcheck-docs

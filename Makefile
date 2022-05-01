@@ -128,23 +128,11 @@ cont-rm-all: ## remove all containers
 
 
 
-dev/%: PORT?=8888
-dev/%: ## run a foreground container for a stack
-	docker run -it --rm -p $(PORT):8888 $(DARGS) $(OWNER)/$(notdir $@)
-
-install-dev-env: ## install libraries required to build images and run tests
-	@pip install -r requirements-dev.txt
-
-
-
 docs: ## build HTML documentation
 	sphinx-build -W --keep-going --color docs/ docs/_build/
 
 linkcheck-docs: ## check broken links
 	sphinx-build -W --keep-going --color -b linkcheck docs/ docs/_build/
-
-install-docs-env: ## install libraries required to build docs
-	@pip install -r requirements-docs.txt
 
 
 
