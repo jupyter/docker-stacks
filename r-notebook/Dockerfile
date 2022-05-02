@@ -52,7 +52,6 @@ RUN mamba install --quiet --yes \
     fix-permissions "/home/${NB_USER}"
 
 # `r-tidymodels` is not easy to install under arm
-# hadolint ignore=SC2039
 RUN set -x && \
     arch=$(uname -m) && \
     if [ "${arch}" == "x86_64" ]; then \
