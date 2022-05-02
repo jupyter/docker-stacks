@@ -169,7 +169,7 @@ jobs:
       - name: Install Dev Dependencies 📦
         run: |
           pip install --upgrade pip
-          pip install -r main/requirements-dev.txt
+          pip install -r requirements-dev.txt
 
       - name: Checkout Wiki Repo 📃
         uses: actions/checkout@v3
