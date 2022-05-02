@@ -91,6 +91,10 @@ ARG PYTHON_VERSION=3.9
 RUN mkdir "/home/${NB_USER}/work" && \
     fix-permissions "/home/${NB_USER}"
 
+# Prevent libmamba from sporadically hanging on arm64 under QEMU
+# <https://github.com/mamba-org/mamba/issues/1611>
+ENV G_SLICE=always-malloc
+
 # Download and install Micromamba, and initialize Conda prefix.
 #   <https://github.com/mamba-org/mamba#micromamba>
 #   Similar projects using Micromamba:

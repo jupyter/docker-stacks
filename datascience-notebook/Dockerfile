@@ -59,6 +59,10 @@ RUN mkdir /etc/julia && \
 
 USER ${NB_UID}
 
+# Prevent libmamba from sporadically hanging on arm64 under QEMU
+# <https://github.com/mamba-org/mamba/issues/1611>
+ENV G_SLICE=always-malloc
+
 # R packages including IRKernel which gets installed globally.
 # r-e1071: dependency of the caret R package
 RUN mamba install --quiet --yes \

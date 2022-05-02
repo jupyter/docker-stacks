@@ -25,6 +25,10 @@ RUN apt-get update --yes && \
 
 USER ${NB_UID}
 
+# Prevent libmamba from sporadically hanging on arm64 under QEMU
+# <https://github.com/mamba-org/mamba/issues/1611>
+ENV G_SLICE=always-malloc
+
 # Install Python 3 packages
 RUN mamba install --quiet --yes \
     'altair' \

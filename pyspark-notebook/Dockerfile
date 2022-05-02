@@ -60,6 +60,10 @@ RUN fix-permissions "/etc/ipython/"
 
 USER ${NB_UID}
 
+# Prevent libmamba from sporadically hanging on arm64 under QEMU
+# <https://github.com/mamba-org/mamba/issues/1611>
+ENV G_SLICE=always-malloc
+
 # Install pyarrow
 RUN mamba install --quiet --yes \
     'pyarrow' && \

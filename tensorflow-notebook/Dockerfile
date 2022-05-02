@@ -10,6 +10,10 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Prevent libmamba from sporadically hanging on arm64 under QEMU
+# <https://github.com/mamba-org/mamba/issues/1611>
+ENV G_SLICE=always-malloc
+
 # Install Tensorflow
 RUN mamba install --quiet --yes \
     'tensorflow' && \
