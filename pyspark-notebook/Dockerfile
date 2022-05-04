@@ -61,7 +61,13 @@ RUN fix-permissions "/etc/ipython/"
 USER ${NB_UID}
 
 # Install pyarrow
-RUN mamba install --quiet --yes \
+RUN arch=$(uname -m) && \
+    if [ "${arch}" == "aarch64" ]; then \
+        # Prevent libmamba from sporadically hanging on arm64 under QEMU
+        # <https://github.com/mamba-org/mamba/issues/1611>
+        export G_SLICE=always-malloc; \
+    fi && \
+    mamba install --quiet --yes \
     'pyarrow' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
