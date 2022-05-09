@@ -67,7 +67,7 @@ jobs:
       # https://github.com/docker/build-push-action/tree/master#usage
       # https://github.com/docker/build-push-action/blob/master/docs/advanced/multi-platform.md
       - name: Set up QEMU (for docker buildx) 🐳
-        uses: docker/setup-qemu-action@27d0a4f181a40b142cce983c5393082c365d1480 # dependabot updates to latest release
+        uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # dependabot updates to latest release
 
       - name: Set up Docker Buildx (for multi-arch builds) 🐳
         uses: docker/setup-buildx-action@f211e3e9ded2d9377c8cadc4489a4e38014bc4c9 # dependabot updates to latest release
