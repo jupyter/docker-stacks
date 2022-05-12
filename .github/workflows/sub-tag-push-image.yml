@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       imageName:
-        description: "Image name to be pushed"
+        description: "Image name to be built"
         required: true
         type: string
       platform:
@@ -17,7 +17,7 @@ on:
         type: string
 
 jobs:
-  test-image:
+  tag-push-images:
     runs-on: ${{ inputs.runsOn }}
     steps:
       - name: Checkout Repo ⚡️
