@@ -1,0 +1,23 @@
+name: "Build, push image"
+description: "Build and push image to GitHub artifacts"
+
+inputs:
+  imageName:
+    description: "Image name to be built"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build image 🛠
+      uses: docker/build-push-action@v3
+      with:
+        context: ${{ inputs.imageName }}/
+        file: ${{ inputs.imageName }}/Dockerfile
+        tags: jupyter/${{ inputs.imageName }}:latest
+        outputs: type=docker,dest=/tmp/${{ inputs.imageName }}.tar
+    - name: Upload artifact 💾
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.imageName }}
+        path: /tmp/${{ inputs.imageName }}.tar

@@ -7,7 +7,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/build-docker.yml"
-      - ".github/actions/create-dev-env/**"
+      - ".github/actions/**"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
@@ -27,7 +27,7 @@ on:
       - master
     paths:
       - ".github/workflows/build-docker.yml"
-      - ".github/actions/create-dev-env/**"
+      - ".github/actions/**"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
@@ -61,17 +61,9 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
       - name: Build image 🛠
-        uses: docker/build-push-action@v3
+        uses: ./.github/actions/build-push-image
         with:
-          context: base-notebook/
-          file: base-notebook/Dockerfile
-          tags: jupyter/base-notebook:latest
-          outputs: type=docker,dest=/tmp/base-notebook.tar
-      - name: Upload artifact 💾
-        uses: actions/upload-artifact@v3
-        with:
-          name: base-notebook
-          path: /tmp/base-notebook.tar
+          imageName: base-notebook
 
   test-base-notebook:
     name: Test base-notebook
