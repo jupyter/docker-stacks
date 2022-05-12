@@ -27,8 +27,9 @@ def test_package_manager(
     LOGGER.info(
         f"Test that the package manager {package_manager} is working properly ..."
     )
+    # Increased timout to make aarch64 images tests work in QEMU
     container.run_and_wait(
-        timeout=5,
+        timeout=30,
         tty=True,
         command=["start.sh", "bash", "-c", f"{package_manager} {version_arg}"],
     )
