@@ -3,8 +3,8 @@ name: Download image artifact from GitHub artifacts, tag it and push to DockerHu
 on:
   workflow_call:
     inputs:
-      imageName:
-        description: "Image name to be pushed"
+      image:
+        description: "Image name"
         required: true
         type: string
       platform:
@@ -12,7 +12,7 @@ on:
         required: true
         type: string
       runsOn:
-        description: "Image to be run on"
+        description: "GitHub Actions Runner image"
         required: true
         type: string
 
@@ -26,18 +26,13 @@ jobs:
         uses: ./.github/actions/create-dev-env
 
       - name: Download built image 📥
-        uses: actions/download-artifact@v3
+        uses: ./.github/actions/create-dev-env
         with:
-          name: ${{ inputs.imageName }}-${{ inputs.platform }}
-          path: /tmp/
-      - name: Load downloaded image to docker 📥
-        run: |
-          docker load --input /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
-          docker image ls -a
-        shell: bash
+          image: ${{ inputs.image }}
+          platform: ${{ inputs.platform }}
 
       - name: Create tags and manifest 🏷
-        run: python3 -m tagging.tag_image --short-image-name ${{ inputs.imageName }}
+        run: python3 -m tagging.tag_image --short-image-name ${{ inputs.image }}
         shell: bash
 
       - name: Login to Docker Hub 🔐
@@ -49,5 +44,5 @@ jobs:
 
       - name: Push Images to Docker Hub 📤
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: docker push --all-tags jupyter/${{ inputs.imageName }}
+        run: docker push --all-tags jupyter/${{ inputs.image }}
         shell: bash

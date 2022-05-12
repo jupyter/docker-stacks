@@ -3,8 +3,8 @@ name: Download image artifact from GitHub artifacts and test it
 on:
   workflow_call:
     inputs:
-      imageName:
-        description: "Image name to be tested"
+      image:
+        description: "Image name"
         required: true
         type: string
       platform:
@@ -12,7 +12,7 @@ on:
         required: true
         type: string
       runsOn:
-        description: "Image to be run on"
+        description: "GitHub Actions Runner image"
         required: true
         type: string
 
@@ -26,16 +26,11 @@ jobs:
         uses: ./.github/actions/create-dev-env
 
       - name: Download built image 📥
-        uses: actions/download-artifact@v3
+        uses: ./.github/actions/create-dev-env
         with:
-          name: ${{ inputs.imageName }}-${{ inputs.platform }}
-          path: /tmp/
-      - name: Load downloaded image to docker 📥
-        run: |
-          docker load --input /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
-          docker image ls -a
-        shell: bash
+          image: ${{ inputs.image }}
+          platform: ${{ inputs.platform }}
 
       - name: Run tests ✅
-        run: python3 -m tests.run_tests --short-image-name ${{ inputs.imageName }}
+        run: python3 -m tests.run_tests --short-image-name ${{ inputs.image }}
         shell: bash

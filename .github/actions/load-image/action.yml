@@ -1,0 +1,28 @@
+name: "Load image"
+description: "Download image artifact and load it to docker"
+
+inputs:
+  image:
+    description: "Image name"
+    required: true
+    type: string
+  platform:
+    description: "Image platform"
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download built image 📥
+      if: ${{ inputs.image != '' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ inputs.image }}-${{ inputs.platform }}
+        path: /tmp/
+    - name: Load downloaded image to docker 📥
+      if: ${{ inputs.image != '' }}
+      run: |
+        docker load --input /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+        docker image ls -a
+      shell: bash

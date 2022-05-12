@@ -53,43 +53,43 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-amd64-base-notebook:
+  build-amd64-base:
     uses: ./.github/workflows/sub-build-push-image.yml
     with:
-      parentImageName: ""
-      imageName: base-notebook
+      parentImage: ""
+      image: base-notebook
       platform: amd64
       runsOn: ubuntu-latest
 
-  test-amd64-base-notebook:
-    needs: [build-amd64-base-notebook]
+  test-amd64-base:
+    needs: [build-amd64-base]
     uses: ./.github/workflows/sub-test-image.yml
     with:
-      imageName: base-notebook
+      image: base-notebook
       platform: amd64
       runsOn: ubuntu-latest
 
-  build-amd64-minimal-notebook:
-    needs: [build-amd64-base-notebook]
+  build-amd64-minimal:
+    needs: [build-amd64-base]
     uses: ./.github/workflows/sub-build-push-image.yml
     with:
-      parentImageName: base-notebook
-      imageName: minimal-notebook
+      parentImage: base-notebook
+      image: minimal-notebook
       platform: amd64
       runsOn: ubuntu-latest
 
-  test-amd64-minimal-notebook:
-    needs: [build-amd64-minimal-notebook]
+  test-amd64-minimal:
+    needs: [build-amd64-minimal]
     uses: ./.github/workflows/sub-test-image.yml
     with:
-      imageName: minimal-notebook
+      image: minimal-notebook
       platform: amd64
       runsOn: ubuntu-latest
 
   amd64-images-tag-push:
-    needs: [test-amd64-base-notebook, test-amd64-minimal-notebook]
+    needs: [test-amd64-base, test-amd64-minimal]
     uses: ./.github/workflows/sub-tag-push-image.yml
     with:
       platform: amd64
       runsOn: ubuntu-latest
-      imageName: base-notebook
+      image: base-notebook
