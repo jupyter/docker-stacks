@@ -8,19 +8,21 @@ from pathlib import Path
 
 
 def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
-    home_wiki_file = wiki_dir / "Home.md"
-    file = home_wiki_file.read_text(home_wiki_file)
+    wiki_home_file = wiki_dir / "Home.md"
 
+    wiki_home_content = wiki_home_file.read_text()
     build_history_line_files = artifacts_dir.rglob("**/*.txt")
     build_history_lines = "\n".join(
         hist_line_file.read_text() for hist_line_file in build_history_line_files
     )
     TABLE_BEGINNING = "|-|-|-|\n"
-    file = file.replace(TABLE_BEGINNING, TABLE_BEGINNING + build_history_lines + "\n")
-    home_wiki_file.write_text(file)
+    wiki_home_content = wiki_home_content.replace(
+        TABLE_BEGINNING, TABLE_BEGINNING + build_history_lines + "\n"
+    )
+    wiki_home_file.write_text(wiki_home_content)
 
-    for file in artifacts_dir.rglob("**/*.md"):
-        shutil.copy(file, wiki_dir / file.name)
+    for manifest_file in artifacts_dir.rglob("**/*.md"):
+        shutil.copy(manifest_file, wiki_dir / manifest_file.name)
 
 
 if __name__ == "__main__":
