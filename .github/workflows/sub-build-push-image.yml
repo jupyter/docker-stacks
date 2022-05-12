@@ -12,7 +12,7 @@ on:
         required: true
         type: string
       platform:
-        description: "Target platform for the built image"
+        description: "Image platform"
         required: true
         type: string
       runsOn:

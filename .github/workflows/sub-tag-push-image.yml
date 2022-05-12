@@ -4,11 +4,11 @@ on:
   workflow_call:
     inputs:
       imageName:
-        description: "Image name to be built"
+        description: "Image name to be pushed"
         required: true
         type: string
       platform:
-        description: "Target platform for the built image"
+        description: "Image platform"
         required: true
         type: string
       runsOn:
