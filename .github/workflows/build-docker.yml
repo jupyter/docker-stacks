@@ -71,5 +71,5 @@ jobs:
       - name: Upload artifact 💾
         uses: actions/upload-artifact@v3
         with:
-          name: myimage
-          path: /tmp/myimage.tar
+          name: base-notebook
+          path: /tmp/image.tar
