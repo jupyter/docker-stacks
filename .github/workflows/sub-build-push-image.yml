@@ -15,10 +15,14 @@ on:
         description: "Target platform for the built image"
         required: true
         type: string
+      runsOn:
+        description: "Image to be run on"
+        required: true
+        type: string
 
 jobs:
   build-push-image:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runsOn }}
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
@@ -39,13 +43,13 @@ jobs:
         shell: bash
 
       - name: Build image 🛠
-        uses: docker/build-push-action@v3
-        with:
-          context: ${{ inputs.imageName }}/
-          file: ${{ inputs.imageName }}/Dockerfile
-          tags: jupyter/${{ inputs.imageName }}:latest
-          outputs: type=docker,dest=/tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
-          platforms: linux/${{ inputs.platform }}
+        working-directory: ${{ inputs.imageName }}
+        run: docker build --tag jupyter/${{ inputs.imageName }} --tag jupyter/${{ inputs.imageName }} .
+        shell: bash
+      - name: Save image as a file 💾
+        run: docker save jupyter/base-notebook -o /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
+        shell: bash
+
       - name: Upload artifact 💾
         uses: actions/upload-artifact@v3
         with:

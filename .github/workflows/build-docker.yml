@@ -59,6 +59,7 @@ jobs:
       parentImageName: ""
       imageName: base-notebook
       platform: amd64
+      runsOn: ubuntu-latest
 
   test-amd64-base-notebook:
     needs: [build-amd64-base-notebook]
@@ -66,6 +67,7 @@ jobs:
     with:
       imageName: base-notebook
       platform: amd64
+      runsOn: ubuntu-latest
 
   build-amd64-minimal-notebook:
     needs: [build-amd64-base-notebook]
@@ -74,6 +76,7 @@ jobs:
       parentImageName: base-notebook
       imageName: minimal-notebook
       platform: amd64
+      runsOn: ubuntu-latest
 
   test-amd64-minimal-notebook:
     needs: [build-amd64-minimal-notebook]
@@ -81,32 +84,4 @@ jobs:
     with:
       imageName: minimal-notebook
       platform: amd64
-
-  build-arm64-base-notebook:
-    uses: ./.github/workflows/sub-build-push-image.yml
-    with:
-      parentImageName: ""
-      imageName: base-notebook
-      platform: arm64
-
-  test-arm64-base-notebook:
-    needs: [build-arm64-base-notebook]
-    uses: ./.github/workflows/sub-test-image.yml
-    with:
-      imageName: base-notebook
-      platform: arm64
-
-  build-arm64-minimal-notebook:
-    needs: [build-arm64-base-notebook]
-    uses: ./.github/workflows/sub-build-push-image.yml
-    with:
-      parentImageName: base-notebook
-      imageName: minimal-notebook
-      platform: arm64
-
-  test-arm64-minimal-notebook:
-    needs: [build-arm64-minimal-notebook]
-    uses: ./.github/workflows/sub-test-image.yml
-    with:
-      imageName: minimal-notebook
-      platform: arm64
+      runsOn: ubuntu-latest
