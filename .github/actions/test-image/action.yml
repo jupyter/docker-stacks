@@ -18,5 +18,7 @@ runs:
       run: |
         docker load --input /tmp/${{ inputs.imageName }}.tar
         docker image ls -a
+      shell: bash
     - name: Run tests ✅
       run: python3 -m tests.run_tests --short-image-name ${{ inputs.imageName }}
+      shell: bash
