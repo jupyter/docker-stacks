@@ -50,17 +50,10 @@ concurrency:
 
 jobs:
   build-base-notebook:
-    name: Build base-notebook
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
-
-      - name: Build and push image as GitHub artifact 🛠
-        uses: ./.github/workflows/sub-build-push-image.yml
-        with:
-          imageName: base-notebook
-          parentImageName: ""
+    uses: ./.github/workflows/sub-build-push-image.yml
+    with:
+      imageName: base-notebook
+      parentImageName: ""
 
   test-base-notebook:
     name: Test base-notebook

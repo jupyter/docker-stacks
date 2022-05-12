@@ -13,7 +13,10 @@ on:
 jobs:
   build-push-image:
     name: Build and push image to GitHub artifacts
+    runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
