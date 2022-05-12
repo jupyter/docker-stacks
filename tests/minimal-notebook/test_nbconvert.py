@@ -33,7 +33,7 @@ def test_nbconvert(
     )
     command = f"jupyter nbconvert {cont_data_dir}/{test_file}.ipynb --output-dir {output_dir} --to {output_format}"
     logs = container.run_and_wait(
-        timeout=60,
+        timeout=120,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
