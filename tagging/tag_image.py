@@ -3,19 +3,24 @@
 # Distributed under the terms of the Modified BSD License.
 import argparse
 import logging
+import platform
 
 import plumbum
 
 from tagging.docker_runner import DockerRunner
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
-from tagging.github_set_env import github_set_env
 
 docker = plumbum.local["docker"]
 
 LOGGER = logging.getLogger(__name__)
 
 
-def tag_image(short_image_name: str, owner: str) -> None:
+def get_tags_prefix() -> str:
+    machine = platform.machine()
+    return "" if machine == "x86_64" else f"{machine}-"
+
+
+def tag_image(short_image_name: str, owner: str, tags_prefix: str) -> None:
     """
     Tags <owner>/<short_image_name>:latest with the tags reported by all taggers
     for the given image.
@@ -29,22 +34,19 @@ def tag_image(short_image_name: str, owner: str) -> None:
     image = f"{owner}/{short_image_name}:latest"
 
     with DockerRunner(image) as container:
-        tags = []
         for tagger in taggers:
             tagger_name = tagger.__class__.__name__
             tag_value = tagger.tag_value(container)
-            tags.append(tag_value)
             LOGGER.info(
                 f"Applying tag, tagger_name: {tagger_name} tag_value: {tag_value}"
             )
-            docker["tag", image, f"{owner}/{short_image_name}:{tag_value}"]()
-
-        if tags:
-            env_name = f'{short_image_name.replace("-", "_")}_EXTRA_TAG_ARGS'
-            docker_build_tag_args = " ".join(
-                [f"-t {owner}/{short_image_name}:{tag}" for tag in tags]
-            )
-            github_set_env(env_name, docker_build_tag_args)
+            docker[
+                "tag", image, f"{owner}/{short_image_name}:{tags_prefix}{tag_value}"
+            ]()
+    if tags_prefix != "":
+        LOGGER.info("Changing :latest tag to include tags_prefix")
+        docker["tag", image, f"{owner}/{short_image_name}:{tags_prefix}latest"]()
+        docker["rmi", image]()
 
 
 if __name__ == "__main__":
@@ -59,4 +61,7 @@ if __name__ == "__main__":
     arg_parser.add_argument("--owner", default="jupyter", help="Owner of the image")
     args = arg_parser.parse_args()
 
-    tag_image(args.short_image_name, args.owner)
+    tags_prefix = get_tags_prefix()
+    LOGGER.info(f"Using: {tags_prefix=}")
+
+    tag_image(args.short_image_name, args.owner, tags_prefix)
