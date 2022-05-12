@@ -49,27 +49,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-base-notebook:
+  build-amd64-base-notebook:
     uses: ./.github/workflows/sub-build-push-image.yml
     with:
-      imageName: base-notebook
       parentImageName: ""
+      imageName: base-notebook
+      platform: amd64
 
-  test-base-notebook:
+  test-amd64-base-notebook:
     needs: [build-base-notebook]
     uses: ./.github/workflows/sub-test-image.yml
     with:
       imageName: base-notebook
+      platform: amd64
 
-  build-minimal-notebook:
+  build-amd64-minimal-notebook:
     needs: [build-base-notebook]
     uses: ./.github/workflows/sub-build-push-image.yml
     with:
-      imageName: minimal-notebook
       parentImageName: base-notebook
+      imageName: minimal-notebook
+      platform: amd64
 
-  test-minimal-notebook:
+  test-amd64-minimal-notebook:
     needs: [build-minimal-notebook]
     uses: ./.github/workflows/sub-test-image.yml
     with:
       imageName: minimal-notebook
+      platform: amd64

@@ -11,6 +11,13 @@ on:
         description: "Parent image name"
         required: true
         type: string
+      platform:
+        description: "Target platform for the built image"
+        required: true
+        type: choice
+        options:
+          - amd64
+          - arm64
 
 jobs:
   build-push-image:
@@ -25,12 +32,12 @@ jobs:
         if: ${{ inputs.parentImageName != '' }}
         uses: actions/download-artifact@v3
         with:
-          name: ${{ inputs.parentImageName }}
+          name: ${{ inputs.parentImageName }}-${{ inputs.platform }}
           path: /tmp/
       - name: Load downloaded image to docker 📥
         if: ${{ inputs.parentImageName != '' }}
         run: |
-          docker load --input /tmp/${{ inputs.parentImageName }}.tar
+          docker load --input /tmp/${{ inputs.parentImageName }}-${{ inputs.platform }}.tar
           docker image ls -a
         shell: bash
 
@@ -40,9 +47,10 @@ jobs:
           context: ${{ inputs.imageName }}/
           file: ${{ inputs.imageName }}/Dockerfile
           tags: jupyter/${{ inputs.imageName }}:latest
-          outputs: type=docker,dest=/tmp/${{ inputs.imageName }}.tar
+          outputs: type=docker,dest=/tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
+          platform: linux/${{ inputs.platform }}
       - name: Upload artifact 💾
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.imageName }}
-          path: /tmp/${{ inputs.imageName }}.tar
+          name: ${{ inputs.imageName }}-${{ inputs.platform }}
+          path: /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar

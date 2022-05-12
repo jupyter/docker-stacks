@@ -7,6 +7,13 @@ on:
         description: "Image name to be tested"
         required: true
         type: string
+      platform:
+        description: "Target platform for the built image"
+        required: true
+        type: choice
+        options:
+          - amd64
+          - arm64
 
 jobs:
   test-image:
@@ -20,11 +27,11 @@ jobs:
       - name: Download built image 📥
         uses: actions/download-artifact@v3
         with:
-          name: ${{ inputs.imageName }}
+          name: ${{ inputs.imageName }}-${{ inputs.platform }}
           path: /tmp/
       - name: Load downloaded image to docker 📥
         run: |
-          docker load --input /tmp/${{ inputs.imageName }}.tar
+          docker load --input /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
           docker image ls -a
         shell: bash
 
