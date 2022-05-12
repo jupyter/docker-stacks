@@ -46,12 +46,12 @@ jobs:
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-manifest
+          name: ${{ matrix.image }}-${{ inputs.platform }}-manifest
           path: /tmp/manifests/*.md
       - name: Upload build history line 💾
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-history_line
+          name: ${{ matrix.image }}-${{ inputs.platform }}-history_line
           path: /tmp/build_history_lines/*.txt
 
       - name: Login to Docker Hub 🔐
