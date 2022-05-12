@@ -45,8 +45,7 @@ jobs:
           file: ${{ inputs.imageName }}/Dockerfile
           tags: jupyter/${{ inputs.imageName }}:latest
           outputs: type=docker,dest=/tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
-          platforms:
-            - linux/${{ inputs.platform }}
+          platforms: linux/${{ inputs.platform }}
       - name: Upload artifact 💾
         uses: actions/upload-artifact@v3
         with:
