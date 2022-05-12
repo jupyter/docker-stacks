@@ -25,7 +25,7 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      - name: Download built image 📥
+      - name: Load image to docker 📥
         uses: ./.github/actions/load-image
         with:
           image: ${{ inputs.image }}

@@ -22,7 +22,7 @@ jobs:
 
     strategy:
       matrix:
-        image: ${{fromJson(inputs.images)}}
+        image: ${{ fromJson(inputs.images) }}
 
     steps:
       - name: Checkout Repo ⚡️
@@ -30,7 +30,7 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      - name: Download built image 📥
+      - name: Load image to docker 📥
         uses: ./.github/actions/load-image
         with:
           image: ${{ matrix.image }}

@@ -29,7 +29,7 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      - name: Download parent built image 📥
+      - name: Load parent built image to docker 📥
         if: ${{ inputs.parentImage != '' }}
         uses: ./.github/actions/load-image
         with:
