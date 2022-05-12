@@ -8,7 +8,7 @@ on:
     paths:
       - ".github/workflows/build-docker.yml"
       - ".github/workflows/sub-build-upload-image.yml"
-      - ".github/workflows/sub-test-image.yml"
+      - ".github/workflows/sub-test-images.yml"
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
 
@@ -31,7 +31,7 @@ on:
     paths:
       - ".github/workflows/build-docker.yml"
       - ".github/workflows/sub-build-upload-image.yml"
-      - ".github/workflows/sub-test-image.yml"
+      - ".github/workflows/sub-test-images.yml"
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
 
@@ -82,7 +82,7 @@ jobs:
 
   test-amd64-minimal:
     needs: [build-amd64-minimal]
-    uses: ./.github/workflows/sub-test-image.yml
+    uses: ./.github/workflows/sub-test-images.yml
     with:
       image: minimal-notebook
       platform: amd64
@@ -94,4 +94,8 @@ jobs:
     with:
       platform: amd64
       runsOn: ubuntu-latest
-      image: base-notebook
+      # https://docs.github.com/en/actions/using-workflows/reusing-workflows#limitations
+      # The strategy property is not supported in any job that calls a reusable workflow
+      # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
+      images: >-
+        ["base-notebook", "minimal-notebook"]

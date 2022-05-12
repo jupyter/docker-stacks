@@ -3,8 +3,8 @@ name: Download image artifact from GitHub artifacts, tag it and push to DockerHu
 on:
   workflow_call:
     inputs:
-      image:
-        description: "Image name"
+      images:
+        description: "Stringified JSON object listing image names"
         required: true
         type: string
       platform:
@@ -19,6 +19,11 @@ on:
 jobs:
   tag-push-images:
     runs-on: ${{ inputs.runsOn }}
+
+    strategy:
+      matrix:
+        image: ${{fromJson(inputs.images)}}
+
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
@@ -28,11 +33,11 @@ jobs:
       - name: Download built image 📥
         uses: ./.github/actions/load-image
         with:
-          image: ${{ inputs.image }}
+          image: ${{ matrix.image }}
           platform: ${{ inputs.platform }}
 
-      - name: Create tags and manifest 🏷
-        run: python3 -m tagging.tag_image --short-image-name ${{ inputs.image }}
+      - name: Create tags 🏷
+        run: python3 -m tagging.tag_image --short-image-name ${{ matrix.image }}
         shell: bash
 
       - name: Login to Docker Hub 🔐
@@ -44,5 +49,5 @@ jobs:
 
       - name: Push Images to Docker Hub 📤
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: docker push --all-tags jupyter/${{ inputs.image }}
+        run: docker push --all-tags jupyter/${{ matrix.image }}
         shell: bash
