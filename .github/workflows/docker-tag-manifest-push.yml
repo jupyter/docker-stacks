@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.image }}-${{ inputs.platform }}-history_line
-          path: /tmp/build_history_lines/*.txt
+          path: /tmp/hist_lines/*.txt
 
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
