@@ -75,25 +75,25 @@ jobs:
       platform: amd64
       runsOn: ubuntu-latest
 
-  build-amd64-minimal:
-    needs: [build-amd64-base]
-    uses: ./.github/workflows/docker-build-upload.yml
-    with:
-      parentImage: base-notebook
-      image: minimal-notebook
-      platform: amd64
-      runsOn: ubuntu-latest
+  # build-amd64-minimal:
+  #   needs: [build-amd64-base]
+  #   uses: ./.github/workflows/docker-build-upload.yml
+  #   with:
+  #     parentImage: base-notebook
+  #     image: minimal-notebook
+  #     platform: amd64
+  #     runsOn: ubuntu-latest
 
-  test-amd64-minimal:
-    needs: [build-amd64-minimal]
-    uses: ./.github/workflows/docker-test.yml
-    with:
-      image: minimal-notebook
-      platform: amd64
-      runsOn: ubuntu-latest
+  # test-amd64-minimal:
+  #   needs: [build-amd64-minimal]
+  #   uses: ./.github/workflows/docker-test.yml
+  #   with:
+  #     image: minimal-notebook
+  #     platform: amd64
+  #     runsOn: ubuntu-latest
 
   amd64-images-tag-push:
-    needs: [test-amd64-base, test-amd64-minimal]
+    needs: [test-amd64-base]
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: amd64
@@ -102,4 +102,4 @@ jobs:
       # The strategy property is not supported in any job that calls a reusable workflow
       # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
       images: >-
-        ["base-notebook", "minimal-notebook"]
+        ["base-notebook"]
