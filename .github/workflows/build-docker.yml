@@ -56,16 +56,7 @@ jobs:
       parentImageName: ""
 
   test-base-notebook:
-    name: Test base-notebook
-    runs-on: ubuntu-latest
     needs: [build-base-notebook]
-    steps:
-      - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
-      - name: Create dev environment 📦
-        uses: ./.github/actions/create-dev-env
-
-      - name: Pull image from GitHub artifacts and test it 🛠
-        uses: ./.github/actions/test-image
-        with:
-          imageName: base-notebook
+    uses: ./.github/workflows/sub-test-image.yml
+    with:
+      imageName: base-notebook

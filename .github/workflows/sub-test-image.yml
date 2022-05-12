@@ -1,0 +1,25 @@
+name: Download image artifact from GitHub artifacts and test it
+
+inputs:
+  imageName:
+    description: "Image name to be tested"
+    required: true
+    type: string
+
+jobs:
+  test-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download built image 📥
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.imageName }}
+          path: /tmp/
+      - name: Load downloaded image to docker 📥
+        run: |
+          docker load --input /tmp/${{ inputs.imageName }}.tar
+          docker image ls -a
+        shell: bash
+      - name: Run tests ✅
+        run: python3 -m tests.run_tests --short-image-name ${{ inputs.imageName }}
+        shell: bash

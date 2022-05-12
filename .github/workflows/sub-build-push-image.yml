@@ -14,7 +14,6 @@ on:
 
 jobs:
   build-push-image:
-    name: Build and push image to GitHub artifacts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo ⚡️
