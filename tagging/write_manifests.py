@@ -79,7 +79,7 @@ def write_manifests(short_image_name: str, owner: str) -> None:
 
     with DockerRunner(image) as container:
         all_tags = [tags_prefix + tagger.tag_value(container) for tagger in taggers]
-        write_build_history_line(short_image_name, owner, all_tags)
+        write_build_history_line(short_image_name, owner, manifest_filename, all_tags)
         write_manifest_file(
             short_image_name, owner, manifest_filename, manifests, container
         )
