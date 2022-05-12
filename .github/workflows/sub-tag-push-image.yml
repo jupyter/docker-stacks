@@ -1,0 +1,53 @@
+name: Download image artifact from GitHub artifacts, tag it and push to DockerHub
+
+on:
+  workflow_call:
+    inputs:
+      imageName:
+        description: "Image name to be pushed"
+        required: true
+        type: string
+      platform:
+        description: "Target platform for the built image"
+        required: true
+        type: string
+      runsOn:
+        description: "Image to be run on"
+        required: true
+        type: string
+
+jobs:
+  test-image:
+    runs-on: ${{ inputs.runsOn }}
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+      - name: Create dev environment 📦
+        uses: ./.github/actions/create-dev-env
+
+      - name: Download built image 📥
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.imageName }}-${{ inputs.platform }}
+          path: /tmp/
+      - name: Load downloaded image to docker 📥
+        run: |
+          docker load --input /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
+          docker image ls -a
+        shell: bash
+
+      - name: Create tags and manifest 🏷
+        run: python3 -m tagging.tag_image --short-image-name ${{ inputs.imageName }}
+        shell: bash
+
+      - name: Login to Docker Hub 🔐
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Images to Docker Hub 📤
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        run: docker push --all-tags jupyter/${{ inputs.imageName }}
+        shell: bash
