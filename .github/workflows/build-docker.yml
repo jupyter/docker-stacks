@@ -62,6 +62,7 @@ jobs:
         uses: ./.github/actions/build-push-image
         with:
           imageName: base-notebook
+          parentImageName: ""
 
   test-base-notebook:
     name: Test base-notebook

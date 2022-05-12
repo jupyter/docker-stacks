@@ -5,10 +5,25 @@ inputs:
   imageName:
     description: "Image name to be built"
     required: true
+  parentImageName:
+    description: "Parent image name"
 
 runs:
   using: "composite"
   steps:
+    - name: Download parent built image 📥
+      if: ${{ inputs.parentImageName != '' }}
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ inputs.parentImageName }}
+        path: /tmp/
+    - name: Load downloaded image to docker 📥
+      if: ${{ inputs.parentImageName != '' }}
+      run: |
+        docker load --input /tmp/${{ inputs.parentImageName }}.tar
+        docker image ls -a
+      shell: bash
+
     - name: Build image 🛠
       uses: docker/build-push-action@v3
       with:
