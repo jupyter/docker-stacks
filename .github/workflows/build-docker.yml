@@ -60,3 +60,15 @@ jobs:
     uses: ./.github/workflows/sub-test-image.yml
     with:
       imageName: base-notebook
+
+  build-minimal-notebook:
+    uses: ./.github/workflows/sub-build-push-image.yml
+    with:
+      imageName: minimal-notebook
+      parentImageName: base-notebook
+
+  test-minimal-notebook:
+    needs: [build-minimal-notebook]
+    uses: ./.github/workflows/sub-test-image.yml
+    with:
+      imageName: minimal-notebook
