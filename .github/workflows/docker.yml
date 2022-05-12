@@ -97,7 +97,7 @@ jobs:
       - name: Checkout Wiki Repo 📃
         uses: actions/checkout@v3
         with:
-          repository: ${{github.repository}}.wiki
+          repository: ${{ github.repository }}.wiki
           path: wiki/
 
       - name: Create tags and manifest 🏷
@@ -107,15 +107,15 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: stefanzweifel/git-auto-commit-action@49620cd3ed21ee620a48530e81dba0d139c9cb80 # dependabot updates to latest release
         with:
-          commit_message: "Automated wiki publish for ${{github.sha}}"
+          commit_message: "Automated wiki publish for ${{ github.sha }}"
           repository: wiki/
 
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
         with:
-          username: ${{secrets.DOCKERHUB_USERNAME}}
-          password: ${{secrets.DOCKERHUB_TOKEN}}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Images to Docker Hub 📤
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
