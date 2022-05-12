@@ -1,0 +1,61 @@
+name: Build and test Docker Images
+
+on:
+  schedule:
+    # Weekly, at 03:00 on Monday UTC time
+    - cron: "0 3 * * 1"
+  pull_request:
+    paths:
+      - ".github/workflows/build-docker.yml"
+
+      - "all-spark-notebook/**"
+      - "base-notebook/**"
+      - "datascience-notebook/**"
+      - "minimal-notebook/**"
+      - "pyspark-notebook/**"
+      - "r-notebook/**"
+      - "scipy-notebook/**"
+      - "tensorflow-notebook/**"
+
+      - "tagging/**"
+      - "tests/**"
+      - "requirements-dev.txt"
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - ".github/workflows/build-docker.yml"
+
+      - "all-spark-notebook/**"
+      - "base-notebook/**"
+      - "datascience-notebook/**"
+      - "minimal-notebook/**"
+      - "pyspark-notebook/**"
+      - "r-notebook/**"
+      - "scipy-notebook/**"
+      - "tensorflow-notebook/**"
+
+      - "tagging/**"
+      - "tests/**"
+      - "requirements-dev.txt"
+  workflow_dispatch:
+
+# https://docs.github.com/en/actions/using-jobs/using-concurrency
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-base-notebook:
+    name: Build Base Notebook Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+      - name: Run custom action
+        # Use the location in the repository (without action.yml)
+        uses: ./.github/actions/create-dev-env
