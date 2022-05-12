@@ -41,7 +41,7 @@ jobs:
         shell: bash
 
       - name: Write manifest files 🏷
-        run: python3 -m tagging.write_manifests --short-image-name ${{ matrix.image }}
+        run: python3 -m tagging.write_manifests --short-image-name ${{ matrix.image }} --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/
         shell: bash
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v3

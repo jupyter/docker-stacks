@@ -24,7 +24,8 @@ MARKDOWN_LINE_BREAK = "<br />"
 def write_build_history_line(
     short_image_name: str,
     owner: str,
-    manifest_filename: str,
+    hist_line_dir: Path,
+    filename: str,
     all_tags: list[str],
 ) -> None:
     LOGGER.info("Appending build history line")
@@ -38,20 +39,19 @@ def write_build_history_line(
         [
             f"[Git diff](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
             f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/{short_image_name}/Dockerfile)",
-            f"[Build manifest](./{manifest_filename.removesuffix('.md')})",
+            f"[Build manifest](./{filename})",
         ]
     )
     build_history_line = "|".join([date_column, image_column, links_column]) + "|"
-    build_history_filename = manifest_filename.replace(".md", ".txt")
-    Path(f"/tmp/build_history_lines/{build_history_filename}").write_text(
-        build_history_line
-    )
+    hist_line_dir.mkdir(parents=True, exist_ok=True)
+    (hist_line_dir / f"{filename}.txt").write_text(build_history_line)
 
 
 def write_manifest_file(
     short_image_name: str,
     owner: str,
-    manifest_filename: str,
+    manifest_dir: Path,
+    filename: str,
     manifests: list[ManifestInterface],
     container: Container,
 ) -> None:
@@ -63,10 +63,16 @@ def write_manifest_file(
     ] + [manifest.markdown_piece(container) for manifest in manifests]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
-    Path(f"/tmp/manifests/{manifest_filename}").write_text(markdown_content)
+    manifest_dir.mkdir(parents=True, exist_ok=True)
+    (manifest_dir / f"{filename}.md").write_text(markdown_content)
 
 
-def write_manifests(short_image_name: str, owner: str) -> None:
+def write_manifests(
+    short_image_name: str,
+    owner: str,
+    hist_line_dir: Path,
+    manifest_dir: Path,
+) -> None:
     LOGGER.info(f"Creating manifests for image: {short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 
@@ -74,14 +80,15 @@ def write_manifests(short_image_name: str, owner: str) -> None:
 
     tags_prefix = get_tags_prefix()
     commit_hash_tag = GitHelper.commit_hash_tag()
-    filename = f"{tags_prefix}{short_image_name}-{commit_hash_tag}.md"
-    manifest_filename = f"{filename}.md"
+    filename = f"{tags_prefix}{short_image_name}-{commit_hash_tag}"
 
     with DockerRunner(image) as container:
         all_tags = [tags_prefix + tagger.tag_value(container) for tagger in taggers]
-        write_build_history_line(short_image_name, owner, manifest_filename, all_tags)
+        write_build_history_line(
+            short_image_name, owner, hist_line_dir, filename, all_tags
+        )
         write_manifest_file(
-            short_image_name, owner, manifest_filename, manifests, container
+            short_image_name, owner, manifest_dir, filename, manifests, container
         )
 
 
@@ -94,9 +101,23 @@ if __name__ == "__main__":
         required=True,
         help="Short image name to create manifests for",
     )
+    arg_parser.add_argument(
+        "--hist-line-dir",
+        required=True,
+        type=Path,
+        help="Directory to save history line",
+    )
+    arg_parser.add_argument(
+        "--manifest-dir",
+        required=True,
+        type=Path,
+        help="Directory to save manifest file",
+    )
     arg_parser.add_argument("--owner", default="jupyter", help="Owner of the image")
     args = arg_parser.parse_args()
 
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
-    write_manifests(args.short_image_name, args.owner)
+    write_manifests(
+        args.short_image_name, args.owner, args.hist_line_dir, args.manifest_dir
+    )
