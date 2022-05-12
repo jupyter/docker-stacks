@@ -26,7 +26,7 @@ jobs:
         uses: ./.github/actions/create-dev-env
 
       - name: Download built image 📥
-        uses: ./.github/actions/create-dev-env
+        uses: ./.github/actions/load-image
         with:
           image: ${{ inputs.image }}
           platform: ${{ inputs.platform }}
