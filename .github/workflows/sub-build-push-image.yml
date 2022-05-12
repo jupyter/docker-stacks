@@ -8,6 +8,7 @@ on:
         required: true
       parentImageName:
         description: "Parent image name"
+        required: true
 
 jobs:
   build-push-image:
