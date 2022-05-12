@@ -9,7 +9,7 @@ from pathlib import Path
 
 def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
     home_wiki_file = wiki_dir / "Home.md"
-    file = home_wiki_file.read(home_wiki_file)
+    file = home_wiki_file.read_text(home_wiki_file)
 
     build_history_line_files = artifacts_dir.rglob("**/*.txt")
     build_history_lines = "\n".join(
@@ -17,7 +17,7 @@ def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
     )
     TABLE_BEGINNING = "|-|-|-|\n"
     file = file.replace(TABLE_BEGINNING, TABLE_BEGINNING + build_history_lines + "\n")
-    home_wiki_file.write(file)
+    home_wiki_file.write_text(file)
 
     for file in artifacts_dir.rglob("**/*.md"):
         shutil.copy(file, wiki_dir / file.name)
