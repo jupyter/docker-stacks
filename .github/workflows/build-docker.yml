@@ -55,11 +55,9 @@ jobs:
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
-      - name: Create dev environment 📦
-        uses: ./.github/actions/create-dev-env
 
       - name: Build and push image as GitHub artifact 🛠
-        uses: ./.github/actions/build-push-image
+        uses: ./.github/workflows/sub-build-push-image.yml
         with:
           imageName: base-notebook
           parentImageName: ""

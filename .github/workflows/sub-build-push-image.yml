@@ -1,0 +1,44 @@
+name: "Build, push image"
+description: "Build and push image to GitHub artifacts"
+
+on:
+  workflow_call:
+    inputs:
+      imageName:
+        description: "Image name to be built"
+        required: true
+      parentImageName:
+        description: "Parent image name"
+
+jobs:
+  build-push-image:
+    name: Build and push image to GitHub artifacts
+    steps:
+      - name: Create dev environment 📦
+        uses: ./.github/actions/create-dev-env
+
+      - name: Download parent built image 📥
+        if: ${{ inputs.parentImageName != '' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.parentImageName }}
+          path: /tmp/
+      - name: Load downloaded image to docker 📥
+        if: ${{ inputs.parentImageName != '' }}
+        run: |
+          docker load --input /tmp/${{ inputs.parentImageName }}.tar
+          docker image ls -a
+        shell: bash
+
+      - name: Build image 🛠
+        uses: docker/build-push-action@v3
+        with:
+          context: ${{ inputs.imageName }}/
+          file: ${{ inputs.imageName }}/Dockerfile
+          tags: jupyter/${{ inputs.imageName }}:latest
+          outputs: type=docker,dest=/tmp/${{ inputs.imageName }}.tar
+      - name: Upload artifact 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.imageName }}
+          path: /tmp/${{ inputs.imageName }}.tar
