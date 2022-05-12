@@ -10,6 +10,7 @@ on:
       - ".github/workflows/docker-build-upload.yml"
       - ".github/workflows/docker-test.yml"
       - ".github/workflows/docker-tag-manifest-push.yml"
+      - ".github/workflows/docker-wiki.yml"
 
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
@@ -35,6 +36,7 @@ on:
       - ".github/workflows/docker-build-upload.yml"
       - ".github/workflows/docker-test.yml"
       - ".github/workflows/docker-tag-manifest-push.yml"
+      - ".github/workflows/docker-wiki.yml"
 
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
