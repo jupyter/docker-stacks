@@ -1,10 +1,12 @@
 name: Download image artifact from GitHub artifacts and test it
 
-inputs:
-  imageName:
-    description: "Image name to be tested"
-    required: true
-    type: string
+on:
+  workflow_call:
+    inputs:
+      imageName:
+        description: "Image name to be tested"
+        required: true
+        type: string
 
 jobs:
   test-image:
