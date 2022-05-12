@@ -40,6 +40,20 @@ jobs:
         run: python3 -m tagging.tag_image --short-image-name ${{ matrix.image }}
         shell: bash
 
+      - name: Write manifest files 🏷
+        run: python3 -m tagging.write_manifests --short-image-name ${{ matrix.image }}
+        shell: bash
+      - name: Upload manifest file 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.image }}-${{ inputs.platform }}-manifest
+          path: /tmp/manifests/*.md
+      - name: Upload build history line 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.image }}-${{ inputs.platform }}-history_line
+          path: /tmp/build_history_lines/*.txt
+
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release

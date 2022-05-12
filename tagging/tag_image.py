@@ -3,21 +3,16 @@
 # Distributed under the terms of the Modified BSD License.
 import argparse
 import logging
-import platform
 
 import plumbum
 
 from tagging.docker_runner import DockerRunner
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
+from tagging.tags_prefix import get_tags_prefix
 
 docker = plumbum.local["docker"]
 
 LOGGER = logging.getLogger(__name__)
-
-
-def get_tags_prefix() -> str:
-    machine = platform.machine()
-    return "" if machine == "x86_64" else f"{machine}-"
 
 
 def tag_image(short_image_name: str, owner: str, tags_prefix: str) -> None:
@@ -62,6 +57,5 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
 
     tags_prefix = get_tags_prefix()
-    LOGGER.info(f"Using: {tags_prefix=}")
 
     tag_image(args.short_image_name, args.owner, tags_prefix)

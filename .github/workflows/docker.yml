@@ -9,7 +9,7 @@ on:
       - ".github/workflows/docker.yml"
       - ".github/workflows/docker-build-upload.yml"
       - ".github/workflows/docker-test.yml"
-      - ".github/workflows/docker-tag-push.yml"
+      - ".github/workflows/docker-tag-manifest-push.yml"
 
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
@@ -34,7 +34,7 @@ on:
       - ".github/workflows/docker.yml"
       - ".github/workflows/docker-build-upload.yml"
       - ".github/workflows/docker-test.yml"
-      - ".github/workflows/docker-tag-push.yml"
+      - ".github/workflows/docker-tag-manifest-push.yml"
 
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
@@ -94,7 +94,7 @@ jobs:
 
   amd64-images-tag-push:
     needs: [test-amd64-base, test-amd64-minimal]
-    uses: ./.github/workflows/docker-tag-push.yml
+    uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: amd64
       runsOn: ubuntu-latest
