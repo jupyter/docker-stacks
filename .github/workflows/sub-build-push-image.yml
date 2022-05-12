@@ -1,5 +1,4 @@
-name: "Build, push image"
-description: "Build and push image to GitHub artifacts"
+name: Download parent image, build new one, push it to GitHub artifacts
 
 on:
   workflow_call:
