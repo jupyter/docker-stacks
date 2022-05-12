@@ -12,6 +12,11 @@ jobs:
   test-image:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+      - name: Create dev environment 📦
+        uses: ./.github/actions/create-dev-env
+
       - name: Download built image 📥
         uses: actions/download-artifact@v3
         with:
@@ -22,6 +27,7 @@ jobs:
           docker load --input /tmp/${{ inputs.imageName }}.tar
           docker image ls -a
         shell: bash
+
       - name: Run tests ✅
         run: python3 -m tests.run_tests --short-image-name ${{ inputs.imageName }}
         shell: bash
