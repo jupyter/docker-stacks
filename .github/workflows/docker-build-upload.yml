@@ -38,7 +38,7 @@ jobs:
 
       - name: Build image 🛠
         working-directory: ${{ inputs.image }}
-        run: docker build --tag jupyter/${{ inputs.image }} --tag jupyter/${{ inputs.image }} .
+        run: docker build --tag jupyter/${{ inputs.image }} .
         env:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build
