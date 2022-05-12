@@ -6,10 +6,13 @@ import logging
 import shutil
 from pathlib import Path
 
+LOGGER = logging.getLogger(__name__)
+
 
 def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
-    wiki_home_file = wiki_dir / "Home.md"
+    LOGGER.info("Updating wiki page")
 
+    wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
     build_history_line_files = artifacts_dir.rglob("**/*.txt")
     build_history_lines = "\n".join(
@@ -20,9 +23,11 @@ def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
         TABLE_BEGINNING, TABLE_BEGINNING + build_history_lines + "\n"
     )
     wiki_home_file.write_text(wiki_home_content)
+    LOGGER.info("Wiki home file updated")
 
     for manifest_file in artifacts_dir.rglob("**/*.md"):
-        shutil.copy(manifest_file, wiki_dir / manifest_file.name)
+        shutil.copy(manifest_file, wiki_dir / "manifests" / manifest_file.name)
+        LOGGER.info(f"Manifest file added: {manifest_file.name}")
 
 
 if __name__ == "__main__":
