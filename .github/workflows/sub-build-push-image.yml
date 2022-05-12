@@ -6,9 +6,11 @@ on:
       imageName:
         description: "Image name to be built"
         required: true
+        type: string
       parentImageName:
         description: "Parent image name"
         required: true
+        type: string
 
 jobs:
   build-push-image:
