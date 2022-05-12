@@ -20,7 +20,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: /tmp/artifacts/
-      - name: Display structure of downloaded files
+      - name: Display structure of downloaded files 🔍️
         run: ls -R /tmp/artifacts/
         shell: bash
 
@@ -31,7 +31,7 @@ jobs:
           path: wiki/
 
       - name: Update wiki page 🏷
-        run: python3 -m tests.update_wiki_page --wiki-dir wiki/ --artifacts-dir /tmp/artifacts/
+        run: python3 -m tagging.update_wiki_page --wiki-dir wiki/ --artifacts-dir /tmp/artifacts/
         shell: bash
 
       - name: Push Wiki to GitHub 📤
