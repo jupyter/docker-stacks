@@ -57,7 +57,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
-      - name: Build image 🛠
+
+      - name: Build and push image as GitHub artifact 🛠
         uses: ./.github/actions/build-push-image
         with:
           imageName: base-notebook
@@ -71,14 +72,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
-      - name: Download built image 📥
-        uses: actions/download-artifact@v3
+
+      - name: Pull image from GitHub artifacts and test it 🛠
+        uses: ./.github/actions/test-image
         with:
-          name: base-notebook
-          path: /tmp/
-      - name: Load downloaded image to docker 📥
-        run: |
-          docker load --input /tmp/base-notebook.tar
-          docker image ls -a
-      - name: Run tests ✅
-        run: python3 -m tests.run_tests --short-image-name base-notebook
+          imageName: base-notebook
