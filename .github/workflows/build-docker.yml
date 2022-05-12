@@ -62,6 +62,7 @@ jobs:
       imageName: base-notebook
 
   build-minimal-notebook:
+    needs: [build-base-notebook]
     uses: ./.github/workflows/sub-build-push-image.yml
     with:
       imageName: minimal-notebook
