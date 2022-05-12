@@ -52,9 +52,6 @@ jobs:
   build-base-notebook:
     name: Build base-notebook
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
