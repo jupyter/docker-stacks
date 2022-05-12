@@ -45,6 +45,10 @@ jobs:
       - name: Build image 🛠
         working-directory: ${{ inputs.imageName }}
         run: docker build --tag jupyter/${{ inputs.imageName }} --tag jupyter/${{ inputs.imageName }} .
+        env:
+          DOCKER_BUILDKIT: 1
+          # Full logs for CI build
+          BUILDKIT_PROGRESS: plain
         shell: bash
       - name: Save image as a file 💾
         run: docker save jupyter/${{ inputs.imageName }} -o /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
