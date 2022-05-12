@@ -56,6 +56,18 @@ jobs:
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
-      - name: Run custom action
+      - name: Create dev environment 📦
         # Use the location in the repository (without action.yml)
         uses: ./.github/actions/create-dev-env
+      - name: Build image 🛠
+        uses: docker/build-push-action@v3
+        with:
+          context: base-notebook/
+          file: base-notebook/Dockerfile
+          tags: jupyter/base-notebook:latest
+          outputs: type=docker,dest=/tmp/image.tar
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: myimage
+          path: /tmp/myimage.tar
