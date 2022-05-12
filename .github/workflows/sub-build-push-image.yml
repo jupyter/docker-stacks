@@ -1,4 +1,4 @@
-name: Download parent image, build new one, push it to GitHub artifacts
+name: Download parent image, build new one, upload it to GitHub artifacts
 
 on:
   workflow_call:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Download parent built image 📥
         if: ${{ inputs.parentImage != '' }}
-        uses: ./.github/actions/create-dev-env
+        uses: ./.github/actions/load-image
         with:
           image: ${{ inputs.parentImage }}
           platform: ${{ inputs.platform }}

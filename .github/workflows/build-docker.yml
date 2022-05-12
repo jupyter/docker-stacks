@@ -10,6 +10,7 @@ on:
       - ".github/workflows/sub-build-push-image.yml"
       - ".github/workflows/sub-test-image.yml"
       - ".github/actions/create-dev-env/action.yml"
+      - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
@@ -32,6 +33,7 @@ on:
       - ".github/workflows/sub-build-push-image.yml"
       - ".github/workflows/sub-test-image.yml"
       - ".github/actions/create-dev-env/action.yml"
+      - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
