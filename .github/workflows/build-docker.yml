@@ -86,7 +86,7 @@ jobs:
 
   test-amd64-minimal:
     needs: [build-amd64-minimal]
-    uses: ./.github/workflows/sub-test-images.yml
+    uses: ./.github/workflows/sub-test-image.yml
     with:
       image: minimal-notebook
       platform: amd64
