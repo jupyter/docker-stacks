@@ -17,7 +17,7 @@ on:
         type: string
 
 jobs:
-  test-image:
+  test:
     runs-on: ${{ inputs.runsOn }}
     steps:
       - name: Checkout Repo ⚡️

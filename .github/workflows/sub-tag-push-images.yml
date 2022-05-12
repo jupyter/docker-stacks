@@ -17,7 +17,7 @@ on:
         type: string
 
 jobs:
-  tag-push-images:
+  tag-push:
     runs-on: ${{ inputs.runsOn }}
 
     strategy:

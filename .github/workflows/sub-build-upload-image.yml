@@ -21,7 +21,7 @@ on:
         type: string
 
 jobs:
-  build-push-image:
+  build-upload:
     runs-on: ${{ inputs.runsOn }}
     steps:
       - name: Checkout Repo ⚡️
