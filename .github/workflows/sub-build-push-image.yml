@@ -47,7 +47,7 @@ jobs:
         run: docker build --tag jupyter/${{ inputs.imageName }} --tag jupyter/${{ inputs.imageName }} .
         shell: bash
       - name: Save image as a file 💾
-        run: docker save jupyter/base-notebook -o /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
+        run: docker save jupyter/${{ inputs.imageName }} -o /tmp/${{ inputs.imageName }}-${{ inputs.platform }}.tar
         shell: bash
 
       - name: Upload artifact 💾
