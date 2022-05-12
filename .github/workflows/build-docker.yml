@@ -94,7 +94,7 @@ jobs:
 
   amd64-images-tag-push:
     needs: [test-amd64-base, test-amd64-minimal]
-    uses: ./.github/workflows/sub-tag-push-image.yml
+    uses: ./.github/workflows/sub-tag-push-images.yml
     with:
       platform: amd64
       runsOn: ubuntu-latest
