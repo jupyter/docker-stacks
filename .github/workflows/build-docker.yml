@@ -7,7 +7,9 @@ on:
   pull_request:
     paths:
       - ".github/workflows/build-docker.yml"
-      - ".github/actions/**"
+      - ".github/workflows/sub-build-push-image.yml"
+      - ".github/workflows/sub-test-image.yml"
+      - ".github/actions/create-dev-env/action.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
@@ -27,7 +29,9 @@ on:
       - master
     paths:
       - ".github/workflows/build-docker.yml"
-      - ".github/actions/**"
+      - ".github/workflows/sub-build-push-image.yml"
+      - ".github/workflows/sub-test-image.yml"
+      - ".github/actions/create-dev-env/action.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
