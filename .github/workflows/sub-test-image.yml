@@ -10,10 +10,7 @@ on:
       platform:
         description: "Target platform for the built image"
         required: true
-        type: choice
-        options:
-          - amd64
-          - arm64
+        type: string
 
 jobs:
   test-image:
