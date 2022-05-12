@@ -11,10 +11,14 @@ on:
         description: "Target platform for the built image"
         required: true
         type: string
+      runsOn:
+        description: "Image to be run on"
+        required: true
+        type: string
 
 jobs:
   test-image:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runsOn }}
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
