@@ -10,6 +10,7 @@ runs:
         sudo rm -rf /usr/share/dotnet
         sudo rm -rf /usr/local/lib/android
         sudo rm -rf /opt/ghc
+      shell: bash
 
     # Setup docker to build for multiple platforms, see:
     # https://github.com/docker/build-push-action/tree/master#usage
@@ -30,3 +31,4 @@ runs:
       run: |
         pip install --upgrade pip
         pip install -r requirements-dev.txt
+      shell: bash
