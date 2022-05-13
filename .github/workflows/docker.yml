@@ -94,8 +94,120 @@ jobs:
       platform: amd64
       runsOn: ubuntu-latest
 
+  build-amd64-scipy:
+    needs: [build-amd64-minimal]
+    uses: ./.github/workflows/docker-build-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: scipy-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  test-amd64-scipy:
+    needs: [build-amd64-scipy]
+    uses: ./.github/workflows/docker-test.yml
+    with:
+      image: scipy-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  build-amd64-r:
+    needs: [build-amd64-minimal]
+    uses: ./.github/workflows/docker-build-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: r-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  test-amd64-r:
+    needs: [build-amd64-r]
+    uses: ./.github/workflows/docker-test.yml
+    with:
+      image: r-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  build-amd64-tensorflow:
+    needs: [build-amd64-scipy]
+    uses: ./.github/workflows/docker-build-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: tensorflow-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  test-amd64-tensorflow:
+    needs: [build-amd64-tensorflow]
+    uses: ./.github/workflows/docker-test.yml
+    with:
+      image: tensorflow-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  build-amd64-datascience:
+    needs: [build-amd64-scipy]
+    uses: ./.github/workflows/docker-build-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: datascience-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  test-amd64-datascience:
+    needs: [build-amd64-datascience]
+    uses: ./.github/workflows/docker-test.yml
+    with:
+      image: datascience-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  build-amd64-pyspark:
+    needs: [build-amd64-scipy]
+    uses: ./.github/workflows/docker-build-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: pyspark-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  test-amd64-pyspark:
+    needs: [build-amd64-pyspark]
+    uses: ./.github/workflows/docker-test.yml
+    with:
+      image: pyspark-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  build-amd64-all-spark:
+    needs: [build-amd64-spark]
+    uses: ./.github/workflows/docker-build-upload.yml
+    with:
+      parentImage: spark-notebook
+      image: all-spark-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  test-amd64-all-spark:
+    needs: [build-amd64-all-spark]
+    uses: ./.github/workflows/docker-test.yml
+    with:
+      image: all-spark-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
   amd64-images-tag-push:
-    needs: [test-amd64-base, test-amd64-minimal]
+    needs:
+      [
+        test-amd64-base,
+        test-amd64-minimal,
+        test-amd64-scipy,
+        test-amd64-r,
+        test-amd64-tensorflow,
+        test-amd64-datascience,
+        test-amd64-pyspark,
+        test-amd64-all-spark,
+      ]
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: amd64
@@ -104,7 +216,16 @@ jobs:
       # The strategy property is not supported in any job that calls a reusable workflow
       # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
       images: >-
-        ["base-notebook", "minimal-notebook"]
+        [
+          "base-notebook",
+          "minimal-notebook",
+          "scipy-notebook",
+          "r-notebook",
+          "tensorflow-notebook",
+          "datascience-notebook",
+          "pyspark-notebook",
+          "all-spark-notebook"
+        ]
 
   wiki-update:
     needs: [amd64-images-tag-push]
