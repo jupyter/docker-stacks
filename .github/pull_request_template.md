@@ -2,7 +2,7 @@
 
 ## Issue ticket if applicable
 
-<!-- Fix: https://github.com/jupyter/docker-stacks/issues/0 -->
+<!-- Example - Fix: https://github.com/jupyter/docker-stacks/issues/0 -->
 
 ## Checklist (especially for first-time contributors)
 
