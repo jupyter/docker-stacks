@@ -14,7 +14,7 @@ def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
 
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
-    build_history_line_files = artifacts_dir.rglob("**/*.txt")
+    build_history_line_files = artifacts_dir.rglob("*-history_line/*.txt")
     build_history_lines = "\n".join(
         hist_line_file.read_text() for hist_line_file in build_history_line_files
     )
@@ -25,7 +25,7 @@ def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
     wiki_home_file.write_text(wiki_home_content)
     LOGGER.info("Wiki home file updated")
 
-    for manifest_file in artifacts_dir.rglob("**/*.md"):
+    for manifest_file in artifacts_dir.rglob("*-manifest/*.md"):
         shutil.copy(manifest_file, wiki_dir / "manifests" / manifest_file.name)
         LOGGER.info(f"Manifest file added: {manifest_file.name}")
 
