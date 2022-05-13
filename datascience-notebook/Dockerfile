@@ -61,7 +61,13 @@ USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
 # r-e1071: dependency of the caret R package
-RUN mamba install --quiet --yes \
+RUN arch=$(uname -m) && \
+    if [ "${arch}" == "aarch64" ]; then \
+        # Prevent libmamba from sporadically hanging on arm64 under QEMU
+        # <https://github.com/mamba-org/mamba/issues/1611>
+        export G_SLICE=always-malloc; \
+    fi && \
+    mamba install --quiet --yes \
     'r-base' \
     'r-caret' \
     'r-crayon' \
@@ -75,23 +81,23 @@ RUN mamba install --quiet --yes \
     'r-nycflights13' \
     'r-randomforest' \
     'r-rcurl' \
+    'r-rmarkdown' \
     'r-rodbc' \
     'r-rsqlite' \
     'r-shiny' \
+    'r-tidyverse' \
     'rpy2' \
     'unixodbc' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# These packages are not easy to install under arm
+# `r-tidymodels` is not easy to install under arm
 RUN set -x && \
     arch=$(uname -m) && \
     if [ "${arch}" == "x86_64" ]; then \
         mamba install --quiet --yes \
-            'r-rmarkdown' \
-            'r-tidymodels' \
-            'r-tidyverse' && \
+            'r-tidymodels' && \
             mamba clean --all -f -y && \
             fix-permissions "${CONDA_DIR}" && \
             fix-permissions "/home/${NB_USER}"; \

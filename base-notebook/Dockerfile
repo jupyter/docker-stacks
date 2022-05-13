@@ -119,7 +119,8 @@ RUN set -x && \
     if [ "${arch}" == "aarch64" ]; then \
         # Prevent libmamba from sporadically hanging on arm64 under QEMU
         # <https://github.com/mamba-org/mamba/issues/1611>
-        ./micromamba config set extract_threads 1; \
+        # We don't use `micromamba config set` since it instead modifies ~/.condarc.
+        echo "extract_threads: 1" >> "${CONDA_DIR}/.condarc"; \
     fi && \
     # Install the packages
     ./micromamba install \
@@ -165,7 +166,8 @@ RUN sed -re "s/c.ServerApp/c.NotebookApp/g" \
 # This healtcheck works well for `lab`, `notebook`, `nbclassic`, `server` and `retro` jupyter commands
 # https://github.com/jupyter/docker-stacks/issues/915#issuecomment-1068528799
 HEALTHCHECK  --interval=15s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget -O- --no-verbose --tries=1 http://localhost:8888${JUPYTERHUB_SERVICE_PREFIX:-/}api || exit 1
+    CMD wget -O- --no-verbose --tries=1 --no-check-certificate \
+    http${GEN_CERT:+s}://localhost:8888${JUPYTERHUB_SERVICE_PREFIX:-/}api || exit 1
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
