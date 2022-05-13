@@ -28,7 +28,7 @@ def test_package_manager(
         f"Test that the package manager {package_manager} is working properly ..."
     )
     container.run_and_wait(
-        timeout=30,
+        timeout=5,
         tty=True,
         command=["start.sh", "bash", "-c", f"{package_manager} {version_arg}"],
     )
