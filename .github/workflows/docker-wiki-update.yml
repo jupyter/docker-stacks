@@ -20,7 +20,9 @@ jobs:
           histLineDir: /tmp/hist_lines/
           manifestDir: /tmp/manifests/
       - name: Display structure of downloaded files 🔍️
-        run: ls -R /tmp/artifacts/
+        run: |
+          ls -R /tmp/hist_lines/
+          ls -R /tmp/manifests/
         shell: bash
 
       - name: Checkout Wiki Repo 📃
