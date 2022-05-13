@@ -48,11 +48,13 @@ jobs:
         with:
           name: ${{ matrix.image }}-${{ inputs.platform }}-manifest
           path: /tmp/manifests/*.md
+          retention-days: 3
       - name: Upload build history line 💾
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.image }}-${{ inputs.platform }}-history_line
           path: /tmp/hist_lines/*.txt
+          retention-days: 3
 
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
