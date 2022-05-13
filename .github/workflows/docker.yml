@@ -180,10 +180,10 @@ jobs:
       runsOn: ubuntu-latest
 
   build-amd64-all-spark:
-    needs: [build-amd64-spark]
+    needs: [build-amd64-pyspark]
     uses: ./.github/workflows/docker-build-upload.yml
     with:
-      parentImage: spark-notebook
+      parentImage: pyspark-notebook
       image: all-spark-notebook
       platform: amd64
       runsOn: ubuntu-latest
