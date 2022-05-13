@@ -14,12 +14,11 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      # To make this workflow easier to implement, we download all artifacts
-      # https://github.com/actions/download-artifact/issues/6
-      - name: Download all artifacts 📥
-        uses: actions/download-artifact@v3
+      - name: Download all manifests and history lines 📥
+        uses: ./.github/actions/download-manifests
         with:
-          path: /tmp/artifacts/
+          histLineDir: /tmp/hist_lines/
+          manifestDir: /tmp/manifests/
       - name: Display structure of downloaded files 🔍️
         run: ls -R /tmp/artifacts/
         shell: bash
@@ -31,7 +30,7 @@ jobs:
           path: wiki/
 
       - name: Update wiki page 🏷
-        run: python3 -m tagging.update_wiki_page --wiki-dir wiki/ --artifacts-dir /tmp/artifacts/
+        run: python3 -m tagging.update_wiki_page --wiki-dir wiki/ --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/
         shell: bash
 
       - name: Push Wiki to GitHub 📤

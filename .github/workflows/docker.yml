@@ -13,6 +13,7 @@ on:
       - ".github/workflows/docker-wiki-update.yml"
 
       - ".github/actions/create-dev-env/action.yml"
+      - ".github/actions/download-manifests/action.yml"
       - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
@@ -39,6 +40,7 @@ on:
       - ".github/workflows/docker-wiki-update.yml"
 
       - ".github/actions/create-dev-env/action.yml"
+      - ".github/actions/download-manifests/action.yml"
       - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"

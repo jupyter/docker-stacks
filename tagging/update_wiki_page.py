@@ -9,12 +9,12 @@ from pathlib import Path
 LOGGER = logging.getLogger(__name__)
 
 
-def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
+def update_wiki_page(wiki_dir: Path, hist_line_dir: Path, manifest_dir: Path) -> None:
     LOGGER.info("Updating wiki page")
 
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
-    build_history_line_files = artifacts_dir.rglob("*-history_line/*.txt")
+    build_history_line_files = hist_line_dir.rglob("*.txt")
     build_history_lines = "\n".join(
         hist_line_file.read_text() for hist_line_file in build_history_line_files
     )
@@ -25,7 +25,7 @@ def update_wiki_page(wiki_dir: Path, artifacts_dir: Path) -> None:
     wiki_home_file.write_text(wiki_home_content)
     LOGGER.info("Wiki home file updated")
 
-    for manifest_file in artifacts_dir.rglob("*-manifest/*.md"):
+    for manifest_file in manifest_dir.rglob("*.md"):
         shutil.copy(manifest_file, wiki_dir / "manifests" / manifest_file.name)
         LOGGER.info(f"Manifest file added: {manifest_file.name}")
 
@@ -41,11 +41,17 @@ if __name__ == "__main__":
         help="Directory for wiki repo",
     )
     arg_parser.add_argument(
-        "--artifacts-dir",
+        "--hist-line-dir",
         required=True,
         type=Path,
         help="Directory to save history line",
     )
+    arg_parser.add_argument(
+        "--manifest-dir",
+        required=True,
+        type=Path,
+        help="Directory to save manifest file",
+    )
     args = arg_parser.parse_args()
 
-    update_wiki_page(args.wiki_dir, args.artifacts_dir)
+    update_wiki_page(args.wiki_dir, args.hist_line_dir, args.manifest_dir)
