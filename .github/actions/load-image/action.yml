@@ -24,3 +24,6 @@ runs:
         docker load --input /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
         docker image ls -a
       shell: bash
+    - name: Delete the file 🗑️
+      run: rm /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+      shell: bash

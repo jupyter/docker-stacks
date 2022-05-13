@@ -4,13 +4,6 @@ description: "Create build environment"
 runs:
   using: "composite"
   steps:
-    # - name: Maximize build space 🛠
-    #   run: |
-    #     sudo rm -rf /usr/share/dotnet
-    #     sudo rm -rf /usr/local/lib/android
-    #     sudo rm -rf /opt/ghc
-    #   shell: bash
-
     - name: Set Up Python 🐍
       uses: actions/setup-python@v3
       with:
