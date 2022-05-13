@@ -1,0 +1,43 @@
+name: Update dockerhub overviews
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - ".github/workflows/hub-overview.yml"
+
+      - "all-spark-notebook/README.md"
+      - "base-notebook/README.md"
+      - "datascience-notebook/README.md"
+      - "minimal-notebook/README.md"
+      - "pyspark-notebook/README.md"
+      - "r-notebook/README.md"
+      - "scipy-notebook/README.md"
+      - "tensorflow-notebook/README.md"
+
+jobs:
+  update-dockerhub-overview:
+    name: Update dockerhub overviews
+    runs-on: ubuntu-latest
+
+    steps:
+      # Currently, it's impossible to automatically update descriptions
+      # https://github.com/docker/hub-tool/issues/172
+      - name: Fail to show, that for now we need to manually update dockerhub overview page 💩
+        run: exit 1
+
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+
+      - name: push README to Dockerhub for base-notebook 🐳
+        uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # dependabot updates to latest release
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
+        with:
+          destination_container_repo: jupyter/base-notebook
+          provider: dockerhub
+          short_description: "Small base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
+          readme_file: "base-notebook/README.md"
