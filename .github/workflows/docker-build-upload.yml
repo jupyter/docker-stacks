@@ -37,7 +37,7 @@ jobs:
           platform: ${{ inputs.platform }}
 
       - name: Build image 🛠
-        run: docker build --tag jupyter/${{ inputs.image }} ${{ inputs.image }}/
+        run: docker build --rm --force-rm --tag jupyter/${{ inputs.image }} ${{ inputs.image }}/
         env:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build
