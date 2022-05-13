@@ -10,13 +10,13 @@ from docker.models.containers import Container
 
 from tagging.docker_runner import DockerRunner
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
+from tagging.get_tags_prefix import get_tags_prefix
 from tagging.git_helper import GitHelper
 from tagging.manifests import ManifestHeader, ManifestInterface
-from tagging.tags_prefix import get_tags_prefix
 
 LOGGER = logging.getLogger(__name__)
 
-
+# This would actually be manifest creation timestamp
 BUILD_TIMESTAMP = datetime.datetime.utcnow().isoformat()[:-7] + "Z"
 MARKDOWN_LINE_BREAK = "<br />"
 

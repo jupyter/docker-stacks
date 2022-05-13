@@ -8,14 +8,14 @@ import plumbum
 
 from tagging.docker_runner import DockerRunner
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
-from tagging.tags_prefix import get_tags_prefix
+from tagging.get_tags_prefix import get_tags_prefix
 
 docker = plumbum.local["docker"]
 
 LOGGER = logging.getLogger(__name__)
 
 
-def tag_image(short_image_name: str, owner: str, tags_prefix: str) -> None:
+def tag_image(short_image_name: str, owner: str) -> None:
     """
     Tags <owner>/<short_image_name>:latest with the tags reported by all taggers
     for the given image.
@@ -24,6 +24,7 @@ def tag_image(short_image_name: str, owner: str, tags_prefix: str) -> None:
     taggers, _ = get_taggers_and_manifests(short_image_name)
 
     image = f"{owner}/{short_image_name}:latest"
+    tags_prefix = get_tags_prefix()
 
     with DockerRunner(image) as container:
         for tagger in taggers:
@@ -53,6 +54,4 @@ if __name__ == "__main__":
     arg_parser.add_argument("--owner", default="jupyter", help="Owner of the image")
     args = arg_parser.parse_args()
 
-    tags_prefix = get_tags_prefix()
-
-    tag_image(args.short_image_name, args.owner, tags_prefix)
+    tag_image(args.short_image_name, args.owner)
