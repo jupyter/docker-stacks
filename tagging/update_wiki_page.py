@@ -7,6 +7,7 @@ import shutil
 from pathlib import Path
 
 LOGGER = logging.getLogger(__name__)
+TABLE_BEGINNING = "|-|-|-|\n"
 
 
 def update_wiki_page(wiki_dir: Path, hist_line_dir: Path, manifest_dir: Path) -> None:
@@ -18,7 +19,6 @@ def update_wiki_page(wiki_dir: Path, hist_line_dir: Path, manifest_dir: Path) ->
     build_history_lines = "\n".join(
         hist_line_file.read_text() for hist_line_file in build_history_line_files
     )
-    TABLE_BEGINNING = "|-|-|-|\n"
     wiki_home_content = wiki_home_content.replace(
         TABLE_BEGINNING, TABLE_BEGINNING + build_history_lines + "\n"
     )

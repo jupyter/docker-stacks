@@ -36,7 +36,7 @@ def tag_image(short_image_name: str, owner: str, tags_prefix: str) -> None:
                 "tag", image, f"{owner}/{short_image_name}:{tags_prefix}{tag_value}"
             ]()
     if tags_prefix != "":
-        LOGGER.info("Changing :latest tag to include tags_prefix")
+        LOGGER.info(f"Changing :latest tag to include {tags_prefix=}")
         docker["tag", image, f"{owner}/{short_image_name}:{tags_prefix}latest"]()
         docker["rmi", image]()
 
