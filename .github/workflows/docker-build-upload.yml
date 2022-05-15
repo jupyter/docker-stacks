@@ -43,6 +43,13 @@ jobs:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
         shell: bash
+
+      - name: Push image to ghcr.io 🛠
+        run: |
+          docker tag jupyter/${{ inputs.image }} ghcr.io/jupyter/${{ inputs.image }}
+          docker push ghcr.io/jupyter/${{ inputs.image }}
+        shell: bash
+
       - name: Save image as a file 💾
         run: docker save jupyter/${{ inputs.image }} -o /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
         shell: bash
