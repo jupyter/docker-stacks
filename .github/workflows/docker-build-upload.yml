@@ -43,7 +43,7 @@ jobs:
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
         shell: bash
-      - name: Save image as a file 💾
+      - name: Save image as a tar for later use 💾
         run: docker save jupyter/${{ inputs.image }} -o /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
         shell: bash
 
