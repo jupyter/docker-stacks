@@ -1,4 +1,4 @@
-name: Download image artifact from GitHub artifacts, tag it and push to DockerHub
+name: Download Docker image from GitHub artifacts, tag and push it to DockerHub
 
 on:
   workflow_call:
@@ -30,7 +30,7 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      - name: Load image to docker 📥
+      - name: Load image to Docker 📥
         uses: ./.github/actions/load-image
         with:
           image: ${{ matrix.image }}
