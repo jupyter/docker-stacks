@@ -83,6 +83,12 @@ The following sections provide some examples of how to get started using them.
 
 Spark **local mode** is useful for experimentation on small data when you do not have a Spark cluster available.
 
+```{warning}
+In these examples, Spark spawns all the main execution components in the same single JVM.
+You can read additional info about local mode [here](https://books.japila.pl/apache-spark-internals/local/).
+If you want to use all the CPU one of the simplest way is to setup a [Spark Standalone Cluster](https://spark.apache.org/docs/latest/spark-standalone.html).
+```
+
 ##### Local Mode in Python
 
 In a Python notebook.
