@@ -1,4 +1,4 @@
-name: "Load image"
+name: Load Docker image
 description: "Download image artifact and load it to docker"
 
 inputs:
