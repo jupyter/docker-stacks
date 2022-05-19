@@ -40,4 +40,4 @@ jobs:
           destination_container_repo: jupyter/base-notebook
           provider: dockerhub
           short_description: "Small base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
-          readme_file: "base-notebook/README.md"
+          readme_file: base-notebook/README.md
