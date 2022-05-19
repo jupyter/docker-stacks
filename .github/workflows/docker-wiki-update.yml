@@ -28,7 +28,7 @@ jobs:
       - name: Checkout Wiki Repo 📃
         uses: actions/checkout@v3
         with:
-          repository: ${{github.repository}}.wiki
+          repository: ${{ github.repository }}.wiki
           path: wiki/
 
       - name: Update wiki page 🏷
@@ -39,5 +39,5 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: stefanzweifel/git-auto-commit-action@5804e42f86b1891093b151b6c4e78e759c746c4d # dependabot updates to latest release
         with:
-          commit_message: "Automated wiki publish for ${{github.sha}}"
+          commit_message: "Automated wiki publish for ${{ github.sha }}"
           repository: wiki/
