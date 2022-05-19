@@ -1,8 +1,8 @@
-name: "Build environment"
-description: "Create build environment"
+name: Build environment
+description: Create build environment
 
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Set Up Python 🐍
       uses: actions/setup-python@v3

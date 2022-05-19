@@ -4,19 +4,19 @@ on:
   workflow_call:
     inputs:
       parentImage:
-        description: "Parent image name"
+        description: Parent image name
         required: true
         type: string
       image:
-        description: "Image name"
+        description: Image name
         required: true
         type: string
       platform:
-        description: "Image platform"
+        description: Image platform
         required: true
         type: string
       runsOn:
-        description: "GitHub Actions Runner image"
+        description: GitHub Actions Runner image
         required: true
         type: string
 

@@ -4,15 +4,15 @@ on:
   workflow_call:
     inputs:
       images:
-        description: "Stringified JSON object listing image names"
+        description: Stringified JSON object listing image names
         required: true
         type: string
       platform:
-        description: "Image platform"
+        description: Image platform
         required: true
         type: string
       runsOn:
-        description: "GitHub Actions Runner image"
+        description: GitHub Actions Runner image
         required: true
         type: string
 

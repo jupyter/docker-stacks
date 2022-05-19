@@ -1,5 +1,5 @@
-name: "Download manifests"
-description: "Download all manifests and history lines"
+name: Download manifests
+description: Download all manifests and history lines
 
 # Unfortunately, `actions/download-artifact` doesn't support wildcard download
 # To make this workflow fast, we manually download all manifests and history lines
@@ -7,16 +7,16 @@ description: "Download all manifests and history lines"
 
 inputs:
   histLineDir:
-    description: "Directory to store history lines"
+    description: Directory to store history lines
     required: true
     type: string
   manifestDir:
-    description: "Directory to store manifest files"
+    description: Directory to store manifest files
     required: true
     type: string
 
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3

@@ -1,18 +1,18 @@
 name: Load Docker image
-description: "Download image artifact and load it to docker"
+description: Download image artifact and load it to docker
 
 inputs:
   image:
-    description: "Image name"
+    description: Image name
     required: true
     type: string
   platform:
-    description: "Image platform"
+    description: Image platform
     required: true
     type: string
 
 runs:
-  using: "composite"
+  using: composite
   steps:
     - name: Download built image 📥
       uses: actions/download-artifact@v3
