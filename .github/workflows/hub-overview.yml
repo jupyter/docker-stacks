@@ -31,7 +31,7 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
 
-      - name: push README to Dockerhub for base-notebook 🐳
+      - name: Push README to Dockerhub for base-notebook 🐳
         uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # dependabot updates to latest release
         env:
           DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
