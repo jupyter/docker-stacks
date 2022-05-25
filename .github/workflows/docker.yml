@@ -7,10 +7,14 @@ on:
   pull_request:
     paths:
       - ".github/workflows/docker.yml"
+      # We use local reusable workflows to make architecture clean an simple
+      # https://docs.github.com/en/actions/using-workflows/reusing-workflows
       - ".github/workflows/docker-build-test-upload.yml"
       - ".github/workflows/docker-tag-manifest-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
+      # We use local composite actions to combine multiple workflow steps within one action
+      # https://docs.github.com/en/actions/creating-actions/about-custom-actions#composite-actions
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/download-manifests/action.yml"
       - ".github/actions/load-image/action.yml"
@@ -57,6 +61,7 @@ on:
 
 # https://docs.github.com/en/actions/using-jobs/using-concurrency
 concurrency:
+  # only cancel in-progress jobs or runs for the current workflow - matches against branch & tags
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
