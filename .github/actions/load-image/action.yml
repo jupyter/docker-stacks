@@ -14,16 +14,14 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Download built image 📥
-      uses: actions/download-artifact@v3
+    - name: Login to GHCR 🔐
+      uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
       with:
-        name: ${{ inputs.image }}-${{ inputs.platform }}
-        path: /tmp/
-    - name: Load downloaded image to docker 📥
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Pull image from ghcr.io 📥
       run: |
-        docker load --input /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
-        docker image ls -a
-      shell: bash
-    - name: Delete the file 🗑️
-      run: rm /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+        docker pull ghcr.io/jupyter/${{ inputs.image }}-${{ inputs.platform }}
+        docker tag ghcr.io/jupyter/${{ inputs.image }}-${{ inputs.platform }} jupyter/${{ inputs.image }}
       shell: bash

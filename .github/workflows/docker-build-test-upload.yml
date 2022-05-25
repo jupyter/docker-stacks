@@ -48,12 +48,14 @@ jobs:
         run: python3 -m tests.run_tests --short-image-name ${{ inputs.image }}
         shell: bash
 
-      - name: Save image as a tar for later use 💾
-        run: docker save jupyter/${{ inputs.image }} -o /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
-        shell: bash
-      - name: Upload image as artifact 💾
-        uses: actions/upload-artifact@v3
+      - name: Login to GHCR 🔐
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}
-          path: /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
-          retention-days: 3
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push image to ghcr.io 💾
+        run: |
+          docker tag jupyter/${{ inputs.image }} ghcr.io/jupyter/${{ inputs.image }}-${{ inputs.platform }}
+          docker push ghcr.io/jupyter/${{ inputs.image }}-${{ inputs.platform }}
+        shell: bash
