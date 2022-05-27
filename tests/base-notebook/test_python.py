@@ -17,8 +17,9 @@ def test_python_version(
     logs = container.run_and_wait(
         timeout=5,
         tty=True,
-        command=["start.sh", "python", "--version"],
+        command=["python", "--version"],
     )
+    assert logs.startswith("Python ")
     actual_python_version = version.parse(logs.split()[1])
     assert actual_python_version < version.parse(
         python_next_version
