@@ -65,6 +65,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  packages: write
+
 jobs:
   amd64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
