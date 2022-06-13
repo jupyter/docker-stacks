@@ -101,7 +101,7 @@ It contains:
   [cloudpickle](https://github.com/cloudpipe/cloudpickle),
   [conda-forge::blas=\*=openblas](https://www.openblas.net),
   [cython](https://cython.org),
-  [dask](https://dask.org/),
+  [dask](https://www.dask.org/),
   [dill](https://pypi.org/project/dill/),
   [h5py](https://www.h5py.org),
   [matplotlib-base](https://matplotlib.org/),
