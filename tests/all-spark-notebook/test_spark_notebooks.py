@@ -38,8 +38,8 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
         command=["start.sh", "bash", "-c", command],
     )
     warnings = TrackedContainer.get_warnings(logs)
-    # Some Spark warnings
-    assert len(warnings) == 5
+    # No Spark warnings
+    assert len(warnings) == 0
 
     expected_file = f"{output_dir}/{test_file}.md"
     assert expected_file in logs, f"Expected file {expected_file} not generated"
