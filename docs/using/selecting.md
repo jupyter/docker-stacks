@@ -183,7 +183,6 @@ communities.
   [sparklyr](https://spark.rstudio.com),
   [ggplot2](https://ggplot2.tidyverse.org)
   packages
-- [spylon-kernel](https://github.com/vericast/spylon-kernel) to support Scala code in Jupyter notebooks
 
 ### Image Relationships
 
