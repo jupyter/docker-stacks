@@ -175,7 +175,7 @@ communities.
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/all-spark-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/all-spark-notebook/tags/)
 
-`jupyter/all-spark-notebook` includes Python, R, and Scala support for Apache Spark.
+`jupyter/all-spark-notebook` includes Python and R support for Apache Spark.
 
 - Everything in `jupyter/pyspark-notebook` and its ancestor images
 - [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
