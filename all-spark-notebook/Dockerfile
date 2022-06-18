@@ -43,10 +43,3 @@ RUN arch=$(uname -m) && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Spylon-kernel
-RUN mamba install --quiet --yes 'spylon-kernel' && \
-    mamba clean --all -f -y && \
-    python -m spylon_kernel install --sys-prefix && \
-    rm -rf "/home/${NB_USER}/.local" && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
