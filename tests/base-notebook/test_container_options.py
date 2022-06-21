@@ -82,11 +82,12 @@ def test_gid_change(container: TrackedContainer) -> None:
 
 def test_groups_change(container: TrackedContainer) -> None:
     """Container should change the GID of the default user."""
+    nb_user_groups = "104(input),125(render),124(kvm),107(messagebus),450,150(test)"
     logs = container.run_and_wait(
         timeout=10,
         tty=True,
         user="root",
-        environment=["NB_GID=110", "NB_UNPRIVILEGED_GROUPS='104(input),125(render),124(kvm),107(messagebus),450,150(test)'"],
+        environment=["NB_GID=110", f"NB_UNPRIVILEGED_GROUPS={nb_user_groups}"],
         command=["start.sh", "id"],
     )
     assert "gid=110(jovyan)" in logs
