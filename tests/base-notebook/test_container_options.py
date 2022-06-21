@@ -81,7 +81,7 @@ def test_gid_change(container: TrackedContainer) -> None:
     assert "groups=110(jovyan),100(users)" in logs
 
 
-def test_groups_change(container: TrackedContainer) -> None:
+def test_additional_groups_change(container: TrackedContainer) -> None:
     """Container should add additional groups to the default user."""
     nb_user_groups = "104(input),125(render),124(kvm),107(messagebus),450,150(test)"
     logs = container.run_and_wait(
