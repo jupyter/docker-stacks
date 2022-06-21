@@ -80,17 +80,25 @@ def test_gid_change(container: TrackedContainer) -> None:
     assert "gid=110(jovyan)" in logs
     assert "groups=110(jovyan),100(users)" in logs
 
+
 def test_groups_change(container: TrackedContainer) -> None:
     """Container should change the GID of the default user."""
     logs = container.run_and_wait(
         timeout=10,
         tty=True,
         user="root",
-        environment=["NB_GID=110", "NB_UNPRIVILEGED_GROUPS='104(input),125(render),124(kvm),107(messagebus),450,150(test)'"],
+        environment=[
+            "NB_GID=110",
+            "NB_UNPRIVILEGED_GROUPS='104(input),125(render),124(kvm),107(messagebus),450,150(test)'",
+        ],
         command=["start.sh", "id"],
     )
     assert "gid=110(jovyan)" in logs
-    assert "groups=110(jovyan),100(users),104(input),107(messagebus),124(kvm),125(render),150(test),450(g_450)" in logs
+    assert (
+        "groups=110(jovyan),100(users),104(input),107(messagebus),124(kvm),125(render),150(test),450(g_450)"
+        in logs
+    )
+
 
 def test_nb_user_change(container: TrackedContainer) -> None:
     """Container should change the username (`NB_USER`) of the default user."""
