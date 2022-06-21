@@ -76,6 +76,7 @@ You do so by passing arguments to the `docker run` command.
   You **must** run the container with `--user root` for this option to take effect.
   (The startup script will `su ${NB_USER}` after adjusting the group IDs.)
   You can add groups to the `${NB_USER}` by setting `NB_UNPRIVILEGED_GROUPS` (e.g., `-e NB_UNPRIVILEGED_GROUPS='104(input),124(kvm),126'`).
+  
 - `-e NB_GROUP=<name>` - The name used for `${NB_GID}`, which defaults to `${NB_USER}`.
   This group name is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
 
