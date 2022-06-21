@@ -88,12 +88,11 @@ def test_groups_change(container: TrackedContainer) -> None:
         timeout=10,
         tty=True,
         user="root",
-        environment=["NB_GID=110", f"NB_UNPRIVILEGED_GROUPS={nb_user_groups}"],
+        environment=[f"NB_UNPRIVILEGED_GROUPS={nb_user_groups}"],
         command=["start.sh", "id"],
     )
-    assert "gid=110(jovyan)" in logs
     assert (
-        "groups=110(jovyan),100(users),104(input),107(messagebus),124(kvm),125(render),150(test),450(g_450)"
+        "groups=100(users),104(input),107(messagebus),124(kvm),125(render),150(test),450(g_450)"
         in logs
     )
 
