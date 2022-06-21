@@ -11,13 +11,8 @@ def test_spark_shell(container: TrackedContainer) -> None:
     """Checking if Spark (spark-shell) is running properly"""
     logs = container.run_and_wait(
         timeout=60,
-        no_warnings=False,
         tty=True,
         command=["start.sh", "bash", "-c", 'spark-shell <<< "1+1"'],
     )
-    warnings = TrackedContainer.get_warnings(logs)
-
-    # Should not see any Spark warnings
-    assert len(warnings) == 0
 
     assert "res0: Int = 2" in logs, "spark-shell does not work"
