@@ -11,6 +11,7 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
+ARG NB_UNPRIVILEGED_GROUPS=""
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
@@ -54,6 +55,7 @@ ENV CONDA_DIR=/opt/conda \
     NB_USER="${NB_USER}" \
     NB_UID=${NB_UID} \
     NB_GID=${NB_GID} \
+    NB_UNPRIVILEGED_GROUPS=${NB_UNPRIVILEGED_GROUPS} \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8

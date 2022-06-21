@@ -75,6 +75,7 @@ if [ "$(id -u)" == 0 ] ; then
     # - NB_UID: the desired user id
     # - NB_GID: a group id we want our user to belong to
     # - NB_GROUP: a group name we want for the group
+    # - NB_UNPRIVILEGED_GROUPS: list of groups to add for NB_USER as "104(input),125(render),124(kvm),107(messagebus)"
     # - GRANT_SUDO: a boolean ("1" or "yes") to grant the user sudo rights
     # - CHOWN_HOME: a boolean ("1" or "yes") to chown the user's home folder
     # - CHOWN_EXTRA: a comma separated list of paths to chown
@@ -103,6 +104,23 @@ if [ "$(id -u)" == 0 ] ; then
         userdel "${NB_USER}"
         useradd --home "/home/${NB_USER}" --uid "${NB_UID}" --gid "${NB_GID}" --groups 100 --no-log-init "${NB_USER}"
     fi
+
+    # Create additional groups for NB_USER
+    _IFS=${IFS}; IFS=,
+    for gid in ${NB_UNPRIVILEGED_GROUPS?}; do
+        g_id=$(echo "${gid}" | awk -F '[()]' '{print $1}')
+        g_name=$(echo "${gid}" | awk -F '[()]' '{print $2}')
+        # make sure group name, no longer than 32 characters
+        g_name="${g_name:0:32}"
+
+        if ! getent group "${g_id:?}" >/dev/null 2>&1; then
+            _log "create group with: groupadd --force --gid ${g_id:?} ${g_name:-"g_${g_id:?}"} "
+            eval 'groupadd --force --gid "${g_id:?}" "${g_name:-"g_${g_id:?}"}" '
+            _log "Add user to group: usermod -a -G ${g_name:-"g_${g_id:?}"} ${NB_USER}"
+            eval 'usermod -a -G "${g_name:-"g_${g_id:?}"}" ${NB_USER}'
+        fi
+    done
+    IFS=$_IFS
 
     # Move or symlink the jovyan home directory to the desired users home
     # directory if it doesn't already exist, and update the current working

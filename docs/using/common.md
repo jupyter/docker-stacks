@@ -70,6 +70,13 @@ You do so by passing arguments to the `docker run` command.
   The user is added to supplemental group `users` (gid 100) to grant write access to the home directory and `/opt/conda`.
   If you override the user/group logic, ensure the user stays in the group `users` if you want them to be able to modify files in the image.
 
+- `-e NB_UNPRIVILEGED_GROUPS=<numeric gid>(<name>),<numeric gid-2>` - Instructs the startup script to add the `${NB_USER}` to additional groups `${NB_UNPRIVILEGED_GROUPS}`
+  (the new groups are added with a name of `<numeric gid>(<name>)` if it is defined. Otherwise, the group is named `g_${<numeric gid>}`).
+  This feature is useful when mounting host volumes with multiple specific group permissions.
+  You **must** run the container with `--user root` for this option to take effect.
+  (The startup script will `su ${NB_USER}` after adjusting the group IDs.)
+  You can add groups to the `${NB_USER}` by setting `NB_UNPRIVILEGED_GROUPS` (e.g., `-e NB_UNPRIVILEGED_GROUPS='104(input),124(kvm),126'`).
+  
 - `-e NB_GROUP=<name>` - The name used for `${NB_GID}`, which defaults to `${NB_USER}`.
   This group name is only used if `${NB_GID}` is specified and completely optional: there is only cosmetic effect.
 
