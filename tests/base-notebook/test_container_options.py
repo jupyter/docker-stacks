@@ -87,7 +87,9 @@ def test_additional_groups_change(container: TrackedContainer) -> None:
         timeout=10,
         tty=True,
         user="root",
-        environment=["NB_UNPRIVILEGED_GROUPS=104(input),125(render),124(kvm),107(messagebus),450,150(test)"],
+        environment=[
+            "NB_UNPRIVILEGED_GROUPS=104(input),125(render),124(kvm),107(messagebus),450,150(test)"
+        ],
         command=["start.sh", "id"],
     )
     assert (
