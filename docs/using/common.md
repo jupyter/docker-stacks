@@ -11,7 +11,7 @@ This page describes the options supported by the startup script and how to bypas
 You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html) to the `start-notebook.sh` script when launching the container.
 
 1. For example, to secure the Notebook server with a [custom password](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#preparing-a-hashed-password)
-   hashed using `notebook.auth.security.passwd()` instead of the default token,
+   hashed using `jupyter_server.auth.security.passwd()` instead of the default token,
    you can run the following (this hash was generated for `my-password` password):
 
    ```bash
