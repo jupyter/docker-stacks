@@ -26,13 +26,7 @@ RUN apt-get update --yes && \
 USER ${NB_UID}
 
 # Install Python 3 packages
-RUN arch=$(uname -m) && \
-    if [ "${arch}" == "aarch64" ]; then \
-        # Prevent libmamba from sporadically hanging on arm64 under QEMU
-        # <https://github.com/mamba-org/mamba/issues/1611>
-        export G_SLICE=always-malloc; \
-    fi && \
-    mamba install --quiet --yes \
+RUN mamba install --quiet --yes \
     'altair' \
     'beautifulsoup4' \
     'bokeh' \
