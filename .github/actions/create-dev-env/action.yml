@@ -10,7 +10,8 @@ inputs:
 runs:
   using: composite
   steps:
-    # Self-hosted runners have to have python3 preinstalled
+    # aarch64 runners do not have pre-built python3 distributions
+    # so, we install python3 in the aarch64 VM manually
     - name: Set Up Python 🐍
       uses: actions/setup-python@v4
       with:
