@@ -48,6 +48,7 @@ You can build a `pyspark-notebook` image (and also the downstream `all-spark-not
   - `scala_version`: The Scala version (`2.13`).
   - `spark_checksum`: The package checksum (`BFE4540...`).
 - Spark can run with different OpenJDK versions and those version need to match else Spark will not work.
+
   - `openjdk_version`: The version of (JRE headless) the OpenJDK distribution (`17`), see [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
 
 - Starting Spark 3.2 the distribution file contains Scala version, hence building different version will only work for Spark >= 3.2
@@ -74,7 +75,7 @@ docker run -it --rm jupyter/pyspark-notebook:spark-3.2.0 pyspark --version
 #     _\ \/ _ \/ _ `/ __/  '_/
 #    /___/ .__/\_,_/_/ /_/\_\   version 3.2.0
 #       /_/
-                        
+
 # Using Scala version 2.13.5, OpenJDK 64-Bit Server VM, 11.0.15
 ```
 
