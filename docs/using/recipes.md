@@ -513,7 +513,7 @@ By adding the properties to `spark-defaults.conf`, the user no longer needs to e
 ```dockerfile
 FROM jupyter/pyspark-notebook:latest
 
-ARG DELTA_CORE_VERSION="1.2.0"
+ARG DELTA_CORE_VERSION="1.2.1"
 RUN pip install --quiet --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
      fix-permissions "${HOME}" && \
      fix-permissions "${CONDA_DIR}"
