@@ -14,4 +14,10 @@ To setup a new runner:
    This will perform initial runner setup and create a non-root user `runner-user`.
 
 3. Setup new GitHub Runner with this user: <https://github.com/jupyter/docker-stacks/settings/actions/runners/new> using `Linux` and `ARM64`.
-4. Run under `root` user in Runner directory: `./svc.sh install runner-user`
+4. Run under `root`:
+
+   ```bash
+   cd /home/runner-user/actions-runner/ && ./svc.sh install runner-user
+   ```
+
+5. Reboot VM to apply all updates and run GitHub runner.
