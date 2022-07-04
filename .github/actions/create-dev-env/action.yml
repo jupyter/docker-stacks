@@ -1,13 +1,21 @@
 name: Build environment
 description: Create build environment
 
+inputs:
+  platform:
+    description: Platform to be run on
+    required: true
+    type: string
+
 runs:
   using: composite
   steps:
+    # Self-hosted runners have to have python3 preinstalled
     - name: Set Up Python 🐍
       uses: actions/setup-python@v4
       with:
         python-version: 3.x
+      if: ${{ inputs.platform == 'amd64' }}
 
     - name: Install Dev Dependencies 📦
       run: |

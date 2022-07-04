@@ -8,7 +8,7 @@ import plumbum
 
 from tests.images_hierarchy import get_test_dirs
 
-pytest = plumbum.local["pytest"]
+python3 = plumbum.local["python3"]
 
 LOGGER = logging.getLogger(__name__)
 
@@ -19,7 +19,9 @@ def test_image(short_image_name: str, owner: str) -> None:
     LOGGER.info(f"Test dirs to be run: {test_dirs}")
     with plumbum.local.env(TEST_IMAGE=f"{owner}/{short_image_name}"):
         (
-            pytest[
+            python3[
+                "-m",
+                "pytest",
                 "--numprocesses",
                 "auto",
                 "-m",

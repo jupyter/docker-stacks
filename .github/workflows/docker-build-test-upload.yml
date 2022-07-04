@@ -28,6 +28,8 @@ jobs:
         uses: actions/checkout@v3
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
+        with:
+          platform: ${{ inputs.platform }}
 
       - name: Load parent built image to Docker 📥
         if: ${{ inputs.parentImage != '' }}
@@ -57,3 +59,11 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}
           path: /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
           retention-days: 3
+
+      # Self-hosted runners share a state between runs
+      - name: Cleanup artifacts 🗑️
+        run: |
+            rm /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+            docker image rm jupyter/${{ inputs.image }}
+            docker image rm ubuntu:focal || exit 0
+        shell: bash
