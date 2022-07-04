@@ -76,7 +76,7 @@ docker run -it --rm jupyter/pyspark-notebook:spark-2.4.7 pyspark --version
 
 ### Usage Examples
 
-The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images support the use of [Apache Spark](https://spark.apache.org/) in Python, R, and Scala notebooks.
+The `jupyter/pyspark-notebook` and `jupyter/all-spark-notebook` images support the use of [Apache Spark](https://spark.apache.org/) in Python and R notebooks.
 The following sections provide some examples of how to get started using them.
 
 #### Using Spark Local Mode
@@ -142,24 +142,6 @@ sc <- spark_connect(master = "local", config = conf)
 sdf_len(sc, 100, repartition = 1) %>%
     spark_apply(function(e) sum(e))
 # 5050
-```
-
-##### Local Mode in Scala
-
-Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
-options in a `%%init_spark` magic cell.
-
-```python
-%%init_spark
-# Configure Spark to use a local master
-launcher.master = "local"
-```
-
-```scala
-// Sum of the first 100 whole numbers
-val rdd = sc.parallelize(0 to 100)
-rdd.sum()
-// 5050
 ```
 
 #### Connecting to a Spark Cluster in Standalone Mode
@@ -233,24 +215,6 @@ sc <- spark_connect(master = "spark://master:7077", config = conf)
 sdf_len(sc, 100, repartition = 1) %>%
     spark_apply(function(e) sum(e))
 # 5050
-```
-
-##### Standalone Mode in Scala
-
-Spylon kernel instantiates a `SparkContext` for you in variable `sc` after you configure Spark
-options in a `%%init_spark` magic cell.
-
-```python
-%%init_spark
-# Configure Spark to use a local master
-launcher.master = "spark://master:7077"
-```
-
-```scala
-// Sum of the first 100 whole numbers
-val rdd = sc.parallelize(0 to 100)
-rdd.sum()
-// 5050
 ```
 
 ### Define Spark Dependencies
