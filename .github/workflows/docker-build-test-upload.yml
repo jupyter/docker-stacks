@@ -63,7 +63,7 @@ jobs:
       # Self-hosted runners share a state between runs
       - name: Cleanup artifacts 🗑️
         run: |
-            rm /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
-            docker image rm jupyter/${{ inputs.image }}
-            docker image rm ubuntu:focal || exit 0
+          rm /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+          docker image rm jupyter/${{ inputs.image }}
+          docker image rm ubuntu:focal || exit 0
         shell: bash
