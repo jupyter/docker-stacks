@@ -21,7 +21,17 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
+        name: base-notebook-aarch64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
         name: base-notebook-amd64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
+        name: minimal-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
@@ -31,7 +41,17 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
+        name: scipy-notebook-aarch64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
         name: scipy-notebook-amd64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
+        name: r-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
@@ -51,7 +71,17 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
+        name: pyspark-notebook-aarch64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
         name: pyspark-notebook-amd64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
+        name: all-spark-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
@@ -62,7 +92,17 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
+        name: base-notebook-aarch64-manifest
+        path: ${{ inputs.manifestDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
         name: base-notebook-amd64-manifest
+        path: ${{ inputs.manifestDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
+        name: minimal-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
@@ -72,7 +112,17 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
+        name: scipy-notebook-aarch64-manifest
+        path: ${{ inputs.manifestDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
         name: scipy-notebook-amd64-manifest
+        path: ${{ inputs.manifestDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
+        name: r-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
@@ -92,7 +142,17 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
+        name: pyspark-notebook-aarch64-manifest
+        path: ${{ inputs.manifestDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
         name: pyspark-notebook-amd64-manifest
+        path: ${{ inputs.manifestDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
+        name: all-spark-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
