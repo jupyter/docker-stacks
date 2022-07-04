@@ -31,6 +31,12 @@ jobs:
         with:
           platform: ${{ inputs.platform }}
 
+      # Self-hosted runners might share a state between runs
+      - name: Cleanup unwanted docker images 🗑️
+        run: docker system prune --all --force
+        shell: bash
+        if: ${{ inputs.platform == 'aarch64' }}
+
       - name: Load parent built image to Docker 📥
         if: ${{ inputs.parentImage != '' }}
         uses: ./.github/actions/load-image
@@ -61,9 +67,9 @@ jobs:
           retention-days: 3
 
       # Self-hosted runners share a state between runs
-      - name: Cleanup artifacts 🗑️
+      - name: Cleanup built artifacts 🗑️
         run: |
           rm /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
-          docker image rm jupyter/${{ inputs.image }}
-          docker image rm ubuntu:focal || exit 0
+          docker system prune --all --force
         shell: bash
+        if: ${{ inputs.platform == 'aarch64' }}
