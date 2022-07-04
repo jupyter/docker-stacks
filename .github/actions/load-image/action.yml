@@ -25,5 +25,6 @@ runs:
         docker image ls -a
       shell: bash
     - name: Delete the file 🗑️
-      run: rm /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+      run: rm -f /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
       shell: bash
+      if: always()
