@@ -69,3 +69,12 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         run: docker push --all-tags jupyter/${{ matrix.image }}
         shell: bash
+
+      # Self-hosted runners share a state (whole VM) between runs
+      - name: Cleanup artifacts 🗑️
+        run: |
+          rm -rf /tmp/hist_lines/
+          rm -rf /tmp/manifests/
+          docker system prune --all --force
+        shell: bash
+        if: always()

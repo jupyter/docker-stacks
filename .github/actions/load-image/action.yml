@@ -14,6 +14,11 @@ inputs:
 runs:
   using: composite
   steps:
+    # Self-hosted runners share a state (whole VM) between runs
+    - name: Cleanup unwanted docker images 🗑️
+      run: docker system prune --all --force
+      shell: bash
+
     - name: Download built image 📥
       uses: actions/download-artifact@v3
       with:

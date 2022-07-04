@@ -190,6 +190,33 @@ jobs:
       platform: amd64
       runsOn: ubuntu-latest
 
+  aarch64-images-tag-push:
+    needs:
+      [
+        aarch64-base,
+        aarch64-minimal,
+        aarch64-scipy,
+        aarch64-r,
+        aarch64-pyspark,
+        aarch64-all-spark,
+      ]
+    uses: ./.github/workflows/docker-tag-manifest-push.yml
+    with:
+      platform: aarch64
+      runsOn: self-hosted
+      # https://docs.github.com/en/actions/using-workflows/reusing-workflows#limitations
+      # The strategy property is not supported in any job that calls a reusable workflow
+      # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
+      images: >-
+        [
+          "base-notebook",
+          "minimal-notebook",
+          "scipy-notebook",
+          "r-notebook",
+          "pyspark-notebook",
+          "all-spark-notebook"
+        ]
+
   amd64-images-tag-push:
     needs:
       [
@@ -221,33 +248,6 @@ jobs:
           "all-spark-notebook"
         ]
 
-  aarch64-images-tag-push:
-    needs:
-      [
-        aarch64-base,
-        aarch64-minimal,
-        aarch64-scipy,
-        aarch64-r,
-        aarch64-pyspark,
-        aarch64-all-spark,
-      ]
-    uses: ./.github/workflows/docker-tag-manifest-push.yml
-    with:
-      platform: amd64
-      runsOn: ubuntu-latest
-      # https://docs.github.com/en/actions/using-workflows/reusing-workflows#limitations
-      # The strategy property is not supported in any job that calls a reusable workflow
-      # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
-      images: >-
-        [
-          "base-notebook",
-          "minimal-notebook",
-          "scipy-notebook",
-          "r-notebook",
-          "pyspark-notebook",
-          "all-spark-notebook"
-        ]
-
   wiki-update:
-    needs: [amd64-images-tag-push, aarch64-images-tag-push]
+    needs: [aarch64-images-tag-push, amd64-images-tag-push]
     uses: ./.github/workflows/docker-wiki-update.yml
