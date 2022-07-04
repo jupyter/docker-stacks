@@ -1,4 +1,4 @@
-# Jupyter Notebook Python, Scala, R, Spark Stack
+# Jupyter Notebook Python, R, Spark Stack
 
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/all-spark-notebook.svg)](https://hub.docker.com/r/jupyter/all-spark-notebook/)
 [![docker stars](https://img.shields.io/docker/stars/jupyter/all-spark-notebook.svg)](https://hub.docker.com/r/jupyter/all-spark-notebook/)
