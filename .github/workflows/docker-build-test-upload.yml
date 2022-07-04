@@ -35,7 +35,7 @@ jobs:
       - name: Cleanup unwanted docker images 🗑️
         run: docker system prune --all --force
         shell: bash
-        if: always() && ${{ inputs.platform == 'aarch64' }}
+        if: always()
 
       - name: Load parent built image to Docker 📥
         if: ${{ inputs.parentImage != '' }}
@@ -72,4 +72,4 @@ jobs:
           rm /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
           docker system prune --all --force
         shell: bash
-        if: always() && ${{ inputs.platform == 'aarch64' }}
+        if: always()
