@@ -4,8 +4,14 @@ For `aarch64` images, we have self-hosted VMs, provided by [Oracle OCI](https://
 
 To setup a new runner:
 
-1. Create an Oracle `VM.Standard.A1.Flex` with _1 OCPU_ and _4 GB_ using `Ubuntu 22.04` image.
-2. Run under `root`: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mathbunnyru/docker-stacks/asalikhov/new_build_system/aarch64-runner/setup.sh)"`
+1. Create an Oracle `VM.Standard.A1.Flex` with _1 OCPU_ and _6 GB_ using `Ubuntu 22.04` image.
+2. Run under `root`:
+
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mathbunnyru/docker-stacks/asalikhov/new_build_system/aarch64-runner/setup.sh)"
+   ```
+
    This will perform initial runner setup and create a non-root user `runner-user`.
+
 3. Setup new GitHub Runner with this user: <https://github.com/jupyter/docker-stacks/settings/actions/runners/new>
 4. Run under `root` user in Runner directory: `./svc.sh install runner-user`
