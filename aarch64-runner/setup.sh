@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/bin/bash
+set -ex
 
 GITHUB_RUNNER_USER="runner-user"
 
