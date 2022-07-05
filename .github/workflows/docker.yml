@@ -191,6 +191,8 @@ jobs:
       runsOn: ubuntu-latest
 
   aarch64-images-tag-push:
+    permissions:
+      contents: write
     needs:
       [
         aarch64-base,
@@ -218,6 +220,8 @@ jobs:
         ]
 
   amd64-images-tag-push:
+    permissions:
+      contents: write
     needs:
       [
         amd64-base,
@@ -246,5 +250,7 @@ jobs:
         ]
 
   wiki-update:
+    permissions:
+      contents: write
     needs: [aarch64-images-tag-push, amd64-images-tag-push]
     uses: ./.github/workflows/docker-wiki-update.yml
