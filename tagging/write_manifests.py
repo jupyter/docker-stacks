@@ -4,6 +4,7 @@
 import argparse
 import datetime
 import logging
+import platform
 from pathlib import Path
 
 from docker.models.containers import Container
@@ -67,6 +68,11 @@ def write_manifest_file(
     (manifest_dir / f"{filename}.md").write_text(markdown_content)
 
 
+def get_file_prefix() -> str:
+    machine = platform.machine()
+    return "amd64" if machine == "x86_64" else "aarch64"
+
+
 def write_manifests(
     short_image_name: str,
     owner: str,
@@ -78,11 +84,12 @@ def write_manifests(
 
     image = f"{owner}/{short_image_name}:latest"
 
-    tags_prefix = get_tags_prefix()
+    file_prefix = get_file_prefix()
     commit_hash_tag = GitHelper.commit_hash_tag()
-    filename = f"{tags_prefix}{short_image_name}-{commit_hash_tag}"
+    filename = f"{file_prefix}-{short_image_name}-{commit_hash_tag}"
 
     with DockerRunner(image) as container:
+        tags_prefix = get_tags_prefix()
         all_tags = [tags_prefix + tagger.tag_value(container) for tagger in taggers]
         write_build_history_line(
             short_image_name, owner, hist_line_dir, filename, all_tags
