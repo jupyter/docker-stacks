@@ -233,9 +233,6 @@ jobs:
     with:
       platform: amd64
       runsOn: ubuntu-latest
-      # https://docs.github.com/en/actions/using-workflows/reusing-workflows#limitations
-      # The strategy property is not supported in any job that calls a reusable workflow
-      # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
       images: >-
         [
           "base-notebook",

@@ -15,7 +15,7 @@ runs:
   using: composite
   steps:
     # Self-hosted runners share a state (whole VM) between runs
-    - name: Cleanup unwanted docker images 🗑️
+    - name: Reset docker state 🗑️
       run: docker system prune --all --force
       shell: bash
 
