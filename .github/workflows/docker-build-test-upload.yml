@@ -31,6 +31,12 @@ jobs:
         with:
           platform: ${{ inputs.platform }}
 
+      # Self-hosted runners share a state (whole VM) between runs
+      - name: Reset docker state 🗑️
+        if: ${{ inputs.platform != 'amd64' }}
+        run: docker system prune --all --force
+        shell: bash
+
       - name: Load parent built image to Docker 📥
         if: ${{ inputs.parentImage != '' }}
         uses: ./.github/actions/load-image
