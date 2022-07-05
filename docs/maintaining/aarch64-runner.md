@@ -9,7 +9,7 @@ To setup a new runner:
 2. Run under `root`:
 
    ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mathbunnyru/docker-stacks/asalikhov/new_build_system/aarch64-runner/setup.sh)"
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jupyter/docker-stacks/HEAD/aarch64-runner/setup.sh)"
    ```
 
    This will perform initial runner setup and create a non-root user `runner-user`.
