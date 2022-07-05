@@ -31,8 +31,8 @@ Table of Contents
    :maxdepth: 2
    :caption: Maintainer Guide
 
-   maintaining/aarch64-runner
    maintaining/tasks
+   maintaining/aarch64-runner
 
 .. toctree::
    :maxdepth: 2
