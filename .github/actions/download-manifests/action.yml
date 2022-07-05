@@ -2,7 +2,7 @@ name: Download manifests
 description: Download all manifests and history lines
 
 # Unfortunately, `actions/download-artifact` doesn't support wildcard download
-# To make this workflow fast, we manually download all manifests and history lines
+# To make this workflow fast, we manually list all manifests and history lines downloads
 # https://github.com/actions/download-artifact/issues/6
 
 inputs:

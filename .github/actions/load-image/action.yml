@@ -1,5 +1,5 @@
 name: Load Docker image
-description: Download image artifact and load it to docker
+description: Download image tar and load it to docker
 
 inputs:
   image:
