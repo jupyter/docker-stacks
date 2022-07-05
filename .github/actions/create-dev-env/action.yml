@@ -22,5 +22,5 @@ runs:
     - name: Install Dev Dependencies 📦
       run: |
         pip install --upgrade pip
-        pip install -r requirements-dev.txt
+        pip install --upgrade -r requirements-dev.txt
       shell: bash
