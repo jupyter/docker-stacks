@@ -8,6 +8,9 @@ on:
 jobs:
   tag-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3

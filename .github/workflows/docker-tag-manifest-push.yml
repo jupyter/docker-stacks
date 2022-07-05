@@ -19,6 +19,8 @@ on:
 jobs:
   tag-push:
     runs-on: ${{ inputs.runsOn }}
+    permissions:
+      contents: write
 
     strategy:
       matrix:
