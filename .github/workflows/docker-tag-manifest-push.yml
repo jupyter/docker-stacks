@@ -50,7 +50,9 @@ jobs:
           platform: ${{ inputs.platform }}
 
       - name: Create tags 🏷
-        run: python3 -m tagging.tag_image --short-image-name ${{ matrix.image }}
+        run: |
+          python3 -m tagging.tag_image --short-image-name ${{ matrix.image }}
+          docker image ls -a
         shell: bash
 
       - name: Write manifest files 🏷
