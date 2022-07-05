@@ -74,7 +74,7 @@ jobs:
           path: /tmp/hist_lines/${{ inputs.platform }}-${{ matrix.image }}-*.txt
           retention-days: 3
 
-      - name: Remove aarch64 latest tag
+      - name: Remove aarch64 latest tag 🗑️
         if: ${{ inputs.platform != 'amd64' }}
         run: docker rmi jupyter/${{ matrix.image }}
         shell: bash
