@@ -53,7 +53,7 @@ You can build a `pyspark-notebook` image (and also the downstream `all-spark-not
     - See [Spark Overview](https://spark.apache.org/docs/latest/#downloading) and [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
 
 - Starting with _Spark >= 3.2_ the distribution file contains Scala version, hence building older Spark will not work.
-- Building older version requires modification to the Dockerfile or using it's older version of the Dockerfile
+- Building older version requires modification to the Dockerfile or using it's older version of the Dockerfile.
 
 For example here is how to build a `pyspark-notebook` image with Spark `3.2.0`, Hadoop `3.2` and OpenJDK `11`.
 
