@@ -1,0 +1,74 @@
+name: Download parent image, build new one, test it and upload to GitHub artifacts
+
+on:
+  workflow_call:
+    inputs:
+      parentImage:
+        description: Parent image name
+        required: true
+        type: string
+      image:
+        description: Image name
+        required: true
+        type: string
+      platform:
+        description: Image platform
+        required: true
+        type: string
+      runsOn:
+        description: GitHub Actions Runner image
+        required: true
+        type: string
+
+jobs:
+  build-test-upload:
+    runs-on: ${{ inputs.runsOn }}
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+      - name: Create dev environment 📦
+        uses: ./.github/actions/create-dev-env
+        with:
+          platform: ${{ inputs.platform }}
+
+      # Self-hosted runners share a state (whole VM) between runs
+      - name: Reset docker state 🗑️
+        if: ${{ inputs.platform != 'amd64' }}
+        run: docker system prune --all --force
+        shell: bash
+
+      - name: Load parent built image to Docker 📥
+        if: ${{ inputs.parentImage != '' }}
+        uses: ./.github/actions/load-image
+        with:
+          image: ${{ inputs.parentImage }}
+          platform: ${{ inputs.platform }}
+
+      - name: Build image 🛠
+        run: docker build --rm --force-rm --tag jupyter/${{ inputs.image }} ${{ inputs.image }}/
+        env:
+          DOCKER_BUILDKIT: 1
+          # Full logs for CI build
+          BUILDKIT_PROGRESS: plain
+        shell: bash
+
+      - name: Run tests ✅
+        run: python3 -m tests.run_tests --short-image-name ${{ inputs.image }}
+        shell: bash
+
+      - name: Save image as a tar for later use 💾
+        run: docker save jupyter/${{ inputs.image }} -o /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+        shell: bash
+      - name: Upload image as artifact 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.image }}-${{ inputs.platform }}
+          path: /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+          retention-days: 3
+
+      # Self-hosted runners share a state (whole VM) between runs
+      - name: Cleanup artifacts 🗑️
+        run: |
+          rm -f /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+        shell: bash
+        if: always()

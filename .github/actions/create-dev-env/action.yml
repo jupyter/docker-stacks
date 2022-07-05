@@ -1,0 +1,26 @@
+name: Build environment
+description: Create build environment
+
+inputs:
+  platform:
+    description: Platform to be run on
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    # actions/setup-python doesn't suport Linux aarch64 runners
+    # See: https://github.com/actions/setup-python/issues/108
+    # python3 is manually preinstalled in the aarch64 VM self-hosted runner
+    - name: Set Up Python 🐍
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
+      if: ${{ inputs.platform == 'amd64' }}
+
+    - name: Install Dev Dependencies 📦
+      run: |
+        pip install --upgrade pip
+        pip install --upgrade -r requirements-dev.txt
+      shell: bash

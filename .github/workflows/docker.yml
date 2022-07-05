@@ -1,4 +1,4 @@
-name: Build, test, and publish Docker Images
+name: Build, test and push Docker Images
 
 on:
   schedule:
@@ -7,6 +7,17 @@ on:
   pull_request:
     paths:
       - ".github/workflows/docker.yml"
+      # We use local reusable workflows to make architecture clean an simple
+      # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+      - ".github/workflows/docker-build-test-upload.yml"
+      - ".github/workflows/docker-tag-manifest-push.yml"
+      - ".github/workflows/docker-wiki-update.yml"
+
+      # We use local composite actions to combine multiple workflow steps within one action
+      # https://docs.github.com/en/actions/creating-actions/about-custom-actions#composite-actions
+      - ".github/actions/create-dev-env/action.yml"
+      - ".github/actions/download-manifests/action.yml"
+      - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
@@ -19,7 +30,6 @@ on:
 
       - "tagging/**"
       - "tests/**"
-      - "Makefile"
       - "requirements-dev.txt"
   push:
     branches:
@@ -27,6 +37,13 @@ on:
       - master
     paths:
       - ".github/workflows/docker.yml"
+      - ".github/workflows/docker-build-test-upload.yml"
+      - ".github/workflows/docker-tag-manifest-push.yml"
+      - ".github/workflows/docker-wiki-update.yml"
+
+      - ".github/actions/create-dev-env/action.yml"
+      - ".github/actions/download-manifests/action.yml"
+      - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
       - "base-notebook/**"
@@ -39,84 +56,203 @@ on:
 
       - "tagging/**"
       - "tests/**"
-      - "Makefile"
       - "requirements-dev.txt"
   workflow_dispatch:
 
+# https://docs.github.com/en/actions/using-jobs/using-concurrency
 concurrency:
   # only cancel in-progress jobs or runs for the current workflow - matches against branch & tags
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-test-publish-images:
-    name: Build, test, and publish Docker Images
-    if: github.event_name != 'schedule' || (github.event_name == 'schedule' && github.repository == 'jupyter/docker-stacks')
-    runs-on: ubuntu-latest
+  aarch64-base:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: ""
+      image: base-notebook
+      platform: aarch64
+      runsOn: ARM64
+
+  amd64-base:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: ""
+      image: base-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  aarch64-minimal:
+    needs: [aarch64-base]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: base-notebook
+      image: minimal-notebook
+      platform: aarch64
+      runsOn: ARM64
+
+  amd64-minimal:
+    needs: [amd64-base]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: base-notebook
+      image: minimal-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  aarch64-scipy:
+    needs: [aarch64-minimal]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: scipy-notebook
+      platform: aarch64
+      runsOn: ARM64
+
+  amd64-scipy:
+    needs: [amd64-minimal]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: scipy-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  aarch64-r:
+    needs: [aarch64-minimal]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: r-notebook
+      platform: aarch64
+      runsOn: ARM64
+
+  amd64-r:
+    needs: [amd64-minimal]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: r-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  amd64-tensorflow:
+    needs: [amd64-scipy]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: tensorflow-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  amd64-datascience:
+    needs: [amd64-scipy]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: datascience-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  aarch64-pyspark:
+    needs: [aarch64-scipy]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: pyspark-notebook
+      platform: aarch64
+      runsOn: ARM64
+
+  amd64-pyspark:
+    needs: [amd64-scipy]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: pyspark-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  aarch64-all-spark:
+    needs: [aarch64-pyspark]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: pyspark-notebook
+      image: all-spark-notebook
+      platform: aarch64
+      runsOn: ARM64
+
+  amd64-all-spark:
+    needs: [amd64-pyspark]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: pyspark-notebook
+      image: all-spark-notebook
+      platform: amd64
+      runsOn: ubuntu-latest
+
+  aarch64-images-tag-push:
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    needs:
+      [
+        aarch64-base,
+        aarch64-minimal,
+        aarch64-scipy,
+        aarch64-r,
+        aarch64-pyspark,
+        aarch64-all-spark,
+      ]
+    uses: ./.github/workflows/docker-tag-manifest-push.yml
+    with:
+      platform: aarch64
+      runsOn: ARM64
+      # https://docs.github.com/en/actions/using-workflows/reusing-workflows#limitations
+      # The strategy property is not supported in any job that calls a reusable workflow
+      # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
+      images: >-
+        [
+          "base-notebook",
+          "minimal-notebook",
+          "scipy-notebook",
+          "r-notebook",
+          "pyspark-notebook",
+          "all-spark-notebook"
+        ]
+
+  amd64-images-tag-push:
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    needs:
+      [
+        amd64-base,
+        amd64-minimal,
+        amd64-scipy,
+        amd64-r,
+        amd64-tensorflow,
+        amd64-datascience,
+        amd64-pyspark,
+        amd64-all-spark,
+      ]
+    uses: ./.github/workflows/docker-tag-manifest-push.yml
+    with:
+      platform: amd64
+      runsOn: ubuntu-latest
+      images: >-
+        [
+          "base-notebook",
+          "minimal-notebook",
+          "scipy-notebook",
+          "r-notebook",
+          "tensorflow-notebook",
+          "datascience-notebook",
+          "pyspark-notebook",
+          "all-spark-notebook"
+        ]
+
+  wiki-update:
     permissions:
       contents: write
-
-    steps:
-      - name: Maximize build space 🛠
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-
-      # Setup docker to build for multiple platforms, see:
-      # https://github.com/docker/build-push-action/tree/master#usage
-      # https://github.com/docker/build-push-action/blob/master/docs/advanced/multi-platform.md
-      - name: Set up QEMU (for docker buildx) 🐳
-        uses: docker/setup-qemu-action@8b122486cedac8393e77aa9734c3528886e4a1a8 # dependabot updates to latest release
-
-      - name: Set up Docker Buildx (for multi-arch builds) 🐳
-        uses: docker/setup-buildx-action@dc7b9719a96d48369863986a06765841d7ea23f6 # dependabot updates to latest release
-
-      - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
-
-      - name: Set Up Python 🐍
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.x
-
-      - name: Install Dev Dependencies 📦
-        run: |
-          pip install --upgrade pip
-          pip install -r requirements-dev.txt
-
-      - name: Build Docker Images 🛠
-        run: make build-all-multi
-        env:
-          # Full logs for CI build
-          BUILDKIT_PROGRESS: plain
-
-      - name: Run tests ✅
-        run: make test-all
-
-      - name: Checkout Wiki Repo 📃
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ github.repository }}.wiki
-          path: wiki/
-
-      - name: Create tags and manifest 🏷
-        run: make hook-all
-
-      - name: Push Wiki to GitHub 📤
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        uses: stefanzweifel/git-auto-commit-action@49620cd3ed21ee620a48530e81dba0d139c9cb80 # dependabot updates to latest release
-        with:
-          commit_message: "Automated wiki publish for ${{ github.sha }}"
-          repository: wiki/
-
-      - name: Login to Docker Hub 🔐
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Push Images to Docker Hub 📤
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: make push-all-multi
+    needs: [aarch64-images-tag-push, amd64-images-tag-push]
+    uses: ./.github/workflows/docker-wiki-update.yml
