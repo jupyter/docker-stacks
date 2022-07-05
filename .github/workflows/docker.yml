@@ -72,7 +72,7 @@ jobs:
       parentImage: ""
       image: base-notebook
       platform: aarch64
-      runsOn: self-hosted
+      runsOn: ARM64
 
   amd64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -89,7 +89,7 @@ jobs:
       parentImage: base-notebook
       image: minimal-notebook
       platform: aarch64
-      runsOn: self-hosted
+      runsOn: ARM64
 
   amd64-minimal:
     needs: [amd64-base]
@@ -107,7 +107,7 @@ jobs:
       parentImage: minimal-notebook
       image: scipy-notebook
       platform: aarch64
-      runsOn: self-hosted
+      runsOn: ARM64
 
   amd64-scipy:
     needs: [amd64-minimal]
@@ -125,7 +125,7 @@ jobs:
       parentImage: minimal-notebook
       image: r-notebook
       platform: aarch64
-      runsOn: self-hosted
+      runsOn: ARM64
 
   amd64-r:
     needs: [amd64-minimal]
@@ -161,7 +161,7 @@ jobs:
       parentImage: scipy-notebook
       image: pyspark-notebook
       platform: aarch64
-      runsOn: self-hosted
+      runsOn: ARM64
 
   amd64-pyspark:
     needs: [amd64-scipy]
@@ -179,7 +179,7 @@ jobs:
       parentImage: pyspark-notebook
       image: all-spark-notebook
       platform: aarch64
-      runsOn: self-hosted
+      runsOn: ARM64
 
   amd64-all-spark:
     needs: [amd64-pyspark]
@@ -203,7 +203,7 @@ jobs:
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: aarch64
-      runsOn: self-hosted
+      runsOn: ARM64
       # https://docs.github.com/en/actions/using-workflows/reusing-workflows#limitations
       # The strategy property is not supported in any job that calls a reusable workflow
       # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
