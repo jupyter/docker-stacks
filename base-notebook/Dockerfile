@@ -103,7 +103,6 @@ RUN mkdir "/home/${NB_USER}/work" && \
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 COPY --chown="${NB_UID}:${NB_GID}" initial-condarc "${CONDA_DIR}/.condarc"
-COPY --chown="${NB_UID}:${NB_GID}" test-file.txt /tmp/test-file.txt
 WORKDIR /tmp
 RUN set -x && \
     arch=$(uname -m) && \
