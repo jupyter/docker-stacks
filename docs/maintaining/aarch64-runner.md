@@ -12,7 +12,7 @@ To setup a new runner:
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/jupyter/docker-stacks/HEAD/aarch64-runner/setup.sh)"
    ```
 
-   This will perform initial runner setup and create a non-root user `runner-user`.
+   This will perform initial runner setup and create a user `runner-user` without `sudo` capabilities.
 
 3. Setup new GitHub Runner under `runner-user` using [GitHub Instructions](https://github.com/jupyter/docker-stacks/settings/actions/runners/new?arch=arm64&os=linux).
    Do not `./run.sh` yet.
