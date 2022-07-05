@@ -82,14 +82,14 @@ def write_manifests(
     LOGGER.info(f"Creating manifests for image: {short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 
-    image = f"{owner}/{short_image_name}:latest"
+    tags_prefix = get_tags_prefix()
+    image = f"{owner}/{short_image_name}:{tags_prefix}latest"
 
     file_prefix = get_file_prefix()
     commit_hash_tag = GitHelper.commit_hash_tag()
     filename = f"{file_prefix}-{short_image_name}-{commit_hash_tag}"
 
     with DockerRunner(image) as container:
-        tags_prefix = get_tags_prefix()
         all_tags = [tags_prefix + tagger.tag_value(container) for tagger in taggers]
         write_build_history_line(
             short_image_name, owner, hist_line_dir, filename, all_tags
