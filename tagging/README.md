@@ -113,7 +113,7 @@ class AptPackagesManifest(ManifestInterface):
 
 - `quoted_output` simply runs the command inside container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece of file.
 - `manifests.py` contains all the manifests.
-- `create_manifests.py` is a python executable which is used to create the build manifest for an image.
+- `write_manifest.py` is a python executable which is used to create the build manifest and history line for an image.
 
 ### Images Hierarchy
 

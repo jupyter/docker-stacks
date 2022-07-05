@@ -55,7 +55,6 @@ PACKAGE_MAPPING = {
     "pytables": "tables",
     "scikit-image": "skimage",
     "scikit-learn": "sklearn",
-    "spylon-kernel": "spylon_kernel",
     # R
     "randomforest": "randomForest",
     "rcurl": "RCurl",
@@ -73,6 +72,7 @@ EXCLUDED_PACKAGES = [
     "protobuf",
     "python",
     "r-irkernel",
+    "r-sparklyr",  # TODO(asalikhov): remove this line when updated to spark 3.3
     "unixodbc",
 ]
 

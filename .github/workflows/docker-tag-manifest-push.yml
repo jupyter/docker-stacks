@@ -1,0 +1,92 @@
+name: Download Docker image from GitHub artifacts, tag and push it to DockerHub
+
+on:
+  workflow_call:
+    inputs:
+      images:
+        description: Stringified JSON object listing image names
+        required: true
+        type: string
+      platform:
+        description: Image platform
+        required: true
+        type: string
+      runsOn:
+        description: GitHub Actions Runner image
+        required: true
+        type: string
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+      DOCKERHUB_TOKEN:
+        required: true
+
+jobs:
+  tag-push:
+    runs-on: ${{ inputs.runsOn }}
+
+    strategy:
+      matrix:
+        image: ${{ fromJson(inputs.images) }}
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+      - name: Create dev environment 📦
+        uses: ./.github/actions/create-dev-env
+        with:
+          platform: ${{ inputs.platform }}
+
+      # Self-hosted runners share a state (whole VM) between runs
+      - name: Reset docker state and cleanup artifacts 🗑️
+        if: ${{ inputs.platform != 'amd64' }}
+        run: |
+          docker system prune --all --force
+          rm -rf /tmp/hist_lines/
+          rm -rf /tmp/manifests/
+        shell: bash
+
+      - name: Load image to Docker 📥
+        uses: ./.github/actions/load-image
+        with:
+          image: ${{ matrix.image }}
+          platform: ${{ inputs.platform }}
+
+      - name: Create tags 🏷
+        run: |
+          python3 -m tagging.tag_image --short-image-name ${{ matrix.image }}
+          docker image ls -a
+        shell: bash
+
+      - name: Write manifest and build history file 🏷
+        run: python3 -m tagging.write_manifest --short-image-name ${{ matrix.image }} --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/
+        shell: bash
+      - name: Upload manifest file 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.image }}-${{ inputs.platform }}-manifest
+          path: /tmp/manifests/${{ inputs.platform }}-${{ matrix.image }}-*.md
+          retention-days: 3
+      - name: Upload build history line 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.image }}-${{ inputs.platform }}-history_line
+          path: /tmp/hist_lines/${{ inputs.platform }}-${{ matrix.image }}-*.txt
+          retention-days: 3
+
+      - name: Remove aarch64 latest tag 🗑️
+        if: ${{ inputs.platform != 'amd64' }}
+        run: docker rmi jupyter/${{ matrix.image }}
+        shell: bash
+
+      - name: Login to Docker Hub 🔐
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Images to Docker Hub 📤
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        run: docker push --all-tags jupyter/${{ matrix.image }}
+        shell: bash
