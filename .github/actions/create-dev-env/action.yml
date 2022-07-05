@@ -1,5 +1,5 @@
 name: Build environment
-description: Create build environment
+description: Create new build environment
 
 inputs:
   platform:
