@@ -73,7 +73,7 @@ def get_file_prefix() -> str:
     return "amd64" if machine == "x86_64" else "aarch64"
 
 
-def write_manifests(
+def write_manifest(
     short_image_name: str,
     owner: str,
     hist_line_dir: Path,
@@ -82,14 +82,14 @@ def write_manifests(
     LOGGER.info(f"Creating manifests for image: {short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 
-    tags_prefix = get_tags_prefix()
-    image = f"{owner}/{short_image_name}:{tags_prefix}latest"
+    image = f"{owner}/{short_image_name}:latest"
 
     file_prefix = get_file_prefix()
     commit_hash_tag = GitHelper.commit_hash_tag()
     filename = f"{file_prefix}-{short_image_name}-{commit_hash_tag}"
 
     with DockerRunner(image) as container:
+        tags_prefix = get_tags_prefix()
         all_tags = [tags_prefix + tagger.tag_value(container) for tagger in taggers]
         write_build_history_line(
             short_image_name, owner, hist_line_dir, filename, all_tags
@@ -125,6 +125,6 @@ if __name__ == "__main__":
 
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
-    write_manifests(
+    write_manifest(
         args.short_image_name, args.owner, args.hist_line_dir, args.manifest_dir
     )

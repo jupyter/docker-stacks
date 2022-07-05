@@ -38,9 +38,12 @@ jobs:
           platform: ${{ inputs.platform }}
 
       # Self-hosted runners share a state (whole VM) between runs
-      - name: Reset docker state 🗑️
+      - name: Reset docker state and cleanup artifacts 🗑️
         if: ${{ inputs.platform != 'amd64' }}
-        run: docker system prune --all --force
+        run: |
+          docker system prune --all --force
+          rm -rf /tmp/hist_lines/
+          rm -rf /tmp/manifests/
         shell: bash
 
       - name: Load image to Docker 📥
@@ -55,8 +58,8 @@ jobs:
           docker image ls -a
         shell: bash
 
-      - name: Write manifest files 🏷
-        run: python3 -m tagging.write_manifests --short-image-name ${{ matrix.image }} --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/
+      - name: Write manifest and build history file 🏷
+        run: python3 -m tagging.write_manifest --short-image-name ${{ matrix.image }} --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/
         shell: bash
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v3
@@ -71,6 +74,11 @@ jobs:
           path: /tmp/hist_lines/${{ inputs.platform }}-${{ matrix.image }}-*.txt
           retention-days: 3
 
+      - name: Remove aarch64 latest tag
+        if: ${{ inputs.platform != 'amd64' }}
+        run: docker rmi jupyter/${{ matrix.image }}
+        shell: bash
+
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
@@ -82,12 +90,3 @@ jobs:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         run: docker push --all-tags jupyter/${{ matrix.image }}
         shell: bash
-
-      # Self-hosted runners share a state (whole VM) between runs
-      - name: Cleanup artifacts 🗑️
-        run: |
-          rm -rf /tmp/hist_lines/
-          rm -rf /tmp/manifests/
-          docker system prune --all --force
-        shell: bash
-        if: always()
