@@ -41,7 +41,7 @@ ipython profile create
 
 You can build a `pyspark-notebook` image (and also the downstream `all-spark-notebook` image) with a different version of Spark by overriding the default value of the following arguments at build time.
 
-- Spark distribution is defined by the combination of Spark, Hadoop and Scala version and verified by the package checksum,
+- Spark distribution is defined by the combination of Spark, Hadoop and Scala versions and verified by the package checksum,
   see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
   - `spark_version`: The Spark version to install (`3.3.0`).
   - `hadoop_version`: The Hadoop version (`3.2`).
