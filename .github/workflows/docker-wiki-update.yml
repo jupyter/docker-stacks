@@ -1,0 +1,45 @@
+name: Download manifest artifacts from GitHub, tag and push to DockerHub
+# We're doing everything in one workflow on purpose
+# This way we make sure we don't access wiki pages from several jobs simultaneously
+
+on:
+  workflow_call:
+
+jobs:
+  tag-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+      - name: Create dev environment 📦
+        uses: ./.github/actions/create-dev-env
+        with:
+          platform: amd64
+
+      - name: Download all manifests and history lines 📥
+        uses: ./.github/actions/download-manifests
+        with:
+          histLineDir: /tmp/hist_lines/
+          manifestDir: /tmp/manifests/
+      - name: Display structure of downloaded files 🔍️
+        run: |
+          ls -R /tmp/hist_lines/
+          ls -R /tmp/manifests/
+        shell: bash
+
+      - name: Checkout Wiki Repo 📃
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki/
+
+      - name: Update wiki page 🏷
+        run: python3 -m tagging.update_wiki_page --wiki-dir wiki/ --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/
+        shell: bash
+
+      - name: Push Wiki to GitHub 📤
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        uses: stefanzweifel/git-auto-commit-action@5804e42f86b1891093b151b6c4e78e759c746c4d # dependabot updates to latest release
+        with:
+          commit_message: "Automated wiki publish for ${{ github.sha }}"
+          repository: wiki/

@@ -116,12 +116,6 @@ RUN set -x && \
     rm /tmp/micromamba.tar.bz2 && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
-    if [ "${arch}" == "aarch64" ]; then \
-        # Prevent libmamba from sporadically hanging on arm64 under QEMU
-        # <https://github.com/mamba-org/mamba/issues/1611>
-        # We don't use `micromamba config set` since it instead modifies ~/.condarc.
-        echo "extract_threads: 1" >> "${CONDA_DIR}/.condarc"; \
-    fi && \
     # Install the packages
     ./micromamba install \
         --root-prefix="${CONDA_DIR}" \

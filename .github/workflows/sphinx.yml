@@ -45,7 +45,7 @@ jobs:
       - name: Install Doc Dependencies 📦
         run: |
           pip install --upgrade pip
-          pip install -r requirements-docs.txt
+          pip install --upgrade -r requirements-docs.txt
 
       - name: Build Documentation 📖
         run: make docs
