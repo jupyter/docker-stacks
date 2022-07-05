@@ -47,12 +47,12 @@ You can build a `pyspark-notebook` image (and also the downstream `all-spark-not
   - `hadoop_version`: The Hadoop version (`3.2`).
   - `scala_version`: The Scala version (`2.13`).
   - `spark_checksum`: The package checksum (`BFE4540...`).
-- Spark can run with different OpenJDK versions and those version need to match else Spark will not work.
-
-  - `openjdk_version`: The version of (JRE headless) the OpenJDK distribution (`17`), see [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
+  - `openjdk_version`: The version of the OpenJDK (JRE headless) distribution (`17`).
+    - This version needs to match the version supported by the Spark distribution used above. 
+    - See [Spark Overview](https://spark.apache.org/docs/latest/#downloading) and [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk). 
 
 - Starting with _Spark >= 3.2_ the distribution file contains Scala version, hence building older Spark will not work.
-- Building older version requires modification to the Dockerfile or using it's older version
+- Building older version requires modification to the Dockerfile or using it's older version of the Dockerfile
 
 For example here is how to build a `pyspark-notebook` image with Spark `3.2.0`, Hadoop `3.2` and OpenJDK `11`.
 
