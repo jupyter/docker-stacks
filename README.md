@@ -115,6 +115,6 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 
 ## CPU Architectures
 
-- We publish containers for both `amd64` (`x86_64`) and `aarch64` platforms, except for `datascience-notebook` and `tensorflow-notebook`, which only support `amd64` for now
+- We publish containers for both `amd64` (`x86_64`) and `aarch64` platforms, except for `tensorflow-notebook`, which only supports `amd64` for now
 - We do not create multi-platform images
 - Instead, all `arm64` images have _aarch64-_ tag prefix, for example `jupyter/base-notebook:aarch64-python-3.10.5`

@@ -66,6 +66,11 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
+        name: datascience-notebook-aarch64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
         name: datascience-notebook-amd64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
@@ -133,6 +138,11 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: tensorflow-notebook-amd64-manifest
+        path: ${{ inputs.manifestDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
+        name: datascience-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3

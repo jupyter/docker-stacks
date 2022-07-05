@@ -145,6 +145,15 @@ jobs:
       platform: amd64
       runsOn: ubuntu-latest
 
+  aarch64-datascience:
+    needs: [aarch64-scipy]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: datascience-notebook
+      platform: aarch64
+      runsOn: ARM64
+
   amd64-datascience:
     needs: [amd64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -200,6 +209,7 @@ jobs:
         aarch64-minimal,
         aarch64-scipy,
         aarch64-r,
+        aarch64-datascience,
         aarch64-pyspark,
         aarch64-all-spark,
       ]
@@ -216,6 +226,7 @@ jobs:
           "minimal-notebook",
           "scipy-notebook",
           "r-notebook",
+          "datascience-notebook",
           "pyspark-notebook",
           "all-spark-notebook"
         ]
