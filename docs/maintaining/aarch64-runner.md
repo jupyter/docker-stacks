@@ -1,10 +1,11 @@
 # Self-hosted runners
 
-For `aarch64` images, we have self-hosted VMs, provided by [Oracle OCI](https://www.oracle.com/cloud/).
+For building `aarch64` images, we use VMs, provided by [Oracle OCI](https://www.oracle.com/cloud/).
+Currently, there are 2 self-hosted GitHub runners with _2 OCPU_ and _12 GB_ each.
 
 To setup a new runner:
 
-1. Create a compute instance `VM.Standard.A1.Flex` with _1 OCPU_ and _6 GB_ using `Ubuntu 22.04` image.
+1. Create a compute instance `VM.Standard.A1.Flex` with _2 OCPU_ and _12 GB_ using `Ubuntu 22.04` image.
 2. Run under `root`:
 
    ```bash
