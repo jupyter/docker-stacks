@@ -32,14 +32,10 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
     )
     logs = container.run_and_wait(
         timeout=60,
-        no_warnings=False,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["start.sh", "bash", "-c", command],
     )
-    warnings = TrackedContainer.get_warnings(logs)
-    # Some Spark warnings
-    assert len(warnings) == 5
 
     expected_file = f"{output_dir}/{test_file}.md"
     assert expected_file in logs, f"Expected file {expected_file} not generated"
