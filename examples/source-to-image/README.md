@@ -31,7 +31,7 @@ As an example of how S2I can be used to create a custom image with a bundled set
 
 ```bash
 s2i build \
-    --scripts-url https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image \
+    --scripts-url https://raw.githubusercontent.com/jupyter/docker-stacks/main/examples/source-to-image \
     --context-dir docs/source/examples/Notebook \
     https://github.com/jupyter/notebook \
     jupyter/minimal-notebook:latest \
@@ -127,7 +127,7 @@ Templates are provided for using the S2I build mechanism with the scripts in thi
 To load the templates run:
 
 ```bash
-oc create -f https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image/templates.json
+oc create -f https://raw.githubusercontent.com/jupyter/docker-stacks/main/examples/source-to-image/templates.json
 ```
 
 This will create the templates:

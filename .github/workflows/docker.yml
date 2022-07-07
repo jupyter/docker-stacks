@@ -34,7 +34,6 @@ on:
   push:
     branches:
       - main
-      - master
     paths:
       - ".github/workflows/docker.yml"
       - ".github/workflows/docker-build-test-upload.yml"

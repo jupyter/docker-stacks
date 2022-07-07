@@ -148,7 +148,7 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/999>
 ## Let's Encrypt a Notebook server
 
 See the README for a basic automation here
-<https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy>
+<https://github.com/jupyter/docker-stacks/tree/main/examples/make-deploy>
 which includes steps for requesting and renewing a Let's Encrypt certificate.
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/78>

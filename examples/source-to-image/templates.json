@@ -27,7 +27,7 @@
         },
         {
           "name": "BUILDER_SCRIPTS",
-          "value": "https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image",
+          "value": "https://raw.githubusercontent.com/jupyter/docker-stacks/main/examples/source-to-image",
           "required": true
         },
         {
@@ -37,7 +37,7 @@
         },
         {
           "name": "GIT_REFERENCE",
-          "value": "master",
+          "value": "main",
           "required": true
         },
         {
@@ -130,7 +130,7 @@
         },
         {
           "name": "BUILDER_SCRIPTS",
-          "value": "https://raw.githubusercontent.com/jupyter/docker-stacks/master/examples/source-to-image",
+          "value": "https://raw.githubusercontent.com/jupyter/docker-stacks/main/examples/source-to-image",
           "required": true
         },
         {
@@ -140,7 +140,7 @@
         },
         {
           "name": "GIT_REFERENCE",
-          "value": "master",
+          "value": "main",
           "required": true
         },
         {

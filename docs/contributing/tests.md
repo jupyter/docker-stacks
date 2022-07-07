@@ -4,7 +4,7 @@ We greatly appreciate pull requests that extend the automated tests that vet the
 
 ## How the Tests Work
 
-A [GitHub Action workflow](https://github.com/jupyter/docker-stacks/blob/master/.github/workflows/docker.yml)
+A [GitHub Action workflow](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker.yml)
 runs tests against pull requests submitted to the `jupyter/docker-stacks` repository.
 
 We use `pytest` module to run tests on the image.
@@ -18,7 +18,7 @@ If your test is located in `tests/<somestack>-notebook/`, it will be run against
 ```
 
 Many tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/reference/fixtures.html)
-defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/master/tests/conftest.py) file.
+defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/main/tests/conftest.py) file.
 
 ## Unit tests
 
