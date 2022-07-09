@@ -29,7 +29,7 @@ In this section we will briefly describe source code in this folder and give exa
 ```python
 from tagging.docker_runner import DockerRunner
 
-with DockerRunner("ubuntu:jammy") as container:
+with DockerRunner("ubuntu:22.04") as container:
     DockerRunner.run_simple_command(container, cmd="env", print_result=True)
 ```
 

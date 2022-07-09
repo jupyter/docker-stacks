@@ -241,7 +241,7 @@ Enabling manpages in the base Ubuntu layer prevents this container bloat.
 To achieve this, use the previous `Dockerfile`'s commands with the original `ubuntu` image as your base container:
 
 ```dockerfile
-ARG BASE_CONTAINER=ubuntu:jammy
+ARG BASE_CONTAINER=ubuntu:22.04
 ```
 
 For Ubuntu 18.04 (bionic) and earlier, you may also require to a workaround for a mandb bug, which was fixed in mandb >= 2.8.6.1:
