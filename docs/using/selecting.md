@@ -184,6 +184,17 @@ communities.
   [ggplot2](https://ggplot2.tidyverse.org)
   packages
 
+### jupyter/snowpark-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/snowpark-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/snowpark-notebook/Dockerfile) |
+[Docker Hub image tags](https://hub.docker.com/r/jupyter/snowpark-notebook/tags/)
+
+`jupyter/snowpark-notebook` includes snowpark library and it's dependencies for analytics on snowflake.
+
+- Everything in `jupyter/scipy-notebook` and its ancestor images
+- [snowflake-snowpark-python](https://pypi.org/project/snowflake-snowpark-python/) Snowflake Snowpark Python API
+
 ### Image Relationships
 
 The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles).
