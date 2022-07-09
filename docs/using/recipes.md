@@ -29,7 +29,7 @@ Create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:6b49f3337709
+FROM jupyter/datascience-notebook:807999a41207
 # Install in the default python3 environment
 RUN pip install --quiet --no-cache-dir 'flake8==3.9.2' && \
     fix-permissions "${CONDA_DIR}" && \
@@ -48,7 +48,7 @@ Next, create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:6b49f3337709
+FROM jupyter/datascience-notebook:807999a41207
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --quiet --no-cache-dir --requirement /tmp/requirements.txt && \
@@ -60,7 +60,7 @@ For conda, the Dockerfile is similar:
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:6b49f3337709
+FROM jupyter/datascience-notebook:807999a41207
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN mamba install --yes --file /tmp/requirements.txt && \
@@ -148,7 +148,7 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/999>
 ## Let's Encrypt a Notebook server
 
 See the README for a basic automation here
-<https://github.com/jupyter/docker-stacks/tree/master/examples/make-deploy>
+<https://github.com/jupyter/docker-stacks/tree/main/examples/make-deploy>
 which includes steps for requesting and renewing a Let's Encrypt certificate.
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/78>
@@ -283,7 +283,7 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:6b49f3337709
+FROM jupyter/base-notebook:807999a41207
 RUN pip install --quiet --no-cache-dir jupyterhub==1.4.1 && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -474,7 +474,7 @@ For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:6b49f3337709 \
+    jupyter/base-notebook:807999a41207 \
     start.sh jupyter lab --LabApp.token=''
 ```
 
@@ -482,7 +482,7 @@ For jupyter classic:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:6b49f3337709 \
+    jupyter/base-notebook:807999a41207 \
     start.sh jupyter notebook --NotebookApp.token=''
 ```
 

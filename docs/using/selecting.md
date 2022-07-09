@@ -18,8 +18,8 @@ The following sections describe these images, including their contents, relation
 
 ### jupyter/base-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/base-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/base-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/base-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/base-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
 `jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.md).
@@ -40,8 +40,8 @@ It is the basis for all other stacks and contains:
 
 ### jupyter/minimal-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/minimal-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/minimal-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/minimal-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/minimal-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/minimal-notebook/tags/)
 
 `jupyter/minimal-notebook` adds command-line tools useful when working in Jupyter applications.
@@ -56,8 +56,8 @@ It contains:
 
 ### jupyter/r-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/r-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/r-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/r-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/r-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/r-notebook/tags/)
 
 `jupyter/r-notebook` includes popular packages from the R ecosystem listed below:
@@ -87,8 +87,8 @@ It contains:
 
 ### jupyter/scipy-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/scipy-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/scipy-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/scipy-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/scipy-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/scipy-notebook/tags/)
 
 `jupyter/scipy-notebook` includes popular packages from the scientific Python ecosystem.
@@ -129,8 +129,8 @@ It contains:
 
 ### jupyter/tensorflow-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/tensorflow-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/tensorflow-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/tensorflow-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/tensorflow-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/tensorflow-notebook/tags/)
 
 `jupyter/tensorflow-notebook` includes popular Python deep learning libraries.
@@ -140,8 +140,8 @@ It contains:
 
 ### jupyter/datascience-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/datascience-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/datascience-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/datascience-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/datascience-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/datascience-notebook/tags/)
 
 `jupyter/datascience-notebook` includes libraries for data analysis from the Julia, Python, and R
@@ -159,8 +159,8 @@ communities.
 
 ### jupyter/pyspark-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/pyspark-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/pyspark-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/pyspark-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/pyspark-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/pyspark-notebook/tags/)
 
 `jupyter/pyspark-notebook` includes Python support for Apache Spark.
@@ -171,8 +171,8 @@ communities.
 
 ### jupyter/all-spark-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/master/all-spark-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/master/all-spark-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/all-spark-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/all-spark-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/all-spark-notebook/tags/)
 
 `jupyter/all-spark-notebook` includes Python and R support for Apache Spark.

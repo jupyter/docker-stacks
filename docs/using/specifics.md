@@ -41,37 +41,43 @@ ipython profile create
 
 You can build a `pyspark-notebook` image (and also the downstream `all-spark-notebook` image) with a different version of Spark by overriding the default value of the following arguments at build time.
 
-- Spark distribution is defined by the combination of the Spark and the Hadoop version and verified by the package checksum,
+- Spark distribution is defined by the combination of Spark, Hadoop and Scala versions and verified by the package checksum,
   see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
-  - `spark_version`: The Spark version to install (`3.0.0`).
-  - `hadoop_version`: The Hadoop version (`3.2`).
-  - `spark_checksum`: The package checksum (`BFE4540...`).
-- Spark can run with different OpenJDK versions.
-  - `openjdk_version`: The version of (JRE headless) the OpenJDK distribution (`11`), see [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
 
-For example here is how to build a `pyspark-notebook` image with Spark `2.4.7`, Hadoop `2.7` and OpenJDK `8`.
+  - `spark_version`: The Spark version to install (`3.3.0`).
+  - `hadoop_version`: The Hadoop version (`3.2`).
+  - `scala_version`: The Scala version (`2.13`).
+  - `spark_checksum`: The package checksum (`BFE4540...`).
+  - `openjdk_version`: The version of the OpenJDK (JRE headless) distribution (`17`).
+    - This version needs to match the version supported by the Spark distribution used above.
+    - See [Spark Overview](https://spark.apache.org/docs/latest/#downloading) and [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
+
+- Starting with _Spark >= 3.2_ the distribution file contains Scala version, hence building older Spark will not work.
+- Building older version requires modification to the Dockerfile or using it's older version of the Dockerfile.
+
+For example here is how to build a `pyspark-notebook` image with Spark `3.2.0`, Hadoop `3.2` and OpenJDK `11`.
 
 ```bash
 # From the root of the project
 # Build the image with different arguments
 docker build --rm --force-rm \
-    -t jupyter/pyspark-notebook:spark-2.4.7 ./pyspark-notebook \
-    --build-arg spark_version=2.4.7 \
-    --build-arg hadoop_version=2.7 \
-    --build-arg spark_checksum=0F5455672045F6110B030CE343C049855B7BA86C0ECB5E39A075FF9D093C7F648DA55DED12E72FFE65D84C32DCD5418A6D764F2D6295A3F894A4286CC80EF478 \
-    --build-arg openjdk_version=8
+    -t jupyter/pyspark-notebook:spark-3.2.0 ./pyspark-notebook \
+    --build-arg spark_version=3.2.0 \
+    --build-arg hadoop_version=3.2 \
+    --build-arg spark_checksum=707DDE035926A50B75E53FCA72CADA519F3239B14A96546911CB4916A58DCF69A1D2BFDD2C7DD5899324DBD82B6EEAB9797A7B4ABF86736FFCA4C26D0E0BF0EE \
+    --build-arg openjdk_version=11
 
 # Check the newly built image
-docker run -it --rm jupyter/pyspark-notebook:spark-2.4.7 pyspark --version
+docker run -it --rm jupyter/pyspark-notebook:spark-3.2.0 pyspark --version
 
 # Welcome to
 #       ____              __
 #      / __/__  ___ _____/ /__
 #     _\ \/ _ \/ _ `/ __/  '_/
-#    /___/ .__/\_,_/_/ /_/\_\   version 2.4.7
+#    /___/ .__/\_,_/_/ /_/\_\   version 3.2.0
 #       /_/
-#
-# Using Scala version 2.11.12, OpenJDK 64-Bit Server VM, 1.8.0_275
+
+# Using Scala version 2.13.5, OpenJDK 64-Bit Server VM, 11.0.15
 ```
 
 ### Usage Examples

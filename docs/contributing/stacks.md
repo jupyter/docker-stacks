@@ -80,12 +80,11 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
    push:
      branches:
        - main
-       - master
      paths-ignore:
        - "*.md"
    ```
 
-   This will trigger the CI pipeline whenever you push to your `main` or `master` branch and when any Pull Requests are made to your repository.
+   This will trigger the CI pipeline whenever you push to your `main` branch and when any Pull Requests are made to your repository.
    For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
 2. Commit your changes and push to GitHub.
@@ -99,7 +98,7 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
 ## Configuring Docker Hub
 
 Now, configure Docker Hub to build your stack image and push it to Docker Hub repository whenever
-you merge a GitHub pull request to the master branch of your project.
+you merge a GitHub pull request to the main branch of your project.
 
 1. Visit [https://hub.docker.com/](https://hub.docker.com/) and log in.
 2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter.
@@ -137,14 +136,13 @@ you merge a GitHub pull request to the master branch of your project.
 
 Make edits to the Dockerfile in your project to add third-party libraries and configure Jupyter
 applications.
-Refer to the Dockerfiles for the core stacks (e.g., [jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/blob/master/datascience-notebook/Dockerfile))
+Refer to the Dockerfiles for the core stacks (e.g., [jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/blob/main/datascience-notebook/Dockerfile))
 to get a feel for what's possible and best practices.
 
 [Submit pull requests](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)
 to your project repository on GitHub.
-Ensure your image builds correctly on GitHub actions before merging to
-master or main.
-Refer to Docker Hub to build your master or main branch that you can `docker pull`.
+Ensure your image builds correctly on GitHub actions before merging to main branch.
+Refer to Docker Hub to build your main branch that you can `docker pull`.
 
 ## Sharing Your Image
 
