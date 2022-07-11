@@ -38,7 +38,8 @@ Example:
 """
 
 import logging
-from typing import Callable, Iterable
+from collections.abc import Iterable
+from typing import Callable
 
 import pytest  # type: ignore
 
