@@ -52,7 +52,7 @@ It then starts an _ephemeral_ container running a Jupyter Server and exposes the
 docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:807999a41207
 ```
 
-The use of the `-v` flag in the command mounts the current working directory on the host (`{PWD}` in the example command) as `/home/jovyan/work` in the container.
+The use of the `-v` flag in the command mounts the current working directory on the host (`${PWD}` in the example command) as `/home/jovyan/work` in the container.
 The server logs appear in the terminal.
 
 Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
