@@ -46,7 +46,7 @@ def test_unsigned_ssl(
     # properly while the server is booting up. An SSL handshake error seems to
     # abort the retry logic. Forcing a long sleep for the moment until I have
     # time to dig more.
-    time.sleep(5)
+    time.sleep(1)
     resp = http_client.get(f"https://localhost:{host_port}", verify=False)
     resp.raise_for_status()
     assert "login_submit" in resp.text
@@ -91,9 +91,9 @@ def test_nb_user_change(container: TrackedContainer) -> None:
         command=["start.sh", "bash", "-c", "sleep infinity"],
     )
 
-    # Give the chown time to complete. Use sleep, not wait, because the
-    # container sleeps forever.
-    time.sleep(10)
+    # Give the chown time to complete.
+    # Use sleep, not wait, because the container sleeps forever.
+    time.sleep(1)
     LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
     output = running_container.logs().decode("utf-8")
     assert "ERROR" not in output
