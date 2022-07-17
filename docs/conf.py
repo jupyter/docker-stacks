@@ -73,6 +73,7 @@ html_logo = "_static/jupyter-logo.svg"
 html_theme_options = {
     "path_to_docs": "docs",
     "repository_url": "https://github.com/jupyter/docker-stacks",
+    "repository_branch": "main",
     "use_edit_page_button": True,
     "use_issues_button": True,
     "use_repository_button": True,
