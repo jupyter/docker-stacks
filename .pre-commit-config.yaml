@@ -116,7 +116,7 @@ repos:
   # nbQA provides tools from the Python ecosystem like
   # pyupgrade, isort, black, and flake8, adjusted for notebooks.
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.3.1
+    rev: 1.4.0
     hooks:
       - id: nbqa-pyupgrade
         args: [--py39-plus]
