@@ -14,7 +14,7 @@
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.37.1
+    rev: v2.37.2
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
@@ -35,7 +35,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.961
+    rev: v0.971
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -102,14 +102,14 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.32.0
+    rev: v0.32.1
     hooks:
       - id: markdownlint
         args: ["--fix"]
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
-    rev: 0.5.0
+    rev: 0.6.0
     hooks:
       - id: nbstripout
 
