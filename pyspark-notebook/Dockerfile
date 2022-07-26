@@ -57,8 +57,8 @@ RUN if [ -z "${scala_version}" ] ; then \
     ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}" spark && ; \
   fi
 
-RUN # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
-    mkdir -p /usr/local/bin/before-notebook.d && \
+# Add a link in the before_notebook hook in order to source automatically PYTHONPATH
+RUN mkdir -p /usr/local/bin/before-notebook.d && \
     ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh
 
 # Configure IPython system-wide
