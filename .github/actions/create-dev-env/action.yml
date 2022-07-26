@@ -10,7 +10,7 @@ inputs:
 runs:
   using: composite
   steps:
-    # actions/setup-python doesn't suport Linux aarch64 runners
+    # actions/setup-python doesn't support Linux aarch64 runners
     # See: https://github.com/actions/setup-python/issues/108
     # python3 is manually preinstalled in the aarch64 VM self-hosted runner
     - name: Set Up Python 🐍
