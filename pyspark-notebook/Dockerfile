@@ -17,8 +17,8 @@ USER root
 # (ARGS are in lower case to distinguish them from ENV)
 ARG spark_version="3.3.0"
 ARG hadoop_version="3"
-#ARG scala_version="2.13"
-ARG spark_checksum="4c09dac70e22bf1d5b7b2cabc1dd92aba13237f52a5b682c67982266fc7a0f5e0f964edff9bc76adbd8cb444eb1a00fdc59516147f99e4e2ce068420ff4881f0"
+ARG scala_version
+ARG spark_checksum="1e8234d0c1d2ab4462d6b0dfe5b54f2851dcd883378e0ed756140e10adfb5be4123961b521140f580e364c239872ea5a9f813a20b73c69cb6d4e95da2575c29c"
 ARG openjdk_version="17"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
