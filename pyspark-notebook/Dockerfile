@@ -31,7 +31,7 @@ RUN apt-get update --yes && \
 # Spark installation
 WORKDIR /tmp
 
-RUN if [ -z "$scala_version" ] ; then \
+RUN if [ -z "${scala_version}" ] ; then \
     wget -q "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" && \
     echo "${spark_checksum} *spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" | sha512sum -c - && \
     tar xzf "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" -C /usr/local --owner root --group root --no-same-owner && \
@@ -43,10 +43,6 @@ RUN if [ -z "$scala_version" ] ; then \
     rm "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"; \
   fi
 
-#RUN wget -q "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz" && \
- #   echo "${spark_checksum} *spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz" | sha512sum -c - && \
- #   tar xzf "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz" -C /usr/local --owner root --group root --no-same-owner && \
- #   rm "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"
 
 WORKDIR /usr/local
 
@@ -55,7 +51,7 @@ ENV SPARK_HOME=/usr/local/spark
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
     PATH="${PATH}:${SPARK_HOME}/bin"
 
-RUN if [ -z "$scala_version" ] ; then \
+RUN if [ -z "${scala_version}" ] ; then \
     ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" spark && \
     # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
     mkdir -p /usr/local/bin/before-notebook.d && \
