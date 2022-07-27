@@ -35,15 +35,16 @@ WORKDIR /tmp
 
 RUN if [ -z "${scala_version}" ] ; then \
     wget -q "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" -o spark.tgz && \
+    echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
+    tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \
+    rm "spark.tgz" ;\
   else \
     wget -q "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz" -o spark.tgz && \
+    echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
+    tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \
+    rm "spark.tgz" ;\
   fi
 
-RUN echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
-    tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \
-    rm "spark.tgz"
-
-WORKDIR /usr/local
 
 # Configure Spark
 ENV SPARK_HOME=/usr/local/spark
