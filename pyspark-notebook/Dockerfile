@@ -42,7 +42,6 @@ RUN if [ -z "${scala_version}" ] ; then \
   tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \
   rm "spark.tgz"
 
-
 # Configure Spark
 ENV SPARK_HOME=/usr/local/spark
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
@@ -56,7 +55,6 @@ RUN if [ -z "${scala_version}" ] ; then \
   # Add a link in the before_notebook hook in order to source automatically PYTHONPATH && \
   mkdir -p /usr/local/bin/before-notebook.d && \
   ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh
-
 
 # Configure IPython system-wide
 COPY ipython_kernel_config.py "/etc/ipython/"
