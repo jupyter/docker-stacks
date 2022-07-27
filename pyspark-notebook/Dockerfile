@@ -34,16 +34,13 @@ RUN apt-get update --yes && \
 WORKDIR /tmp
 
 RUN if [ -z "${scala_version}" ] ; then \
-    wget -qO "spark.tgz" "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" && \
-    echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
-    tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \
-    rm "spark.tgz" ;\
+    wget -qO "spark.tgz" "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" ;\
   else \
-    wget -qO "spark.tgz" "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz" && \
-    echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
-    tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \
-    rm "spark.tgz" ;\
-  fi
+    wget -qO "spark.tgz" "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz" ;\
+  fi && \
+  echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
+  tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \
+  rm "spark.tgz"
 
 
 # Configure Spark
@@ -52,16 +49,13 @@ ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M 
     PATH="${PATH}:${SPARK_HOME}/bin"
 
 RUN if [ -z "${scala_version}" ] ; then \
-    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" ${SPARK_HOME} && \
-    # Add a link in the before_notebook hook in order to source automatically PYTHONPATH && \
-    mkdir -p /usr/local/bin/before-notebook.d && \
-    ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh ;\
+    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" ${SPARK_HOME} ;\
   else \
-    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}" ${SPARK_HOME} && \
-    # Add a link in the before_notebook hook in order to source automatically PYTHONPATH && \
-    mkdir -p /usr/local/bin/before-notebook.d && \
-    ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh ;\
-  fi
+    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}" ${SPARK_HOME} ;\
+  fi && \
+  # Add a link in the before_notebook hook in order to source automatically PYTHONPATH && \
+  mkdir -p /usr/local/bin/before-notebook.d && \
+  ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh
 
 
 # Configure IPython system-wide
