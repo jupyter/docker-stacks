@@ -51,11 +51,11 @@ ENV SPARK_HOME=/usr/local/spark
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
     PATH="${PATH}:${SPARK_HOME}/bin"
 
-RUN if [ -z "${scala_version}" ] ; then \
-    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" spark && ; \
-  else \
-    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}" spark && ; \
-  fi
+#RUN if [ -z "${scala_version}" ] ; then \
+#    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" spark && ; \
+#  else \
+#    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}" spark && ; \
+#  fi
 
 # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
 RUN mkdir -p /usr/local/bin/before-notebook.d && \
