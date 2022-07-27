@@ -33,7 +33,7 @@ RUN apt-get update --yes && \
 # Spark installation
 WORKDIR /tmp
 
-RUN if [ -z "${scala_version}" ] ; then \
+RUN if [ -z "${scala_version}" ]; then \
     wget -qO "spark.tgz" "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" ;\
   else \
     wget -qO "spark.tgz" "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz" ;\
@@ -47,10 +47,10 @@ ENV SPARK_HOME=/usr/local/spark
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
     PATH="${PATH}:${SPARK_HOME}/bin"
 
-RUN if [ -z "${scala_version}" ] ; then \
-    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" "${SPARK_HOME}" ;\
+RUN if [ -z "${scala_version}" ]; then \
+    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" "${SPARK_HOME}"; \
   else \
-    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}" "${SPARK_HOME}" ;\
+    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}" "${SPARK_HOME}"; \
   fi && \
   # Add a link in the before_notebook hook in order to source automatically PYTHONPATH && \
   mkdir -p /usr/local/bin/before-notebook.d && \
