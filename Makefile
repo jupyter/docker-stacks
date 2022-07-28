@@ -67,10 +67,9 @@ linkcheck-docs: ## check broken links
 
 
 
-hook/%: WIKI_PATH?=wiki
 hook/%: ## run post-build hooks for an image
 	python3 -m tagging.tag_image --short-image-name "$(notdir $@)" --owner "$(OWNER)" && \
-	python3 -m tagging.write_manifest --short-image-name "$(notdir $@)" --owner "$(OWNER)" --wiki-path "$(WIKI_PATH)"
+	python3 -m tagging.write_manifest --short-image-name "$(notdir $@)" --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/ --owner "$(OWNER)"
 hook-all: $(foreach I, $(ALL_IMAGES), hook/$(I)) ## run post-build hooks for all images
 
 

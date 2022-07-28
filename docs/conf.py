@@ -63,7 +63,7 @@ html_theme = "alabaster"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
-# File above was generated using sphinx 4.3.2 with this command:
+# File above was generated using sphinx 4.5.0 with this command:
 # sphinx-quickstart --project "docker-stacks" --author "Project Jupyter" -v "latest" -r "latest" -l en --no-sep --no-makefile --no-batchfile
 # These are custom options for this project
 
@@ -73,6 +73,7 @@ html_logo = "_static/jupyter-logo.svg"
 html_theme_options = {
     "path_to_docs": "docs",
     "repository_url": "https://github.com/jupyter/docker-stacks",
+    "repository_branch": "main",
     "use_edit_page_button": True,
     "use_issues_button": True,
     "use_repository_button": True,
