@@ -233,14 +233,15 @@ RUN rm /etc/dpkg/dpkg.cfg.d/excludes && \
 USER ${NB_UID}
 ```
 
-Adding the documentation on top of the existing single-user image wastes a lot of space and requires
-reinstalling every system package. Which can take additional time and bandwidth; the
-`datascience-notebook` image has been shown to grow by almost 3GB when adding manpages in this way.
+Adding the documentation on top of the existing single-user image wastes a lot of space
+and requires reinstalling every system package,
+which can take additional time and bandwidth.
+The `datascience-notebook` image has been shown to grow by almost 3GB when adding manpages in this way.
 Enabling manpages in the base Ubuntu layer prevents this container bloat.
-To achieve this, use the previous `Dockerfile` with the original ubuntu image (`ubuntu:focal`) as your base container:
+To achieve this, use the previous `Dockerfile`'s commands with the original `ubuntu` image as your base container:
 
 ```dockerfile
-ARG BASE_CONTAINER=ubuntu:focal
+ARG BASE_CONTAINER=ubuntu:22.04
 ```
 
 For Ubuntu 18.04 (bionic) and earlier, you may also require to a workaround for a mandb bug, which was fixed in mandb >= 2.8.6.1:

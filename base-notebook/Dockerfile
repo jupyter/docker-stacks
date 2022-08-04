@@ -1,9 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# Ubuntu 20.04 (focal)
-# https://hub.docker.com/_/ubuntu/?tab=tags&name=focal
-ARG ROOT_CONTAINER=ubuntu:focal
+# Ubuntu 22.04 (jammy)
+# https://hub.docker.com/_/ubuntu/?tab=tags&name=jammy
+ARG ROOT_CONTAINER=ubuntu:22.04
 
 FROM $ROOT_CONTAINER
 

@@ -43,6 +43,6 @@ docker run -it --rm \
 # directory so that the FQDN doesn't have to be known later.
 docker run -it --rm \
     -v "${SECRETS_VOLUME}":/etc/letsencrypt \
-    ubuntu:20.04 \
+    ubuntu:22.04 \
     bash -c "ln -s /etc/letsencrypt/live/${FQDN}/* /etc/letsencrypt/ && \
         find /etc/letsencrypt -type d -exec chmod 755 {} +"
