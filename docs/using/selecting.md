@@ -201,9 +201,15 @@ Every Monday and whenever a pull request is merged, images are rebuilt and pushe
 Whenever a docker image is pushed to the container registry, it is tagged with:
 
 - a `latest` tag
-- a 12-character git commit SHA like `b9f6ce795cfc`
-- a date formatted like `2021-08-29`
-- a set of software version tags like `python-3.9.6` and `lab-3.0.16`
+- a 12-character git commit SHA like `0fd03d9356de`
+- a date formatted like `2022-08-04`
+- OS version like `ubuntu-22.04`
+- a set of software version tags like `python-3.10.5` and `lab-3.4.4`
+
+```{warning}
+- Tags before `2022-07-05` were sometimes incorrect. Please, do not rely on them.
+- All `arm64` images have _aarch64-_ tag prefix, for example `aarch64-python-3.10.5`.
+```
 
 For stability and reproducibility, you should either reference a date formatted
 tag from a date before the current date (in UTC time) or a git commit SHA older
