@@ -21,8 +21,6 @@ RUN apt-get update --yes && \
     tzdata \
     unzip \
     vim-tiny \
-    # Inkscape is installed to be able to convert SVG files
-    inkscape \
     # git-over-ssh
     openssh-client \
     # less is needed to run help in R
