@@ -1,0 +1,5 @@
+
+# Add mimetype to specifies how the plot returns from R to the browser.
+# https://notebook.community/andrie/jupyter-notebook-samples/Changing%20R%20plot%20options%20in%20Jupyter
+
+options(jupyter.plot_mimetypes = c('text/plain', 'image/svg+xml', 'application/pdf'))

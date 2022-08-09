@@ -61,3 +61,6 @@ RUN set -x && \
             fix-permissions "${CONDA_DIR}" && \
             fix-permissions "/home/${NB_USER}"; \
     fi;
+
+# Add mimetype to specifies how the plot returns from R to the browser.
+COPY --chown=${NB_UID}:${NB_GID} Rprofile.site /opt/conda/lib/R/etc/
