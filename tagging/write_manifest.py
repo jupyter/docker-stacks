@@ -120,7 +120,11 @@ if __name__ == "__main__":
         type=Path,
         help="Directory to save manifest file",
     )
-    arg_parser.add_argument("--owner", default="jupyter", help="Owner of the image")
+    arg_parser.add_argument(
+        "--owner",
+        required=True,
+        help="Owner of the image",
+    )
     args = arg_parser.parse_args()
 
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")

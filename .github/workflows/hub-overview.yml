@@ -1,5 +1,8 @@
 name: Update dockerhub overviews
 
+env:
+  OWNER: ${{ GITHUB_REPOSITORY_OWNER }}
+
 on:
   push:
     branches:
@@ -36,7 +39,7 @@ jobs:
           DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
         with:
-          destination_container_repo: jupyter/base-notebook
+          destination_container_repo: ${{ env.OWNER }}/base-notebook
           provider: dockerhub
           short_description: "Small base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
           readme_file: base-notebook/README.md
