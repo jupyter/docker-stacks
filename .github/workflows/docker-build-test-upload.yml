@@ -1,7 +1,7 @@
 name: Download parent image, build new one, test it and upload to GitHub artifacts
 
 env:
-  OWNER: ${{ GITHUB_REPOSITORY_OWNER }}
+  OWNER: ${{ github.repository_owner }}
 
 on:
   workflow_call:

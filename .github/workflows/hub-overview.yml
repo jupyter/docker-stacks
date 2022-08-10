@@ -1,7 +1,7 @@
 name: Update dockerhub overviews
 
 env:
-  OWNER: ${{ GITHUB_REPOSITORY_OWNER }}
+  OWNER: ${{ github.repository_owner }}
 
 on:
   push:
