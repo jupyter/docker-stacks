@@ -79,7 +79,7 @@ jobs:
       parentImage: ""
       image: base-notebook
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
 
   aarch64-minimal:
     needs: [aarch64-base]
@@ -97,7 +97,7 @@ jobs:
       parentImage: base-notebook
       image: minimal-notebook
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
 
   aarch64-scipy:
     needs: [aarch64-minimal]
@@ -115,7 +115,7 @@ jobs:
       parentImage: minimal-notebook
       image: scipy-notebook
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
 
   aarch64-r:
     needs: [aarch64-minimal]
@@ -133,7 +133,7 @@ jobs:
       parentImage: minimal-notebook
       image: r-notebook
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
 
   amd64-tensorflow:
     needs: [amd64-scipy]
@@ -142,7 +142,7 @@ jobs:
       parentImage: scipy-notebook
       image: tensorflow-notebook
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
 
   aarch64-datascience:
     needs: [aarch64-scipy]
@@ -160,7 +160,7 @@ jobs:
       parentImage: scipy-notebook
       image: datascience-notebook
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
 
   aarch64-pyspark:
     needs: [aarch64-scipy]
@@ -178,7 +178,7 @@ jobs:
       parentImage: scipy-notebook
       image: pyspark-notebook
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
 
   aarch64-all-spark:
     needs: [aarch64-pyspark]
@@ -196,7 +196,7 @@ jobs:
       parentImage: pyspark-notebook
       image: all-spark-notebook
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
 
   aarch64-images-tag-push:
     secrets:
@@ -248,7 +248,7 @@ jobs:
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: amd64
-      runsOn: ubuntu-latest
+      runsOn: ubuntu-22.04
       images: >-
         [
           "base-notebook",

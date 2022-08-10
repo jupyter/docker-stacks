@@ -19,7 +19,7 @@ on:
 jobs:
   update-dockerhub-overview:
     name: Update dockerhub overviews
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       # Currently, it's impossible to automatically update descriptions
