@@ -1,5 +1,8 @@
 name: Download parent image, build new one, test it and upload to GitHub artifacts
 
+env:
+  OWNER: ${{  GITHUB_REPOSITORY_OWNER  }}
+
 on:
   workflow_call:
     inputs:
@@ -45,7 +48,7 @@ jobs:
           platform: ${{ inputs.platform }}
 
       - name: Build image 🛠
-        run: docker build --rm --force-rm --tag jupyter/${{ inputs.image }} ${{ inputs.image }}/
+        run: docker build --rm --force-rm --tag ${{ env.OWNER }}/jupyterhub/${{ inputs.image }} ${{ inputs.image }}/
         env:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build
@@ -57,14 +60,14 @@ jobs:
         shell: bash
 
       - name: Save image as a tar for later use 💾
-        run: docker save jupyter/${{ inputs.image }} -o /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+        run: docker save ${{ env.OWNER }}/jupyterhub/${{ inputs.image }} -o /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
         shell: bash
       - name: Upload image as artifact 💾
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}
           path: /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
-          retention-days: 3
+          retention-days: 2
 
       # Self-hosted runners share a state (whole VM) between runs
       - name: Cleanup artifacts 🗑️

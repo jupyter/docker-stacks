@@ -1,5 +1,8 @@
 name: Download Docker image from GitHub artifacts, tag and push it to DockerHub
 
+env:
+  OWNER: ${{  GITHUB_REPOSITORY_OWNER  }}
+
 on:
   workflow_call:
     inputs:
@@ -15,11 +18,6 @@ on:
         description: GitHub Actions Runner image
         required: true
         type: string
-    secrets:
-      DOCKERHUB_USERNAME:
-        required: true
-      DOCKERHUB_TOKEN:
-        required: true
 
 jobs:
   tag-push:
@@ -66,27 +64,28 @@ jobs:
         with:
           name: ${{ matrix.image }}-${{ inputs.platform }}-manifest
           path: /tmp/manifests/${{ inputs.platform }}-${{ matrix.image }}-*.md
-          retention-days: 3
+          retention-days: 2
       - name: Upload build history line 💾
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.image }}-${{ inputs.platform }}-history_line
           path: /tmp/hist_lines/${{ inputs.platform }}-${{ matrix.image }}-*.txt
-          retention-days: 3
+          retention-days: 2
 
       - name: Remove aarch64 latest tag 🗑️
         if: ${{ inputs.platform != 'amd64' }}
-        run: docker rmi jupyter/${{ matrix.image }}
+        run: docker rmi jupyterhub/${{ matrix.image }}
         shell: bash
 
       - name: Login to Docker Hub 🔐
-        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' || github.event_name == 'schedule'
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push Images to Docker Hub 📤
-        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: docker push --all-tags jupyter/${{ matrix.image }}
+      - name: Push Images to Github 📤
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' || github.event_name == 'schedule'
+        run: docker push --all-tags jupyterhub/${{ matrix.image }}  
         shell: bash
