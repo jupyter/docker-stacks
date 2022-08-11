@@ -49,7 +49,7 @@ if "GEN_CERT" in os.environ:
     )
     # Restrict access to the file
     pem_file.chmod(stat.S_IRUSR | stat.S_IWUSR)
-    c.ServerApp.certfile = pem_file
+    c.ServerApp.certfile = str(pem_file)
 
 # Change default umask for all subprocesses of the notebook server if set in
 # the environment
