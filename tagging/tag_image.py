@@ -50,7 +50,11 @@ if __name__ == "__main__":
         required=True,
         help="Short image name to apply tags for",
     )
-    arg_parser.add_argument("--owner", default="jupyter", help="Owner of the image")
+    arg_parser.add_argument(
+        "--owner",
+        required=True,
+        help="Owner of the image",
+    )
     args = arg_parser.parse_args()
 
     tag_image(args.short_image_name, args.owner)
