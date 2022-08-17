@@ -11,8 +11,10 @@ from tests.conftest import TrackedContainer
 LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
+
 @pytest.mark.parametrize(
-    "test_file", ["minetypes_R"],
+    "test_file",
+    ["minetypes_R"],
 )
 def test_minetypes(container: TrackedContainer, test_file: str) -> None:
     """Check if R notebooks can be executed"""
