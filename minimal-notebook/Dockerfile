@@ -39,5 +39,5 @@ RUN update-alternatives --install /usr/bin/nano nano /bin/nano-tiny 10
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
-# Add R mimetype option to specifies how the plot returns from R to the browser
+# Add R mimetype option to specify how the plot returns from R to the browser
 COPY --chown=${NB_UID}:${NB_GID} Rprofile.site /opt/conda/lib/R/etc/
