@@ -85,9 +85,6 @@ RUN mamba install --quiet --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Add `mimetype` to specify how the plot returns from R to the browser.
-COPY --chown=${NB_UID}:${NB_GID} Rprofile.site /opt/conda/lib/R/etc/
-
 # `rpy2` and `r-tidymodels` are not easy to install under aarch64
 RUN set -x && \
     arch=$(uname -m) && \
