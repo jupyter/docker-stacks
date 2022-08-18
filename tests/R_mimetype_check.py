@@ -2,13 +2,12 @@
 # Distributed under the terms of the Modified BSD License.
 
 import logging
-
 from tests.conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 
 
-def minetypes_check(container: TrackedContainer) -> None:
+def mimetypes_check(container: TrackedContainer) -> str:
     """Check if Rscript command can be executed"""
     LOGGER.info("Test that R command can be executed ...")
     Rcommand = 'if (length(getOption("jupyter.plot_mimetypes")) != 3) {stop("missing jupyter.plot_mimetypes")}'
