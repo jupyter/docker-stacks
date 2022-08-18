@@ -10,7 +10,7 @@ LOGGER = logging.getLogger(__name__)
 
 def minetypes_check(container: TrackedContainer) -> None:
     """Check if Rscript command can be executed"""
-    LOGGER.info(f"Test that R command can be executed ...")
+    LOGGER.info("Test that R command can be executed ...")
     Rcommand = 'if (length(getOption("jupyter.plot_mimetypes")) != 3) {stop("missing jupyter.plot_mimetypes")}'
     logs = container.run_and_wait(
         timeout=60,
