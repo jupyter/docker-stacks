@@ -2,6 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 import logging
+
 from tests.conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
