@@ -5,6 +5,6 @@ from tests.conftest import TrackedContainer
 from tests.R_mimetype_check import check_r_mimetypes
 
 
-def check_r_mimetypes(container: TrackedContainer) -> None:
+def test_mimetypes(container: TrackedContainer) -> None:
     """Check if Rscript command for mimetypes can be executed"""
     check_r_mimetypes(container)
