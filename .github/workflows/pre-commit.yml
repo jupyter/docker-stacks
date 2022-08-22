@@ -30,4 +30,4 @@ jobs:
           pip install --upgrade pre-commit
 
       - name: Run pre-commit hooks ✅
-        run: make pre-commit-all
+        run: pre-commit run --all-files --hook-stage manual
