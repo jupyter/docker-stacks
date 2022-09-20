@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Merge tags for the images
+      - name: Merge tags for the images 🔀
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         run: python3 -m tagging.merge_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/
         shell: bash
