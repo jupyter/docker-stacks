@@ -14,7 +14,7 @@
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.37.3
+    rev: v2.38.0
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
@@ -116,7 +116,7 @@ repos:
   # nbQA provides tools from the Python ecosystem like
   # pyupgrade, isort, black, and flake8, adjusted for notebooks.
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.4.0
+    rev: 1.5.0
     hooks:
       - id: nbqa-pyupgrade
         args: [--py39-plus]
