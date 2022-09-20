@@ -34,17 +34,25 @@ def merge_tags(
 
     for tag in all_tags:
         LOGGER.info(f"Trying to merge tag: {tag}")
+        existing_images = []
         for tags_prefix in ALL_TAGS_PREFIXES:
-            docker["pull", tag.replace(":", f":{tags_prefix}-")] & plumbum.FG
+            image_with_platform = tag.replace(":", f":{tags_prefix}-")
+            LOGGER.info(f"Trying to pull: {image_with_platform}")
+            try:
+                docker["pull", image_with_platform] & plumbum.FG
+                existing_images.append(image_with_platform)
+                LOGGER.info("Pull success")
+            except plumbum.ProcessExecutionError:
+                LOGGER.info(
+                    "Pull failed, image with this tag and platform doesn't exist"
+                )
 
         (
             docker[
                 "manifest",
                 "create",
                 tag,
-                tag.replace(":", ":x86_64-"),
-                tag.replace(":", ":aarch64-"),
-            ]
+            ][existing_images]
             & plumbum.FG
         )
         docker["manifest", "push", tag] & plumbum.FG
