@@ -33,7 +33,7 @@ def merge_tags(
     for tag in all_tags:
         LOGGER.info(f"Trying to merge tag: {tag}")
         for tags_prefix in ALL_TAGS_PREFIXES:
-            docker["pull", tag.replace(":", f":{tags_prefix}-")]()
+            docker["pull", tag.replace(":", f":{tags_prefix}-")] & plumbum.FG
 
         docker[
             "manifest",
