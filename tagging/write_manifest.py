@@ -90,7 +90,9 @@ def write_manifest(
 
     with DockerRunner(image) as container:
         tags_prefix = get_tags_prefix()
-        all_tags = [tags_prefix + tagger.tag_value(container) for tagger in taggers]
+        all_tags = [
+            tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
+        ]
         write_build_history_line(
             short_image_name, owner, hist_line_dir, filename, all_tags
         )

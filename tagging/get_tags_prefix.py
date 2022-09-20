@@ -2,7 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 import platform
 
+ALL_TAGS_PREFIXES = {"x86_64", "aarch64"}
+
 
 def get_tags_prefix() -> str:
-    machine = platform.machine()
-    return "" if machine == "x86_64" else f"{machine}-"
+    return platform.machine()

@@ -10,6 +10,7 @@ on:
       # We use local reusable workflows to make architecture clean an simple
       # https://docs.github.com/en/actions/using-workflows/reusing-workflows
       - ".github/workflows/docker-build-test-upload.yml"
+      - ".github/workflows/docker-merge-tags.yml"
       - ".github/workflows/docker-tag-manifest-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
@@ -37,6 +38,7 @@ on:
     paths:
       - ".github/workflows/docker.yml"
       - ".github/workflows/docker-build-test-upload.yml"
+      - ".github/workflows/docker-merge-tags.yml"
       - ".github/workflows/docker-tag-manifest-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
@@ -215,7 +217,6 @@ jobs:
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: aarch64
-      runsOn: ARM64
       # https://docs.github.com/en/actions/using-workflows/reusing-workflows#limitations
       # The strategy property is not supported in any job that calls a reusable workflow
       # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
@@ -248,7 +249,6 @@ jobs:
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: amd64
-      runsOn: ubuntu-latest
       images: >-
         [
           "base-notebook",
@@ -260,6 +260,13 @@ jobs:
           "pyspark-notebook",
           "all-spark-notebook"
         ]
+
+  merge-tags:
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    needs: [aarch64-images-tag-push, amd64-images-tag-push]
+    uses: ./.github/workflows/docker-merge-tags.yml
 
   wiki-update:
     permissions:

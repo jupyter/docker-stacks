@@ -1,4 +1,4 @@
-name: Download parent image, build new one, test it and upload to GitHub artifacts
+name: Download parent image, build new one, test and upload it and tags and manifests to GitHub artifacts
 
 env:
   OWNER: ${{ github.repository_owner }}
@@ -35,9 +35,13 @@ jobs:
           platform: ${{ inputs.platform }}
 
       # Self-hosted runners share a state (whole VM) between runs
-      - name: Reset docker state 🗑️
+      - name: Reset docker state and cleanup artifacts 🗑️
         if: ${{ inputs.platform != 'amd64' }}
-        run: docker system prune --all --force
+        run: |
+          docker system prune --all --force
+          rm -rf /tmp/tags/
+          rm -rf /tmp/hist_lines/
+          rm -rf /tmp/manifests/
         shell: bash
 
       - name: Load parent built image to Docker 📥
@@ -58,6 +62,33 @@ jobs:
       - name: Run tests ✅
         run: python3 -m tests.run_tests --short-image-name ${{ inputs.image }} --owner ${{ env.OWNER }}
         shell: bash
+
+      - name: Write tags file 🏷
+        run: |
+          python3 -m tagging.write_tags_file --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/ --owner ${{ env.OWNER }}
+        shell: bash
+      - name: Upload tags 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.image }}-${{ inputs.platform }}-tags
+          path: /tmp/tags/${{ inputs.platform }}-${{ matrix.image }}.txt
+          retention-days: 3
+
+      - name: Write manifest and build history file 🏷
+        run: python3 -m tagging.write_manifest --short-image-name ${{ matrix.image }} --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/ --owner ${{ env.OWNER }}
+        shell: bash
+      - name: Upload manifest file 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.image }}-${{ inputs.platform }}-manifest
+          path: /tmp/manifests/${{ inputs.platform }}-${{ matrix.image }}-*.md
+          retention-days: 3
+      - name: Upload build history line 💾
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.image }}-${{ inputs.platform }}-history_line
+          path: /tmp/hist_lines/${{ inputs.platform }}-${{ matrix.image }}-*.txt
+          retention-days: 3
 
       - name: Save image as a tar for later use 💾
         run: docker save ${{ env.OWNER }}/${{ inputs.image }} -o /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
