@@ -4,7 +4,6 @@
 import argparse
 import datetime
 import logging
-import platform
 from pathlib import Path
 
 from docker.models.containers import Container
@@ -66,10 +65,6 @@ def write_manifest_file(
 
     manifest_dir.mkdir(parents=True, exist_ok=True)
     (manifest_dir / f"{filename}.md").write_text(markdown_content)
-
-
-def get_file_prefix() -> str:
-    return platform.machine()
 
 
 def write_manifest(
