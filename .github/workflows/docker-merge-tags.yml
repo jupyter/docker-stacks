@@ -31,11 +31,6 @@ jobs:
         uses: ./.github/actions/create-dev-env
         with:
           platform: x86_64
-      - name: Load image to Docker 📥
-        uses: ./.github/actions/load-image
-        with:
-          image: ${{ matrix.image }}
-          platform: ${{ inputs.platform }}
 
       - name: Download x86_64 tags file 📥
         uses: actions/download-artifact@v3
