@@ -67,7 +67,7 @@ jobs:
         run: |
           python3 -m tagging.write_tags_file --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/ --owner ${{ env.OWNER }}
         shell: bash
-      - name: Upload tags 💾
+      - name: Upload tags file 💾
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-tags
