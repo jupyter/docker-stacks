@@ -7,8 +7,6 @@ from pathlib import Path
 
 import plumbum
 
-from tagging.get_tags_prefix import get_tags_prefix
-
 docker = plumbum.local["docker"]
 
 LOGGER = logging.getLogger(__name__)
@@ -18,6 +16,7 @@ def apply_tags(
     short_image_name: str,
     owner: str,
     tags_dir: Path,
+    arch: str,
 ) -> None:
     """
     Tags <owner>/<short_image_name>:latest with the tags
@@ -26,8 +25,7 @@ def apply_tags(
     LOGGER.info(f"Tagging image: {short_image_name}")
 
     image = f"{owner}/{short_image_name}:latest"
-    tags_prefix = get_tags_prefix()
-    filename = f"{tags_prefix}-{short_image_name}.txt"
+    filename = f"{arch}-{short_image_name}.txt"
     tags = (tags_dir / filename).read_text().splitlines()
 
     for tag in tags:
@@ -54,10 +52,17 @@ if __name__ == "__main__":
         help="Directory with saved tags file",
     )
     arg_parser.add_argument(
+        "--arch",
+        required=True,
+        type=str,
+        choices=["x86_64", "aarch64"],
+        help="Image platform",
+    )
+    arg_parser.add_argument(
         "--owner",
         required=True,
         help="Owner of the image",
     )
     args = arg_parser.parse_args()
 
-    apply_tags(args.short_image_name, args.owner, args.tags_dir)
+    apply_tags(args.short_image_name, args.owner, args.tags_dir, args.arch)
