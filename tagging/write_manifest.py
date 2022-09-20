@@ -69,8 +69,7 @@ def write_manifest_file(
 
 
 def get_file_prefix() -> str:
-    machine = platform.machine()
-    return "amd64" if machine == "x86_64" else "aarch64"
+    return platform.machine()
 
 
 def write_manifest(

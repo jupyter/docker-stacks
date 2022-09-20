@@ -34,7 +34,7 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
         with:
-          platform: amd64
+          platform: x86_64
       - name: Load image to Docker 📥
         uses: ./.github/actions/load-image
         with:

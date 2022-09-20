@@ -75,12 +75,12 @@ jobs:
       platform: aarch64
       runsOn: ARM64
 
-  amd64-base:
+  x86_64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: ""
       image: base-notebook
-      platform: amd64
+      platform: x86_64
       runsOn: ubuntu-latest
 
   aarch64-minimal:
@@ -92,13 +92,13 @@ jobs:
       platform: aarch64
       runsOn: ARM64
 
-  amd64-minimal:
-    needs: [amd64-base]
+  x86_64-minimal:
+    needs: [x86_64-base]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: base-notebook
       image: minimal-notebook
-      platform: amd64
+      platform: x86_64
       runsOn: ubuntu-latest
 
   aarch64-scipy:
@@ -110,13 +110,13 @@ jobs:
       platform: aarch64
       runsOn: ARM64
 
-  amd64-scipy:
-    needs: [amd64-minimal]
+  x86_64-scipy:
+    needs: [x86_64-minimal]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: minimal-notebook
       image: scipy-notebook
-      platform: amd64
+      platform: x86_64
       runsOn: ubuntu-latest
 
   aarch64-r:
@@ -128,22 +128,22 @@ jobs:
       platform: aarch64
       runsOn: ARM64
 
-  amd64-r:
-    needs: [amd64-minimal]
+  x86_64-r:
+    needs: [x86_64-minimal]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: minimal-notebook
       image: r-notebook
-      platform: amd64
+      platform: x86_64
       runsOn: ubuntu-latest
 
-  amd64-tensorflow:
-    needs: [amd64-scipy]
+  x86_64-tensorflow:
+    needs: [x86_64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: scipy-notebook
       image: tensorflow-notebook
-      platform: amd64
+      platform: x86_64
       runsOn: ubuntu-latest
 
   aarch64-datascience:
@@ -155,13 +155,13 @@ jobs:
       platform: aarch64
       runsOn: ARM64
 
-  amd64-datascience:
-    needs: [amd64-scipy]
+  x86_64-datascience:
+    needs: [x86_64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: scipy-notebook
       image: datascience-notebook
-      platform: amd64
+      platform: x86_64
       runsOn: ubuntu-latest
 
   aarch64-pyspark:
@@ -173,13 +173,13 @@ jobs:
       platform: aarch64
       runsOn: ARM64
 
-  amd64-pyspark:
-    needs: [amd64-scipy]
+  x86_64-pyspark:
+    needs: [x86_64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: scipy-notebook
       image: pyspark-notebook
-      platform: amd64
+      platform: x86_64
       runsOn: ubuntu-latest
 
   aarch64-all-spark:
@@ -191,13 +191,13 @@ jobs:
       platform: aarch64
       runsOn: ARM64
 
-  amd64-all-spark:
-    needs: [amd64-pyspark]
+  x86_64-all-spark:
+    needs: [x86_64-pyspark]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: pyspark-notebook
       image: all-spark-notebook
-      platform: amd64
+      platform: x86_64
       runsOn: ubuntu-latest
 
   aarch64-images-tag-push:
@@ -231,24 +231,24 @@ jobs:
           "all-spark-notebook"
         ]
 
-  amd64-images-tag-push:
+  x86_64-images-tag-push:
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     needs:
       [
-        amd64-base,
-        amd64-minimal,
-        amd64-scipy,
-        amd64-r,
-        amd64-tensorflow,
-        amd64-datascience,
-        amd64-pyspark,
-        amd64-all-spark,
+        x86_64-base,
+        x86_64-minimal,
+        x86_64-scipy,
+        x86_64-r,
+        x86_64-tensorflow,
+        x86_64-datascience,
+        x86_64-pyspark,
+        x86_64-all-spark,
       ]
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
-      platform: amd64
+      platform: x86_64
       images: >-
         [
           "base-notebook",
@@ -265,7 +265,7 @@ jobs:
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    needs: [aarch64-images-tag-push, amd64-images-tag-push]
+    needs: [aarch64-images-tag-push, x86_64-images-tag-push]
     uses: ./.github/workflows/docker-merge-tags.yml
     with:
       images: >-
@@ -282,5 +282,5 @@ jobs:
   wiki-update:
     permissions:
       contents: write
-    needs: [aarch64-images-tag-push, amd64-images-tag-push]
+    needs: [aarch64-images-tag-push, x86_64-images-tag-push]
     uses: ./.github/workflows/docker-wiki-update.yml

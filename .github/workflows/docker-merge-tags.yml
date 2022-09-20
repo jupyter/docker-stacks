@@ -30,17 +30,17 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
         with:
-          platform: amd64
+          platform: x86_64
       - name: Load image to Docker 📥
         uses: ./.github/actions/load-image
         with:
           image: ${{ matrix.image }}
           platform: ${{ inputs.platform }}
 
-      - name: Download amd64 tags file 📥
+      - name: Download x86_64 tags file 📥
         uses: actions/download-artifact@v3
         with:
-          name: ${{ matrix.image }}-amd64-tags
+          name: ${{ matrix.image }}-x86_64-tags
 
       - name: Download aarch64 tags file 📥
         uses: actions/download-artifact@v3

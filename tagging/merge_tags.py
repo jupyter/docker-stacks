@@ -19,7 +19,7 @@ def merge_tags(
     tags_dir: Path,
 ) -> None:
     """
-    Merge tags for amd64 and aarch64 images when possible.
+    Merge tags for x86_64 and aarch64 images when possible.
     """
     LOGGER.info(f"Merging tags for image: {short_image_name}")
 
