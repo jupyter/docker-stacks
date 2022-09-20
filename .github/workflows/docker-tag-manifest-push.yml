@@ -52,6 +52,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ matrix.image }}-${{ inputs.platform }}-tags
+          path: /tmp/tags/
       - name: Apply tags to the loaded image 🏷
         run: python3 -m tagging.apply_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/  --owner ${{ env.OWNER }}
 
