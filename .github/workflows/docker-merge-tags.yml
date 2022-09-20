@@ -39,10 +39,16 @@ jobs:
           path: /tmp/tags/
 
       - name: Download aarch64 tags file 📥
+        if: ${{ matrix.image }} != 'tensorflow-notebook'
         uses: actions/download-artifact@v3
         with:
           name: ${{ matrix.image }}-aarch64-tags
           path: /tmp/tags/
+
+      - name: Creating empty aarch64 tags file for tensorflow-notebook 💩
+        if: ${{ matrix.image }} == 'tensorflow-notebook'
+        run: touch /tmp/tags/aarch64-tensorflow-notebook.txt
+        shell: bash
 
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
