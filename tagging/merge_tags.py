@@ -30,7 +30,8 @@ def merge_tags(
         tags = (tags_dir / filename).read_text().splitlines()
         all_tags.update(tag.replace(tags_prefix + "-", "") for tag in tags)
 
-    print(all_tags)
+    LOGGER.info(f"Got tags: {all_tags}")
+
     for tag in all_tags:
         LOGGER.info(f"Trying to merge tag: {tag}")
         for tags_prefix in ALL_TAGS_PREFIXES:
