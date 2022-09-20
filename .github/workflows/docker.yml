@@ -267,6 +267,17 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     needs: [aarch64-images-tag-push, amd64-images-tag-push]
     uses: ./.github/workflows/docker-merge-tags.yml
+    with:
+      images: >-
+        [
+          "base-notebook",
+          "minimal-notebook",
+          "scipy-notebook",
+          "r-notebook",
+          "datascience-notebook",
+          "pyspark-notebook",
+          "all-spark-notebook"
+        ]
 
   wiki-update:
     permissions:
