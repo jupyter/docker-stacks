@@ -7,7 +7,7 @@ from pathlib import Path
 
 import plumbum
 
-from tagging.get_tags_prefix import ALL_TAGS_PREFIXES
+from tagging.get_platform import ALL_PLATFORMS
 
 docker = plumbum.local["docker"]
 
@@ -25,18 +25,18 @@ def merge_tags(
 
     all_tags: set[str] = set()
 
-    for tags_prefix in ALL_TAGS_PREFIXES:
-        filename = f"{tags_prefix}-{short_image_name}.txt"
+    for platform in ALL_PLATFORMS:
+        filename = f"{platform}-{short_image_name}.txt"
         tags = (tags_dir / filename).read_text().splitlines()
-        all_tags.update(tag.replace(tags_prefix + "-", "") for tag in tags)
+        all_tags.update(tag.replace(platform + "-", "") for tag in tags)
 
     LOGGER.info(f"Got tags: {all_tags}")
 
     for tag in all_tags:
         LOGGER.info(f"Trying to merge tag: {tag}")
         existing_images = []
-        for tags_prefix in ALL_TAGS_PREFIXES:
-            image_with_platform = tag.replace(":", f":{tags_prefix}-")
+        for platform in ALL_PLATFORMS:
+            image_with_platform = tag.replace(":", f":{platform}-")
             LOGGER.info(f"Trying to pull: {image_with_platform}")
             try:
                 docker["pull", image_with_platform] & plumbum.FG

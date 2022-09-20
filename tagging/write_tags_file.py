@@ -6,8 +6,8 @@ import logging
 from pathlib import Path
 
 from tagging.docker_runner import DockerRunner
+from tagging.get_platform import get_platform
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
-from tagging.get_tags_prefix import get_tags_prefix
 
 LOGGER = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ def write_tags_file(
     taggers, _ = get_taggers_and_manifests(short_image_name)
 
     image = f"{owner}/{short_image_name}:latest"
-    tags_prefix = get_tags_prefix()
+    tags_prefix = get_platform()
     filename = f"{tags_prefix}-{short_image_name}.txt"
 
     tags = [f"{owner}/{short_image_name}:{tags_prefix}-latest"]
