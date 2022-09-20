@@ -274,6 +274,7 @@ jobs:
           "minimal-notebook",
           "scipy-notebook",
           "r-notebook",
+          "tensorflow-notebook",
           "datascience-notebook",
           "pyspark-notebook",
           "all-spark-notebook"
