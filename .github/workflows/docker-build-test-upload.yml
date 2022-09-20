@@ -65,29 +65,29 @@ jobs:
 
       - name: Write tags file 🏷
         run: |
-          python3 -m tagging.write_tags_file --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/ --owner ${{ env.OWNER }}
+          python3 -m tagging.write_tags_file --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/ --owner ${{ env.OWNER }}
         shell: bash
       - name: Upload tags 💾
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.image }}-${{ inputs.platform }}-tags
-          path: /tmp/tags/${{ inputs.platform }}-${{ matrix.image }}.txt
+          name: ${{ inputs.image }}-${{ inputs.platform }}-tags
+          path: /tmp/tags/${{ inputs.platform }}-${{ inputs.image }}.txt
           retention-days: 3
 
       - name: Write manifest and build history file 🏷
-        run: python3 -m tagging.write_manifest --short-image-name ${{ matrix.image }} --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/ --owner ${{ env.OWNER }}
+        run: python3 -m tagging.write_manifest --short-image-name ${{ inputs.image }} --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/ --owner ${{ env.OWNER }}
         shell: bash
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.image }}-${{ inputs.platform }}-manifest
-          path: /tmp/manifests/${{ inputs.platform }}-${{ matrix.image }}-*.md
+          name: ${{ inputs.image }}-${{ inputs.platform }}-manifest
+          path: /tmp/manifests/${{ inputs.platform }}-${{ inputs.image }}-*.md
           retention-days: 3
       - name: Upload build history line 💾
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.image }}-${{ inputs.platform }}-history_line
-          path: /tmp/hist_lines/${{ inputs.platform }}-${{ matrix.image }}-*.txt
+          name: ${{ inputs.image }}-${{ inputs.platform }}-history_line
+          path: /tmp/hist_lines/${{ inputs.platform }}-${{ inputs.image }}-*.txt
           retention-days: 3
 
       - name: Save image as a tar for later use 💾
