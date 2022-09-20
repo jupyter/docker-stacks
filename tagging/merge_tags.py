@@ -47,6 +47,7 @@ def merge_tags(
                     "Pull failed, image with this tag and platform doesn't exist"
                 )
 
+        LOGGER.info(f"Found images: {existing_images}")
         (
             docker[
                 "manifest",
