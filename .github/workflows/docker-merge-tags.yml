@@ -50,10 +50,11 @@ jobs:
           path: /tmp/tags/
 
       - name: Login to Docker Hub 🔐
+        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Merge tags for the images
-        run: python3 -m tagging.merge_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/  --owner ${{ env.OWNER }}
+        run: python3 -m tagging.merge_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/

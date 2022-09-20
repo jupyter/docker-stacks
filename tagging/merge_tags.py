@@ -23,13 +23,14 @@ def merge_tags(
     """
     LOGGER.info(f"Merging tags for image: {short_image_name}")
 
-    all_tags: list[str] = []
+    all_tags: set[str] = set()
 
     for tags_prefix in ALL_TAGS_PREFIXES:
         filename = f"{tags_prefix}-{short_image_name}.txt"
         tags = (tags_dir / filename).read_text().splitlines()
-        all_tags.extend(tag.replace(tags_prefix + "-", "") for tag in tags)
+        all_tags.update(tag.replace(tags_prefix + "-", "") for tag in tags)
 
+    print(all_tags)
     for tag in all_tags:
         LOGGER.info(f"Trying to merge tag: {tag}")
         for tags_prefix in ALL_TAGS_PREFIXES:
