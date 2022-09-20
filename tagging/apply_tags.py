@@ -35,7 +35,7 @@ def apply_tags(
         docker["tag", image, tag]()
 
     LOGGER.info("Removing latest tag from the image")
-    docker["tag", "rmi", image]()
+    docker["image", "rmi", image]()
 
 
 if __name__ == "__main__":
