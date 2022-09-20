@@ -54,7 +54,7 @@ jobs:
           name: ${{ matrix.image }}-${{ inputs.platform }}-tags
           path: /tmp/tags/
       - name: Apply tags to the loaded image 🏷
-        run: python3 -m tagging.apply_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/  --owner ${{ env.OWNER }}
+        run: python3 -m tagging.apply_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/ --platform ${{ inputs.platform }} --owner ${{ env.OWNER }}
 
       - name: Push Images to Docker Hub 📤
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'

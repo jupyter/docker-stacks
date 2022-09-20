@@ -16,7 +16,7 @@ def apply_tags(
     short_image_name: str,
     owner: str,
     tags_dir: Path,
-    arch: str,
+    platform: str,
 ) -> None:
     """
     Tags <owner>/<short_image_name>:latest with the tags
@@ -25,7 +25,7 @@ def apply_tags(
     LOGGER.info(f"Tagging image: {short_image_name}")
 
     image = f"{owner}/{short_image_name}:latest"
-    filename = f"{arch}-{short_image_name}.txt"
+    filename = f"{platform}-{short_image_name}.txt"
     tags = (tags_dir / filename).read_text().splitlines()
 
     for tag in tags:
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         help="Directory with saved tags file",
     )
     arg_parser.add_argument(
-        "--arch",
+        "--platform",
         required=True,
         type=str,
         choices=["x86_64", "aarch64"],
@@ -65,4 +65,4 @@ if __name__ == "__main__":
     )
     args = arg_parser.parse_args()
 
-    apply_tags(args.short_image_name, args.owner, args.tags_dir, args.arch)
+    apply_tags(args.short_image_name, args.owner, args.tags_dir, args.platform)
