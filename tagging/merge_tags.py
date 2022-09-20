@@ -36,14 +36,17 @@ def merge_tags(
         for tags_prefix in ALL_TAGS_PREFIXES:
             docker["pull", tag.replace(":", f":{tags_prefix}-")] & plumbum.FG
 
-        docker[
-            "manifest",
-            "create",
-            "--amend",
-            tag,
-            tag.replace(":", ":x86_64-"),
-            tag.replace(":", ":aarch64-"),
-        ]
+        (
+            docker[
+                "manifest",
+                "create",
+                tag,
+                tag.replace(":", ":x86_64-"),
+                tag.replace(":", ":aarch64-"),
+            ]
+            & plumbum.FG
+        )
+        docker["manifest", "push", tag] & plumbum.FG
 
 
 if __name__ == "__main__":
