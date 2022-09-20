@@ -27,7 +27,7 @@ def write_tags_file(
     tags_prefix = get_tags_prefix()
     filename = f"{tags_prefix}-{short_image_name}.txt"
 
-    tags = [f"{owner}/{short_image_name}:{tags_prefix}latest"]
+    tags = [f"{owner}/{short_image_name}:{tags_prefix}-latest"]
     with DockerRunner(image) as container:
         for tagger in taggers:
             tagger_name = tagger.__class__.__name__
@@ -35,7 +35,7 @@ def write_tags_file(
             LOGGER.info(
                 f"Calculated tag, tagger_name: {tagger_name} tag_value: {tag_value}"
             )
-            tags.append(f"{owner}/{short_image_name}:{tags_prefix}{tag_value}")
+            tags.append(f"{owner}/{short_image_name}:{tags_prefix}-{tag_value}")
     tags_dir.mkdir(parents=True, exist_ok=True)
     (tags_dir / filename).write_text("\n".join(tags))
 
