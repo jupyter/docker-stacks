@@ -239,7 +239,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [csharp_b]: https://mybinder.org/v2/gh/tlinnet/csharp-notebook/master
 [education]: https://github.com/umsi-mads/education-notebook
 [education_b]: https://mybinder.org/v2/gh/umsi-mads/education-notebook/master
-[ihaskell]: https://github.com/jamesdbrock/ihaskell-notebook
+[ihaskell]: https://github.com/IHaskell/ihaskell-notebook
 [ihaskell_b]: https://mybinder.org/v2/gh/jamesdbrock/learn-you-a-haskell-notebook/master?urlpath=lab/tree/ihaskell_examples/ihaskell/IHaskell.ipynb
 [ihaskell_project]: https://github.com/IHaskell/IHaskell
 [java]: https://github.com/jbindinga/java-notebook
