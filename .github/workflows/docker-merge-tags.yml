@@ -50,6 +50,15 @@ jobs:
         run: touch /tmp/tags/aarch64-tensorflow-notebook.txt
         shell: bash
 
+      # Docker might be stuck when pulling images
+      # https://github.com/docker/for-mac/issues/2083
+      # https://stackoverflow.com/questions/38087027/docker-compose-stuck-downloading-or-pulling-fs-layer
+      - name: Reset docker state 🗑️
+        run: |
+          docker system prune --all --force
+          sudo systemctl restart docker
+        shell: bash
+
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # dependabot updates to latest release
