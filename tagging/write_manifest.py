@@ -4,14 +4,13 @@
 import argparse
 import datetime
 import logging
-import platform
 from pathlib import Path
 
 from docker.models.containers import Container
 
 from tagging.docker_runner import DockerRunner
+from tagging.get_platform import get_platform
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
-from tagging.get_tags_prefix import get_tags_prefix
 from tagging.git_helper import GitHelper
 from tagging.manifests import ManifestHeader, ManifestInterface
 
@@ -68,11 +67,6 @@ def write_manifest_file(
     (manifest_dir / f"{filename}.md").write_text(markdown_content)
 
 
-def get_file_prefix() -> str:
-    machine = platform.machine()
-    return "amd64" if machine == "x86_64" else "aarch64"
-
-
 def write_manifest(
     short_image_name: str,
     owner: str,
@@ -84,13 +78,15 @@ def write_manifest(
 
     image = f"{owner}/{short_image_name}:latest"
 
-    file_prefix = get_file_prefix()
+    file_prefix = get_platform()
     commit_hash_tag = GitHelper.commit_hash_tag()
     filename = f"{file_prefix}-{short_image_name}-{commit_hash_tag}"
 
     with DockerRunner(image) as container:
-        tags_prefix = get_tags_prefix()
-        all_tags = [tags_prefix + tagger.tag_value(container) for tagger in taggers]
+        tags_prefix = get_platform()
+        all_tags = [
+            tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
+        ]
         write_build_history_line(
             short_image_name, owner, hist_line_dir, filename, all_tags
         )

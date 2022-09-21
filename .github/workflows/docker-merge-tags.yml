@@ -1,4 +1,4 @@
-name: Download Docker image from GitHub artifacts, tag and push it to DockerHub
+name: Download Docker images from GitHub artifacts and merge tags
 
 env:
   OWNER: ${{ github.repository_owner }}
@@ -8,10 +8,6 @@ on:
     inputs:
       images:
         description: Stringified JSON object listing image names
-        required: true
-        type: string
-      platform:
-        description: Image platform
         required: true
         type: string
     secrets:
@@ -35,11 +31,24 @@ jobs:
         uses: ./.github/actions/create-dev-env
         with:
           platform: x86_64
-      - name: Load image to Docker 📥
-        uses: ./.github/actions/load-image
+
+      - name: Download x86_64 tags file 📥
+        uses: actions/download-artifact@v3
         with:
-          image: ${{ matrix.image }}
-          platform: ${{ inputs.platform }}
+          name: ${{ matrix.image }}-x86_64-tags
+          path: /tmp/tags/
+
+      - name: Download aarch64 tags file 📥
+        if: matrix.image != 'tensorflow-notebook'
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.image }}-aarch64-tags
+          path: /tmp/tags/
+
+      - name: Create an empty aarch64 tags file for tensorflow-notebook 💩
+        if: matrix.image == 'tensorflow-notebook'
+        run: touch /tmp/tags/aarch64-tensorflow-notebook.txt
+        shell: bash
 
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
@@ -48,15 +57,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Download tags file 📥
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ matrix.image }}-${{ inputs.platform }}-tags
-          path: /tmp/tags/
-      - name: Apply tags to the loaded image 🏷
-        run: python3 -m tagging.apply_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/ --platform ${{ inputs.platform }} --owner ${{ env.OWNER }}
-
-      - name: Push Images to Docker Hub 📤
+      - name: Merge tags for the images 🔀
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: docker push --all-tags ${{ env.OWNER }}/${{ matrix.image }}
+        run: python3 -m tagging.merge_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/
         shell: bash
