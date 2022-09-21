@@ -208,7 +208,7 @@ Whenever a docker image is pushed to the container registry, it is tagged with:
 
 ```{warning}
 - Tags before `2022-07-05` were sometimes incorrect. Please, do not rely on them.
-- All `aarch64` images have _aarch64-_ tag prefix, for example `aarch64-python-3.10.5`.
+- Single-platform images have either `aarch64` or `x86_64` tag prefixes, for example `jupyter/base-notebook:aarch64-python-3.10.5`
 ```
 
 For stability and reproducibility, you should either reference a date formatted
