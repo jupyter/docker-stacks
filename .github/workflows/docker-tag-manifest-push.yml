@@ -1,4 +1,4 @@
-name: Download Docker image from GitHub artifacts, tag and push it to DockerHub
+name: Download Docker image and its tags from GitHub artifacts, apply them and push the image to DockerHub
 
 env:
   OWNER: ${{ github.repository_owner }}
@@ -21,7 +21,7 @@ on:
         required: true
 
 jobs:
-  tag-push:
+  tag-manifest-push:
     runs-on: ubuntu-latest
 
     strategy:

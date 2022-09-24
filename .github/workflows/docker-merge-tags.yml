@@ -1,4 +1,4 @@
-name: Download Docker images from GitHub artifacts and merge tags
+name: Download images tags from GitHub artifacts and create multi-platform manifests
 
 env:
   OWNER: ${{ github.repository_owner }}
