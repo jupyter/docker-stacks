@@ -17,7 +17,7 @@ on:
         required: true
 
 jobs:
-  tag-push:
+  merge-tags:
     runs-on: ubuntu-latest
 
     strategy:
