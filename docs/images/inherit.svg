@@ -28,7 +28,8 @@
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="280" />
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="8" font-style="normal" font-weight="normal" text-anchor="middle" textLength="44" x="320" y="304">r-notebook</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="360" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="8" font-style="normal" font-weight="normal" text-anchor="middle" textLength="84" x="128" y="384">tensorflow-notebook</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="8" font-style="normal" font-weight="normal" text-anchor="middle" textLength="84" x="128" y="379">tensorflow-notebook</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="8" font-style="normal" font-weight="normal" text-anchor="middle" textLength="58" x="128" y="389">(only x86_64)</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="360" />
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="8" font-style="normal" font-weight="normal" text-anchor="middle" textLength="88" x="320" y="384">datascience-notebook</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="360" />
@@ -39,22 +40,22 @@
   <polygon fill="rgb(0,0,0)" points="128,119 124,112 132,112 128,119" stroke="rgb(0,0,0)" />
   <path d="M 128 160 L 128 192" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="128,199 124,192 132,192 128,199" stroke="rgb(0,0,0)" />
+  <path d="M 128 240 L 128 272" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,279 124,272 132,272 128,279" stroke="rgb(0,0,0)" />
   <path d="M 128 240 L 128 260" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 128 260 L 320 260" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 320 260 L 320 272" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="320,279 316,272 324,272 320,279" stroke="rgb(0,0,0)" />
-  <path d="M 128 240 L 128 272" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="128,279 124,272 132,272 128,279" stroke="rgb(0,0,0)" />
-  <path d="M 128 320 L 128 340" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 128 340 L 512 340" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 512 340 L 512 352" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="512,359 508,352 516,352 512,359" stroke="rgb(0,0,0)" />
-  <path d="M 128 320 L 128 352" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="128,359 124,352 132,352 128,359" stroke="rgb(0,0,0)" />
   <path d="M 128 320 L 128 340" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 128 340 L 320 340" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 320 340 L 320 352" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="320,359 316,352 324,352 320,359" stroke="rgb(0,0,0)" />
+  <path d="M 128 320 L 128 352" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="128,359 124,352 132,352 128,359" stroke="rgb(0,0,0)" />
+  <path d="M 128 320 L 128 340" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 128 340 L 512 340" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 512 340 L 512 352" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="512,359 508,352 516,352 512,359" stroke="rgb(0,0,0)" />
   <path d="M 512 400 L 512 432" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="512,439 508,432 516,432 512,439" stroke="rgb(0,0,0)" />
 </svg>
