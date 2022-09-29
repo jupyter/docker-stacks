@@ -76,6 +76,13 @@ class PythonVersionTagger(TaggerInterface):
         return "python-" + _get_program_version(container, "python").split()[1]
 
 
+class PythonMajorMinorVersionTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(container: Container) -> str:
+        full_version = PythonVersionTagger.tag_value(container)
+        return full_version[: full_version.rfind(".")]
+
+
 class JupyterNotebookVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container: Container) -> str:
