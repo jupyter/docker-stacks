@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 # Ubuntu 22.04 (jammy)
-# https://hub.docker.com/_/ubuntu/?tab=tags&name=jammy
+# https://hub.docker.com/_/ubuntu/tags?page=1&name=jammy
 ARG ROOT_CONTAINER=ubuntu:22.04
 
 FROM $ROOT_CONTAINER
