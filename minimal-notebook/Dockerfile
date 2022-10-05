@@ -30,7 +30,9 @@ RUN apt-get update --yes && \
     # https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex
     texlive-xetex \
     texlive-fonts-recommended \
-    texlive-plain-generic && \
+    texlive-plain-generic \
+    # Enable clipboard on Linux host systems
+    xclip && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create alternative for nano -> nano-tiny
