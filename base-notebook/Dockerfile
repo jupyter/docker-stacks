@@ -1,9 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# Ubuntu 20.04 (focal)
-# https://hub.docker.com/_/ubuntu/tags?page=1&name=focal
-ARG ROOT_CONTAINER=ubuntu:20.04
+# Ubuntu 22.04 (jammy)
+# https://hub.docker.com/_/ubuntu/tags?page=1&name=jammy
+ARG ROOT_CONTAINER=ubuntu:22.04
 
 FROM $ROOT_CONTAINER
 
@@ -85,7 +85,7 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
 USER ${NB_UID}
 
 # Pin python version here, or set it to "default"
-ARG PYTHON_VERSION=3.10
+ARG PYTHON_VERSION=3.7
 
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
