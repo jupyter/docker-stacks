@@ -42,6 +42,7 @@ RUN mamba install --quiet --yes \
     'matplotlib-base' \
     'numba' \
     'numexpr' \
+    'openpyxl' \
     'pandas' \
     'patsy' \
     'protobuf' \
