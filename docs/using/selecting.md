@@ -107,6 +107,7 @@ It contains:
   [matplotlib-base](https://matplotlib.org/),
   [numba](https://numba.pydata.org/),
   [numexpr](https://github.com/pydata/numexpr),
+  [openpyxl](https://openpyxl.readthedocs.io/en/stable/),
   [pandas](https://pandas.pydata.org/),
   [patsy](https://patsy.readthedocs.io/en/latest/),
   [protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial),
