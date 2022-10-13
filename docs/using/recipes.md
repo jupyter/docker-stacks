@@ -550,3 +550,21 @@ RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
     rm -rf "/home/${NB_USER}/.cache/matplotlib" && \
     python -c 'import matplotlib.font_manager;print("font loaded: ",("Source Han Sans CN" in [f.name for f in matplotlib.font_manager.fontManager.ttflist]))'
 ```
+
+## Enable clipboard in pandas on Linux systems
+
+```{admonition} Additional notes
+    This solution works on Linux host systems.
+    It is not required on Windows and won't work on macOS.
+```
+
+To enable `pandas.read_clipboard()` functionality, you need to have `xclip` installed
+(installed in `minimal-notebook` and all the inherited images)
+and add these options when running `docker`: `-e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix`, i.e.:
+
+```bash
+docker run -it --rm \
+    -e DISPLAY \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    jupyter/minimal-notebook
+```
