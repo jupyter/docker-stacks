@@ -122,7 +122,7 @@ RUN set -x && \
         --prefix="${CONDA_DIR}" \
         --yes \
         "${PYTHON_SPECIFIER}" \
-        'mamba' \
+        'mamba>=0.27.0' \
         'notebook' \
         'jupyterhub' \
         'jupyterlab' && \
