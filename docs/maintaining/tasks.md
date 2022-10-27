@@ -16,6 +16,14 @@ To build new images and publish them to the Docker Hub registry, do the followin
 4. Try to avoid merging another PR to main branch until all pending builds are complete.
    This way, you will know which commit might have broken the build and also have correct tags for moving tags (like `python` version).
 
+## Updating Python version
+
+When a new `Python` version is released, we wait for two things:
+
+- all the dependencies to be available (as wheels or in `conda-forge`).
+- the first `python` patch release for this version.
+  This allows to avoid many bugs, which can happen in a major release.
+
 ## Updating the Ubuntu Base Image
 
 `base-notebook` is based on the LTS Ubuntu docker image.
