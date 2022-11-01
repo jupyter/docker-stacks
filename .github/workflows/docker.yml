@@ -229,7 +229,7 @@ jobs:
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: aarch64
-      target: ${{ matrix.image }}
+      image: ${{ matrix.image }}
 
   x86_64-images-tag-push:
     secrets:
@@ -262,7 +262,7 @@ jobs:
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: x86_64
-      target: ${{ matrix.image }}
+      image: ${{ matrix.image }}
 
   merge-tags:
     secrets:
