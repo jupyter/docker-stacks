@@ -113,8 +113,7 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: base-jupyter-x86_64-manifest
-        path:
-          ${{ inputs.manifestDir }}
+        path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:

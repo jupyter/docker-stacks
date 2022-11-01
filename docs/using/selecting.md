@@ -24,7 +24,7 @@ The following sections describe these images, including their contents, relation
 
 `jupyter/base-jupyter` is a small image supporting a majority of [options common across all core stacks](common.md).
 It is the basis for all other stacks on which Jupyter-related applications can be built (e.g., kernel-based containers,
-[nbclient](https://github.com/jupyter/nbclient) applications, etc.).  As such, it does not 
+[nbclient](https://github.com/jupyter/nbclient) applications, etc.). As such, it does not
 contain application-level software like Jupyter Notebook server, Jupyter Lab or Jupyter Hub.
 
 It contains:
@@ -44,7 +44,7 @@ It contains:
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/base-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
-`jupyter/base-notebook` adds base Jupyter server applications like Notebook, Jupyter Lab and Jupyter Hub 
+`jupyter/base-notebook` adds base Jupyter server applications like Notebook, Jupyter Lab and Jupyter Hub
 and serves as the basis for all other stacks besides `jupyter/base-jupyter`.
 
 It contains:
