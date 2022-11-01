@@ -36,7 +36,7 @@ jobs:
           - image: r-notebook
             description: "R Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
           - image: tensorflow-notebook
-            description: "Scientific Jupyter Notebook Python Stack with Tensorflow included from https://github.com/jupyter/docker-stacks"
+            description: "Scientific Jupyter Notebook Python Stack w/ TensorFlow from https://github.com/jupyter/docker-stacks"
           - image: datascience-notebook
             description: "Data Science Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
           - image: pyspark-notebook
