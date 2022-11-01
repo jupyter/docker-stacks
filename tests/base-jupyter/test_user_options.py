@@ -74,15 +74,15 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     ), f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
 
     LOGGER.info(
-        f"Checking if home folder of {nb_user} contains the hidden '.jupyter' folder with appropriate permissions ..."
+        f"Checking if home folder of {nb_user} contains the hidden 'work' folder with appropriate permissions ..."
     )
-    command = f'stat -c "%F %U %G" /home/{nb_user}/.jupyter'
+    command = f'stat -c "%F %U %G" /home/{nb_user}/work'
     expected_output = f"directory {nb_user} users"
     cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
     output = cmd.output.decode("utf-8").strip("\n")
     assert (
         output == expected_output
-    ), f"Hidden folder .jupyter was not copied properly to {nb_user} home folder. stat: {output}, expected {expected_output}"
+    ), f"Folder 'work' was not copied properly to {nb_user} home folder. stat: {output}, expected {expected_output}"
 
 
 def test_chown_extra(container: TrackedContainer) -> None:
