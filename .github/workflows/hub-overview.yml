@@ -30,19 +30,19 @@ jobs:
           - image: base-notebook
             description: "Small base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
           - image: minimal-notebook
-            description: "Minimal Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
+            description: "Minimal Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
           - image: scipy-notebook
-            description: "Jupyter Notebook Scientific Python Stack from https://github.com/jupyter/docker-stacks"
+            description: "Scientific Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
           - image: r-notebook
-            description: "Jupyter Notebook R Stack from https://github.com/jupyter/docker-stacks"
+            description: "R Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
           - image: tensorflow-notebook
-            description: "Jupyter Notebook Scientific Python Stack w/ Tensorflow from https://github.com/jupyter/docker-stacks"
+            description: "Scientific Jupyter Notebook Python Stack with Tensorflow included from https://github.com/jupyter/docker-stacks"
           - image: datascience-notebook
-            description: "Jupyter Notebook Data Science Stack from https://github.com/jupyter/docker-stacks"
+            description: "Data Science Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
           - image: pyspark-notebook
-            description: "Jupyter Notebook Python, Spark, Mesos Stack from https://github.com/jupyter/docker-stacks"
+            description: "Python and Spark Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
           - image: all-spark-notebook
-            description: "Jupyter Notebook Python, Scala, R, Spark, Mesos Stack from https://github.com/jupyter/docker-stacks"
+            description: "Python, Scala, R and Spark Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
 
     steps:
       - name: Checkout Repo ⚡️
