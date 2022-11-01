@@ -43,7 +43,7 @@ jobs:
 
       - name: Login to Docker Hub 🔐
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # dependabot updates to latest release
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2.1.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
