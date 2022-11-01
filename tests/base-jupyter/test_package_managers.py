@@ -16,7 +16,6 @@ LOGGER = logging.getLogger(__name__)
         ("apt", "--version"),
         ("conda", "--version"),
         ("mamba", "--version"),
-        ("npm", "--version"),
         ("pip", "--version"),
     ],
 )
