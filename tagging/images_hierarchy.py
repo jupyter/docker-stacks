@@ -38,7 +38,7 @@ class ImageDescription:
 
 
 ALL_IMAGES = {
-    "base-notebook": ImageDescription(
+    "base-jupyter": ImageDescription(
         parent_image=None,
         taggers=[
             SHATagger(),
@@ -46,11 +46,16 @@ ALL_IMAGES = {
             UbuntuVersionTagger(),
             PythonMajorMinorVersionTagger(),
             PythonVersionTagger(),
+        ],
+        manifests=[CondaEnvironmentManifest(), AptPackagesManifest()],
+    ),
+    "base-notebook": ImageDescription(
+        parent_image="base-jupyter",
+        taggers=[
             JupyterNotebookVersionTagger(),
             JupyterLabVersionTagger(),
             JupyterHubVersionTagger(),
-        ],
-        manifests=[CondaEnvironmentManifest(), AptPackagesManifest()],
+        ]
     ),
     "minimal-notebook": ImageDescription(parent_image="base-notebook"),
     "scipy-notebook": ImageDescription(parent_image="minimal-notebook"),
