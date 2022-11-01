@@ -24,17 +24,37 @@ jobs:
     name: Update dockerhub overviews
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        include:
+          - image: base-notebook
+            description: "Small base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
+          - image: minimal-notebook
+            description: "Minimal Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
+          - image: scipy-notebook
+            description: "Jupyter Notebook Scientific Python Stack from https://github.com/jupyter/docker-stacks"
+          - image: r-notebook
+            description: "Jupyter Notebook R Stack from https://github.com/jupyter/docker-stacks"
+          - image: tensorflow-notebook
+            description: "Jupyter Notebook Scientific Python Stack w/ Tensorflow from https://github.com/jupyter/docker-stacks"
+          - image: datascience-notebook
+            description: "Jupyter Notebook Data Science Stack from https://github.com/jupyter/docker-stacks"
+          - image: pyspark-notebook
+            description: "Jupyter Notebook Python, Spark, Mesos Stack from https://github.com/jupyter/docker-stacks"
+          - image: all-spark-notebook
+            description: "Jupyter Notebook Python, Scala, R, Spark, Mesos Stack from https://github.com/jupyter/docker-stacks"
+
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
 
-      - name: Push README to Dockerhub for base-notebook 🐳
+      - name: Push README to Dockerhub 🐳
         uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # v1
         env:
           DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKER_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
         with:
-          destination_container_repo: ${{ env.OWNER }}/base-notebook
+          destination_container_repo: ${{ env.OWNER }}/${{ matrix.image }}
           provider: dockerhub
-          short_description: "Small base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
-          readme_file: base-notebook/README.md
+          short_description: ${{ matrix.description }}
+          readme_file: ${{ matrix.image }}/README.md
