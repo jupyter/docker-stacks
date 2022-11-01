@@ -6,8 +6,8 @@ env:
 on:
   workflow_call:
     inputs:
-      images:
-        description: Stringified JSON object listing image names
+      image:
+        description: Image name
         required: true
         type: string
       platform:
@@ -24,10 +24,6 @@ jobs:
   tag-manifest-push:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        image: ${{ fromJson(inputs.images) }}
-
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
@@ -38,7 +34,7 @@ jobs:
       - name: Load image to Docker 📥
         uses: ./.github/actions/load-image
         with:
-          image: ${{ matrix.image }}
+          image: ${{ inputs.image }}
           platform: ${{ inputs.platform }}
 
       - name: Login to Docker Hub 🔐
@@ -51,12 +47,12 @@ jobs:
       - name: Download tags file 📥
         uses: actions/download-artifact@v3
         with:
-          name: ${{ matrix.image }}-${{ inputs.platform }}-tags
+          name: ${{ inputs.image }}-${{ inputs.platform }}-tags
           path: /tmp/tags/
       - name: Apply tags to the loaded image 🏷
-        run: python3 -m tagging.apply_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/ --platform ${{ inputs.platform }} --owner ${{ env.OWNER }}
+        run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/ --platform ${{ inputs.platform }} --owner ${{ env.OWNER }}
 
       - name: Push Images to Docker Hub 📤
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: docker push --all-tags ${{ env.OWNER }}/${{ matrix.image }}
+        run: docker push --all-tags ${{ env.OWNER }}/${{ inputs.image }}
         shell: bash

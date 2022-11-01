@@ -6,8 +6,8 @@ env:
 on:
   workflow_call:
     inputs:
-      images:
-        description: Stringified JSON object listing image names
+      image:
+        description: Image name
         required: true
         type: string
     secrets:
@@ -20,10 +20,6 @@ jobs:
   merge-tags:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        image: ${{ fromJson(inputs.images) }}
-
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
@@ -35,18 +31,18 @@ jobs:
       - name: Download x86_64 tags file 📥
         uses: actions/download-artifact@v3
         with:
-          name: ${{ matrix.image }}-x86_64-tags
+          name: ${{ inputs.image }}-x86_64-tags
           path: /tmp/tags/
 
       - name: Download aarch64 tags file 📥
-        if: matrix.image != 'tensorflow-notebook'
+        if: inputs.image != 'tensorflow-notebook'
         uses: actions/download-artifact@v3
         with:
-          name: ${{ matrix.image }}-aarch64-tags
+          name: ${{ inputs.image }}-aarch64-tags
           path: /tmp/tags/
 
       - name: Create an empty aarch64 tags file for tensorflow-notebook 💩
-        if: matrix.image == 'tensorflow-notebook'
+        if: inputs.image == 'tensorflow-notebook'
         run: touch /tmp/tags/aarch64-tensorflow-notebook.txt
         shell: bash
 
@@ -68,5 +64,5 @@ jobs:
 
       - name: Merge tags for the images 🔀
         if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
-        run: python3 -m tagging.merge_tags --short-image-name ${{ matrix.image }} --tags-dir /tmp/tags/
+        run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/
         shell: bash

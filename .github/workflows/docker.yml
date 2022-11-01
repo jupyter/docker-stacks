@@ -214,22 +214,22 @@ jobs:
         aarch64-pyspark,
         aarch64-all-spark,
       ]
+    strategy:
+      matrix:
+        image:
+          [
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
+          ]
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: aarch64
-      # https://docs.github.com/en/actions/using-workflows/reusing-workflows#limitations
-      # The strategy property is not supported in any job that calls a reusable workflow
-      # Using the workaround: https://github.community/t/reusable-workflow-with-strategy-matrix/205676/2
-      images: >-
-        [
-          "base-notebook",
-          "minimal-notebook",
-          "scipy-notebook",
-          "r-notebook",
-          "datascience-notebook",
-          "pyspark-notebook",
-          "all-spark-notebook"
-        ]
+      image: ${{ matrix.image }}
 
   x86_64-images-tag-push:
     secrets:
@@ -246,39 +246,45 @@ jobs:
         x86_64-pyspark,
         x86_64-all-spark,
       ]
+    strategy:
+      matrix:
+        image:
+          [
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            tensorflow-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
+          ]
     uses: ./.github/workflows/docker-tag-manifest-push.yml
     with:
       platform: x86_64
-      images: >-
-        [
-          "base-notebook",
-          "minimal-notebook",
-          "scipy-notebook",
-          "r-notebook",
-          "tensorflow-notebook",
-          "datascience-notebook",
-          "pyspark-notebook",
-          "all-spark-notebook"
-        ]
+      image: ${{ matrix.image }}
 
   merge-tags:
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
+    strategy:
+      matrix:
+        image:
+          [
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            tensorflow-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
+          ]
     uses: ./.github/workflows/docker-merge-tags.yml
     with:
-      images: >-
-        [
-          "base-notebook",
-          "minimal-notebook",
-          "scipy-notebook",
-          "r-notebook",
-          "tensorflow-notebook",
-          "datascience-notebook",
-          "pyspark-notebook",
-          "all-spark-notebook"
-        ]
+      image: ${{ matrix.image }}
 
   wiki-update:
     permissions:
