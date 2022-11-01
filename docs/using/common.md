@@ -1,6 +1,6 @@
 # Common Features
 
-By default, a container launched from any Jupyter Docker Stacks image runs a Jupyter Server with JupyterLab frontend.
+Except `jupyter/base-jupyter`, a container launched from any Jupyter Docker Stacks image runs a Jupyter Server with JupyterLab frontend.
 The container does so by executing a `start-notebook.sh` script.
 This script configures the internal container environment and then runs `jupyter lab`, passing any command-line arguments received.
 

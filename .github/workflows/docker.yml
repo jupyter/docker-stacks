@@ -21,6 +21,7 @@ on:
       - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
+      - "base-jupyter/**"
       - "base-notebook/**"
       - "datascience-notebook/**"
       - "minimal-notebook/**"
@@ -47,6 +48,7 @@ on:
       - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
+      - "base-jupyter/**"
       - "base-notebook/**"
       - "datascience-notebook/**"
       - "minimal-notebook/**"
@@ -67,18 +69,36 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  aarch64-base:
+  aarch64-jupyter:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: ""
+      image: base-jupyter
+      platform: aarch64
+      runsOn: ARM64
+
+  x86_64-jupyter:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: ""
+      image: base-jupyter
+      platform: x86_64
+      runsOn: ubuntu-latest
+
+  aarch64-base:
+    needs: [aarch64-jupyter]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: base-jupyter
       image: base-notebook
       platform: aarch64
       runsOn: ARM64
 
   x86_64-base:
+    needs: [x86_64-jupyter]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
-      parentImage: ""
+      parentImage: base-jupyter
       image: base-notebook
       platform: x86_64
       runsOn: ubuntu-latest
@@ -206,6 +226,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     needs:
       [
+        aarch64-jupyter,
         aarch64-base,
         aarch64-minimal,
         aarch64-scipy,
@@ -218,6 +239,7 @@ jobs:
       matrix:
         image:
           [
+            base-jupyter,
             base-notebook,
             minimal-notebook,
             scipy-notebook,
@@ -237,6 +259,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     needs:
       [
+        x86_64-jupyter,
         x86_64-base,
         x86_64-minimal,
         x86_64-scipy,
@@ -250,6 +273,7 @@ jobs:
       matrix:
         image:
           [
+            base-jupyter,
             base-notebook,
             minimal-notebook,
             scipy-notebook,
@@ -273,6 +297,7 @@ jobs:
       matrix:
         image:
           [
+            base-jupyter,
             base-notebook,
             minimal-notebook,
             scipy-notebook,
