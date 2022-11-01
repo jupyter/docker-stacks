@@ -25,11 +25,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Currently, it's impossible to automatically update descriptions
-      # https://github.com/docker/hub-tool/issues/172
-      - name: Fail to show, that for now we need to manually update dockerhub overview page 💩
-        run: exit 1
-
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
 
