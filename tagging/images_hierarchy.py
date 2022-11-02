@@ -55,7 +55,7 @@ ALL_IMAGES = {
             JupyterNotebookVersionTagger(),
             JupyterLabVersionTagger(),
             JupyterHubVersionTagger(),
-        ]
+        ],
     ),
     "minimal-notebook": ImageDescription(parent_image="base-notebook"),
     "scipy-notebook": ImageDescription(parent_image="minimal-notebook"),
