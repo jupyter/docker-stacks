@@ -36,55 +36,6 @@ def test_gid_change(container: TrackedContainer) -> None:
     assert "groups=110(jovyan),100(users)" in logs
 
 
-def test_nb_user_change(container: TrackedContainer) -> None:
-    """Container should change the username (`NB_USER`) of the default user."""
-    nb_user = "nayvoj"
-    running_container = container.run_detached(
-        tty=True,
-        user="root",
-        environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
-        command=["start.sh", "bash", "-c", "sleep infinity"],
-    )
-
-    # Give the chown time to complete.
-    # Use sleep, not wait, because the container sleeps forever.
-    time.sleep(1)
-    LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
-    output = running_container.logs().decode("utf-8")
-    assert "ERROR" not in output
-    assert "WARNING" not in output
-    assert (
-        f"username: jovyan       -> {nb_user}" in output
-    ), f"User is not changed to {nb_user}"
-
-    LOGGER.info(f"Checking {nb_user} id ...")
-    command = "id"
-    expected_output = f"uid=1000({nb_user}) gid=100(users) groups=100(users)"
-    cmd = running_container.exec_run(command, user=nb_user, workdir=f"/home/{nb_user}")
-    output = cmd.output.decode("utf-8").strip("\n")
-    assert output == expected_output, f"Bad user {output}, expected {expected_output}"
-
-    LOGGER.info(f"Checking if {nb_user} owns his home folder ...")
-    command = f'stat -c "%U %G" /home/{nb_user}/'
-    expected_output = f"{nb_user} users"
-    cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
-    output = cmd.output.decode("utf-8").strip("\n")
-    assert (
-        output == expected_output
-    ), f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
-
-    LOGGER.info(
-        f"Checking if home folder of {nb_user} contains the 'work' folder with appropriate permissions ..."
-    )
-    command = f'stat -c "%F %U %G" /home/{nb_user}/work'
-    expected_output = f"directory {nb_user} users"
-    cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
-    output = cmd.output.decode("utf-8").strip("\n")
-    assert (
-        output == expected_output
-    ), f"Folder 'work' was not copied properly to {nb_user} home folder. stat: {output}, expected {expected_output}"
-
-
 def test_chown_extra(container: TrackedContainer) -> None:
     """Container should change the UID/GID of a comma separated
     CHOWN_EXTRA list of folders."""
