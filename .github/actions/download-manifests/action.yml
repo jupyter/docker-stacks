@@ -21,12 +21,12 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
-        name: base-jupyter-aarch64-history_line
+        name: docker-stacks-foundation-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
-        name: base-jupyter-x86_64-history_line
+        name: docker-stacks-foundation-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
@@ -107,12 +107,12 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
-        name: base-jupyter-aarch64-manifest
+        name: docker-stacks-foundation-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
-        name: base-jupyter-x86_64-manifest
+        name: docker-stacks-foundation-x86_64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3

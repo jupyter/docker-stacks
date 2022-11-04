@@ -22,7 +22,7 @@
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="30" x="128" y="59">ubuntu</text>
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="119" x="128" y="70">(LTS with point release)</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="60" x="320" y="65">base-jupyter</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="119" x="320" y="65">docker-stacks-foundation</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="40" />
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="65" x="512" y="65">base-notebook</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="640" y="40" />
@@ -46,22 +46,22 @@
   <polygon fill="rgb(0,0,0)" points="447,60 440,56 440,64 447,60" stroke="rgb(0,0,0)" />
   <path d="M 576 60 L 632 60" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="639,60 632,56 632,64 639,60" stroke="rgb(0,0,0)" />
+  <path d="M 768 60 L 824 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="831,60 824,56 824,64 831,60" stroke="rgb(0,0,0)" />
   <path d="M 768 60 L 800 60" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 800 60 L 800 140" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 800 140 L 824 140" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="831,140 824,136 824,144 831,140" stroke="rgb(0,0,0)" />
-  <path d="M 768 60 L 824 60" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="831,60 824,56 824,64 831,60" stroke="rgb(0,0,0)" />
-  <path d="M 960 60 L 992 60" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 992 60 L 992 140" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 992 140 L 1016 140" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="1023,140 1016,136 1016,144 1023,140" stroke="rgb(0,0,0)" />
   <path d="M 960 60 L 1016 60" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="1023,60 1016,56 1016,64 1023,60" stroke="rgb(0,0,0)" />
   <path d="M 960 60 L 992 60" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 992 60 L 992 220" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 992 220 L 1016 220" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="1023,220 1016,216 1016,224 1023,220" stroke="rgb(0,0,0)" />
+  <path d="M 960 60 L 992 60" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 992 60 L 992 140" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 992 140 L 1016 140" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1023,140 1016,136 1016,144 1023,140" stroke="rgb(0,0,0)" />
   <path d="M 1152 220 L 1208 220" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="1215,220 1208,216 1208,224 1215,220" stroke="rgb(0,0,0)" />
 </svg>

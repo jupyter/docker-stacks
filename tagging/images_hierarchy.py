@@ -38,7 +38,7 @@ class ImageDescription:
 
 
 ALL_IMAGES = {
-    "base-jupyter": ImageDescription(
+    "docker-stacks-foundation": ImageDescription(
         parent_image=None,
         taggers=[
             SHATagger(),
@@ -50,7 +50,7 @@ ALL_IMAGES = {
         manifests=[CondaEnvironmentManifest(), AptPackagesManifest()],
     ),
     "base-notebook": ImageDescription(
-        parent_image="base-jupyter",
+        parent_image="docker-stacks-foundation",
         taggers=[
             JupyterNotebookVersionTagger(),
             JupyterLabVersionTagger(),

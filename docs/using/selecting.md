@@ -16,13 +16,13 @@ This section provides details about the first.
 The Jupyter team maintains a set of Docker image definitions in the <https://github.com/jupyter/docker-stacks> GitHub repository.
 The following sections describe these images, including their contents, relationships, and versioning strategy.
 
-### jupyter/base-jupyter
+### jupyter/docker-stacks-foundation
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/base-jupyter) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/base-jupyter/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/base-jupyter/tags/)
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/docker-stacks-foundation) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/docker-stacks-foundation/Dockerfile) |
+[Docker Hub image tags](https://hub.docker.com/r/jupyter/docker-stacks-foundation/tags/)
 
-`jupyter/base-jupyter` is a small image supporting a majority of [options common across all core stacks](common.md).
+`jupyter/docker-stacks-foundation` is a small image supporting a majority of [options common across all core stacks](common.md).
 It is the basis for all other stacks on which Jupyter-related applications can be built (e.g., kernel-based containers,
 [nbclient](https://github.com/jupyter/nbclient) applications, etc.). As such, it does not
 contain application-level software like Jupyter Notebook server, Jupyter Lab or Jupyter Hub.
@@ -46,11 +46,11 @@ It contains:
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
 `jupyter/base-notebook` adds base Jupyter server applications like Notebook, Jupyter Lab and Jupyter Hub
-and serves as the basis for all other stacks besides `jupyter/base-jupyter`.
+and serves as the basis for all other stacks besides `jupyter/docker-stacks-foundation`.
 
 It contains:
 
-- Everything in `jupyter/base-jupyter`
+- Everything in `jupyter/docker-stacks-foundation`
 - Minimally-functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - A `start-notebook.sh` script as the default command
@@ -210,7 +210,7 @@ The following diagram depicts the build dependency tree of the core images. (i.e
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/image?compression=deflate&encoding=base64&src=eJyFj7EKwkAMhnefInSyQzcpStEncNNRkGub6tkzOe5yaBXf3etgsUVwS77_-yEpDVdtrdUJnjOAGhsVjBwbJvH6gbCGVTGLQRLKQBIONN_ud3DTcgbLmgQcGlQe0wSyDZRxyi7BdoKuiK3vfciJBUvmdhA-oDeumvRVmZE0Zb3nK227kTUmvZMIkmfXGL4NPD7AZDq4L_NjvkiT381aiYoUqcK_l7g_V9jOW-XakTVlvaeMyabm6w2kJY7h)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/image?compression=deflate&encoding=base64&src=eJyFj0FqxDAMRfc5hchqsvCuDFNCe4Lu2mVhUBKlNXGkYMtkMqV3r70pOLRk-_T-56tz0k-DxQ_4qgAGGjE6vY7CGuyd4Ake2yod6thF1vjOp5e3V1itfsIilhU8OcJATQ3mGYbURd4ExX4KZpTIA6oVbnP1P7ec61KDYVHqRKYsFyAbs2U7oyukPcte6O2yFVZJslMrcRA_Oll_eXpM2G1wu5yv54em_juZFmOixD0dLvEHK5YtLOinwtqz7KFzZm9-_wDZDphP)
 
 ### Builds
 

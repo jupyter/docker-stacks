@@ -11,7 +11,7 @@ We use `pytest` module to run tests on the image.
 `conftest.py` and `pytest.ini` in the `tests` folder define the environment in which tests are run.
 More info on `pytest` can be found [here](https://docs.pytest.org/en/latest/contents.html).
 
-The actual image-specific test files are located in folders like `tests/<somestack>/` (e.g., `tests/base-jupyter/`, `tests/minimal-notebook/`, etc.).
+The actual image-specific test files are located in folders like `tests/<somestack>/` (e.g., `tests/docker-stacks-foundation/`, `tests/minimal-notebook/`, etc.).
 
 ```{note}
 If your test is located in `tests/<somestack>/`, it will be run against `jupyter/<somestack>` image and against all the [images inherited from this image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#image-relationships.
