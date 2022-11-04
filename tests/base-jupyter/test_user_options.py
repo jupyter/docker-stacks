@@ -2,7 +2,6 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 import pathlib
-import time
 
 import pytest  # type: ignore
 
