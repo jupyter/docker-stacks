@@ -2,13 +2,14 @@
 # Distributed under the terms of the Modified BSD License.
 
 ARG OWNER=jupyter
-ARG ROOT_CONTAINER=$OWNER/base-jupyter
-FROM $ROOT_CONTAINER
+ARG ROOT_CONTAINER
+ARG BASE_CONTAINER=${ROOT_CONTAINER:-${OWNER}/base-jupyter}
+FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
-ARG NB_USER="jovyan"
-ARG NB_UID="1000"
-ARG NB_GID="100"
+ARG NB_USER=${NB_USER:-"jovyan"}
+ARG NB_UID=${NB_UID:-"1000"}
+ARG NB_GID=${NB_GID:-"100"}
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
@@ -18,7 +19,6 @@ USER root
 
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
-ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --yes && \
     # - apt-get upgrade is run to patch known vulnerabilities in apt-get packages as
     #   the ubuntu base image is rebuilt too seldom sometimes (less than once a month)
@@ -43,9 +43,7 @@ USER ${NB_UID}
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 WORKDIR /tmp
-RUN mamba install \
-    --prefix="${CONDA_DIR}" \
-    --yes \
+RUN mamba install --quiet --yes \
     'notebook' \
     'jupyterhub' \
     'jupyterlab' && \

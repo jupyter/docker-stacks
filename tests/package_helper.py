@@ -37,6 +37,21 @@ from tests.conftest import TrackedContainer
 LOGGER = logging.getLogger(__name__)
 
 
+def run_package_manager(
+    container: TrackedContainer, package_manager: str, version_arg: str
+) -> None:
+    """Runs the given package manager with its version argument."""
+
+    LOGGER.info(
+        f"Test that the package manager {package_manager} is working properly ..."
+    )
+    container.run_and_wait(
+        timeout=5,
+        tty=True,
+        command=["start.sh", "bash", "-c", f"{package_manager} {version_arg}"],
+    )
+
+
 class CondaPackageHelper:
     """Conda package helper permitting to get information about packages"""
 

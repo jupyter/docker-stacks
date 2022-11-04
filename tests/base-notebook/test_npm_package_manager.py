@@ -4,15 +4,11 @@
 import logging
 
 from tests.conftest import TrackedContainer
+from tests.package_helper import run_package_manager
 
 LOGGER = logging.getLogger(__name__)
 
 
 def test_npm_package_manager(container: TrackedContainer) -> None:
-    """Test the notebook start-notebook script"""
-    LOGGER.info("Test that the package manager npm is working properly ...")
-    container.run_and_wait(
-        timeout=5,
-        tty=True,
-        command=["start.sh", "bash", "-c", "npm --version"],
-    )
+    """Test that npm is installed and runs."""
+    run_package_manager(container, "npm", "--version")

@@ -29,14 +29,15 @@ contain application-level software like Jupyter Notebook server, Jupyter Lab or 
 
 It contains:
 
-- [Miniforge](https://github.com/conda-forge/miniforge) Python 3.x in `/opt/conda` with two package managers
+- Package managers
   - [conda](https://github.com/conda/conda): "cross-platform, language-agnostic binary package manager".
   - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
 - Unprivileged user `jovyan` (`uid=1000`, configurable, [see options in the common features section](./common.md) of this documentation) in group `users` (`gid=100`)
   with ownership over the `/home/jovyan` and `/opt/conda` paths
 - `tini` as the container entrypoint
 - A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
-- Options for a self-signed HTTPS certificate and passwordless sudo
+- Passwordless sudo
+- No preinstalled scientific computing packages
 
 ### jupyter/base-notebook
 
@@ -51,9 +52,6 @@ It contains:
 
 - Everything in `jupyter/base-jupyter`
 - Minimally-functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
-- [Miniforge](https://github.com/conda-forge/miniforge) Python 3.x in `/opt/conda` with two package managers
-  - [conda](https://github.com/conda/conda): "cross-platform, language-agnostic binary package manager".
-  - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - A `start-notebook.sh` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub

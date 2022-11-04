@@ -74,7 +74,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     ), f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
 
     LOGGER.info(
-        f"Checking if home folder of {nb_user} contains the hidden 'work' folder with appropriate permissions ..."
+        f"Checking if home folder of {nb_user} contains the 'work' folder with appropriate permissions ..."
     )
     command = f'stat -c "%F %U %G" /home/{nb_user}/work'
     expected_output = f"directory {nb_user} users"
