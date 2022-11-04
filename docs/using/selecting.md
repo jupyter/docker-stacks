@@ -36,7 +36,7 @@ It contains:
   with ownership over the `/home/jovyan` and `/opt/conda` paths
 - `tini` as the container entrypoint
 - A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
-- Passwordless sudo
+- Options for a passwordless sudo
 - No preinstalled scientific computing packages
 
 ### jupyter/base-notebook
