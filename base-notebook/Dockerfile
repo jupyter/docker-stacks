@@ -20,9 +20,6 @@ USER root
 # Install all OS dependencies for notebook server that starts but lacks all
 # features (e.g., download as all possible file formats)
 RUN apt-get update --yes && \
-    # - apt-get upgrade is run to patch known vulnerabilities in apt-get packages as
-    #   the ubuntu base image is rebuilt too seldom sometimes (less than once a month)
-    apt-get upgrade --yes && \
     apt-get install --yes --no-install-recommends \
     fonts-liberation \
     # - pandoc is used to convert notebooks to html files
