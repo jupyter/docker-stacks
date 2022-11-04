@@ -1,15 +1,10 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-
 ARG OWNER=jupyter
-ARG ROOT_CONTAINER
-ARG BASE_CONTAINER=${ROOT_CONTAINER:-${OWNER}/base-jupyter}
+ARG BASE_CONTAINER=$OWNER/base-jupyter
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
-ARG NB_USER=${NB_USER:-"jovyan"}
-ARG NB_UID=${NB_UID:-"1000"}
-ARG NB_GID=${NB_GID:-"100"}
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
