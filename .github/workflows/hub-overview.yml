@@ -11,9 +11,9 @@ on:
       - ".github/workflows/hub-overview.yml"
 
       - "all-spark-notebook/README.md"
-      - "docker-stacks-foundation/README.md"
       - "base-notebook/README.md"
       - "datascience-notebook/README.md"
+      - "docker-stacks-foundation/README.md"
       - "minimal-notebook/README.md"
       - "pyspark-notebook/README.md"
       - "r-notebook/README.md"
