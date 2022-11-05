@@ -21,9 +21,9 @@ on:
       - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
-      - "docker-stacks-foundation/**"
       - "base-notebook/**"
       - "datascience-notebook/**"
+      - "docker-stacks-foundation/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
       - "r-notebook/**"
@@ -48,9 +48,9 @@ on:
       - ".github/actions/load-image/action.yml"
 
       - "all-spark-notebook/**"
-      - "docker-stacks-foundation/**"
       - "base-notebook/**"
       - "datascience-notebook/**"
+      - "docker-stacks-foundation/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
       - "r-notebook/**"
