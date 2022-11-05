@@ -23,9 +23,9 @@ The following sections describe these images, including their contents, relation
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/docker-stacks-foundation/tags/)
 
 `jupyter/docker-stacks-foundation` is a small image supporting a majority of [options common across all core stacks](common.md).
-It is the basis for all other stacks on which Jupyter-related applications can be built (e.g., kernel-based containers,
-[nbclient](https://github.com/jupyter/nbclient) applications, etc.). As such, it does not
-contain application-level software like Jupyter Notebook server, Jupyter Lab or Jupyter Hub.
+It is the basis for all other stacks on which Jupyter-related applications can be built
+(e.g., kernel-based containers, [nbclient](https://github.com/jupyter/nbclient) applications, etc.).
+As such, it does not contain application-level software like Jupyter Notebook server, Jupyter Lab or Jupyter Hub.
 
 It contains:
 
