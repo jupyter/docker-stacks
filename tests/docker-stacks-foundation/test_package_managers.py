@@ -6,6 +6,7 @@ import logging
 import pytest  # type: ignore
 
 from tests.conftest import TrackedContainer
+from tests.package_helper import run_package_manager
 
 LOGGER = logging.getLogger(__name__)
 
@@ -16,19 +17,11 @@ LOGGER = logging.getLogger(__name__)
         ("apt", "--version"),
         ("conda", "--version"),
         ("mamba", "--version"),
-        ("npm", "--version"),
         ("pip", "--version"),
     ],
 )
 def test_package_manager(
-    container: TrackedContainer, package_manager: str, version_arg: tuple[str, ...]
+    container: TrackedContainer, package_manager: str, version_arg: str
 ) -> None:
-    """Test the notebook start-notebook script"""
-    LOGGER.info(
-        f"Test that the package manager {package_manager} is working properly ..."
-    )
-    container.run_and_wait(
-        timeout=5,
-        tty=True,
-        command=["start.sh", "bash", "-c", f"{package_manager} {version_arg}"],
-    )
+    """Test that package managers are installed and run."""
+    run_package_manager(container, package_manager, version_arg)

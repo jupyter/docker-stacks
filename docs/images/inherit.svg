@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg viewBox="0 0 1216 280" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="0 0 1408 280" xmlns="http://www.w3.org/2000/svg" xmlns:inkspace="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs id="defs_block">
     <filter height="1.504" id="filter_blur" inkspace:collect="always" width="1.1575" x="-0.07875" y="-0.252">
       <feGaussianBlur id="feGaussianBlur3780" inkspace:collect="always" stdDeviation="4.2" />
@@ -12,51 +12,56 @@
   <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="259" y="46" />
   <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="451" y="46" />
   <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="643" y="46" />
-  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="643" y="126" />
   <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="835" y="46" />
   <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="835" y="126" />
-  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="835" y="206" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="1027" y="46" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="1027" y="126" />
   <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="1027" y="206" />
+  <rect fill="rgb(0,0,0)" height="40" stroke="rgb(0,0,0)" style="filter:url(#filter_blur);opacity:0.7;fill-opacity:1" width="128" x="1219" y="206" />
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="64" y="40" />
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="30" x="128" y="59">ubuntu</text>
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="119" x="128" y="70">(LTS with point release)</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="40" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="65" x="320" y="65">base-notebook</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="119" x="320" y="65">docker-stacks-foundation</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="40" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="80" x="512" y="65">minimal-notebook</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="65" x="512" y="65">base-notebook</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="640" y="40" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="70" x="704" y="65">scipy-notebook</text>
-  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="640" y="120" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="50" x="704" y="145">r-notebook</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="80" x="704" y="65">minimal-notebook</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="832" y="40" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="95" x="896" y="59">tensorflow-notebook</text>
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="65" x="896" y="70">(only x86_64)</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="70" x="896" y="65">scipy-notebook</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="832" y="120" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="100" x="896" y="145">datascience-notebook</text>
-  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="832" y="200" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="80" x="896" y="225">pyspark-notebook</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="50" x="896" y="145">r-notebook</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="1024" y="40" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="95" x="1088" y="59">tensorflow-notebook</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="65" x="1088" y="70">(only x86_64)</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="1024" y="120" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="100" x="1088" y="145">datascience-notebook</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="1024" y="200" />
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="90" x="1088" y="225">all-spark-notebook</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="80" x="1088" y="225">pyspark-notebook</text>
+  <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="1216" y="200" />
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="90" x="1280" y="225">all-spark-notebook</text>
   <path d="M 192 60 L 248 60" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="255,60 248,56 248,64 255,60" stroke="rgb(0,0,0)" />
   <path d="M 384 60 L 440 60" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="447,60 440,56 440,64 447,60" stroke="rgb(0,0,0)" />
   <path d="M 576 60 L 632 60" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="639,60 632,56 632,64 639,60" stroke="rgb(0,0,0)" />
-  <path d="M 576 60 L 608 60" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 608 60 L 608 140" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 608 140 L 632 140" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="639,140 632,136 632,144 639,140" stroke="rgb(0,0,0)" />
+  <path d="M 768 60 L 824 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="831,60 824,56 824,64 831,60" stroke="rgb(0,0,0)" />
   <path d="M 768 60 L 800 60" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 800 60 L 800 140" fill="none" stroke="rgb(0,0,0)" />
   <path d="M 800 140 L 824 140" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="831,140 824,136 824,144 831,140" stroke="rgb(0,0,0)" />
-  <path d="M 768 60 L 824 60" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="831,60 824,56 824,64 831,60" stroke="rgb(0,0,0)" />
-  <path d="M 768 60 L 800 60" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 800 60 L 800 220" fill="none" stroke="rgb(0,0,0)" />
-  <path d="M 800 220 L 824 220" fill="none" stroke="rgb(0,0,0)" />
-  <polygon fill="rgb(0,0,0)" points="831,220 824,216 824,224 831,220" stroke="rgb(0,0,0)" />
-  <path d="M 960 220 L 1016 220" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 960 60 L 1016 60" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1023,60 1016,56 1016,64 1023,60" stroke="rgb(0,0,0)" />
+  <path d="M 960 60 L 992 60" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 992 60 L 992 220" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 992 220 L 1016 220" fill="none" stroke="rgb(0,0,0)" />
   <polygon fill="rgb(0,0,0)" points="1023,220 1016,216 1016,224 1023,220" stroke="rgb(0,0,0)" />
+  <path d="M 960 60 L 992 60" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 992 60 L 992 140" fill="none" stroke="rgb(0,0,0)" />
+  <path d="M 992 140 L 1016 140" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1023,140 1016,136 1016,144 1023,140" stroke="rgb(0,0,0)" />
+  <path d="M 1152 220 L 1208 220" fill="none" stroke="rgb(0,0,0)" />
+  <polygon fill="rgb(0,0,0)" points="1215,220 1208,216 1208,224 1215,220" stroke="rgb(0,0,0)" />
 </svg>

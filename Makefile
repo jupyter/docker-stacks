@@ -9,6 +9,7 @@ OWNER?=jupyter
 # Need to list the images in build dependency order
 # All of the images
 ALL_IMAGES:= \
+	docker-stacks-foundation \
 	base-notebook \
 	minimal-notebook \
 	r-notebook \
@@ -19,6 +20,7 @@ ALL_IMAGES:= \
 	all-spark-notebook
 
 AARCH64_IMAGES:= \
+	docker-stacks-foundation \
 	base-notebook \
 	minimal-notebook \
 	r-notebook \

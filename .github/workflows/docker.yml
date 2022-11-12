@@ -23,6 +23,7 @@ on:
       - "all-spark-notebook/**"
       - "base-notebook/**"
       - "datascience-notebook/**"
+      - "docker-stacks-foundation/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
       - "r-notebook/**"
@@ -49,6 +50,7 @@ on:
       - "all-spark-notebook/**"
       - "base-notebook/**"
       - "datascience-notebook/**"
+      - "docker-stacks-foundation/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
       - "r-notebook/**"
@@ -67,18 +69,36 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  aarch64-base:
+  aarch64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: ""
+      image: docker-stacks-foundation
+      platform: aarch64
+      runsOn: ARM64
+
+  x86_64-foundation:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: ""
+      image: docker-stacks-foundation
+      platform: x86_64
+      runsOn: ubuntu-latest
+
+  aarch64-base:
+    needs: [aarch64-foundation]
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: docker-stacks-foundation
       image: base-notebook
       platform: aarch64
       runsOn: ARM64
 
   x86_64-base:
+    needs: [x86_64-foundation]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
-      parentImage: ""
+      parentImage: docker-stacks-foundation
       image: base-notebook
       platform: x86_64
       runsOn: ubuntu-latest
@@ -206,6 +226,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     needs:
       [
+        aarch64-foundation,
         aarch64-base,
         aarch64-minimal,
         aarch64-scipy,
@@ -218,6 +239,7 @@ jobs:
       matrix:
         image:
           [
+            docker-stacks-foundation,
             base-notebook,
             minimal-notebook,
             scipy-notebook,
@@ -237,6 +259,7 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     needs:
       [
+        x86_64-foundation,
         x86_64-base,
         x86_64-minimal,
         x86_64-scipy,
@@ -250,6 +273,7 @@ jobs:
       matrix:
         image:
           [
+            docker-stacks-foundation,
             base-notebook,
             minimal-notebook,
             scipy-notebook,
@@ -273,6 +297,7 @@ jobs:
       matrix:
         image:
           [
+            docker-stacks-foundation,
             base-notebook,
             minimal-notebook,
             scipy-notebook,

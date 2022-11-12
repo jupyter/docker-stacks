@@ -13,6 +13,7 @@ on:
       - "all-spark-notebook/README.md"
       - "base-notebook/README.md"
       - "datascience-notebook/README.md"
+      - "docker-stacks-foundation/README.md"
       - "minimal-notebook/README.md"
       - "pyspark-notebook/README.md"
       - "r-notebook/README.md"
@@ -27,8 +28,10 @@ jobs:
     strategy:
       matrix:
         include:
+          - image: docker-stacks-foundation
+            description: "Small base image on which Jupyter applications can be built from https://github.com/jupyter/docker-stacks"
           - image: base-notebook
-            description: "Small base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
+            description: "Base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
           - image: minimal-notebook
             description: "Minimal Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
           - image: scipy-notebook

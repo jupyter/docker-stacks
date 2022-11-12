@@ -16,27 +16,46 @@ This section provides details about the first.
 The Jupyter team maintains a set of Docker image definitions in the <https://github.com/jupyter/docker-stacks> GitHub repository.
 The following sections describe these images, including their contents, relationships, and versioning strategy.
 
+### jupyter/docker-stacks-foundation
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/docker-stacks-foundation) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/docker-stacks-foundation/Dockerfile) |
+[Docker Hub image tags](https://hub.docker.com/r/jupyter/docker-stacks-foundation/tags/)
+
+`jupyter/docker-stacks-foundation` is a small image supporting a majority of [options common across all core stacks](common.md).
+It is the basis for all other stacks on which Jupyter-related applications can be built
+(e.g., kernel-based containers, [nbclient](https://github.com/jupyter/nbclient) applications, etc.).
+As such, it does not contain application-level software like Jupyter Notebook server, Jupyter Lab or Jupyter Hub.
+
+It contains:
+
+- Package managers
+  - [conda](https://github.com/conda/conda): "cross-platform, language-agnostic binary package manager".
+  - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
+- Unprivileged user `jovyan` (`uid=1000`, configurable, [see options in the common features section](./common.md) of this documentation) in group `users` (`gid=100`)
+  with ownership over the `/home/jovyan` and `/opt/conda` paths
+- `tini` as the container entrypoint
+- A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
+- Options for a passwordless sudo
+- No preinstalled scientific computing packages
+
 ### jupyter/base-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/base-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/base-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
-`jupyter/base-notebook` is a small image supporting the [options common across all core stacks](common.md).
-It is the basis for all other stacks and contains:
+`jupyter/base-notebook` adds base Jupyter server applications like Notebook, Jupyter Lab and Jupyter Hub
+and serves as the basis for all other stacks besides `jupyter/docker-stacks-foundation`.
 
+It contains:
+
+- Everything in `jupyter/docker-stacks-foundation`
 - Minimally-functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
-- [Miniforge](https://github.com/conda-forge/miniforge) Python 3.x in `/opt/conda` with two package managers
-  - [conda](https://github.com/conda/conda): "cross-platform, language-agnostic binary package manager".
-  - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
 - `notebook`, `jupyterhub` and `jupyterlab` packages
-- No preinstalled scientific computing packages
-- Unprivileged user `jovyan` (`uid=1000`, configurable, [see options in the common features section](./common.md) of this documentation) in group `users` (`gid=100`)
-  with ownership over the `/home/jovyan` and `/opt/conda` paths
-- `tini` as the container entrypoint and a `start-notebook.sh` script as the default command
+- A `start-notebook.sh` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub
-- A `start.sh` script useful for running alternative commands in the container (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
-- Options for a self-signed HTTPS certificate and passwordless sudo
+- Options for a self-signed HTTPS certificate
 
 ### jupyter/minimal-notebook
 
@@ -191,7 +210,7 @@ The following diagram depicts the build dependency tree of the core images. (i.e
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFzrEKwjAQxvG9T3FkskM3KUrRJ3DTUShJe9XQ9C4kKbWK7266CCmCW_jnd_Apw03fanmDVwbQYidHE-qOKXj9RDjAvsrihxjVSGG80uZ0OcOkwx0sawrg0KD0mAsojqDiqyAOqJj7Kp4lYRGDJj1Ik6B1W5xvtJ0TlZbFiIDk2XWGp2-PA5nMDI9dWZfbXPy-bGWQsSI1-HeJ-7PCzt5K1ydq3RYnjSnW8v0BwS-D-w)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/image?compression=deflate&encoding=base64&src=eJyFj0FqxDAMRfc5hchqsvCuDFNCe4Lu2mVhUBKlNXGkYMtkMqV3r70pOLRk-_T-56tz0k-DxQ_4qgAGGjE6vY7CGuyd4Ake2yod6thF1vjOp5e3V1itfsIilhU8OcJATQ3mGYbURd4ExX4KZpTIA6oVbnP1P7ec61KDYVHqRKYsFyAbs2U7oyukPcte6O2yFVZJslMrcRA_Oll_eXpM2G1wu5yv54em_juZFmOixD0dLvEHK5YtLOinwtqz7KFzZm9-_wDZDphP)
 
 ### Builds
 

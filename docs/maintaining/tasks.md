@@ -26,9 +26,9 @@ When a new `Python` version is released, we wait for two things:
 
 ## Updating the Ubuntu Base Image
 
-`base-notebook` is based on the LTS Ubuntu docker image.
+`docker-stacks-foundation` is based on the LTS Ubuntu docker image.
 We wait for the first point release of the new LTS Ubuntu before updating the version.
-Other images are directly or indirectly inherited from `base-notebook`.
+Other images are directly or indirectly inherited from `docker-stacks-foundation`.
 We rebuild our images automatically each week, which means they frequently receive the updates.
 
 When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger images rebuild [from the GitHub actions workflow UI](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
