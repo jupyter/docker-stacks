@@ -1,4 +1,4 @@
-# Base Jupyter Stack
+# Foundation Jupyter Stack
 
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/docker-stacks-foundation.svg)](https://hub.docker.com/r/jupyter/docker-stacks-foundation/)
 [![docker stars](https://img.shields.io/docker/stars/jupyter/docker-stacks-foundation.svg)](https://hub.docker.com/r/jupyter/docker-stacks-foundation/)
