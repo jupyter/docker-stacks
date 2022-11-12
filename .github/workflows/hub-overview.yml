@@ -29,7 +29,7 @@ jobs:
       matrix:
         include:
           - image: docker-stacks-foundation
-            description: "Small base image on which Jupyter applications can be built from https://github.com/jupyter/docker-stacks"
+            description: "Tiny base image on which Jupyter apps can be built from https://github.com/jupyter/docker-stacks"
           - image: base-notebook
             description: "Base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
           - image: minimal-notebook
