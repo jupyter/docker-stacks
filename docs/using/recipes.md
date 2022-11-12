@@ -29,7 +29,7 @@ Create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:9e63909e0317
+FROM jupyter/datascience-notebook:85f615d5cafa
 # Install in the default python3 environment
 RUN pip install --quiet --no-cache-dir 'flake8==3.9.2' && \
     fix-permissions "${CONDA_DIR}" && \
@@ -48,7 +48,7 @@ Next, create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:9e63909e0317
+FROM jupyter/datascience-notebook:85f615d5cafa
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --quiet --no-cache-dir --requirement /tmp/requirements.txt && \
@@ -60,7 +60,7 @@ For conda, the Dockerfile is similar:
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:9e63909e0317
+FROM jupyter/datascience-notebook:85f615d5cafa
 # Install from requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN mamba install --yes --file /tmp/requirements.txt && \
@@ -283,7 +283,7 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:9e63909e0317
+FROM jupyter/base-notebook:85f615d5cafa
 RUN pip install --quiet --no-cache-dir jupyterhub==1.4.1 && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -474,7 +474,7 @@ For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:9e63909e0317 \
+    jupyter/base-notebook:85f615d5cafa \
     start.sh jupyter lab --LabApp.token=''
 ```
 
@@ -482,7 +482,7 @@ For jupyter classic:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:9e63909e0317 \
+    jupyter/base-notebook:85f615d5cafa \
     start.sh jupyter notebook --NotebookApp.token=''
 ```
 
