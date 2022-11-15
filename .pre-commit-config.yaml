@@ -67,7 +67,7 @@ repos:
 
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint.git
-    rev: v2.12.0
+    rev: v2.12.1-beta
     hooks:
       - id: hadolint-docker
         entry: hadolint/hadolint:v2.12.0 hadolint
