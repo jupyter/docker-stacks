@@ -48,14 +48,7 @@ def merge_tags(
                 )
 
         LOGGER.info(f"Found images: {existing_images}")
-        (
-            docker[
-                "manifest",
-                "create",
-                tag,
-            ][existing_images]
-            & plumbum.FG
-        )
+        docker["manifest", "create", tag][existing_images] & plumbum.FG
         docker["manifest", "push", tag] & plumbum.FG
 
 
