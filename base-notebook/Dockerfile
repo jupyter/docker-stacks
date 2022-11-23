@@ -39,6 +39,7 @@ RUN mamba install --quiet --yes \
     'notebook' \
     'jupyterhub' \
     'jupyterlab' && \
+    rm -f "/home/${NB_USER}/.jupyter/jupyter_notebook_config.py" && \
     jupyter notebook --generate-config && \
     mamba clean --all -f -y && \
     npm cache clean --force && \
