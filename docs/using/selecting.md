@@ -210,7 +210,7 @@ The following diagram depicts the build dependency tree of the core images. (i.e
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/image?compression=deflate&encoding=base64&src=eJyFj0FqxDAMRfc5hchqsvCuDFNCe4Lu2mVhUBKlNXGkYMtkMqV3r70pOLRk-_T-56tz0k-DxQ_4qgAGGjE6vY7CGuyd4Ake2yod6thF1vjOp5e3V1itfsIilhU8OcJATQ3mGYbURd4ExX4KZpTIA6oVbnP1P7ec61KDYVHqRKYsFyAbs2U7oyukPcte6O2yFVZJslMrcRA_Oll_eXpM2G1wu5yv54em_juZFmOixD0dLvEHK5YtLOinwtqz7KFzZm9-_wDZDphP)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFj0FqxDAMRfc5hchqsvCuDFNCe4Lu2mVhUBKlNXGkYMtkMqV3r70pOLRk-_T-56tz0k-DxQ_4qgAGGjE6vY7CGuyd4Ake2yod6thF1vjOp5e3V1itfsIilhU8OcJATQ3mGYbURd4ExX4KZpTIA6oVbnP1P7ec61KDYVHqRKYsFyAbs2U7oyukPcte6O2yFVZJslMrcRA_Oll_eXpM2G1wu5yv54em_juZFmOixD0dLvEHK5YtLOinwtqz7KFzZm9-_wDZDphP)
 
 ### Builds
 
