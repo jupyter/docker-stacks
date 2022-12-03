@@ -16,9 +16,9 @@ USER root
 # Default values can be overridden at build time
 # (ARGS are in lower case to distinguish them from ENV)
 ARG spark_version="3.2.3"
-ARG hadoop_version="3"
+ARG hadoop_version="3.2"
 ARG scala_version
-ARG spark_checksum="620c336a6b742c5c8da9c916b102d0795907e10f73b5ab7808f8f68b5e091766024bc9c28607806351177807d4c8b28b5e2de733aaad1f17e0676c466b520d7e "
+ARG spark_checksum="620c336a6b742c5c8da9c916b102d0795907e10f73b5ab7808f8f68b5e091766024bc9c28607806351177807d4c8b28b5e2de733aaad1f17e0676c466b520d7e"
 ARG openjdk_version="17"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
