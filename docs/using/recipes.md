@@ -571,7 +571,7 @@ docker run -it --rm \
 
 ## Add ijavascript kernel to container
 
-The example below is a Dockerfile to install the ijavascript kernel.
+The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
 
 ```dockerfile
 # use one of the jupyter docker stacks images
