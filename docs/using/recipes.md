@@ -569,7 +569,6 @@ docker run -it --rm \
     jupyter/minimal-notebook
 ```
 
-
 ## Add ijavascript kernel to container
 
 The example below is a Dockerfile to install the ijavascript kernel.
