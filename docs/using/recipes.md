@@ -577,11 +577,7 @@ The example below is a Dockerfile to install the [ijavascript kernel](https://gi
 # use one of the jupyter docker stacks images
 FROM jupyter/scipy-notebook:85f615d5cafa
 
-# configure where npm installs global packages & install ijavascript
-RUN npm config set prefix "${HOME}"
+# install ijavascript
 RUN npm install -g ijavascript
-RUN "${HOME}"/bin/ijsinstall
-
-# add the bin folder created by npm in $HOME to our $PATH
-ENV PATH "${HOME}/bin:${PATH}"
+RUN ijsinstall
 ```
