@@ -5,7 +5,7 @@ import logging
 from tests.conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
-EXPECTED_PYTHON_VERSION = "3.10"
+EXPECTED_PYTHON_VERSION = "3.11"
 
 
 def test_python_version(container: TrackedContainer) -> None:
