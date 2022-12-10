@@ -25,6 +25,7 @@ on:
 jobs:
   build-docs:
     name: Build Sphinx Documentation
+    if: github.repository == 'jupyter/docker-stacks' || github.event_name != 'schedule'
     runs-on: ubuntu-latest
     permissions:
       contents: write
