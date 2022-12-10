@@ -71,6 +71,7 @@ concurrency:
 jobs:
   aarch64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    if: github.repository == 'jupyter/docker-stacks'
     with:
       parentImage: ""
       image: docker-stacks-foundation
@@ -88,6 +89,7 @@ jobs:
   aarch64-base:
     needs: [aarch64-foundation]
     uses: ./.github/workflows/docker-build-test-upload.yml
+    if: github.repository == 'jupyter/docker-stacks'
     with:
       parentImage: docker-stacks-foundation
       image: base-notebook
@@ -106,6 +108,7 @@ jobs:
   aarch64-minimal:
     needs: [aarch64-base]
     uses: ./.github/workflows/docker-build-test-upload.yml
+    if: github.repository == 'jupyter/docker-stacks'
     with:
       parentImage: base-notebook
       image: minimal-notebook
@@ -124,6 +127,7 @@ jobs:
   aarch64-scipy:
     needs: [aarch64-minimal]
     uses: ./.github/workflows/docker-build-test-upload.yml
+    if: github.repository == 'jupyter/docker-stacks'
     with:
       parentImage: minimal-notebook
       image: scipy-notebook
@@ -142,6 +146,7 @@ jobs:
   aarch64-r:
     needs: [aarch64-minimal]
     uses: ./.github/workflows/docker-build-test-upload.yml
+    if: github.repository == 'jupyter/docker-stacks'
     with:
       parentImage: minimal-notebook
       image: r-notebook
@@ -169,6 +174,7 @@ jobs:
   aarch64-datascience:
     needs: [aarch64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
+    if: github.repository == 'jupyter/docker-stacks'
     with:
       parentImage: scipy-notebook
       image: datascience-notebook
@@ -187,6 +193,7 @@ jobs:
   aarch64-pyspark:
     needs: [aarch64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
+    if: github.repository == 'jupyter/docker-stacks'
     with:
       parentImage: scipy-notebook
       image: pyspark-notebook
@@ -205,6 +212,7 @@ jobs:
   aarch64-all-spark:
     needs: [aarch64-pyspark]
     uses: ./.github/workflows/docker-build-test-upload.yml
+    if: github.repository == 'jupyter/docker-stacks'
     with:
       parentImage: pyspark-notebook
       image: all-spark-notebook
@@ -221,6 +229,7 @@ jobs:
       runsOn: ubuntu-latest
 
   aarch64-images-tag-push:
+    if: github.repository == 'jupyter/docker-stacks'
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -310,9 +319,11 @@ jobs:
     uses: ./.github/workflows/docker-merge-tags.yml
     with:
       image: ${{ matrix.image }}
+    if: github.repository == 'jupyter/docker-stacks'
 
   wiki-update:
     permissions:
       contents: write
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
     uses: ./.github/workflows/docker-wiki-update.yml
+    if: github.repository == 'jupyter/docker-stacks'
