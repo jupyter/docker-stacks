@@ -24,6 +24,7 @@ jobs:
   update-dockerhub-overview:
     name: Update dockerhub overviews
     runs-on: ubuntu-latest
+    if: github.repository == 'jupyter/docker-stacks'
 
     steps:
       - name: Checkout Repo ⚡️
