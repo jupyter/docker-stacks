@@ -26,6 +26,7 @@ on:
 jobs:
   build-test-upload:
     runs-on: ${{ inputs.runsOn }}
+
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
