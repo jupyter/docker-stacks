@@ -11,7 +11,7 @@ on:
       # https://docs.github.com/en/actions/using-workflows/reusing-workflows
       - ".github/workflows/docker-build-test-upload.yml"
       - ".github/workflows/docker-merge-tags.yml"
-      - ".github/workflows/docker-tag-manifest-push.yml"
+      - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
       # We use local composite actions to combine multiple workflow steps within one action
@@ -40,7 +40,7 @@ on:
       - ".github/workflows/docker.yml"
       - ".github/workflows/docker-build-test-upload.yml"
       - ".github/workflows/docker-merge-tags.yml"
-      - ".github/workflows/docker-tag-manifest-push.yml"
+      - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
       - ".github/actions/create-dev-env/action.yml"
@@ -229,7 +229,7 @@ jobs:
     needs: [x86_64-pyspark]
 
   aarch64-images-tag-push:
-    uses: ./.github/workflows/docker-tag-manifest-push.yml
+    uses: ./.github/workflows/docker-tag-push.yml
     with:
       platform: aarch64
       image: ${{ matrix.image }}
@@ -263,7 +263,7 @@ jobs:
     if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-images-tag-push:
-    uses: ./.github/workflows/docker-tag-manifest-push.yml
+    uses: ./.github/workflows/docker-tag-push.yml
     with:
       platform: x86_64
       image: ${{ matrix.image }}

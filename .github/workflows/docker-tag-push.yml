@@ -21,7 +21,7 @@ on:
         required: true
 
 jobs:
-  tag-manifest-push:
+  tag-push:
     runs-on: ubuntu-latest
 
     steps:
