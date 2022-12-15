@@ -587,24 +587,27 @@ RUN ijsinstall
 The following recipe demonstrates how to add functionality to read from and write to an instance of Microsoft SQL server in your notebook.
 
 ```dockerfile
-ARG BASE_CONTAINER=jupyter/datascience-notebook:latest
-FROM $BASE_CONTAINER
+ARG BASE_IMAGE=jupyter/tensorflow-notebook
+
+FROM $BASE_IMAGE
 
 USER root
 
 ENV MSSQL_DRIVER "ODBC Driver 18 for SQL Server"
+ENV PATH="/opt/mssql-tools18/bin:${PATH}"
 
-RUN apt update && \
-    apt install -y curl gnupg2 && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
-    apt update && \
-    ACCEPT_EULA=Y apt install -y msodbcsql18 && \
-    echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc && \
-    source ~/.bashrc && \
-    apt -y install python3-pyodbc && \
-    pip3 install pyodbc && \
-    apt clean
+RUN apt update --yes --no-install-recommends && \
+    apt install --yes gnupg2 && \
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/microsoft.gpg && \
+    apt purge --yes gnupg2 && \
+    echo "deb [arch=amd64,armhf,arm64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft.list && \
+    apt update --yes --no-install-recommends && \
+    ACCEPT_EULA=Y apt install --yes msodbcsql18 && \
+    python3 -m pip install pyodbc && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Switch back to jovyan to avoid accidental container runs as root
+USER ${NB_UID}
 ```
 
 You can now use `pyodbc` and `sqlalchemy` to interact with the database.
