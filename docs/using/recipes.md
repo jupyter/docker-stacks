@@ -581,3 +581,32 @@ FROM jupyter/scipy-notebook:85f615d5cafa
 RUN npm install -g ijavascript
 RUN ijsinstall
 ```
+
+## Add Microsoft SQL Server ODBC driver
+
+The following recipe demonstrates how to add functionality to read from and write to an instance of Microsoft SQL server in your notebook.
+
+```dockerfile
+ARG BASE_CONTAINER=jupyter/datascience-notebook:latest
+FROM $BASE_CONTAINER
+
+USER root
+
+ENV MSSQL_DRIVER "ODBC Driver 18 for SQL Server"
+
+RUN apt update && \
+    apt install -y curl gnupg2 && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+    apt update && \
+    ACCEPT_EULA=Y apt install -y msodbcsql18 && \
+    echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc && \
+    source ~/.bashrc && \
+    apt -y install python3-pyodbc && \
+    pip3 install pyodbc && \
+    apt clean
+```
+
+You can now use ``pyodbc`` and ``sqlalchemy`` to interact with the database.
+
+Pre-built images are hosted in the [realiserad/jupyter-docker-mssql](https://github.com/Realiserad/jupyter-docker-mssql) repository.
