@@ -607,6 +607,6 @@ RUN apt update && \
     apt clean
 ```
 
-You can now use ``pyodbc`` and ``sqlalchemy`` to interact with the database.
+You can now use `pyodbc` and `sqlalchemy` to interact with the database.
 
 Pre-built images are hosted in the [realiserad/jupyter-docker-mssql](https://github.com/Realiserad/jupyter-docker-mssql) repository.
