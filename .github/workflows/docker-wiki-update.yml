@@ -1,4 +1,4 @@
-name: Download manifest artifacts from GitHub, tag and push to DockerHub
+name: Download build manifests from GitHub artifacts and push them to GitHub wiki
 # We're doing everything in one workflow on purpose
 # This way we make sure we don't access wiki pages from several jobs simultaneously
 
