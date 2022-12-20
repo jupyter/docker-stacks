@@ -21,7 +21,7 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/pycqa/isort
-    rev: 5.11.1
+    rev: v5.11.3
     hooks:
       - id: isort
         args: [--profile, black]
@@ -89,7 +89,7 @@ repos:
 
   # Lint: Shell scripts
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.8.0.4
+    rev: v0.9.0.2
     hooks:
       - id: shellcheck
         args: ["-x"]
