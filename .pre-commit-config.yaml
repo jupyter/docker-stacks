@@ -21,7 +21,7 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/pycqa/isort
-    rev: v5.11.3
+    rev: 5.11.4
     hooks:
       - id: isort
         args: [--profile, black]
@@ -116,7 +116,7 @@ repos:
   # nbQA provides tools from the Python ecosystem like
   # pyupgrade, isort, black, and flake8, adjusted for notebooks.
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.5.3
+    rev: 1.6.0
     hooks:
       - id: nbqa-pyupgrade
         args: [--py39-plus]
