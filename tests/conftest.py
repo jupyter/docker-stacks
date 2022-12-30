@@ -24,6 +24,12 @@ def find_free_port() -> str:
         return s.getsockname()[1]  # type: ignore
 
 
+def get_health(container: Container) -> str:
+    api_client = docker.APIClient()
+    inspect_results = api_client.inspect_container(container.name)
+    return inspect_results["State"]["Health"]["Status"]  # type: ignore
+
+
 @pytest.fixture(scope="session")
 def http_client() -> requests.Session:
     """Requests session with retries and backoff."""

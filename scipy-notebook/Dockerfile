@@ -39,6 +39,8 @@ RUN mamba install --quiet --yes \
     'h5py' \
     'ipympl'\
     'ipywidgets' \
+    # Temporary fix for: https://github.com/jupyter/docker-stacks/issues/1851
+    'jupyter_server>=2.0.0' \
     'matplotlib-base' \
     'numba' \
     'numexpr' \
