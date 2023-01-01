@@ -14,5 +14,5 @@ def test_health(container: TrackedContainer) -> None:
         tty=True,
     )
     # sleeping some time to let the server start
-    time.sleep(10)
+    time.sleep(15)
     assert get_health(running_container) == "healthy"
