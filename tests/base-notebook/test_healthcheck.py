@@ -27,7 +27,7 @@ LOGGER = logging.getLogger(__name__)
 def test_health(container: TrackedContainer, env: Optional[list[str]]) -> None:
     running_container = container.run_detached(
         tty=True,
-        env=env,
+        environment=env,
     )
     # sleeping some time to let the server start
     time.sleep(15)
