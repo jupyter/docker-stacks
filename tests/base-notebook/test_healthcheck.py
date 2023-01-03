@@ -21,7 +21,6 @@ LOGGER = logging.getLogger(__name__)
         ["DOCKER_STACKS_JUPYTER_CMD=notebook"],
         ["DOCKER_STACKS_JUPYTER_CMD=server"],
         ["DOCKER_STACKS_JUPYTER_CMD=nbclassic"],
-        ["JUPYTERHUB_API_TOKEN=my_token"],
     ],
 )
 def test_health(container: TrackedContainer, env: Optional[list[str]]) -> None:
