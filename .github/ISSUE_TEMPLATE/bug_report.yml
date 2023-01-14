@@ -15,7 +15,6 @@ body:
         Please answer the following sections to help us troubleshoot the problem.
 
   - type: dropdown
-    id: docker_images
     attributes:
       label: What docker image(s) are you using?
       description: Select as many images as applicable
@@ -34,10 +33,10 @@ body:
 
   - type: input
     attributes:
-      label: OS system and architecture running docker image
+      label: Host OS system and architecture running docker image
       placeholder: |
         Example:
-        Ubuntu/aarch64
+        Ubuntu 22.04 / aarch64
     validations:
       required: true
 
@@ -88,7 +87,7 @@ body:
       description: |
         A clear and concise description of what you expected to happen.
       placeholder: |
-        Example: ggplot output appears in my notebook.
+        Example: `ggplot` output appears in my notebook.
 
   - type: textarea
     attributes:
@@ -109,3 +108,11 @@ body:
         Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
     validations:
       required: false
+
+  - type: checkboxes
+    attributes:
+      label: Latest Docker version
+      description: You should try to use latest Docker version
+      options:
+        - label: I've updated my Docker version to the latest available and the issue still persists
+          required: true
