@@ -11,7 +11,7 @@ on:
       # https://docs.github.com/en/actions/using-workflows/reusing-workflows
       - ".github/workflows/docker-build-test-upload.yml"
       - ".github/workflows/docker-merge-tags.yml"
-      - ".github/workflows/docker-tag-manifest-push.yml"
+      - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
       # We use local composite actions to combine multiple workflow steps within one action
@@ -40,7 +40,7 @@ on:
       - ".github/workflows/docker.yml"
       - ".github/workflows/docker-build-test-upload.yml"
       - ".github/workflows/docker-merge-tags.yml"
-      - ".github/workflows/docker-tag-manifest-push.yml"
+      - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
       - ".github/actions/create-dev-env/action.yml"
@@ -76,6 +76,7 @@ jobs:
       image: docker-stacks-foundation
       platform: aarch64
       runsOn: ARM64
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -86,155 +87,155 @@ jobs:
       runsOn: ubuntu-latest
 
   aarch64-base:
-    needs: [aarch64-foundation]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: docker-stacks-foundation
       image: base-notebook
       platform: aarch64
       runsOn: ARM64
+    needs: [aarch64-foundation]
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-base:
-    needs: [x86_64-foundation]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: docker-stacks-foundation
       image: base-notebook
       platform: x86_64
       runsOn: ubuntu-latest
+    needs: [x86_64-foundation]
 
   aarch64-minimal:
-    needs: [aarch64-base]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: base-notebook
       image: minimal-notebook
       platform: aarch64
       runsOn: ARM64
+    needs: [aarch64-base]
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-minimal:
-    needs: [x86_64-base]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: base-notebook
       image: minimal-notebook
       platform: x86_64
       runsOn: ubuntu-latest
+    needs: [x86_64-base]
 
   aarch64-scipy:
-    needs: [aarch64-minimal]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: minimal-notebook
       image: scipy-notebook
       platform: aarch64
       runsOn: ARM64
+    needs: [aarch64-minimal]
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-scipy:
-    needs: [x86_64-minimal]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: minimal-notebook
       image: scipy-notebook
       platform: x86_64
       runsOn: ubuntu-latest
+    needs: [x86_64-minimal]
 
   aarch64-r:
-    needs: [aarch64-minimal]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: minimal-notebook
       image: r-notebook
       platform: aarch64
       runsOn: ARM64
+    needs: [aarch64-minimal]
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-r:
-    needs: [x86_64-minimal]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: minimal-notebook
       image: r-notebook
       platform: x86_64
       runsOn: ubuntu-latest
+    needs: [x86_64-minimal]
 
   x86_64-tensorflow:
-    needs: [x86_64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: scipy-notebook
       image: tensorflow-notebook
       platform: x86_64
       runsOn: ubuntu-latest
+    needs: [x86_64-scipy]
 
   aarch64-datascience:
-    needs: [aarch64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: scipy-notebook
       image: datascience-notebook
       platform: aarch64
       runsOn: ARM64
+    needs: [aarch64-scipy]
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-datascience:
-    needs: [x86_64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: scipy-notebook
       image: datascience-notebook
       platform: x86_64
       runsOn: ubuntu-latest
+    needs: [x86_64-scipy]
 
   aarch64-pyspark:
-    needs: [aarch64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: scipy-notebook
       image: pyspark-notebook
       platform: aarch64
       runsOn: ARM64
+    needs: [aarch64-scipy]
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-pyspark:
-    needs: [x86_64-scipy]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: scipy-notebook
       image: pyspark-notebook
       platform: x86_64
       runsOn: ubuntu-latest
+    needs: [x86_64-scipy]
 
   aarch64-all-spark:
-    needs: [aarch64-pyspark]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: pyspark-notebook
       image: all-spark-notebook
       platform: aarch64
       runsOn: ARM64
+    needs: [aarch64-pyspark]
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-all-spark:
-    needs: [x86_64-pyspark]
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parentImage: pyspark-notebook
       image: all-spark-notebook
       platform: x86_64
       runsOn: ubuntu-latest
+    needs: [x86_64-pyspark]
 
   aarch64-images-tag-push:
+    uses: ./.github/workflows/docker-tag-push.yml
+    with:
+      platform: aarch64
+      image: ${{ matrix.image }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    needs:
-      [
-        aarch64-foundation,
-        aarch64-base,
-        aarch64-minimal,
-        aarch64-scipy,
-        aarch64-r,
-        aarch64-datascience,
-        aarch64-pyspark,
-        aarch64-all-spark,
-      ]
     strategy:
       matrix:
         image:
@@ -248,15 +249,41 @@ jobs:
             pyspark-notebook,
             all-spark-notebook,
           ]
-    uses: ./.github/workflows/docker-tag-manifest-push.yml
-    with:
-      platform: aarch64
-      image: ${{ matrix.image }}
+    needs:
+      [
+        aarch64-foundation,
+        aarch64-base,
+        aarch64-minimal,
+        aarch64-scipy,
+        aarch64-r,
+        aarch64-datascience,
+        aarch64-pyspark,
+        aarch64-all-spark,
+      ]
+    if: github.repository == 'jupyter/docker-stacks'
 
   x86_64-images-tag-push:
+    uses: ./.github/workflows/docker-tag-push.yml
+    with:
+      platform: x86_64
+      image: ${{ matrix.image }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    strategy:
+      matrix:
+        image:
+          [
+            docker-stacks-foundation,
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            tensorflow-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
+          ]
     needs:
       [
         x86_64-foundation,
@@ -269,50 +296,34 @@ jobs:
         x86_64-pyspark,
         x86_64-all-spark,
       ]
-    strategy:
-      matrix:
-        image:
-          [
-            docker-stacks-foundation,
-            base-notebook,
-            minimal-notebook,
-            scipy-notebook,
-            r-notebook,
-            tensorflow-notebook,
-            datascience-notebook,
-            pyspark-notebook,
-            all-spark-notebook,
-          ]
-    uses: ./.github/workflows/docker-tag-manifest-push.yml
-    with:
-      platform: x86_64
-      image: ${{ matrix.image }}
 
   merge-tags:
-    secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-    needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    strategy:
-      matrix:
-        image:
-          [
-            docker-stacks-foundation,
-            base-notebook,
-            minimal-notebook,
-            scipy-notebook,
-            r-notebook,
-            tensorflow-notebook,
-            datascience-notebook,
-            pyspark-notebook,
-            all-spark-notebook,
-          ]
     uses: ./.github/workflows/docker-merge-tags.yml
     with:
       image: ${{ matrix.image }}
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    strategy:
+      matrix:
+        image:
+          [
+            docker-stacks-foundation,
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            tensorflow-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
+          ]
+    needs: [aarch64-images-tag-push, x86_64-images-tag-push]
+    if: github.repository == 'jupyter/docker-stacks'
 
   wiki-update:
+    uses: ./.github/workflows/docker-wiki-update.yml
+    needs: [aarch64-images-tag-push, x86_64-images-tag-push]
+    if: github.repository == 'jupyter/docker-stacks'
     permissions:
       contents: write
-    needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    uses: ./.github/workflows/docker-wiki-update.yml

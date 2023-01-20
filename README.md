@@ -9,7 +9,7 @@
 Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter) containing Jupyter applications and interactive computing tools.
 You can use a stack image to do any of the following (and more):
 
-- Start a personal Jupyter Server with JupyterLab frontend (default)
+- Start a personal Jupyter Server with the JupyterLab frontend (default)
 - Run JupyterLab for a team using JupyterHub
 - Start a personal Jupyter Notebook server in a local Docker container
 - Write your own project Dockerfile
@@ -59,7 +59,7 @@ Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
 
 Due to the usage of [the flag `--rm`](https://docs.docker.com/engine/reference/run/#clean-up---rm) Docker automatically cleans up the container and removes the file
 system when the container exits, but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
-[The `-it` flag](https://docs.docker.com/engine/reference/commandline/run/#assign-name-and-allocate-pseudo-tty---name--it) allocates pseudo-TTY.
+[The `-it` flag](https://docs.docker.com/engine/reference/commandline/run/#-assign-name-and-allocate-pseudo-tty---name--it) allocates pseudo-TTY.
 
 ## Contributing
 

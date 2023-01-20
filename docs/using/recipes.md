@@ -581,3 +581,36 @@ FROM jupyter/scipy-notebook:85f615d5cafa
 RUN npm install -g ijavascript
 RUN ijsinstall
 ```
+
+## Add Microsoft SQL Server ODBC driver
+
+The following recipe demonstrates how to add functionality to read from and write to an instance of Microsoft SQL server in your notebook.
+
+```dockerfile
+ARG BASE_IMAGE=jupyter/tensorflow-notebook
+
+FROM $BASE_IMAGE
+
+USER root
+
+ENV MSSQL_DRIVER "ODBC Driver 18 for SQL Server"
+ENV PATH="/opt/mssql-tools18/bin:${PATH}"
+
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends gnupg2 && \
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/microsoft.gpg && \
+    apt-get purge --yes gnupg2 && \
+    echo "deb [arch=amd64,armhf,arm64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft.list && \
+    apt-get update --yes && \
+    ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql18 && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Switch back to jovyan to avoid accidental container runs as root
+USER ${NB_UID}
+
+RUN pip install --quiet --no-cache-dir pyodbc
+```
+
+You can now use `pyodbc` and `sqlalchemy` to interact with the database.
+
+Pre-built images are hosted in the [realiserad/jupyter-docker-mssql](https://github.com/Realiserad/jupyter-docker-mssql) repository.

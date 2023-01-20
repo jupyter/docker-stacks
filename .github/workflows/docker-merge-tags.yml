@@ -33,14 +33,12 @@ jobs:
         with:
           name: ${{ inputs.image }}-x86_64-tags
           path: /tmp/tags/
-
       - name: Download aarch64 tags file 📥
         if: inputs.image != 'tensorflow-notebook'
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.image }}-aarch64-tags
           path: /tmp/tags/
-
       - name: Create an empty aarch64 tags file for tensorflow-notebook 💩
         if: inputs.image == 'tensorflow-notebook'
         run: touch /tmp/tags/aarch64-tensorflow-notebook.txt
@@ -56,13 +54,13 @@ jobs:
         shell: bash
 
       - name: Login to Docker Hub 🔐
-        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2.1.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Merge tags for the images 🔀
-        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/
         shell: bash

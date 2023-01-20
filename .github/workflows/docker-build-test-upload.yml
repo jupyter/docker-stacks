@@ -1,4 +1,4 @@
-name: Download parent image, build new one, test and upload it and tags and manifests to GitHub artifacts
+name: Download parent image, build a new one and test it; then upload the image, tags and manifests to GitHub artifacts
 
 env:
   OWNER: ${{ github.repository_owner }}
@@ -26,6 +26,7 @@ on:
 jobs:
   build-test-upload:
     runs-on: ${{ inputs.runsOn }}
+
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3

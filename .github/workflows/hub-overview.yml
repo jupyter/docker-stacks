@@ -24,6 +24,22 @@ jobs:
   update-dockerhub-overview:
     name: Update dockerhub overviews
     runs-on: ubuntu-latest
+    if: github.repository == 'jupyter/docker-stacks'
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+
+      - name: Push README to Dockerhub 🐳
+        uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # v1
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
+        with:
+          destination_container_repo: ${{ env.OWNER }}/${{ matrix.image }}
+          provider: dockerhub
+          short_description: ${{ matrix.description }}
+          readme_file: ${{ matrix.image }}/README.md
 
     strategy:
       matrix:
@@ -46,18 +62,3 @@ jobs:
             description: "Python and Spark Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
           - image: all-spark-notebook
             description: "Python, Scala, R and Spark Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
-
-    steps:
-      - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
-
-      - name: Push README to Dockerhub 🐳
-        uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # v1
-        env:
-          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKER_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
-        with:
-          destination_container_repo: ${{ env.OWNER }}/${{ matrix.image }}
-          provider: dockerhub
-          short_description: ${{ matrix.description }}
-          readme_file: ${{ matrix.image }}/README.md

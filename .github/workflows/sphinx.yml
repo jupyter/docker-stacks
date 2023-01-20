@@ -25,10 +25,10 @@ on:
 jobs:
   build-docs:
     name: Build Sphinx Documentation
-    if: github.event_name != 'schedule' || (github.event_name == 'schedule' && github.repository == 'jupyter/docker-stacks')
-    runs-on: ubuntu-latest
     permissions:
       contents: write
+    if: github.repository == 'jupyter/docker-stacks' || github.event_name != 'schedule'
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repo ⚡️

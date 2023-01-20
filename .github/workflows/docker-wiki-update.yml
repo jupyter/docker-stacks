@@ -1,4 +1,4 @@
-name: Download manifest artifacts from GitHub, tag and push to DockerHub
+name: Download build manifests from GitHub artifacts and push them to GitHub wiki
 # We're doing everything in one workflow on purpose
 # This way we make sure we don't access wiki pages from several jobs simultaneously
 
@@ -39,7 +39,7 @@ jobs:
         shell: bash
 
       - name: Push Wiki to GitHub 📤
-        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4.16.0
         with:
           commit_message: "Automated wiki publish for ${{ github.sha }}"

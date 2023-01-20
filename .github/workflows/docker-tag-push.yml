@@ -21,7 +21,7 @@ on:
         required: true
 
 jobs:
-  tag-manifest-push:
+  tag-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +38,7 @@ jobs:
           platform: ${{ inputs.platform }}
 
       - name: Login to Docker Hub 🔐
-        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a # v2.1.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -53,6 +53,6 @@ jobs:
         run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/ --platform ${{ inputs.platform }} --owner ${{ env.OWNER }}
 
       - name: Push Images to Docker Hub 📤
-        if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+        if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         run: docker push --all-tags ${{ env.OWNER }}/${{ inputs.image }}
         shell: bash
