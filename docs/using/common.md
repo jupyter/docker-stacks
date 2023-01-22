@@ -129,7 +129,8 @@ You do so by passing arguments to the `docker run` command.
   The variables are unset after the hooks have been executed but before the command provided to the startup script runs.
 - `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to add to `jupyter` commands.
   This way, the user could use any option supported by `jupyter` subcommand.
-- `-e JUPYTER_PORT=8117` - Change the port that Jupyter is using to the value of the `$JUPYTER_PORT` environment variable. This maybe useful if you run multiple instances of Jupyter in swarm mode and want to use different port for each instance.
+- `-e JUPYTER_PORT=8117` - Changes the port in the container that Jupyter is using to the value of the `${JUPYTER_PORT}` environment variable.
+  This may be useful if you run multiple instances of Jupyter in swarm mode and want to use a different port for each instance.
 
 ## Startup Hooks
 
