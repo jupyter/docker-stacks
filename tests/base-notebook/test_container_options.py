@@ -80,11 +80,13 @@ def test_unsigned_ssl(
     assert not warnings
 
 
-def test_custom_internal_port(container: TrackedContainer, http_client: requests.Session) -> None:
+def test_custom_internal_port(
+    container: TrackedContainer, http_client: requests.Session
+) -> None:
     """Container should be accessible from the host
     when using custom internal port"""
     host_port = find_free_port()
-    internal_port=8117
+    internal_port = 8117
     running_container = container.run_detached(
         command=["start-notebook.sh", "--NotebookApp.token=''"],
         environment={"JUPYTER_PORT", internal_port},
