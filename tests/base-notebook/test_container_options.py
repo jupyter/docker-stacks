@@ -78,3 +78,22 @@ def test_unsigned_ssl(
     assert "ERROR" not in logs
     warnings = TrackedContainer.get_warnings(logs)
     assert not warnings
+
+
+def test_custom_internal_port(container: TrackedContainer, http_client: requests.Session) -> None:
+    """Container should be accessible from the host
+    when using custom internal port"""
+    host_port = find_free_port()
+    internal_port=8117
+    running_container = container.run_detached(
+        command=["start-notebook.sh", "--NotebookApp.token=''"],
+        environment={"JUPYTER_PORT", internal_port},
+        ports={internal_port: host_port},
+    )
+    resp = http_client.get(f"http://localhost:{host_port}")
+    resp.raise_for_status()
+    logs = running_container.logs().decode("utf-8")
+    LOGGER.debug(logs)
+    assert "ERROR" not in logs
+    warnings = TrackedContainer.get_warnings(logs)
+    assert not warnings
