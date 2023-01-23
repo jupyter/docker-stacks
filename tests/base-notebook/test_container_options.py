@@ -83,21 +83,21 @@ def test_unsigned_ssl(
 @pytest.mark.parametrize(
     "env",
     [
-        None,
+        {},
         {"DOCKER_STACKS_JUPYTER_CMD": "notebook"},
         {"JUPYTER_PORT": 8171},
         {"JUPYTER_PORT": 8117, "DOCKER_STACKS_JUPYTER_CMD": "notebook"},
     ],
 )
 def test_custom_internal_port(
-    container: TrackedContainer, http_client: requests.Session
+    container: TrackedContainer,
+    http_client: requests.Session,
+    env: dict[str, str],
 ) -> None:
     """Container should be accessible from the host
     when using custom internal port"""
     host_port = find_free_port()
-    internal_port = (
-        env["JUPYTER_PORT"] if (env and ("JUPYTER_PORT" in env.keys())) else 8888
-    )
+    internal_port = env.get("JUPYTER_PORT", 8888)
     running_container = container.run_detached(
         command=["start-notebook.sh", "--NotebookApp.token=''"],
         environment=env,
