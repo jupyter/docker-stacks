@@ -84,9 +84,13 @@ def test_unsigned_ssl(
     "env",
     [
         {},
-        {"DOCKER_STACKS_JUPYTER_CMD": "notebook"},
-        {"JUPYTER_PORT": 8171},
-        {"JUPYTER_PORT": 8117, "DOCKER_STACKS_JUPYTER_CMD": "notebook"},
+        {"JUPYTER_PORT": 1234, "DOCKER_STACKS_JUPYTER_CMD": "lab"},
+        {"JUPYTER_PORT": 2345, "DOCKER_STACKS_JUPYTER_CMD": "notebook"},
+        {"JUPYTER_PORT": 3456, "DOCKER_STACKS_JUPYTER_CMD": "server"},
+        {"JUPYTER_PORT": 4567, "DOCKER_STACKS_JUPYTER_CMD": "nbclassic"},
+        {"JUPYTER_PORT": 5678, "RESTARTABLE": "yes"},
+        {"JUPYTER_PORT": 6789},
+        {"JUPYTER_PORT": 7890, "DOCKER_STACKS_JUPYTER_CMD": "notebook"},
     ],
 )
 def test_custom_internal_port(
