@@ -86,8 +86,7 @@ def test_unsigned_ssl(
         None,
         {"DOCKER_STACKS_JUPYTER_CMD": "notebook"},
         {"JUPYTER_PORT": 8171},
-        {"JUPYTER_PORT": 8117,
-         "DOCKER_STACKS_JUPYTER_CMD": "notebook"},
+        {"JUPYTER_PORT": 8117, "DOCKER_STACKS_JUPYTER_CMD": "notebook"},
     ],
 )
 def test_custom_internal_port(
@@ -96,7 +95,9 @@ def test_custom_internal_port(
     """Container should be accessible from the host
     when using custom internal port"""
     host_port = find_free_port()
-    internal_port = env["JUPYTER_PORT"] if (env and ("JUPYTER_PORT" in env.keys())) else 8888
+    internal_port = (
+        env["JUPYTER_PORT"] if (env and ("JUPYTER_PORT" in env.keys())) else 8888
+    )
     running_container = container.run_detached(
         command=["start-notebook.sh", "--NotebookApp.token=''"],
         environment=env,
