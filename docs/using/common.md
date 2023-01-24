@@ -22,9 +22,15 @@ You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/l
 2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the notebook server, you can run the following:
 
    ```bash
-   docker run  -it --rm -p 8888:8888 jupyter/base-notebook \
+   docker run  -it --rm -p 8888:8888 --no-healthcheck jupyter/base-notebook \
        start-notebook.sh --NotebookApp.base_url=/customized/url/prefix/
    ```
+
+   Note: We pass the `--no-healthcheck` parameter when setting a custom `base_url` for the Jupyter server,
+   because our current implementation for doing healthcheck assumes the `base_url` to be `/` (the default).
+   Without using this parameter, the container may run, but it's state will be "unhealthy".
+   Alternatively, you can [use your own command for healthcheck](https://docs.docker.com/engine/reference/run/#healthcheck)
+   using the `--health-cmd` parameter.
 
 ## Docker Options
 
@@ -123,6 +129,8 @@ You do so by passing arguments to the `docker run` command.
   The variables are unset after the hooks have been executed but before the command provided to the startup script runs.
 - `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to add to `jupyter` commands.
   This way, the user could use any option supported by `jupyter` subcommand.
+- `-e JUPYTER_PORT=8117` - Changes the port in the container that Jupyter is using to the value of the `${JUPYTER_PORT}` environment variable.
+  This may be useful if you run multiple instances of Jupyter in swarm mode and want to use a different port for each instance.
 
 ## Startup Hooks
 

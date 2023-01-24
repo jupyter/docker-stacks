@@ -9,7 +9,6 @@ from jupyter_core.paths import jupyter_data_dir
 
 c = get_config()  # noqa: F821
 c.ServerApp.ip = "0.0.0.0"
-c.ServerApp.port = 8888
 c.ServerApp.open_browser = False
 
 # to output both image/svg+xml and application/pdf plot formats in the notebook file

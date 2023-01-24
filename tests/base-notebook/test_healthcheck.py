@@ -17,10 +17,12 @@ LOGGER = logging.getLogger(__name__)
     [
         None,
         ["DOCKER_STACKS_JUPYTER_CMD=lab"],
-        ["RESTARTABLE=yes"],
         ["DOCKER_STACKS_JUPYTER_CMD=notebook"],
         ["DOCKER_STACKS_JUPYTER_CMD=server"],
         ["DOCKER_STACKS_JUPYTER_CMD=nbclassic"],
+        ["RESTARTABLE=yes"],
+        ["JUPYTER_PORT=8171"],
+        ["JUPYTER_PORT=8117", "DOCKER_STACKS_JUPYTER_CMD=notebook"],
     ],
 )
 def test_health(container: TrackedContainer, env: Optional[list[str]]) -> None:
