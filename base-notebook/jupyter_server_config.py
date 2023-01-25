@@ -9,6 +9,9 @@ from jupyter_core.paths import jupyter_data_dir
 
 c = get_config()  # noqa: F821
 c.ServerApp.ip = "0.0.0.0"
+# Setting port in the config to make JupyterHub singleuser use the provided port
+# https://github.com/jupyter/docker-stacks/issues/1862
+c.ServerApp.port = os.environ["JUPYTER_PORT"]
 c.ServerApp.open_browser = False
 
 # to output both image/svg+xml and application/pdf plot formats in the notebook file
