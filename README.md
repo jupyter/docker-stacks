@@ -59,7 +59,7 @@ Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
 
 Due to the usage of [the flag `--rm`](https://docs.docker.com/engine/reference/run/#clean-up---rm) Docker automatically cleans up the container and removes the file
 system when the container exits, but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
-[The `-it` flag](https://docs.docker.com/engine/reference/commandline/run/#assign-name-and-allocate-pseudo-tty---name--it) allocates pseudo-TTY.
+[The `-it` flag](https://docs.docker.com/engine/reference/commandline/run/#-assign-name-and-allocate-pseudo-tty---name--it) allocates pseudo-TTY.
 
 ## Contributing
 
