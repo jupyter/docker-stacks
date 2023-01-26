@@ -281,11 +281,19 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 
 ### GPU enabled notebooks
 
-| Flavor             | Description                                                                                                                                                                                                                                                                                                                                              |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [GPU-Jupyter][gpu] | Power of your NVIDIA GPU and GPU calculations using Tensorflow and Pytorch in collaborative notebooks. This is done by generating a Dockerfile that consists of the **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it |
-| [PRP-GPU][prp_gpu] | PRP (Pacific Research Platform) maintained [registry][prp_reg] for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.                                                                     |
+| Flavor             | Description                                                                                                                                                                                                                                                                                                                                               |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [GPU-Jupyter][gpu] | Power of your NVIDIA GPU and GPU calculations using Tensorflow and Pytorch in collaborative notebooks. This is done by generating a Dockerfile that consists of the **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it. |
+| [PRP-GPU][prp_gpu] | PRP (Pacific Research Platform) maintained [registry][prp_reg] for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.                                                                      |
+| [b-data][b-data]   | GPU accelerated, multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images for [R][r_cuda], [Python][python_cuda] and [Julia][julia_cuda]. Derived from nvidia/cuda `devel`-flavored images including TensortRT and TensorRT plugin libraries. With [code-server][code-server] next to JupyterLab. Just Python – no [Conda][conda]/[Mamba][mamba].       |
 
 [gpu]: https://github.com/iot-salzburg/gpu-jupyter
 [prp_gpu]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/-/tree/prp
 [prp_reg]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/container_registry
+[b-data]: https://github.com/b-data
+[r_cuda]: https://github.com/b-data/jupyterlab-r-docker-stack/blob/main/CUDA.md
+[python_cuda]: https://github.com/b-data/jupyterlab-python-docker-stack/blob/main/CUDA.md
+[julia_cuda]: https://github.com/b-data/jupyterlab-julia-docker-stack/blob/main/CUDA.md
+[code-server]: https://github.com/coder/code-server
+[conda]: https://github.com/conda/conda
+[mamba]: https://github.com/mamba-org/mamba
