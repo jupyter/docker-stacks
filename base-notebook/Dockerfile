@@ -70,8 +70,9 @@ RUN sed -re "s/c.ServerApp/c.NotebookApp/g" \
 # This healtcheck works well for `lab`, `notebook`, `nbclassic`, `server` and `retro` jupyter commands
 # https://github.com/jupyter/docker-stacks/issues/915#issuecomment-1068528799
 HEALTHCHECK  --interval=5s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget -O- --no-verbose --tries=1 --no-check-certificate \
-    http${GEN_CERT:+s}://localhost:${JUPYTER_PORT}${JUPYTERHUB_SERVICE_PREFIX:-/}api || exit 1
+    CMD cat /home/${NB_USER}/.local/share/jupyter/runtime/*.json | \
+    python -c 'import sys, json; print(json.loads(sys.stdin.read())["url"]+"api");' | \
+    wget -i - -O- --no-verbose --tries=1 --no-check-certificate || exit 1
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
