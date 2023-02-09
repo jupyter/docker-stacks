@@ -113,17 +113,17 @@ An alternative to using the Docker CLI is to use the Podman CLI. Podman is mostl
 
 **Example 4:**
 
-If we use Podman instead of Docker in the situation given in _Example 2_, it would look like this:
+If we use Podman instead of Docker in the situation given in _Example 2_, it will look like this:
 
-The example makes use of rootless Podman, in other words, the Podman command is run from a regular user account.
-In a Bash shell set the shell variables _uid_ and _gid_ to the UID and GID of the user _jovyan_ in the container.
+The example makes use of rootless Podman; in other words, the Podman command is run from a regular user account.
+In a Bash shell, set the shell variables _uid_ and _gid_ to the UID and GID of the user _jovyan_ in the container.
 
 ```bash
 uid=1000
 gid=100
 ```
 
-Set the shell variables _subuidSize_ and _subgidSize_ to the number of subordinate UIDs and GIDs respectively.
+Set the shell variables _subuidSize_ and _subgidSize_ to the number of subordinate UIDs and GIDs, respectively.
 
 ```bash
 subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
@@ -144,7 +144,7 @@ podman run -it --rm -p 10000:8888 \
 
 ```{warning}
 The `podman run` options `--uidmap` and `--gidmap` can be used to map the container user _jovyan_ to the regular user on the host when running rootless Podman.
-The same Podman command should not be run with sudo (i.e. running rootful Podman),
+The same Podman command should not be run with sudo (i.e. running rootful Podman)
 because then the mapping would map the container user _jovyan_ to the root user on the host.
 It's a good security practice to run programs with as few privileges as possible.
 ```
