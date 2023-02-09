@@ -6,7 +6,7 @@ and the documentation below to help you get started defining, building, and shar
 
 Following these steps will:
 
-1. Set up a project on GitHub containing a Dockerfile based on any of the images we provide.
+1. Set up a project on GitHub containing a Dockerfile based on any image we provide.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your repository.
 3. Configure Docker Hub to build and host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.md#community-stacks) in this documentation to include your image.
@@ -16,7 +16,7 @@ Feel free to follow it or pave your own path using alternative services and buil
 
 ## Creating a Project
 
-First, install [cookiecutter](https://github.com/cookiecutter/cookiecutter) using pip or conda:
+First, install [cookiecutter](https://github.com/cookiecutter/cookiecutter) using _pip_ or _conda_:
 
 ```bash
 pip install cookiecutter  # or mamba install cookiecutter
@@ -51,7 +51,7 @@ stack_base_image [jupyter/base-notebook]:
 Enter a longer description of the stack for your README.
 
 ```text
-stack_description [my-jupyter-stack is a community maintained Jupyter Docker Stack image]:
+stack_description [my-jupyter-stack is a community-maintained Jupyter Docker Stack image]:
 ```
 
 Initialize your project as a Git repository and push it to GitHub.
@@ -91,7 +91,7 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
 3. Head back to your repository and click on the **Actions** tab.
    ![GitHub page for jupyter/docker-stacks with the Actions tab active and a rectangle around the "Build Docker Images" workflow in the UI](../_static/github-actions-tab.png)
    From there, you can click on the workflows on the left-hand side of the screen.
-4. In the next screen, you will be able to see information about the workflow run and duration.
+4. In the next screen, you will see information about the workflow run and duration.
    If you click again on the button with the workflow name, you will see the logs for the workflow steps.
    ![GitHub Actions page showing the "Build Docker Images" workflow](../_static/github-actions-workflow.png)
 
@@ -150,6 +150,6 @@ Finally, if you'd like to add a link to your project to this documentation site,
 
 1. Clone the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
 2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section.
-3. Add a table entry with a link to your project, binder link and a short description of what your Docker image contains.
+3. Add a table entry with a link to your project, a binder link and a short description of what your Docker image contains.
 4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)(PR) with your changes.
    Maintainers will respond and work with you to address any formatting or content issues.
