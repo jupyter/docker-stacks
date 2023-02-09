@@ -117,6 +117,6 @@ class AptPackagesManifest(ManifestInterface):
 
 ### Images Hierarchy
 
-All images dependencies on each other and what taggers and manifest they make use of is defined in `images_hierarchy.py`.
+All images' dependencies on each other and what taggers and manifest they make use of are defined in `images_hierarchy.py`.
 
 `get_taggers_and_manifests.py` defines a helper function to get the taggers and manifests for a specific image.
