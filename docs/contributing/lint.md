@@ -8,7 +8,7 @@ To integrate and enforce this process in the project lifecycle, we are using **g
 
 ### Pre-commit hook installation
 
-*pre-commit* is a Python package that needs to be installed.
+_pre-commit_ is a Python package that needs to be installed.
 To achieve this, use the generic task to install all Python development dependencies.
 
 ```sh
@@ -26,7 +26,7 @@ make pre-commit-install
 
 ### Run
 
-Now, *pre-commit* (and so configured hooks) will run automatically on `git commit` on each changed file.
+Now, _pre-commit_ (and so configured hooks) will run automatically on `git commit` on each changed file.
 However, it is also possible to trigger it against all files.
 
 ```{note}
