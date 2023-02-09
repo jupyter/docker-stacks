@@ -49,7 +49,7 @@ Next, create a new Dockerfile like the one shown below.
 ```dockerfile
 # Start from a core stack version
 FROM jupyter/datascience-notebook:85f615d5cafa
-# Install from requirements.txt file
+# Install from the requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --quiet --no-cache-dir --requirement /tmp/requirements.txt && \
     fix-permissions "${CONDA_DIR}" && \
@@ -61,7 +61,7 @@ For conda, the Dockerfile is similar:
 ```dockerfile
 # Start from a core stack version
 FROM jupyter/datascience-notebook:85f615d5cafa
-# Install from requirements.txt file
+# Install from the requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN mamba install --yes --file /tmp/requirements.txt && \
     mamba clean --all -f -y && \
@@ -74,7 +74,7 @@ Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://git
 ## Add a custom conda environment and Jupyter kernel
 
 The default version of Python that ships with the image may not be the version you want.
-The instructions below permit to add a conda environment with a different Python version and make it accessible to Jupyter.
+The instructions below permit adding a conda environment with a different Python version and making it accessible to Jupyter.
 
 ```dockerfile
 # Choose your desired base image
@@ -187,16 +187,16 @@ pip install --quiet --no-cache-dir xgboost && \
 # run "import xgboost" in python
 ```
 
-## Running behind a nginx proxy
+## Running behind an nginx proxy
 
-Sometimes it is helpful to run the Jupyter instance behind a nginx proxy, for example:
+Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for example:
 
 - you would prefer to access the notebook at a server URL with a path
   (`https://example.com/jupyter`) rather than a port (`https://example.com:8888`)
 - you may have many services in addition to Jupyter running on the same server, and want
   nginx to help improve server performance in managing the connections
 
-Here is a [quick example NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
+Here is a [quick example of NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
 Then download the files at that gist and run `docker-compose up -d` to test it out.
 Customize the `nginx.conf` file to set the desired paths and add other services.
@@ -299,12 +299,12 @@ A few suggestions have been made regarding using Docker Stacks with spark.
 
 ### Using PySpark with AWS S3
 
-Using Spark session for hadoop 2.7.3
+Using Spark session for Hadoop 2.7.3
 
 ```python
 import os
 
-# !ls /usr/local/spark/jars/hadoop* # to figure out what version of hadoop
+# !ls /usr/local/spark/jars/hadoop* # to figure out what version of Hadoop
 os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
@@ -324,7 +324,7 @@ spark = (
 df = spark.read.parquet("s3://myBucket/myKey")
 ```
 
-Using Spark context for hadoop 2.6.0
+Using Spark context for Hadoop 2.6.0
 
 ```python
 import os
@@ -404,7 +404,7 @@ RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > 
     apt-get install --yes --no-install-recommends -t jessie-backports openjdk-8-jdk && \
     rm /etc/apt/sources.list.d/jessie-backports.list && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
-# Add hadoop binaries
+# Add Hadoop binaries
     wget https://mirrors.ukfast.co.uk/sites/ftp.apache.org/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz && \
     tar -xvf hadoop-2.7.3.tar.gz -C /usr/local && \
     chown -R "${NB_USER}:users" /usr/local/hadoop-2.7.3 && \
@@ -415,7 +415,7 @@ RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > 
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
 # Remove the example hadoop configs and replace
 # with those for our cluster.
-# Alternatively this could be mounted as a volume
+# Alternatively, this could be mounted as a volume
     rm -f /usr/local/hadoop-2.7.3/etc/hadoop/*
 
 # Download this from ambari / cloudera manager and copy here
@@ -574,7 +574,7 @@ docker run -it --rm \
 The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
 
 ```dockerfile
-# use one of the jupyter docker stacks images
+# use one of the Jupyter Docker Stacks images
 FROM jupyter/scipy-notebook:85f615d5cafa
 
 # install ijavascript
