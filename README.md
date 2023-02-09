@@ -81,14 +81,14 @@ We'd also like to invite members of the community to help with two maintainer ac
   to improve the contribution, deciding if the contribution should take another form (e.g., a recipe
   instead of a permanent change to the images)
 
-Anyone in the community can jump in and help with these activities at any time.
-We will happily grant additional permissions (e.g., ability to merge PRs) to anyone who shows an ongoing interest in working on the project.
+Anyone in the community can jump in and help with these activities anytime.
+We will happily grant additional permissions (e.g., the ability to merge PRs) to anyone who shows an ongoing interest in working on the project.
 
 ## Jupyter Notebook Deprecation Notice
 
 Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), JupyterLab is now the default for all the Jupyter Docker stack images.
 It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
-You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` subcommand) at container startup,
+You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` subcommand) at container startup;
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#alternative-commands).
 
 According to the Jupyter Notebook project status and its compatibility with JupyterLab,
@@ -101,7 +101,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 - [jupyter/repo2docker](https://github.com/jupyterhub/repo2docker) - Turn git repositories into
   Jupyter-enabled Docker Images
 - [openshift/source-to-image](https://github.com/openshift/source-to-image) - A tool for
-  building/building artifacts from source and injecting into docker images
+  building artifacts from source and injecting them into docker images
 - [jupyter-on-openshift/jupyter-notebooks](https://github.com/jupyter-on-openshift/jupyter-notebooks) -
   OpenShift compatible S2I builder for basic notebook images
 
@@ -116,7 +116,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 ## CPU Architectures
 
 - We publish containers for both `x86_64` and `aarch64` platforms, except for `tensorflow-notebook`, which only supports `x86_64` for now
-- Single-platform images have either `aarch64` or `x86_64` tag prefixes, for example `jupyter/base-notebook:aarch64-python-3.10.5`
+- Single-platform images have either `aarch64` or `x86_64` tag prefixes, for example, `jupyter/base-notebook:aarch64-python-3.10.5`
 - Starting from `2022-09-21`, we create multi-platform images
 
 ## Using old images
