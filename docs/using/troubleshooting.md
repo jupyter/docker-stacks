@@ -313,16 +313,16 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
 
 3. **Route container to another local port**
 
+   Instead of mapping Docker port `8888` to local port `8888` , map to another unused local port.
+   You can see an example of mapping to local port `8001`:
+
    ```
    docker run -p 8001:8888 jupyter/datascience-notebook
    ```
 
-   Instead of mapping local port 8888 to Docker port 8888, map to another unused local port (Suggested range: 8001-8009)
+   When the terminal provides the link to access Jupyter: <http://127.0.0.1:8888/lab?token=80d45d241a1ba4c2...>,
+   change the default port value of `8888` to the port value mapped with the `docker run` command.
 
-   When the terminal provides the link to access Jupyter: <http://127.0.0.1:8888/lab?token=80d45d241a1ba4c2>....
-
-   Change the default port value of 8888 to the port value mapped with the Docker run command
-
-   In this example we use 8001, so the edited link would be: <http://127.0.0.1:8001/lab?token=80d45d241a1ba4c2>....
+   In this example we use 8001, so the edited link would be: <http://127.0.0.1:8001/lab?token=80d45d241a1ba4c2...>.
 
    Note: Port mapping for Jupyter has other applications outside of Docker. For example, it can be used to allow multiple Jupyter instances when using SSH to control cloud devices.
