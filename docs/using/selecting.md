@@ -129,7 +129,7 @@ It contains:
   [openpyxl](https://openpyxl.readthedocs.io/en/stable/),
   [pandas](https://pandas.pydata.org/),
   [patsy](https://patsy.readthedocs.io/en/latest/),
-  [protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial),
+  [protobuf](https://protobuf.dev/getting-started/pythontutorial/),
   [pytables](https://www.pytables.org/),
   [scikit-image](https://scikit-image.org),
   [scikit-learn](https://scikit-learn.org/stable/),
