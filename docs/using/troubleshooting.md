@@ -316,7 +316,7 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
    Instead of mapping Docker port `8888` to local port `8888` , map to another unused local port.
    You can see an example of mapping to local port `8001`:
 
-   ```
+   ```bash
    docker run -p 8001:8888 jupyter/datascience-notebook
    ```
 
