@@ -311,17 +311,17 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
 
    ![VSCode Preferences UI - Jupyter: Disable Jupyter Auto Start checkbox unchecked](../_static/using/troubleshooting/vscode-jupyter-settings.png)
 
-3. **Route container to another local port**
+3. **Route container to unused local port**
 
-   Instead of mapping Docker port `8888` to local port `8888` , map to another unused local port.
+   Instead of mapping Docker port `8888` to local port `8888`, map to another unused local port.
    You can see an example of mapping to local port `8001`:
 
    ```bash
-   docker run -p 8001:8888 jupyter/datascience-notebook
+   docker run -it --rm -p 8001:8888 jupyter/datascience-notebook
    ```
 
    When the terminal provides the link to access Jupyter: <http://127.0.0.1:8888/lab?token=80d45d241a1ba4c2...>,
-   change the default port value of `8888` to the port value mapped with the `docker run` command.
+   change the default port value of `8888` in the url to the port value mapped with the `docker run` command.
 
    In this example we use 8001, so the edited link would be: <http://127.0.0.1:8001/lab?token=80d45d241a1ba4c2...>.
 
