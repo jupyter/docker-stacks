@@ -221,7 +221,7 @@ Every Monday and whenever a pull request is merged, images are rebuilt and pushe
 Whenever a docker image is pushed to the container registry, it is tagged with:
 
 - a `latest` tag
-- a 12-character git commit SHA like `85f615d5cafa`
+- a 12-character git commit SHA like `2023-02-13`
 - a date formatted like `2022-08-04`
 - OS version like `ubuntu-22.04`
 - a set of software version tags like `python-3.10.5` and `lab-3.4.4`
