@@ -193,8 +193,8 @@ Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for e
 
 - you would prefer to access the notebook at a server URL with a path
   (`https://example.com/jupyter`) rather than a port (`https://example.com:8888`)
-- you may have many services in addition to Jupyter running on the same server, and want
-  nginx to help improve server performance in managing the connections
+- you may have many services in addition to Jupyter running on the same server
+  and want nginx to help improve server performance in managing the connections
 
 Here is a [quick example of NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
@@ -418,7 +418,7 @@ RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > 
 # Alternatively, this could be mounted as a volume
     rm -f /usr/local/hadoop-2.7.3/etc/hadoop/*
 
-# Download this from ambari / cloudera manager and copy here
+# Download this from ambari/cloudera manager and copy it here
 COPY example-hadoop-conf/ /usr/local/hadoop-2.7.3/etc/hadoop/
 
 # Spark-Submit doesn't work unless I set the following
@@ -558,7 +558,7 @@ RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
     It is not required on Windows and won't work on macOS.
 ```
 
-To enable `pandas.read_clipboard()` functionality, you need to have `xclip` installed
+To enable the `pandas.read_clipboard()` functionality, you need to have `xclip` installed
 (installed in `minimal-notebook` and all the inherited images)
 and add these options when running `docker`: `-e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix`, i.e.:
 

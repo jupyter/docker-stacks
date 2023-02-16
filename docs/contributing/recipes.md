@@ -1,6 +1,6 @@
 # New Recipes
 
-We welcome contributions of [recipes](../using/recipes.md), short examples of using, configuring, or extending the Docker Stacks, for inclusion in the documentation site.
+We welcome contributions of [recipes](../using/recipes.md), short examples of using, configuring, or extending the Docker Stacks for inclusion in the documentation site.
 Follow the process below to add a new recipe:
 
 1. Open the `docs/using/recipes.md` source file.

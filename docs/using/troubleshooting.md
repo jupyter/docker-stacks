@@ -57,7 +57,7 @@ The following sections cover a few of these scenarios and how to fix them.
    - `CHOWN_EXTRA_OPTS="-R"`: will recursively change the ownership and group of the directory specified in `CHOWN_EXTRA`.
    - `--user root`: you **must** run the container with the root user to change ownership at runtime.
 
-   now accessing the mount should work as expected:
+   Now accessing the mount should work as expected:
 
    ```bash
    # assuming we mounted the volume in /home/jovyan/stagingarea
@@ -130,7 +130,8 @@ If you have also **created a new user**, you might be experiencing any of the fo
 
 1. **Ensure the new user has ownership of `/home` and volume mounts**
 
-   For example, say you want to create a user `callisto` with a `GID` and `UID` of `1234`, you will have to add the following flags to the docker run command:
+   For example, say you want to create a user `callisto` with a `GID` and `UID` of `1234`.
+   You will have to add the following flags to the docker run command:
 
    ```bash
     docker run -it --rm \
@@ -323,6 +324,6 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
    When the terminal provides the link to access Jupyter: <http://127.0.0.1:8888/lab?token=80d45d241a1ba4c2...>,
    change the default port value of `8888` in the url to the port value mapped with the `docker run` command.
 
-   In this example we use 8001, so the edited link would be: <http://127.0.0.1:8001/lab?token=80d45d241a1ba4c2...>.
+   In this example, we use 8001, so the edited link would be: <http://127.0.0.1:8001/lab?token=80d45d241a1ba4c2...>.
 
    Note: Port mapping for Jupyter has other applications outside of Docker. For example, it can be used to allow multiple Jupyter instances when using SSH to control cloud devices.

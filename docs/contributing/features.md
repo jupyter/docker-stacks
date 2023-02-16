@@ -23,7 +23,7 @@ Roughly speaking, we evaluate new features based on the following criteria:
   with Jupyter Notebook, JupyterLab, JupyterHub, etc.?
 - **Fit with the image purpose**: Does the feature match the theme of the stack in which it will be
   added? Would it fit better in a new community stack?
-- **Complexity of build / runtime configuration**: How many lines of code does the feature require
+- **Complexity of build/runtime configuration**: How many lines of code does the feature require
   in one of the Dockerfiles or startup scripts? Does it require new scripts entirely? Do users need
   to adjust how they use the images?
 - **Impact on image metrics**: How many bytes does the feature and its dependencies add to the
