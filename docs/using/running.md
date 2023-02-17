@@ -15,12 +15,12 @@ The following are some common patterns.
 
 **Example 1:**
 
-This command pulls the `jupyter/scipy-notebook` image tagged `85f615d5cafa` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `2023-02-13` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888.
 The server logs appear in the terminal and include a URL to the notebook server.
 
 ```bash
-docker run -it -p 8888:8888 jupyter/scipy-notebook:85f615d5cafa
+docker run -it -p 8888:8888 jupyter/scipy-notebook:2023-02-13
 
 # Entered start.sh with args: jupyter lab
 
@@ -39,7 +39,7 @@ Pressing `Ctrl-C` twice shuts down the notebook server but leaves the container 
 # list containers
 docker ps -a
 # CONTAINER ID   IMAGE                                                 COMMAND                  CREATED          STATUS                     PORTS     NAMES
-# 221331c047c4   jupyter/scipy-notebook:85f615d5cafa                   "tini -g -- start-no…"   11 seconds ago   Exited (0) 8 seconds ago             cranky_benz
+# 221331c047c4   jupyter/scipy-notebook:2023-02-13                   "tini -g -- start-no…"   11 seconds ago   Exited (0) 8 seconds ago             cranky_benz
 
 # start the stopped container
 docker start -a 221331c047c4
@@ -53,12 +53,12 @@ docker rm 221331c047c4
 
 **Example 2:**
 
-This command pulls the `jupyter/r-notebook` image tagged `85f615d5cafa` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/r-notebook` image tagged `2023-02-13` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Notebook server and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:85f615d5cafa
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:2023-02-13
 ```
 
 Pressing `Ctrl-C` twice shuts down the notebook server and immediately destroys the Docker container.
@@ -113,24 +113,24 @@ An alternative to using the Docker CLI is to use the Podman CLI. Podman is mostl
 
 **Example 4:**
 
-If we use Podman instead of Docker in the situation given in _Example 2_, it would look like this:
+If we use Podman instead of Docker in the situation given in _Example 2_, it will look like this:
 
-The example makes use of rootless Podman, in other words, the Podman command is run from a regular user account.
-In a Bash shell set the shell variables _uid_ and _gid_ to the UID and GID of the user _jovyan_ in the container.
+The example makes use of rootless Podman; in other words, the Podman command is run from a regular user account.
+In a Bash shell, set the shell variables _uid_ and _gid_ to the UID and GID of the user _jovyan_ in the container.
 
 ```bash
 uid=1000
 gid=100
 ```
 
-Set the shell variables _subuidSize_ and _subgidSize_ to the number of subordinate UIDs and GIDs respectively.
+Set the shell variables _subuidSize_ and _subgidSize_ to the number of subordinate UIDs and GIDs, respectively.
 
 ```bash
 subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
 subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
 ```
 
-This command pulls the `docker.io/jupyter/r-notebook` image tagged `85f615d5cafa` from Docker Hub if it is not already present on the local host.
+This command pulls the `docker.io/jupyter/r-notebook` image tagged `2023-02-13` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Server and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the correct host port (10000).
 
@@ -139,12 +139,12 @@ podman run -it --rm -p 10000:8888 \
     -v "${PWD}":/home/jovyan/work --user $uid:$gid \
     --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
     --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
-    docker.io/jupyter/r-notebook:85f615d5cafa
+    docker.io/jupyter/r-notebook:2023-02-13
 ```
 
 ```{warning}
 The `podman run` options `--uidmap` and `--gidmap` can be used to map the container user _jovyan_ to the regular user on the host when running rootless Podman.
-The same Podman command should not be run with sudo (i.e. running rootful Podman),
+The same Podman command should not be run with sudo (i.e. running rootful Podman)
 because then the mapping would map the container user _jovyan_ to the root user on the host.
 It's a good security practice to run programs with as few privileges as possible.
 ```

@@ -15,10 +15,10 @@ USER root
 # Spark dependencies
 # Default values can be overridden at build time
 # (ARGS are in lower case to distinguish them from ENV)
-ARG spark_version="3.3.1"
+ARG spark_version="3.3.2"
 ARG hadoop_version="3"
 ARG scala_version
-ARG spark_checksum="769db39a560a95fd88b58ed3e9e7d1e92fb68ee406689fb4d30c033cb5911e05c1942dcc70e5ec4585df84e80aabbc272b9386a208debda89522efff1335c8ff"
+ARG spark_checksum="4cd2396069fbe0f8efde2af4fd301bf46f8c6317e9dea1dd42a405de6a38380635d49b17972cb92c619431acece2c3af4c23bfdf193cedb3ea913ed69ded23a1"
 ARG openjdk_version="17"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
@@ -33,10 +33,12 @@ RUN apt-get update --yes && \
 # Spark installation
 WORKDIR /tmp
 
+# You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
+# But it seems to be slower, that's why we use recommended site for download
 RUN if [ -z "${scala_version}" ]; then \
-    wget -qO "spark.tgz" "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz"; \
+    wget -qO "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz"; \
   else \
-    wget -qO "spark.tgz" "https://archive.apache.org/dist/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"; \
+    wget -qO "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"; \
   fi && \
   echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
   tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \

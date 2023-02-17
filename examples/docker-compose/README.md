@@ -42,7 +42,7 @@ You can customize the docker-stack notebook image to deploy by modifying the `no
 For example, you can build and deploy a `jupyter/all-spark-notebook` by modifying the Dockerfile like so:
 
 ```dockerfile
-FROM jupyter/all-spark-notebook:85f615d5cafa
+FROM jupyter/all-spark-notebook:2023-02-13
 # Your RUN commands and so on
 ```
 
