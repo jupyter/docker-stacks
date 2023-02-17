@@ -34,7 +34,7 @@ It contains:
   - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
 - Unprivileged user `jovyan` (`uid=1000`, configurable, [see options in the common features section](./common.md) of this documentation) in group `users` (`gid=100`)
   with ownership over the `/home/jovyan` and `/opt/conda` paths
-- `tini` as the container entrypoint
+- `tini` as the container entry point
 - A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 - Options for a passwordless sudo
 - No preinstalled scientific computing packages
@@ -51,7 +51,7 @@ and serves as the basis for all other stacks besides `jupyter/docker-stacks-foun
 It contains:
 
 - Everything in `jupyter/docker-stacks-foundation`
-- Minimally-functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
+- Minimally functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - A `start-notebook.sh` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub
@@ -101,7 +101,7 @@ It contains:
   [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
   [shiny](https://shiny.rstudio.com/),
   [tidymodels](https://www.tidymodels.org/),
-  [unixodbc](http://www.unixodbc.org)
+  [unixodbc](https://www.unixodbc.org)
   packages from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
 
 ### jupyter/scipy-notebook
@@ -129,7 +129,7 @@ It contains:
   [openpyxl](https://openpyxl.readthedocs.io/en/stable/),
   [pandas](https://pandas.pydata.org/),
   [patsy](https://patsy.readthedocs.io/en/latest/),
-  [protobuf](https://developers.google.com/protocol-buffers/docs/pythontutorial),
+  [protobuf](https://protobuf.dev/getting-started/pythontutorial/),
   [pytables](https://www.pytables.org/),
   [scikit-image](https://scikit-image.org),
   [scikit-learn](https://scikit-learn.org/stable/),
@@ -167,7 +167,7 @@ It contains:
 `jupyter/datascience-notebook` includes libraries for data analysis from the Julia, Python, and R
 communities.
 
-- Everything in the `jupyter/scipy-notebook` and `jupyter/r-notebook` images, and their ancestor
+- Everything in the `jupyter/scipy-notebook` and `jupyter/r-notebook` images and their ancestor
   images
 - [rpy2](https://rpy2.github.io/doc/latest/html/index.html) package
 - The [Julia](https://julialang.org/) compiler and base environment
@@ -221,14 +221,14 @@ Every Monday and whenever a pull request is merged, images are rebuilt and pushe
 Whenever a docker image is pushed to the container registry, it is tagged with:
 
 - a `latest` tag
-- a 12-character git commit SHA like `85f615d5cafa`
-- a date formatted like `2022-08-04`
+- a 12-character git commit SHA like `1ffe43816ba9`
+- a date formatted like `2023-01-30`
 - OS version like `ubuntu-22.04`
-- a set of software version tags like `python-3.10.5` and `lab-3.4.4`
+- a set of software version tags like `python-3.10.8` and `lab-3.5.3`
 
 ```{warning}
 - Tags before `2022-07-05` were sometimes incorrect. Please, do not rely on them.
-- Single-platform images have either `aarch64` or `x86_64` tag prefixes, for example `jupyter/base-notebook:aarch64-python-3.10.5`
+- Single-platform images have either `aarch64` or `x86_64` tag prefixes, for example, `jupyter/base-notebook:aarch64-python-3.10.5`
 ```
 
 For stability and reproducibility, you should either reference a date formatted
@@ -279,13 +279,21 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [scraper]: https://github.com/rgriffogoes/scraper-notebook
 [scraper_b]: https://mybinder.org/v2/gh/rgriffogoes/scraper-notebook/main
 
-### GPU enabled notebooks
+### GPU accelerated notebooks
 
-| Flavor             | Description                                                                                                                                                                                                                                                                                                                                              |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [GPU-Jupyter][gpu] | Power of your NVIDIA GPU and GPU calculations using Tensorflow and Pytorch in collaborative notebooks. This is done by generating a Dockerfile that consists of the **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as submodule and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it |
-| [PRP-GPU][prp_gpu] | PRP (Pacific Research Platform) maintained [registry][prp_reg] for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.                                                                     |
+| Flavor             | Description                                                                                                                                                                                                                                                                                                                                                 |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [GPU-Jupyter][gpu] | Power of your NVIDIA GPU and GPU calculations using Tensorflow and Pytorch in collaborative notebooks. This is done by generating a Dockerfile that consists of the **nvidia/cuda** base image, the well-maintained **docker-stacks** that is integrated as a submodule and GPU-able libraries like **Tensorflow**, **Keras** and **PyTorch** on top of it. |
+| [PRP-GPU][prp_gpu] | PRP (Pacific Research Platform) maintained [registry][prp_reg] for jupyter stack based on NVIDIA CUDA-enabled image. Added the PRP image with Pytorch and some other python packages and GUI Desktop notebook based on <https://github.com/jupyterhub/jupyter-remote-desktop-proxy>.                                                                        |
+| [b-data][b-data]   | GPU accelerated, multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images for [R][r_cuda], [Python][python_cuda] and [Julia][julia_cuda]. Derived from nvidia/cuda `devel`-flavored images, including TensortRT and TensorRT plugin libraries. With [code-server][code-server] next to JupyterLab. Just Python – no [Conda][conda]/[Mamba][mamba].        |
 
 [gpu]: https://github.com/iot-salzburg/gpu-jupyter
 [prp_gpu]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/-/tree/prp
 [prp_reg]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/container_registry
+[b-data]: https://github.com/b-data
+[r_cuda]: https://github.com/b-data/jupyterlab-r-docker-stack/blob/main/CUDA.md
+[python_cuda]: https://github.com/b-data/jupyterlab-python-docker-stack/blob/main/CUDA.md
+[julia_cuda]: https://github.com/b-data/jupyterlab-julia-docker-stack/blob/main/CUDA.md
+[code-server]: https://github.com/coder/code-server
+[conda]: https://github.com/conda/conda
+[mamba]: https://github.com/mamba-org/mamba

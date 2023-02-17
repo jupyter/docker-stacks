@@ -7,7 +7,7 @@ We greatly appreciate pull requests that extend the automated tests that vet the
 A [GitHub Action workflow](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker.yml)
 runs tests against pull requests submitted to the `jupyter/docker-stacks` repository.
 
-We use `pytest` module to run tests on the image.
+We use the `pytest` module to run tests on the image.
 `conftest.py` and `pytest.ini` in the `tests` folder define the environment in which tests are run.
 More info on `pytest` can be found [here](https://docs.pytest.org/en/latest/contents.html).
 
@@ -22,10 +22,10 @@ defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/main/
 
 ## Unit tests
 
-If you want to run a python script in one of our images, you could add a unit test.
-You can do this by creating a `tests/<somestack>/units/` directory, if it doesn't already exist and put your file there.
+You can add a unit test if you want to run a python script in one of our images.
+You should create a `tests/<somestack>/units/` directory, if it doesn't already exist and put your file there.
 Files in this folder will be executed in the container when tests are run.
-You could see an [example for the TensorFlow package here](https://github.com/jupyter/docker-stacks/blob/HEAD/tests/tensorflow-notebook/units/unit_tensorflow.py).
+You can see an [example for the TensorFlow package here](https://github.com/jupyter/docker-stacks/blob/HEAD/tests/tensorflow-notebook/units/unit_tensorflow.py).
 
 ## Contributing New Tests
 

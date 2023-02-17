@@ -6,7 +6,7 @@ and the documentation below to help you get started defining, building, and shar
 
 Following these steps will:
 
-1. Set up a project on GitHub containing a Dockerfile based on any of the images we provide.
+1. Set up a project on GitHub containing a Dockerfile based on any image we provide.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your repository.
 3. Configure Docker Hub to build and host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.md#community-stacks) in this documentation to include your image.
@@ -16,7 +16,7 @@ Feel free to follow it or pave your own path using alternative services and buil
 
 ## Creating a Project
 
-First, install [cookiecutter](https://github.com/cookiecutter/cookiecutter) using pip or conda:
+First, install [cookiecutter](https://github.com/cookiecutter/cookiecutter) using _pip_ or _conda_:
 
 ```bash
 pip install cookiecutter  # or mamba install cookiecutter
@@ -51,7 +51,7 @@ stack_base_image [jupyter/base-notebook]:
 Enter a longer description of the stack for your README.
 
 ```text
-stack_description [my-jupyter-stack is a community maintained Jupyter Docker Stack image]:
+stack_description [my-jupyter-stack is a community-maintained Jupyter Docker Stack image]:
 ```
 
 Initialize your project as a Git repository and push it to GitHub.
@@ -87,17 +87,17 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
    This will trigger the CI pipeline whenever you push to your `main` branch and when any Pull Requests are made to your repository.
    For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
-2. Commit your changes and push to GitHub.
+2. Commit your changes and push them to GitHub.
 3. Head back to your repository and click on the **Actions** tab.
    ![GitHub page for jupyter/docker-stacks with the Actions tab active and a rectangle around the "Build Docker Images" workflow in the UI](../_static/github-actions-tab.png)
    From there, you can click on the workflows on the left-hand side of the screen.
-4. In the next screen, you will be able to see information about the workflow run and duration.
-   If you click again on the button with the workflow name, you will see the logs for the workflow steps.
+4. In the next screen, you will see information about the workflow run and duration.
+   If you click the button with the workflow name again, you will see the logs for the workflow steps.
    ![GitHub Actions page showing the "Build Docker Images" workflow](../_static/github-actions-workflow.png)
 
 ## Configuring Docker Hub
 
-Now, configure Docker Hub to build your stack image and push it to Docker Hub repository whenever
+Now, configure Docker Hub to build your stack image and push it to the Docker Hub repository whenever
 you merge a GitHub pull request to the main branch of your project.
 
 1. Visit [https://hub.docker.com/](https://hub.docker.com/) and log in.
@@ -124,7 +124,7 @@ you merge a GitHub pull request to the main branch of your project.
     ```
 
 13. Head back to your GitHub repository and click on the **Settings tab**.
-    ![GitHub page with the the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/github-create-secrets.png)
+    ![GitHub page with the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/github-create-secrets.png)
 14. Click on the **Secrets** section and then on the **New repository secret** button in the top right corner (see image above).
 15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the **value** field.
     ![GitHub - Actions/New secret page with the Name field set to "DOCKERHUB_TOKEN"](../_static/github-secret-token.png)
@@ -137,12 +137,12 @@ you merge a GitHub pull request to the main branch of your project.
 Make edits to the Dockerfile in your project to add third-party libraries and configure Jupyter
 applications.
 Refer to the Dockerfiles for the core stacks (e.g., [jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/blob/main/datascience-notebook/Dockerfile))
-to get a feel for what's possible and best practices.
+to get a feel for what's possible and the best practices.
 
 [Submit pull requests](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)
 to your project repository on GitHub.
-Ensure your image builds correctly on GitHub actions before merging to main branch.
-Refer to Docker Hub to build your main branch that you can `docker pull`.
+Ensure your image builds correctly on GitHub actions before merging to the main branch.
+Refer to Docker Hub to build the main branch that you can `docker pull`.
 
 ## Sharing Your Image
 
@@ -150,6 +150,6 @@ Finally, if you'd like to add a link to your project to this documentation site,
 
 1. Clone the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
 2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section.
-3. Add a table entry with a link to your project, binder link and a short description of what your Docker image contains.
+3. Add a table entry with a link to your project, a binder link and a short description of what your Docker image contains.
 4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)(PR) with your changes.
    Maintainers will respond and work with you to address any formatting or content issues.

@@ -3,12 +3,12 @@
 The main purpose of the source code in this folder is to properly tag all the images and to update [build manifests](https://github.com/jupyter/docker-stacks/wiki).
 These two processes are closely related, so the source code is widely reused.
 
-Basic example of a tag is a `python` version tag.
+A basic example of a tag is a `python` version tag.
 For example, an image `jupyter/base-notebook` with `python 3.10.5` will have a tag `jupyter/base-notebook:python-3.10.5`.
 This tag (and all the other tags) are pushed to Docker Hub.
 
 Manifest is a description of some important part of the image in a `markdown`.
-For example, we dump all the `conda` packages including their versions.
+For example, we dump all the `conda` packages, including their versions.
 
 ## Main principles
 
@@ -20,7 +20,7 @@ For example, we dump all the `conda` packages including their versions.
 
 ## Source code description
 
-In this section we will briefly describe source code in this folder and give examples on how to use it.
+In this section, we will briefly describe the source code in this folder and give examples of how to use it.
 
 ### DockerRunner
 
@@ -35,7 +35,7 @@ with DockerRunner("ubuntu:22.04") as container:
 
 ### GitHelper
 
-`GitHelper` methods are run in the current `git` repo and give the information about last commit hash and commit message:
+`GitHelper` methods are run in the current `git` repo and give the information about the last commit hash and commit message:
 
 ```python
 from tagging.git_helper import GitHelper
@@ -44,11 +44,11 @@ print("Git hash:", GitHelper.commit_hash())
 print("Git message:", GitHelper.commit_message())
 ```
 
-Prefix of commit hash (namely, 12 letters) is used as an image tag to make it easy to inherit from a fixed version of a docker image.
+The prefix of commit hash (namely, 12 letters) is used as an image tag to make it easy to inherit from a fixed version of a docker image.
 
 ### Tagger
 
-`Tagger` is a class, which can be run inside docker container to calculate some tag for an image.
+`Tagger` is a class which can be run inside a docker container to calculate some tag for an image.
 
 All the taggers are inherited from `TaggerInterface`:
 
@@ -61,7 +61,7 @@ class TaggerInterface:
         raise NotImplementedError
 ```
 
-So, `tag_value(container)` method gets a docker container as an input and returns some tag.
+So, the `tag_value(container)` method gets a docker container as an input and returns a tag.
 
 `SHATagger` example:
 
@@ -95,7 +95,7 @@ class ManifestInterface:
         raise NotImplementedError
 ```
 
-- `markdown_piece(container)` method returns piece of markdown file to be used as a part of build manifest.
+- `markdown_piece(container)` method returns a piece of markdown file to be used as a part of the build manifest.
 
 `AptPackagesManifest` example:
 
@@ -111,12 +111,12 @@ class AptPackagesManifest(ManifestInterface):
         )
 ```
 
-- `quoted_output` simply runs the command inside container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece of file.
+- `quoted_output` simply runs the command inside a container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece.
 - `manifests.py` contains all the manifests.
 - `write_manifest.py` is a python executable which is used to create the build manifest and history line for an image.
 
 ### Images Hierarchy
 
-All images dependencies on each other and what taggers and manifest they make use of is defined in `images_hierarchy.py`.
+All images' dependencies on each other and what taggers and manifest they make use of are defined in `images_hierarchy.py`.
 
 `get_taggers_and_manifests.py` defines a helper function to get the taggers and manifests for a specific image.
