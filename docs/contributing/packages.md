@@ -12,8 +12,8 @@ We pin major.minor version of python, so this will stay the same even after invo
 ## Outdated packages
 
 To help to identify packages that can be updated, you can use the following helper tool.
-It will list all the packages installed in the `Dockerfile` that can be updated -- dependencies are
-filtered to focus only on requested packages.
+It will list all the updateable packages installed in the `Dockerfile` --
+dependencies are filtered to focus only on requested packages.
 
 ```bash
 make check-outdated/base-notebook

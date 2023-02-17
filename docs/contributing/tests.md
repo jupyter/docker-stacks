@@ -7,7 +7,7 @@ We greatly appreciate pull requests that extend the automated tests that vet the
 A [GitHub Action workflow](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker.yml)
 runs tests against pull requests submitted to the `jupyter/docker-stacks` repository.
 
-We use `pytest` module to run tests on the image.
+We use the `pytest` module to run tests on the image.
 `conftest.py` and `pytest.ini` in the `tests` folder define the environment in which tests are run.
 More info on `pytest` can be found [here](https://docs.pytest.org/en/latest/contents.html).
 

@@ -164,7 +164,7 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
    When using `--net=host`, you must also use the flags `--pid=host -e TINI_SUBREAPER=true`. See <https://github.com/jupyter/docker-stacks/issues/64> for details._
    ```
 
-**Note**: In the following examples, we are using the Spark master URL `spark://master:7077` that shall be replaced by the URL of the Spark master.
+**Note**: In the following examples, we are using the Spark master URL `spark://master:7077` which shall be replaced by the URL of the Spark master.
 
 ##### Standalone Mode in Python
 
@@ -246,7 +246,7 @@ spark = (
 ```
 
 Dependencies can also be defined in the `spark-defaults.conf`.
-However, it has to be done by `root` so it should only be considered to build custom images.
+However, it has to be done by `root`, so it should only be considered to build custom images.
 
 ```dockerfile
 USER root

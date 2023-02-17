@@ -29,7 +29,7 @@ Create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:85f615d5cafa
+FROM jupyter/datascience-notebook:2023-02-13
 # Install in the default python3 environment
 RUN pip install --quiet --no-cache-dir 'flake8==3.9.2' && \
     fix-permissions "${CONDA_DIR}" && \
@@ -48,7 +48,7 @@ Next, create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:85f615d5cafa
+FROM jupyter/datascience-notebook:2023-02-13
 # Install from the requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --quiet --no-cache-dir --requirement /tmp/requirements.txt && \
@@ -60,7 +60,7 @@ For conda, the Dockerfile is similar:
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:85f615d5cafa
+FROM jupyter/datascience-notebook:2023-02-13
 # Install from the requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN mamba install --yes --file /tmp/requirements.txt && \
@@ -193,8 +193,8 @@ Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for e
 
 - you would prefer to access the notebook at a server URL with a path
   (`https://example.com/jupyter`) rather than a port (`https://example.com:8888`)
-- you may have many services in addition to Jupyter running on the same server, and want
-  nginx to help improve server performance in managing the connections
+- you may have many services in addition to Jupyter running on the same server
+  and want nginx to help improve server performance in managing the connections
 
 Here is a [quick example of NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
@@ -283,7 +283,7 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:85f615d5cafa
+FROM jupyter/base-notebook:2023-02-13
 RUN pip install --quiet --no-cache-dir jupyterhub==1.4.1 && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -418,7 +418,7 @@ RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > 
 # Alternatively, this could be mounted as a volume
     rm -f /usr/local/hadoop-2.7.3/etc/hadoop/*
 
-# Download this from ambari / cloudera manager and copy here
+# Download this from ambari/cloudera manager and copy it here
 COPY example-hadoop-conf/ /usr/local/hadoop-2.7.3/etc/hadoop/
 
 # Spark-Submit doesn't work unless I set the following
@@ -474,7 +474,7 @@ For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:85f615d5cafa \
+    jupyter/base-notebook:2023-02-13 \
     start.sh jupyter lab --LabApp.token=''
 ```
 
@@ -482,7 +482,7 @@ For jupyter classic:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:85f615d5cafa \
+    jupyter/base-notebook:2023-02-13 \
     start.sh jupyter notebook --NotebookApp.token=''
 ```
 
@@ -558,7 +558,7 @@ RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
     It is not required on Windows and won't work on macOS.
 ```
 
-To enable `pandas.read_clipboard()` functionality, you need to have `xclip` installed
+To enable the `pandas.read_clipboard()` functionality, you need to have `xclip` installed
 (installed in `minimal-notebook` and all the inherited images)
 and add these options when running `docker`: `-e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix`, i.e.:
 
@@ -575,7 +575,7 @@ The example below is a Dockerfile to install the [ijavascript kernel](https://gi
 
 ```dockerfile
 # use one of the Jupyter Docker Stacks images
-FROM jupyter/scipy-notebook:85f615d5cafa
+FROM jupyter/scipy-notebook:2023-02-13
 
 # install ijavascript
 RUN npm install -g ijavascript

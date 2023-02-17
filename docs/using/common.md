@@ -12,7 +12,7 @@ You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/l
 
 1. For example, to secure the Notebook server with a [custom password](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#preparing-a-hashed-password)
    hashed using `jupyter_server.auth.security.passwd()` instead of the default token,
-   you can run the following (this hash was generated for `my-password` password):
+   you can run the following (this hash was generated for the `my-password` password):
 
    ```bash
    docker run -it --rm -p 8888:8888 jupyter/base-notebook \
