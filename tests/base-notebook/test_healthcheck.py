@@ -58,13 +58,14 @@ def test_health(
     )
 
     # sleeping some time to let the server start
-    timeSpent = 0
-    waitTime = 0.1
-    timeLimit = 15
-    while timeSpent < timeLimit:
-        time.sleep(waitTime)
-        timeSpent += waitTime
+    time_spent = 0
+    wait_time = 0.1
+    time_limit = 15
+    while time_spent < time_limit:
+        time.sleep(wait_time)
+        time_spent += wait_time
         if get_health(running_container) == "healthy":
-            break
+            return
+    raise RuntimeError("container is still unhealthy")
 
     assert get_health(running_container) == "healthy"
