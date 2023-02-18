@@ -66,6 +66,5 @@ def test_health(
         time_spent += wait_time
         if get_health(running_container) == "healthy":
             return
-    raise RuntimeError("container is still unhealthy")
 
     assert get_health(running_container) == "healthy"
