@@ -58,7 +58,7 @@ def test_health(
     )
 
     # sleeping some time to let the server start
-    time_spent = 0
+    time_spent = 0.0
     wait_time = 0.1
     time_limit = 15
     while time_spent < time_limit:
