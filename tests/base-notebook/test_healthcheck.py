@@ -51,6 +51,15 @@ def test_health(
         environment=env,
         command=cmd,
     )
+
     # sleeping some time to let the server start
-    time.sleep(15)
+    timeSpent = 0
+    waitTime = 0.1
+    timeLimit = 15
+    while timeSpent < timeLimit:
+        time.sleep(waitTime)
+        timeSpent += waitTime
+        if get_health(running_container) == "healthy":
+            break
+
     assert get_health(running_container) == "healthy"
