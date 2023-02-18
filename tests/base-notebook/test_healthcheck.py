@@ -31,8 +31,13 @@ LOGGER = logging.getLogger(__name__)
             ["start-notebook.sh", "--NotebookApp.base_url=/test"],
         ),
         (["NB_USER=testuser", "CHOWN_HOME=1"], None),
+        (["NB_USER='test user'", "CHOWN_HOME=1"], None),
         (
             ["NB_USER=testuser", "CHOWN_HOME=1"],
+            ["start-notebook.sh", "--NotebookApp.base_url=/test"],
+        ),
+        (
+            ["NB_USER='test user'", "CHOWN_HOME=1"],
             ["start-notebook.sh", "--NotebookApp.base_url=/test"],
         ),
         (
