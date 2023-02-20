@@ -44,6 +44,9 @@ html_theme_options = {
     "use_issues_button": True,
     "use_repository_button": True,
     "use_download_button": True,
+    "logo": {
+        "text": html_title,
+    },
 }
 
 extensions = ["myst_parser", "sphinx_copybutton"]
