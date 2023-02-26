@@ -56,7 +56,7 @@ CMD ["start-notebook.sh"]
 # Copy local files as late as possible to avoid cache busting
 COPY start-notebook.sh start-singleuser.sh /usr/local/bin/
 # Currently need to have both jupyter_notebook_config and jupyter_server_config to support classic and lab
-COPY jupyter_server_config.py /etc/jupyter/
+COPY jupyter_server_config.py docker_healthcheck.py /etc/jupyter/
 
 # Fix permissions on /etc/jupyter as root
 USER root
@@ -70,10 +70,7 @@ RUN sed -re "s/c.ServerApp/c.NotebookApp/g" \
 # This healtcheck works well for `lab`, `notebook`, `nbclassic`, `server` and `retro` jupyter commands
 # https://github.com/jupyter/docker-stacks/issues/915#issuecomment-1068528799
 HEALTHCHECK  --interval=5s --timeout=3s --start-period=5s --retries=3 \
-    CMD bash -c 'set -o pipefail; \
-    (cat /home/"${NB_USER}"/.local/share/jupyter/runtime/*.json | \
-    python -c '\''import sys, json; print(json.loads(sys.stdin.read())["url"]+"api");'\'' | \
-    wget -i - -O- --no-verbose --tries=1 --no-check-certificate) || exit 1'
+    CMD python /etc/jupyter/docker_healthcheck.py || exit 1
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
