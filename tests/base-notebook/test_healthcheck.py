@@ -16,7 +16,7 @@ LOGGER = logging.getLogger(__name__)
     "env,cmd,user",
     [
         (None, None, None),
-        (["DOCKER_SfACKS_JUPYTER_CMD=lab"], None, None),
+        (["DOCKER_STACKS_JUPYTER_CMD=lab"], None, None),
         (["DOCKER_STACKS_JUPYTER_CMD=notebook"], None, None),
         (["DOCKER_STACKS_JUPYTER_CMD=server"], None, None),
         (["DOCKER_STACKS_JUPYTER_CMD=nbclassic"], None, None),
