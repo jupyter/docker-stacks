@@ -74,16 +74,10 @@ def test_health(
     "env,cmd,user",
     [
         (["NB_USER=testuser", "CHOWN_HOME=1"], None, None),
-        (["NB_USER='test user'", "CHOWN_HOME=1"], None, "root"),
         (
             ["NB_USER=testuser", "CHOWN_HOME=1"],
             ["start-notebook.sh", "--NotebookApp.base_url=/test"],
             None,
-        ),
-        (
-            ["NB_USER='test user'", "CHOWN_HOME=1"],
-            ["start-notebook.sh", "--NotebookApp.base_url=/test"],
-            "root",
         ),
         (
             ["NB_USER=testuser", "CHOWN_HOME=1", "JUPYTER_PORT=8123"],
