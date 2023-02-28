@@ -22,15 +22,9 @@ You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/l
 2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the notebook server, you can run the following:
 
    ```bash
-   docker run  -it --rm -p 8888:8888 --no-healthcheck jupyter/base-notebook \
+   docker run  -it --rm -p 8888:8888 jupyter/base-notebook \
        start-notebook.sh --NotebookApp.base_url=/customized/url/prefix/
    ```
-
-   Note: We pass the `--no-healthcheck` parameter when setting a custom `base_url` for the Jupyter server
-   because our current implementation for doing healthcheck assumes the `base_url` to be `/` (the default).
-   Without using this parameter, the container may run, but its state will be "unhealthy".
-   Alternatively, you can [use your own command for healthcheck](https://docs.docker.com/engine/reference/run/#healthcheck)
-   using the `--health-cmd` parameter.
 
 ## Docker Options
 
