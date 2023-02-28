@@ -1,16 +1,19 @@
+#!/usr/bin/env python3
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
 import json
 import os
+from pathlib import Path
 
 import requests
 
 # A number of operations below delibrately don't check for possible errors
 # As this is a healthcheck, it should succeed or raise an exception on error
 
-runtime_dir = "/home/" + os.environ["NB_USER"] + "/.local/share/jupyter/runtime/"
-file_list = os.listdir(runtime_dir)
-json_file = [s for s in file_list if s.endswith(".json")]
+runtime_dir = Path("/home/") / os.environ["NB_USER"] / ".local/share/jupyter/runtime/"
+json_file = next(runtime_dir.glob("*.json"))
 
-url = json.load(open(runtime_dir + json_file[0]))["url"]
+url = json.loads(json_file.read_bytes())["url"]
 url = url + "api"
 
 r = requests.get(url, verify=False)  # request without SSL verification
