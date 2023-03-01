@@ -3,5 +3,5 @@
 docutils>=0.17.1
 myst-parser>=0.18.0
 sphinx>=4.5.0
-sphinx-book-theme>=0.3.3
+sphinx-book-theme==1.0.0
 sphinx-copybutton>=0.5.0
