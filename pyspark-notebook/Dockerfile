@@ -18,7 +18,7 @@ USER root
 ARG spark_version="3.4.0"
 ARG hadoop_version="3"
 ARG scala_version
-ARG spark_checksum="2913f126cc3dfc091ec134c10f2fb5737a7d2409a823a60bd3592c4535f8de82ada3cca970aad8faf8414112a142206a67fe7324e68df7792e88ac8f221da326"
+ARG spark_checksum="7f8c4c2371f14dec9f7e9ead606adcbbfaa05772ef575dfac1c8437f5459ca8f344cef47f999076b631003986f00f27ac3513b34265f43a46f8f66fbce0e14ca"
 ARG openjdk_version="17"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
@@ -36,7 +36,7 @@ WORKDIR /tmp
 # You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
 # But it seems to be slower, that's why we use recommended site for download
 RUN if [ -z "${scala_version}" ]; then \
-    wget -qO "spark.tgz" https://dist.apache.org/repos/dist/dev/spark/v3.4.0-rc1-bin/spark-3.4.0-bin-hadoop3.tgz; \
+    wget -qO "spark.tgz" https://dist.apache.org/repos/dist/dev/spark/v3.4.0-rc2-bin/spark-3.4.0-bin-hadoop3.tgz; \
   else \
     wget -qO "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"; \
   fi && \
