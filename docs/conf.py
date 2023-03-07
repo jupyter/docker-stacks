@@ -44,6 +44,9 @@ html_theme_options = {
     "use_issues_button": True,
     "use_repository_button": True,
     "use_download_button": True,
+    "logo": {
+        "text": html_title,
+    },
 }
 
 extensions = ["myst_parser", "sphinx_copybutton"]
@@ -58,7 +61,7 @@ myst_heading_anchors = 3
 
 linkcheck_ignore = [
     r".*github\.com.*#",  # javascript based anchors
-    r"https://github\.com/jupyter/docker-stacks/settings/actions/runners/new\?arch=arm64&os=linux",  # only works for users with permissions to change runners
+    r"https://github\.com/jupyter/docker-stacks/settings/actions/runners/new\?arch=arm64\&amp;os=linux",  # only works for users with permissions to change runners
     r"http://127\.0\.0\.1:.*",  # various examples
 ]
 
