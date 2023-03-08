@@ -35,7 +35,7 @@ USER ${NB_UID}
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 WORKDIR /tmp
-RUN mamba install --quiet --yes \
+RUN mamba install --yes \
     'notebook' \
     'jupyterhub' \
     'jupyterlab' && \
