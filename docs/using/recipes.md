@@ -31,7 +31,7 @@ Create a new Dockerfile like the one shown below.
 # Start from a core stack version
 FROM jupyter/datascience-notebook:2023-02-28
 # Install in the default python3 environment
-RUN pip install --quiet --no-cache-dir 'flake8==3.9.2' && \
+RUN pip install --no-cache-dir 'flake8==3.9.2' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
@@ -51,7 +51,7 @@ Next, create a new Dockerfile like the one shown below.
 FROM jupyter/datascience-notebook:2023-02-28
 # Install from the requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
-RUN pip install --quiet --no-cache-dir --requirement /tmp/requirements.txt && \
+RUN pip install --no-cache-dir --requirement /tmp/requirements.txt && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
@@ -85,7 +85,7 @@ ARG conda_env=python37
 ARG py_ver=3.7
 
 # you can add additional libraries you want mamba to install by listing them below the first line and ending with "&& \"
-RUN mamba create --quiet --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
+RUN mamba create --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
     mamba clean --all -f -y
 
 # alternatively, you can comment out the lines above and uncomment those below
@@ -102,7 +102,7 @@ RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --na
     fix-permissions "/home/${NB_USER}"
 
 # any additional pip installs can be added by uncommenting the following line
-# RUN "${CONDA_DIR}/envs/${conda_env}/bin/pip" install --quiet --no-cache-dir
+# RUN "${CONDA_DIR}/envs/${conda_env}/bin/pip" install --no-cache-dir
 
 # if you want this environment to be the default one, uncomment the following line:
 # RUN echo "conda activate ${conda_env}" >> "${HOME}/.bashrc"
@@ -118,7 +118,7 @@ Create the Dockerfile as:
 FROM jupyter/scipy-notebook:latest
 
 # Install the Dask dashboard
-RUN pip install --quiet --no-cache-dir dask-labextension && \
+RUN pip install --no-cache-dir dask-labextension && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -160,7 +160,7 @@ notebooks, with no conversion, adding javascript Reveal.js:
 
 ```bash
 # Add Live slideshows with RISE
-RUN mamba install --quiet --yes -c damianavila82 rise && \
+RUN mamba install --yes -c damianavila82 rise && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -175,12 +175,12 @@ You need to install conda-forge's gcc for Python xgboost to work correctly.
 Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0.
 
 ```bash
-mamba install --quiet --yes gcc && \
+mamba install --yes gcc && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-pip install --quiet --no-cache-dir xgboost && \
+pip install --no-cache-dir xgboost && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -284,7 +284,7 @@ version in the Hub itself.
 
 ```dockerfile
 FROM jupyter/base-notebook:2023-02-28
-RUN pip install --quiet --no-cache-dir jupyterhub==1.4.1 && \
+RUN pip install --no-cache-dir jupyterhub==1.4.1 && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
@@ -438,9 +438,9 @@ USER ${NB_UID}
 # - Dashboards
 # - PyDoop
 # - PyHive
-RUN pip install --quiet --no-cache-dir jupyter_dashboards faker && \
+RUN pip install --no-cache-dir jupyter_dashboards faker && \
     jupyter dashboards quick-setup --sys-prefix && \
-    pip2 install --quiet --no-cache-dir pyhive pydoop thrift sasl thrift_sasl faker && \
+    pip2 install --no-cache-dir pyhive pydoop thrift sasl thrift_sasl faker && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -496,7 +496,7 @@ FROM jupyter/minimal-notebook:latest
 
 USER ${NB_UID}
 
-RUN pip install --quiet --no-cache-dir jupyter_contrib_nbextensions && \
+RUN pip install --no-cache-dir jupyter_contrib_nbextensions && \
     jupyter contrib nbextension install --user && \
     # can modify or enable additional extensions here
     jupyter nbextension enable spellchecker/main --user && \
@@ -515,7 +515,7 @@ By adding the properties to `spark-defaults.conf`, the user no longer needs to e
 FROM jupyter/pyspark-notebook:latest
 
 ARG DELTA_CORE_VERSION="1.2.1"
-RUN pip install --quiet --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
+RUN pip install --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
      fix-permissions "${HOME}" && \
      fix-permissions "${CONDA_DIR}"
 
@@ -608,7 +608,7 @@ RUN apt-get update --yes && \
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
-RUN pip install --quiet --no-cache-dir pyodbc
+RUN pip install --no-cache-dir pyodbc
 ```
 
 You can now use `pyodbc` and `sqlalchemy` to interact with the database.

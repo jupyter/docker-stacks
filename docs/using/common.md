@@ -245,16 +245,16 @@ You can use either `mamba`, `pip` or `conda` (`mamba` is recommended) to install
 ```bash
 # install a package into the default (python 3.x) environment and cleanup it after
 # the installation
-mamba install --quiet --yes some-package && \
+mamba install --yes some-package && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-pip install --quiet --no-cache-dir some-package && \
+pip install --no-cache-dir some-package && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-conda install --quiet --yes some-package && \
+conda install --yes some-package && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -274,7 +274,7 @@ mamba install --channel defaults humanize
 conda config --system --prepend channels defaults
 
 # install a package
-mamba install --quiet --yes humanize && \
+mamba install --yes humanize && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
