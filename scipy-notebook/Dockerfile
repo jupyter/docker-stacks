@@ -26,7 +26,7 @@ RUN apt-get update --yes && \
 USER ${NB_UID}
 
 # Install Python 3 packages
-RUN mamba install --quiet --yes \
+RUN mamba install --yes \
     'altair' \
     'beautifulsoup4' \
     'bokeh' \
