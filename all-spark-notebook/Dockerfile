@@ -27,7 +27,7 @@ RUN apt-get update --yes && \
 USER ${NB_UID}
 
 # R packages including IRKernel which gets installed globally.
-RUN mamba install --quiet --yes \
+RUN mamba install --yes \
     'r-base' \
     'r-ggplot2' \
     'r-irkernel' \
