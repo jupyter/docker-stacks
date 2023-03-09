@@ -48,6 +48,7 @@ html_theme_options = {
         "text": html_title,
     },
 }
+html_last_updated_fmt = "%Y-%m-%d"
 
 extensions = ["myst_parser", "sphinx_copybutton"]
 source_suffix = {
