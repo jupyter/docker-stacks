@@ -18,7 +18,7 @@ USER root
 ARG spark_version="3.4.0"
 ARG hadoop_version="3"
 ARG scala_version
-ARG spark_checksum="adf237f8bd200b8ae2c162f9ebe3f7fa2b58981ab477917ec36d702354874c6e26d38f33a372ba48bb3fc7390c1eca2ebe1bb2ff6594b9247610b78d4ba71bde"
+ARG spark_checksum="06493eb9cebfc47123c5f8d5fc545e51962532f3cab305173c50ab6788b0b3005b032f8b948691b57203586802e52852a53ff30d57f53af7305701fd7a429a5b"
 ARG openjdk_version="17"
 
 ENV APACHE_SPARK_VERSION="${spark_version}" \
