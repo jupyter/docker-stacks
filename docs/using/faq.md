@@ -4,7 +4,7 @@
 
 We have lots of users with different packages they want to use.
 Adding them all is impossible, so we have several images to choose from.
-[Choose the one](selecting.md), that is closest to your need and feel free to [add them on top of our images](recipes.md#using-mamba-install-or-pip-install-in-a-child-docker-image).
+[Choose the image](selecting.md), that is closest to your needs and feel free to [add your package on top of our images](recipes.md#using-mamba-install-or-pip-install-in-a-child-docker-image).
 
 ## Who is `jovyan`
 
