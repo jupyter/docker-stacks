@@ -14,6 +14,7 @@ Table of Contents
    using/specifics
    using/recipes
    using/troubleshooting
+   using/faq
 
 .. toctree::
    :maxdepth: 2
