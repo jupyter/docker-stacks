@@ -41,6 +41,7 @@ RUN mamba install --yes \
     'ipywidgets' \
     # Temporary fix for: https://github.com/jupyter/docker-stacks/issues/1851
     'jupyter_server>=2.0.0' \
+    'jupyterlab-git' \
     'matplotlib-base' \
     'numba' \
     'numexpr' \
@@ -57,8 +58,7 @@ RUN mamba install --yes \
     'statsmodels' \
     'sympy' \
     'widgetsnbextension'\
-    'xlrd'\
-    'jupyterlab-git' && \
+    'xlrd' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
