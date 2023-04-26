@@ -13,14 +13,10 @@ runs:
     # actions/setup-python doesn't support Linux aarch64 runners
     # See: https://github.com/actions/setup-python/issues/108
     # python3 is manually preinstalled in the aarch64 VM self-hosted runner
-    - name: Set Up Python 🐍
+    - name: Set Up Python 🐍 and install dev dependencies 📦
       uses: actions/setup-python@v4
       with:
         python-version: 3.x
+        cache: "pip"
+        cache-dependency-path: "**/requirements*.txt"
       if: ${{ inputs.platform == 'x86_64' }}
-
-    - name: Install Dev Dependencies 📦
-      run: |
-        pip install --upgrade pip
-        pip install --upgrade -r requirements-dev.txt
-      shell: bash
