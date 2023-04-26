@@ -122,6 +122,7 @@ It contains:
   [cython](https://cython.org),
   [dask](https://www.dask.org/),
   [dill](https://pypi.org/project/dill/),
+  [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git),
   [h5py](https://www.h5py.org),
   [matplotlib-base](https://matplotlib.org/),
   [numba](https://numba.pydata.org/),
