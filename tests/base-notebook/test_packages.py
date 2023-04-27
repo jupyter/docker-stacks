@@ -70,6 +70,7 @@ EXCLUDED_PACKAGES = [
     "conda-forge::blas[build=openblas]",
     "hdf5",
     "jupyter_server[version='>",  # Temporary fix for: https://github.com/jupyter/docker-stacks/issues/1851
+    "jupyterlab-git",
     "openssl",
     "protobuf",
     "python",
