@@ -123,6 +123,7 @@ It contains:
   [dask](https://www.dask.org/),
   [dill](https://pypi.org/project/dill/),
   [h5py](https://www.h5py.org),
+  [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git),
   [matplotlib-base](https://matplotlib.org/),
   [numba](https://numba.pydata.org/),
   [numexpr](https://github.com/pydata/numexpr),
