@@ -14,7 +14,7 @@
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.2
+    rev: v3.4.0
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
@@ -35,7 +35,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.2.0
+    rev: v1.3.0
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
