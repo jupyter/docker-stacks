@@ -43,6 +43,7 @@ RUN mamba install --yes \
     'jupyter_server>=2.0.0' \
     'jupyterlab-git' \
     'matplotlib-base' \
+    'numba' \
     'numexpr' \
     'openpyxl' \
     'pandas' \
