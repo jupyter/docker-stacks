@@ -38,7 +38,8 @@ WORKDIR /tmp
 RUN mamba install --yes \
     'notebook' \
     'jupyterhub' \
-    'jupyterlab' && \
+    'jupyterlab' \
+    'nodejs >= 18.0' && \
     jupyter notebook --generate-config && \
     mamba clean --all -f -y && \
     npm cache clean --force && \
