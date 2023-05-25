@@ -20,7 +20,7 @@ Configure this runner:
    This will perform the initial runner setup and create a user `runner-user` without `sudo` capabilities.
 
 2. Setup new GitHub Runner under `runner-user` using [GitHub Instructions](https://github.com/jupyter/docker-stacks/settings/actions/runners/new?arch=arm64&os=linux).
-   Do not `./run.sh` yet.
+   **Do not `./run.sh` yet**.
 3. Run under `root`:
 
    ```bash
