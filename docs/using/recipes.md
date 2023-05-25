@@ -29,7 +29,7 @@ Create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:2023-05-15
+FROM jupyter/datascience-notebook:2023-05-25
 # Install in the default python3 environment
 RUN pip install --no-cache-dir 'flake8==3.9.2' && \
     fix-permissions "${CONDA_DIR}" && \
@@ -48,7 +48,7 @@ Next, create a new Dockerfile like the one shown below.
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:2023-05-15
+FROM jupyter/datascience-notebook:2023-05-25
 # Install from the requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN pip install --no-cache-dir --requirement /tmp/requirements.txt && \
@@ -60,7 +60,7 @@ For conda, the Dockerfile is similar:
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/datascience-notebook:2023-05-15
+FROM jupyter/datascience-notebook:2023-05-25
 # Install from the requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN mamba install --yes --file /tmp/requirements.txt && \
@@ -283,7 +283,7 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:2023-05-15
+FROM jupyter/base-notebook:2023-05-25
 RUN pip install --no-cache-dir jupyterhub==1.4.1 && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -474,7 +474,7 @@ For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:2023-05-15 \
+    jupyter/base-notebook:2023-05-25 \
     start.sh jupyter lab --LabApp.token=''
 ```
 
@@ -482,7 +482,7 @@ For jupyter classic:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:2023-05-15 \
+    jupyter/base-notebook:2023-05-25 \
     start.sh jupyter notebook --NotebookApp.token=''
 ```
 
@@ -575,7 +575,7 @@ The example below is a Dockerfile to install the [ijavascript kernel](https://gi
 
 ```dockerfile
 # use one of the Jupyter Docker Stacks images
-FROM jupyter/scipy-notebook:2023-05-15
+FROM jupyter/scipy-notebook:2023-05-25
 
 # install ijavascript
 RUN npm install -g ijavascript
