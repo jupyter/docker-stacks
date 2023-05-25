@@ -176,8 +176,7 @@ communities.
 - [rpy2](https://rpy2.github.io/doc/latest/html/index.html) package
 - The [Julia](https://julialang.org/) compiler and base environment
 - [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebooks
-- [HDF5](https://github.com/JuliaIO/HDF5.jl)
-  packages
+- [HDF5](https://github.com/JuliaIO/HDF5.jl) package
 
 ### jupyter/pyspark-notebook
 
