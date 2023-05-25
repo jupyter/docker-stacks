@@ -36,10 +36,12 @@ USER ${NB_UID}
 # files across image layers when the permissions change
 WORKDIR /tmp
 RUN mamba install --yes \
+    # NodeJS >= 18.0 is required for `jupyter lab build` command
+    # https://github.com/jupyter/docker-stacks/issues/1901
+    'nodejs >= 18.0' \
     'notebook' \
     'jupyterhub' \
-    'jupyterlab' \
-    'nodejs >= 18.0' && \
+    'jupyterlab' && \
     jupyter notebook --generate-config && \
     mamba clean --all -f -y && \
     npm cache clean --force && \
