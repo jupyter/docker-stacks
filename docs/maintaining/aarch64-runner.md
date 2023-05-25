@@ -2,14 +2,14 @@
 
 For building `aarch64` images, we use self-hosted GitHub runners.
 It is recommended to have at least two runners to allow better parallelism.
+Each runner is recommended to have at least _2 cores_ and _20 GB_ of disk space.
 
 Add a new runner:
 
-- To use [Oracle OCI](https://www.oracle.com/cloud/), create a compute instance `VM.Standard.A1.Flex` with _2 OCPU_ and _12 GB_ using `Ubuntu 22.04` image.
+- To use [Oracle OCI](https://www.oracle.com/cloud/), create a compute instance `VM.Standard.A1.Flex` .
 - To use [Google Cloud](https://cloud.google.com), use [this instruction](https://cloud.google.com/compute/docs/instances/create-arm-vm-instance#armpublicimage).
-  We highly recommend using 20GB of disk.
 
-Configure this runner:
+Configure your runner:
 
 1. Run under `root`:
 
