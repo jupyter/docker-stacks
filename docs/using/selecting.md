@@ -68,10 +68,13 @@ It contains:
 It contains:
 
 - Everything in `jupyter/base-notebook`
+- Common useful utilities like
+  [git](https://git-scm.com/),
+  [nano](https://www.nano-editor.org/) (actually `nano-tiny`),
+  [tzdata](https://www.iana.org/time-zones),
+  [unzip](https://code.launchpad.net/ubuntu/+source/unzip)
+  and [vi](https://www.vim.org) (actually `vim-tiny`),
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
-- [git](https://git-scm.com/),
-  [vi](https://www.vim.org) (actually `vim-tiny`),
-  [nano](https://www.nano-editor.org/) (actually `nano-tiny`), `tzdata`, and `unzip`
 
 ### jupyter/r-notebook
 
@@ -173,10 +176,7 @@ communities.
 - [rpy2](https://rpy2.github.io/doc/latest/html/index.html) package
 - The [Julia](https://julialang.org/) compiler and base environment
 - [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebooks
-- [HDF5](https://github.com/JuliaIO/HDF5.jl),
-  [Gadfly](https://gadflyjl.org/stable/),
-  [RDatasets](https://github.com/JuliaStats/RDatasets.jl)
-  packages
+- [HDF5](https://github.com/JuliaIO/HDF5.jl) package
 
 ### jupyter/pyspark-notebook
 
