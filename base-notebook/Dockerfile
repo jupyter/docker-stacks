@@ -42,6 +42,8 @@ RUN mamba install --yes \
     'notebook' \
     'jupyterhub' \
     'jupyterlab' && \
+    # Pin NodeJS
+    echo 'nodejs >=18.0' >> "${CONDA_DIR}/conda-meta/pinned" && \
     jupyter notebook --generate-config && \
     mamba clean --all -f -y && \
     npm cache clean --force && \
