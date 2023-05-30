@@ -12,8 +12,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install Tensorflow
 RUN mamba install --yes \
-    # Temporary pin flatbuffers version
-    'flatbuffers==23.3.3' \
     'tensorflow' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
