@@ -10,9 +10,10 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install Tensorflow
+# Install Tensorflow with pip
 RUN mamba install --yes \
-    'tensorflow' && \
+    'pip' && \
     mamba clean --all -f -y && \
+    pip install tensorflow && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
