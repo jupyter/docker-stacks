@@ -2,7 +2,7 @@
 
 For building `aarch64` images, we use self-hosted GitHub runners.
 It is recommended to have at least two runners to allow better parallelism.
-Each runner is recommended to have at least _2 cores_ and _20 GB_ of disk space.
+Each runner is recommended to have at least _2 cores_ and _30 GB_ of disk space.
 
 Add a new runner:
 
