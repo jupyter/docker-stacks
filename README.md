@@ -122,15 +122,16 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 ## Using old images
 
 This project only builds one set of images at a time.
-On `2022-10-09`, we rebuilt images with old `Ubuntu` and `python` versions for users who still need them:
+If you want to use older `Ubuntu` and/or `python` version, you can use following images:
 
-| Ubuntu | Python | Tag                                     |
-| ------ | ------ | --------------------------------------- |
-| 20.04  | 3.7    | `1aac87eb7fa5`                          |
-| 20.04  | 3.8    | `a374cab4fcb6`                          |
-| 20.04  | 3.9    | `5ae537728c69`                          |
-| 20.04  | 3.10   | `f3079808ca8c`                          |
-| 22.04  | 3.7    | `b86753318aa1`                          |
-| 22.04  | 3.8    | `7285848c0a11`                          |
-| 22.04  | 3.9    | `ed2908bbb62e`                          |
-| 22.04  | 3.10   | `latest` (this image is rebuilt weekly) |
+| Build Date   | Ubuntu | Python | Tag            |
+| ------------ | ------ | ------ | -------------- |
+| 2022-10-09   | 20.04  | 3.7    | `1aac87eb7fa5` |
+| 2022-10-09   | 20.04  | 3.8    | `a374cab4fcb6` |
+| 2022-10-09   | 20.04  | 3.9    | `5ae537728c69` |
+| 2022-10-09   | 20.04  | 3.10   | `f3079808ca8c` |
+| 2022-10-09   | 22.04  | 3.7    | `b86753318aa1` |
+| 2022-10-09   | 22.04  | 3.8    | `7285848c0a11` |
+| 2022-10-09   | 22.04  | 3.9    | `ed2908bbb62e` |
+| 2023-05-30   | 22.04  | 3.10   | `4d70cf8da953` |
+| weekly build | 22.04  | 3.11   | `latest`       |
