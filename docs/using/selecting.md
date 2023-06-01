@@ -254,6 +254,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [kotlin]       | [![bb]][kotlin_b]       | [**Kotlin** kernel for Jupyter/IPython][kotlin_kernel] on top of the `base-notebook` image                |
 | [transformers] | [![bb]][transformers_b] | [**Transformers**][transformers_lib] and NLP libraries such as `Tensorflow`, `Keras`, `Jax` and `PyTorch` |
 | [scraper]      | [![bb]][scraper_b]      | **Scraper** tools (`selenium`, `chromedriver`, `beatifulsoup4`, `requests`) on `minimal-notebook` image   |
+| [almond]       | [![bb]][almond_b]       | Scala kernel for Jupyter using **Almond** on top of the `base-notebook` image                             |
 
 [bb]: https://static.mybinder.org/badge_logo.svg
 [csharp]: https://github.com/tlinnet/csharp-notebook
@@ -279,6 +280,8 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [transformers_lib]: https://huggingface.co/docs/transformers/index
 [scraper]: https://github.com/rgriffogoes/scraper-notebook
 [scraper_b]: https://mybinder.org/v2/gh/rgriffogoes/scraper-notebook/main
+[almond]: https://almond.sh
+[almond_b]: https://mybinder.org/v2/gh/almond-sh/examples/master?urlpath=lab%2Ftree%2Fnotebooks%2Findex.ipynb
 
 ### GPU accelerated notebooks
 
