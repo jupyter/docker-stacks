@@ -71,7 +71,7 @@ maintained stacks.
 
 We value all positive contributions to the Docker stacks project,
 from [bug reports](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/issues.html)
-to [pull requests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/packages.html)
+to [pull requests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/features.html#submitting-a-pull-request)
 to help with answering questions.
 We'd also like to invite members of the community to help with two maintainer activities:
 
