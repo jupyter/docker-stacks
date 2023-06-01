@@ -162,6 +162,15 @@ jobs:
       runsOn: ubuntu-latest
     needs: [x86_64-minimal]
 
+  aarch64-tensorflow:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: tensorflow-notebook
+      platform: aarch64
+      runsOn: ARM64
+    needs: [aarch64-scipy]
+
   x86_64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -245,6 +254,7 @@ jobs:
             minimal-notebook,
             scipy-notebook,
             r-notebook,
+            tensorflow-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -256,6 +266,7 @@ jobs:
         aarch64-minimal,
         aarch64-scipy,
         aarch64-r,
+        aarch64-tensorflow,
         aarch64-datascience,
         aarch64-pyspark,
         aarch64-all-spark,

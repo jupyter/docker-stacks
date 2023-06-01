@@ -34,15 +34,10 @@ jobs:
           name: ${{ inputs.image }}-x86_64-tags
           path: /tmp/tags/
       - name: Download aarch64 tags file 📥
-        if: inputs.image != 'tensorflow-notebook'
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.image }}-aarch64-tags
           path: /tmp/tags/
-      - name: Create an empty aarch64 tags file for tensorflow-notebook 💩
-        if: inputs.image == 'tensorflow-notebook'
-        run: touch /tmp/tags/aarch64-tensorflow-notebook.txt
-        shell: bash
 
       # Docker might be stuck when pulling images
       # https://github.com/docker/for-mac/issues/2083
