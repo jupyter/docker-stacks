@@ -19,16 +19,6 @@ ALL_IMAGES:= \
 	pyspark-notebook \
 	all-spark-notebook
 
-AARCH64_IMAGES:= \
-	docker-stacks-foundation \
-	base-notebook \
-	minimal-notebook \
-	r-notebook \
-	scipy-notebook \
-	datascience-notebook \
-	pyspark-notebook \
-	all-spark-notebook
-
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
 
@@ -50,7 +40,6 @@ build/%: ## build the latest image for a stack using the system's architecture
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
-build-aarch64: $(foreach I, $(AARCH64_IMAGES), build/$(I)) ## build aarch64 stacks
 
 
 check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report (experimental)
