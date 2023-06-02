@@ -63,9 +63,8 @@ system when the container exits, but any changes made to the `~/work` directory 
 
 ## Contributing
 
-Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) for
-information about how to contribute package updates, recipes, features, tests, and community
-maintained stacks.
+Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
+for information about how to contribute recipes, features, tests, and community maintained stacks.
 
 ## Maintainer Help Wanted
 
@@ -108,7 +107,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 ## Resources
 
 - [Documentation on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
-- [Issue Tracker on GitHub](https://github.com/jupyter/docker-stacks)
+- [Issue Tracker on GitHub](https://github.com/jupyter/docker-stacks/issues)
 - [Jupyter Discourse Forum](https://discourse.jupyter.org/)
 - [Jupyter Website](https://jupyter.org)
 - [Images on DockerHub](https://hub.docker.com/u/jupyter)
@@ -116,7 +115,7 @@ This change is tracked in the issue [#1217](https://github.com/jupyter/docker-st
 ## CPU Architectures
 
 - We publish containers for both `x86_64` and `aarch64` platforms
-- Single-platform images have either `aarch64` or `x86_64` tag prefixes, for example, `jupyter/base-notebook:aarch64-python-3.10.5`
+- Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `jupyter/base-notebook:aarch64-python-3.10.5`
 - Starting from `2022-09-21`, we create multi-platform images (except `tensorflow-notebook`)
 - Starting from `2023-06-01`, we create multi-platform `tensorflow-notebook` image as well
 
