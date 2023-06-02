@@ -3,7 +3,7 @@
 
 # https://hub.docker.com/r/jupyter/base-notebook/tags
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/base-notebook:2023-05-26
+ARG BASE_CONTAINER=$OWNER/base-notebook:2023-06-01
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -12,6 +12,6 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-ENV TAG="2023-05-26"
+ENV TAG="2023-06-01"
 
 COPY --chown=${NB_UID}:${NB_GID} binder/README.ipynb "${HOME}"/README.ipynb
