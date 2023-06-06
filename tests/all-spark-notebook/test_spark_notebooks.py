@@ -14,8 +14,7 @@ THIS_DIR = Path(__file__).parent.resolve()
 
 @pytest.mark.parametrize(
     "test_file",
-    # TODO: add local_sparklyr
-    ["local_pyspark", "local_sparkR", "issue_1168"],
+    ["issue_1168", "local_pyspark", "local_sparklyr", "local_sparkR"],
 )
 def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
     """Check if Spark notebooks can be executed"""
