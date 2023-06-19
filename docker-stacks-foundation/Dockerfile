@@ -101,7 +101,7 @@ RUN set -x && \
         # Should be simpler, see <https://github.com/mamba-org/mamba/issues/1437>
         arch="64"; \
     fi && \
-    wget -qO /tmp/micromamba.tar.bz2 \
+    wget --progress=dot:giga -O /tmp/micromamba.tar.bz2 \
         "https://micromamba.snakepit.net/api/micromamba/linux-${arch}/latest" && \
     tar -xvjf /tmp/micromamba.tar.bz2 --strip-components=1 bin/micromamba && \
     rm /tmp/micromamba.tar.bz2 && \

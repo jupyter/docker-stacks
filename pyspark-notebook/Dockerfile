@@ -36,9 +36,9 @@ WORKDIR /tmp
 # You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
 # But it seems to be slower, that's why we use recommended site for download
 RUN if [ -z "${scala_version}" ]; then \
-    wget -qO "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz"; \
+    wget --progress=dot:giga -O "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz"; \
   else \
-    wget -qO "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"; \
+    wget --progress=dot:giga -O "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"; \
   fi && \
   echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
   tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \

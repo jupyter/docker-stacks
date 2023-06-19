@@ -44,7 +44,7 @@ RUN set -x && \
     julia_installer="julia-${JULIA_VERSION}-linux-${julia_arch}.tar.gz" && \
     julia_major_minor=$(echo "${JULIA_VERSION}" | cut -d. -f 1,2) && \
     mkdir "/opt/julia-${JULIA_VERSION}" && \
-    wget -q "https://julialang-s3.julialang.org/bin/linux/${julia_short_arch}/${julia_major_minor}/${julia_installer}" && \
+    wget --progress=dot:giga "https://julialang-s3.julialang.org/bin/linux/${julia_short_arch}/${julia_major_minor}/${julia_installer}" && \
     tar xzf "${julia_installer}" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
     rm "${julia_installer}" && \
     ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
