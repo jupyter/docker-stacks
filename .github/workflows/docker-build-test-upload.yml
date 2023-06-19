@@ -36,9 +36,13 @@ jobs:
           platform: ${{ inputs.platform }}
 
       # Self-hosted runners share a state (whole VM) between runs
+      # Also, they might have running or stopped containers,
+      # which are not cleaned up by `docker system prun`
       - name: Reset docker state and cleanup artifacts 🗑️
         if: ${{ inputs.platform != 'x86_64' }}
         run: |
+          docker kill $(docker ps -q) || true
+          docker rm $(docker ps -a -q) || true
           docker system prune --all --force
           rm -rf /tmp/tags/
           rm -rf /tmp/hist_lines/
