@@ -42,7 +42,7 @@ The following sections cover a few of these scenarios and how to fix them.
 
    ```bash
    # running in detached mode - can also be run in interactive mode
-   docker run -d \
+   docker run --detach \
        -v <my-vol>:<container-dir> \
        -p 8888:8888 \
        --user root \

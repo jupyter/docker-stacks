@@ -41,8 +41,8 @@ jobs:
       - name: Reset docker state and cleanup artifacts 🗑️
         if: ${{ inputs.platform != 'x86_64' }}
         run: |
-          docker kill $(docker ps -q) || true
-          docker rm $(docker ps -a -q) || true
+          docker kill $(docker ps --quiet) || true
+          docker rm $(docker ps --all --quiet) || true
           docker system prune --all --force
           rm -rf /tmp/tags/
           rm -rf /tmp/hist_lines/

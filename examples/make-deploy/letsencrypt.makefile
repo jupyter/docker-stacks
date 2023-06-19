@@ -30,7 +30,7 @@ letsencrypt:
 		--agree-tos \
 		--domain '$(FQDN)' \
 		--email '$(EMAIL)'; \
-		docker rm -f $(TMP_CONTAINER) > /dev/null
+		docker rm --force $(TMP_CONTAINER) > /dev/null
 # The letsencrypt image has an entrypoint, so we use the notebook image
 # instead so we can run arbitrary commands.
 # Here we set the permissions so nobody can read the cert and key.
@@ -42,7 +42,7 @@ letsencrypt:
 		$(NOTEBOOK_IMAGE) \
 		bash -c "ln -s /etc/letsencrypt/live/$(FQDN)/* /etc/letsencrypt/ && \
 			find /etc/letsencrypt -type d -exec chmod 755 {} +"; \
-			docker rm -f $(TMP_CONTAINER) > /dev/null
+			docker rm --force $(TMP_CONTAINER) > /dev/null
 
 letsencrypt-notebook: PORT?=443
 letsencrypt-notebook: NAME?=notebook

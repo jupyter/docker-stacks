@@ -36,7 +36,7 @@ help:
 
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ## build the latest image for a stack using the system's architecture
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm -t $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
+	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
 	@echo -n "Built image size: "
 	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
@@ -51,10 +51,10 @@ check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check al
 cont-clean-all: cont-stop-all cont-rm-all ## clean all containers (stop + rm)
 cont-stop-all: ## stop all containers
 	@echo "Stopping all containers ..."
-	-docker stop -t0 $(shell docker ps -a -q) 2> /dev/null
+	-docker stop --time 0 $(shell docker ps --all --quiet) 2> /dev/null
 cont-rm-all: ## remove all containers
 	@echo "Removing all containers ..."
-	-docker rm --force $(shell docker ps -a -q) 2> /dev/null
+	-docker rm --force $(shell docker ps --all --quiet) 2> /dev/null
 
 
 
@@ -82,7 +82,7 @@ img-rm: ## remove jupyter images
 	-docker rmi --force $(shell docker images --quiet "$(OWNER)/*") 2> /dev/null
 img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
-	-docker rmi --force $(shell docker images -f "dangling=true" -q) 2> /dev/null
+	-docker rmi --force $(shell docker images -f "dangling=true" --quiet) 2> /dev/null
 
 
 

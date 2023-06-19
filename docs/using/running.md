@@ -37,12 +37,12 @@ Pressing `Ctrl-C` twice shuts down the notebook server but leaves the container 
 
 ```bash
 # list containers
-docker ps -a
+docker ps --all
 # CONTAINER ID   IMAGE                                                 COMMAND                  CREATED          STATUS                     PORTS     NAMES
 # 221331c047c4   jupyter/scipy-notebook:2023-06-01                   "tini -g -- start-no…"   11 seconds ago   Exited (0) 8 seconds ago             cranky_benz
 
 # start the stopped container
-docker start -a 221331c047c4
+docker start --attach 221331c047c4
 # Entered start.sh with args: jupyter lab
 # ...
 
@@ -71,12 +71,12 @@ This command pulls the `jupyter/all-spark-notebook` image currently tagged `late
 It then starts a container named `notebook` running a JupyterLab server and exposes the server on a randomly selected port.
 
 ```bash
-docker run -d -P --name notebook jupyter/all-spark-notebook
+docker run --detach -P --name notebook jupyter/all-spark-notebook
 ```
 
 where:
 
-- `-d`: will run the container in detached mode
+- `--detach`: will run the container in detached mode
 
 You can also use the following docker commands to see the port and notebook server token:
 

@@ -132,7 +132,7 @@ ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 And build the image as:
 
 ```bash
-docker build -t jupyter/scipy-dasklabextension:latest .
+docker build --tag jupyter/scipy-dasklabextension:latest .
 ```
 
 Once built, run using the command:

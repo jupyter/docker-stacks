@@ -14,7 +14,7 @@ This page provides details about features specific to one or more images.
   Every new spark context that is created is put onto an incrementing port (i.e. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports.
   ```
 
-  For example: `docker run -d -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
+  For example: `docker run --detach -p 8888:8888 -p 4040:4040 -p 4041:4041 jupyter/pyspark-notebook`.
 
 #### IPython low-level output capture and forward
 
