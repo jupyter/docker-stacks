@@ -20,7 +20,7 @@ def test_spark_shell(container: TrackedContainer) -> None:
 
 def test_pandas_version(container: TrackedContainer) -> None:
     """Checking if pandas is installed and its version is 1.5.3 
-    This is only needed for spark before 4.0 see #1924"""
+    This is only needed for Spark before 4.0 see #1924"""
     command = [
         "start.sh",
         "bash",
