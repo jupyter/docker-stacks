@@ -66,7 +66,8 @@ USER ${NB_UID}
 
 # Install pyarrow
 RUN mamba install --yes \
-    'pyarrow' && \
+    'pyarrow' \
+    'pandas=1.5.3' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
