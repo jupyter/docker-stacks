@@ -64,7 +64,7 @@ RUN fix-permissions "/etc/ipython/"
 
 USER ${NB_UID}
 
-# Install pyarrow
+# Install pyarrow and pin pandas to version 1.5.3 see #1924
 RUN mamba install --yes \
     'pyarrow' \
     'pandas=1.5.3' && \
