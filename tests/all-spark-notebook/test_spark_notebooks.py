@@ -39,9 +39,15 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
     expected_file = f"{output_dir}/{test_file}.md"
     assert expected_file in logs, f"Expected file {expected_file} not generated"
 
+
 def test_pandas_version(container: TrackedContainer) -> None:
     """Checking if pandas is installed and its version is 1.5.3"""
-    command = ["start.sh", "bash", "-c", "python -c 'import pandas; print(pandas.__version__)'"]
+    command = [
+        "start.sh",
+        "bash",
+        "-c",
+        "python -c 'import pandas; print(pandas.__version__)'",
+    ]
     logs = container.run_and_wait(
         timeout=60,
         tty=True,
