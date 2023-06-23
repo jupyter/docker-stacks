@@ -36,7 +36,7 @@ WORKDIR /tmp
 # You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
 # But it seems to be slower, that's why we use recommended site for download
 RUN if [ -z "${scala_version}" ]; then \
-    wget --progress=dot:giga -O "spark.tgz" "https://dist.apache.org/repos/dist/dev/spark/v3.4.1-rc1-bin/spark-3.4.1-bin-hadoop3.tgz"; \
+    wget --progress=dot:giga -O "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz"; \
   else \
     wget --progress=dot:giga -O "spark.tgz" "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"; \
   fi && \
