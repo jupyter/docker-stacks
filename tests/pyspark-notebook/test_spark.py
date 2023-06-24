@@ -21,16 +21,15 @@ def test_spark_shell(container: TrackedContainer) -> None:
 def test_pandas_version(container: TrackedContainer) -> None:
     """Checking if pandas is installed and its version is 1.5.3
     This is only needed for Spark before 4.0 see #1924"""
-    command = [
-        "start.sh",
-        "bash",
-        "-c",
-        "python -c 'import pandas; print(pandas.__version__)'",
-    ]
     logs = container.run_and_wait(
         timeout=60,
         tty=True,
-        command=command,
+        command=[
+            "start.sh",
+            "python",
+            "-c",
+            "import pandas; print(pandas.__version__)",
+        ],
     )
 
     assert "1.5.3" in logs, "pandas version is not 1.5.3"
