@@ -67,7 +67,7 @@ USER ${NB_UID}
 # Install pyarrow and pin pandas to version 1.5.3 see #1924
 RUN mamba install --yes \
     'pyarrow' \
-    'pandas=1.5.3' && \
+    'pandas>=1.5.3 and <2.0.0' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
