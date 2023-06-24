@@ -64,7 +64,8 @@ RUN fix-permissions "/etc/ipython/"
 
 USER ${NB_UID}
 
-# Install pyarrow and pin pandas to version 1.5.3 see #1924
+# Install pyarrow
+# Temporarily pin pandas to version 1.5.3, see: https://github.com/jupyter/docker-stacks/issues/1924 
 RUN mamba install --yes \
     'pyarrow' \
     'pandas>=1.5.3 and <2.0.0' && \
