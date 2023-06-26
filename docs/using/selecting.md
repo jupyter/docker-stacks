@@ -76,7 +76,6 @@ It contains:
   and [vi](https://www.vim.org) (actually `vim-tiny`),
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 
-
 ### jupyter/julia-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/julia-notebook) |
