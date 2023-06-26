@@ -24,6 +24,7 @@ body:
         - minimal-notebook
         - pyspark-notebook
         - r-notebook
+        - julia-notebook
         - scipy-notebook
         - tensorflow-notebook
         - new community stack
