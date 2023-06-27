@@ -145,25 +145,6 @@ jobs:
       runsOn: ubuntu-latest
     needs: [x86_64-minimal]
 
-  aarch64-julia:
-    uses: ./.github/workflows/docker-build-test-upload.yml
-    with:
-      parentImage: minimal-notebook
-      image: julia-notebook
-      platform: aarch64
-      runsOn: ARM64
-    needs: [aarch64-minimal]
-    if: github.repository == 'jupyter/docker-stacks'
-
-  x86_64-julia:
-    uses: ./.github/workflows/docker-build-test-upload.yml
-    with:
-      parentImage: minimal-notebook
-      image: julia-notebook
-      platform: x86_64
-      runsOn: ubuntu-latest
-    needs: [x86_64-minimal]
-
   aarch64-r:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -179,6 +160,25 @@ jobs:
     with:
       parentImage: minimal-notebook
       image: r-notebook
+      platform: x86_64
+      runsOn: ubuntu-latest
+    needs: [x86_64-minimal]
+
+  aarch64-julia:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: julia-notebook
+      platform: aarch64
+      runsOn: ARM64
+    needs: [aarch64-minimal]
+    if: github.repository == 'jupyter/docker-stacks'
+
+  x86_64-julia:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: julia-notebook
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-minimal]
