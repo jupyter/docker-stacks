@@ -23,10 +23,10 @@ body:
         - all-spark-notebook
         - base-notebook
         - datascience-notebook
+        - julia-notebook
         - minimal-notebook
         - pyspark-notebook
         - r-notebook
-        - julia-notebook
         - scipy-notebook
         - tensorflow-notebook
     validations:
