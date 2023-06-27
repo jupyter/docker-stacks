@@ -1,4 +1,4 @@
-# Jupyter Notebook Data Science Stack
+# Jupyter Notebook Julia Stack
 
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/julia-notebook.svg)](https://hub.docker.com/r/jupyter/julia-notebook/)
 [![docker stars](https://img.shields.io/docker/stars/jupyter/julia-notebook.svg)](https://hub.docker.com/r/jupyter/julia-notebook/)
