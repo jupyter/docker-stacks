@@ -71,6 +71,7 @@ EXCLUDED_PACKAGES = [
     "hdf5",
     "jupyterlab-git",
     "openssl",
+    "pandas[version='>",
     "protobuf",
     "python",
     "r-irkernel",
