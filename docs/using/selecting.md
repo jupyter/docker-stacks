@@ -119,7 +119,6 @@ It contains:
 - The [Julia Programming Language](https://julialang.org/)
 - [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebook
 
-
 ### jupyter/scipy-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/scipy-notebook) |
