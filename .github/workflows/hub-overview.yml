@@ -14,10 +14,10 @@ on:
       - "base-notebook/README.md"
       - "datascience-notebook/README.md"
       - "docker-stacks-foundation/README.md"
+      - "julia-notebook/README.md"
       - "minimal-notebook/README.md"
       - "pyspark-notebook/README.md"
       - "r-notebook/README.md"
-      - "julia-notebook/README.md"
       - "scipy-notebook/README.md"
       - "tensorflow-notebook/README.md"
 

@@ -24,10 +24,10 @@ on:
       - "base-notebook/**"
       - "datascience-notebook/**"
       - "docker-stacks-foundation/**"
+      - "julia-notebook/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
       - "r-notebook/**"
-      - "julia-notebook/**"
       - "scipy-notebook/**"
       - "tensorflow-notebook/**"
 
@@ -52,10 +52,10 @@ on:
       - "base-notebook/**"
       - "datascience-notebook/**"
       - "docker-stacks-foundation/**"
+      - "julia-notebook/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
       - "r-notebook/**"
-      - "julia-notebook/**"
       - "scipy-notebook/**"
       - "tensorflow-notebook/**"
 

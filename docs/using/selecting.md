@@ -76,18 +76,6 @@ It contains:
   and [vi](https://www.vim.org) (actually `vim-tiny`),
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 
-### jupyter/julia-notebook
-
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/julia-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/julia-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/julia-notebook/tags/)
-
-`jupyter/julia-notebook` includes popular packages from the Julia ecosystem listed below:
-
-- Everything in `jupyter/minimal-notebook` and its ancestor images
-- The [Julia Programming Language](https://julialang.org/)
-- [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebook
-
 ### jupyter/r-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/r-notebook) |
@@ -118,6 +106,19 @@ It contains:
   [tidymodels](https://www.tidymodels.org/),
   [unixodbc](https://www.unixodbc.org)
   packages from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
+
+### jupyter/julia-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/julia-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/julia-notebook/Dockerfile) |
+[Docker Hub image tags](https://hub.docker.com/r/jupyter/julia-notebook/tags/)
+
+`jupyter/julia-notebook` includes popular packages from the Julia ecosystem listed below:
+
+- Everything in `jupyter/minimal-notebook` and its ancestor images
+- The [Julia Programming Language](https://julialang.org/)
+- [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebook
+
 
 ### jupyter/scipy-notebook
 
