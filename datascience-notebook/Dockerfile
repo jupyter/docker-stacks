@@ -23,7 +23,7 @@ RUN apt-get update --yes && \
 # Julia dependencies
 # install Julia packages in /opt/julia instead of ${HOME}
 ENV JULIA_DEPOT_PATH=/opt/julia \
-    JULIA_PKGDIR=/opt/julia \
+    JULIA_PKGDIR=/opt/julia
 
 # Setup Julia
 RUN /opt/setup-scripts/setup-julia.bash
