@@ -67,17 +67,7 @@ RUN mamba install --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Add Julia packages.
-# Install IJulia as jovyan and then move the kernelspec out
-# to the system share location. Avoids problems with runtime UID change not
-# taking effect properly on the .local folder in the jovyan home dir.
-RUN julia -e 'import Pkg; Pkg.update()' && \
-    julia -e 'import Pkg; Pkg.add("HDF5")' && \
-    julia -e 'using Pkg; pkg"add IJulia"; pkg"precompile"' && \
-    # move kernelspec out of home \
-    mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/" && \
-    chmod -R go+rx "${CONDA_DIR}/share/jupyter" && \
-    rm -rf "${HOME}/.local" && \
-    fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
+# Setup IJulia kernel
+RUN /usr/local/bin/setup-ijulia.bash
 
 WORKDIR "${HOME}"
