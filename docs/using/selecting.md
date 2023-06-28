@@ -107,6 +107,18 @@ It contains:
   [unixodbc](https://www.unixodbc.org)
   packages from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
 
+### jupyter/julia-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/julia-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/julia-notebook/Dockerfile) |
+[Docker Hub image tags](https://hub.docker.com/r/jupyter/julia-notebook/tags/)
+
+`jupyter/julia-notebook` includes popular packages from the Julia ecosystem listed below:
+
+- Everything in `jupyter/minimal-notebook` and its ancestor images
+- The [Julia Programming Language](https://julialang.org/)
+- [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebook
+
 ### jupyter/scipy-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/scipy-notebook) |
@@ -211,7 +223,7 @@ The following diagram depicts the build dependency tree of the core images. (i.e
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFjjFuwzAMRXefgvDUDDpAYaQnyNaOBQraphPCCmlIFIy0yN0rdQggI4XX9x__Z-91mEfGM_w0ACNNmLx9TSoW-ZvgCK9d5hqYxNBYJaNFgwVk65octalPYulTXk4f77CyXXLOYhDIE0Y6tODeYMwrFFw0HOboJk0y_rWV8v-yctfnBidq1KvORa5AMa4sfEVfSVtWvDjwcqusmhSnNZKoYfK6Pnj7XM0vYqYkA-1Oh53Z5RYXDHNlbVnx0Hu3Ne-_7MWcxg)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFjkFuwkAMRfecwsqKLuYACMEJuqPLSshJHDAZ7GjGIwSIuzPTRaWJWmX7_vP_br12Y894gucKoKcBk7fjoGKRHwQ72Gwz18AkhsYqGU0aLCDbdpWjJrVJLH3L-vPrADe2c85ZDAJ5wkgfDbg99HmFgouG3RjdoEn6n7ZS_l9W7trc4ESNWtWxyBUoxpWFr-grac6KFzue7pVVk-I0RhI1DF5vv7z5W80vYqYkHS1Oh0XjkjzjwnPTPU4Yxsqas-Kh925uvt4imKoO)
 
 ### Builds
 

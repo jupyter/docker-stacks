@@ -21,6 +21,7 @@ body:
         - all-spark-notebook
         - base-notebook
         - datascience-notebook
+        - julia-notebook
         - minimal-notebook
         - pyspark-notebook
         - r-notebook

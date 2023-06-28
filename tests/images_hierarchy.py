@@ -13,6 +13,7 @@ ALL_IMAGES = {
     "minimal-notebook": "base-notebook",
     "scipy-notebook": "minimal-notebook",
     "r-notebook": "minimal-notebook",
+    "julia-notebook": "minimal-notebook",
     "tensorflow-notebook": "scipy-notebook",
     "datascience-notebook": "scipy-notebook",
     "pyspark-notebook": "scipy-notebook",

@@ -13,6 +13,7 @@ ALL_IMAGES:= \
 	base-notebook \
 	minimal-notebook \
 	r-notebook \
+	julia-notebook \
 	scipy-notebook \
 	tensorflow-notebook \
 	datascience-notebook \

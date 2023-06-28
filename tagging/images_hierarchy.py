@@ -64,6 +64,11 @@ ALL_IMAGES = {
         taggers=[RVersionTagger()],
         manifests=[RPackagesManifest()],
     ),
+    "julia-notebook": ImageDescription(
+        parent_image="minimal-notebook",
+        taggers=[JuliaVersionTagger()],
+        manifests=[JuliaPackagesManifest()],
+    ),
     "tensorflow-notebook": ImageDescription(
         parent_image="scipy-notebook", taggers=[TensorflowVersionTagger()]
     ),

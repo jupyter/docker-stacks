@@ -14,6 +14,7 @@ on:
       - "base-notebook/README.md"
       - "datascience-notebook/README.md"
       - "docker-stacks-foundation/README.md"
+      - "julia-notebook/README.md"
       - "minimal-notebook/README.md"
       - "pyspark-notebook/README.md"
       - "r-notebook/README.md"
@@ -54,6 +55,8 @@ jobs:
             description: "Scientific Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
           - image: r-notebook
             description: "R Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
+          - image: julia-notebook
+            description: "Julia Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
           - image: tensorflow-notebook
             description: "Scientific Jupyter Notebook Python Stack w/ TensorFlow from https://github.com/jupyter/docker-stacks"
           - image: datascience-notebook

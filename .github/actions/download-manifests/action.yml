@@ -71,6 +71,16 @@ runs:
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       with:
+        name: julia-notebook-aarch64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
+        name: julia-notebook-x86_64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      with:
         name: tensorflow-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
