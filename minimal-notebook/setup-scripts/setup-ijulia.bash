@@ -12,7 +12,6 @@ Pkg.add("HDF5", "IJulia");
 Pkg.precompile();
 EOF
 
-
 # Move the kernelspec out to the system share location. Avoids
 # problems with runtime UID change not taking effect properly on the
 # .local folder in the jovyan home dir.  move kernelspec out of home
