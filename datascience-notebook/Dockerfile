@@ -34,28 +34,8 @@ ENV JULIA_DEPOT_PATH=/opt/julia \
 
 WORKDIR /tmp
 
-# hadolint ignore=SC2046
-RUN set -x && \
-    julia_arch=$(uname -m) && \
-    julia_short_arch="${julia_arch}" && \
-    if [ "${julia_short_arch}" == "x86_64" ]; then \
-      julia_short_arch="x64"; \
-    fi; \
-    julia_installer="julia-${JULIA_VERSION}-linux-${julia_arch}.tar.gz" && \
-    julia_major_minor=$(echo "${JULIA_VERSION}" | cut -d. -f 1,2) && \
-    mkdir "/opt/julia-${JULIA_VERSION}" && \
-    wget --progress=dot:giga "https://julialang-s3.julialang.org/bin/linux/${julia_short_arch}/${julia_major_minor}/${julia_installer}" && \
-    tar xzf "${julia_installer}" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1 && \
-    rm "${julia_installer}" && \
-    ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
-
-# Show Julia where conda libraries are \
-RUN mkdir /etc/julia && \
-    echo "push!(Libdl.DL_LOAD_PATH, \"${CONDA_DIR}/lib\")" >> /etc/julia/juliarc.jl && \
-    # Create JULIA_PKGDIR \
-    mkdir "${JULIA_PKGDIR}" && \
-    chown "${NB_USER}" "${JULIA_PKGDIR}" && \
-    fix-permissions "${JULIA_PKGDIR}"
+# Install Julia
+RUN /usr/bin/local/install-julia.bash
 
 USER ${NB_UID}
 

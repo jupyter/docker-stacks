@@ -43,3 +43,6 @@ USER ${NB_UID}
 
 # Add R mimetype option to specify how the plot returns from R to the browser
 COPY --chown=${NB_UID}:${NB_GID} Rprofile.site /opt/conda/lib/R/etc/
+
+# Add common scripts so we can call them from inherited images
+COPY install-julia.bash /usr/bin/local/install-julia.bash
