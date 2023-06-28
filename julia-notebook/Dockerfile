@@ -24,5 +24,3 @@ USER ${NB_UID}
 
 # Setup IJulia kernel
 RUN /opt/setup-scripts/setup-ijulia.bash
-
-WORKDIR "${HOME}"
