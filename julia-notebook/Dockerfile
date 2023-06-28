@@ -26,8 +26,8 @@ ENV JULIA_DEPOT_PATH=/opt/julia \
 
 WORKDIR /tmp
 
-# Install Julia
-RUN /usr/bin/local/install-julia.bash
+# Setup Julia
+RUN /usr/bin/local/setup-julia.bash
 
 USER ${NB_UID}
 
