@@ -2,8 +2,11 @@
 set -exuo pipefail
 # Requirements:
 # - This script is run as the root user
-# - The JULIA_VERSION environment variable is set
 # - The JULIA_PKGDIR environment variable is set
+
+# Default julia version to install if env var is not set
+# Check https://julialang.org/downloads/
+JULIA_VERSION="${JULIA_VERSION:-1.9.1}"
 
 # Figure out what architecture we are installing in
 JULIA_ARCH=$(uname -m)

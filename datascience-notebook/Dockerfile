@@ -12,12 +12,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Julia installation
-# Default values can be overridden at build time
-# (ARGS are in lower case to distinguish them from ENV)
-# Check https://julialang.org/downloads/
-ARG julia_version="1.9.1"
-
 # R pre-requisites
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
@@ -30,7 +24,6 @@ RUN apt-get update --yes && \
 # install Julia packages in /opt/julia instead of ${HOME}
 ENV JULIA_DEPOT_PATH=/opt/julia \
     JULIA_PKGDIR=/opt/julia \
-    JULIA_VERSION="${julia_version}"
 
 WORKDIR /tmp
 
