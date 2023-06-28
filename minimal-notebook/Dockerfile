@@ -45,4 +45,4 @@ USER ${NB_UID}
 COPY --chown=${NB_UID}:${NB_GID} Rprofile.site /opt/conda/lib/R/etc/
 
 # Add setup scripts that may be used by downstream images or inherited images
-COPY setup-scripts/* /usr/bin/local/
+COPY setup-scripts/ /opt/setup-scripts/

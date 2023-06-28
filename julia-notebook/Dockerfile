@@ -18,11 +18,11 @@ ENV JULIA_DEPOT_PATH=/opt/julia \
     JULIA_PKGDIR=/opt/julia
 
 # Setup Julia
-RUN /usr/bin/local/setup-julia.bash
+RUN /opt/setup-scripts/setup-julia.bash
 
 USER ${NB_UID}
 
 # Setup IJulia kernel
-RUN /usr/local/bin/setup-ijulia.bash
+RUN /opt/setup-scripts/setup-ijulia.bash
 
 WORKDIR "${HOME}"

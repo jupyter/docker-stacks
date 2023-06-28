@@ -26,9 +26,12 @@ ENV JULIA_DEPOT_PATH=/opt/julia \
     JULIA_PKGDIR=/opt/julia \
 
 # Setup Julia
-RUN /usr/bin/local/setup-julia.bash
+RUN /opt/setup-scripts/setup-julia.bash
 
 USER ${NB_UID}
+
+# Setup IJulia kernel
+RUN /opt/setup-scripts/setup-ijulia.bash
 
 # R packages including IRKernel which gets installed globally.
 # r-e1071: dependency of the caret R package
@@ -57,8 +60,5 @@ RUN mamba install --yes \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
-
-# Setup IJulia kernel
-RUN /usr/local/bin/setup-ijulia.bash
 
 WORKDIR "${HOME}"
