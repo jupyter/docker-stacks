@@ -5,12 +5,15 @@
 set -exuo pipefail
 
 # Install base Julia packages
-julia -e <<EOF
+julia -e '
 import Pkg;
 Pkg.update();
-Pkg.add("HDF5", "IJulia");
+Pkg.add([
+  "HDF5",
+  "IJulia"
+]);
 Pkg.precompile();
-EOF
+'
 
 # Move the kernelspec out to the system share location. Avoids
 # problems with runtime UID change not taking effect properly on the
