@@ -9,8 +9,8 @@ julia -e '
 import Pkg;
 Pkg.update();
 Pkg.add([
-  "HDF5",
-  "IJulia"
+    "HDF5",
+    "IJulia"
 ]);
 Pkg.precompile();
 '
