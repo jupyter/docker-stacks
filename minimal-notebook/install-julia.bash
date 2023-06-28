@@ -1,8 +1,11 @@
 #!/bin/bash
-
 set -exuo pipefail
+# Requirements:
+# - This script is run as the root user
+# - The JULIA_VERSION environment variable is set
+# - The JULIA_PKGDIR environment variable is set
 
-# Figure out what architecture we are building for
+# Figure out what architecture we are installing in
 JULIA_ARCH=$(uname -m)
 JULIA_SHORT_ARCH="${JULIA_ARCH}"
 if [ "${JULIA_SHORT_ARCH}" == "x86_64" ]; then
