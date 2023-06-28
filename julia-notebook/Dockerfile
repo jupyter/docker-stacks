@@ -17,8 +17,6 @@ USER root
 ENV JULIA_DEPOT_PATH=/opt/julia \
     JULIA_PKGDIR=/opt/julia
 
-WORKDIR /tmp
-
 # Setup Julia
 RUN /usr/bin/local/setup-julia.bash
 
