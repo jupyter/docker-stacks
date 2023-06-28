@@ -30,8 +30,8 @@ RUN /opt/setup-scripts/setup-julia.bash
 
 USER ${NB_UID}
 
-# Setup IJulia kernel
-RUN /opt/setup-scripts/setup-ijulia.bash
+# Setup IJulia kernel & other packages
+RUN /opt/setup-scripts/setup-julia-packages.bash
 
 # R packages including IRKernel which gets installed globally.
 # r-e1071: dependency of the caret R package
