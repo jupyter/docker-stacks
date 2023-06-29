@@ -93,7 +93,7 @@ def packages(package_helper: CondaPackageHelper) -> dict[str, set[str]]:
 
 def get_package_import_name(package: str) -> str:
     """Perform a mapping between the python package name and the name used for the import"""
-    return PACKAGE_MAPPING.get(package, package)
+    return PACKAGE_MAPPING.get(package, package).replace("-", "_")
 
 
 def excluded_package_predicate(package: str) -> bool:
