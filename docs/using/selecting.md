@@ -118,6 +118,7 @@ It contains:
 - Everything in `jupyter/minimal-notebook` and its ancestor images
 - The [Julia Programming Language](https://julialang.org/)
 - [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebook
+- [Pluto.jl](https://plutojl.org/) reactive Julia notebook interface, made accessible with [jupyter-pluto-proxy](https://github.com/yuvipanda/jupyter-pluto-proxy)
 
 ### jupyter/scipy-notebook
 
