@@ -10,7 +10,8 @@ import Pkg;
 Pkg.update();
 Pkg.add([
     "HDF5",
-    "IJulia"
+    "IJulia",
+    "Pluto"
 ]);
 Pkg.precompile();
 '
@@ -22,3 +23,10 @@ mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/ker
 chmod -R go+rx "${CONDA_DIR}/share/jupyter"
 rm -rf "${HOME}/.local"
 fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
+
+# Install jupyter-pluto-proxy to get Pluto to work on JupyterHub
+mamba install --yes \
+    'jupyter-pluto-proxy' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
