@@ -7,7 +7,7 @@ from pathlib import Path
 
 import requests
 
-# A number of operations below delibrately don't check for possible errors
+# A number of operations below deliberately don't check for possible errors
 # As this is a healthcheck, it should succeed or raise an exception on error
 
 runtime_dir = Path("/home/") / os.environ["NB_USER"] / ".local/share/jupyter/runtime/"
