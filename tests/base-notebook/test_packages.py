@@ -52,11 +52,11 @@ LOGGER = logging.getLogger(__name__)
 PACKAGE_MAPPING = {
     # Python
     "beautifulsoup4": "bs4",
+    "jupyter-pluto-proxy": "jupyter_pluto_proxy",
     "matplotlib-base": "matplotlib",
     "pytables": "tables",
     "scikit-image": "skimage",
     "scikit-learn": "sklearn",
-    "jupyter-pluto-proxy": "jupyter_pluto_proxy",
     # R
     "randomforest": "randomForest",
     "rcurl": "RCurl",
