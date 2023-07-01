@@ -1,7 +1,7 @@
 #!/bin/bash
 set -exuo pipefail
 # Requirements:
-# - This script is run as the root user
+# - Run as the root user
 # - The JULIA_PKGDIR environment variable is set
 
 # Default julia version to install if env var is not set
