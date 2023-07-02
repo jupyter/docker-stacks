@@ -10,11 +10,11 @@ LOGGER = logging.getLogger(__name__)
 def run_command(
     container: TrackedContainer,
     command: str,
-) -> None:
+) -> str:
     """Runs the given package manager with its version argument."""
 
     LOGGER.info(f"Test that the command '{command}' is working properly ...")
-    container.run_and_wait(
+    return container.run_and_wait(
         timeout=5,
         tty=True,
         command=["start.sh", "bash", "-c", command],
