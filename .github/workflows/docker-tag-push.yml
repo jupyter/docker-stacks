@@ -48,9 +48,9 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-tags
-          path: /tmp/tags/
+          path: /tmp/jupyter/tags/
       - name: Apply tags to the loaded image 🏷
-        run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/ --platform ${{ inputs.platform }} --owner ${{ env.OWNER }}
+        run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --owner ${{ env.OWNER }}
 
       - name: Push Images to Docker Hub 📤
         if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')

@@ -32,12 +32,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.image }}-x86_64-tags
-          path: /tmp/tags/
+          path: /tmp/jupyter/tags/
       - name: Download aarch64 tags file 📥
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.image }}-aarch64-tags
-          path: /tmp/tags/
+          path: /tmp/jupyter/tags/
 
       # Docker might be stuck when pulling images
       # https://github.com/docker/for-mac/issues/2083
@@ -57,5 +57,5 @@ jobs:
 
       - name: Merge tags for the images 🔀
         if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
-        run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/
+        run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/
         shell: bash

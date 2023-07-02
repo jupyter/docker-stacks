@@ -44,9 +44,7 @@ jobs:
           docker kill $(docker ps --quiet) || true
           docker rm $(docker ps --all --quiet) || true
           docker system prune --all --force
-          rm -rf /tmp/tags/
-          rm -rf /tmp/hist_lines/
-          rm -rf /tmp/manifests/
+          rm -rf /tmp/jupyter/
         shell: bash
 
       - name: Load parent built image to Docker 📥
@@ -70,44 +68,39 @@ jobs:
 
       - name: Write tags file 🏷
         run: |
-          python3 -m tagging.write_tags_file --short-image-name ${{ inputs.image }} --tags-dir /tmp/tags/ --owner ${{ env.OWNER }}
+          python3 -m tagging.write_tags_file --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --owner ${{ env.OWNER }}
         shell: bash
       - name: Upload tags file 💾
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-tags
-          path: /tmp/tags/${{ inputs.platform }}-${{ inputs.image }}.txt
+          path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.image }}.txt
           retention-days: 3
 
       - name: Write manifest and build history file 🏷
-        run: python3 -m tagging.write_manifest --short-image-name ${{ inputs.image }} --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/ --owner ${{ env.OWNER }}
+        run: python3 -m tagging.write_manifest --short-image-name ${{ inputs.image }} --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/ --owner ${{ env.OWNER }}
         shell: bash
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-manifest
-          path: /tmp/manifests/${{ inputs.platform }}-${{ inputs.image }}-*.md
+          path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.image }}-*.md
           retention-days: 3
       - name: Upload build history line 💾
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-history_line
-          path: /tmp/hist_lines/${{ inputs.platform }}-${{ inputs.image }}-*.txt
+          path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.image }}-*.txt
           retention-days: 3
 
       - name: Save image as a tar for later use 💾
-        run: docker save ${{ env.OWNER }}/${{ inputs.image }} -o /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+        run: |
+          mkdir -p /tmp/jupyter/images/
+          docker save ${{ env.OWNER }}/${{ inputs.image }} -o /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar
         shell: bash
       - name: Upload image as artifact 💾
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}
-          path: /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+          path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar
           retention-days: 3
-
-      # Self-hosted runners share a state (whole VM) between runs
-      - name: Cleanup artifacts 🗑️
-        run: |
-          rm -f /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
-        shell: bash
-        if: always()

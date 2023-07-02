@@ -20,12 +20,12 @@ jobs:
       - name: Download all manifests and history lines 📥
         uses: ./.github/actions/download-manifests
         with:
-          histLineDir: /tmp/hist_lines/
-          manifestDir: /tmp/manifests/
+          histLineDir: /tmp/jupyter/hist_lines/
+          manifestDir: /tmp/jupyter/manifests/
       - name: Display structure of downloaded files 🔍️
         run: |
-          ls -R /tmp/hist_lines/
-          ls -R /tmp/manifests/
+          ls -R /tmp/jupyter/hist_lines/
+          ls -R /tmp/jupyter/manifests/
         shell: bash
 
       - name: Checkout Wiki Repo 📃
@@ -35,7 +35,7 @@ jobs:
           path: wiki/
 
       - name: Update wiki page 🏷
-        run: python3 -m tagging.update_wiki_page --wiki-dir wiki/ --hist-line-dir /tmp/hist_lines/ --manifest-dir /tmp/manifests/
+        run: python3 -m tagging.update_wiki_page --wiki-dir wiki/ --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/
         shell: bash
 
       - name: Push Wiki to GitHub 📤

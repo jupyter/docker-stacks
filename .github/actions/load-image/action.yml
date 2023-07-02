@@ -18,13 +18,12 @@ runs:
       uses: actions/download-artifact@v3
       with:
         name: ${{ inputs.image }}-${{ inputs.platform }}
-        path: /tmp/
+        path: /tmp/jupyter/images/
     - name: Load downloaded image to docker 📥
       run: |
-        docker load --input /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+        docker load --input /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar
         docker image ls --all
       shell: bash
     - name: Delete the file 🗑️
-      run: rm -f /tmp/${{ inputs.image }}-${{ inputs.platform }}.tar
+      run: rm /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar
       shell: bash
-      if: always()
