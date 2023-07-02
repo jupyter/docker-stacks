@@ -3,16 +3,12 @@
 import logging
 
 from tests.conftest import TrackedContainer
+from tests.run_command import run_command
 
 LOGGER = logging.getLogger(__name__)
 
 
 def test_spark_shell(container: TrackedContainer) -> None:
     """Checking if Spark (spark-shell) is running properly"""
-    logs = container.run_and_wait(
-        timeout=60,
-        tty=True,
-        command=["start.sh", "bash", "-c", 'spark-shell <<< "1+1"'],
-    )
-
+    logs = run_command(container, 'spark-shell <<< "1+1"', timeout=60)
     assert "res0: Int = 2" in logs, "spark-shell does not work"
