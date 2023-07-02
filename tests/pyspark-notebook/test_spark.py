@@ -10,5 +10,5 @@ LOGGER = logging.getLogger(__name__)
 
 def test_spark_shell(container: TrackedContainer) -> None:
     """Checking if Spark (spark-shell) is running properly"""
-    logs = run_command(container, 'spark-shell <<< "1+1"')
+    logs = run_command(container, 'spark-shell <<< "1+1"', timeout=60)
     assert "res0: Int = 2" in logs, "spark-shell does not work"
