@@ -4,6 +4,5 @@ from tests.conftest import TrackedContainer
 from tests.run_command import run_command
 
 
-def test_npm_package_manager(container: TrackedContainer) -> None:
-    """Test that npm is installed and runs."""
-    run_command(container, "npm --version")
+def test_julia(container: TrackedContainer) -> None:
+    run_command(container, "julia --version")

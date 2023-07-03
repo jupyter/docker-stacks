@@ -21,9 +21,6 @@ runs:
         path: /tmp/jupyter/images/
     - name: Load downloaded image to docker 📥
       run: |
-        docker load --input /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar
+        zstd --uncompress --stdout --rm /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst | docker load
         docker image ls --all
-      shell: bash
-    - name: Delete the file 🗑️
-      run: rm /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar
       shell: bash
