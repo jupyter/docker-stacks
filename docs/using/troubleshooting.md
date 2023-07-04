@@ -306,7 +306,7 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
 
 2. **Turn off Jupyter auto-start in VSCode**
 
-   Alternatively - you might want to ensure that the `Jupyter: Auto Start` setting is turned off to avoid this issue in the future.
+   Alternatively - you might want to ensure that the `Jupyter: Disable Auto Start` setting is turned on to avoid this issue in the future.
 
    You can achieve this from the `Settings > Jupyter` menu in VScode:
 
