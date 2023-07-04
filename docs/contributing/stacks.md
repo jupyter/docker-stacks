@@ -89,11 +89,11 @@ The cookiecutter template comes with a `.github/workflows/docker.yml` file, whic
 
 2. Commit your changes and push them to GitHub.
 3. Head back to your repository and click on the **Actions** tab.
-   ![GitHub page for jupyter/docker-stacks with the Actions tab active and a rectangle around the "Build Docker Images" workflow in the UI](../_static/github-actions-tab.png)
+   ![GitHub page for jupyter/docker-stacks with the Actions tab active and a rectangle around the "Build Docker Images" workflow in the UI](../_static/contributing/stacks/github-actions-tab.png)
    From there, you can click on the workflows on the left-hand side of the screen.
 4. In the next screen, you will see information about the workflow run and duration.
    If you click the button with the workflow name again, you will see the logs for the workflow steps.
-   ![GitHub Actions page showing the "Build Docker Images" workflow](../_static/github-actions-workflow.png)
+   ![GitHub Actions page showing the "Build Docker Images" workflow](../_static/contributing/stacks/github-actions-workflow.png)
 
 ## Configuring Docker Hub
 
@@ -102,21 +102,21 @@ you merge a GitHub pull request to the main branch of your project.
 
 1. Visit [https://hub.docker.com/](https://hub.docker.com/) and log in.
 2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter.
-   ![DockerHub page zoomed into the user's settings and accounts menu.](../_static/docker-org-select.png)
+   ![DockerHub page zoomed into the user's settings and accounts menu.](../_static/contributing/stacks/docker-org-select.png)
 3. Scroll to the bottom of the page and click **Create repository**.
 4. Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter.
-   ![DockerHub - Create Repository page with the name field set to "My specialized jupyter stack"](../_static/docker-repo-name.png)
+   ![DockerHub - Create Repository page with the name field set to "My specialized jupyter stack"](../_static/contributing/stacks/docker-repo-name.png)
 5. Enter a description for your image.
 6. Click **GitHub** under the **Build Settings** and follow the prompts to connect your account if it is not already connected.
 7. Select the GitHub organization and repository containing your image definition from the dropdowns.
-   ![Dockerhub - Create Repository page focusing on the "Select Repository" dropdown menu](../_static/docker-github-settings.png)
+   ![Dockerhub - Create Repository page focusing on the "Select Repository" dropdown menu](../_static/contributing/stacks/docker-github-settings.png)
 8. Click the **Create and Build** button.
 9. Click on your avatar in the top-right corner and select Account settings.
-   ![DockerHub page zoomed into the user's settings and accounts menu](../_static/docker-org-select.png)
+   ![DockerHub page zoomed into the user's settings and accounts menu](../_static/contributing/stacks/docker-org-select.png)
 10. Click on **Security** and then click on the **New Access Token** button.
-    ![DockerHub - Account page with the "Security" tab active and a rectangle highlighting the "New Access Token" button in the UI](../_static/docker-org-security.png)
+    ![DockerHub - Account page with the "Security" tab active and a rectangle highlighting the "New Access Token" button in the UI](../_static/contributing/stacks/docker-org-security.png)
 11. Enter a meaningful name for your token and click on **Create**
-    ![DockerHub - New Access Token page with the name field set to "my-jupyter-docker-token"](../_static/docker-org-create-token.png)
+    ![DockerHub - New Access Token page with the name field set to "my-jupyter-docker-token"](../_static/contributing/stacks/docker-org-create-token.png)
 12. Copy the personal access token displayed on the next screen.
 
     ```{note}
@@ -124,13 +124,13 @@ you merge a GitHub pull request to the main branch of your project.
     ```
 
 13. Head back to your GitHub repository and click on the **Settings tab**.
-    ![GitHub page with the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/github-create-secrets.png)
+    ![GitHub page with the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/contributing/stacks/github-create-secrets.png)
 14. Click on the **Secrets** section and then on the **New repository secret** button in the top right corner (see image above).
 15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the **value** field.
-    ![GitHub - Actions/New secret page with the Name field set to "DOCKERHUB_TOKEN"](../_static/github-secret-token.png)
+    ![GitHub - Actions/New secret page with the Name field set to "DOCKERHUB_TOKEN"](../_static/contributing/stacks/github-secret-token.png)
 16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the _value_ field with your DockerHub username.
     Once you have completed these steps, your repository secrets section should look something like this:
-    ![GitHub - Repository secrets page showing the existing "DOCKERHUB_TOKEN" and "DOCKERHUB_USERNAME" secrets](../_static/github-secrets-completed.png)
+    ![GitHub - Repository secrets page showing the existing "DOCKERHUB_TOKEN" and "DOCKERHUB_USERNAME" secrets](../_static/contributing/stacks/github-secrets-completed.png)
 
 ## Defining Your Image
 
