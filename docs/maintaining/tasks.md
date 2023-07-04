@@ -41,6 +41,8 @@ Pushing the `Run Workflow` button will trigger this process.
 In general, we do not add new core images and ask contributors to either create a [recipe](../using/recipes.md) or [community stack](../contributing/stacks.md).
 ```
 
+You can see an example of adding a new image [here](https://github.com/jupyter/docker-stacks/pull/1926/files).
+
 When there's a new stack definition, check before merging the PR:
 
 1. PR includes an update to the stack overview diagram
