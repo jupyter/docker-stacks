@@ -308,9 +308,9 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
 
    Alternatively - you might want to ensure that the `Jupyter: Auto Start` setting is turned off to avoid this issue in the future.
 
-   You can achieve this from the `Preferences > Jupyter` menu in VScode:
+   You can achieve this from the `Settings > Jupyter` menu in VScode:
 
-   ![VSCode Preferences UI - Jupyter: Disable Jupyter Auto Start checkbox unchecked](../_static/using/troubleshooting/vscode-jupyter-settings.png)
+   ![VSCode Settings UI - Jupyter: Disable Jupyter Auto Start checkbox checked](../_static/using/troubleshooting/vscode-jupyter-settings.png)
 
 3. **Route container to unused local port**
 
