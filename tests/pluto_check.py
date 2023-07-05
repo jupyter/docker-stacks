@@ -1,3 +1,5 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
 import logging
 import secrets
 import time
@@ -9,10 +11,9 @@ from tests.conftest import TrackedContainer, find_free_port
 LOGGER = logging.getLogger(__name__)
 
 
-def test_pluto_proxy(
+def check_pluto_proxy(
     container: TrackedContainer, http_client: requests.Session
 ) -> None:
-    """Pluto proxy starts Pluto correctly"""
     host_port = find_free_port()
     token = secrets.token_hex()
     container.run_detached(
