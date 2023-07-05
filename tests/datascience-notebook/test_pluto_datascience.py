@@ -2,7 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 import requests
 
-from tests.conftest import TrackedContainer, check_pluto_proxy
+from tests.conftest import TrackedContainer
+from tests.pluto_check import check_pluto_proxy
 
 
 def test_pluto_proxy(
