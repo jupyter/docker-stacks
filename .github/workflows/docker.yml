@@ -221,7 +221,6 @@ jobs:
       runsOn: ubuntu-latest
     needs: [x86_64-scipy]
 
-
   aarch64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:

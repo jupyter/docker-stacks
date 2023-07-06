@@ -176,7 +176,6 @@ It contains:
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [tensorflow](https://www.tensorflow.org/) machine learning library
 
-
 ### jupyter/pytorch-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/pytorch-notebook) |
