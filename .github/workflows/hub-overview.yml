@@ -17,10 +17,10 @@ on:
       - "julia-notebook/README.md"
       - "minimal-notebook/README.md"
       - "pyspark-notebook/README.md"
+      - "pytorch-notebook/README.md"
       - "r-notebook/README.md"
       - "scipy-notebook/README.md"
       - "tensorflow-notebook/README.md"
-      - "pytorch-notebook/README.md"
 
 jobs:
   update-dockerhub-overview:

@@ -194,15 +194,6 @@ jobs:
       runsOn: ARM64
     needs: [aarch64-scipy]
 
-  aarch64-pytorch:
-    uses: ./.github/workflows/docker-build-test-upload.yml
-    with:
-      parentImage: scipy-notebook
-      image: pytorch-notebook
-      platform: aarch64
-      runsOn: ARM64
-    needs: [aarch64-scipy]
-
   x86_64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -211,6 +202,15 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-scipy]
+
+  aarch64-pytorch:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: pytorch-notebook
+      platform: aarch64
+      runsOn: ARM64
+    needs: [aarch64-scipy]
 
   x86_64-pytorch:
     uses: ./.github/workflows/docker-build-test-upload.yml
