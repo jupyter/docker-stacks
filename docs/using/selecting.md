@@ -176,6 +176,18 @@ It contains:
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [tensorflow](https://www.tensorflow.org/) machine learning library
 
+
+### jupyter/pytorch-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/pytorch-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/pytorch-notebook/Dockerfile) |
+[Docker Hub image tags](https://hub.docker.com/r/jupyter/pytorch-notebook/tags/)
+
+`jupyter/pytorch-notebook` includes popular Python deep learning libraries.
+
+- Everything in `jupyter/scipy-notebook` and its ancestor images
+- [pytorch](https://www.pytorch.org/) machine learning library
+
 ### jupyter/datascience-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/datascience-notebook) |
@@ -226,7 +238,7 @@ The following diagram depicts the build dependency tree of the core images. (i.e
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFjkFuwkAMRfecwsqKLuYACMEJuqPLSshJHDAZ7GjGIwSIuzPTRaWJWmX7_vP_br12Y894gucKoKcBk7fjoGKRHwQ72Gwz18AkhsYqGU0aLCDbdpWjJrVJLH3L-vPrADe2c85ZDAJ5wkgfDbg99HmFgouG3RjdoEn6n7ZS_l9W7trc4ESNWtWxyBUoxpWFr-grac6KFzue7pVVk-I0RhI1DF5vv7z5W80vYqYkHS1Oh0XjkjzjwnPTPU4Yxsqas-Kh925uvt4imKoO)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFz8FOwzAMgOH7nsLqCQ55ADTBE3CDIxJyU5eZZnaUOJoK2rsv4YCUSlOvv784yRjULxPjF_weACaasQT7nFUs8w_BMzwda9fEJIbGKjVFTZaQ7Xioo6GMRax8yMPr-xtc2E51zmKQKBBmehzAvcBUb6HksqFfspu1yPS3rS2_N2vnxrrBiRqNqkvDXWjizMJnDB3atuay57h2qi_NDEaSNc1BL_99uEPjapr8ac_Vr2CtJJ52n5h2xXcJjDufiGuOmJZObVtzGILbyusNkda3zw)
 
 ### Builds
 

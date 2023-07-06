@@ -21,6 +21,7 @@ from tagging.taggers import (
     JupyterNotebookVersionTagger,
     PythonMajorMinorVersionTagger,
     PythonVersionTagger,
+    PytorchVersionTagger,
     RVersionTagger,
     SHATagger,
     SparkVersionTagger,
@@ -71,6 +72,9 @@ ALL_IMAGES = {
     ),
     "tensorflow-notebook": ImageDescription(
         parent_image="scipy-notebook", taggers=[TensorflowVersionTagger()]
+    ),
+    "pytorch-notebook": ImageDescription(
+        parent_image="scipy-notebook", taggers=[PytorchVersionTagger()]
     ),
     "datascience-notebook": ImageDescription(
         parent_image="scipy-notebook",

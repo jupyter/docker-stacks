@@ -27,6 +27,7 @@ on:
       - "julia-notebook/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
+      - "pytorch-notebook/**"
       - "r-notebook/**"
       - "scipy-notebook/**"
       - "tensorflow-notebook/**"
@@ -55,6 +56,7 @@ on:
       - "julia-notebook/**"
       - "minimal-notebook/**"
       - "pyspark-notebook/**"
+      - "pytorch-notebook/**"
       - "r-notebook/**"
       - "scipy-notebook/**"
       - "tensorflow-notebook/**"
@@ -192,6 +194,15 @@ jobs:
       runsOn: ARM64
     needs: [aarch64-scipy]
 
+  aarch64-pytorch:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: pytorch-notebook
+      platform: aarch64
+      runsOn: ARM64
+    needs: [aarch64-scipy]
+
   x86_64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -200,6 +211,16 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-scipy]
+
+  x86_64-pytorch:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: pytorch-notebook
+      platform: x86_64
+      runsOn: ubuntu-latest
+    needs: [x86_64-scipy]
+
 
   aarch64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -277,6 +298,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            pytorch-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -289,6 +311,7 @@ jobs:
         aarch64-scipy,
         aarch64-r,
         aarch64-tensorflow,
+        aarch64-pytorch,
         aarch64-datascience,
         aarch64-pyspark,
         aarch64-all-spark,
@@ -314,6 +337,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            pytorch-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -326,6 +350,7 @@ jobs:
         x86_64-scipy,
         x86_64-r,
         x86_64-tensorflow,
+        x86_64-pytorch,
         x86_64-datascience,
         x86_64-pyspark,
         x86_64-all-spark,
@@ -349,6 +374,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            pytorch-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,

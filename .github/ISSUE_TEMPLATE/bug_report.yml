@@ -26,6 +26,7 @@ body:
         - julia-notebook
         - minimal-notebook
         - pyspark-notebook
+        - pytorch-notebook
         - r-notebook
         - scipy-notebook
         - tensorflow-notebook
