@@ -185,7 +185,7 @@ It contains:
 `jupyter/pytorch-notebook` includes popular Python deep learning libraries.
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
-- [pytorch](https://www.pytorch.org/) machine learning library
+- [pytorch](https://pytorch.org/) machine learning library
 
 ### jupyter/datascience-notebook
 
