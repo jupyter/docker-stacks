@@ -7,6 +7,8 @@ from pathlib import Path
 
 import plumbum
 
+from tagging.get_platform import unify_aarch64
+
 docker = plumbum.local["docker"]
 
 LOGGER = logging.getLogger(__name__)
@@ -55,7 +57,7 @@ if __name__ == "__main__":
         "--platform",
         required=True,
         type=str,
-        choices=["x86_64", "aarch64"],
+        choices=["x86_64", "aarch64", "arm64"],
         help="Image platform",
     )
     arg_parser.add_argument(
@@ -64,5 +66,6 @@ if __name__ == "__main__":
         help="Owner of the image",
     )
     args = arg_parser.parse_args()
+    args.platform = unify_aarch64(args.platform)
 
     apply_tags(args.short_image_name, args.owner, args.tags_dir, args.platform)
