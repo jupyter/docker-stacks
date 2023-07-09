@@ -202,7 +202,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
   -v "${PWD}"/<my-vol>:/home/jovyan/work
   ```
 
-  This example uses the syntax `$(PWD)`, which is replaced with the full path to the current directory at runtime. The destination
+  This example uses the syntax `${PWD}`, which is replaced with the full path to the current directory at runtime. The destination
   path should also be an absolute path starting with a `/` such as `/home/jovyan/work`.
 
 - You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_UID` and `-e NB_GID`:
