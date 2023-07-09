@@ -37,14 +37,15 @@ help:
 
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ## build the latest image for a stack using the system's architecture
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag $(OWNER)/$(notdir $@):latest ./$(notdir $@) --build-arg OWNER=$(OWNER)
+	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(OWNER)/$(notdir $@):latest" "./$(notdir $@)" --build-arg OWNER="$(OWNER)"
 	@echo -n "Built image size: "
-	@docker images $(OWNER)/$(notdir $@):latest --format "{{.Size}}"
+	@docker images "$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
 
-check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report (experimental)
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests/base-notebook/test_outdated.py
+
+check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report
+	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests/docker-stacks-foundation/test_outdated.py
 check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check all the stacks for outdated packages
 
 
@@ -61,7 +62,6 @@ cont-rm-all: ## remove all containers
 
 docs: ## build HTML documentation
 	sphinx-build -W --keep-going --color docs/ docs/_build/
-
 linkcheck-docs: ## check broken links
 	sphinx-build -W --keep-going --color -b linkcheck docs/ docs/_build/
 
@@ -97,21 +97,18 @@ pre-commit-install: ## set up the git hook scripts
 
 
 pull/%: ## pull a jupyter image
-	docker pull $(OWNER)/$(notdir $@)
+	docker pull "$(OWNER)/$(notdir $@)"
 pull-all: $(foreach I, $(ALL_IMAGES), pull/$(I)) ## pull all images
-
-
 push/%: ## push all tags for a jupyter image
-	docker push --all-tags $(OWNER)/$(notdir $@)
+	docker push --all-tags "$(OWNER)/$(notdir $@)"
 push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 
 
 run-shell/%: ## run a bash in interactive mode in a stack
-	docker run -it --rm $(OWNER)/$(notdir $@) $(SHELL)
-
+	docker run -it --rm "$(OWNER)/$(notdir $@)" $(SHELL)
 run-sudo-shell/%: ## run a bash in interactive mode as root in a stack
-	docker run -it --rm --user root $(OWNER)/$(notdir $@) $(SHELL)
+	docker run -it --rm --user root "$(OWNER)/$(notdir $@)" $(SHELL)
 
 
 
