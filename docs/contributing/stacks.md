@@ -8,7 +8,7 @@ Following these steps will:
 
 1. Set up a project on GitHub containing a Dockerfile based on any image we provide.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your repository.
-3. Configure Docker Hub to build and host your images for others to use.
+3. Configure Docker Hub to host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.md#community-stacks) in this documentation to include your image.
 
 This approach mirrors how we build and share the core stack images.
@@ -16,7 +16,7 @@ Feel free to follow it or pave your own path using alternative services and buil
 
 ## Creating a Project
 
-First, install [cookiecutter](https://github.com/cookiecutter/cookiecutter) using _pip_ or _conda_:
+First, install [cookiecutter](https://github.com/cookiecutter/cookiecutter) using _pip_ or _mamba_:
 
 ```bash
 pip install cookiecutter  # or mamba install cookiecutter
@@ -36,13 +36,13 @@ stack_name [my-jupyter-stack]:
 ```
 
 Enter the user or organization name under which this stack will reside on Docker Hub.
-You must have access to manage this Docker Hub organization to push images here and set up automated builds.
+You must have access to manage this Docker Hub organization to push images here.
 
 ```text
 stack_org [my-project]:
 ```
 
-Select an image from the jupyter/docker-stacks project that will serve as the base for your new image.
+Select an image from the `jupyter/docker-stacks` project that will serve as the base for your new image.
 
 ```text
 stack_base_image [jupyter/base-notebook]:
@@ -54,6 +54,7 @@ Enter a longer description of the stack for your README.
 stack_description [my-jupyter-stack is a community-maintained Jupyter Docker Stack image]:
 ```
 
+Create a GitHub repository to store your project.
 Initialize your project as a Git repository and push it to GitHub.
 
 ```bash
@@ -68,23 +69,8 @@ git push -u origin main
 
 ## Configuring GitHub actions
 
-The cookiecutter template comes with a `.github/workflows/docker.yml` file, which allows you to use GitHub actions to build your Docker image whenever you or someone else submits a pull request.
-
-1. By default, the `.github/workflows/docker.yaml` file has the following triggers configuration:
-
-   ```yaml
-   on:
-   pull_request:
-     paths-ignore:
-       - "*.md"
-   push:
-     branches:
-       - main
-     paths-ignore:
-       - "*.md"
-   ```
-
-   This will trigger the CI pipeline whenever you push to your `main` branch and when any Pull Requests are made to your repository.
+1. By default, the `.github/workflows/docker.yaml` will trigger the CI pipeline whenever you push to your `main` branch
+   and when any Pull Requests are made to your repository.
    For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
 2. Commit your changes and push them to GitHub.
