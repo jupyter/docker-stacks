@@ -39,7 +39,8 @@ ipython profile create
 
 ### Build an Image with a Different Version of Spark
 
-You can build a `pyspark-notebook` image (and also the downstream `all-spark-notebook` image) with a different version of Spark by overriding the default value of the following arguments at build time.
+You can build a `pyspark-notebook` image with a different version of Spark by overriding the default value of the following arguments at build time.
+If you want to build `all-spark-notebook` with a different version, you have to build `pyspark-notebook` first with the version you want and then build `all-spark-notebook` (which is inherited from `pyspark-notebook`).
 
 - Spark distribution is defined by the combination of Spark, Hadoop and Scala versions and verified by the package checksum,
   see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
