@@ -67,19 +67,22 @@ git remote add origin <url from github>
 git push -u origin main
 ```
 
-## Configuring GitHub actions
+## Exploring GitHub Actions
 
-1. By default, the `.github/workflows/docker.yaml` will trigger the CI pipeline whenever you push to your `main` branch
+1. By default, the newly `.github/workflows/docker.yaml` will trigger the CI pipeline whenever you push to your `main` branch
    and when any Pull Requests are made to your repository.
    For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
-2. Commit your changes and push them to GitHub.
-3. Head back to your repository and click on the **Actions** tab.
+2. Go to your repository and click on the **Actions** tab.
    From there, you can click on the workflows on the left-hand side of the screen.
 
    ![GitHub page for jupyter/docker-stacks with the Actions tab active and a rectangle around the "Build Docker Images" workflow in the UI](../_static/contributing/stacks/github-actions-tab.png)
 
-4. In the next screen, you will see information about the workflow run and duration.
+   ```{note}
+   First run is expected to fail, because we haven't yet added Docker credentials to push the image
+   ```
+
+3. In the next screen, you will see information about the workflow run and duration.
    If you click the button with the workflow name again, you will see the logs for the workflow steps.
 
    ![GitHub Actions page showing the "Build Docker Images" workflow](../_static/contributing/stacks/github-actions-workflow.png)
@@ -90,58 +93,44 @@ Now, configure Docker Hub to build your stack image and push it to the Docker Hu
 you merge a GitHub pull request to the main branch of your project.
 
 1. Visit [https://hub.docker.com/](https://hub.docker.com/) and log in.
-2. Select the account or organization matching the one you entered when prompted with `stack_org` by the cookiecutter.
+2. Create a new repository - make sure to use the correct namespace (account or organization).
+   Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter.
 
-   ![DockerHub page zoomed into the user's settings and accounts menu.](../_static/contributing/stacks/docker-org-select.png)
+   ![Docker Hub - Create Repository page with the name field set to "My specialized jupyter stack"](../_static/contributing/stacks/docker-repo-name.png)
 
-3. Scroll to the bottom of the page and click **Create repository**.
-4. Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter.
+3. Enter a description for your image.
+4. Click on your avatar in the top-right corner and select Account settings.
 
-   ![DockerHub - Create Repository page with the name field set to "My specialized jupyter stack"](../_static/contributing/stacks/docker-repo-name.png)
+   ![Docker Hub page zoomed into the user's settings and accounts menu](../_static/contributing/stacks/docker-user-dropdown.png)
 
-5. Enter a description for your image.
-6. Click **GitHub** under the **Build Settings** and follow the prompts to connect your account if it is not already connected.
-7. Select the GitHub organization and repository containing your image definition from the dropdowns.
+5. Click on **Security** and then click on the **New Access Token** button.
 
-   ![Dockerhub - Create Repository page focusing on the "Select Repository" dropdown menu](../_static/contributing/stacks/docker-github-settings.png)
+   ![Docker Hub - Account page with the "Security" tab active and a rectangle highlighting the "New Access Token" button in the UI](../_static/contributing/stacks/docker-org-security.png)
 
-8. Click the **Create and Build** button.
-9. Click on your avatar in the top-right corner and select Account settings.
+6. Enter a meaningful name for your token and click on **Generate**
 
-   ![DockerHub page zoomed into the user's settings and accounts menu](../_static/contributing/stacks/docker-org-select.png)
+   ![Docker Hub - New Access Token page with the name field set to "test-stack token"](../_static/contributing/stacks/docker-org-create-token.png)
 
-10. Click on **Security** and then click on the **New Access Token** button.
+7. Copy the personal access token displayed on the next screen.
 
-    ![DockerHub - Account page with the "Security" tab active and a rectangle highlighting the "New Access Token" button in the UI](../_static/contributing/stacks/docker-org-security.png)
+   ```{note}
+   **You will not be able to see it again after you close the pop-up window**.
+   ```
 
-11. Enter a meaningful name for your token and click on **Create**
+8. Head back to your GitHub repository and click on the **Settings tab**.
+9. Click on the **Secrets and variables->Actions** section and then on the **New repository secret** button in the top right corner.
 
-    ![DockerHub - New Access Token page with the name field set to "my-jupyter-docker-token"](../_static/contributing/stacks/docker-org-create-token.png)
+   ![GitHub page with the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/contributing/stacks/github-create-secrets.png)
 
-12. Copy the personal access token displayed on the next screen.
-
-    ```{note}
-    you will not be able to see it again after you close the pop-up window**.
-    ```
-
-13. Head back to your GitHub repository and click on the **Settings tab**.
-
-    ![GitHub page with the "Setting" tab active and a rectangle highlighting the "New repository secret" button in the UI](../_static/contributing/stacks/github-create-secrets.png)
-
-14. Click on the **Secrets** section and then on the **New repository secret** button in the top right corner (see image above).
-15. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from DockerHub in the **value** field.
+10. Create a **DOCKERHUB_TOKEN** secret and paste the Personal Access Token from Docker Hub in the **value** field.
 
     ![GitHub - Actions/New secret page with the Name field set to "DOCKERHUB_TOKEN"](../_static/contributing/stacks/github-secret-token.png)
 
-16. Repeat the above step but creating a **DOCKERHUB_USERNAME** and replacing the _value_ field with your DockerHub username.
-    Once you have completed these steps, your repository secrets section should look something like this:
-
-    ![GitHub - Repository secrets page showing the existing "DOCKERHUB_TOKEN" and "DOCKERHUB_USERNAME" secrets](../_static/contributing/stacks/github-secrets-completed.png)
+11. Now you're ready to go and you can restart a failed workflow.
 
 ## Defining Your Image
 
-Make edits to the Dockerfile in your project to add third-party libraries and configure Jupyter
-applications.
+Make edits to the Dockerfile in your project to add third-party libraries and configure Jupyter applications.
 Refer to the Dockerfiles for the core stacks (e.g., [jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/blob/main/datascience-notebook/Dockerfile))
 to get a feel for what's possible and the best practices.
 
