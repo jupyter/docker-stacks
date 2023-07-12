@@ -143,8 +143,8 @@ Refer to Docker Hub to build the main branch that you can `docker pull`.
 
 Finally, if you'd like to add a link to your project to this documentation site, please do the following:
 
-1. Clone the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
-2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section.
+1. Fork the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
+2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section in your fork.
 3. Add a table entry with a link to your project, a binder link and a short description of what your Docker image contains.
 4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)(PR) with your changes.
    Maintainers will respond and work with you to address any formatting or content issues.
