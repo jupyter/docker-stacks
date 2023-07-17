@@ -50,4 +50,4 @@ jobs:
         run: make docs
 
       - name: Check Documentation URLs 🔗
-        run: make linkcheck-docs
+        run: make linkcheck-docs || make linkcheck-docs
