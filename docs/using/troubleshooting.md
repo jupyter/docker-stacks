@@ -202,7 +202,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
   -v "${PWD}"/<my-vol>:/home/jovyan/work
   ```
 
-  This example uses the syntax `$(PWD)`, which is replaced with the full path to the current directory at runtime. The destination
+  This example uses the syntax `${PWD}`, which is replaced with the full path to the current directory at runtime. The destination
   path should also be an absolute path starting with a `/` such as `/home/jovyan/work`.
 
 - You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_UID` and `-e NB_GID`:
@@ -306,7 +306,7 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
 
 2. **Turn off Jupyter auto-start in VSCode**
 
-   Alternatively - you might want to ensure that the `Jupyter: Disable Auto Start` setting is turned on to avoid this issue in the future.
+   Alternatively - you might want to ensure that the `Jupyter: Disable Jupyter Auto Start` setting is turned on to avoid this issue in the future.
 
    You can achieve this from the `Settings > Jupyter` menu in VScode:
 

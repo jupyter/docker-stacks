@@ -54,6 +54,11 @@ jobs:
           image: ${{ inputs.parentImage }}
           platform: ${{ inputs.platform }}
 
+      - name: Pull ubuntu:22.04 image 📥
+        if: ${{ inputs.parentImage == '' }}
+        run: docker pull ubuntu:22.04
+        shell: bash
+
       - name: Build image 🛠
         run: docker build --rm --force-rm --tag ${{ env.OWNER }}/${{ inputs.image }} ${{ inputs.image }}/
         env:
