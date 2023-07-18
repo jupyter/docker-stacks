@@ -34,7 +34,7 @@ body:
 
   - type: textarea
     attributes:
-      label: What changes are you proposing?
+      label: What change(s) are you proposing?
       description: |
         Be concise and feel free to add supporting links or references.
       placeholder: |
