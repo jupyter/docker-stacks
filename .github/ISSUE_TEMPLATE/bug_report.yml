@@ -23,6 +23,7 @@ body:
         - all-spark-notebook
         - base-notebook
         - datascience-notebook
+        - docker-stacks-foundation
         - julia-notebook
         - minimal-notebook
         - pyspark-notebook
