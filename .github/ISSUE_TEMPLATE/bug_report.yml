@@ -10,7 +10,7 @@ body:
         Hi! Thanks for using the Jupyter Docker Stacks and taking some time to contribute to this project.
 
         We'd appreciate it if you could check out the [Troubleshooting common problems](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/troubleshooting.html) section in the documentation,
-        as well as [existing issues](https://github.com/jupyter/docker-stacks/issues) prior to submitting an issue to avoid duplication.
+        as well as [existing issues](https://github.com/jupyter/docker-stacks/issues?q=is%3Aissue) prior to submitting an issue to avoid duplication.
 
         Please answer the following sections to help us troubleshoot the problem.
 
