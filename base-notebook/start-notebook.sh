@@ -19,4 +19,4 @@ if [[ "${RESTARTABLE}" == "yes" ]]; then
 fi
 
 # shellcheck disable=SC1091,SC2086
-exec /usr/local/bin/start.sh ${wrapper} jupyter ${DOCKER_STACKS_JUPYTER_CMD} ${NOTEBOOK_ARGS} "$@"
+exec /usr/local/bin/start.sh ${wrapper} jupyter ${DOCKER_STACKS_JUPYTER_CMD} --port ${JUPYTER_PORT} ${NOTEBOOK_ARGS} "$@"

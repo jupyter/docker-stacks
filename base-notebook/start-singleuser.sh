@@ -10,4 +10,4 @@ if [[ "${NOTEBOOK_ARGS} $*" != *"--ip="* ]]; then
 fi
 
 # shellcheck disable=SC1091,SC2086
-. /usr/local/bin/start.sh jupyterhub-singleuser ${NOTEBOOK_ARGS} "$@"
+. /usr/local/bin/start.sh jupyterhub-singleuser --port ${JUPYTER_PORT} ${NOTEBOOK_ARGS} "$@"
