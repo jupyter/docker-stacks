@@ -486,7 +486,7 @@ docker run -it --rm \
     start.sh jupyter notebook --NotebookApp.token=''
 ```
 
-## Enable nbextension spellchecker for markdown (or any other nbextension)
+## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)
 
 NB: this works for classic notebooks only
 
@@ -499,7 +499,7 @@ USER ${NB_UID}
 RUN pip install --no-cache-dir jupyter_contrib_nbextensions && \
     jupyter contrib nbextension install --user && \
     # can modify or enable additional extensions here
-    jupyter nbextension enable spellchecker/main --user && \
+    jupyter nbclassic-extension enable spellchecker/main --user && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```

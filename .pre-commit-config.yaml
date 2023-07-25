@@ -14,7 +14,7 @@
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.8.0
+    rev: v3.9.0
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
@@ -28,7 +28,7 @@ repos:
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 23.7.0
     hooks:
       - id: black
         args: [--target-version=py39]
@@ -127,7 +127,7 @@ repos:
 
   # Run black on python code blocks in documentation files.
   - repo: https://github.com/asottile/blacken-docs
-    rev: 1.14.0
+    rev: 1.15.0
     hooks:
       - id: blacken-docs
         # --skip-errors is added to allow us to have python syntax highlighting even if
