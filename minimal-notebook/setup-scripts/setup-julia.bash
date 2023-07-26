@@ -6,7 +6,7 @@ set -exuo pipefail
 
 # Default julia version to install if env var is not set
 # Check https://julialang.org/downloads/
-JULIA_VERSION="${JULIA_VERSION:-1.9.1}"
+JULIA_VERSION="${JULIA_VERSION:-1.9.2}"
 
 # Figure out what architecture we are installing in
 JULIA_ARCH=$(uname -m)
