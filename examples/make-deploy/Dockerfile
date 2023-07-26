@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 # Pick your favorite docker-stacks image
-FROM jupyter/minimal-notebook:2023-06-01
+FROM jupyter/minimal-notebook:2023-07-25
 
 USER root
 
