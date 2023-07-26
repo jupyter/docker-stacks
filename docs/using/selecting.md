@@ -47,7 +47,7 @@ It contains:
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/base-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
-`jupyter/base-notebook` adds base Jupyter Applications like Notebook, JupyterLab and JupyterHub
+`jupyter/base-notebook` adds base Jupyter Applications like JupyterLab, Jupyter Notebook, JupyterHub and NBClassic
 and serves as the basis for all other stacks besides `jupyter/docker-stacks-foundation`.
 
 It contains:

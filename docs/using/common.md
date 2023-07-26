@@ -197,7 +197,7 @@ Since `Jupyter Notebook v7` `jupyter-server` is used as a backend.
 Notes:
 
 - \*Not installed at this time, but it could be the case in the future or in a community stack.
-- Any other valid `jupyter` command that starts the Jupyter Server can be used.
+- Any other valid `jupyter` subcommand that starts the Jupyter Application can be used.
 
 Example:
 

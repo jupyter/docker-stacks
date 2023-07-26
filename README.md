@@ -85,7 +85,7 @@ We will happily grant additional permissions (e.g., the ability to merge PRs) to
 
 ## Choosing Jupyter frontend
 
-JupyterLab is now the default for all the Jupyter Docker stack images.
+JupyterLab is the default for all the Jupyter Docker Stacks images.
 It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
 You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` subcommand) at container startup;
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#alternative-commands).

@@ -33,7 +33,7 @@ docker run -it -p 8888:8888 jupyter/scipy-notebook:2023-07-25
 #      or http://127.0.0.1:8888/lab?token=f31f2625f13d131f578fced0fc76b81d10f6c629e92c7099
 ```
 
-Pressing `Ctrl-C` twice shuts down the server but leaves the container intact on disk for later restart or permanent deletion using commands like the following:
+Pressing `Ctrl-C` twice shuts down the Server but leaves the container intact on disk for later restart or permanent deletion using commands like the following:
 
 ```bash
 # list containers
