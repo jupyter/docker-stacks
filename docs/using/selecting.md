@@ -37,6 +37,8 @@ It contains:
 - `tini` as the container entry point
 - A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 - Options for a passwordless sudo
+- Common system libraries like `bzip2`, `ca-certificates`, `locales`
+- `wget` to download external files
 - No preinstalled scientific computing packages
 
 ### jupyter/base-notebook
