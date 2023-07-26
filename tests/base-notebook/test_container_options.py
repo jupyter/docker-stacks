@@ -16,7 +16,7 @@ def test_cli_args(container: TrackedContainer, http_client: requests.Session) ->
     (e.g., disabling token security)"""
     host_port = find_free_port()
     running_container = container.run_detached(
-        command=["start-notebook.sh", "--NotebookApp.token=''"],
+        command=["start-notebook.sh", "--IdentityProvider.token=''"],
         ports={"8888/tcp": host_port},
     )
     resp = http_client.get(f"http://localhost:{host_port}")
@@ -103,7 +103,7 @@ def test_custom_internal_port(
     host_port = find_free_port()
     internal_port = env.get("JUPYTER_PORT", 8888)
     running_container = container.run_detached(
-        command=["start-notebook.sh", "--NotebookApp.token=''"],
+        command=["start-notebook.sh", "--IdentityProvider.token=''"],
         environment=env,
         ports={internal_port: host_port},
     )
