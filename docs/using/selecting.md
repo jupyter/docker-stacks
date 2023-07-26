@@ -37,6 +37,8 @@ It contains:
 - `tini` as the container entry point
 - A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 - Options for a passwordless sudo
+- Common system libraries like `bzip2`, `ca-certificates`, `locales`
+- `wget` to download external files
 - No preinstalled scientific computing packages
 
 ### jupyter/base-notebook
@@ -69,6 +71,7 @@ It contains:
 
 - Everything in `jupyter/base-notebook`
 - Common useful utilities like
+  [curl](https://curl.se),
   [git](https://git-scm.com/),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`),
   [tzdata](https://www.iana.org/time-zones),
