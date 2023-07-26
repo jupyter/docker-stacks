@@ -17,9 +17,9 @@ Pkg.add([
 Pkg.precompile();
 '
 
-# Move the kernelspec out to the system share location. Avoids
-# problems with runtime UID change not taking effect properly on the
-# .local folder in the jovyan home dir.  move kernelspec out of home
+# Move the kernelspec out of ${HOME} to the system share location.
+# Avoids problems with runtime UID change not taking effect properly
+# on the .local folder in the jovyan home dir.
 mv "${HOME}/.local/share/jupyter/kernels/julia"* "${CONDA_DIR}/share/jupyter/kernels/"
 chmod -R go+rx "${CONDA_DIR}/share/jupyter"
 rm -rf "${HOME}/.local"
