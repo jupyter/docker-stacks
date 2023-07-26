@@ -16,7 +16,7 @@ The following are some common patterns.
 **Example 1:**
 
 This command pulls the `jupyter/scipy-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
-It then starts a container running Jupyter Server and JupyterLab frontend and exposes the server on host port 8888.
+It then starts a container running Jupyter Server with the JupyterLab frontend and exposes the server on host port 8888.
 The server logs appear in the terminal and include a URL to the server.
 
 ```bash
@@ -131,7 +131,7 @@ subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Si
 ```
 
 This command pulls the `docker.io/jupyter/r-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
-It then starts a container running a Jupyter Server and JupyterLab frontend and exposes the server on host port 10000.
+It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash

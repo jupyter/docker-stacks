@@ -9,9 +9,9 @@
 Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter) containing Jupyter applications and interactive computing tools.
 You can use a stack image to do any of the following (and more):
 
-- Start a personal Server with JupyterLab frontend (default)
+- Start a personal Jupyter Server with the JupyterLab frontend (default)
 - Run JupyterLab for a team using JupyterHub
-- Start a personal Server with Jupyter Notebook frontend in a local Docker container
+- Start a personal Jupyter Server with the Jupyter Notebook frontend in a local Docker container
 - Write your own project Dockerfile
 
 ## Quick Start
@@ -27,7 +27,7 @@ The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/
 **Example 1:**
 
 This command pulls the `jupyter/scipy-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
-It then starts a container running a Jupyter Server and JupyterLab frontend and exposes the container's internal port `8888` to port `10000` of the host machine:
+It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the container's internal port `8888` to port `10000` of the host machine:
 
 ```bash
 docker run -p 10000:8888 jupyter/scipy-notebook:2023-07-25
@@ -46,7 +46,7 @@ The container remains intact for restart after the Server exits.
 **Example 2:**
 
 This command pulls the `jupyter/datascience-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
-It then starts an _ephemeral_ container running a Jupyter Server and JupyterLab frontend and exposes the server on host port 10000.
+It then starts an _ephemeral_ container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 
 ```bash
 docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:2023-07-25
