@@ -475,15 +475,16 @@ For JupyterLab:
 ```bash
 docker run -it --rm \
     jupyter/base-notebook:2023-07-25 \
-    start.sh jupyter lab --LabApp.token=''
+    start-notebook.sh --IdentityProvider.token=''
 ```
 
-For jupyter classic:
+For Jupyter Notebook:
 
 ```bash
 docker run -it --rm \
+    -e DOCKER_STACKS_JUPYTER_CMD=notebook \
     jupyter/base-notebook:2023-07-25 \
-    start.sh jupyter notebook --NotebookApp.token=''
+    start-notebook.sh --IdentityProvider.token=''
 ```
 
 ## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)

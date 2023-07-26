@@ -11,19 +11,19 @@ This page describes the options supported by the startup script and how to bypas
 You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html) to the `start-notebook.sh` script when launching the container.
 
 1. For example, to secure the Notebook server with a [custom password](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#preparing-a-hashed-password)
-   hashed using `jupyter_server.auth.security.passwd()` instead of the default token,
+   hashed using `jupyter_server.auth.passwd()` instead of the default token,
    you can run the following (this hash was generated for the `my-password` password):
 
    ```bash
    docker run -it --rm -p 8888:8888 jupyter/base-notebook \
-       start-notebook.sh --NotebookApp.password='argon2:$argon2id$v=19$m=10240,t=10,p=8$JdAN3fe9J45NvK/EPuGCvA$O/tbxglbwRpOFuBNTYrymAEH6370Q2z+eS1eF4GM6Do'
+       start-notebook.sh --PasswordIdentityProvider.hashed_password='argon2:$argon2id$v=19$m=10240,t=10,p=8$JdAN3fe9J45NvK/EPuGCvA$O/tbxglbwRpOFuBNTYrymAEH6370Q2z+eS1eF4GM6Do'
    ```
 
 2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the notebook server, you can run the following:
 
    ```bash
    docker run  -it --rm -p 8888:8888 jupyter/base-notebook \
-       start-notebook.sh --NotebookApp.base_url=/customized/url/prefix/
+       start-notebook.sh --ServerApp.base_url=/customized/url/prefix/
    ```
 
 ## Docker Options
@@ -148,8 +148,8 @@ docker run -it --rm -p 8888:8888 \
     -v /some/host/folder:/etc/ssl/notebook \
     jupyter/base-notebook \
     start-notebook.sh \
-    --NotebookApp.keyfile=/etc/ssl/notebook/notebook.key \
-    --NotebookApp.certfile=/etc/ssl/notebook/notebook.crt
+    --ServerApp.keyfile=/etc/ssl/notebook/notebook.key \
+    --ServerApp.certfile=/etc/ssl/notebook/notebook.crt
 ```
 
 Alternatively, you may mount a single PEM file containing both the key and certificate.
@@ -160,7 +160,7 @@ docker run -it --rm -p 8888:8888 \
     -v /some/host/folder/notebook.pem:/etc/ssl/notebook.pem \
     jupyter/base-notebook \
     start-notebook.sh \
-    --NotebookApp.certfile=/etc/ssl/notebook.pem
+    --ServerApp.certfile=/etc/ssl/notebook.pem
 ```
 
 In either case, Jupyter Notebook expects the key and certificate to be a **base64 encoded text file**.
