@@ -54,14 +54,14 @@ docker rm 221331c047c4
 **Example 2:**
 
 This command pulls the `jupyter/r-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
-It then starts a container running a Notebook Server and exposes the server on host port 10000.
-The server logs appear in the terminal and include a URL to the Notebook Server, but with the internal container port (8888) instead of the correct host port (10000).
+It then starts a container running Server and exposes the server on host port 10000.
+The server logs appear in the terminal and include a URL to the Server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
 docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:2023-07-25
 ```
 
-Pressing `Ctrl-C` twice shuts down the Notebook Server and immediately destroys the Docker container.
+Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
 New files and changes in `~/work` in the container will be preserved.
 Any other changes made in the container will be lost.
 
@@ -156,7 +156,7 @@ The `podman run` option `--userns=auto` will, for instance, not be possible to u
 The example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them.
 ```
 
-Pressing `Ctrl-C` twice shuts down the Notebook Server and immediately destroys the Docker container.
+Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
 New files and changes in `~/work` in the container will be preserved.
 Any other changes made in the container will be lost.
 

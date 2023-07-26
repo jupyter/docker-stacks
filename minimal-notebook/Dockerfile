@@ -12,7 +12,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install all OS dependencies for fully functional Notebook Server
+# Install all OS dependencies for fully functional Server
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
     # Common useful utilities

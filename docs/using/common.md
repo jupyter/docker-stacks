@@ -28,7 +28,7 @@ You can pass [Jupyter Server options](https://jupyter-server.readthedocs.io/en/l
 
 ## Docker Options
 
-You may instruct the `start-notebook.sh` script to customize the container environment before launching the Notebook Server.
+You may instruct the `start-notebook.sh` script to customize the container environment before launching the Server.
 You do so by passing arguments to the `docker run` command.
 
 ### User-related configurations
@@ -133,7 +133,7 @@ or executables (`chmod +x`) to be run to the paths below:
 
 - `/usr/local/bin/start-notebook.d/` - handled **before** any of the standard options noted above are applied
 - `/usr/local/bin/before-notebook.d/` - handled **after** all the standard options noted above are applied
-  and ran right before the Notebook Server launches
+  and ran right before the Server launches
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/main/docker-stacks-foundation/start.sh)
 script for execution details.
@@ -174,7 +174,7 @@ For additional information about using SSL, see the following:
 - The [`jupyter_server_config.py`](https://github.com/jupyter/docker-stacks/blob/main/base-notebook/jupyter_server_config.py)
   file for how this Docker image generates a self-signed certificate.
 - The [Jupyter Server documentation](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#securing-a-jupyter-server)
-  for best practices about securing a public Notebook Server in general.
+  for best practices about securing a public Server in general.
 
 ## Alternative Commands
 
@@ -202,7 +202,7 @@ Notes:
 Example:
 
 ```bash
-# Run Notebook Server and Jupyter Notebook frontend
+# Run Jupyter Server with Jupyter Notebook frontend
 docker run -it --rm \
     -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \

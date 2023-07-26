@@ -9,9 +9,9 @@
 Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://hub.docker.com/u/jupyter) containing Jupyter applications and interactive computing tools.
 You can use a stack image to do any of the following (and more):
 
-- Start a JupyterLab Notebook Server (default)
+- Start a personal Server with JupyterLab frontend (default)
 - Run JupyterLab for a team using JupyterHub
-- Start a Notebook Server with Jupyter Notebook frontend in a local Docker container
+- Start a personal Server with Jupyter Notebook frontend in a local Docker container
 - Write your own project Dockerfile
 
 ## Quick Start
@@ -41,7 +41,7 @@ where:
 - `hostname` is the name of the computer running Docker
 - `token` is the secret token printed in the console.
 
-The container remains intact for restart after the Notrbook Server exits.
+The container remains intact for restart after the Server exits.
 
 **Example 2:**
 

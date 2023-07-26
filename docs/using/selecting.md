@@ -53,7 +53,7 @@ and serves as the basis for all other stacks besides `jupyter/docker-stacks-foun
 It contains:
 
 - Everything in `jupyter/docker-stacks-foundation`
-- Minimally functional Notebook Server (e.g., no LaTeX support for saving notebooks as PDFs)
+- Minimally functional Server (e.g., no LaTeX support for saving notebooks as PDFs)
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - A `start-notebook.sh` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub

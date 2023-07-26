@@ -145,7 +145,7 @@ docker run -it --rm \
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/999>
 
-## Let's Encrypt a Notebook Server
+## Let's Encrypt a Server
 
 See the README for a basic automation here
 <https://github.com/jupyter/docker-stacks/tree/main/examples/make-deploy>
@@ -461,7 +461,7 @@ USER ${NB_UID}
 
 Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
 
-## Run Notebook Server inside an already secured environment (i.e., with no token)
+## Run Server inside an already secured environment (i.e., with no token)
 
 (Adapted from [issue 728](https://github.com/jupyter/docker-stacks/issues/728))
 
