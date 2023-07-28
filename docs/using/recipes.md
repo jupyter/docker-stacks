@@ -163,25 +163,9 @@ Be sure to check the current base image in `jupyter/docker-stacks-foundation` be
 
 We also have contributed recipes for using JupyterHub.
 
-### Use JupyterHub's dockerspawner
+### Use JupyterHub's DockerSpawner
 
-```{warning}
-This recipe is not tested and might be broken.
-```
-
-In most cases for use with DockerSpawner, given an image that already has a notebook stack set up,
-you would only need to add:
-
-1. install the jupyterhub-singleuser script (for the correct Python version)
-2. change the command to launch the single-user server
-
-Swapping out the `FROM` line in the `jupyterhub/singleuser` Dockerfile should be enough for most
-cases.
-
-Credit: [Justin Tyberg](https://github.com/jtyberg), [quanghoc](https://github.com/quanghoc), and
-[Min RK](https://github.com/minrk) based on
-[docker-stacks/issues/124](https://github.com/jupyter/docker-stacks/issues/124) and
-[docker-stacks/pull/185](https://github.com/jupyter/docker-stacks/pull/185)
+You can find an example of using DockerSpawner [here](https://github.com/jupyterhub/jupyterhub-deploy-docker/tree/main/basic-example).
 
 ### Containers with a specific version of JupyterHub
 
