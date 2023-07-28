@@ -17,50 +17,25 @@ For example:
 docker run -it --rm \
     --user root \
     -e GRANT_SUDO=yes \
-    jupyter/minimal-notebook
+    jupyter/base-notebook
 ```
 
 **You should only enable `sudo` if you trust the user and/or if the container is running on an isolated host.**
 See [Docker security documentation](https://docs.docker.com/engine/security/userns-remap/) for more information about running containers as `root`.
 
-## Using `mamba install` or `pip install` in a Child Docker image
+## Using `mamba install` (recommended) or `pip install` in a Child Docker image
 
 Create a new Dockerfile like the one shown below.
+To use a requirements.txt file, first, create your `requirements.txt` file with the listing of packages desired.
 
 ```dockerfile
-# Start from a core stack version
-FROM jupyter/datascience-notebook:2023-07-25
-# Install in the default python3 environment
-RUN pip install --no-cache-dir 'flake8==3.9.2' && \
+FROM jupyter/base-notebook
+
+RUN mamba install --yes 'flake8' && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
-```
 
-Then build a new image.
-
-```bash
-docker build --rm -t jupyter/my-datascience-notebook .
-```
-
-To use a requirements.txt file, first, create your `requirements.txt` file with the listing of
-packages desired.
-Next, create a new Dockerfile like the one shown below.
-
-```dockerfile
-# Start from a core stack version
-FROM jupyter/datascience-notebook:2023-07-25
-# Install from the requirements.txt file
-COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
-RUN pip install --no-cache-dir --requirement /tmp/requirements.txt && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-```
-
-For conda, the Dockerfile is similar:
-
-```dockerfile
-# Start from a core stack version
-FROM jupyter/datascience-notebook:2023-07-25
 # Install from the requirements.txt file
 COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
 RUN mamba install --yes --file /tmp/requirements.txt && \
@@ -69,7 +44,28 @@ RUN mamba install --yes --file /tmp/requirements.txt && \
     fix-permissions "/home/${NB_USER}"
 ```
 
-Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#r15960081)
+`pip` usage is similar:
+
+```dockerfile
+FROM jupyter/base-notebook
+
+# Install in the default python3 environment
+RUN pip install --no-cache-dir 'flake8' && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+# Install from the requirements.txt file
+COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
+RUN pip install --no-cache-dir --requirement /tmp/requirements.txt && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+```
+
+Then build a new image.
+
+```bash
+docker build --rm -t my-custom-image .
+```
 
 ## Add a custom conda environment and Jupyter kernel
 
@@ -77,8 +73,7 @@ The default version of Python that ships with the image may not be the version y
 The instructions below permit adding a conda environment with a different Python version and making it accessible to Jupyter.
 
 ```dockerfile
-# Choose your desired base image
-FROM jupyter/minimal-notebook:latest
+FROM jupyter/minimal-notebook
 
 # name your environment and choose the python version
 ARG conda_env=python37
@@ -114,25 +109,21 @@ RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --na
 Create the Dockerfile as:
 
 ```dockerfile
-# Start from a core stack version
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/base-notebook
 
 # Install the Dask dashboard
-RUN pip install --no-cache-dir dask-labextension && \
+RUN mamba install --yes 'dask-labextension' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Dask Scheduler & Bokeh ports
+# Dask Scheduler port
 EXPOSE 8787
-EXPOSE 8786
-
-ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 ```
 
 And build the image as:
 
 ```bash
-docker build --tag jupyter/scipy-dasklabextension:latest .
+docker build --tag my-custom-image .
 ```
 
 Once built, run using the command:
@@ -140,10 +131,9 @@ Once built, run using the command:
 ```bash
 docker run -it --rm \
     -p 8888:8888 \
-    -p 8787:8787 jupyter/scipy-dasklabextension:latest
+    -p 8787:8787 \
+    my-custom-image
 ```
-
-Ref: <https://github.com/jupyter/docker-stacks/issues/999>
 
 ## Let's Encrypt a Server
 
@@ -153,21 +143,23 @@ which includes steps for requesting and renewing a Let's Encrypt certificate.
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/78>
 
-## Slideshows with Jupyter and RISE
+## Slideshows with JupyterLab and RISE
 
-[RISE](https://github.com/damianavila/RISE) allows via an extension to create live slideshows of your
-notebooks, with no conversion, adding javascript Reveal.js:
+[RISE](https://github.com/jupyterlab-contrib/rise): "Live" Reveal.js JupyterLab Slideshow Extension.
 
-```bash
-# Add Live slideshows with RISE
-RUN mamba install --yes -c damianavila82 rise && \
+```{note}
+We're providing the recipe to install JupyterLab extension.
+You can find the original Jupyter Notebook extenstion [here](http://github.com/damianavila/RISE)
+```
+
+```dockerfile
+FROM jupyter/base-notebook
+
+RUN mamba install --yes 'jupyterlab_rise' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
-
-Credit: [Paolo D.](https://github.com/pdonorio) based on
-[docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43)
 
 ## xgboost
 
@@ -175,12 +167,12 @@ You need to install conda-forge's gcc for Python xgboost to work correctly.
 Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0.
 
 ```bash
-mamba install --yes gcc && \
+mamba install --yes 'gcc' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-pip install --no-cache-dir xgboost && \
+pip install --no-cache-dir 'xgboost' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -217,9 +209,7 @@ Most containers, including our Ubuntu base image, ship without manpages installe
 You can use the following Dockerfile to inherit from one of our images to enable manpages:
 
 ```dockerfile
-# Choose your desired base image
-ARG BASE_CONTAINER=jupyter/datascience-notebook:latest
-FROM $BASE_CONTAINER
+FROM jupyter/datascience-notebookR
 
 USER root
 
@@ -283,8 +273,9 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:2023-07-25
-RUN pip install --no-cache-dir jupyterhub==1.4.1 && \
+FROM jupyter/base-notebook
+
+RUN pip install --no-cache-dir 'jupyterhub==1.4.1' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
@@ -438,9 +429,9 @@ USER ${NB_UID}
 # - Dashboards
 # - PyDoop
 # - PyHive
-RUN pip install --no-cache-dir jupyter_dashboards faker && \
+RUN pip install --no-cache-dir 'jupyter_dashboards' 'faker' && \
     jupyter dashboards quick-setup --sys-prefix && \
-    pip2 install --no-cache-dir pyhive pydoop thrift sasl thrift_sasl faker && \
+    pip2 install --no-cache-dir 'pyhive' 'pydoop' 'thrift' 'sasl' 'thrift_sasl' 'faker' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -474,7 +465,7 @@ For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:2023-07-25 \
+    jupyter/base-notebook \
     start-notebook.sh --IdentityProvider.token=''
 ```
 
@@ -483,7 +474,7 @@ For Jupyter Notebook:
 ```bash
 docker run -it --rm \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-    jupyter/base-notebook:2023-07-25 \
+    jupyter/base-notebook \
     start-notebook.sh --IdentityProvider.token=''
 ```
 
@@ -492,12 +483,11 @@ docker run -it --rm \
 NB: this works for classic notebooks only
 
 ```dockerfile
-# Update with your base image of choice
-FROM jupyter/minimal-notebook:latest
+FROM jupyter/minimal-notebook
 
 USER ${NB_UID}
 
-RUN pip install --no-cache-dir jupyter_contrib_nbextensions && \
+RUN pip install --no-cache-dir 'jupyter_contrib_nbextensions' && \
     jupyter contrib nbextension install --user && \
     # can modify or enable additional extensions here
     jupyter nbclassic-extension enable spellchecker/main --user && \
@@ -513,10 +503,10 @@ Please note that the [Delta Lake](https://delta.io/) packages are only available
 By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
 
 ```dockerfile
-FROM jupyter/pyspark-notebook:latest
+FROM jupyter/pyspark-notebook
 
 ARG DELTA_CORE_VERSION="1.2.1"
-RUN pip install --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
+RUN pip install --no-cache-dir 'delta-spark==${DELTA_CORE_VERSION}' && \
      fix-permissions "${HOME}" && \
      fix-permissions "${CONDA_DIR}"
 
@@ -540,7 +530,7 @@ RUN echo "from pyspark.sql import SparkSession" > /tmp/init-delta.py && \
 The example below is a Dockerfile to load Source Han Sans with normal weight, usually used for the web.
 
 ```dockerfile
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/scipy-notebook
 
 RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
     MPL_DATA="${CONDA_DIR}/lib/${PYV}/site-packages/matplotlib/mpl-data" && \
@@ -575,8 +565,7 @@ docker run -it --rm \
 The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
 
 ```dockerfile
-# use one of the Jupyter Docker Stacks images
-FROM jupyter/scipy-notebook:2023-07-25
+FROM jupyter/scipy-notebook
 
 # install ijavascript
 RUN npm install -g ijavascript
@@ -588,9 +577,7 @@ RUN ijsinstall
 The following recipe demonstrates how to add functionality to read from and write to an instance of Microsoft SQL server in your notebook.
 
 ```dockerfile
-ARG BASE_IMAGE=jupyter/tensorflow-notebook
-
-FROM $BASE_IMAGE
+FROM jupyter/base-notebook
 
 USER root
 
@@ -598,18 +585,25 @@ ENV MSSQL_DRIVER "ODBC Driver 18 for SQL Server"
 ENV PATH="/opt/mssql-tools18/bin:${PATH}"
 
 RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends gnupg2 && \
-    wget --progress=dot:giga https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/microsoft.gpg && \
-    apt-get purge --yes gnupg2 && \
-    echo "deb [arch=amd64,armhf,arm64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft.list && \
+    apt-get install --yes --no-install-recommends curl gnupg2 lsb-release && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
     apt-get update --yes && \
     ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql18 && \
+    # optional: for bcp and sqlcmd
+    ACCEPT_EULA=Y apt-get install --yes --no-install-recommends mssql-tools18 && \
+    # optional: for unixODBC development headers
+    apt-get install -y unixodbc-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
-RUN pip install --no-cache-dir pyodbc
+RUN mamba install --yes \
+    'pyodbc' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 You can now use `pyodbc` and `sqlalchemy` to interact with the database.
