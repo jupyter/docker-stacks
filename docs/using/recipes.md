@@ -149,7 +149,7 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/78>
 
 ```{note}
 We're providing the recipe to install JupyterLab extension.
-You can find the original Jupyter Notebook extenstion [here](http://github.com/damianavila/RISE)
+You can find the original Jupyter Notebook extenstion [here](https://github.com/damianavila/RISE)
 ```
 
 ```dockerfile
