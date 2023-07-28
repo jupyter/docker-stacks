@@ -29,7 +29,6 @@ Create a new Dockerfile like the one shown below.
 To use a requirements.txt file, first, create your `requirements.txt` file with the listing of packages desired.
 
 ```dockerfile
-# Start from a core stack version
 FROM jupyter/base-notebook
 
 RUN mamba install --yes 'flake8' && \
@@ -48,7 +47,6 @@ RUN mamba install --yes --file /tmp/requirements.txt && \
 `pip` usage is similar:
 
 ```dockerfile
-# Start from a core stack version
 FROM jupyter/base-notebook
 
 # Install in the default python3 environment
@@ -75,7 +73,6 @@ The default version of Python that ships with the image may not be the version y
 The instructions below permit adding a conda environment with a different Python version and making it accessible to Jupyter.
 
 ```dockerfile
-# Choose your desired base image
 FROM jupyter/minimal-notebook
 
 # name your environment and choose the python version
@@ -112,7 +109,6 @@ RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --na
 Create the Dockerfile as:
 
 ```dockerfile
-# Start from a core stack version
 FROM jupyter/scipy-notebook
 
 # Install the Dask dashboard
@@ -215,9 +211,7 @@ Most containers, including our Ubuntu base image, ship without manpages installe
 You can use the following Dockerfile to inherit from one of our images to enable manpages:
 
 ```dockerfile
-# Choose your desired base image
-ARG BASE_CONTAINER=jupyter/datascience-notebook
-FROM $BASE_CONTAINER
+FROM jupyter/datascience-notebookR
 
 USER root
 
@@ -281,7 +275,8 @@ To use a specific version of JupyterHub, the version of `jupyterhub` in your ima
 version in the Hub itself.
 
 ```dockerfile
-FROM jupyter/base-notebook:2023-07-25
+FROM jupyter/base-notebook
+
 RUN pip install --no-cache-dir jupyterhub==1.4.1 && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -472,7 +467,7 @@ For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:2023-07-25 \
+    jupyter/base-notebook \
     start-notebook.sh --IdentityProvider.token=''
 ```
 
@@ -481,7 +476,7 @@ For Jupyter Notebook:
 ```bash
 docker run -it --rm \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-    jupyter/base-notebook:2023-07-25 \
+    jupyter/base-notebook \
     start-notebook.sh --IdentityProvider.token=''
 ```
 
@@ -490,7 +485,6 @@ docker run -it --rm \
 NB: this works for classic notebooks only
 
 ```dockerfile
-# Update with your base image of choice
 FROM jupyter/minimal-notebook
 
 USER ${NB_UID}
@@ -573,8 +567,7 @@ docker run -it --rm \
 The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
 
 ```dockerfile
-# use one of the Jupyter Docker Stacks images
-FROM jupyter/scipy-notebook:2023-07-25
+FROM jupyter/scipy-notebook
 
 # install ijavascript
 RUN npm install -g ijavascript
@@ -586,9 +579,7 @@ RUN ijsinstall
 The following recipe demonstrates how to add functionality to read from and write to an instance of Microsoft SQL server in your notebook.
 
 ```dockerfile
-ARG BASE_IMAGE=jupyter/base-notebook
-
-FROM $BASE_IMAGE
+FROM jupyter/base-notebook
 
 USER root
 
