@@ -36,7 +36,7 @@ jobs:
 
     strategy:
       matrix:
-        docker:
+        dockerfile:
           [
             dask_jupyterlab.dockerfile,
             jupyterhub_version.dockerfile,
