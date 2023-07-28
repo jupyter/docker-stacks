@@ -46,8 +46,8 @@ docker build --rm --tag my-custom-image .
 
 ## Add a custom conda environment and Jupyter kernel
 
-The default version of Python that ships with the image may not be the version you want.
-The instructions below permit adding a conda environment with a different Python version and making it accessible to Jupyter.
+The default version of `Python` that ships with the image may not be the version you want.
+The instructions below permit adding a conda environment with a different `Python` version and making it accessible to Jupyter.
 You may also use older image like `jupyter/base-notebook:python-3.10`.
 List of all tags can be found [here](https://github.com/jupyter/docker-stacks/wiki)
 
