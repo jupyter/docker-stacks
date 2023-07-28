@@ -1,6 +1,6 @@
 # Common Features
 
-Except for `jupyter/docker-stacks-foundation`, a container launched from any Jupyter Docker Stacks image runs a Jupyter Server with a JupyterLab frontend.
+Except for `jupyter/docker-stacks-foundation`, a container launched from any Jupyter Docker Stacks image runs a Jupyter Server with the JupyterLab frontend.
 The container does so by executing a `start-notebook.sh` script.
 This script configures the internal container environment and then runs `jupyter lab`, passing any command-line arguments received.
 
@@ -8,9 +8,9 @@ This page describes the options supported by the startup script and how to bypas
 
 ## Jupyter Server Options
 
-You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html) to the `start-notebook.sh` script when launching the container.
+You can pass [Jupyter Server options](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html) to the `start-notebook.sh` script when launching the container.
 
-1. For example, to secure the Notebook server with a [custom password](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#preparing-a-hashed-password)
+1. For example, to secure the Jupyter Server with a [custom password](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#preparing-a-hashed-password)
    hashed using `jupyter_server.auth.passwd()` instead of the default token,
    you can run the following (this hash was generated for the `my-password` password):
 
@@ -19,7 +19,7 @@ You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/l
        start-notebook.sh --PasswordIdentityProvider.hashed_password='argon2:$argon2id$v=19$m=10240,t=10,p=8$JdAN3fe9J45NvK/EPuGCvA$O/tbxglbwRpOFuBNTYrymAEH6370Q2z+eS1eF4GM6Do'
    ```
 
-2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the notebook server, you can run the following:
+2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the Jupyter Server, you can run the following:
 
    ```bash
    docker run  -it --rm -p 8888:8888 jupyter/base-notebook \
@@ -28,7 +28,7 @@ You can pass [Jupyter server options](https://jupyter-server.readthedocs.io/en/l
 
 ## Docker Options
 
-You may instruct the `start-notebook.sh` script to customize the container environment before launching the notebook server.
+You may instruct the `start-notebook.sh` script to customize the container environment before launching the Server.
 You do so by passing arguments to the `docker run` command.
 
 ### User-related configurations
@@ -133,7 +133,7 @@ or executables (`chmod +x`) to be run to the paths below:
 
 - `/usr/local/bin/start-notebook.d/` - handled **before** any of the standard options noted above are applied
 - `/usr/local/bin/before-notebook.d/` - handled **after** all the standard options noted above are applied
-  and ran right before the notebook server launches
+  and ran right before the Server launches
 
 See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/main/docker-stacks-foundation/start.sh)
 script for execution details.
@@ -163,7 +163,7 @@ docker run -it --rm -p 8888:8888 \
     --ServerApp.certfile=/etc/ssl/notebook.pem
 ```
 
-In either case, Jupyter Notebook expects the key and certificate to be a **base64 encoded text file**.
+In either case, Jupyter Server expects the key and certificate to be a **base64 encoded text file**.
 The certificate file or PEM may contain one or more certificates (e.g., server, intermediate, and root).
 
 For additional information about using SSL, see the following:
@@ -174,7 +174,7 @@ For additional information about using SSL, see the following:
 - The [`jupyter_server_config.py`](https://github.com/jupyter/docker-stacks/blob/main/base-notebook/jupyter_server_config.py)
   file for how this Docker image generates a self-signed certificate.
 - The [Jupyter Server documentation](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#securing-a-jupyter-server)
-  for best practices about securing a public notebook server in general.
+  for best practices about securing a public Server in general.
 
 ## Alternative Commands
 
@@ -184,31 +184,32 @@ JupyterLab, built on top of Jupyter Server, is now the default for all the image
 However, switching back to the classic notebook or using a different startup command is still possible.
 You can achieve this by setting the environment variable `DOCKER_STACKS_JUPYTER_CMD` at container startup.
 The table below shows some options.
+Since `Jupyter Notebook v7` `jupyter-server` is used as a backend.
 
-| `DOCKER_STACKS_JUPYTER_CMD` | Backend          | Frontend         |
-| --------------------------- | ---------------- | ---------------- |
-| `lab` (default)             | Jupyter Server   | JupyterLab       |
-| `notebook`                  | Jupyter Notebook | Jupyter Notebook |
-| `nbclassic`                 | Jupyter Server   | Jupyter Notebook |
-| `server`                    | Jupyter Server   | None             |
-| `retro`\*                   | Jupyter Server   | RetroLab         |
+| `DOCKER_STACKS_JUPYTER_CMD` | Frontend         |
+| --------------------------- | ---------------- |
+| `lab` (default)             | JupyterLab       |
+| `notebook`                  | Jupyter Notebook |
+| `nbclassic`                 | NbClassic        |
+| `server`                    | None             |
+| `retro`\*                   | RetroLab         |
 
 Notes:
 
 - \*Not installed at this time, but it could be the case in the future or in a community stack.
-- Any other valid `jupyter` command that starts the Jupyter server can be used.
+- Any other valid `jupyter` subcommand that starts the Jupyter Application can be used.
 
 Example:
 
 ```bash
-# Run Jupyter Notebook on Jupyter Server
+# Run Jupyter Server with the Jupyter Notebook frontend
 docker run -it --rm \
     -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
     jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
-# Run Jupyter Notebook classic
+# Use Jupyter NBClassic frontend
 docker run -it --rm \
     -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \

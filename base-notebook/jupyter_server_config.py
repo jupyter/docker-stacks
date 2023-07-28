@@ -53,7 +53,6 @@ if "GEN_CERT" in os.environ:
     os.chmod(pem_file, stat.S_IRUSR | stat.S_IWUSR)
     c.ServerApp.certfile = pem_file
 
-# Change default umask for all subprocesses of the notebook server if set in
-# the environment
+# Change default umask for all subprocesses of the Server if set in the environment
 if "NB_UMASK" in os.environ:
     os.umask(int(os.environ["NB_UMASK"], 8))

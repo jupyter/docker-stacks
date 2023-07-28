@@ -11,7 +11,7 @@ You can use a stack image to do any of the following (and more):
 
 - Start a personal Jupyter Server with the JupyterLab frontend (default)
 - Run JupyterLab for a team using JupyterHub
-- Start a personal Jupyter Notebook server in a local Docker container
+- Start a personal Jupyter Server with the Jupyter Notebook frontend in a local Docker container
 - Write your own project Dockerfile
 
 ## Quick Start
@@ -20,14 +20,14 @@ You can try a [relatively recent build of the jupyter/base-notebook image on myb
 by simply clicking the preceding link.
 Otherwise, the examples below may help you get started if you [have Docker installed](https://docs.docker.com/get-docker/),
 know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use
-and want to launch a single Jupyter Server in a container.
+and want to launch a single Jupyter Application in a container.
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) describes additional uses and features in detail.
 
 **Example 1:**
 
 This command pulls the `jupyter/scipy-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
-It then starts a container running a Jupyter Server and exposes the container's internal port `8888` to port `10000` of the host machine:
+It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the container's internal port `8888` to port `10000` of the host machine:
 
 ```bash
 docker run -p 10000:8888 jupyter/scipy-notebook:2023-07-25
@@ -41,12 +41,12 @@ where:
 - `hostname` is the name of the computer running Docker
 - `token` is the secret token printed in the console.
 
-The container remains intact for restart after the Jupyter Server exits.
+The container remains intact for restart after the Server exits.
 
 **Example 2:**
 
 This command pulls the `jupyter/datascience-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
-It then starts an _ephemeral_ container running a Jupyter Server and exposes the server on host port 10000.
+It then starts an _ephemeral_ container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 
 ```bash
 docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:2023-07-25
@@ -83,17 +83,12 @@ We'd also like to invite members of the community to help with two maintainer ac
 Anyone in the community can jump in and help with these activities anytime.
 We will happily grant additional permissions (e.g., the ability to merge PRs) to anyone who shows an ongoing interest in working on the project.
 
-## Jupyter Notebook Deprecation Notice
+## Choosing Jupyter frontend
 
-Following [Jupyter Notebook notice](https://github.com/jupyter/notebook#notice), JupyterLab is now the default for all the Jupyter Docker stack images.
+JupyterLab is the default for all the Jupyter Docker Stacks images.
 It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
 You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` subcommand) at container startup;
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#alternative-commands).
-
-According to the Jupyter Notebook project status and its compatibility with JupyterLab,
-these Docker images may remove the classic Jupyter Notebook interface altogether in favor of another _classic-like_ UI built atop JupyterLab.
-
-This change is tracked in the issue [#1217](https://github.com/jupyter/docker-stacks/issues/1217); please check its content for more information.
 
 ## Alternatives
 

@@ -97,7 +97,7 @@ body:
       description: |
         A clear and concise description of what the bug is.
       placeholder: |
-        Example: No output is visible in the notebook and the notebook server log contains messages about ...
+        Example: No output is visible in the notebook and the Server log contains messages about ...
     validations:
       required: true
 
