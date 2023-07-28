@@ -171,8 +171,6 @@ RUN mamba install --yes 'py-xgboost' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
-
-# run "import xgboost" in python
 ```
 
 ## Running behind an nginx proxy
