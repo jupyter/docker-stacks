@@ -41,7 +41,7 @@ To use a requirements.txt file, first, create your `requirements.txt` file with 
 Then build a new image.
 
 ```bash
-docker build --rm -t my-custom-image .
+docker build --rm --tag my-custom-image .
 ```
 
 ## Add a custom conda environment and Jupyter kernel
@@ -96,7 +96,7 @@ Create the Dockerfile as:
 And build the image as:
 
 ```bash
-docker build --tag my-custom-image .
+docker build --rm --tag my-custom-image .
 ```
 
 Once built, run using the command:
