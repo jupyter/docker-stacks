@@ -50,6 +50,7 @@ The following rules are ignored by default for all images in the `.hadolint.yaml
   - `base-notebook` `FROM` clause is fixed but based on an argument (`ARG`).
   - Building downstream images from (`FROM`) the latest is done on purpose.
 - [`DL3008`][dl3008]: System packages are always updated (`apt-get`) to the latest version.
+- [`DL3013`][dl3013]: We always install latest packages using `pip`
 
 The preferred way to do it for other rules is to flag ignored ones in the `Dockerfile`.
 
@@ -69,4 +70,5 @@ RUN cd /tmp && echo "hello!"
 [rules]: https://github.com/hadolint/hadolint#rules
 [dl3006]: https://github.com/hadolint/hadolint/wiki/DL3006
 [dl3008]: https://github.com/hadolint/hadolint/wiki/DL3008
+[dl3013]: https://github.com/hadolint/hadolint/wiki/DL3013
 [pre-commit]: https://pre-commit.com/
