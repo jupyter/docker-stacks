@@ -113,6 +113,7 @@ FROM jupyter/base-notebook
 
 # Install the Dask dashboard
 RUN mamba install --yes 'dask-labextension' && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -582,8 +583,7 @@ RUN apt-get update --yes && \
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
-RUN mamba install --yes \
-    'pyodbc' && \
+RUN mamba install --yes 'pyodbc' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
