@@ -163,16 +163,11 @@ RUN mamba install --yes 'jupyterlab_rise' && \
 
 ## xgboost
 
-You need to install conda-forge's gcc for Python xgboost to work correctly.
-Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0.
+```dockerfile
+FROM jupyter/base-notebook
 
-```bash
-mamba install --yes 'gcc' && \
+RUN mamba install --yes 'py-xgboost' && \
     mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-pip install --no-cache-dir 'xgboost' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
