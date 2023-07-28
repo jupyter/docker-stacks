@@ -76,7 +76,7 @@ The instructions below permit adding a conda environment with a different Python
 
 ```dockerfile
 # Choose your desired base image
-FROM jupyter/minimal-notebook:latest
+FROM jupyter/minimal-notebook
 
 # name your environment and choose the python version
 ARG conda_env=python37
@@ -113,7 +113,7 @@ Create the Dockerfile as:
 
 ```dockerfile
 # Start from a core stack version
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/scipy-notebook
 
 # Install the Dask dashboard
 RUN pip install --no-cache-dir dask-labextension && \
@@ -130,7 +130,7 @@ ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 And build the image as:
 
 ```bash
-docker build --tag jupyter/scipy-dasklabextension:latest .
+docker build --tag jupyter/scipy-dasklabextension .
 ```
 
 Once built, run using the command:
@@ -138,7 +138,7 @@ Once built, run using the command:
 ```bash
 docker run -it --rm \
     -p 8888:8888 \
-    -p 8787:8787 jupyter/scipy-dasklabextension:latest
+    -p 8787:8787 jupyter/scipy-dasklabextension
 ```
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/999>
@@ -216,7 +216,7 @@ You can use the following Dockerfile to inherit from one of our images to enable
 
 ```dockerfile
 # Choose your desired base image
-ARG BASE_CONTAINER=jupyter/datascience-notebook:latest
+ARG BASE_CONTAINER=jupyter/datascience-notebook
 FROM $BASE_CONTAINER
 
 USER root
@@ -491,7 +491,7 @@ NB: this works for classic notebooks only
 
 ```dockerfile
 # Update with your base image of choice
-FROM jupyter/minimal-notebook:latest
+FROM jupyter/minimal-notebook
 
 USER ${NB_UID}
 
@@ -511,7 +511,7 @@ Please note that the [Delta Lake](https://delta.io/) packages are only available
 By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
 
 ```dockerfile
-FROM jupyter/pyspark-notebook:latest
+FROM jupyter/pyspark-notebook
 
 ARG DELTA_CORE_VERSION="1.2.1"
 RUN pip install --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
@@ -538,7 +538,7 @@ RUN echo "from pyspark.sql import SparkSession" > /tmp/init-delta.py && \
 The example below is a Dockerfile to load Source Han Sans with normal weight, usually used for the web.
 
 ```dockerfile
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/scipy-notebook
 
 RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
     MPL_DATA="${CONDA_DIR}/lib/${PYV}/site-packages/matplotlib/mpl-data" && \
