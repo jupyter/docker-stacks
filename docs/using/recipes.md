@@ -125,7 +125,7 @@ Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for e
 
 Here is a [quick example of NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
-Then download the files at that gist and run `docker-compose up -d` to test it out.
+Then download the files at that gist and run `docker-compose up` to test it out.
 Customize the `nginx.conf` file to set the desired paths and add other services.
 
 ## Host volume mounts and notebook errors
