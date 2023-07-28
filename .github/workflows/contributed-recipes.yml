@@ -45,6 +45,7 @@ jobs:
             manpage_install.dockerfile,
             microsoft_odbc.dockerfile,
             pip_install.dockerfile,
+            spellcheck_notebookv6.dockerfile,
             rise_jupyterlab.dockerfile,
             xgboost.dockerfile,
           ]

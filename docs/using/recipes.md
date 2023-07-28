@@ -388,24 +388,14 @@ docker run -it --rm \
 
 ## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)
 
-```{warning}
-This recipe is not tested and might be broken.
+```{note}
+This recipe only works for NBCassic with Jupyter Notebook < 7.
+It is recommended to use [jupyterlab-spellchecker](https://github.com/jupyterlab-contrib/spellchecker) in modern environments.
 ```
 
-NB: this works for classic notebooks only
-
-```dockerfile
-FROM jupyter/base-notebook
-
-RUN pip install --no-cache-dir 'jupyter_contrib_nbextensions' && \
-    jupyter contrib nbextension install --user && \
-    # can modify or enable additional extensions here
-    jupyter nbclassic-extension enable spellchecker/main --user && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/spellcheck_notebookv6.dockerfile
+:language: docker
 ```
-
-Ref: <https://github.com/jupyter/docker-stacks/issues/675>
 
 ## Enable Delta Lake in Spark notebooks
 
