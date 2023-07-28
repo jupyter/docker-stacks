@@ -38,6 +38,7 @@ jobs:
       matrix:
         dockerfile:
           [
+            custom_environment.dockerfile,
             dask_jupyterlab.dockerfile,
             jupyterhub_version.dockerfile,
             mamba_install.dockerfile,

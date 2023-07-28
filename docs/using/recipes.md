@@ -46,42 +46,13 @@ docker build --rm --tag my-custom-image .
 
 ## Add a custom conda environment and Jupyter kernel
 
-```{warning}
-This recipe is not tested and might be broken.
-```
-
 The default version of Python that ships with the image may not be the version you want.
 The instructions below permit adding a conda environment with a different Python version and making it accessible to Jupyter.
+You may also use older image like `jupyter/base-notebook:python-3.10`.
+List of all tags can be found [here](https://github.com/jupyter/docker-stacks/wiki)
 
-```dockerfile
-FROM jupyter/minimal-notebook
-
-# name your environment and choose the python version
-ARG conda_env=python37
-ARG py_ver=3.7
-
-# you can add additional libraries you want mamba to install by listing them below the first line and ending with "&& \"
-RUN mamba create --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
-    mamba clean --all -f -y
-
-# alternatively, you can comment out the lines above and uncomment those below
-# if you'd prefer to use a YAML file present in the docker build context
-
-# COPY --chown=${NB_UID}:${NB_GID} environment.yml "/home/${NB_USER}/tmp/"
-# RUN cd "/home/${NB_USER}/tmp/" && \
-#     mamba env create -p "${CONDA_DIR}/envs/${conda_env}" -f environment.yml && \
-#     mamba clean --all -f -y
-
-# create Python kernel and link it to jupyter
-RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --name="${conda_env}" && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# any additional pip installs can be added by uncommenting the following line
-# RUN "${CONDA_DIR}/envs/${conda_env}/bin/pip" install --no-cache-dir
-
-# if you want this environment to be the default one, uncomment the following line:
-# RUN echo "conda activate ${conda_env}" >> "${HOME}/.bashrc"
+```{literalinclude} recipe_code/custom_environment.dockerfile
+:language: docker
 ```
 
 ## Dask JupyterLab Extension
