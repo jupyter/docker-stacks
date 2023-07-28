@@ -1,0 +1,47 @@
+name: Test contributed recipes
+
+on:
+  schedule:
+    # Images are rebuilt on Monday, so we're testing recipes each Tuesday
+    # Weekly, at 03:00 on Tuesday UTC time
+    - cron: "0 3 * * 2"
+  pull_request:
+    paths:
+      - ".github/workflows/contributed-recipes.yml"
+      - "docs/using/recipe_code/"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/contributed-recipes.yml"
+      - "docs/using/recipe_code/"
+
+jobs:
+  test-recipes:
+    runs-on: ubuntu-latest
+    if: github.repository == 'jupyter/docker-stacks'
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v3
+
+      - name: Build recipe 🛠
+        run: docker build --rm --force-rm --tag my-custom-image -f ./${{ matrix.dockerfile }} ./
+        env:
+          DOCKER_BUILDKIT: 1
+          # Full logs for CI build
+          BUILDKIT_PROGRESS: plain
+        working-directory: docs/using/recipe_code
+        shell: bash
+
+    strategy:
+      matrix:
+        dockerfile:
+          [
+            dask_jupyterlab.dockerfile,
+            jupyterhub_version.dockerfile,
+            manpage_install.dockerfile,
+            microsoft_odbc.dockerfile,
+            rise_jupyterlab.dockerfile,
+            xgboost.dockerfile,
+          ]
