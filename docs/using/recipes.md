@@ -613,7 +613,7 @@ RUN apt-get update --yes && \
 USER ${NB_UID}
 
 RUN mamba install --yes \
-    'pyodbc' \
+    'pyodbc' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
