@@ -40,8 +40,10 @@ jobs:
           [
             dask_jupyterlab.dockerfile,
             jupyterhub_version.dockerfile,
+            mamba_install.dockerfile,
             manpage_install.dockerfile,
             microsoft_odbc.dockerfile,
+            pip_install.dockerfile,
             rise_jupyterlab.dockerfile,
             xgboost.dockerfile,
           ]
