@@ -169,8 +169,9 @@ You can find an example of using DockerSpawner [here](https://github.com/jupyter
 
 ### Containers with a specific version of JupyterHub
 
-To use a specific version of JupyterHub, the version of `jupyterhub` in your image should match the
-version in the Hub itself.
+The version of `jupyterhub` in your image should match the
+version in the JupyterHub itself.
+To use a specific version of JupyterHub, do the following:
 
 ```{literalinclude} recipe_code/jupyterhub_version.dockerfile
 :language: docker
