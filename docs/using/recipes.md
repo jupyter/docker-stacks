@@ -192,7 +192,8 @@ Using Spark session for Hadoop 2.7.3
 ```python
 import os
 
-# !ls /usr/local/spark/jars/hadoop* # to figure out what version of Hadoop
+# To figure out what version of Hadoop, run:
+# ls /usr/local/spark/jars/hadoop*
 os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
