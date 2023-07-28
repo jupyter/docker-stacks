@@ -7,13 +7,13 @@ on:
     - cron: "0 3 * * 2"
   pull_request:
     paths:
-      - ".github/workflows/contribured-recipes.yml"
+      - ".github/workflows/contributed-recipes.yml"
       - "docs/using/recipe_code/"
   push:
     branches:
       - main
     paths:
-      - ".github/workflows/contribured-recipes.yml"
+      - ".github/workflows/contributed-recipes.yml"
       - "docs/using/recipe_code/"
 
 jobs:
