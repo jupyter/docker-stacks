@@ -143,21 +143,23 @@ which includes steps for requesting and renewing a Let's Encrypt certificate.
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/78>
 
-## Slideshows with Jupyter and RISE
+## Slideshows with JupyterLab and RISE
 
-[RISE](https://github.com/damianavila/RISE) allows via an extension to create live slideshows of your
-notebooks, with no conversion, adding javascript Reveal.js:
+[RISE](https://github.com/jupyterlab-contrib/rise): "Live" Reveal.js JupyterLab Slideshow Extension.
 
-```bash
-# Add Live slideshows with RISE
-RUN mamba install --yes -c damianavila82 rise && \
+```{note}
+We're providing the recipe to install JupyterLab extension.
+You can find the original Jupyter Notebook extenstion [here](http://github.com/damianavila/RISE)
+```
+
+```dockerfile
+FROM jupyter/base-notebook
+
+RUN mamba install --yes 'jupyterlab_rise' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
-
-Credit: [Paolo D.](https://github.com/pdonorio) based on
-[docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43)
 
 ## xgboost
 
