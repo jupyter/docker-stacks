@@ -109,24 +109,21 @@ RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --na
 Create the Dockerfile as:
 
 ```dockerfile
-FROM jupyter/scipy-notebook
+FROM jupyter/base-notebook
 
 # Install the Dask dashboard
-RUN pip install --no-cache-dir dask-labextension && \
+RUN mamba install --yes 'dask-labextension' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Dask Scheduler & Bokeh ports
+# Dask Scheduler port
 EXPOSE 8787
-EXPOSE 8786
-
-ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
 ```
 
 And build the image as:
 
 ```bash
-docker build --tag jupyter/scipy-dasklabextension .
+docker build --tag my-custom-image .
 ```
 
 Once built, run using the command:
@@ -134,10 +131,9 @@ Once built, run using the command:
 ```bash
 docker run -it --rm \
     -p 8888:8888 \
-    -p 8787:8787 jupyter/scipy-dasklabextension
+    -p 8787:8787 \
+    my-custom-image
 ```
-
-Ref: <https://github.com/jupyter/docker-stacks/issues/999>
 
 ## Let's Encrypt a Server
 
