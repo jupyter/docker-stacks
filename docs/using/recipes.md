@@ -411,8 +411,8 @@ FROM jupyter/pyspark-notebook
 
 RUN mamba install --yes 'delta-spark' && \
     mamba clean --all -f -y && \
-    fix-permissions "${HOME}" && \
-    fix-permissions "${CONDA_DIR}"
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 USER root
 
