@@ -259,14 +259,11 @@ version in the Hub itself.
 ```dockerfile
 FROM jupyter/base-notebook
 
-RUN pip install --no-cache-dir 'jupyterhub==1.4.1' && \
+RUN mamba install --yes 'jupyterhub==4.0.1' && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
-
-Credit: [MinRK](https://github.com/jupyter/docker-stacks/issues/423#issuecomment-322767742)
-
-Ref: <https://github.com/jupyter/docker-stacks/issues/177>
 
 ## Spark
 
