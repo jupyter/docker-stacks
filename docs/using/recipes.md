@@ -588,7 +588,7 @@ RUN ijsinstall
 The following recipe demonstrates how to add functionality to read from and write to an instance of Microsoft SQL server in your notebook.
 
 ```dockerfile
-ARG BASE_IMAGE=jupyter/tensorflow-notebook
+ARG BASE_IMAGE=jupyter/base-notebook
 
 FROM $BASE_IMAGE
 
@@ -598,18 +598,25 @@ ENV MSSQL_DRIVER "ODBC Driver 18 for SQL Server"
 ENV PATH="/opt/mssql-tools18/bin:${PATH}"
 
 RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends gnupg2 && \
-    wget --progress=dot:giga https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/microsoft.gpg && \
-    apt-get purge --yes gnupg2 && \
-    echo "deb [arch=amd64,armhf,arm64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft.list && \
+    apt-get install --yes --no-install-recommends curl gnupg2 lsb-release && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
     apt-get update --yes && \
     ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql18 && \
+    # optional: for bcp and sqlcmd
+    ACCEPT_EULA=Y apt-get install --yes --no-install-recommends mssql-tools18 && \
+    # optional: for unixODBC development headers
+    apt-get install -y unixodbc-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
-RUN pip install --no-cache-dir pyodbc
+RUN mamba install --yes \
+    'pyodbc' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 ```
 
 You can now use `pyodbc` and `sqlalchemy` to interact with the database.
