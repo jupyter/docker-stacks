@@ -64,7 +64,7 @@ RUN pip install --no-cache-dir --requirement /tmp/requirements.txt && \
 Then build a new image.
 
 ```bash
-docker build --rm -t jupyter/my-custom-image .
+docker build --rm -t my-custom-image .
 ```
 
 ## Add a custom conda environment and Jupyter kernel
