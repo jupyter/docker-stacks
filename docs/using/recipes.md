@@ -167,12 +167,12 @@ You need to install conda-forge's gcc for Python xgboost to work correctly.
 Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0.
 
 ```bash
-mamba install --yes gcc && \
+mamba install --yes 'gcc' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-pip install --no-cache-dir xgboost && \
+pip install --no-cache-dir 'xgboost' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -275,7 +275,7 @@ version in the Hub itself.
 ```dockerfile
 FROM jupyter/base-notebook
 
-RUN pip install --no-cache-dir jupyterhub==1.4.1 && \
+RUN pip install --no-cache-dir 'jupyterhub==1.4.1' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
@@ -429,9 +429,9 @@ USER ${NB_UID}
 # - Dashboards
 # - PyDoop
 # - PyHive
-RUN pip install --no-cache-dir jupyter_dashboards faker && \
+RUN pip install --no-cache-dir 'jupyter_dashboards' 'faker' && \
     jupyter dashboards quick-setup --sys-prefix && \
-    pip2 install --no-cache-dir pyhive pydoop thrift sasl thrift_sasl faker && \
+    pip2 install --no-cache-dir 'pyhive' 'pydoop' 'thrift' 'sasl' 'thrift_sasl' 'faker' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -487,7 +487,7 @@ FROM jupyter/minimal-notebook
 
 USER ${NB_UID}
 
-RUN pip install --no-cache-dir jupyter_contrib_nbextensions && \
+RUN pip install --no-cache-dir 'jupyter_contrib_nbextensions' && \
     jupyter contrib nbextension install --user && \
     # can modify or enable additional extensions here
     jupyter nbclassic-extension enable spellchecker/main --user && \
@@ -506,7 +506,7 @@ By adding the properties to `spark-defaults.conf`, the user no longer needs to e
 FROM jupyter/pyspark-notebook
 
 ARG DELTA_CORE_VERSION="1.2.1"
-RUN pip install --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
+RUN pip install --no-cache-dir 'delta-spark==${DELTA_CORE_VERSION}' && \
      fix-permissions "${HOME}" && \
      fix-permissions "${CONDA_DIR}"
 
