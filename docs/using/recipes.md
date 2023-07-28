@@ -46,6 +46,10 @@ docker build --rm -t my-custom-image .
 
 ## Add a custom conda environment and Jupyter kernel
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 The default version of Python that ships with the image may not be the version you want.
 The instructions below permit adding a conda environment with a different Python version and making it accessible to Jupyter.
 
@@ -106,6 +110,10 @@ docker run -it --rm \
 
 ## Let's Encrypt a Server
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 See the README for a basic automation here
 <https://github.com/jupyter/docker-stacks/tree/main/examples/make-deploy>
 which includes steps for requesting and renewing a Let's Encrypt certificate.
@@ -132,6 +140,10 @@ You can find the original Jupyter Notebook extenstion [here](https://github.com/
 ```
 
 ## Running behind an nginx proxy
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for example:
 
@@ -182,6 +194,10 @@ We also have contributed recipes for using JupyterHub.
 
 ### Use JupyterHub's dockerspawner
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 In most cases for use with DockerSpawner, given an image that already has a notebook stack set up,
 you would only need to add:
 
@@ -210,6 +226,10 @@ version in the Hub itself.
 A few suggestions have been made regarding using Docker Stacks with spark.
 
 ### Using PySpark with AWS S3
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 Using Spark session for Hadoop 2.7.3
 
@@ -267,6 +287,10 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/127>
 
 ### Using Local Spark JARs
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 ```python
 import os
 
@@ -291,6 +315,10 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/154>
 
 ### Using spark-packages.org
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 If you'd like to use packages from [spark-packages.org](https://spark-packages.org/), see
 [https://gist.github.com/parente/c95fdaba5a9a066efaab](https://gist.github.com/parente/c95fdaba5a9a066efaab)
 for an example of how to specify the package identifier in the environment before creating a
@@ -299,6 +327,10 @@ SparkContext.
 Ref: <https://github.com/jupyter/docker-stacks/issues/43>
 
 ### Use jupyter/all-spark-notebooks with an existing Spark/YARN cluster
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 ```dockerfile
 FROM jupyter/all-spark-notebook
@@ -375,8 +407,6 @@ Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/is
 
 ## Run Server inside an already secured environment (i.e., with no token)
 
-(Adapted from [issue 728](https://github.com/jupyter/docker-stacks/issues/728))
-
 The default security is very good.
 There are use cases, encouraged by containers, where the jupyter container and the system it runs within lie inside the security boundary.
 It is convenient to launch the server without a password or token in these use cases.
@@ -401,6 +431,10 @@ docker run -it --rm \
 
 ## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 NB: this works for classic notebooks only
 
 ```dockerfile
@@ -419,6 +453,10 @@ RUN pip install --no-cache-dir 'jupyter_contrib_nbextensions' && \
 Ref: <https://github.com/jupyter/docker-stacks/issues/675>
 
 ## Enable Delta Lake in Spark notebooks
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 Please note that the [Delta Lake](https://delta.io/) packages are only available for Spark version > `3.0`.
 By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
@@ -448,6 +486,10 @@ RUN echo "from pyspark.sql import SparkSession" > /tmp/init-delta.py && \
 
 ## Add Custom Fonts in Scipy notebook
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 The example below is a Dockerfile to load Source Han Sans with normal weight, usually used for the web.
 
 ```dockerfile
@@ -464,6 +506,10 @@ RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
 ```
 
 ## Enable clipboard in pandas on Linux systems
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 ```{admonition} Additional notes
     This solution works on Linux host systems.
@@ -482,6 +528,10 @@ docker run -it --rm \
 ```
 
 ## Add ijavascript kernel to container
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
 
