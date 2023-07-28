@@ -12,7 +12,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install all OS dependencies for notebook server that starts but lacks all
+# Install all OS dependencies for Server that starts but lacks all
 # features (e.g., download as all possible file formats)
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
@@ -28,19 +28,19 @@ RUN apt-get update --yes && \
 
 USER ${NB_UID}
 
-# Install Jupyter Notebook, Lab, and Hub
-# Generate a notebook server config
+# Install JupyterLab, Jupyter Notebook, JupyterHub and NBClassic
+# Generate a Jupyter Server config
 # Cleanup temporary files
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 WORKDIR /tmp
 RUN mamba install --yes \
+    'jupyterlab' \
     'notebook' \
     'jupyterhub' \
-    'jupyterlab' \
     'nbclassic' && \
-    jupyter notebook --generate-config && \
+    jupyter server --generate-config && \
     mamba clean --all -f -y && \
     npm cache clean --force && \
     jupyter lab clean && \

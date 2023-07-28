@@ -145,7 +145,7 @@ docker run -it --rm \
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/999>
 
-## Let's Encrypt a Notebook server
+## Let's Encrypt a Server
 
 See the README for a basic automation here
 <https://github.com/jupyter/docker-stacks/tree/main/examples/make-deploy>
@@ -461,14 +461,14 @@ USER ${NB_UID}
 
 Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
 
-## Run Jupyter Notebook/Lab inside an already secured environment (i.e., with no token)
+## Run Server inside an already secured environment (i.e., with no token)
 
 (Adapted from [issue 728](https://github.com/jupyter/docker-stacks/issues/728))
 
 The default security is very good.
 There are use cases, encouraged by containers, where the jupyter container and the system it runs within lie inside the security boundary.
 It is convenient to launch the server without a password or token in these use cases.
-In this case, you should use the `start.sh` script to launch the server with no token:
+In this case, you should use the `start-notebook.sh` script to launch the server with no token:
 
 For JupyterLab:
 

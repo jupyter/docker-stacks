@@ -20,7 +20,7 @@ make virtualbox-vm NAME=dev
 eval $(docker-machine env dev)
 # pull a docker stack and build a local image from it
 make image
-# start a notebook server in a container
+# start a Server in a container
 make notebook
 ```
 

@@ -12,8 +12,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 def test_cli_args(container: TrackedContainer, http_client: requests.Session) -> None:
-    """Container should respect notebook server command line args
-    (e.g., disabling token security)"""
+    """Image should respect command line args (e.g., disabling token security)"""
     host_port = find_free_port()
     running_container = container.run_detached(
         command=["start-notebook.sh", "--IdentityProvider.token=''"],
@@ -59,7 +58,7 @@ def test_unsigned_ssl(
     container: TrackedContainer, http_client: requests.Session
 ) -> None:
     """Container should generate a self-signed SSL certificate
-    and notebook server should use it to enable HTTPS.
+    and Jupyter Server should use it to enable HTTPS.
     """
     host_port = find_free_port()
     running_container = container.run_detached(
