@@ -397,8 +397,6 @@ NB: this works for classic notebooks only
 ```dockerfile
 FROM jupyter/base-notebook
 
-USER ${NB_UID}
-
 RUN pip install --no-cache-dir 'jupyter_contrib_nbextensions' && \
     jupyter contrib nbextension install --user && \
     # can modify or enable additional extensions here
