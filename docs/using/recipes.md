@@ -395,7 +395,7 @@ This recipe is not tested and might be broken.
 NB: this works for classic notebooks only
 
 ```dockerfile
-FROM jupyter/minimal-notebook
+FROM jupyter/base-notebook
 
 USER ${NB_UID}
 
