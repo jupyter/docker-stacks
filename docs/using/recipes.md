@@ -204,7 +204,7 @@ Most containers, including our Ubuntu base image, ship without manpages installe
 You can use the following Dockerfile to inherit from one of our images to enable manpages:
 
 ```dockerfile
-FROM jupyter/datascience-notebookR
+FROM jupyter/base-notebook
 
 USER root
 
@@ -218,29 +218,17 @@ RUN rm /etc/dpkg/dpkg.cfg.d/excludes && \
 USER ${NB_UID}
 ```
 
-Adding the documentation on top of the existing single-user image wastes a lot of space
+Adding the documentation on top of the existing image wastes a lot of space
 and requires reinstalling every system package,
 which can take additional time and bandwidth.
-The `datascience-notebook` image has been shown to grow by almost 3GB when adding manpages in this way.
 Enabling manpages in the base Ubuntu layer prevents this container bloat.
 To achieve this, use the previous `Dockerfile`'s commands with the original `ubuntu` image as your base container:
 
 ```dockerfile
-ARG BASE_CONTAINER=ubuntu:22.04
+FROM ubuntu:22.04
 ```
 
-For Ubuntu 18.04 (bionic) and earlier, you may also require to a workaround for a mandb bug, which was fixed in mandb >= 2.8.6.1:
-
-```dockerfile
-# https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
-# https://launchpadlibrarian.net/435841763/man-db_2.8.5-2_2.8.6-1.diff.gz
-
-RUN echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/man" >> /etc/manpath.config && \
-    echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/share/man" >> /etc/manpath.config && \
-    mandb
-```
-
-Be sure to check the current base image in `base-notebook` before building.
+Be sure to check the current base image in `jupyter/docker-stacks-foundation` before building.
 
 ## JupyterHub
 
