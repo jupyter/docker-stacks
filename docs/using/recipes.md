@@ -409,10 +409,10 @@ By adding the properties to `spark-defaults.conf`, the user no longer needs to e
 ```dockerfile
 FROM jupyter/pyspark-notebook
 
-ARG DELTA_CORE_VERSION="1.2.1"
-RUN pip install --no-cache-dir 'delta-spark==${DELTA_CORE_VERSION}' && \
-     fix-permissions "${HOME}" && \
-     fix-permissions "${CONDA_DIR}"
+RUN mamba install --yes 'delta-spark' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${HOME}" && \
+    fix-permissions "${CONDA_DIR}"
 
 USER root
 
