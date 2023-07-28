@@ -113,6 +113,7 @@ FROM jupyter/base-notebook
 
 # Install the Dask dashboard
 RUN mamba install --yes 'dask-labextension' && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -170,8 +171,6 @@ RUN mamba install --yes 'py-xgboost' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
-
-# run "import xgboost" in python
 ```
 
 ## Running behind an nginx proxy
@@ -258,14 +257,11 @@ version in the Hub itself.
 ```dockerfile
 FROM jupyter/base-notebook
 
-RUN pip install --no-cache-dir 'jupyterhub==1.4.1' && \
+RUN mamba install --yes 'jupyterhub==4.0.1' && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```
-
-Credit: [MinRK](https://github.com/jupyter/docker-stacks/issues/423#issuecomment-322767742)
-
-Ref: <https://github.com/jupyter/docker-stacks/issues/177>
 
 ## Spark
 
@@ -582,8 +578,7 @@ RUN apt-get update --yes && \
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
-RUN mamba install --yes \
-    'pyodbc' && \
+RUN mamba install --yes 'pyodbc' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
