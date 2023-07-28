@@ -28,37 +28,14 @@ See [Docker security documentation](https://docs.docker.com/engine/security/user
 Create a new Dockerfile like the one shown below.
 To use a requirements.txt file, first, create your `requirements.txt` file with the listing of packages desired.
 
-```dockerfile
-FROM jupyter/base-notebook
-
-RUN mamba install --yes 'flake8' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# Install from the requirements.txt file
-COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
-RUN mamba install --yes --file /tmp/requirements.txt && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/mamba_install.dockerfile
+:language: docker
 ```
 
 `pip` usage is similar:
 
-```dockerfile
-FROM jupyter/base-notebook
-
-# Install in the default python3 environment
-RUN pip install --no-cache-dir 'flake8' && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# Install from the requirements.txt file
-COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
-RUN pip install --no-cache-dir --requirement /tmp/requirements.txt && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/pip_install.dockerfile
+:language: docker
 ```
 
 Then build a new image.
@@ -108,17 +85,8 @@ RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --na
 [Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes.
 Create the Dockerfile as:
 
-```dockerfile
-FROM jupyter/base-notebook
-
-# Install the Dask dashboard
-RUN mamba install --yes 'dask-labextension' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# Dask Scheduler port
-EXPOSE 8787
+```{literalinclude} recipe_code/dask_jupyterlab.dockerfile
+:language: docker
 ```
 
 And build the image as:
@@ -153,24 +121,14 @@ We're providing the recipe to install JupyterLab extension.
 You can find the original Jupyter Notebook extenstion [here](https://github.com/damianavila/RISE)
 ```
 
-```dockerfile
-FROM jupyter/base-notebook
-
-RUN mamba install --yes 'jupyterlab_rise' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/rise_jupyterlab.dockerfile
+:language: docker
 ```
 
 ## xgboost
 
-```dockerfile
-FROM jupyter/base-notebook
-
-RUN mamba install --yes 'py-xgboost' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/xgboost.dockerfile
+:language: docker
 ```
 
 ## Running behind an nginx proxy
@@ -202,19 +160,8 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 Most containers, including our Ubuntu base image, ship without manpages installed to save space.
 You can use the following Dockerfile to inherit from one of our images to enable manpages:
 
-```dockerfile
-FROM jupyter/base-notebook
-
-USER root
-
-# `/etc/dpkg/dpkg.cfg.d/excludes` contains several `path-exclude`s, including man pages
-# Remove it, then install man, install docs
-RUN rm /etc/dpkg/dpkg.cfg.d/excludes && \
-    apt-get update --yes && \
-    dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install --yes --no-install-recommends --reinstall man && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-USER ${NB_UID}
+```{literalinclude} recipe_code/manpage_install.dockerfile
+:language: docker
 ```
 
 Adding the documentation on top of the existing image wastes a lot of space
@@ -254,13 +201,8 @@ Credit: [Justin Tyberg](https://github.com/jtyberg), [quanghoc](https://github.c
 To use a specific version of JupyterHub, the version of `jupyterhub` in your image should match the
 version in the Hub itself.
 
-```dockerfile
-FROM jupyter/base-notebook
-
-RUN mamba install --yes 'jupyterhub==4.0.1' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/jupyterhub_version.dockerfile
+:language: docker
 ```
 
 ## Spark
@@ -555,33 +497,8 @@ RUN ijsinstall
 
 The following recipe demonstrates how to add functionality to read from and write to an instance of Microsoft SQL server in your notebook.
 
-```dockerfile
-FROM jupyter/base-notebook
-
-USER root
-
-ENV MSSQL_DRIVER "ODBC Driver 18 for SQL Server"
-ENV PATH="/opt/mssql-tools18/bin:${PATH}"
-
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends curl gnupg2 lsb-release && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
-    apt-get update --yes && \
-    ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql18 && \
-    # optional: for bcp and sqlcmd
-    ACCEPT_EULA=Y apt-get install --yes --no-install-recommends mssql-tools18 && \
-    # optional: for unixODBC development headers
-    apt-get install -y unixodbc-dev && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Switch back to jovyan to avoid accidental container runs as root
-USER ${NB_UID}
-
-RUN mamba install --yes 'pyodbc' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/microsoft_odbc.dockerfile
+:language: docker
 ```
 
 You can now use `pyodbc` and `sqlalchemy` to interact with the database.

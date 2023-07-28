@@ -72,6 +72,16 @@ repos:
       - id: hadolint-docker
         entry: hadolint/hadolint:v2.12.1-beta hadolint
 
+  # Lint: Dockerfile
+  # We're linting .dockerfile files as well
+  - repo: https://github.com/hadolint/hadolint.git
+    rev: v2.12.1-beta
+    hooks:
+      - id: hadolint-docker
+        entry: hadolint/hadolint:v2.12.1-beta hadolint
+        types: [file]
+        files: \.dockerfile$
+
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.32.0
