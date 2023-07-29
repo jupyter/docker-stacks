@@ -105,7 +105,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - [Issue Tracker on GitHub](https://github.com/jupyter/docker-stacks/issues)
 - [Jupyter Discourse Forum](https://discourse.jupyter.org/)
 - [Jupyter Website](https://jupyter.org)
-- [Images on DockerHub](https://hub.docker.com/u/jupyter)
+- [Images on Docker Hub](https://hub.docker.com/u/jupyter)
 
 ## CPU Architectures
 

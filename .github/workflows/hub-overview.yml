@@ -1,4 +1,4 @@
-name: Update dockerhub overviews
+name: Update Docker Hub overviews
 
 env:
   OWNER: ${{ github.repository_owner }}
@@ -23,7 +23,7 @@ on:
 
 jobs:
   update-dockerhub-overview:
-    name: Update dockerhub overviews
+    name: Update Docker Hub overviews
     runs-on: ubuntu-latest
     if: github.repository == 'jupyter/docker-stacks'
 
@@ -31,7 +31,7 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v3
 
-      - name: Push README to Dockerhub 🐳
+      - name: Push README to Docker Hub 🐳
         uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # v1
         env:
           DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
