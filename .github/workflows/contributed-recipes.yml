@@ -16,6 +16,7 @@ on:
       - ".github/workflows/contributed-recipes.yml"
       - "docs/using/recipe_code/"
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   test-recipes:

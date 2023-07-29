@@ -364,3 +364,8 @@ jobs:
     if: github.repository == 'jupyter/docker-stacks'
     permissions:
       contents: write
+
+  contributed-recipes:
+    uses: ./.github/workflows/contributed-recipes.yml
+    needs: [merge-tags]
+    if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
