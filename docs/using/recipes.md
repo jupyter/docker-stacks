@@ -41,47 +41,18 @@ To use a requirements.txt file, first, create your `requirements.txt` file with 
 Then build a new image.
 
 ```bash
-docker build --rm -t my-custom-image .
+docker build --rm --tag my-custom-image .
 ```
 
 ## Add a custom conda environment and Jupyter kernel
 
-```{warning}
-This recipe is not tested and might be broken.
-```
+The default version of `Python` that ships with the image may not be the version you want.
+The instructions below permit adding a conda environment with a different `Python` version and making it accessible to Jupyter.
+You may also use older image like `jupyter/base-notebook:python-3.10`.
+List of all tags can be found [here](https://github.com/jupyter/docker-stacks/wiki)
 
-The default version of Python that ships with the image may not be the version you want.
-The instructions below permit adding a conda environment with a different Python version and making it accessible to Jupyter.
-
-```dockerfile
-FROM jupyter/minimal-notebook
-
-# name your environment and choose the python version
-ARG conda_env=python37
-ARG py_ver=3.7
-
-# you can add additional libraries you want mamba to install by listing them below the first line and ending with "&& \"
-RUN mamba create --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
-    mamba clean --all -f -y
-
-# alternatively, you can comment out the lines above and uncomment those below
-# if you'd prefer to use a YAML file present in the docker build context
-
-# COPY --chown=${NB_UID}:${NB_GID} environment.yml "/home/${NB_USER}/tmp/"
-# RUN cd "/home/${NB_USER}/tmp/" && \
-#     mamba env create -p "${CONDA_DIR}/envs/${conda_env}" -f environment.yml && \
-#     mamba clean --all -f -y
-
-# create Python kernel and link it to jupyter
-RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --name="${conda_env}" && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# any additional pip installs can be added by uncommenting the following line
-# RUN "${CONDA_DIR}/envs/${conda_env}/bin/pip" install --no-cache-dir
-
-# if you want this environment to be the default one, uncomment the following line:
-# RUN echo "conda activate ${conda_env}" >> "${HOME}/.bashrc"
+```{literalinclude} recipe_code/custom_environment.dockerfile
+:language: docker
 ```
 
 ## Dask JupyterLab Extension
@@ -96,7 +67,7 @@ Create the Dockerfile as:
 And build the image as:
 
 ```bash
-docker build --tag my-custom-image .
+docker build --rm --tag my-custom-image .
 ```
 
 Once built, run using the command:
@@ -154,7 +125,7 @@ Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for e
 
 Here is a [quick example of NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
-Then download the files at that gist and run `docker-compose up -d` to test it out.
+Then download the files at that gist and run `docker-compose up` to test it out.
 Customize the `nginx.conf` file to set the desired paths and add other services.
 
 ## Host volume mounts and notebook errors
@@ -192,30 +163,15 @@ Be sure to check the current base image in `jupyter/docker-stacks-foundation` be
 
 We also have contributed recipes for using JupyterHub.
 
-### Use JupyterHub's dockerspawner
+### Use JupyterHub's DockerSpawner
 
-```{warning}
-This recipe is not tested and might be broken.
-```
-
-In most cases for use with DockerSpawner, given an image that already has a notebook stack set up,
-you would only need to add:
-
-1. install the jupyterhub-singleuser script (for the correct Python version)
-2. change the command to launch the single-user server
-
-Swapping out the `FROM` line in the `jupyterhub/singleuser` Dockerfile should be enough for most
-cases.
-
-Credit: [Justin Tyberg](https://github.com/jtyberg), [quanghoc](https://github.com/quanghoc), and
-[Min RK](https://github.com/minrk) based on
-[docker-stacks/issues/124](https://github.com/jupyter/docker-stacks/issues/124) and
-[docker-stacks/pull/185](https://github.com/jupyter/docker-stacks/pull/185)
+You can find an example of using DockerSpawner [here](https://github.com/jupyterhub/jupyterhub-deploy-docker/tree/main/basic-example).
 
 ### Containers with a specific version of JupyterHub
 
-To use a specific version of JupyterHub, the version of `jupyterhub` in your image should match the
-version in the Hub itself.
+The version of `jupyterhub` in your image should match the
+version in the JupyterHub itself.
+To use a specific version of JupyterHub, do the following:
 
 ```{literalinclude} recipe_code/jupyterhub_version.dockerfile
 :language: docker
@@ -236,7 +192,8 @@ Using Spark session for Hadoop 2.7.3
 ```python
 import os
 
-# !ls /usr/local/spark/jars/hadoop* # to figure out what version of Hadoop
+# To figure out what version of Hadoop, run:
+# ls /usr/local/spark/jars/hadoop*
 os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
@@ -431,26 +388,14 @@ docker run -it --rm \
 
 ## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)
 
-```{warning}
-This recipe is not tested and might be broken.
+```{note}
+This recipe only works for NBCassic with Jupyter Notebook < 7.
+It is recommended to use [jupyterlab-spellchecker](https://github.com/jupyterlab-contrib/spellchecker) in modern environments.
 ```
 
-NB: this works for classic notebooks only
-
-```dockerfile
-FROM jupyter/minimal-notebook
-
-USER ${NB_UID}
-
-RUN pip install --no-cache-dir 'jupyter_contrib_nbextensions' && \
-    jupyter contrib nbextension install --user && \
-    # can modify or enable additional extensions here
-    jupyter nbclassic-extension enable spellchecker/main --user && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/spellcheck_notebookv6.dockerfile
+:language: docker
 ```
-
-Ref: <https://github.com/jupyter/docker-stacks/issues/675>
 
 ## Enable Delta Lake in Spark notebooks
 
