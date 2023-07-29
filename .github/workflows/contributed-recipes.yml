@@ -15,6 +15,7 @@ on:
     paths:
       - ".github/workflows/contributed-recipes.yml"
       - "docs/using/recipe_code/"
+  workflow_dispatch:
 
 jobs:
   test-recipes:
