@@ -135,7 +135,7 @@ or executables (`chmod +x`) to be run to the paths below:
 - `/usr/local/bin/before-notebook.d/` - handled **after** all the standard options noted above are applied
   and ran right before the Server launches
 
-See the `run-hooks` function in the [`jupyter/base-notebook start.sh`](https://github.com/jupyter/docker-stacks/blob/main/docker-stacks-foundation/start.sh)
+See the `run-hooks` function in the [`jupyter/docker-stacks-foundation start.sh`](https://github.com/jupyter/docker-stacks/blob/main/docker-stacks-foundation/start.sh)
 script for execution details.
 
 ## SSL Certificates
@@ -194,10 +194,11 @@ Since `Jupyter Notebook v7` `jupyter-server` is used as a backend.
 | `server`                    | None             |
 | `retro`\*                   | RetroLab         |
 
-Notes:
-
-- \*Not installed at this time, but it could be the case in the future or in a community stack.
+```{note}
+- Changing frontend for **JupyterHub singleuser image** is described in [JupyterHub docs](https://jupyterhub.readthedocs.io/en/latest/howto/configuration/config-user-env.html#switching-back-to-the-classic-notebook).
+- \* `retro` is not installed at this time, but it could be the case in the future or in a community stack.
 - Any other valid `jupyter` subcommand that starts the Jupyter Application can be used.
+```
 
 Example:
 

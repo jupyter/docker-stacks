@@ -26,11 +26,11 @@ The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/
 
 **Example 1:**
 
-This command pulls the `jupyter/scipy-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `2023-07-31` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the container's internal port `8888` to port `10000` of the host machine:
 
 ```bash
-docker run -p 10000:8888 jupyter/scipy-notebook:2023-07-25
+docker run -p 10000:8888 jupyter/scipy-notebook:2023-07-31
 ```
 
 You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) to `-p 8888:8888`.
@@ -45,11 +45,11 @@ The container remains intact for restart after the Server exits.
 
 **Example 2:**
 
-This command pulls the `jupyter/datascience-notebook` image tagged `2023-07-25` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/datascience-notebook` image tagged `2023-07-31` from Docker Hub if it is not already present on the local host.
 It then starts an _ephemeral_ container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:2023-07-25
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/datascience-notebook:2023-07-31
 ```
 
 The use of the `-v` flag in the command mounts the current working directory on the host (`${PWD}` in the example command) as `/home/jovyan/work` in the container.
@@ -112,7 +112,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - We publish containers for both `x86_64` and `aarch64` platforms
 - Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `jupyter/base-notebook:aarch64-python-3.10.5`
 - Starting from `2022-09-21`, we create multi-platform images (except `tensorflow-notebook`)
-- Starting from `2023-07-25`, we create multi-platform `tensorflow-notebook` image as well
+- Starting from `2023-07-31`, we create multi-platform `tensorflow-notebook` image as well
 
 ## Using old images
 

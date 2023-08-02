@@ -13,7 +13,7 @@ To achieve this, use the generic task to install all Python development dependen
 
 ```sh
 # Install all development dependencies for the project
-pip install requirements-dev.txt
+pip install --upgrade -r requirements-dev.txt
 # It can also be installed directly
 pip install pre-commit
 ```
