@@ -2,9 +2,10 @@ name: Test contributed recipes
 
 on:
   schedule:
-    # Images are rebuilt on Monday, so we're testing recipes each Tuesday
-    # Weekly, at 03:00 on Tuesday UTC time
-    - cron: "0 3 * * 2"
+    # Images are rebuilt at 03:00 on Monday UTC
+    # So we're testing recipes one hour in advance
+    # They will also be tested after building images
+    - cron: "0 2 * * 1"
   pull_request:
     paths:
       - ".github/workflows/contributed-recipes.yml"
