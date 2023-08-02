@@ -78,6 +78,7 @@ repos:
     rev: v2.12.1-beta
     hooks:
       - id: hadolint-docker
+        name: Lint *.dockerfile Dockerfiles
         entry: hadolint/hadolint:v2.12.1-beta hadolint
         types: [file]
         files: \.dockerfile$
