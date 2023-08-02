@@ -71,6 +71,7 @@ It contains:
 
 - Everything in `jupyter/base-notebook`
 - Common useful utilities like
+  [curl](https://curl.se),
   [git](https://git-scm.com/),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`),
   [tzdata](https://www.iana.org/time-zones),
