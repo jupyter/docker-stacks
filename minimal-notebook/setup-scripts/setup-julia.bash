@@ -22,7 +22,8 @@ JULIA_MAJOR_MINOR=$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)
 # Download and install Julia
 cd /tmp
 mkdir "/opt/julia-${JULIA_VERSION}"
-wget --progress=dot:giga "https://julialang-s3.julialang.org/bin/linux/${JULIA_SHORT_ARCH}/${JULIA_MAJOR_MINOR}/${JULIA_INSTALLER}"
+curl --progress-bar --location --output "${JULIA_INSTALLER}" \
+    "https://julialang-s3.julialang.org/bin/linux/${JULIA_SHORT_ARCH}/${JULIA_MAJOR_MINOR}/${JULIA_INSTALLER}"
 tar xzf "${JULIA_INSTALLER}" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1
 rm "${JULIA_INSTALLER}"
 
