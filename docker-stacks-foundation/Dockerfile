@@ -18,8 +18,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install all OS dependencies for notebook server that starts but lacks all
-# features (e.g., download as all possible file formats)
+# Install all OS dependencies for Server that starts
+# but lacks all features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --yes && \
     # - apt-get upgrade is run to patch known vulnerabilities in apt-get packages as
@@ -71,8 +71,8 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     mkdir -p "${CONDA_DIR}" && \
     chown "${NB_USER}:${NB_GID}" "${CONDA_DIR}" && \
     chmod g+w /etc/passwd && \
-    fix-permissions "${HOME}" && \
-    fix-permissions "${CONDA_DIR}"
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 USER ${NB_UID}
 

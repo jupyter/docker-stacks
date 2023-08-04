@@ -25,7 +25,7 @@ The following sections describe these images, including their contents, relation
 `jupyter/docker-stacks-foundation` is a small image supporting a majority of [options common across all core stacks](common.md).
 It is the basis for all other stacks on which Jupyter-related applications can be built
 (e.g., kernel-based containers, [nbclient](https://github.com/jupyter/nbclient) applications, etc.).
-As such, it does not contain application-level software like Jupyter Notebook server, Jupyter Lab or Jupyter Hub.
+As such, it does not contain application-level software like JupyterLab, Jupyter Notebook or JupyterHub.
 
 It contains:
 
@@ -37,6 +37,8 @@ It contains:
 - `tini` as the container entry point
 - A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 - Options for a passwordless sudo
+- Common system libraries like `bzip2`, `ca-certificates`, `locales`
+- `wget` to download external files
 - No preinstalled scientific computing packages
 
 ### jupyter/base-notebook
@@ -45,13 +47,13 @@ It contains:
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/base-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
 
-`jupyter/base-notebook` adds base Jupyter server applications like Notebook, Jupyter Lab and Jupyter Hub
+`jupyter/base-notebook` adds base Jupyter Applications like JupyterLab, Jupyter Notebook, JupyterHub and NBClassic
 and serves as the basis for all other stacks besides `jupyter/docker-stacks-foundation`.
 
 It contains:
 
 - Everything in `jupyter/docker-stacks-foundation`
-- Minimally functional Jupyter Notebook server (e.g., no LaTeX support for saving notebooks as PDFs)
+- Minimally functional Server (e.g., no LaTeX support for saving notebooks as PDFs)
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - A `start-notebook.sh` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub
@@ -69,6 +71,7 @@ It contains:
 
 - Everything in `jupyter/base-notebook`
 - Common useful utilities like
+  [curl](https://curl.se),
   [git](https://git-scm.com/),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`),
   [tzdata](https://www.iana.org/time-zones),

@@ -50,7 +50,7 @@ When there's a new stack definition, check before merging the PR:
    The image links to the [blockdiag source](http://interactive.blockdiag.com/) used to create it.
 2. PR updates the [Makefile](https://github.com/jupyter/docker-stacks/blob/main/Makefile), which is used to build the stacks in order on GitHub Actions.
 3. Necessary tags/manifests are added for the new image in the [tagging](https://github.com/jupyter/docker-stacks/tree/main/tagging) folder.
-4. A new repository is created in the `jupyter` org on Docker Hub
+4. A new repository is created in the `jupyter` org on Docker Hub,
    and it's named after the stack folder in the git repo.
 5. Grant the `stacks` team permission to write to this repo.
 

@@ -52,8 +52,8 @@ letsencrypt-notebook: DOCKER_ARGS:=-e USE_HTTPS=yes \
 	-e PASSWORD=$(PASSWORD) \
 	-v $(SECRETS_VOLUME):/etc/letsencrypt
 letsencrypt-notebook: ARGS:=\
-	--NotebookApp.certfile=/etc/letsencrypt/fullchain.pem \
-	--NotebookApp.keyfile=/etc/letsencrypt/privkey.pem
+	--ServerApp.certfile=/etc/letsencrypt/fullchain.pem \
+	--ServerApp.keyfile=/etc/letsencrypt/privkey.pem
 letsencrypt-notebook: check
 	@test -n "$(PASSWORD)" || \
 		(echo "ERROR: PASSWORD not defined or blank"; exit 1)
