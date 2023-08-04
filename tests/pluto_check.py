@@ -18,11 +18,8 @@ def check_pluto_proxy(
     token = secrets.token_hex()
     container.run_detached(
         command=[
-            "start.sh",
-            "jupyter",
-            "lab",
-            "--port=8888",
-            f"--LabApp.token={token}",
+            "start-notebook.sh",
+            f"--IdentityProvider.token={token}",
         ],
         ports={"8888/tcp": host_port},
     )

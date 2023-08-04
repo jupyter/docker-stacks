@@ -17,95 +17,42 @@ For example:
 docker run -it --rm \
     --user root \
     -e GRANT_SUDO=yes \
-    jupyter/minimal-notebook
+    jupyter/base-notebook
 ```
 
 **You should only enable `sudo` if you trust the user and/or if the container is running on an isolated host.**
 See [Docker security documentation](https://docs.docker.com/engine/security/userns-remap/) for more information about running containers as `root`.
 
-## Using `mamba install` or `pip install` in a Child Docker image
+## Using `mamba install` (recommended) or `pip install` in a Child Docker image
 
 Create a new Dockerfile like the one shown below.
+To use a requirements.txt file, first, create your `requirements.txt` file with the listing of packages desired.
 
-```dockerfile
-# Start from a core stack version
-FROM jupyter/datascience-notebook:2023-06-01
-# Install in the default python3 environment
-RUN pip install --no-cache-dir 'flake8==3.9.2' && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/mamba_install.dockerfile
+:language: docker
+```
+
+`pip` usage is similar:
+
+```{literalinclude} recipe_code/pip_install.dockerfile
+:language: docker
 ```
 
 Then build a new image.
 
 ```bash
-docker build --rm -t jupyter/my-datascience-notebook .
+docker build --rm --tag my-custom-image .
 ```
-
-To use a requirements.txt file, first, create your `requirements.txt` file with the listing of
-packages desired.
-Next, create a new Dockerfile like the one shown below.
-
-```dockerfile
-# Start from a core stack version
-FROM jupyter/datascience-notebook:2023-06-01
-# Install from the requirements.txt file
-COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
-RUN pip install --no-cache-dir --requirement /tmp/requirements.txt && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-```
-
-For conda, the Dockerfile is similar:
-
-```dockerfile
-# Start from a core stack version
-FROM jupyter/datascience-notebook:2023-06-01
-# Install from the requirements.txt file
-COPY --chown=${NB_UID}:${NB_GID} requirements.txt /tmp/
-RUN mamba install --yes --file /tmp/requirements.txt && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-```
-
-Ref: [docker-stacks/commit/79169618d571506304934a7b29039085e77db78c](https://github.com/jupyter/docker-stacks/commit/79169618d571506304934a7b29039085e77db78c#r15960081)
 
 ## Add a custom conda environment and Jupyter kernel
 
-The default version of Python that ships with the image may not be the version you want.
-The instructions below permit adding a conda environment with a different Python version and making it accessible to Jupyter.
+The default version of `Python` that ships with the image may not be the version you want.
+The instructions below permit adding a conda environment with a different `Python` version and making it accessible to Jupyter.
+You may also use older image like `jupyter/base-notebook:python-3.10`.
+List of all tags can be found [here](https://github.com/jupyter/docker-stacks/wiki)
 
-```dockerfile
-# Choose your desired base image
-FROM jupyter/minimal-notebook:latest
-
-# name your environment and choose the python version
-ARG conda_env=python37
-ARG py_ver=3.7
-
-# you can add additional libraries you want mamba to install by listing them below the first line and ending with "&& \"
-RUN mamba create --yes -p "${CONDA_DIR}/envs/${conda_env}" python=${py_ver} ipython ipykernel && \
-    mamba clean --all -f -y
-
-# alternatively, you can comment out the lines above and uncomment those below
-# if you'd prefer to use a YAML file present in the docker build context
-
-# COPY --chown=${NB_UID}:${NB_GID} environment.yml "/home/${NB_USER}/tmp/"
-# RUN cd "/home/${NB_USER}/tmp/" && \
-#     mamba env create -p "${CONDA_DIR}/envs/${conda_env}" -f environment.yml && \
-#     mamba clean --all -f -y
-
-# create Python kernel and link it to jupyter
-RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --name="${conda_env}" && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# any additional pip installs can be added by uncommenting the following line
-# RUN "${CONDA_DIR}/envs/${conda_env}/bin/pip" install --no-cache-dir
-
-# if you want this environment to be the default one, uncomment the following line:
-# RUN echo "conda activate ${conda_env}" >> "${HOME}/.bashrc"
+```{literalinclude} recipe_code/custom_environment.dockerfile
+:language: docker
 ```
 
 ## Dask JupyterLab Extension
@@ -113,26 +60,14 @@ RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --na
 [Dask JupyterLab Extension](https://github.com/dask/dask-labextension) provides a JupyterLab extension to manage Dask clusters, as well as embed Dask's dashboard plots directly into JupyterLab panes.
 Create the Dockerfile as:
 
-```dockerfile
-# Start from a core stack version
-FROM jupyter/scipy-notebook:latest
-
-# Install the Dask dashboard
-RUN pip install --no-cache-dir dask-labextension && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# Dask Scheduler & Bokeh ports
-EXPOSE 8787
-EXPOSE 8786
-
-ENTRYPOINT ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root"]
+```{literalinclude} recipe_code/dask_jupyterlab.dockerfile
+:language: docker
 ```
 
 And build the image as:
 
 ```bash
-docker build --tag jupyter/scipy-dasklabextension:latest .
+docker build --rm --tag my-custom-image .
 ```
 
 Once built, run using the command:
@@ -140,12 +75,15 @@ Once built, run using the command:
 ```bash
 docker run -it --rm \
     -p 8888:8888 \
-    -p 8787:8787 jupyter/scipy-dasklabextension:latest
+    -p 8787:8787 \
+    my-custom-image
 ```
 
-Ref: <https://github.com/jupyter/docker-stacks/issues/999>
+## Let's Encrypt a Server
 
-## Let's Encrypt a Notebook server
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 See the README for a basic automation here
 <https://github.com/jupyter/docker-stacks/tree/main/examples/make-deploy>
@@ -153,41 +91,30 @@ which includes steps for requesting and renewing a Let's Encrypt certificate.
 
 Ref: <https://github.com/jupyter/docker-stacks/issues/78>
 
-## Slideshows with Jupyter and RISE
+## Slideshows with JupyterLab and RISE
 
-[RISE](https://github.com/damianavila/RISE) allows via an extension to create live slideshows of your
-notebooks, with no conversion, adding javascript Reveal.js:
+[RISE](https://github.com/jupyterlab-contrib/rise): "Live" Reveal.js JupyterLab Slideshow Extension.
 
-```bash
-# Add Live slideshows with RISE
-RUN mamba install --yes -c damianavila82 rise && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{note}
+We're providing the recipe to install JupyterLab extension.
+You can find the original Jupyter Notebook extenstion [here](https://github.com/damianavila/RISE)
 ```
 
-Credit: [Paolo D.](https://github.com/pdonorio) based on
-[docker-stacks/issues/43](https://github.com/jupyter/docker-stacks/issues/43)
+```{literalinclude} recipe_code/rise_jupyterlab.dockerfile
+:language: docker
+```
 
 ## xgboost
 
-You need to install conda-forge's gcc for Python xgboost to work correctly.
-Otherwise, you'll get an exception about libgomp.so.1 missing GOMP_4.0.
-
-```bash
-mamba install --yes gcc && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-pip install --no-cache-dir xgboost && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
-
-# run "import xgboost" in python
+```{literalinclude} recipe_code/xgboost.dockerfile
+:language: docker
 ```
 
 ## Running behind an nginx proxy
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for example:
 
@@ -198,7 +125,7 @@ Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for e
 
 Here is a [quick example of NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
 You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
-Then download the files at that gist and run `docker-compose up -d` to test it out.
+Then download the files at that gist and run `docker-compose up` to test it out.
 Customize the `nginx.conf` file to set the desired paths and add other services.
 
 ## Host volume mounts and notebook errors
@@ -216,82 +143,39 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 Most containers, including our Ubuntu base image, ship without manpages installed to save space.
 You can use the following Dockerfile to inherit from one of our images to enable manpages:
 
-```dockerfile
-# Choose your desired base image
-ARG BASE_CONTAINER=jupyter/datascience-notebook:latest
-FROM $BASE_CONTAINER
-
-USER root
-
-# `/etc/dpkg/dpkg.cfg.d/excludes` contains several `path-exclude`s, including man pages
-# Remove it, then install man, install docs
-RUN rm /etc/dpkg/dpkg.cfg.d/excludes && \
-    apt-get update --yes && \
-    dpkg -l | grep ^ii | cut -d' ' -f3 | xargs apt-get install --yes --no-install-recommends --reinstall man && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-USER ${NB_UID}
+```{literalinclude} recipe_code/manpage_install.dockerfile
+:language: docker
 ```
 
-Adding the documentation on top of the existing single-user image wastes a lot of space
+Adding the documentation on top of the existing image wastes a lot of space
 and requires reinstalling every system package,
 which can take additional time and bandwidth.
-The `datascience-notebook` image has been shown to grow by almost 3GB when adding manpages in this way.
 Enabling manpages in the base Ubuntu layer prevents this container bloat.
 To achieve this, use the previous `Dockerfile`'s commands with the original `ubuntu` image as your base container:
 
 ```dockerfile
-ARG BASE_CONTAINER=ubuntu:22.04
+FROM ubuntu:22.04
 ```
 
-For Ubuntu 18.04 (bionic) and earlier, you may also require to a workaround for a mandb bug, which was fixed in mandb >= 2.8.6.1:
-
-```dockerfile
-# https://git.savannah.gnu.org/cgit/man-db.git/commit/?id=8197d7824f814c5d4b992b4c8730b5b0f7ec589a
-# https://launchpadlibrarian.net/435841763/man-db_2.8.5-2_2.8.6-1.diff.gz
-
-RUN echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/man" >> /etc/manpath.config && \
-    echo "MANPATH_MAP ${CONDA_DIR}/bin ${CONDA_DIR}/share/man" >> /etc/manpath.config && \
-    mandb
-```
-
-Be sure to check the current base image in `base-notebook` before building.
+Be sure to check the current base image in `jupyter/docker-stacks-foundation` before building.
 
 ## JupyterHub
 
 We also have contributed recipes for using JupyterHub.
 
-### Use JupyterHub's dockerspawner
+### Use JupyterHub's DockerSpawner
 
-In most cases for use with DockerSpawner, given an image that already has a notebook stack set up,
-you would only need to add:
-
-1. install the jupyterhub-singleuser script (for the correct Python version)
-2. change the command to launch the single-user server
-
-Swapping out the `FROM` line in the `jupyterhub/singleuser` Dockerfile should be enough for most
-cases.
-
-Credit: [Justin Tyberg](https://github.com/jtyberg), [quanghoc](https://github.com/quanghoc), and
-[Min RK](https://github.com/minrk) based on
-[docker-stacks/issues/124](https://github.com/jupyter/docker-stacks/issues/124) and
-[docker-stacks/pull/185](https://github.com/jupyter/docker-stacks/pull/185)
+You can find an example of using DockerSpawner [here](https://github.com/jupyterhub/jupyterhub-deploy-docker/tree/main/basic-example).
 
 ### Containers with a specific version of JupyterHub
 
-To use a specific version of JupyterHub, the version of `jupyterhub` in your image should match the
-version in the Hub itself.
+The version of `jupyterhub` in your image should match the
+version in the JupyterHub itself.
+To use a specific version of JupyterHub, do the following:
 
-```dockerfile
-FROM jupyter/base-notebook:2023-06-01
-RUN pip install --no-cache-dir jupyterhub==1.4.1 && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{literalinclude} recipe_code/jupyterhub_version.dockerfile
+:language: docker
 ```
-
-Credit: [MinRK](https://github.com/jupyter/docker-stacks/issues/423#issuecomment-322767742)
-
-Ref: <https://github.com/jupyter/docker-stacks/issues/177>
 
 ## Spark
 
@@ -299,12 +183,17 @@ A few suggestions have been made regarding using Docker Stacks with spark.
 
 ### Using PySpark with AWS S3
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 Using Spark session for Hadoop 2.7.3
 
 ```python
 import os
 
-# !ls /usr/local/spark/jars/hadoop* # to figure out what version of Hadoop
+# To figure out what version of Hadoop, run:
+# ls /usr/local/spark/jars/hadoop*
 os.environ[
     "PYSPARK_SUBMIT_ARGS"
 ] = '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
@@ -355,6 +244,10 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/127>
 
 ### Using Local Spark JARs
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 ```python
 import os
 
@@ -379,6 +272,10 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/154>
 
 ### Using spark-packages.org
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 If you'd like to use packages from [spark-packages.org](https://spark-packages.org/), see
 [https://gist.github.com/parente/c95fdaba5a9a066efaab](https://gist.github.com/parente/c95fdaba5a9a066efaab)
 for an example of how to specify the package identifier in the environment before creating a
@@ -387,6 +284,10 @@ SparkContext.
 Ref: <https://github.com/jupyter/docker-stacks/issues/43>
 
 ### Use jupyter/all-spark-notebooks with an existing Spark/YARN cluster
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 ```dockerfile
 FROM jupyter/all-spark-notebook
@@ -438,9 +339,9 @@ USER ${NB_UID}
 # - Dashboards
 # - PyDoop
 # - PyHive
-RUN pip install --no-cache-dir jupyter_dashboards faker && \
+RUN pip install --no-cache-dir 'jupyter_dashboards' 'faker' && \
     jupyter dashboards quick-setup --sys-prefix && \
-    pip2 install --no-cache-dir pyhive pydoop thrift sasl thrift_sasl faker && \
+    pip2 install --no-cache-dir 'pyhive' 'pydoop' 'thrift' 'sasl' 'thrift_sasl' 'faker' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -461,63 +362,57 @@ USER ${NB_UID}
 
 Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/issues/369](https://github.com/jupyter/docker-stacks/issues/369)
 
-## Run Jupyter Notebook/Lab inside an already secured environment (i.e., with no token)
-
-(Adapted from [issue 728](https://github.com/jupyter/docker-stacks/issues/728))
+## Run Server inside an already secured environment (i.e., with no token)
 
 The default security is very good.
 There are use cases, encouraged by containers, where the jupyter container and the system it runs within lie inside the security boundary.
 It is convenient to launch the server without a password or token in these use cases.
-In this case, you should use the `start.sh` script to launch the server with no token:
+In this case, you should use the `start-notebook.sh` script to launch the server with no token:
 
 For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:2023-06-01 \
-    start.sh jupyter lab --LabApp.token=''
+    jupyter/base-notebook \
+    start-notebook.sh --IdentityProvider.token=''
 ```
 
-For jupyter classic:
+For Jupyter Notebook:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook:2023-06-01 \
-    start.sh jupyter notebook --NotebookApp.token=''
+    -e DOCKER_STACKS_JUPYTER_CMD=notebook \
+    jupyter/base-notebook \
+    start-notebook.sh --IdentityProvider.token=''
 ```
 
 ## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)
 
-NB: this works for classic notebooks only
-
-```dockerfile
-# Update with your base image of choice
-FROM jupyter/minimal-notebook:latest
-
-USER ${NB_UID}
-
-RUN pip install --no-cache-dir jupyter_contrib_nbextensions && \
-    jupyter contrib nbextension install --user && \
-    # can modify or enable additional extensions here
-    jupyter nbclassic-extension enable spellchecker/main --user && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+```{note}
+This recipe only works for NBCassic with Jupyter Notebook < 7.
+It is recommended to use [jupyterlab-spellchecker](https://github.com/jupyterlab-contrib/spellchecker) in modern environments.
 ```
 
-Ref: <https://github.com/jupyter/docker-stacks/issues/675>
+```{literalinclude} recipe_code/spellcheck_notebookv6.dockerfile
+:language: docker
+```
 
 ## Enable Delta Lake in Spark notebooks
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 Please note that the [Delta Lake](https://delta.io/) packages are only available for Spark version > `3.0`.
 By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
 
 ```dockerfile
-FROM jupyter/pyspark-notebook:latest
+FROM jupyter/pyspark-notebook
 
-ARG DELTA_CORE_VERSION="1.2.1"
-RUN pip install --no-cache-dir delta-spark==${DELTA_CORE_VERSION} && \
-     fix-permissions "${HOME}" && \
-     fix-permissions "${CONDA_DIR}"
+RUN mamba install --yes 'delta-spark' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 USER root
 
@@ -536,10 +431,14 @@ RUN echo "from pyspark.sql import SparkSession" > /tmp/init-delta.py && \
 
 ## Add Custom Fonts in Scipy notebook
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 The example below is a Dockerfile to load Source Han Sans with normal weight, usually used for the web.
 
 ```dockerfile
-FROM jupyter/scipy-notebook:latest
+FROM jupyter/scipy-notebook
 
 RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
     MPL_DATA="${CONDA_DIR}/lib/${PYV}/site-packages/matplotlib/mpl-data" && \
@@ -552,6 +451,10 @@ RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
 ```
 
 ## Enable clipboard in pandas on Linux systems
+
+```{warning}
+This recipe is not tested and might be broken.
+```
 
 ```{admonition} Additional notes
     This solution works on Linux host systems.
@@ -571,11 +474,14 @@ docker run -it --rm \
 
 ## Add ijavascript kernel to container
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
 
 ```dockerfile
-# use one of the Jupyter Docker Stacks images
-FROM jupyter/scipy-notebook:2023-06-01
+FROM jupyter/scipy-notebook
 
 # install ijavascript
 RUN npm install -g ijavascript
@@ -586,29 +492,8 @@ RUN ijsinstall
 
 The following recipe demonstrates how to add functionality to read from and write to an instance of Microsoft SQL server in your notebook.
 
-```dockerfile
-ARG BASE_IMAGE=jupyter/tensorflow-notebook
-
-FROM $BASE_IMAGE
-
-USER root
-
-ENV MSSQL_DRIVER "ODBC Driver 18 for SQL Server"
-ENV PATH="/opt/mssql-tools18/bin:${PATH}"
-
-RUN apt-get update --yes && \
-    apt-get install --yes --no-install-recommends gnupg2 && \
-    wget --progress=dot:giga https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/microsoft.gpg && \
-    apt-get purge --yes gnupg2 && \
-    echo "deb [arch=amd64,armhf,arm64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/ubuntu/22.04/prod jammy main" > /etc/apt/sources.list.d/microsoft.list && \
-    apt-get update --yes && \
-    ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql18 && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Switch back to jovyan to avoid accidental container runs as root
-USER ${NB_UID}
-
-RUN pip install --no-cache-dir pyodbc
+```{literalinclude} recipe_code/microsoft_odbc.dockerfile
+:language: docker
 ```
 
 You can now use `pyodbc` and `sqlalchemy` to interact with the database.

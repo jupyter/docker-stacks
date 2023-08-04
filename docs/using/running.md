@@ -15,12 +15,12 @@ The following are some common patterns.
 
 **Example 1:**
 
-This command pulls the `jupyter/scipy-notebook` image tagged `2023-06-01` from Docker Hub if it is not already present on the local host.
-It then starts a container running a Jupyter Notebook server and exposes the server on host port 8888.
-The server logs appear in the terminal and include a URL to the notebook server.
+This command pulls the `jupyter/scipy-notebook` image tagged `2023-07-31` from Docker Hub if it is not already present on the local host.
+It then starts a container running Jupyter Server with the JupyterLab frontend and exposes the server on host port 8888.
+The server logs appear in the terminal and include a URL to the server.
 
 ```bash
-docker run -it -p 8888:8888 jupyter/scipy-notebook:2023-06-01
+docker run -it -p 8888:8888 jupyter/scipy-notebook:2023-07-31
 
 # Entered start.sh with args: jupyter lab
 
@@ -33,13 +33,13 @@ docker run -it -p 8888:8888 jupyter/scipy-notebook:2023-06-01
 #      or http://127.0.0.1:8888/lab?token=f31f2625f13d131f578fced0fc76b81d10f6c629e92c7099
 ```
 
-Pressing `Ctrl-C` twice shuts down the notebook server but leaves the container intact on disk for later restart or permanent deletion using commands like the following:
+Pressing `Ctrl-C` twice shuts down the Server but leaves the container intact on disk for later restart or permanent deletion using commands like the following:
 
 ```bash
 # list containers
 docker ps --all
 # CONTAINER ID   IMAGE                                                 COMMAND                  CREATED          STATUS                     PORTS     NAMES
-# 221331c047c4   jupyter/scipy-notebook:2023-06-01                   "tini -g -- start-no…"   11 seconds ago   Exited (0) 8 seconds ago             cranky_benz
+# 221331c047c4   jupyter/scipy-notebook:2023-07-31                   "tini -g -- start-no…"   11 seconds ago   Exited (0) 8 seconds ago             cranky_benz
 
 # start the stopped container
 docker start --attach 221331c047c4
@@ -53,15 +53,15 @@ docker rm 221331c047c4
 
 **Example 2:**
 
-This command pulls the `jupyter/r-notebook` image tagged `2023-06-01` from Docker Hub if it is not already present on the local host.
-It then starts a container running a Jupyter Notebook server and exposes the server on host port 10000.
-The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the correct host port (10000).
+This command pulls the `jupyter/r-notebook` image tagged `2023-07-31` from Docker Hub if it is not already present on the local host.
+It then starts a container running Server and exposes the server on host port 10000.
+The server logs appear in the terminal and include a URL to the Server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:2023-06-01
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:2023-07-31
 ```
 
-Pressing `Ctrl-C` twice shuts down the notebook server and immediately destroys the Docker container.
+Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
 New files and changes in `~/work` in the container will be preserved.
 Any other changes made in the container will be lost.
 
@@ -78,7 +78,7 @@ where:
 
 - `--detach`: will run the container in detached mode
 
-You can also use the following docker commands to see the port and notebook server token:
+You can also use the following docker commands to see the port and Jupyter Server token:
 
 ```bash
 # get the random host port assigned to the container port 8888
@@ -130,16 +130,16 @@ subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Si
 subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
 ```
 
-This command pulls the `docker.io/jupyter/r-notebook` image tagged `2023-06-01` from Docker Hub if it is not already present on the local host.
-It then starts a container running a Jupyter Server and exposes the server on host port 10000.
-The server logs appear in the terminal and include a URL to the notebook server, but with the internal container port (8888) instead of the correct host port (10000).
+This command pulls the `docker.io/jupyter/r-notebook` image tagged `2023-07-31` from Docker Hub if it is not already present on the local host.
+It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
+The server logs appear in the terminal and include a URL to the server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
 podman run -it --rm -p 10000:8888 \
     -v "${PWD}":/home/jovyan/work --user $uid:$gid \
     --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
     --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
-    docker.io/jupyter/r-notebook:2023-06-01
+    docker.io/jupyter/r-notebook:2023-07-31
 ```
 
 ```{warning}
@@ -156,7 +156,7 @@ The `podman run` option `--userns=auto` will, for instance, not be possible to u
 The example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them.
 ```
 
-Pressing `Ctrl-C` twice shuts down the notebook server and immediately destroys the Docker container.
+Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
 New files and changes in `~/work` in the container will be preserved.
 Any other changes made in the container will be lost.
 

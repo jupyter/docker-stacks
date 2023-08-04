@@ -20,7 +20,7 @@ Please follow the process below to suggest a new feature for inclusion in one of
 Roughly speaking, we evaluate new features based on the following criteria:
 
 - **Usefulness to Jupyter users**: Is the feature generally applicable across domains? Does it work
-  with Jupyter Notebook, JupyterLab, JupyterHub, etc.?
+  with JupyterLab, Jupyter Notebook, JupyterHub, etc.?
 - **Fit with the image purpose**: Does the feature match the theme of the stack in which it will be
   added? Would it fit better in a new community stack?
 - **Complexity of build/runtime configuration**: How many lines of code does the feature require

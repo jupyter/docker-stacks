@@ -19,8 +19,8 @@ services:
       PASSWORD: ${PASSWORD}
     command: >
       start-notebook.sh
-      --NotebookApp.certfile=/etc/letsencrypt/fullchain.pem
-      --NotebookApp.keyfile=/etc/letsencrypt/privkey.pem
+      --ServerApp.certfile=/etc/letsencrypt/fullchain.pem
+      --ServerApp.keyfile=/etc/letsencrypt/privkey.pem
 
 volumes:
   work:

@@ -6,7 +6,7 @@ set -exuo pipefail
 
 # Default julia version to install if env var is not set
 # Check https://julialang.org/downloads/
-JULIA_VERSION="${JULIA_VERSION:-1.9.1}"
+JULIA_VERSION="${JULIA_VERSION:-1.9.2}"
 
 # Figure out what architecture we are installing in
 JULIA_ARCH=$(uname -m)
@@ -22,7 +22,8 @@ JULIA_MAJOR_MINOR=$(echo "${JULIA_VERSION}" | cut -d. -f 1,2)
 # Download and install Julia
 cd /tmp
 mkdir "/opt/julia-${JULIA_VERSION}"
-wget --progress=dot:giga "https://julialang-s3.julialang.org/bin/linux/${JULIA_SHORT_ARCH}/${JULIA_MAJOR_MINOR}/${JULIA_INSTALLER}"
+curl --progress-bar --location --output "${JULIA_INSTALLER}" \
+    "https://julialang-s3.julialang.org/bin/linux/${JULIA_SHORT_ARCH}/${JULIA_MAJOR_MINOR}/${JULIA_INSTALLER}"
 tar xzf "${JULIA_INSTALLER}" -C "/opt/julia-${JULIA_VERSION}" --strip-components=1
 rm "${JULIA_INSTALLER}"
 

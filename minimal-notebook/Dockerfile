@@ -12,10 +12,11 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install all OS dependencies for fully functional notebook server
+# Install all OS dependencies for fully functional Server
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
     # Common useful utilities
+    curl \
     git \
     nano-tiny \
     tzdata \
