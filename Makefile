@@ -18,7 +18,8 @@ ALL_IMAGES:= \
 	tensorflow-notebook \
 	datascience-notebook \
 	pyspark-notebook \
-	all-spark-notebook
+	all-spark-notebook \
+        linux-desktop-notebook
 
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1

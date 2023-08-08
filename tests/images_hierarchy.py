@@ -18,6 +18,7 @@ ALL_IMAGES = {
     "datascience-notebook": "scipy-notebook",
     "pyspark-notebook": "scipy-notebook",
     "all-spark-notebook": "pyspark-notebook",
+    "linux-desktop-notebook": "minimal-notebook",
 }
 
 

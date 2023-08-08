@@ -223,13 +223,27 @@ communities.
   [ggplot2](https://ggplot2.tidyverse.org)
   packages
 
+### jupyter/linux-desktop-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/julia-desktop-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/linux-desktop-notebook/Dockerfile) |
+[Docker Hub image tags](https://hub.docker.com/r/jupyter/linux-desktop-notebook/tags/)
+
+`jupyter/linux-desktop-notebook` is set up to run a Linux Desktop environment inside
+the container. Very helpful for using datascience tooling that relies on Linux
+desktop applications, such as [QGIS](https://qgis.org/en/site/).
+
+- Everything in `jupyter/minimal-notebook` and its ancestor images
+- The [XFCE4 window manager](https://www.xfce.org/)
+- The [Firefox](https://www.mozilla.org/en-US/firefox/new/) web browser
+
 ### Image Relationships
 
 The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles).
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFjkFuwkAMRfecwsqKLuYACMEJuqPLSshJHDAZ7GjGIwSIuzPTRaWJWmX7_vP_br12Y894gucKoKcBk7fjoGKRHwQ72Gwz18AkhsYqGU0aLCDbdpWjJrVJLH3L-vPrADe2c85ZDAJ5wkgfDbg99HmFgouG3RjdoEn6n7ZS_l9W7trc4ESNWtWxyBUoxpWFr-grac6KFzue7pVVk-I0RhI1DF5vv7z5W80vYqYkHS1Oh0XjkjzjwnPTPU4Yxsqas-Kh925uvt4imKoO)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFz8FOBCEMgOH7PgWZkx54ALPRJ_CmRxPTGTpa6bYEStbV-O6CBxMmmrn-_Sgwsy4xELy4z4NzAVeobM-rihX6QHfrbo6tayYUAyOVlpJmy0B2PLTRVOcqVp_k6v7xwZ3JXtucxFxGRih4PTl_50K7BbMvBkssftUq4WdbX_7frJ-b2wYvajirxo6H0MWJhE7AA9q27spC6TKosXQzGUrRvLKef_v0N21PhFZRFty9Ou-Kt8oEu4pJ6rsPWKJp2vlKupQEOQ5q27oDZr-VX99AkrqY)
 
 ### Builds
 
