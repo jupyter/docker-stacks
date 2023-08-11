@@ -72,6 +72,43 @@ def test_health(
 @pytest.mark.parametrize(
     "env,cmd,user",
     [
+        (["HTTPS_PROXY=host.docker.internal", "HTTP_PROXY=host.docker.internal"], None, None),
+        (
+            ["NB_USER=testuser", "CHOWN_HOME=1", "JUPYTER_PORT=8123", "HTTPS_PROXY=host.docker.internal", "HTTP_PROXY=host.docker.internal"],
+            ["start-notebook.sh", "--ServerApp.base_url=/test"],
+            "root",
+        ),
+    ],
+)
+def test_health_proxy(
+    container: TrackedContainer,
+    env: Optional[list[str]],
+    cmd: Optional[list[str]],
+    user: Optional[str],
+) -> None:
+    running_container = container.run_detached(
+        tty=True,
+        environment=env,
+        command=cmd,
+        user=user,
+    )
+
+    # sleeping some time to let the server start
+    time_spent = 0.0
+    wait_time = 0.1
+    time_limit = 15
+    while time_spent < time_limit:
+        time.sleep(wait_time)
+        time_spent += wait_time
+        if get_health(running_container) == "healthy":
+            return
+
+    assert get_health(running_container) == "healthy"
+
+
+@pytest.mark.parametrize(
+    "env,cmd,user",
+    [
         (["NB_USER=testuser", "CHOWN_HOME=1"], None, None),
         (
             ["NB_USER=testuser", "CHOWN_HOME=1"],
