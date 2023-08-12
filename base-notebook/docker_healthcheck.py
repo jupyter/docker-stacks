@@ -17,8 +17,8 @@ url = json.loads(json_file.read_bytes())["url"]
 url = url + "api"
 
 proxies = {
-  "http": None,
-  "https": None,
+    "http": None,
+    "https": None,
 }
 
 r = requests.get(url, proxies=proxies, verify=False)  # request without SSL verification

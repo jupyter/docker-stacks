@@ -72,9 +72,19 @@ def test_health(
 @pytest.mark.parametrize(
     "env,cmd,user",
     [
-        (["HTTPS_PROXY=host.docker.internal", "HTTP_PROXY=host.docker.internal"], None, None),
         (
-            ["NB_USER=testuser", "CHOWN_HOME=1", "JUPYTER_PORT=8123", "HTTPS_PROXY=host.docker.internal", "HTTP_PROXY=host.docker.internal"],
+            ["HTTPS_PROXY=host.docker.internal", "HTTP_PROXY=host.docker.internal"],
+            None,
+            None,
+        ),
+        (
+            [
+                "NB_USER=testuser",
+                "CHOWN_HOME=1",
+                "JUPYTER_PORT=8123",
+                "HTTPS_PROXY=host.docker.internal",
+                "HTTP_PROXY=host.docker.internal",
+            ],
             ["start-notebook.sh", "--ServerApp.base_url=/test"],
             "root",
         ),
