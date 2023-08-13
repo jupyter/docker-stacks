@@ -16,6 +16,11 @@ json_file = next(runtime_dir.glob("*server-*.json"))
 url = json.loads(json_file.read_bytes())["url"]
 url = url + "api"
 
-r = requests.get(url, verify=False)  # request without SSL verification
+proxies = {
+    "http": "",
+    "https": "",
+}
+
+r = requests.get(url, proxies=proxies, verify=False)  # request without SSL verification
 r.raise_for_status()
 print(r.content)
