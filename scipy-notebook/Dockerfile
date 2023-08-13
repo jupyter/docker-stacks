@@ -25,7 +25,7 @@ RUN apt-get update --yes && \
 
 USER ${NB_UID}
 
-# mamba downgrades this packages to previous major version, which causes issues
+# mamba downgrades these packages to previous major versions, which causes issues
 RUN echo 'jupyterlab >=4.0.4' >> "${CONDA_DIR}/conda-meta/pinned" && \
     echo 'notebook >=7.0.2' >> "${CONDA_DIR}/conda-meta/pinned"
 
