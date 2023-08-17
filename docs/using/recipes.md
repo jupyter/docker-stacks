@@ -504,7 +504,7 @@ Pre-built images are hosted in the [realiserad/jupyter-docker-mssql](https://git
 
 The following recipe demonstrates how to add functionality to connect to a Oracle Database using [Oracle Instant Client](https://www.oracle.com/database/technologies/instant-client.html) in your notebook.
 
-This recipe installs version 21.11.0.0.0. Go to the [Oracle Instant Client Download page](https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html) for the 
+This recipe installs version 21.11.0.0.0. Go to the [Oracle Instant Client Download page](https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html) for the
 complete list of versions available.
 
 ```{literalinclude} recipe_code/oracledb.dockerfile
