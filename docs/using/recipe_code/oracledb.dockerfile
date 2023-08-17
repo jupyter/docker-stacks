@@ -2,10 +2,12 @@ FROM jupyter/base-notebook
 
 ## Install java, javac and alien
 USER root
-RUN add-apt-repository universe && \
+RUN apt-get update --yes && \ 
+    apt install --yes --no-install-recommends software-properties-common && \
     apt-get update --yes && \
-    apt-get install --yes --no-install-recommends software-properties-common default-jre default-jdk openjdk-11-jdk alien libaio1 && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    add-apt-repository universe && \
+    apt-get update --yes && \
+    apt install --yes --no-install-recommends default-jre default-jdk openjdk-11-jdk libaio1
 
 ## Then install Oracle SQL Instant client, SQL+Plus, tools and JDBC.
 ## Note: You may need to change the URL to a newer version.
