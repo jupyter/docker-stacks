@@ -2,7 +2,7 @@ FROM jupyter/base-notebook
 
 ## Install java, javac and alien
 USER root
-RUN apt-get update --yes && \ 
+RUN apt-get update --yes && \
     apt install --yes --no-install-recommends software-properties-common && \
     apt-get update --yes && \
     add-apt-repository universe && \
