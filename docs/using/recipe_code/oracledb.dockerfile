@@ -11,7 +11,7 @@ RUN add-apt-repository universe && \
 ## Note: You may need to change the URL to a newer version.
 ## See: https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html
 RUN mkdir "/opt/oracle"
-WORKDIR "/opt/oracle" 
+WORKDIR "/opt/oracle"
 RUN wget --progress=dot:giga https://download.oracle.com/otn_software/linux/instantclient/2111000/oracle-instantclient-basiclite-21.11.0.0.0-1.el8.x86_64.rpm && \
     alien -d --scripts oracle-instantclient-basiclite-21.11.0.0.0-1.el8.x86_64.rpm && \
     dpkg -i oracle-instantclient-basiclite_21.11.0.0.0-2_amd64.deb && \
@@ -37,7 +37,7 @@ RUN echo "PATH=$ORACLE_HOME/bin:$PATH" >> "${HOME}/.bashrc" && \
     echo "export PATH" >> "${HOME}/.bashrc"
 
 ## (Optional) Add credentials for the Oracle Database server; files must be present on your root folder.
-WORKDIR /usr/lib/oracle/21/client64/lib 
+WORKDIR /usr/lib/oracle/21/client64/lib
 ## Adding a wildcard `[]` on the last letter of the filename to avoid throwing an error if the file does not exist.
 ## See: https://stackoverflow.com/questions/31528384/conditional-copy-add-in-dockerfile
 COPY cwallet.ss[o] /usr/lib/oracle/21/client64/lib/network/admin
