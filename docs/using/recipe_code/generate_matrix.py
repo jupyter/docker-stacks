@@ -5,7 +5,6 @@ import json
 from pathlib import Path
 
 THIS_DIR = Path(__file__).parent.resolve()
-ROOT_DIR = THIS_DIR.parent.parent
 
 
 def generate_matrix():
