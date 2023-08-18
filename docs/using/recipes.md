@@ -507,7 +507,6 @@ The following recipe demonstrates how to add functionality to connect to a Oracl
 Nonetheless, go to the [Oracle Instant Client Download page](https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html) for the
 complete list of versions available. You may need to perform different steps for older versions; the may be explained on the "Installation instructions" section of the Downloads page.
 
-
 ```{literalinclude} recipe_code/oracledb.dockerfile
 :language: docker
 ```
