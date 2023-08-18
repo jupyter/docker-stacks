@@ -4,8 +4,6 @@ FROM jupyter/base-notebook
 USER root
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends software-properties-common && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*  && \
-    apt-get update --yes && \
     add-apt-repository universe && \
     apt-get update --yes && \
     apt-get install --yes --no-install-recommends alien default-jre default-jdk openjdk-11-jdk libaio1 && \
@@ -33,25 +31,33 @@ RUN rm "*.deb" && rm "*.rpm" & chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb"
 
 ## Configure environment
 ## Note: You may need to change the ORACLE_HOME path to a different version `.../oracle/21/...`.
-RUN echo "ORACLE_HOME=/usr/lib/oracle/21/client64" >> "${HOME}/.bashrc"
-RUN echo "PATH=$ORACLE_HOME/bin:$PATH" >> "${HOME}/.bashrc" && \
-    echo "LD_LIBRARY_PATH=$ORACLE_HOME/lib" >> "${HOME}/.bashrc" && \
-    echo "export ORACLE_HOME" >> "${HOME}/.bashrc" && \
-    echo "export LD_LIBRARY_PATH" >> "${HOME}/.bashrc" && \
-    echo "export PATH" >> "${HOME}/.bashrc"
+ENV ORACLE_HOME=/usr/lib/oracle/21/client64
+ENV PATH="${ORACLE_HOME}/bin:${PATH}"
+ENV LD_LIBRARY_PATH=${ORACLE_HOME}/lib
+ENV PATH="${LD_LIBRARY_PATH}:${PATH}"
 
 ## (Optional) Add credentials for the Oracle Database server; files must be present on your root folder.
-WORKDIR /usr/lib/oracle/21/client64/lib
+WORKDIR /usr/lib/oracle/21/client64/lib/network/admin
 ## Adding a wildcard `[]` on the last letter of the filename to avoid throwing an error if the file does not exist.
 ## See: https://stackoverflow.com/questions/31528384/conditional-copy-add-in-dockerfile
-COPY cwallet.ss[o] /usr/lib/oracle/21/client64/lib/network/admin
-COPY sqlnet.or[a] /usr/lib/oracle/21/client64/lib/network/admin
-COPY tnsnames.or[a] /usr/lib/oracle/21/client64/lib/network/admin
+COPY cwallet.ss[o] ./
+COPY sqlnet.or[a] ./
+COPY tnsnames.or[a] ./
 
 ## Switch back to jovyan.
 USER "${NB_UID}"
 
+## Change workdir back to jovyan.
+WORKDIR "${NB_UID}"
+
 ## Install `oracledb` Python library to use Oracle SQL Instant Client with `--upgrade --user` options enabled
-RUN "${CONDA_DIR}/envs/${CONDA_ENV}/bin/pip" install --no-cache-dir oracledb --upgrade --user && \
+
+# Alternatively, if you are using `conda` to add the custom Python environment and Jupyter kernel:
+# RUN "${CONDA_DIR}/envs/${CONDA_ENV}/bin/pip" install --no-cache-dir oracledb --upgrade --user && \
+#     fix-permissions "${CONDA_DIR}" && \
+#     fix-permissions "${HOME}"
+
+RUN mamba install --yes 'oracledb' --upgrade --user && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "${HOME}"
+    fix-permissions "/home/${NB_USER}"
