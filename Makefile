@@ -37,7 +37,7 @@ help:
 
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ## build the latest image for a stack using the system's architecture
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(OWNER)/$(notdir $@):latest" "./$(notdir $@)" --build-arg OWNER="$(OWNER)"
+	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(OWNER)/$(notdir $@):latest" "./images/$(notdir $@)" --build-arg OWNER="$(OWNER)"
 	@echo -n "Built image size: "
 	@docker images "$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
