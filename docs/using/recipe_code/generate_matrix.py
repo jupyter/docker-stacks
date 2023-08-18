@@ -3,11 +3,12 @@
 # Distributed under the terms of the Modified BSD License.
 import json
 from pathlib import Path
+from typing import Any
 
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-def generate_matrix():
+def generate_matrix() -> dict[str, Any]:
     dockerfiles = sorted(file.name for file in THIS_DIR.glob("*.dockerfile"))
     return {"dockerfile": dockerfiles}
 
