@@ -26,8 +26,9 @@ RUN wget --progress=dot:giga https://download.oracle.com/otn_software/linux/inst
     wget --progress=dot:giga https://download.oracle.com/otn_software/linux/instantclient/2111000/oracle-instantclient-jdbc-21.11.0.0.0-1.el8.x86_64.rpm && \
     alien -d --scripts oracle-instantclient-jdbc-21.11.0.0.0-1.el8.x86_64.rpm && \
     dpkg -i oracle-instantclient-jdbc_21.11.0.0.0-2_amd64.deb && \
-    # Remove temporary files to avoid issues with `fix-permissions` commands
-    rm "*.deb" && rm "*.rpm" && chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb"
+    chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb"
+# Remove temporary files to avoid issues with `fix-permissions` commands
+RUN "rm -f *.rpm && rm -f *.deb"
 
 ## Configure environment
 ## Note: You may need to change the ORACLE_HOME path to a different version `.../oracle/21/...`.
