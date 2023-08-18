@@ -1,7 +1,8 @@
 FROM jupyter/base-notebook
 
-# Install java, javac and alien
 USER root
+
+# Install java, javac and alien
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends software-properties-common && \
     add-apt-repository universe && \
@@ -12,8 +13,7 @@ RUN apt-get update --yes && \
 # Then install Oracle SQL Instant client, SQL+Plus, tools and JDBC.
 # Note: You may need to change the URL to a newer version.
 # See: https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html
-RUN mkdir "/opt/oracle"
-WORKDIR "/opt/oracle"
+WORKDIR "/tmp"
 RUN wget --progress=dot:giga https://download.oracle.com/otn_software/linux/instantclient/2111000/oracle-instantclient-basiclite-21.11.0.0.0-1.el8.x86_64.rpm && \
     alien --install --scripts oracle-instantclient-basiclite-21.11.0.0.0-1.el8.x86_64.rpm && \
     wget --progress=dot:giga https://download.oracle.com/otn_software/linux/instantclient/2111000/oracle-instantclient-sqlplus-21.11.0.0.0-1.el8.x86_64.rpm && \
@@ -45,7 +45,6 @@ USER "${NB_UID}"
 WORKDIR "${HOME}"
 
 # Install `oracledb` Python library to use Oracle SQL Instant Client
-
 RUN mamba install --yes 'oracledb' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
