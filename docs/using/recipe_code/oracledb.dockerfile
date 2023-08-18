@@ -31,7 +31,7 @@ ENV ORACLE_HOME=/usr/lib/oracle/21/client64
 ENV PATH="${ORACLE_HOME}/bin:${PATH}"
 ENV LD_LIBRARY_PATH="${ORACLE_HOME}/lib:${LD_LIBRARY_PATH}"
 
-# (Optional) Add credentials for the Oracle Database server; files must be present on your root folder.
+# (Optional) Add credentials for the Oracle Database server; files must be present on your `docker build PATH` folder.
 WORKDIR /usr/lib/oracle/21/client64/lib/network/admin
 # Adding a wildcard `[]` on the last letter of the filename to avoid throwing an error if the file does not exist.
 # See: https://stackoverflow.com/questions/31528384/conditional-copy-add-in-dockerfile
