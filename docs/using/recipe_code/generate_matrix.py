@@ -14,4 +14,4 @@ def generate_matrix():
 
 
 if __name__ == "__main__":
-    print(json.dumps(generate_matrix()))
+    print("matrix=" + json.dumps(generate_matrix()))
