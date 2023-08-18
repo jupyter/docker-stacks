@@ -61,6 +61,13 @@ Due to the usage of [the flag `--rm`](https://docs.docker.com/engine/reference/r
 system when the container exits, but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
 [The `-it` flag](https://docs.docker.com/engine/reference/commandline/run/#name) allocates pseudo-TTY.
 
+```{note}
+By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
+So, new notebooks will be saved there, unless you change the directory in the file browser.
+
+To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook.sh --ServerApp.root_dir=/home/jovyan/work`.
+```
+
 ## Contributing
 
 Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)

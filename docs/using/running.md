@@ -65,6 +65,13 @@ Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docke
 New files and changes in `~/work` in the container will be preserved.
 Any other changes made in the container will be lost.
 
+```{note}
+By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
+So, new notebooks will be saved there, unless you change the directory in the file browser.
+
+To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook.sh --ServerApp.root_dir=/home/jovyan/work`.
+```
+
 **Example 3:**
 
 This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Docker Hub if an image tagged `latest` is not already present on the local host.
