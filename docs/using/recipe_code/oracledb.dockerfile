@@ -17,11 +17,11 @@ WORKDIR "/opt/oracle"
 RUN wget --progress=dot:giga https://download.oracle.com/otn_software/linux/instantclient/2111000/oracle-instantclient-basiclite-21.11.0.0.0-1.el8.x86_64.rpm && \
     alien --install --scripts oracle-instantclient-basiclite-21.11.0.0.0-1.el8.x86_64.rpm && \
     wget --progress=dot:giga https://download.oracle.com/otn_software/linux/instantclient/2111000/oracle-instantclient-sqlplus-21.11.0.0.0-1.el8.x86_64.rpm && \
-    alien -install --scripts oracle-instantclient-sqlplus-21.11.0.0.0-1.el8.x86_64.rpm && \
+    alien --install --scripts oracle-instantclient-sqlplus-21.11.0.0.0-1.el8.x86_64.rpm && \
     wget --progress=dot:giga https://download.oracle.com/otn_software/linux/instantclient/2111000/oracle-instantclient-tools-21.11.0.0.0-1.el8.x86_64.rpm && \
-    alien -install --scripts oracle-instantclient-tools-21.11.0.0.0-1.el8.x86_64.rpm && \
+    alien --install --scripts oracle-instantclient-tools-21.11.0.0.0-1.el8.x86_64.rpm && \
     wget --progress=dot:giga https://download.oracle.com/otn_software/linux/instantclient/2111000/oracle-instantclient-jdbc-21.11.0.0.0-1.el8.x86_64.rpm && \
-    alien -install --scripts oracle-instantclient-jdbc-21.11.0.0.0-1.el8.x86_64.rpm && \
+    alien --install --scripts oracle-instantclient-jdbc-21.11.0.0.0-1.el8.x86_64.rpm && \
     chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb" && \
     rm -f ./*.rpm
 
