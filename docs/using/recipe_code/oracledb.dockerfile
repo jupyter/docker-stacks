@@ -48,7 +48,7 @@ COPY tnsnames.or[a] ./
 USER "${NB_UID}"
 
 ## Change workdir back to jovyan.
-WORKDIR "${NB_UID}"
+WORKDIR "${HOME}"
 
 ## Install `oracledb` Python library to use Oracle SQL Instant Client with `--upgrade --user` options enabled
 
