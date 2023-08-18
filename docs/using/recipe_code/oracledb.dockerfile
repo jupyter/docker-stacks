@@ -27,14 +27,14 @@ RUN wget --progress=dot:giga https://download.oracle.com/otn_software/linux/inst
     alien -d --scripts oracle-instantclient-jdbc-21.11.0.0.0-1.el8.x86_64.rpm && \
     dpkg -i oracle-instantclient-jdbc_21.11.0.0.0-2_amd64.deb && \
     chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb" && \
-    rm -f /opt/oracle/*.rpm && rm -f /opt/oracle/*.deb
+    rm -f ./*.rpm && \
+    rm -f ./*.deb
 
 ## Configure environment
 ## Note: You may need to change the ORACLE_HOME path to a different version `.../oracle/21/...`.
 ENV ORACLE_HOME=/usr/lib/oracle/21/client64
 ENV PATH="${ORACLE_HOME}/bin:${PATH}"
-ENV LD_LIBRARY_PATH=${ORACLE_HOME}/lib
-ENV PATH="${LD_LIBRARY_PATH}:${PATH}"
+ENV LD_LIBRARY_PATH="${ORACLE_HOME}/lib:${LD_LIBRARY_PATH}"
 
 ## (Optional) Add credentials for the Oracle Database server; files must be present on your root folder.
 WORKDIR /usr/lib/oracle/21/client64/lib/network/admin
@@ -50,14 +50,9 @@ USER "${NB_UID}"
 ## Change workdir back to jovyan.
 WORKDIR "${HOME}"
 
-## Install `oracledb` Python library to use Oracle SQL Instant Client with `--upgrade --user` options enabled
+## Install `oracledb` Python library to use Oracle SQL Instant Client
 
-# Alternatively, if you are using `conda` to add the custom Python environment and Jupyter kernel:
-# RUN "${CONDA_DIR}/envs/${CONDA_ENV}/bin/pip" install --no-cache-dir oracledb --upgrade --user && \
-#     fix-permissions "${CONDA_DIR}" && \
-#     fix-permissions "${HOME}"
-
-RUN mamba install --yes 'oracledb' --upgrade --user && \
+RUN mamba install --yes 'oracledb' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
