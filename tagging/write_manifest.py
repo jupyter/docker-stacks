@@ -38,7 +38,7 @@ def write_build_history_line(
     links_column = MARKDOWN_LINE_BREAK.join(
         [
             f"[Git diff](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
-            f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/{short_image_name}/Dockerfile)",
+            f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/images/{short_image_name}/Dockerfile)",
             f"[Build manifest](./{filename})",
         ]
     )
