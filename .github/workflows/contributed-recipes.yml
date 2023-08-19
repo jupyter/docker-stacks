@@ -47,6 +47,7 @@ jobs:
             mamba_install.dockerfile,
             manpage_install.dockerfile,
             microsoft_odbc.dockerfile,
+            oracledb.dockerfile,
             pip_install.dockerfile,
             rise_jupyterlab.dockerfile,
             spellcheck_notebookv6.dockerfile,
