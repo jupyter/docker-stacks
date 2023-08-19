@@ -499,3 +499,17 @@ The following recipe demonstrates how to add functionality to read from and writ
 You can now use `pyodbc` and `sqlalchemy` to interact with the database.
 
 Pre-built images are hosted in the [realiserad/jupyter-docker-mssql](https://github.com/Realiserad/jupyter-docker-mssql) repository.
+
+## Add Oracle SQL Instant client, SQL\*Plus and other tools (Version 21.x)
+
+The following recipe demonstrates how to add functionality to connect to a Oracle Database using [Oracle Instant Client](https://www.oracle.com/database/technologies/instant-client.html)
+in your notebook.
+This recipe installs version `21.11.0.0.0`.
+
+Nonetheless, go to the [Oracle Instant Client Download page](https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html) for the complete list of versions available.
+You may need to perform different steps for older versions;
+the may be explained on the "Installation instructions" section of the Downloads page.
+
+```{literalinclude} recipe_code/oracledb.dockerfile
+:language: docker
+```
