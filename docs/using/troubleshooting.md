@@ -142,7 +142,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
         -e NB_GID=1234 \
         -e CHOWN_HOME=yes \
         -e CHOWN_HOME_OPTS="-R" \
-        -w "/home/${NB_USER}" \
+        -w "/home/callisto" \
         -v "${PWD}"/test:/home/callisto/work \
         jupyter/minimal-notebook
 
@@ -162,7 +162,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
    - `-e NB_UID=1234` and `-e NB_GID=1234`: will set the `UID` and `GID` of the new user (`callisto`) to `1234`
    - `-e CHOWN_HOME_OPTS="-R"` and `-e CHOWN_HOME=yes`: ensure that the new user is the owner of the `/home` directory and subdirectories
      (setting `CHOWN_HOME_OPTS="-R` will ensure this change is applied recursively)
-   - `-w "/home/${NB_USER}"` sets the working directory to be the new user's home
+   - `-w "/home/callisto"` sets the working directory to be the new user's home
 
    ```{admonition} Additional notes
     In the example above, the `-v` flag is used to mount the local volume onto the new user's `/home` directory.
@@ -185,7 +185,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
        -e NB_GID="$(id -g)"  \
        -e CHOWN_HOME=yes \
        -e CHOWN_HOME_OPTS="-R" \
-       -w "/home/${NB_USER}" \
+       -w "/home/callisto" \
        -v "${PWD}"/test:/home/callisto/work \
        jupyter/minimal-notebook
    ```

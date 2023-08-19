@@ -10,17 +10,7 @@ on:
     paths:
       - ".github/workflows/hub-overview.yml"
 
-      - "all-spark-notebook/README.md"
-      - "base-notebook/README.md"
-      - "datascience-notebook/README.md"
-      - "docker-stacks-foundation/README.md"
-      - "julia-notebook/README.md"
-      - "minimal-notebook/README.md"
-      - "pyspark-notebook/README.md"
-      - "pytorch-notebook/README.md"
-      - "r-notebook/README.md"
-      - "scipy-notebook/README.md"
-      - "tensorflow-notebook/README.md"
+      - "images/*/README.md"
 
 jobs:
   update-dockerhub-overview:
@@ -41,7 +31,7 @@ jobs:
           destination_container_repo: ${{ env.OWNER }}/${{ matrix.image }}
           provider: dockerhub
           short_description: ${{ matrix.description }}
-          readme_file: ${{ matrix.image }}/README.md
+          readme_file: images/${{ matrix.image }}/README.md
 
     strategy:
       matrix:

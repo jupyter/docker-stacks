@@ -37,7 +37,7 @@ You do so by passing arguments to the `docker run` command.
   The default value is `jovyan`.
   Setting `NB_USER` refits the `jovyan` default user and ensures that the desired user has the correct file permissions
   for the new home directory created at `/home/<username>`.
-  For this option to take effect, you **must** run the container with `--user root`, set the working directory `-w "/home/${NB_USER}"`
+  For this option to take effect, you **must** run the container with `--user root`, set the working directory `-w "/home/<username>"`
   and set the environment variable `-e CHOWN_HOME=yes`.
 
   _Example usage:_
@@ -48,7 +48,7 @@ You do so by passing arguments to the `docker run` command.
       --user root \
       -e NB_USER="my-username" \
       -e CHOWN_HOME=yes \
-      -w "/home/${NB_USER}" \
+      -w "/home/my-username" \
       jupyter/base-notebook
   ```
 
