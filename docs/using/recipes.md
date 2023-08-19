@@ -502,6 +502,10 @@ Pre-built images are hosted in the [realiserad/jupyter-docker-mssql](https://git
 
 ## Add Oracle SQL Instant client, SQL\*Plus and other tools (Version 21.x)
 
+```{note}
+This recipe only works for x86_64 architecture.
+```
+
 The following recipe demonstrates how to add functionality to connect to a Oracle Database using [Oracle Instant Client](https://www.oracle.com/database/technologies/instant-client.html)
 in your notebook.
 This recipe installs version `21.11.0.0.0`.
