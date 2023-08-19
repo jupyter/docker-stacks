@@ -1,5 +1,9 @@
 FROM jupyter/base-notebook
 
+# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
+# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 USER root
 
 # Install java, javac and alien
@@ -12,20 +16,21 @@ RUN apt-get update --yes && \
 
 ARG instantclient_major_version=21
 ARG instantclient_version=${instantclient_major_version}.11.0.0.0-1
-ARG instantclient_url=https://download.oracle.com/otn_software/linux/instantclient/2111000
 
 # Then install Oracle SQL Instant client, SQL+Plus, tools and JDBC.
 # Note: You may need to change the URL to a newer version.
 # See: https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html
 WORKDIR "/tmp"
-RUN wget --progress=dot:giga ${instantclient_url}/oracle-instantclient-basiclite-${instantclient_version}.el8.x86_64.rpm && \
-    alien --install --scripts oracle-instantclient-basiclite-${instantclient_version}.el8.x86_64.rpm && \
-    wget --progress=dot:giga ${instantclient_url}/oracle-instantclient-sqlplus-${instantclient_version}.el8.x86_64.rpm && \
-    alien --install --scripts oracle-instantclient-sqlplus-${instantclient_version}.el8.x86_64.rpm && \
-    wget --progress=dot:giga ${instantclient_url}/oracle-instantclient-tools-${instantclient_version}.el8.x86_64.rpm && \
-    alien --install --scripts oracle-instantclient-tools-${instantclient_version}.el8.x86_64.rpm && \
-    wget --progress=dot:giga ${instantclient_url}/oracle-instantclient-jdbc-${instantclient_version}.el8.x86_64.rpm && \
-    alien --install --scripts oracle-instantclient-jdbc-${instantclient_version}.el8.x86_64.rpm && \
+RUN short_version="$(echo "${instantclient_version}" | tr -d '.' | cut -d "-" -f1)" && \
+    instantclient_url="https://download.oracle.com/otn_software/linux/instantclient/${short_version}" && \
+    wget --progress=dot:giga "${instantclient_url}/oracle-instantclient-basiclite-${instantclient_version}.el8.x86_64.rpm" && \
+    alien --install --scripts "oracle-instantclient-basiclite-${instantclient_version}.el8.x86_64.rpm" && \
+    wget --progress=dot:giga "${instantclient_url}/oracle-instantclient-sqlplus-${instantclient_version}.el8.x86_64.rpm" && \
+    alien --install --scripts "oracle-instantclient-sqlplus-${instantclient_version}.el8.x86_64.rpm" && \
+    wget --progress=dot:giga "${instantclient_url}/oracle-instantclient-tools-${instantclient_version}.el8.x86_64.rpm" && \
+    alien --install --scripts "oracle-instantclient-tools-${instantclient_version}.el8.x86_64.rpm" && \
+    wget --progress=dot:giga "${instantclient_url}/oracle-instantclient-jdbc-${instantclient_version}.el8.x86_64.rpm" && \
+    alien --install --scripts "oracle-instantclient-jdbc-${instantclient_version}.el8.x86_64.rpm" && \
     chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb" && \
     rm -f ./*.rpm
 
