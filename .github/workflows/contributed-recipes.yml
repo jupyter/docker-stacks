@@ -33,7 +33,7 @@ jobs:
         run: docs/using/recipe_code/generate_matrix.py >> $GITHUB_OUTPUT
 
   test-recipes:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runsOn }}
     needs: generate-matrix
     if: github.repository == 'jupyter/docker-stacks'
 
