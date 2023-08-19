@@ -181,8 +181,8 @@ It contains:
 
 ### jupyter/pytorch-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/pytorch-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/pytorch-notebook/Dockerfile) |
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pytorch-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pytorch-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/pytorch-notebook/tags/)
 
 `jupyter/pytorch-notebook` includes popular Python deep learning libraries.
