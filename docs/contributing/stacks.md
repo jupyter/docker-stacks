@@ -131,7 +131,7 @@ you merge a GitHub pull request to the main branch of your project.
 ## Defining Your Image
 
 Make edits to the Dockerfile in your project to add third-party libraries and configure Jupyter applications.
-Refer to the Dockerfiles for the core stacks (e.g., [jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/blob/main/datascience-notebook/Dockerfile))
+Refer to the Dockerfiles for the core stacks (e.g., [jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/blob/main/images/datascience-notebook/Dockerfile))
 to get a feel for what's possible and the best practices.
 
 [Submit pull requests](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)

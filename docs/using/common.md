@@ -135,7 +135,7 @@ or executables (`chmod +x`) to be run to the paths below:
 - `/usr/local/bin/before-notebook.d/` - handled **after** all the standard options noted above are applied
   and ran right before the Server launches
 
-See the `run-hooks` function in the [`jupyter/docker-stacks-foundation start.sh`](https://github.com/jupyter/docker-stacks/blob/main/docker-stacks-foundation/start.sh)
+See the `run-hooks` function in the [`jupyter/docker-stacks-foundation start.sh`](https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/start.sh)
 script for execution details.
 
 ## SSL Certificates
@@ -171,7 +171,7 @@ For additional information about using SSL, see the following:
 - The [docker-stacks/examples](https://github.com/jupyter/docker-stacks/tree/main/examples)
   for information about how to use
   [Let's Encrypt](https://letsencrypt.org/) certificates when you run these stacks on a publicly visible domain.
-- The [`jupyter_server_config.py`](https://github.com/jupyter/docker-stacks/blob/main/base-notebook/jupyter_server_config.py)
+- The [`jupyter_server_config.py`](https://github.com/jupyter/docker-stacks/blob/main/images/base-notebook/jupyter_server_config.py)
   file for how this Docker image generates a self-signed certificate.
 - The [Jupyter Server documentation](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#securing-a-jupyter-server)
   for best practices about securing a public Server in general.
