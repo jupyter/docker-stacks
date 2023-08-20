@@ -126,6 +126,10 @@ RUN set -x && \
 ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start.sh"]
 
+# Create dirs for startup hooks
+RUN mkdir /usr/local/bin/start-notebook.d && \
+    mkdir /usr/local/bin/before-notebook.d
+
 # Copy local files as late as possible to avoid cache busting
 COPY start.sh /usr/local/bin/
 
