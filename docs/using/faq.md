@@ -12,7 +12,7 @@ There are 2 types of data, which you might want to persist.
    ```{note}
    If you install a package inside a running container (for example you run `pip install <package>` in a terminal),
    it won't be preserved when you next run your image.
-   To make it work, install this package in your inherited image and rerun `docker build`.
+   To make it work, install this package in your inherited image and rerun `docker build` command.
    ```
 
 2. If you want to persist user-data (files created by you, like `python` scripts, notebooks, text files and so on),
