@@ -129,6 +129,12 @@ CMD ["start.sh"]
 # Copy local files as late as possible to avoid cache busting
 COPY start.sh /usr/local/bin/
 
+USER root
+
+# Create dirs for startup hooks
+RUN mkdir /usr/local/bin/start-notebook.d && \
+    mkdir /usr/local/bin/before-notebook.d
+
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 

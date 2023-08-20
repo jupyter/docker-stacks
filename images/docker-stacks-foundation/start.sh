@@ -20,25 +20,25 @@ run-hooks () {
     if [[ ! -d "${1}" ]] ; then
         return
     fi
-    _log "${0}: running hooks in ${1} as uid / gid: $(id -u) / $(id -g)"
+    _log "${0}: running hooks in: ${1} as uid: $(id -u) gid: $(id -g)"
     for f in "${1}/"*; do
         case "${f}" in
             *.sh)
-                _log "${0}: running script ${f}"
+                _log "${0}: sourcing shell script: ${f}"
                 # shellcheck disable=SC1090
                 source "${f}"
                 ;;
             *)
                 if [[ -x "${f}" ]] ; then
-                    _log "${0}: running executable ${f}"
+                    _log "${0}: running executable: ${f}"
                     "${f}"
                 else
-                    _log "${0}: ignoring non-executable ${f}"
+                    _log "${0}: ignoring non-executable: ${f}"
                 fi
                 ;;
         esac
     done
-    _log "${0}: done running hooks in ${1}"
+    _log "${0}: done running hooks in: ${1}"
 }
 
 # A helper function to unset env vars listed in the value of the env var
