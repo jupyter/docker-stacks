@@ -13,7 +13,7 @@ You can launch a local Docker container from the Jupyter Docker Stacks using the
 There are numerous ways to configure containers using the CLI.
 The following are some common patterns.
 
-**Example 1:**
+### Example 1
 
 This command pulls the `jupyter/scipy-notebook` image tagged `2023-08-19` from Docker Hub if it is not already present on the local host.
 It then starts a container running Jupyter Server with the JupyterLab frontend and exposes the server on host port 8888.
@@ -51,7 +51,7 @@ docker rm 221331c047c4
 # 221331c047c4
 ```
 
-**Example 2:**
+### Example 2
 
 This command pulls the `jupyter/r-notebook` image tagged `2023-08-19` from Docker Hub if it is not already present on the local host.
 It then starts a container running Server and exposes the server on host port 10000.
@@ -72,7 +72,7 @@ So, new notebooks will be saved there, unless you change the directory in the fi
 To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook.sh --ServerApp.root_dir=/home/jovyan/work`.
 ```
 
-**Example 3:**
+### Example 3
 
 This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Docker Hub if an image tagged `latest` is not already present on the local host.
 It then starts a container named `notebook` running a JupyterLab server and exposes the server on a randomly selected port.
@@ -118,7 +118,7 @@ docker rm notebook
 
 An alternative to using the Docker CLI is to use the Podman CLI. Podman is mostly compatible with Docker.
 
-**Example 4:**
+### Podman example
 
 If we use Podman instead of Docker in the situation given in _Example 2_, it will look like this:
 
