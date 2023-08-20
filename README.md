@@ -24,7 +24,7 @@ and want to launch a single Jupyter Application in a container.
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) describes additional uses and features in detail.
 
-**Example 1:**
+### Example 1
 
 This command pulls the `jupyter/scipy-notebook` image tagged `2023-08-19` from Docker Hub if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the container's internal port `8888` to port `10000` of the host machine:
@@ -43,7 +43,7 @@ where:
 
 The container remains intact for restart after the Server exits.
 
-**Example 2:**
+### Example 2
 
 This command pulls the `jupyter/datascience-notebook` image tagged `2023-08-19` from Docker Hub if it is not already present on the local host.
 It then starts an _ephemeral_ container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.

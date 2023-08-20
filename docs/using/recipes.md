@@ -44,6 +44,14 @@ Then build a new image.
 docker build --rm --tag my-custom-image .
 ```
 
+You can then run the image as follows:
+
+```bash
+docker run -it --rm \
+    -p 8888:8888 \
+    my-custom-image
+```
+
 ## Add a custom conda environment and Jupyter kernel
 
 The default version of `Python` that ships with the image may not be the version you want.
