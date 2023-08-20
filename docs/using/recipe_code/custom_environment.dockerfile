@@ -32,7 +32,6 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
 # More info about startup hooks: https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#startup-hooks
 USER root
 RUN activate_custom_env_script=/usr/local/bin/before-notebook.d/activate_custom_env.sh && \
-    mkdir "$(dirname ${activate_custom_env_script})" && \
     echo "#!/bin/bash" > ${activate_custom_env_script} && \
     echo "eval \"$(conda shell.bash activate "${env_name}")\"" >> ${activate_custom_env_script} && \
     chmod +x ${activate_custom_env_script}
