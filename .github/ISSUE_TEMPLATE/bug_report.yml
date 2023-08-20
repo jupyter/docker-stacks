@@ -35,10 +35,19 @@ body:
 
   - type: input
     attributes:
-      label: Host OS system and architecture running docker image
+      label: Host OS system
       placeholder: |
         Example:
-        Ubuntu 22.04 / aarch64
+        Ubuntu 22.04
+    validations:
+      required: true
+
+  - type: dropdown
+    attributes:
+      label: Host architecture
+      options:
+        - x86_64
+        - aarch64
     validations:
       required: true
 
