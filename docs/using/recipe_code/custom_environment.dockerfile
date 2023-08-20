@@ -1,8 +1,8 @@
 FROM jupyter/base-notebook
 
 # Name your environment and choose the python version
-ARG env_name=python38
-ARG py_ver=3.8
+ARG env_name=python310
+ARG py_ver=3.10
 
 # You can add additional libraries here
 RUN mamba create --yes -p "${CONDA_DIR}/envs/${env_name}" \
@@ -28,6 +28,17 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --nam
 RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
     'flake8'
 
-# If you do not want this environment to be the default one, comment this line
-# hadolint ignore=DL3059
+# Creating a startup hook, which will activate our custom environment by default in Jupyter Notebook
+# More info about startup hooks: https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#startup-hooks
+# You can comment this section to keep the default environment in Jupyter Notebook
+USER root
+RUN activate_custom_env_script=/usr/local/bin/before-notebook.d/activate_custom_env.sh && \
+    echo "#!/bin/bash" > ${activate_custom_env_script} && \
+    echo "eval \"$(conda shell.bash activate "${env_name}")\"" >> ${activate_custom_env_script} && \
+    chmod +x ${activate_custom_env_script}
+
+USER ${NB_UID}
+
+# Making this environment default in Terminal
+# You can comment this line to keep the default environment in Terminal
 RUN echo "conda activate ${env_name}" >> "${HOME}/.bashrc"
