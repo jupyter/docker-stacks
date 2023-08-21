@@ -101,7 +101,7 @@ if [ "$(id -u)" == 0 ] ; then
         fi
         # Recreate the desired user as we want it
         userdel "${NB_USER}"
-        useradd --home "/home/${NB_USER}" --uid "${NB_UID}" --gid "${NB_GID}" --groups 100 --no-log-init "${NB_USER}"
+        useradd --no-log-init --home "/home/${NB_USER}" --uid "${NB_UID}" --gid "${NB_GID}" --groups 100 "${NB_USER}"
     fi
 
     # Move or symlink the jovyan home directory to the desired users home
