@@ -71,5 +71,4 @@ linkcheck_allowed_redirects = {
     r"https://results\.pre-commit\.ci/latest/github/jupyter/docker-stacks/main": r"https://results\.pre-commit\.ci/run/github/.*",  # Latest main CI build
     r"https://github\.com/jupyter/docker-stacks/issues/new.*": r"https://github\.com/login.*",  # GitHub wants user to be logon to use this features
     r"https://github\.com/orgs/jupyter/teams/docker-image-maintainers/members": r"https://github\.com/login.*",
-    r"https://www\.rdocumentation.org/packages/RODBC/": r"https://www\.rdocumentation.org/packages/RODBC/*",
 }

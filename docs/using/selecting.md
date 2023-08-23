@@ -103,7 +103,7 @@ It contains:
   [randomforest](https://cran.r-project.org/web/packages/randomForest/index.html),
   [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html),
   [rmarkdown](https://rmarkdown.rstudio.com),
-  [rodbc](https://www.rdocumentation.org/packages/RODBC/),
+  [rodbc](https://cran.r-project.org/web/packages/RODBC/index.html),
   [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
   [shiny](https://shiny.posit.co),
   [tidymodels](https://www.tidymodels.org/),
