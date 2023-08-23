@@ -178,7 +178,7 @@ if [ "$(id -u)" == 0 ] ; then
         #   command. The behavior can be inspected with `sudo -V` run as root.
         #
         #   ref: `man sudo`    https://linux.die.net/man/8/sudo
-        #   ref: `man sudoers` https://www.sudo.ws/man/1.8.15/sudoers.man.html
+        #   ref: `man sudoers` https://www.sudo.ws/docs/man/sudoers.man/
         #
         # - We use the `--preserve-env` flag to pass through most environment
         #   variables, but understand that exceptions are caused by the sudoers
