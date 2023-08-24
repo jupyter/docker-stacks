@@ -11,7 +11,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 if [[ ! -d "${1}" ]] ; then
-    echo "Directory ${1} doesn't exist"
+    echo "Directory ${1} doesn't exist or is not a directory"
     return 1
 fi
 

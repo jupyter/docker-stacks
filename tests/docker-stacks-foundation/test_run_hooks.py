@@ -33,6 +33,34 @@ def test_run_hooks_two_args(container: TrackedContainer) -> None:
     assert "Should pass exactly one directory" in logs
 
 
+def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
+    logs = container.run_and_wait(
+        timeout=5,
+        tty=True,
+        no_failure=False,
+        command=[
+            "bash",
+            "-c",
+            "source /usr/local/bin/run-hooks.sh /tmp/missing-dir/",
+        ],
+    )
+    assert "Directory /tmp/missing-dir/ doesn't exist or is not a directory" in logs
+
+
+def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
+    logs = container.run_and_wait(
+        timeout=5,
+        tty=True,
+        no_failure=False,
+        command=[
+            "bash",
+            "-c",
+            "touch /tmp/some-file && source /usr/local/bin/run-hooks.sh /tmp/some-file",
+        ],
+    )
+    assert "Directory /tmp/some-file doesn't exist or is not a directory" in logs
+
+
 def test_run_hooks_empty_dir(container: TrackedContainer) -> None:
     container.run_and_wait(
         timeout=5,
