@@ -86,7 +86,7 @@ You do so by passing arguments to the `docker run` command.
 
   ```{note}
   `NB_UMASK` when set only applies to the Jupyter process itself -
-  you cannot use it to set a `umask` for additional files created during run-hooks.
+  you cannot use it to set a `umask` for additional files created during `run-hooks.sh`.
   For example, via `pip` or `conda`.
   If you need to set a `umask` for these, you **must** set the `umask` value for each command.
   ```
@@ -135,7 +135,7 @@ or executables (`chmod +x`) to be run to the paths below:
 - `/usr/local/bin/before-notebook.d/` - handled **after** all the standard options noted above are applied
   and ran right before the Server launches
 
-See the `run-hooks` function in the [`jupyter/docker-stacks-foundation start.sh`](https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/start.sh)
+See the `run-hooks.sh` script [here](https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/run-hooks.sh) and how it's used in the [`start.sh`](https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/start.sh)
 script for execution details.
 
 ## SSL Certificates

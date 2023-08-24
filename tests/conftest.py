@@ -108,6 +108,7 @@ class TrackedContainer:
         timeout: int,
         no_warnings: bool = True,
         no_errors: bool = True,
+        no_failure: bool = True,
         **kwargs: Any,
     ) -> str:
         running_container = self.run_detached(**kwargs)
@@ -119,7 +120,10 @@ class TrackedContainer:
             assert not self.get_warnings(logs)
         if no_errors:
             assert not self.get_errors(logs)
-        assert rv == 0 or rv["StatusCode"] == 0
+        if no_failure:
+            assert rv == 0 or rv["StatusCode"] == 0
+        else:
+            assert rv != 0 and rv["StatusCode"] != 0
         return logs
 
     @staticmethod
