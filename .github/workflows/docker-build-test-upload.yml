@@ -60,7 +60,7 @@ jobs:
         shell: bash
 
       - name: Build image 🛠
-        run: docker build --rm --force-rm --tag ${{ env.OWNER }}/${{ inputs.image }} images/${{ inputs.image }}/
+        run: docker build --rm --force-rm --tag ${{ env.OWNER }}/${{ inputs.image }} images/${{ inputs.image }}/ --build-arg OWNER=${{ env.OWNER }}
         env:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build
