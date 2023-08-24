@@ -127,7 +127,7 @@ ENTRYPOINT ["tini", "-g", "--"]
 CMD ["start.sh"]
 
 # Copy local files as late as possible to avoid cache busting
-COPY start.sh /usr/local/bin/
+COPY run-hooks.sh start.sh /usr/local/bin/
 
 USER root
 

@@ -14,33 +14,6 @@ _log () {
 }
 _log "Entered start.sh with args:" "$@"
 
-# The run-hooks function looks for .sh scripts to source and executable files to
-# run within a passed directory.
-run-hooks () {
-    if [[ ! -d "${1}" ]] ; then
-        return
-    fi
-    _log "${0}: running hooks in: ${1} as uid: $(id -u) gid: $(id -g)"
-    for f in "${1}/"*; do
-        case "${f}" in
-            *.sh)
-                _log "${0}: sourcing shell script: ${f}"
-                # shellcheck disable=SC1090
-                source "${f}"
-                ;;
-            *)
-                if [[ -x "${f}" ]] ; then
-                    _log "${0}: running executable: ${f}"
-                    "${f}"
-                else
-                    _log "${0}: ignoring non-executable: ${f}"
-                fi
-                ;;
-        esac
-    done
-    _log "${0}: done running hooks in: ${1}"
-}
-
 # A helper function to unset env vars listed in the value of the env var
 # JUPYTER_ENV_VARS_TO_UNSET.
 unset_explicit_env_vars () {
@@ -62,7 +35,8 @@ else
 fi
 
 # NOTE: This hook will run as the user the container was started with!
-run-hooks /usr/local/bin/start-notebook.d
+# shellcheck disable=SC1091
+source /usr/local/bin/run-hooks.sh /usr/local/bin/start-notebook.d
 
 # If the container started as the root user, then we have permission to refit
 # the jovyan user, and ensure file permissions, grant sudo rights, and such
@@ -160,7 +134,8 @@ if [ "$(id -u)" == 0 ] ; then
     fi
 
     # NOTE: This hook is run as the root user!
-    run-hooks /usr/local/bin/before-notebook.d
+    # shellcheck disable=SC1091
+    source /usr/local/bin/run-hooks.sh /usr/local/bin/before-notebook.d
 
     unset_explicit_env_vars
     _log "Running as ${NB_USER}:" "${cmd[@]}"
@@ -255,7 +230,8 @@ else
     fi
 
     # NOTE: This hook is run as the user we started the container as!
-    run-hooks /usr/local/bin/before-notebook.d
+    # shellcheck disable=SC1091
+    source /usr/local/bin/run-hooks.sh /usr/local/bin/before-notebook.d
     unset_explicit_env_vars
     _log "Executing the command:" "${cmd[@]}"
     exec "${cmd[@]}"
