@@ -76,6 +76,7 @@ def test_run_hooks_empty_dir(container: TrackedContainer) -> None:
 def test_run_hooks_with_files(container: TrackedContainer) -> None:
     host_data_dir = THIS_DIR / "run-hooks-data"
     cont_data_dir = "/home/jovyan/data"
+    # https://forums.docker.com/t/all-files-appear-as-executable-in-file-paths-using-bind-mount/99921
     # Unfortunately, Docker treats all files in mounter dir as executable files
     # So we make a copy of mounted dir inside a container
     command = (
