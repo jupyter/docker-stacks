@@ -140,6 +140,7 @@ if [ "$(id -u)" == 0 ] ; then
     unset_explicit_env_vars
     _log "Running as ${NB_USER}:" "${cmd[@]}"
     exec sudo --preserve-env --set-home --user "${NB_USER}" \
+        LD_LIBRARY_PATH="${LD_LIBRARY_PATH}" \
         PATH="${PATH}" \
         PYTHONPATH="${PYTHONPATH:-}" \
         "${cmd[@]}"
@@ -165,7 +166,7 @@ if [ "$(id -u)" == 0 ] ; then
         #   used `env_delete` from /etc/sudoers. It has higher priority than the
         #   `--preserve-env` flag and the `env_keep` configuration.
         #
-        # - We preserve PATH and PYTHONPATH explicitly. Note however that sudo
+        # - We preserve LD_LIBRARY_PATH, PATH and PYTHONPATH explicitly. Note however that sudo
         #   resolves `${cmd[@]}` using the "secure_path" variable we modified
         #   above in /etc/sudoers.d/path. Thus PATH is irrelevant to how the above
         #   sudo command resolves the path of `${cmd[@]}`. The PATH will be relevant
