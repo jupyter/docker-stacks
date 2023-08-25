@@ -21,7 +21,7 @@ pip install pre-commit
 Then the git hooks scripts configured for the project in `.pre-commit-config.yaml` need to be installed in the local git repository.
 
 ```sh
-make pre-commit-install
+pre-commit install
 ```
 
 ### Run
@@ -34,7 +34,12 @@ Hadolint pre-commit uses Docker to run, so `docker` should be running while runn
 ```
 
 ```sh
-make pre-commit-all
+pre-commit run --all-files --hook-stage manual
+```
+
+```{note}
+We're running `pre-commit` with `--hook-stage manual`, because works with changed files, which doesn't work well for mypy.
+More information can be found in [`.pre-commit-config.yaml` file](https://github.com/jupyter/docker-stacks/blob/main/.pre-commit-config.yaml)
 ```
 
 ## Image Lint
