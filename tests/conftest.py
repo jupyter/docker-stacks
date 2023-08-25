@@ -120,10 +120,7 @@ class TrackedContainer:
             assert not self.get_warnings(logs)
         if no_errors:
             assert not self.get_errors(logs)
-        if no_failure:
-            assert rv == 0 or rv["StatusCode"] == 0
-        else:
-            assert rv != 0 and rv["StatusCode"] != 0
+        assert no_failure == (rv["StatusCode"] == 0)
         return logs
 
     @staticmethod
