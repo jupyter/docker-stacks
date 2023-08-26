@@ -1,6 +1,4 @@
 # Matplotlib: Test tex fonts
-import os
-
 import matplotlib
 import matplotlib.pyplot as plt
 
@@ -22,6 +20,6 @@ y = [1, 2]
 ax.plot(x, y, label="a label")
 ax.legend(fontsize=15)
 
-file_path = os.path.join("/tmp", "test_fonts.png")
+file_path = "/tmp/test_fonts.png"
 fig.savefig(file_path)
 print(f"File {file_path} saved")
