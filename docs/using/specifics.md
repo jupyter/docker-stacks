@@ -57,11 +57,15 @@ You can build a `pyspark-notebook` image with a different `Spark` version by ove
 
 For example, here is how to build a `pyspark-notebook` image with Spark `3.2.0`, Hadoop `3.2` and OpenJDK `11`.
 
+```{warning}
+This recipe is not tested and might be broken.
+```
+
 ```bash
 # From the root of the project
 # Build the image with different arguments
 docker build --rm --force-rm \
-    -t jupyter/pyspark-notebook:spark-3.2.0 ./pyspark-notebook \
+    -t jupyter/pyspark-notebook:spark-3.2.0 ./images/pyspark-notebook \
     --build-arg spark_version=3.2.0 \
     --build-arg hadoop_version=3.2 \
     --build-arg spark_checksum=707DDE035926A50B75E53FCA72CADA519F3239B14A96546911CB4916A58DCF69A1D2BFDD2C7DD5899324DBD82B6EEAB9797A7B4ABF86736FFCA4C26D0E0BF0EE \
