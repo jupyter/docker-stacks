@@ -120,7 +120,7 @@ It contains:
 `jupyter/julia-notebook` includes popular packages from the Julia ecosystem listed below:
 
 - Everything in `jupyter/minimal-notebook` and its ancestor images
-- The [Julia Programming Language](https://julialang.org/)
+- The [Julia](https://julialang.org/) compiler and base environment
 - [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebook
 - [Pluto.jl](https://plutojl.org/) reactive Julia notebook interface, made accessible with [jupyter-pluto-proxy](https://github.com/yuvipanda/jupyter-pluto-proxy)
 - [HDF5](https://github.com/JuliaIO/HDF5.jl) package
@@ -186,16 +186,11 @@ It contains:
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/datascience-notebook/Dockerfile) |
 [Docker Hub image tags](https://hub.docker.com/r/jupyter/datascience-notebook/tags/)
 
-`jupyter/datascience-notebook` includes libraries for data analysis from the Julia, Python, and R
-communities.
+`jupyter/datascience-notebook` includes libraries for data analysis from the Python, and R, and Julia communities.
 
-- Everything in the `jupyter/scipy-notebook` and `jupyter/r-notebook` images and their ancestor
+- Everything in the `jupyter/scipy-notebook`, `jupyter/r-notebook`, and `jupyter/julia-notebook` images and their ancestor
   images
 - [rpy2](https://rpy2.github.io/doc/latest/html/index.html) package
-- The [Julia](https://julialang.org/) compiler and base environment
-- [IJulia](https://github.com/JuliaLang/IJulia.jl) to support Julia code in Jupyter notebooks
-- [Pluto.jl](https://plutojl.org/) reactive Julia notebook interface, made accessible with [jupyter-pluto-proxy](https://github.com/yuvipanda/jupyter-pluto-proxy)
-- [HDF5](https://github.com/JuliaIO/HDF5.jl) package
 
 ### jupyter/pyspark-notebook
 
