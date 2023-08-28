@@ -9,13 +9,13 @@ on:
   pull_request:
     paths:
       - ".github/workflows/contributed-recipes.yml"
-      - "docs/using/recipe_code/"
+      - "docs/using/recipe_code/**"
   push:
     branches:
       - main
     paths:
       - ".github/workflows/contributed-recipes.yml"
-      - "docs/using/recipe_code/"
+      - "docs/using/recipe_code/**"
   workflow_dispatch:
   workflow_call:
 

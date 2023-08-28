@@ -89,14 +89,6 @@ img-rm-dang: ## remove dangling images (tagged None)
 
 
 
-pre-commit-all: ## run pre-commit hook on all files
-	@pre-commit run --all-files --hook-stage manual
-pre-commit-install: ## set up the git hook scripts
-	@pre-commit --version
-	@pre-commit install
-
-
-
 pull/%: ## pull a jupyter image
 	docker pull "$(OWNER)/$(notdir $@)"
 pull-all: $(foreach I, $(ALL_IMAGES), pull/$(I)) ## pull all images

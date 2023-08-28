@@ -3,7 +3,7 @@
 
 # BE CAREFUL when using Docker engine <1.10 because running a container with
 # `--rm` option while mounting a docker volume may wipe out the volume.
-# See issue: https://github.com/docker/docker/issues/17907
+# See issue: https://github.com/moby/moby/issues/17907
 
 # Use letsencrypt production server by default to get a real cert.
 # Use CERT_SERVER=--staging to hit the staging server (not a real cert).

@@ -36,6 +36,7 @@ It contains:
   with ownership over the `/home/jovyan` and `/opt/conda` paths
 - `tini` as the container entry point
 - A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
+- A `run-hooks.sh` script, which can source/run files in a given directory
 - Options for a passwordless sudo
 - Common system libraries like `bzip2`, `ca-certificates`, `locales`
 - `wget` to download external files
@@ -103,7 +104,7 @@ It contains:
   [randomforest](https://cran.r-project.org/web/packages/randomForest/index.html),
   [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html),
   [rmarkdown](https://rmarkdown.rstudio.com),
-  [rodbc](https://www.rdocumentation.org/packages/RODBC/),
+  [rodbc](https://cran.r-project.org/web/packages/RODBC/index.html),
   [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
   [shiny](https://shiny.posit.co),
   [tidymodels](https://www.tidymodels.org/),

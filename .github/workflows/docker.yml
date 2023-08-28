@@ -21,6 +21,7 @@ on:
       - ".github/actions/load-image/action.yml"
 
       - "images/**"
+      - "!images/*/README.md"
       - "tagging/**"
       - "tests/**"
       - "requirements-dev.txt"
@@ -39,6 +40,7 @@ on:
       - ".github/actions/load-image/action.yml"
 
       - "images/**"
+      - "!images/*/README.md"
       - "tagging/**"
       - "tests/**"
       - "requirements-dev.txt"

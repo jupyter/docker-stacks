@@ -14,39 +14,12 @@ _log () {
 }
 _log "Entered start.sh with args:" "$@"
 
-# The run-hooks function looks for .sh scripts to source and executable files to
-# run within a passed directory.
-run-hooks () {
-    if [[ ! -d "${1}" ]] ; then
-        return
-    fi
-    _log "${0}: running hooks in ${1} as uid / gid: $(id -u) / $(id -g)"
-    for f in "${1}/"*; do
-        case "${f}" in
-            *.sh)
-                _log "${0}: running script ${f}"
-                # shellcheck disable=SC1090
-                source "${f}"
-                ;;
-            *)
-                if [[ -x "${f}" ]] ; then
-                    _log "${0}: running executable ${f}"
-                    "${f}"
-                else
-                    _log "${0}: ignoring non-executable ${f}"
-                fi
-                ;;
-        esac
-    done
-    _log "${0}: done running hooks in ${1}"
-}
-
 # A helper function to unset env vars listed in the value of the env var
 # JUPYTER_ENV_VARS_TO_UNSET.
 unset_explicit_env_vars () {
     if [ -n "${JUPYTER_ENV_VARS_TO_UNSET}" ]; then
         for env_var_to_unset in $(echo "${JUPYTER_ENV_VARS_TO_UNSET}" | tr ',' ' '); do
-            echo "Unset ${env_var_to_unset} due to JUPYTER_ENV_VARS_TO_UNSET"
+            _log "Unset ${env_var_to_unset} due to JUPYTER_ENV_VARS_TO_UNSET"
             unset "${env_var_to_unset}"
         done
         unset JUPYTER_ENV_VARS_TO_UNSET
@@ -62,7 +35,8 @@ else
 fi
 
 # NOTE: This hook will run as the user the container was started with!
-run-hooks /usr/local/bin/start-notebook.d
+# shellcheck disable=SC1091
+source /usr/local/bin/run-hooks.sh /usr/local/bin/start-notebook.d
 
 # If the container started as the root user, then we have permission to refit
 # the jovyan user, and ensure file permissions, grant sudo rights, and such
@@ -101,7 +75,7 @@ if [ "$(id -u)" == 0 ] ; then
         fi
         # Recreate the desired user as we want it
         userdel "${NB_USER}"
-        useradd --home "/home/${NB_USER}" --uid "${NB_UID}" --gid "${NB_GID}" --groups 100 --no-log-init "${NB_USER}"
+        useradd --no-log-init --home "/home/${NB_USER}" --shell /bin/bash --uid "${NB_UID}" --gid "${NB_GID}" --groups 100 "${NB_USER}"
     fi
 
     # Move or symlink the jovyan home directory to the desired users home
@@ -160,11 +134,13 @@ if [ "$(id -u)" == 0 ] ; then
     fi
 
     # NOTE: This hook is run as the root user!
-    run-hooks /usr/local/bin/before-notebook.d
-
+    # shellcheck disable=SC1091
+    source /usr/local/bin/run-hooks.sh /usr/local/bin/before-notebook.d
     unset_explicit_env_vars
+
     _log "Running as ${NB_USER}:" "${cmd[@]}"
     exec sudo --preserve-env --set-home --user "${NB_USER}" \
+        LD_LIBRARY_PATH="${LD_LIBRARY_PATH}" \
         PATH="${PATH}" \
         PYTHONPATH="${PYTHONPATH:-}" \
         "${cmd[@]}"
@@ -178,7 +154,7 @@ if [ "$(id -u)" == 0 ] ; then
         #   command. The behavior can be inspected with `sudo -V` run as root.
         #
         #   ref: `man sudo`    https://linux.die.net/man/8/sudo
-        #   ref: `man sudoers` https://www.sudo.ws/man/1.8.15/sudoers.man.html
+        #   ref: `man sudoers` https://www.sudo.ws/docs/man/sudoers.man/
         #
         # - We use the `--preserve-env` flag to pass through most environment
         #   variables, but understand that exceptions are caused by the sudoers
@@ -190,7 +166,7 @@ if [ "$(id -u)" == 0 ] ; then
         #   used `env_delete` from /etc/sudoers. It has higher priority than the
         #   `--preserve-env` flag and the `env_keep` configuration.
         #
-        # - We preserve PATH and PYTHONPATH explicitly. Note however that sudo
+        # - We preserve LD_LIBRARY_PATH, PATH and PYTHONPATH explicitly. Note however that sudo
         #   resolves `${cmd[@]}` using the "secure_path" variable we modified
         #   above in /etc/sudoers.d/path. Thus PATH is irrelevant to how the above
         #   sudo command resolves the path of `${cmd[@]}`. The PATH will be relevant
@@ -255,8 +231,10 @@ else
     fi
 
     # NOTE: This hook is run as the user we started the container as!
-    run-hooks /usr/local/bin/before-notebook.d
+    # shellcheck disable=SC1091
+    source /usr/local/bin/run-hooks.sh /usr/local/bin/before-notebook.d
     unset_explicit_env_vars
+
     _log "Executing the command:" "${cmd[@]}"
     exec "${cmd[@]}"
 fi

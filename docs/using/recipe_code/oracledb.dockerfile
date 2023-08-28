@@ -1,12 +1,8 @@
 FROM jupyter/base-notebook
 
-# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
-# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
-SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-
 USER root
 
-# Install java, javac and alien
+# Install Java & Oracle SQL Instant Client
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends software-properties-common && \
     add-apt-repository universe && \
@@ -14,34 +10,38 @@ RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends alien default-jre default-jdk openjdk-11-jdk libaio1 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ARG instantclient_major_version=21
-ARG instantclient_version=${instantclient_major_version}.11.0.0.0-1
+# Oracle
+ARG INSTANTCLIENT_MAJOR_VERSION=21
+ARG INSTANTCLIENT_VERSION=${INSTANTCLIENT_MAJOR_VERSION}.11.0.0.0-1
+ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/2111000
 
 # Then install Oracle SQL Instant client, SQL+Plus, tools and JDBC.
 # Note: You may need to change the URL to a newer version.
 # See: https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html
-WORKDIR "/tmp"
-RUN short_version="$(echo "${instantclient_version}" | tr -d '.' | cut -d "-" -f1)" && \
-    instantclient_url="https://download.oracle.com/otn_software/linux/instantclient/${short_version}" && \
-    wget --progress=dot:giga "${instantclient_url}/oracle-instantclient-basiclite-${instantclient_version}.el8.x86_64.rpm" && \
-    alien --install --scripts "oracle-instantclient-basiclite-${instantclient_version}.el8.x86_64.rpm" && \
-    wget --progress=dot:giga "${instantclient_url}/oracle-instantclient-sqlplus-${instantclient_version}.el8.x86_64.rpm" && \
-    alien --install --scripts "oracle-instantclient-sqlplus-${instantclient_version}.el8.x86_64.rpm" && \
-    wget --progress=dot:giga "${instantclient_url}/oracle-instantclient-tools-${instantclient_version}.el8.x86_64.rpm" && \
-    alien --install --scripts "oracle-instantclient-tools-${instantclient_version}.el8.x86_64.rpm" && \
-    wget --progress=dot:giga "${instantclient_url}/oracle-instantclient-jdbc-${instantclient_version}.el8.x86_64.rpm" && \
-    alien --install --scripts "oracle-instantclient-jdbc-${instantclient_version}.el8.x86_64.rpm" && \
+RUN mkdir "/opt/oracle"
+WORKDIR "/opt/oracle"
+RUN wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-basiclite-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
+    alien --install --scripts "oracle-instantclient-basiclite-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
+    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-sqlplus-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
+    alien --install --scripts "oracle-instantclient-sqlplus-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
+    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-tools-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
+    alien --install --scripts "oracle-instantclient-tools-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
+    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-jdbc-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
+    alien --install --scripts "oracle-instantclient-jdbc-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
     chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb" && \
     rm -f ./*.rpm
 
-# Configure environment
-ENV ORACLE_HOME=/usr/lib/oracle/${instantclient_major_version}/client64
-ENV PATH="${ORACLE_HOME}/bin:${PATH}"
-ENV LD_LIBRARY_PATH="${ORACLE_HOME}/lib:${LD_LIBRARY_PATH}"
+# And configure variables
+RUN echo "ORACLE_HOME=/usr/lib/oracle/${INSTANTCLIENT_MAJOR_VERSION}/client64" >> "${HOME}/.bashrc" && \
+    echo "PATH=${ORACLE_HOME}/bin:$PATH" >> "${HOME}/.bashrc" && \
+    echo "LD_LIBRARY_PATH=${ORACLE_HOME}/lib:${LD_LIBRARY_PATH}" >> "${HOME}/.bashrc" && \
+    echo "export ORACLE_HOME" >> "${HOME}/.bashrc" && \
+    echo "export PATH" >> "${HOME}/.bashrc" && \
+    echo "export LD_LIBRARY_PATH" >> "${HOME}/.bashrc"
 
-# (Optional) Add credentials for the Oracle Database server; files must be present on your `docker build PATH` folder.
-WORKDIR /usr/lib/oracle/${instantclient_major_version}/client64/lib/network/admin
-# Adding a wildcard `[]` on the last letter of the filename to avoid throwing an error if the file does not exist.
+# Add credentials for /redacted/ using Oracle Db.
+WORKDIR /usr/lib/oracle/${INSTANTCLIENT_MAJOR_VERSION}/client64/lib/network/admin/
+# Add a wildcard `[]` on the last letter of the filename to avoid throwing an error if the file does not exist.
 # See: https://stackoverflow.com/questions/31528384/conditional-copy-add-in-dockerfile
 COPY cwallet.ss[o] ./
 COPY sqlnet.or[a] ./

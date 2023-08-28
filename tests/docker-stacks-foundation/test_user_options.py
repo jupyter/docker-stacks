@@ -243,7 +243,7 @@ def test_container_not_delete_bind_mount(
 
 
 @pytest.mark.parametrize("enable_root", [False, True])
-def test_jupyter_env_vars_to_unset_as_root(
+def test_jupyter_env_vars_to_unset(
     container: TrackedContainer, enable_root: bool
 ) -> None:
     """Environment variables names listed in JUPYTER_ENV_VARS_TO_UNSET

@@ -168,9 +168,6 @@ def r_packages(packages: dict[str, set[str]]) -> Iterable[str]:
     )
 
 
-@pytest.mark.skip(
-    reason="conda 23.7.2 contains regression fix for --json and --debug flags, but it's not yet released on conda-forge"
-)
 def test_r_packages(
     package_helper: CondaPackageHelper, r_packages: Iterable[str]
 ) -> None:
@@ -184,9 +181,6 @@ def python_packages(packages: dict[str, set[str]]) -> Iterable[str]:
     return map(get_package_import_name, filter(python_package_predicate, packages))
 
 
-@pytest.mark.skip(
-    reason="conda 23.7.2 contains regression fix for --json and --debug flags, but it's not yet released on conda-forge"
-)
 def test_python_packages(
     package_helper: CondaPackageHelper,
     python_packages: Iterable[str],

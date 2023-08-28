@@ -1,8 +1,6 @@
 # Matplotlib: Create a simple plot example.
 # Refs: https://matplotlib.org/stable/gallery/lines_bars_and_markers/simple_plot.html
 
-import os
-
 # Optional test with [Matplotlib Jupyter Integration](https://github.com/matplotlib/ipympl)
 # %matplotlib widget
 import matplotlib.pyplot as plt
@@ -21,7 +19,8 @@ ax.set(
     title="About as simple as it gets, folks",
 )
 ax.grid()
+
 # Note that the test can be run headless by checking if an image is produced
-file_path = os.path.join("/tmp", "test.png")
+file_path = "/tmp/test.png"
 fig.savefig(file_path)
 print(f"File {file_path} saved")
