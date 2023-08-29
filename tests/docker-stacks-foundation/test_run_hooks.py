@@ -93,3 +93,37 @@ def test_run_hooks_with_files(container: TrackedContainer) -> None:
     assert "Executable python file was successfully" in logs
     assert "Ignoring non-executable: /home/jovyan/data-copy//non_executable.py" in logs
     assert "SOME_VAR is 123" in logs
+
+
+def test_run_hooks_with_failures(container: TrackedContainer) -> None:
+    host_data_dir = THIS_DIR / "run-hooks-failures"
+    cont_data_dir = "/home/jovyan/data"
+    # https://forums.docker.com/t/all-files-appear-as-executable-in-file-paths-using-bind-mount/99921
+    # Unfortunately, Docker treats all files in mounter dir as executable files
+    # So we make a copy of mounted dir inside a container
+    command = (
+        "cp -r /home/jovyan/data/ /home/jovyan/data-copy/ &&"
+        "source /usr/local/bin/run-hooks.sh /home/jovyan/data-copy/"
+    )
+    logs = container.run_and_wait(
+        timeout=5,
+        volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
+        tty=True,
+        no_failure=False,
+        command=["bash", "-c", command],
+    )
+
+    for file in ["a.sh", "b.py", "c.sh", "d.sh"]:
+        assert f"Started: {file}" in logs
+
+    for file in ["a.sh"]:
+        assert f"Finished: {file}" in logs
+    for file in ["b.py", "c.sh", "d.sh"]:
+        assert f"Finished: {file}" not in logs
+
+    for file in ["b.py", "c.sh"]:
+        assert (
+            f"/home/jovyan/data-copy//{file} has failed, continuing execution" in logs
+        )
+
+    assert "OTHER_VAR=456" in logs
