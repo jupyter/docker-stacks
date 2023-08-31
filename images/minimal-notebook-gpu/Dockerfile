@@ -3,9 +3,12 @@
 # Creates the minimal jupyter gpu image.
 # Forked from Jupyter Development Team.
 
-ARG OWNER=jupyter
-ARG BASE_CONTAINER=gpu-base:latest
-FROM $BASE_CONTAINER
+ARG QBRAID_DOCKER_REGISTRY=us-central1-docker.pkg.dev/qbraid-lab-gke
+# Use a default image unless a different one is specified at build using --build-arg
+ARG BASE_ARTIFACT_REGISTRY=staging-qbraid
+ARG BASE_IMAGE_GCP=gpu-base-staging:latest
+FROM $QBRAID_DOCKER_REGISTRY/$BASE_ARTIFACT_REGISTRY/$BASE_IMAGE_GCP
+
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
