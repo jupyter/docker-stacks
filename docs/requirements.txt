@@ -1,8 +1,0 @@
-# ReadTheDocs environment contains old package versions preinstalled
-# So, to ensure we have modern packages, we pin minimum versions of the packages we need
-docutils>=0.17.1
-myst-parser>=0.18.0
-sphinx>=4.5.0
-sphinx-book-theme>=1.0.0
-sphinx-copybutton>=0.5.0
-sphinx-last-updated-by-git>=0.3.4
