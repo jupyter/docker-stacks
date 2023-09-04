@@ -26,7 +26,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Calculate recipes matrix 🛠
         id: set-matrix
@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build recipe 🛠
         # We're pulling here to avoid accidentally using image which migt be present on aarch64 self-hosted runner
