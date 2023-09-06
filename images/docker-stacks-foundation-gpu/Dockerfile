@@ -3,7 +3,7 @@
 # Creates the foundation jupyter gpu image based upon an Nvidia CUDA image
 # Forked from Jupyter Development Team.
 
-ARG ROOT_CONTAINER=nvidia/cuda:12.2.0-devel-ubuntu20.04
+ARG ROOT_CONTAINER=nvidia/cuda:12.2.0-devel-ubuntu22.04
 
 FROM $ROOT_CONTAINER
 
