@@ -76,7 +76,8 @@ It contains:
   [git](https://git-scm.com/),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`),
   [tzdata](https://www.iana.org/time-zones),
-  [unzip](https://code.launchpad.net/ubuntu/+source/unzip)
+  [unzip](https://code.launchpad.net/ubuntu/+source/unzip),
+  [zip](https://code.launchpad.net/ubuntu/+source/zip)
   and [vi](https://www.vim.org) (actually `vim-tiny`),
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 

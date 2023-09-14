@@ -21,6 +21,7 @@ RUN apt-get update --yes && \
     nano-tiny \
     tzdata \
     unzip \
+    zip \
     vim-tiny \
     # git-over-ssh
     openssh-client \
