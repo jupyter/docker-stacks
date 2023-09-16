@@ -66,7 +66,12 @@ RUN fix-permissions "/etc/ipython/"
 USER ${NB_UID}
 
 # Install pyarrow
-# Temporarily pin pandas to version 2.0.3, see: https://github.com/jupyter/docker-stacks/issues/1924
+# NOTE: It's important to ensure compatibility between Pandas versions.
+# The pandas version in this Dockerfile should match the version 
+# on which the Pandas API for Spark is built.
+# To find the right version:
+# 1. Check out the Spark branch you are on.
+# 2. Find the pandas version in the file spark/dev/infra/Dockerfile.
 RUN mamba install --yes \
     'pandas>=2.0.3,<2.0.4' \
     'pyarrow' && \
