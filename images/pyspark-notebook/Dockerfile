@@ -67,7 +67,7 @@ USER ${NB_UID}
 
 # Install pyarrow
 # NOTE: It's important to ensure compatibility between Pandas versions.
-# The pandas version in this Dockerfile should match the version 
+# The pandas version in this Dockerfile should match the version
 # on which the Pandas API for Spark is built.
 # To find the right version:
 # 1. Check out the Spark branch you are on.
