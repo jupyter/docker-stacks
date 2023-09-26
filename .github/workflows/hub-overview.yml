@@ -14,8 +14,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-dockerhub-overview:
+  update-overview:
     runs-on: ubuntu-latest
+    name: update-overview (${{matrix.image}})
     if: github.repository == 'jupyter/docker-stacks'
 
     steps:
