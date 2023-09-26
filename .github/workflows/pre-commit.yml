@@ -12,7 +12,6 @@ permissions:
 
 jobs:
   run-hooks:
-    name: Run pre-commit hooks
     runs-on: ubuntu-latest
 
     steps:

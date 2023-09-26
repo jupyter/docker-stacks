@@ -15,7 +15,6 @@ on:
 
 jobs:
   update-dockerhub-overview:
-    name: Update Docker Hub overviews
     runs-on: ubuntu-latest
     if: github.repository == 'jupyter/docker-stacks'
 
