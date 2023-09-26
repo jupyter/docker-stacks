@@ -11,6 +11,7 @@ on:
       - ".github/workflows/hub-overview.yml"
 
       - "images/*/README.md"
+  workflow_dispatch:
 
 jobs:
   update-dockerhub-overview:
