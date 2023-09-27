@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
         with:
@@ -29,7 +29,7 @@ jobs:
         shell: bash
 
       - name: Checkout Wiki Repo 📃
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ github.repository }}.wiki
           path: wiki/

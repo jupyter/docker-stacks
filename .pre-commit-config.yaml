@@ -14,7 +14,7 @@
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.10.1
+    rev: v3.13.0
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
@@ -28,7 +28,7 @@ repos:
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black
-    rev: 23.7.0
+    rev: 23.9.1
     hooks:
       - id: black
         args: [--target-version=py39]
@@ -52,7 +52,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.2
+    rev: v3.0.3
     hooks:
       - id: prettier
 
@@ -113,7 +113,7 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.35.0
+    rev: v0.37.0
     hooks:
       - id: markdownlint
         args: ["--fix"]

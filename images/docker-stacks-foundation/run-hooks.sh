@@ -24,11 +24,19 @@ for f in "${1}/"*; do
             echo "Sourcing shell script: ${f}"
             # shellcheck disable=SC1090
             source "${f}"
+            # shellcheck disable=SC2181
+            if [ $? -ne 0 ] ; then
+                echo "${f} has failed, continuing execution"
+            fi
             ;;
         *)
             if [ -x "${f}" ] ; then
                 echo "Running executable: ${f}"
                 "${f}"
+                # shellcheck disable=SC2181
+                if [ $? -ne 0 ] ; then
+                    echo "${f} has failed, continuing execution"
+                fi
             else
                 echo "Ignoring non-executable: ${f}"
             fi

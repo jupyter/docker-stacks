@@ -11,16 +11,17 @@ on:
       - ".github/workflows/hub-overview.yml"
 
       - "images/*/README.md"
+  workflow_dispatch:
 
 jobs:
-  update-dockerhub-overview:
-    name: Update Docker Hub overviews
+  update-overview:
     runs-on: ubuntu-latest
+    name: update-overview (${{matrix.image}})
     if: github.repository == 'jupyter/docker-stacks'
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Push README to Docker Hub 🐳
         uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # v1
