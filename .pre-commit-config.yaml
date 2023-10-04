@@ -40,7 +40,15 @@ repos:
       - id: mypy
         args: [--config, ./mypy.ini]
         additional_dependencies:
-          ["numpy", "pytest", "requests", "types-requests", "types-tabulate"]
+          [
+            "numpy",
+            "pytest",
+            "requests",
+            "urllib3",
+            "types-requests",
+            "types-tabulate",
+            "types-urllib3",
+          ]
         # Unfortunately, `pre-commit` only runs on changed files
         # This doesn't work well with `mypy --follow-imports error`
         # See: https://github.com/pre-commit/mirrors-mypy/issues/34#issuecomment-1062160321
