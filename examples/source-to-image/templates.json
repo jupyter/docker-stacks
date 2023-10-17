@@ -274,7 +274,7 @@
                     "name": "jupyter-notebook",
                     "image": "${APPLICATION_NAME}:latest",
                     "command": [
-                      "start-notebook.sh",
+                      "start-notebook",
                       "--config=/etc/jupyter/openshift/jupyter_server_config.py",
                       "--no-browser",
                       "--ip=0.0.0.0"

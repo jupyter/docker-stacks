@@ -375,14 +375,14 @@ Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/is
 The default security is very good.
 There are use cases, encouraged by containers, where the jupyter container and the system it runs within lie inside the security boundary.
 It is convenient to launch the server without a password or token in these use cases.
-In this case, you should use the `start-notebook.sh` script to launch the server with no token:
+In this case, you should use the `start-notebook` script to launch the server with no token:
 
 For JupyterLab:
 
 ```bash
 docker run -it --rm \
     jupyter/base-notebook \
-    start-notebook.sh --IdentityProvider.token=''
+    start-notebook --IdentityProvider.token=''
 ```
 
 For Jupyter Notebook:
@@ -391,7 +391,7 @@ For Jupyter Notebook:
 docker run -it --rm \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
     jupyter/base-notebook \
-    start-notebook.sh --IdentityProvider.token=''
+    start-notebook --IdentityProvider.token=''
 ```
 
 ## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)

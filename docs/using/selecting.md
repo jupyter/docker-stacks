@@ -56,7 +56,7 @@ It contains:
 - Everything in `jupyter/docker-stacks-foundation`
 - Minimally functional Server (e.g., no LaTeX support for saving notebooks as PDFs)
 - `notebook`, `jupyterhub` and `jupyterlab` packages
-- A `start-notebook.sh` script as the default command
+- A `start-notebook` script as the default command
 - A `start-singleuser.sh` script useful for launching containers in JupyterHub
 - Options for a self-signed HTTPS certificate
 
