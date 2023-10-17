@@ -86,9 +86,11 @@ hooks_directory = PosixPath(sys.argv[1])
 
 if not hooks_directory.exists():
     print(f"Directory {hooks_directory} does not exist")
+    sys.exit(1)
 
 if not hooks_directory.is_dir():
     print(f"{hooks_directory} is not a directory")
+    sys.exit(1)
 
 print(f"Running hooks in: {hooks_directory} as {os.getuid()} gid: {os.getgid()}")
 
@@ -104,9 +106,7 @@ for f in hooks_directory.iterdir():
                 f"{f} has failed with return code {run.returncode}, continuing execution"
             )
     else:
-        print(f"Ignoring non-executable file {f}")
+        print(f"Ignoring non-executable: {f}")
 
 
 print(f"Done running hooks in: {hooks_directory}")
-
-print(os.environ['HELLO'])
