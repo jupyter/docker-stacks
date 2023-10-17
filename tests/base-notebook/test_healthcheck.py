@@ -22,6 +22,7 @@ LOGGER = logging.getLogger(__name__)
         (["RESTARTABLE=yes"], None, None),
         (["JUPYTER_PORT=8171"], None, None),
         (["JUPYTER_PORT=8117", "DOCKER_STACKS_JUPYTER_CMD=notebook"], None, None),
+        (None, ["start-notebook.sh"], None),
         (None, ["start-notebook.py", "--ServerApp.base_url=/test"], None),
         (None, ["start-notebook.py", "--ServerApp.base_url=/test/"], None),
         (["GEN_CERT=1"], ["start-notebook.py", "--ServerApp.base_url=/test"], None),
