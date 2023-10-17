@@ -61,10 +61,10 @@ It contains:
 - Options for a self-signed HTTPS certificate
 
 ```{warning}
-`jupyter/base-notebook` also contains `start-notebook.sh` and `start-singleuser.sh` files to maintain backwards
-compatibility. External config that explicitly refers to those files should instead update to refer to
-`start-notebook.py` and `start-singleuser.py` instead. The shim `.sh` files will be removed at some future
-date.
+`jupyter/base-notebook` also contains `start-notebook.sh` and `start-singleuser.sh` files to maintain backwards compatibility.
+External config that explicitly refers to those files should instead
+update to refer to `start-notebook.py` and `start-singleuser.py`.
+The shim `.sh` files will be removed at some future date.
 ```
 
 ### jupyter/minimal-notebook
