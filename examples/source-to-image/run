@@ -2,4 +2,4 @@
 
 # Start up the notebook instance.
 
-exec start-notebook "$@"
+exec start-notebook.py "$@"

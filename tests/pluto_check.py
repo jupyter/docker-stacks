@@ -18,7 +18,7 @@ def check_pluto_proxy(
     token = secrets.token_hex()
     container.run_detached(
         command=[
-            "start-notebook",
+            "start-notebook.py",
             f"--IdentityProvider.token={token}",
         ],
         ports={"8888/tcp": host_port},

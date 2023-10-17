@@ -5,13 +5,12 @@ import os
 import shlex
 import sys
 
-# If we are in a JupyterHub, we pass on to `start-singleuser` instead so it does the right thing
+# If we are in a JupyterHub, we pass on to `start-singleuser.py` instead so it does the right thing
 if "JUPYTERHUB_API_TOKEN" in os.environ:
     print(
-        "WARNING: using start-singleuser instead of start-notebook to start a server associated with JupyterHub.",
-        file=sys.stderr,
+        "WARNING: using start-singleuser.py instead of start-notebook.py to start a server associated with JupyterHub."
     )
-    command = ["/usr/local/bin/start-singleuser"] + sys.argv[1:]
+    command = ["/usr/local/bin/start-singleuser.py"] + sys.argv[1:]
     os.execvp(command[0], command)
 
 

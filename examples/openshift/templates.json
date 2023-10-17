@@ -80,7 +80,7 @@
                 "name": "jupyter-notebook",
                 "image": "${NOTEBOOK_IMAGE}",
                 "command": [
-                  "start-notebook",
+                  "start-notebook.py",
                   "--config=/etc/jupyter/openshift/jupyter_server_config.py",
                   "--no-browser",
                   "--ip=0.0.0.0"

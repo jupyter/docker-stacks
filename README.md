@@ -65,7 +65,7 @@ system when the container exits, but any changes made to the `~/work` directory 
 By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
 So, new notebooks will be saved there, unless you change the directory in the file browser.
 
-To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook --ServerApp.root_dir=/home/jovyan/work`.
+To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
 ```
 
 ## Contributing
