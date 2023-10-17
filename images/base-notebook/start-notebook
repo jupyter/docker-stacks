@@ -11,7 +11,8 @@ if "JUPYTERHUB_API_TOKEN" in os.environ:
         "WARNING: using start-singleuser instead of start-notebook to start a server associated with JupyterHub.",
         file=sys.stderr,
     )
-    os.execvp("/usr/local/bin/start-singleuser", sys.argv[1:])
+    command = ["/usr/local/bin/start-singleuser"] + sys.argv[1:]
+    os.execvp(command[0], command)
 
 
 # Wrap everything in start.sh, no matter what
