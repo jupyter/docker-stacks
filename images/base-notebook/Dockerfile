@@ -58,13 +58,13 @@ CMD ["start-notebook"]
 COPY start-notebook start-singleuser /usr/local/bin/
 COPY jupyter_server_config.py docker_healthcheck.py /etc/jupyter/
 
-# Symlink scripts to their older .sh variants for backwards compatibility
-RUN ln -s /usr/local/bin/start-notebook /usr/local/bin/start-notebook.sh
-RUN ln -s /usr/local/bin/start-jupyterhub /usr/local/bin/start-jupyterhub.sh
-
 # Fix permissions on /etc/jupyter as root
 USER root
 RUN fix-permissions /etc/jupyter/
+
+# Symlink scripts to their older .sh variants for backwards compatibility
+RUN ln -s /usr/local/bin/start-notebook /usr/local/bin/start-notebook.sh
+RUN ln -s /usr/local/bin/start-jupyterhub /usr/local/bin/start-jupyterhub.sh
 
 # HEALTHCHECK documentation: https://docs.docker.com/engine/reference/builder/#healthcheck
 # This healtcheck works well for `lab`, `notebook`, `nbclassic`, `server` and `retro` jupyter commands
