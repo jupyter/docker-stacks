@@ -2,7 +2,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# The run-hooks.sh script looks for *.sh scripts to source
+# The run-hooks.py script looks for *.sh scripts to source
 # and executable files to run within a passed directory
 import os
 from textwrap import dedent
