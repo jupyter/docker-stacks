@@ -31,11 +31,8 @@ command.append(jupyter_command)
 
 # Append any optional NOTEBOOK_ARGS we were passed in. This is supposed to be multiple args passed
 # on to the notebook command, so we split it correctly with shlex
-command += (
-    []
-    if "NOTEBOOK_ARGS" not in os.environ
-    else shlex.split(os.environ["NOTEBOOK_ARGS"])
-)
+if "NOTEBOOK_ARGS" in os.environ:
+    command += shlex.split(os.environ["NOTEBOOK_ARGS"])
 
 # Execute the command!
 os.execvp(command[0], command)
