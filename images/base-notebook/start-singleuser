@@ -3,6 +3,7 @@
 # Distributed under the terms of the Modified BSD License.
 import os
 import shlex
+import sys
 
 command = ["/usr/local/bin/start.sh", "jupyterhub-singleuser"]
 
@@ -14,6 +15,9 @@ if "--ip=" not in os.environ.get("NOTEBOOK_ARGS", ""):
 # on to the notebook command, so we split it correctly with shlex
 if "NOTEBOOK_ARGS" in os.environ:
     command += shlex.split(os.environ["NOTEBOOK_ARGS"])
+
+# Pass any other args we have been passed through
+command += sys.argv[1:]
 
 # Execute the command!
 os.execvp(command[0], command)
