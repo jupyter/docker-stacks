@@ -59,7 +59,7 @@ COPY start-notebook start-singleuser.sh /usr/local/bin/
 COPY jupyter_server_config.py docker_healthcheck.py /etc/jupyter/
 
 # Symlink start-notebook to start-notebook for backwards compatibility
-RUN ln -s /usr/local/bin/start-notebook /usr/local/bin/start-notebook
+RUN ln -s /usr/local/bin/start-notebook /usr/local/bin/start-notebook.sh
 
 # Fix permissions on /etc/jupyter as root
 USER root
