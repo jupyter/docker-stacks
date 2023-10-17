@@ -61,7 +61,7 @@ def source(path: PosixPath):
                 f"""
                 #!/bin/bash
                 source {path}
-                python {py_file.name}
+                {sys.executable} {py_file.name}
                 """
             ).encode()
         )
