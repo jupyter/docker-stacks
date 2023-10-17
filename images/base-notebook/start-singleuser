@@ -4,7 +4,7 @@
 import os
 import shlex
 
-command = ["/usr/local/bin/start.sh"]
+command = ["/usr/local/bin/start.sh", "jupyterhub-singleuser"]
 
 # set default ip to 0.0.0.0
 if "--ip=" not in os.environ.get("NOTEBOOK_ARGS", ""):
