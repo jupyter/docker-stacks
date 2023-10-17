@@ -55,16 +55,12 @@ EXPOSE $JUPYTER_PORT
 CMD ["start-notebook.py"]
 
 # Copy local files as late as possible to avoid cache busting
-COPY start-notebook.py start-singleuser.py /usr/local/bin/
+COPY start-notebook.py start-notebook.sh start-singleuser.py start-singleuser.sh /usr/local/bin/
 COPY jupyter_server_config.py docker_healthcheck.py /etc/jupyter/
 
 # Fix permissions on /etc/jupyter as root
 USER root
 RUN fix-permissions /etc/jupyter/
-
-# Symlink scripts to their older .sh variants for backwards compatibility
-RUN ln -s /usr/local/bin/start-notebook.py /usr/local/bin/start-notebook.sh && \
-    ln -s /usr/local/bin/start-singleuser.py /usr/local/bin/start-singleuser.sh
 
 # HEALTHCHECK documentation: https://docs.docker.com/engine/reference/builder/#healthcheck
 # This healtcheck works well for `lab`, `notebook`, `nbclassic`, `server` and `retro` jupyter commands
