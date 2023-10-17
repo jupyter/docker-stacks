@@ -6,7 +6,7 @@ import shlex
 import sys
 
 # If we are in a JupyterHub, we pass on to `start-singleuser` instead so it does the right thing
-if "JUPYTERHUB_API_TOKEN" not in os.environ:
+if "JUPYTERHUB_API_TOKEN" in os.environ:
     print(
         "WARNING: using start-singleuser instead of start-notebook to start a server associated with JupyterHub.",
         file=sys.stderr,
