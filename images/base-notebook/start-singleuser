@@ -3,7 +3,6 @@
 # Distributed under the terms of the Modified BSD License.
 import os
 import shlex
-import sys
 
 command = ["/usr/local/bin/start.sh"]
 
