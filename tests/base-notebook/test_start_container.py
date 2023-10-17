@@ -25,7 +25,7 @@ LOGGER = logging.getLogger(__name__)
             ["JUPYTERHUB_API_TOKEN=my_token"],
             "jupyterhub-singleuser",
             False,
-            ["WARNING: using start-singleuser.sh"],
+            ["WARNING: using start-singleuser"],
         ),
     ],
 )

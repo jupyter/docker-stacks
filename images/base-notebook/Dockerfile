@@ -55,11 +55,12 @@ EXPOSE $JUPYTER_PORT
 CMD ["start-notebook"]
 
 # Copy local files as late as possible to avoid cache busting
-COPY start-notebook start-singleuser.sh /usr/local/bin/
+COPY start-notebook start-singleuser /usr/local/bin/
 COPY jupyter_server_config.py docker_healthcheck.py /etc/jupyter/
 
-# Symlink start-notebook to start-notebook for backwards compatibility
+# Symlink scripts to their older .sh variants for backwards compatibility
 RUN ln -s /usr/local/bin/start-notebook /usr/local/bin/start-notebook.sh
+RUN ln -s /usr/local/bin/start-jupyterhub /usr/local/bin/start-jupyterhub.sh
 
 # Fix permissions on /etc/jupyter as root
 USER root

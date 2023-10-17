@@ -57,7 +57,7 @@ It contains:
 - Minimally functional Server (e.g., no LaTeX support for saving notebooks as PDFs)
 - `notebook`, `jupyterhub` and `jupyterlab` packages
 - A `start-notebook` script as the default command
-- A `start-singleuser.sh` script useful for launching containers in JupyterHub
+- A `start-singleuser` script useful for launching containers in JupyterHub
 - Options for a self-signed HTTPS certificate
 
 ### jupyter/minimal-notebook
