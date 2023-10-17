@@ -117,7 +117,7 @@ with the extra system packages, and then use that image with the S2I build to co
 The `run` script in this directory is very simple and just runs the notebook application.
 
 ```bash
-exec start-notebook.sh "$@"
+exec start-notebook.py "$@"
 ```
 
 ## Integration with OpenShift

@@ -1,14 +1,14 @@
 # Common Features
 
 Except for `jupyter/docker-stacks-foundation`, a container launched from any Jupyter Docker Stacks image runs a Jupyter Server with the JupyterLab frontend.
-The container does so by executing a `start-notebook.sh` script.
+The container does so by executing a `start-notebook.py` script.
 This script configures the internal container environment and then runs `jupyter lab`, passing any command-line arguments received.
 
 This page describes the options supported by the startup script and how to bypass it to run alternative commands.
 
 ## Jupyter Server Options
 
-You can pass [Jupyter Server options](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html) to the `start-notebook.sh` script when launching the container.
+You can pass [Jupyter Server options](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html) to the `start-notebook.py` script when launching the container.
 
 1. For example, to secure the Jupyter Server with a [custom password](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#preparing-a-hashed-password)
    hashed using `jupyter_server.auth.passwd()` instead of the default token,
@@ -16,19 +16,19 @@ You can pass [Jupyter Server options](https://jupyter-server.readthedocs.io/en/l
 
    ```bash
    docker run -it --rm -p 8888:8888 jupyter/base-notebook \
-       start-notebook.sh --PasswordIdentityProvider.hashed_password='argon2:$argon2id$v=19$m=10240,t=10,p=8$JdAN3fe9J45NvK/EPuGCvA$O/tbxglbwRpOFuBNTYrymAEH6370Q2z+eS1eF4GM6Do'
+       start-notebook.py --PasswordIdentityProvider.hashed_password='argon2:$argon2id$v=19$m=10240,t=10,p=8$JdAN3fe9J45NvK/EPuGCvA$O/tbxglbwRpOFuBNTYrymAEH6370Q2z+eS1eF4GM6Do'
    ```
 
 2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the Jupyter Server, you can run the following:
 
    ```bash
    docker run  -it --rm -p 8888:8888 jupyter/base-notebook \
-       start-notebook.sh --ServerApp.base_url=/customized/url/prefix/
+       start-notebook.py --ServerApp.base_url=/customized/url/prefix/
    ```
 
 ## Docker Options
 
-You may instruct the `start-notebook.sh` script to customize the container environment before launching the Server.
+You may instruct the `start-notebook.py` script to customize the container environment before launching the Server.
 You do so by passing arguments to the `docker run` command.
 
 ### User-related configurations
@@ -104,7 +104,7 @@ You do so by passing arguments to the `docker run` command.
   You do **not** need this option to allow the user to `conda` or `pip` install additional packages.
   This option is helpful for cases when you wish to give `${NB_USER}` the ability to install OS packages with `apt` or modify other root-owned files in the container.
   You **must** run the container with `--user root` for this option to take effect.
-  (The `start-notebook.sh` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
+  (The `start-notebook.py` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
   **You should only enable `sudo` if you trust the user or if the container runs on an isolated host.**
 
 ### Additional runtime configurations
@@ -147,7 +147,7 @@ For example, to mount a host folder containing a `notebook.key` and `notebook.cr
 docker run -it --rm -p 8888:8888 \
     -v /some/host/folder:/etc/ssl/notebook \
     jupyter/base-notebook \
-    start-notebook.sh \
+    start-notebook.py \
     --ServerApp.keyfile=/etc/ssl/notebook/notebook.key \
     --ServerApp.certfile=/etc/ssl/notebook/notebook.crt
 ```
@@ -159,7 +159,7 @@ For example:
 docker run -it --rm -p 8888:8888 \
     -v /some/host/folder/notebook.pem:/etc/ssl/notebook.pem \
     jupyter/base-notebook \
-    start-notebook.sh \
+    start-notebook.py \
     --ServerApp.certfile=/etc/ssl/notebook.pem
 ```
 
@@ -220,7 +220,7 @@ docker run -it --rm \
 
 ### `start.sh`
 
-The `start-notebook.sh` script inherits most of its option handling capability from a more generic `start.sh` script.
+The `start-notebook.py` script inherits most of its option handling capability from a more generic `start.sh` script.
 The `start.sh` script supports all the features described above but allows you to specify an arbitrary command to execute.
 For example, to run the text-based `ipython` console in a container, do the following:
 

@@ -56,9 +56,16 @@ It contains:
 - Everything in `jupyter/docker-stacks-foundation`
 - Minimally functional Server (e.g., no LaTeX support for saving notebooks as PDFs)
 - `notebook`, `jupyterhub` and `jupyterlab` packages
-- A `start-notebook.sh` script as the default command
-- A `start-singleuser.sh` script useful for launching containers in JupyterHub
+- A `start-notebook.py` script as the default command
+- A `start-singleuser.py` script useful for launching containers in JupyterHub
 - Options for a self-signed HTTPS certificate
+
+```{warning}
+`jupyter/base-notebook` also contains `start-notebook.sh` and `start-singleuser.sh` files to maintain backwards compatibility.
+External config that explicitly refers to those files should instead
+update to refer to `start-notebook.py` and `start-singleuser.py`.
+The shim `.sh` files will be removed at some future date.
+```
 
 ### jupyter/minimal-notebook
 

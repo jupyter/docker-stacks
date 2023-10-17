@@ -25,7 +25,7 @@ LOGGER = logging.getLogger(__name__)
             ["JUPYTERHUB_API_TOKEN=my_token"],
             "jupyterhub-singleuser",
             False,
-            ["WARNING: using start-singleuser.sh"],
+            ["WARNING: using start-singleuser.py"],
         ),
     ],
 )
@@ -37,9 +37,9 @@ def test_start_notebook(
     expected_start: bool,
     expected_warnings: list[str],
 ) -> None:
-    """Test the notebook start-notebook script"""
+    """Test the notebook start-notebook.py script"""
     LOGGER.info(
-        f"Test that the start-notebook launches the {expected_command} server from the env {env} ..."
+        f"Test that the start-notebook.py launches the {expected_command} server from the env {env} ..."
     )
     host_port = find_free_port()
     running_container = container.run_detached(
