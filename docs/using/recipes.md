@@ -298,7 +298,7 @@ This recipe is not tested and might be broken.
 ```
 
 ```dockerfile
-FROM jupyter/all-spark-notebook
+FROM docker.io/jupyter/all-spark-notebook
 
 # Set env vars for pydoop
 ENV HADOOP_HOME /usr/local/hadoop-2.7.3
@@ -415,7 +415,7 @@ Please note that the [Delta Lake](https://delta.io/) packages are only available
 By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
 
 ```dockerfile
-FROM jupyter/pyspark-notebook
+FROM docker.io/jupyter/pyspark-notebook
 
 RUN mamba install --yes 'delta-spark' && \
     mamba clean --all -f -y && \
@@ -446,7 +446,7 @@ This recipe is not tested and might be broken.
 The example below is a Dockerfile to load Source Han Sans with normal weight, usually used for the web.
 
 ```dockerfile
-FROM jupyter/scipy-notebook
+FROM docker.io/jupyter/scipy-notebook
 
 RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
     MPL_DATA="${CONDA_DIR}/lib/${PYV}/site-packages/matplotlib/mpl-data" && \
@@ -489,7 +489,7 @@ This recipe is not tested and might be broken.
 The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
 
 ```dockerfile
-FROM jupyter/scipy-notebook
+FROM docker.io/jupyter/scipy-notebook
 
 # install ijavascript
 RUN npm install -g ijavascript
