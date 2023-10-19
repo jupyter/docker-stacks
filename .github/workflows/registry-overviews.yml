@@ -1,4 +1,4 @@
-name: Update Docker Hub overviews
+name: Update Registry overviews
 
 env:
   OWNER: ${{ github.repository_owner }}
@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/hub-overview.yml"
+      - ".github/workflows/registry-overviews.yml"
 
       - "images/*/README.md"
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 
-      - name: Push README to Docker Hub 🐳
+      - name: Push README to Registry 🐳
         uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # v1
         env:
           DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}

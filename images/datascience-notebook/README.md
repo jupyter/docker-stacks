@@ -6,7 +6,7 @@
 [![docker stars](https://img.shields.io/docker/stars/jupyter/datascience-notebook.svg)](https://hub.docker.com/r/jupyter/datascience-notebook/)
 [![image size](https://img.shields.io/docker/image-size/jupyter/datascience-notebook/latest)](https://hub.docker.com/r/jupyter/datascience-notebook/ "jupyter/datascience-notebook image size")
 
-GitHub Actions in the <https://github.com/jupyter/docker-stacks> project builds and pushes this image to Docker Hub.
+GitHub Actions in the <https://github.com/jupyter/docker-stacks> project builds and pushes this image to the Registry.
 
 Please visit the project documentation site for help to use and contribute to this image and others.
 
