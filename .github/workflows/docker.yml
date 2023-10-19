@@ -23,6 +23,7 @@ on:
       - "images/**"
       - "!images/*/README.md"
       - "tagging/**"
+      - "!tagging/README.md"
       - "tests/**"
       - "requirements-dev.txt"
   push:
@@ -42,6 +43,7 @@ on:
       - "images/**"
       - "!images/*/README.md"
       - "tagging/**"
+      - "!tagging/README.md"
       - "tests/**"
       - "requirements-dev.txt"
   workflow_dispatch:
