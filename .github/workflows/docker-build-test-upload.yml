@@ -102,7 +102,7 @@ jobs:
       - name: Save image as a tar for later use 💾
         run: |
           mkdir -p /tmp/jupyter/images/
-          docker save ${{ env.OWNER }}/${{ inputs.image }} | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst
+          docker save ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst
         shell: bash
       - name: Upload image as artifact 💾
         uses: actions/upload-artifact@v3

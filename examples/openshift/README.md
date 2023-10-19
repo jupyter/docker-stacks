@@ -52,7 +52,7 @@ The output will be similar to:
 
      * With parameters:
         * APPLICATION_NAME=notebook
-        * NOTEBOOK_IMAGE=jupyter/minimal-notebook:latest
+        * NOTEBOOK_IMAGE=docker.io/jupyter/minimal-notebook:latest
         * NOTEBOOK_PASSWORD=ded4d7cada554aa48e0db612e1ed1080 # generated
 
 --> Creating resources ...
@@ -69,7 +69,7 @@ When no template parameters are provided, the name of the deployed notebook will
 The image used will be:
 
 ```lang-none
-jupyter/minimal-notebook:latest
+docker.io/jupyter/minimal-notebook:latest
 ```
 
 A password you can use when accessing the notebook will be auto generated and is displayed in the output from running `oc new-app`.
@@ -102,7 +102,7 @@ To override the name for the notebook, the image used, and the password, you can
 ```bash
 oc new-app --template jupyter-notebook \
     --param APPLICATION_NAME=mynotebook \
-    --param NOTEBOOK_IMAGE=jupyter/scipy-notebook:latest \
+    --param NOTEBOOK_IMAGE=docker.io/jupyter/scipy-notebook:latest \
     --param NOTEBOOK_PASSWORD=mypassword
 ```
 
@@ -213,7 +213,7 @@ you can use the name of the image stream for the image name, including any image
 This can be illustrated by first importing an image into the OpenShift project.
 
 ```bash
-oc import-image jupyter/datascience-notebook:latest --confirm
+oc import-image docker.io/jupyter/datascience-notebook:latest --confirm
 ```
 
 Then deploy it using the name of the image stream created.
