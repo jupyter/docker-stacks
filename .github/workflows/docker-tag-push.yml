@@ -1,4 +1,4 @@
-name: Download Docker image and its tags from GitHub artifacts, apply them and push the image to Docker Hub
+name: Download Docker image and its tags from GitHub artifacts, apply them and push the image to the Registry
 
 env:
   REGISTRY: docker.io
