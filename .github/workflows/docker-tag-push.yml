@@ -38,7 +38,7 @@ jobs:
           image: ${{ inputs.image }}
           platform: ${{ inputs.platform }}
 
-      - name: Login to Docker Hub 🔐
+      - name: Login to Registry 🔐
         if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
@@ -53,7 +53,7 @@ jobs:
       - name: Apply tags to the loaded image 🏷
         run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
 
-      - name: Push Images to Docker Hub 📤
+      - name: Push Images to Registry 📤
         if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         run: docker push --all-tags ${{ env.OWNER }}/${{ inputs.image }}
         shell: bash
