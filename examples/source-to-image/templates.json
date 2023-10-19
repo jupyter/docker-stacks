@@ -22,7 +22,7 @@
         },
         {
           "name": "BUILDER_IMAGE",
-          "value": "jupyter/minimal-notebook:latest",
+          "value": "docker.io/jupyter/minimal-notebook:latest",
           "required": true
         },
         {
@@ -125,7 +125,7 @@
         },
         {
           "name": "BUILDER_IMAGE",
-          "value": "jupyter/minimal-notebook:latest",
+          "value": "docker.io/jupyter/minimal-notebook:latest",
           "required": true
         },
         {
@@ -279,7 +279,6 @@
                       "--no-browser",
                       "--ip=0.0.0.0"
                     ],
-
                     "ports": [
                       {
                         "containerPort": 8888,
