@@ -4,6 +4,7 @@
 
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
+REGISTRY?=docker.io
 OWNER?=jupyter
 
 # Need to list the images in build dependency order
@@ -37,9 +38,9 @@ help:
 
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ## build the latest image for a stack using the system's architecture
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(OWNER)/$(notdir $@):latest" "./images/$(notdir $@)" --build-arg OWNER="$(OWNER)"
+	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" "./images/$(notdir $@)" --build-arg REGISTRY="$(REGISTRY)" --build-arg OWNER="$(OWNER)"
 	@echo -n "Built image size: "
-	@docker images "$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
+	@docker images "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
 
@@ -68,9 +69,9 @@ linkcheck-docs: ## check broken links
 
 
 hook/%: ## run post-build hooks for an image
-	python3 -m tagging.write_tags_file --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --owner "$(OWNER)" && \
-	python3 -m tagging.write_manifest --short-image-name "$(notdir $@)" --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/ --owner "$(OWNER)" && \
-	python3 -m tagging.apply_tags --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --platform "$(shell uname -m)" --owner "$(OWNER)"
+	python3 -m tagging.write_tags_file --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --registry "$(REGISTRY)" --owner "$(OWNER)" && \
+	python3 -m tagging.write_manifest --short-image-name "$(notdir $@)" --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/ --registry "$(REGISTRY)" --owner "$(OWNER)" && \
+	python3 -m tagging.apply_tags --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --platform "$(shell uname -m)" --registry "$(REGISTRY)" --owner "$(OWNER)"
 hook-all: $(foreach I, $(ALL_IMAGES), hook/$(I)) ## run post-build hooks for all images
 
 
@@ -105,5 +106,5 @@ run-sudo-shell/%: ## run a bash in interactive mode as root in a stack
 
 
 test/%: ## run tests against a stack
-	python3 -m tests.run_tests --short-image-name "$(notdir $@)" --owner "$(OWNER)"
+	python3 -m tests.run_tests --short-image-name "$(notdir $@)" --registry "$(REGISTRY)" --owner "$(OWNER)"
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks

@@ -1,6 +1,7 @@
 name: Download Docker image and its tags from GitHub artifacts, apply them and push the image to Docker Hub
 
 env:
+  REGISTRY: docker.io
   OWNER: ${{ github.repository_owner }}
 
 on:
@@ -50,7 +51,7 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}-tags
           path: /tmp/jupyter/tags/
       - name: Apply tags to the loaded image 🏷
-        run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --owner ${{ env.OWNER }}
+        run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
 
       - name: Push Images to Docker Hub 📤
         if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')

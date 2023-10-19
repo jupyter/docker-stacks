@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook
+FROM docker.io/jupyter/base-notebook
 
 USER root
 

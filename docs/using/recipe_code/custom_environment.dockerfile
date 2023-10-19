@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook
+FROM docker.io/jupyter/base-notebook
 
 # Name your environment and choose the python version
 ARG env_name=python310

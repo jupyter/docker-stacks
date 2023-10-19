@@ -23,13 +23,18 @@ class ManifestHeader:
     """ManifestHeader doesn't fall under common interface, and we run it separately"""
 
     @staticmethod
-    def create_header(short_image_name: str, owner: str, build_timestamp: str) -> str:
+    def create_header(
+        short_image_name: str, registry: str, owner: str, build_timestamp: str
+    ) -> str:
         commit_hash = GitHelper.commit_hash()
         commit_hash_tag = GitHelper.commit_hash_tag()
         commit_message = GitHelper.commit_message()
 
         image_size = docker[
-            "images", f"{owner}/{short_image_name}:latest", "--format", "{{.Size}}"
+            "images",
+            f"{registry}/{owner}/{short_image_name}:latest",
+            "--format",
+            "{{.Size}}",
         ]().rstrip()
 
         return "\n".join(
@@ -39,7 +44,7 @@ class ManifestHeader:
                 "## Build Info",
                 "",
                 f"* Build datetime: {build_timestamp}",
-                f"* Docker image: {owner}/{short_image_name}:{commit_hash_tag}",
+                f"* Docker image: {registry}/{owner}/{short_image_name}:{commit_hash_tag}",
                 f"* Docker image size: {image_size}",
                 f"* Git commit SHA: [{commit_hash}](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
                 "* Git commit message:",
