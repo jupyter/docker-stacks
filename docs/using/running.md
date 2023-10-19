@@ -20,7 +20,7 @@ It then starts a container running Jupyter Server with the JupyterLab frontend a
 The server logs appear in the terminal and include a URL to the server.
 
 ```bash
-docker run -it -p 8888:8888 jupyter/scipy-notebook:2023-09-25
+docker run -it -p 8888:8888 docker.io/jupyter/scipy-notebook:2023-09-25
 
 # Entered start.sh with args: jupyter lab
 
@@ -58,7 +58,7 @@ It then starts a container running Server and exposes the server on host port 10
 The server logs appear in the terminal and include a URL to the Server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work jupyter/r-notebook:2023-09-25
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work docker.io/jupyter/r-notebook:2023-09-25
 ```
 
 Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
@@ -78,7 +78,7 @@ This command pulls the `jupyter/all-spark-notebook` image currently tagged `late
 It then starts a container named `notebook` running a JupyterLab server and exposes the server on a randomly selected port.
 
 ```bash
-docker run --detach -P --name notebook jupyter/all-spark-notebook
+docker run --detach -P --name notebook docker.io/jupyter/all-spark-notebook
 ```
 
 where:

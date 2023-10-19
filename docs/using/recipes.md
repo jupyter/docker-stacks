@@ -17,7 +17,7 @@ For example:
 docker run -it --rm \
     --user root \
     -e GRANT_SUDO=yes \
-    jupyter/base-notebook
+    docker.io/jupyter/base-notebook
 ```
 
 **You should only enable `sudo` if you trust the user and/or if the container is running on an isolated host.**
@@ -381,7 +381,7 @@ For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook \
+    docker.io/jupyter/base-notebook \
     start-notebook.py --IdentityProvider.token=''
 ```
 
@@ -390,7 +390,7 @@ For Jupyter Notebook:
 ```bash
 docker run -it --rm \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-    jupyter/base-notebook \
+    docker.io/jupyter/base-notebook \
     start-notebook.py --IdentityProvider.token=''
 ```
 
@@ -477,7 +477,7 @@ and add these options when running `docker`: `-e DISPLAY -v /tmp/.X11-unix:/tmp/
 docker run -it --rm \
     -e DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    jupyter/minimal-notebook
+    docker.io/jupyter/minimal-notebook
 ```
 
 ## Add ijavascript kernel to container

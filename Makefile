@@ -99,9 +99,9 @@ push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 
 run-shell/%: ## run a bash in interactive mode in a stack
-	docker run -it --rm "$(OWNER)/$(notdir $@)" $(SHELL)
+	docker run -it --rm "$(REGISTRY)/$(OWNER)/$(notdir $@)" $(SHELL)
 run-sudo-shell/%: ## run a bash in interactive mode as root in a stack
-	docker run -it --rm --user root "$(OWNER)/$(notdir $@)" $(SHELL)
+	docker run -it --rm --user root "$(REGISTRY)/$(OWNER)/$(notdir $@)" $(SHELL)
 
 
 
