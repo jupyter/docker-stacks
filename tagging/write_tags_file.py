@@ -24,11 +24,11 @@ def write_tags_file(
     LOGGER.info(f"Tagging image: {short_image_name}")
     taggers, _ = get_taggers_and_manifests(short_image_name)
 
-    image = f"${registry}/{owner}/{short_image_name}:latest"
+    image = f"{registry}/{owner}/{short_image_name}:latest"
     tags_prefix = get_platform()
     filename = f"{tags_prefix}-{short_image_name}.txt"
 
-    tags = [f"${registry}/{owner}/{short_image_name}:{tags_prefix}-latest"]
+    tags = [f"{registry}/{owner}/{short_image_name}:{tags_prefix}-latest"]
     with DockerRunner(image) as container:
         for tagger in taggers:
             tagger_name = tagger.__class__.__name__

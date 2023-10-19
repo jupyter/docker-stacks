@@ -17,7 +17,7 @@ def test_image(short_image_name: str, registry: str, owner: str) -> None:
     LOGGER.info(f"Testing image: {short_image_name}")
     test_dirs = get_test_dirs(short_image_name)
     LOGGER.info(f"Test dirs to be run: {test_dirs}")
-    with plumbum.local.env(TEST_IMAGE=f"${registry}/{owner}/{short_image_name}"):
+    with plumbum.local.env(TEST_IMAGE=f"{registry}/{owner}/{short_image_name}"):
         (
             python3[
                 "-m",

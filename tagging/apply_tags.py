@@ -27,7 +27,7 @@ def apply_tags(
     """
     LOGGER.info(f"Tagging image: {short_image_name}")
 
-    image = f"${registry}/{owner}/{short_image_name}:latest"
+    image = f"{registry}/{owner}/{short_image_name}:latest"
     filename = f"{platform}-{short_image_name}.txt"
     tags = (tags_dir / filename).read_text().splitlines()
 
