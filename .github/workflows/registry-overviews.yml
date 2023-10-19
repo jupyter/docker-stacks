@@ -1,0 +1,59 @@
+name: Update Registry overviews
+
+env:
+  OWNER: ${{ github.repository_owner }}
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/registry-overviews.yml"
+
+      - "images/*/README.md"
+  workflow_dispatch:
+
+jobs:
+  update-overview:
+    runs-on: ubuntu-latest
+    name: update-overview (${{matrix.image}})
+    if: github.repository == 'jupyter/docker-stacks'
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v4
+
+      - name: Push README to Registry 🐳
+        uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # v1
+        env:
+          DOCKER_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKER_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
+        with:
+          destination_container_repo: ${{ env.OWNER }}/${{ matrix.image }}
+          provider: dockerhub
+          short_description: ${{ matrix.description }}
+          readme_file: images/${{ matrix.image }}/README.md
+
+    strategy:
+      matrix:
+        include:
+          - image: docker-stacks-foundation
+            description: "Tiny base image on which Jupyter apps can be built from https://github.com/jupyter/docker-stacks"
+          - image: base-notebook
+            description: "Base image for Jupyter Notebook stacks from https://github.com/jupyter/docker-stacks"
+          - image: minimal-notebook
+            description: "Minimal Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
+          - image: scipy-notebook
+            description: "Scientific Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
+          - image: r-notebook
+            description: "R Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
+          - image: julia-notebook
+            description: "Julia Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
+          - image: tensorflow-notebook
+            description: "Scientific Jupyter Notebook Python Stack w/ TensorFlow from https://github.com/jupyter/docker-stacks"
+          - image: datascience-notebook
+            description: "Data Science Jupyter Notebook Python Stack from https://github.com/jupyter/docker-stacks"
+          - image: pyspark-notebook
+            description: "Python and Spark Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
+          - image: all-spark-notebook
+            description: "Python, Scala, R and Spark Jupyter Notebook Stack from https://github.com/jupyter/docker-stacks"
