@@ -236,7 +236,7 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 
 ### Builds
 
-Every Monday and whenever a pull request is merged, images are rebuilt and pushed to [the public container registry](http://quay.io/organization/jupyter).
+Every Monday and whenever a pull request is merged, images are rebuilt and pushed to [the public container registry](https://quay.io/organization/jupyter).
 
 ### Versioning via image tags
 
