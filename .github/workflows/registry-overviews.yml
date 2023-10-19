@@ -27,7 +27,7 @@ jobs:
         env:
           DOCKER_APIKEY: ${{ secrets.APIKEY__QUAY_IO }}
         with:
-          destination_container_repo: ${{ env.OWNER }}/${{ matrix.image }}
+          destination_container_repo: quay.io/${{ env.OWNER }}/${{ matrix.image }}
           provider: quay
           readme_file: images/${{ matrix.image }}/README.md
 
