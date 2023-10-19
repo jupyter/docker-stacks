@@ -1,5 +1,7 @@
 # Jupyter Notebook Data Science Stack
 
+> **Images hosted on Docker Hub are no longer updated. Please, use [quay.io image](https://quay.io/repository/jupyter/datascience-notebook)**
+
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/datascience-notebook.svg)](https://hub.docker.com/r/jupyter/datascience-notebook/)
 [![docker stars](https://img.shields.io/docker/stars/jupyter/datascience-notebook.svg)](https://hub.docker.com/r/jupyter/datascience-notebook/)
 [![image size](https://img.shields.io/docker/image-size/jupyter/datascience-notebook/latest)](https://hub.docker.com/r/jupyter/datascience-notebook/ "jupyter/datascience-notebook image size")
