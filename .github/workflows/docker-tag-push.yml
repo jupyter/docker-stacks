@@ -1,7 +1,7 @@
 name: Download Docker image and its tags from GitHub artifacts, apply them and push the image to the Registry
 
 env:
-  REGISTRY: docker.io
+  REGISTRY: quay.io
   OWNER: ${{ github.repository_owner }}
 
 on:
@@ -42,6 +42,7 @@ jobs:
         if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
+          registry: quay.io
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 

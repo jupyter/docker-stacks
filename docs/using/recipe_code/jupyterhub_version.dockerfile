@@ -1,4 +1,4 @@
-FROM docker.io/jupyter/base-notebook
+FROM quay.io/jupyter/base-notebook
 
 RUN mamba install --yes 'jupyterhub==4.0.1' && \
     mamba clean --all -f -y && \

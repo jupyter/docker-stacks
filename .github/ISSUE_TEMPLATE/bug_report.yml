@@ -57,7 +57,7 @@ body:
         What complete docker command do you run to launch the container (omitting sensitive values)?
       placeholder: |
         Example:
-        `docker run -it --rm -p 8888:8888 docker.io/jupyter/base-notebook`
+        `docker run -it --rm -p 8888:8888 quay.io/jupyter/base-notebook`
     validations:
       required: true
 

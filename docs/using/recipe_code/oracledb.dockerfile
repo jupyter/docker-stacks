@@ -1,4 +1,4 @@
-FROM docker.io/jupyter/base-notebook
+FROM quay.io/jupyter/base-notebook
 
 USER root
 

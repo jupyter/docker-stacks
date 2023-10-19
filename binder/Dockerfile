@@ -1,8 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# https://hub.docker.com/r/jupyter/base-notebook/tags
-ARG REGISTRY=docker.io
+# https://quay.io/repository/jupyter/base-notebook?tab=tags
+ARG REGISTRY=quay.io
 ARG OWNER=jupyter
 ARG BASE_CONTAINER=$REGISTRY/$OWNER/base-notebook:2023-09-25
 FROM $BASE_CONTAINER

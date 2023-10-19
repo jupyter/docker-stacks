@@ -15,12 +15,12 @@ The following are some common patterns.
 
 ### Example 1
 
-This command pulls the `jupyter/scipy-notebook` image tagged `2023-09-25` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `2023-09-25` from Quay.io if it is not already present on the local host.
 It then starts a container running Jupyter Server with the JupyterLab frontend and exposes the server on host port 8888.
 The server logs appear in the terminal and include a URL to the server.
 
 ```bash
-docker run -it -p 8888:8888 docker.io/jupyter/scipy-notebook:2023-09-25
+docker run -it -p 8888:8888 quay.io/jupyter/scipy-notebook:2023-09-25
 
 # Entered start.sh with args: jupyter lab
 
@@ -53,12 +53,12 @@ docker rm 221331c047c4
 
 ### Example 2
 
-This command pulls the `jupyter/r-notebook` image tagged `2023-09-25` from Docker Hub if it is not already present on the local host.
+This command pulls the `jupyter/r-notebook` image tagged `2023-09-25` from Quay.io if it is not already present on the local host.
 It then starts a container running Server and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the Server, but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work docker.io/jupyter/r-notebook:2023-09-25
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/r-notebook:2023-09-25
 ```
 
 Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
@@ -74,11 +74,11 @@ To change the default directory, you will need to specify `ServerApp.root_dir` b
 
 ### Example 3
 
-This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Docker Hub if an image tagged `latest` is not already present on the local host.
+This command pulls the `jupyter/all-spark-notebook` image currently tagged `latest` from Quay.io if an image tagged `latest` is not already present on the local host.
 It then starts a container named `notebook` running a JupyterLab server and exposes the server on a randomly selected port.
 
 ```bash
-docker run --detach -P --name notebook docker.io/jupyter/all-spark-notebook
+docker run --detach -P --name notebook quay.io/jupyter/all-spark-notebook
 ```
 
 where:
@@ -137,7 +137,7 @@ subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Si
 subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
 ```
 
-This command pulls the `docker.io/jupyter/r-notebook` image tagged `2023-09-25` from Docker Hub if it is not already present on the local host.
+This command pulls the `quay.io/jupyter/r-notebook` image tagged `2023-09-25` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the server, but with the internal container port (8888) instead of the correct host port (10000).
 
@@ -146,7 +146,7 @@ podman run -it --rm -p 10000:8888 \
     -v "${PWD}":/home/jovyan/work --user $uid:$gid \
     --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
     --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
-    docker.io/jupyter/r-notebook:2023-09-25
+    quay.io/jupyter/r-notebook:2023-09-25
 ```
 
 ```{warning}
