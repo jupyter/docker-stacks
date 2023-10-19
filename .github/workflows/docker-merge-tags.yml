@@ -11,9 +11,9 @@ on:
         required: true
         type: string
     secrets:
-      DOCKERHUB_USERNAME:
+      REGISTRY_USERNAME:
         required: true
-      DOCKERHUB_TOKEN:
+      REGISTRY_TOKEN:
         required: true
 
 jobs:
@@ -52,8 +52,8 @@ jobs:
         if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
 
       - name: Merge tags for the images 🔀
         if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
