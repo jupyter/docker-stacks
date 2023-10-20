@@ -4,7 +4,7 @@
 
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
-REGISTRY?=quay.io
+REGISTRY?=docker.io
 OWNER?=jupyter
 
 # Need to list the images in build dependency order
