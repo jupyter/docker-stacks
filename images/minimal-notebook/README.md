@@ -1,5 +1,7 @@
 # Minimal Jupyter Notebook Stack
 
+> **Images hosted on Docker Hub are no longer updated. Please, use [quay.io image](https://quay.io/repository/jupyter/minimal-notebook)**
+
 [![docker pulls](https://img.shields.io/docker/pulls/jupyter/minimal-notebook.svg)](https://hub.docker.com/r/jupyter/minimal-notebook/)
 [![docker stars](https://img.shields.io/docker/stars/jupyter/minimal-notebook.svg)](https://hub.docker.com/r/jupyter/minimal-notebook/)
 [![image size](https://img.shields.io/docker/image-size/jupyter/minimal-notebook/latest)](https://hub.docker.com/r/jupyter/minimal-notebook/ "jupyter/minimal-notebook image size")
