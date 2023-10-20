@@ -4,7 +4,7 @@
 
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
-REGISTRY?=docker.io
+REGISTRY?=quay.io
 OWNER?=jupyter
 
 # Need to list the images in build dependency order
@@ -46,7 +46,7 @@ build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
 
 check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests/docker-stacks-foundation/test_outdated.py
+	@TEST_IMAGE="$(REGISTRY)/$(OWNER)/$(notdir $@)" pytest tests/docker-stacks-foundation/test_outdated.py
 check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check all the stacks for outdated packages
 
 
@@ -80,9 +80,11 @@ img-clean: img-rm-dang img-rm ## clean dangling and jupyter images
 img-list: ## list jupyter images
 	@echo "Listing $(OWNER) images ..."
 	docker images "$(OWNER)/*"
+	docker images "*/$(OWNER)/*"
 img-rm: ## remove jupyter images
 	@echo "Removing $(OWNER) images ..."
 	-docker rmi --force $(shell docker images --quiet "$(OWNER)/*") 2> /dev/null
+	-docker rmi --force $(shell docker images --quiet "*/$(OWNER)/*") 2> /dev/null
 img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
 	-docker rmi --force $(shell docker images -f "dangling=true" --quiet) 2> /dev/null
@@ -90,7 +92,7 @@ img-rm-dang: ## remove dangling images (tagged None)
 
 
 pull/%: ## pull a jupyter image
-	docker pull "$(OWNER)/$(notdir $@)"
+	docker pull "$(REGISTRY)/$(OWNER)/$(notdir $@)"
 pull-all: $(foreach I, $(ALL_IMAGES), pull/$(I)) ## pull all images
 push/%: ## push all tags for a jupyter image
 	docker push --all-tags "$(REGISTRY)/$(OWNER)/$(notdir $@)"
