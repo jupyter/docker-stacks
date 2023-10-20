@@ -136,8 +136,8 @@ to get a feel for what's possible and the best practices.
 
 [Submit pull requests](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)
 to your project repository on GitHub.
-Ensure your image builds correctly on GitHub actions before merging to the main branch.
-Refer to Docker Hub to build the main branch that you can `docker pull`.
+Ensure your image builds correctly on GitHub Actions before merging to the main branch.
+After merging to the main branch, your image will be built and pushed to the Docker Hub automatically.
 
 ## Sharing Your Image
 
