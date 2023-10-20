@@ -36,7 +36,9 @@ def write_tags_file(
             LOGGER.info(
                 f"Calculated tag, tagger_name: {tagger_name} tag_value: {tag_value}"
             )
-            tags.append(f"{owner}/{short_image_name}:{tags_prefix}-{tag_value}")
+            tags.append(
+                f"{registry}/{owner}/{short_image_name}:{tags_prefix}-{tag_value}"
+            )
     tags_dir.mkdir(parents=True, exist_ok=True)
     (tags_dir / filename).write_text("\n".join(tags))
 
