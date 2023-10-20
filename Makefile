@@ -93,7 +93,7 @@ pull/%: ## pull a jupyter image
 	docker pull "$(OWNER)/$(notdir $@)"
 pull-all: $(foreach I, $(ALL_IMAGES), pull/$(I)) ## pull all images
 push/%: ## push all tags for a jupyter image
-	docker push --all-tags "$(OWNER)/$(notdir $@)"
+	docker push --all-tags "$(REGISTRY)/$(OWNER)/$(notdir $@)"
 push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 

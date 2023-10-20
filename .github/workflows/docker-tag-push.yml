@@ -54,5 +54,5 @@ jobs:
 
       - name: Push Images to Registry 📤
         if: env.PUSH_TO_REGISTRY
-        run: docker push --all-tags ${{ env.OWNER }}/${{ inputs.image }}
+        run: docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
         shell: bash
