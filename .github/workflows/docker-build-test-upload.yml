@@ -33,8 +33,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
-        with:
-          platform: ${{ inputs.platform }}
 
       # Self-hosted runners share a state (whole VM) between runs
       # Also, they might have running or stopped containers,
