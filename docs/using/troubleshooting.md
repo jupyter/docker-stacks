@@ -14,7 +14,7 @@ If you are running a Docker container while mounting a local volume or host dire
 docker run -it --rm \
     -p 8888:8888 \
     -v <my-vol>:<container-dir> \
-    docker.io/jupyter/minimal-notebook:latest
+    quay.io/jupyter/minimal-notebook:latest
 ```
 
 you might face permissions issues when trying to access the mounted volume:
@@ -48,7 +48,7 @@ The following sections cover a few of these scenarios and how to fix them.
        --user root \
        -e CHOWN_EXTRA="<container-dir>" \
        -e CHOWN_EXTRA_OPTS="-R" \
-       docker.io/jupyter/minimal-notebook
+       quay.io/jupyter/minimal-notebook
    ```
 
    where:
@@ -95,7 +95,7 @@ The following sections cover a few of these scenarios and how to fix them.
        -e NB_UID=1234 \
        -e NB_GID=5678 \
        -v "${PWD}"/test:/home/jovyan/work \
-       docker.io/jupyter/minimal-notebook:latest
+       quay.io/jupyter/minimal-notebook:latest
 
    # you should see an output similar to this
    # Update jovyan's UID:GID to 1234:5678
@@ -144,7 +144,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
         -e CHOWN_HOME_OPTS="-R" \
         -w "/home/callisto" \
         -v "${PWD}"/test:/home/callisto/work \
-        docker.io/jupyter/minimal-notebook
+        quay.io/jupyter/minimal-notebook
 
     # Updated the jovyan user:
     # - username: jovyan       -> callisto
@@ -187,7 +187,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
        -e CHOWN_HOME_OPTS="-R" \
        -w "/home/callisto" \
        -v "${PWD}"/test:/home/callisto/work \
-       docker.io/jupyter/minimal-notebook
+       quay.io/jupyter/minimal-notebook
    ```
 
    where:
@@ -214,7 +214,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
   docker run -it --rm \
       -p 8888:8888 \
       --user "$(id -u)" --group-add users \
-      -v <my-vol>:/home/jovyan/work docker.io/jupyter/datascience-notebook
+      -v <my-vol>:/home/jovyan/work quay.io/jupyter/datascience-notebook
   ```
 
   This command will launch the container with a specific user UID and add that user to the `users` group to modify the files in the default `/home` and `/opt/conda` directories.
@@ -318,7 +318,7 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
    You can see an example of mapping to local port `8001`:
 
    ```bash
-   docker run -it --rm -p 8001:8888 docker.io/jupyter/datascience-notebook
+   docker run -it --rm -p 8001:8888 quay.io/jupyter/datascience-notebook
    ```
 
    When the terminal provides the link to access Jupyter: <http://127.0.0.1:8888/lab?token=80d45d241a1ba4c2...>,

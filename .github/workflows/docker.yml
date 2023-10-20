@@ -248,8 +248,8 @@ jobs:
       platform: aarch64
       image: ${{ matrix.image }}
     secrets:
-      REGISTRY_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
         image:
@@ -286,8 +286,8 @@ jobs:
       platform: x86_64
       image: ${{ matrix.image }}
     secrets:
-      REGISTRY_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
         image:
@@ -322,8 +322,8 @@ jobs:
     with:
       image: ${{ matrix.image }}
     secrets:
-      REGISTRY_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
         image:

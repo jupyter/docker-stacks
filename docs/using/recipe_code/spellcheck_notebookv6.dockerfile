@@ -1,4 +1,4 @@
-FROM docker.io/jupyter/base-notebook:notebook-6.5.4
+FROM quay.io/jupyter/base-notebook:notebook-6.5.4
 
 RUN pip install --no-cache-dir 'jupyter_contrib_nbextensions' && \
     jupyter contrib nbextension install --user && \

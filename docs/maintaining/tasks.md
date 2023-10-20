@@ -56,7 +56,7 @@ When there's a new stack definition, check before merging the PR:
 
 ## Adding a New Maintainer Account
 
-1. Visit <https://hub.docker.com/orgs/jupyter/teams/stacks/members>
+1. Visit <https://quay.io/organization/jupyter/teams/owners>
 2. Add the maintainer's username.
 3. Visit <https://github.com/orgs/jupyter/teams/docker-image-maintainers/members>
 4. Add the maintainer's GitHub username.

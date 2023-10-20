@@ -1,7 +1,7 @@
 name: Download parent image, build a new one and test it; then upload the image, tags and manifests to GitHub artifacts
 
 env:
-  REGISTRY: docker.io
+  REGISTRY: quay.io
   OWNER: ${{ github.repository_owner }}
 
 on:

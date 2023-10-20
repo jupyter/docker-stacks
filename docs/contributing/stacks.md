@@ -8,7 +8,7 @@ Following these steps will:
 
 1. Set up a project on GitHub containing a Dockerfile based on any image we provide.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your repository.
-3. Configure Docker Hub to host your images for others to use.
+3. Configure Quay.io to host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.md#community-stacks) in this documentation to include your image.
 
 This approach mirrors how we build and share the core stack images.
@@ -35,8 +35,8 @@ This will serve as both the git repository name and the part of the Docker image
 stack_name [my-jupyter-stack]:
 ```
 
-Enter the user or organization name under which this stack will reside on Docker Hub.
-You must have access to manage this Docker Hub organization to push images here.
+Enter the user or organization name under which this stack will reside on Quay.io.
+You must have access to manage this Quay.io organization to push images here.
 
 ```text
 stack_org [my-project]:
@@ -88,6 +88,10 @@ git push -u origin main
    ![GitHub Actions page showing the "Build Docker Images" workflow](../_static/contributing/stacks/github-actions-workflow.png)
 
 ## Configuring Docker Hub
+
+```{note}
+Jupyter Docker Stacks are hosted on Quay.io, but in this example, we show you how to host your image on Docker Hub.
+```
 
 Now, configure Docker Hub to build your stack image and push it to the Docker Hub repository whenever
 you merge a GitHub pull request to the main branch of your project.

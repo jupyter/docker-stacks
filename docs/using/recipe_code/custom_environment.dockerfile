@@ -1,4 +1,4 @@
-FROM docker.io/jupyter/base-notebook
+FROM quay.io/jupyter/base-notebook
 
 # Name your environment and choose the python version
 ARG env_name=python310
