@@ -35,7 +35,7 @@ jobs:
   test-recipes:
     runs-on: ${{ matrix.runsOn }}
     needs: generate-matrix
-    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
+    if: github.repository_owner == 'jupyter'
 
     steps:
       - name: Checkout Repo ⚡️
