@@ -30,9 +30,12 @@ class ManifestHeader:
         commit_hash_tag = GitHelper.commit_hash_tag()
         commit_message = GitHelper.commit_message()
 
+        # Unfortunately, docker images doesn't work when specifying `docker.io` as registry
+        fixed_registry = registry + "/" if registry != "docker.io" else ""
+
         image_size = docker[
             "images",
-            f"{registry}/{owner}/{short_image_name}:latest",
+            f"{fixed_registry}{owner}/{short_image_name}:latest",
             "--format",
             "{{.Size}}",
         ]().rstrip()
@@ -44,7 +47,7 @@ class ManifestHeader:
                 "## Build Info",
                 "",
                 f"* Build datetime: {build_timestamp}",
-                f"* Docker image: {registry}/{owner}/{short_image_name}:{commit_hash_tag}",
+                f"* Docker image: `{registry}/{owner}/{short_image_name}:{commit_hash_tag}`",
                 f"* Docker image size: {image_size}",
                 f"* Git commit SHA: [{commit_hash}](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
                 "* Git commit message:",

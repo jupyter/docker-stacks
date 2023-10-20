@@ -30,8 +30,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
-        with:
-          platform: x86_64
       - name: Load image to Docker 📥
         uses: ./.github/actions/load-image
         with:
