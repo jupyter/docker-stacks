@@ -17,7 +17,7 @@ jobs:
   update-overview:
     runs-on: ubuntu-latest
     name: update-overview (${{matrix.image}})
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 
     steps:
       - name: Checkout Repo ⚡️
