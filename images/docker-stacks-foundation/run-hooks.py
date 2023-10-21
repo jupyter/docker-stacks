@@ -75,8 +75,17 @@ def source(path: PosixPath):
             )
             return
 
-        env_vars = json.load(env_vars_file)
-        os.environ.update(env_vars)
+        # Get env vars of the sourced process after it exits
+        # This may contain *additional* env vars, or some may be *removed*
+        child_env_vars = json.load(env_vars_file)
+
+        # Remove any env vars from our environment that were explicitly removed from the child
+        removed_env_vars = set(os.environ.keys()) - set(child_env_vars.keys())
+        for name in removed_env_vars:
+            del os.environ[name]
+
+        # Update our environment with any *new* or *modified* env vars from the child process
+        os.environ.update(child_env_vars)
 
 
 if len(sys.argv) != 2:
