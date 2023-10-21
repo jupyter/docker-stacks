@@ -12,4 +12,3 @@ Please visit the project documentation site for help to use and contribute to th
 
 - [Jupyter Docker Stacks on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html)
 - [Selecting an Image :: Core Stacks :: jupyter/pytorch-notebook](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-pytorch-notebook)
-- [Image Specifics :: PyTorch](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/specifics.html#pytorch)
