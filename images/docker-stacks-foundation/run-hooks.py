@@ -102,7 +102,7 @@ if not hooks_directory.is_dir():
     print(f"{hooks_directory} is not a directory")
     sys.exit(1)
 
-print(f"Running hooks in: {hooks_directory} as {os.getuid()} gid: {os.getgid()}")
+print(f"Running hooks in: {hooks_directory} as uid: {os.getuid()} gid: {os.getgid()}")
 
 for f in sorted(hooks_directory.iterdir()):
     if f.suffix == ".sh":
