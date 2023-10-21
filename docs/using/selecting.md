@@ -36,7 +36,7 @@ It contains:
   with ownership over the `/home/jovyan` and `/opt/conda` paths
 - `tini` as the container entry point
 - A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
-- A `run-hooks.py` script, which can source/run files in a given directory
+- A `run-hooks.py` script, which can source `.sh` files and call executable files in a given directory
 - Options for a passwordless sudo
 - Common system libraries like `bzip2`, `ca-certificates`, `locales`
 - `wget` to download external files
