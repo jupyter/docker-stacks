@@ -103,7 +103,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-base]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-minimal:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -113,7 +113,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-base]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-scipy:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -123,7 +123,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-minimal]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-scipy:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -133,7 +133,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-minimal]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-r:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -143,7 +143,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-minimal]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-r:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -153,7 +153,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-minimal]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-julia:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -163,7 +163,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-minimal]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-julia:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -173,7 +173,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-minimal]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -183,7 +183,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-scipy]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -193,7 +193,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-scipy]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -203,7 +203,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-scipy]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -213,7 +213,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-scipy]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-pyspark:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -223,7 +223,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-scipy]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-pyspark:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -233,7 +233,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-scipy]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-all-spark:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -243,7 +243,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-pyspark]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-all-spark:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -253,7 +253,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-pyspark]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-images-tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
@@ -291,7 +291,7 @@ jobs:
         aarch64-pyspark,
         aarch64-all-spark,
       ]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   aarch64-images-tag-push-fast:
     uses: ./.github/workflows/docker-tag-push.yml
@@ -305,7 +305,7 @@ jobs:
       matrix:
         image: [docker-stacks-foundation, base-notebook]
     needs: [aarch64-foundation, aarch64-base]
-    if: github.repository_owner == 'jupyter' && contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-images-tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
@@ -343,7 +343,7 @@ jobs:
         x86_64-pyspark,
         x86_64-all-spark,
       ]
-    if: ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   x86_64-images-tag-push-fast:
     uses: ./.github/workflows/docker-tag-push.yml
@@ -357,7 +357,7 @@ jobs:
       matrix:
         image: [docker-stacks-foundation, base-notebook]
     needs: [x86_64-foundation, x86_64-base]
-    if: contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: ${{ contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   merge-tags:
     uses: ./.github/workflows/docker-merge-tags.yml
@@ -382,7 +382,7 @@ jobs:
             all-spark-notebook,
           ]
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   merge-tags-fast:
     uses: ./.github/workflows/docker-merge-tags.yml
@@ -395,19 +395,19 @@ jobs:
       matrix:
         image: [docker-stacks-foundation, base-notebook]
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
-    if: github.repository_owner == 'jupyter' && contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ contains(github.event.head_commit.message, '[FAST_BUILD]') }}
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: github.repository_owner == 'jupyter' && ! contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.head_commit.message, '[FAST_BUILD]') }}
     permissions:
       contents: write
 
   wiki-update-fast:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
-    if: github.repository_owner == 'jupyter' && contains('[FAST_BUILD]', github.event.head_commit.message)
+    if: github.repository_owner == 'jupyter' && ${{ contains(github.event.head_commit.message, '[FAST_BUILD]') }}
     permissions:
       contents: write
 
