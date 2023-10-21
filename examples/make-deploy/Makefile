@@ -13,7 +13,7 @@ define RUN_NOTEBOOK
 	--name $(NAME) \
 	-v $(WORK_VOLUME):/home/jovyan/work \
 	$(DOCKER_ARGS) \
-	$(IMAGE) bash -c "$(PRE_CMD) chown jovyan /home/jovyan/work && start-notebook.sh $(ARGS)" > /dev/null
+	$(IMAGE) bash -c "$(PRE_CMD) chown jovyan /home/jovyan/work && start-notebook.py $(ARGS)" > /dev/null
 @echo "DONE: Notebook '$(NAME)' listening on $$(docker-machine ip $$(docker-machine active)):$(PORT)"
 endef
 

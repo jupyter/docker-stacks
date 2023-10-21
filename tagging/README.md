@@ -4,8 +4,8 @@ The main purpose of the source code in this folder is to properly tag all the im
 These two processes are closely related, so the source code is widely reused.
 
 A basic example of a tag is a `python` version tag.
-For example, an image `jupyter/base-notebook` with `python 3.10.5` will have a tag `jupyter/base-notebook:python-3.10.5`.
-This tag (and all the other tags) are pushed to Docker Hub.
+For example, an image `jupyter/base-notebook` with `python 3.10.5` will have a full image name `quay.io/jupyter/base-notebook:python-3.10.5`.
+This tag (and all the other tags) are pushed to Quay.io.
 
 Manifest is a description of some important part of the image in a `markdown`.
 For example, we dump all the `conda` packages, including their versions.

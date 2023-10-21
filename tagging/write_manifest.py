@@ -23,6 +23,7 @@ MARKDOWN_LINE_BREAK = "<br />"
 
 def write_build_history_line(
     short_image_name: str,
+    registry: str,
     owner: str,
     hist_line_dir: Path,
     filename: str,
@@ -32,7 +33,7 @@ def write_build_history_line(
 
     date_column = f"`{BUILD_TIMESTAMP}`"
     image_column = MARKDOWN_LINE_BREAK.join(
-        f"`{owner}/{short_image_name}:{tag_value}`" for tag_value in all_tags
+        f"`{registry}/{owner}/{short_image_name}:{tag_value}`" for tag_value in all_tags
     )
     commit_hash = GitHelper.commit_hash()
     links_column = MARKDOWN_LINE_BREAK.join(
@@ -49,6 +50,7 @@ def write_build_history_line(
 
 def write_manifest_file(
     short_image_name: str,
+    registry: str,
     owner: str,
     manifest_dir: Path,
     filename: str,
@@ -59,7 +61,7 @@ def write_manifest_file(
     LOGGER.info(f"Using manifests: {manifest_names}")
 
     markdown_pieces = [
-        ManifestHeader.create_header(short_image_name, owner, BUILD_TIMESTAMP)
+        ManifestHeader.create_header(short_image_name, registry, owner, BUILD_TIMESTAMP)
     ] + [manifest.markdown_piece(container) for manifest in manifests]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
@@ -69,6 +71,7 @@ def write_manifest_file(
 
 def write_manifest(
     short_image_name: str,
+    registry: str,
     owner: str,
     hist_line_dir: Path,
     manifest_dir: Path,
@@ -76,7 +79,7 @@ def write_manifest(
     LOGGER.info(f"Creating manifests for image: {short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 
-    image = f"{owner}/{short_image_name}:latest"
+    image = f"{registry}/{owner}/{short_image_name}:latest"
 
     file_prefix = get_platform()
     commit_hash_tag = GitHelper.commit_hash_tag()
@@ -88,10 +91,16 @@ def write_manifest(
             tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
         ]
         write_build_history_line(
-            short_image_name, owner, hist_line_dir, filename, all_tags
+            short_image_name, registry, owner, hist_line_dir, filename, all_tags
         )
         write_manifest_file(
-            short_image_name, owner, manifest_dir, filename, manifests, container
+            short_image_name,
+            registry,
+            owner,
+            manifest_dir,
+            filename,
+            manifests,
+            container,
         )
 
 
@@ -117,6 +126,13 @@ if __name__ == "__main__":
         help="Directory to save manifest file",
     )
     arg_parser.add_argument(
+        "--registry",
+        required=True,
+        type=str,
+        choices=["docker.io", "quay.io"],
+        help="Image registry",
+    )
+    arg_parser.add_argument(
         "--owner",
         required=True,
         help="Owner of the image",
@@ -126,5 +142,9 @@ if __name__ == "__main__":
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
     write_manifest(
-        args.short_image_name, args.owner, args.hist_line_dir, args.manifest_dir
+        args.short_image_name,
+        args.registry,
+        args.owner,
+        args.hist_line_dir,
+        args.manifest_dir,
     )
