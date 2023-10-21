@@ -101,8 +101,8 @@ jobs:
     steps:
       - name: Output PR title
         run: |
-          echo ${{ github.event.pull_request.title }}
-          echo ${{ contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+          echo "OH NO!!!"
+    if: ${{ github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-minimal:
     uses: ./.github/workflows/docker-build-test-upload.yml
