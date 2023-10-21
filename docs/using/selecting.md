@@ -249,7 +249,8 @@ Whenever a docker image is pushed to the container registry, it is tagged with:
 - a set of software version tags like `python-3.10.8` and `lab-3.5.3`
 
 ```{warning}
-- Tags before `2022-07-05` were sometimes incorrect. Please, do not rely on them.
+- Tags before `2022-07-05` were sometimes incorrect.
+  Please, do not rely on them.
 - Single-platform images have either `aarch64` or `x86_64` tag prefixes, for example, `jupyter/base-notebook:aarch64-python-3.10.5`
 ```
 

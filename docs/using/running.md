@@ -116,7 +116,8 @@ docker rm notebook
 
 ## Using the Podman CLI
 
-An alternative to using the Docker CLI is to use the Podman CLI. Podman is mostly compatible with Docker.
+An alternative to using the Docker CLI is to use the Podman CLI.
+Podman is mostly compatible with Docker.
 
 ### Podman example
 

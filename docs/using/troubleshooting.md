@@ -1,10 +1,10 @@
 # Troubleshooting Common Problems
 
 When troubleshooting, you may see unexpected behaviors or receive an error message.
-This section provides advice on
-how to identify and fix some of the most commonly encountered issues.
+This section provides advice on how to identify and fix some of the most commonly encountered issues.
 
-Most of the `docker run` flags used in this document are explained in detail in the [Common Features, Docker Options section](common.md#docker-options) of the documentation.
+Most of the `docker run` flags used in this document are explained in detail in the
+[Common Features, Docker Options section](common.md#docker-options) of the documentation.
 
 ## Permission denied when mounting volumes
 
@@ -29,14 +29,16 @@ touch stagingarea/kale.txt
 # touch: cannot touch 'stagingarea/kale.txt': Permission denied
 ```
 
-In this case, the user of the container (`jovyan`) and the owner of the mounted volume (`root`) have different permission levels and ownership over the container's directories and mounts.
+In this case, the user of the container (`jovyan`) and the owner of the mounted volume (`root`)
+have different permission levels and ownership over the container's directories and mounts.
 The following sections cover a few of these scenarios and how to fix them.
 
 **Some things to try:**
 
 1. **Change ownership of the volume mount**
 
-   You can change the ownership of the volume mount using the `chown` command. In the case of the docker-stacks images, you can set the `CHOWN_EXTRA` and `CHOWN_EXTRA_OPTS` environment variables.
+   You can change the ownership of the volume mount using the `chown` command.
+   In the case of the docker-stacks images, you can set the `CHOWN_EXTRA` and `CHOWN_EXTRA_OPTS` environment variables.
 
    For example, to change the ownership of the volume mount to the jovyan user (non-privileged default user in the Docker images):
 
@@ -53,7 +55,8 @@ The following sections cover a few of these scenarios and how to fix them.
 
    where:
 
-   - `CHOWN_EXTRA=<some-dir>,<some-other-dir>`: will change the ownership and group of the specified container directory (non-recursive by default). You need to provide full paths starting with `/`.
+   - `CHOWN_EXTRA=<some-dir>,<some-other-dir>`: will change the ownership and group of the specified container directory (non-recursive by default).
+     You need to provide full paths starting with `/`.
    - `CHOWN_EXTRA_OPTS="-R"`: will recursively change the ownership and group of the directory specified in `CHOWN_EXTRA`.
    - `--user root`: you **must** run the container with the root user to change ownership at runtime.
 
@@ -85,8 +88,9 @@ The following sections cover a few of these scenarios and how to fix them.
    Therefore, the permissions and ownership are copied over and will be **the same** as the ones in your local host
    (including user ids) which may result in permissions errors when trying to access directories or create/modify files inside.
 
-   Suppose your local user has a `UID` and `GID` of `1234` and `5678`, respectively. To fix the UID discrepancies between your local directories and the container's
-   directories, you can run the container with an explicit `NB_UID` and `NB_GID` to match that of the local user:
+   Suppose your local user has a `UID` and `GID` of `1234` and `5678`, respectively.
+   To fix the UID discrepancies between your local directories and the container's directories,
+   you can run the container with an explicit `NB_UID` and `NB_GID` to match that of the local user:
 
    ```bash
    docker run -it --rm \
@@ -108,10 +112,12 @@ The following sections cover a few of these scenarios and how to fix them.
    - You **must** use `--user root` to ensure that the `UID` and `GID` are updated at runtime.
 
 ````{admonition} Additional notes
-- The caveat with this approach is that since these changes are applied at runtime, you will need to re-run the same command
-   with the appropriate flags and environment variables if you need to recreate the container (i.e. after removing/destroying it).
+- The caveat with this approach is that since these changes are applied at runtime,
+   you will need to re-run the same command with the appropriate flags and environment variables
+   if you need to recreate the container (i.e. after removing/destroying it).
  - If you pass a numeric UID, it **must** be in the range of 0-2147483647
- - This approach only updates the UID and GID of the **existing `jovyan` user** instead of creating a new user. From the above example:
+ - This approach only updates the UID and GID of the **existing `jovyan` user** instead of creating a new user.
+   From the above example:
    ```bash
    id
    # uid=1234(jovyan) gid=5678(jovyan) groups=5678(jovyan),100(users)
@@ -167,14 +173,16 @@ If you have also **created a new user**, you might be experiencing any of the fo
    ```{admonition} Additional notes
     In the example above, the `-v` flag is used to mount the local volume onto the new user's `/home` directory.
 
-    However, if you are mounting a volume elsewhere, you also need to use the `-e CHOWN_EXTRA=<some-dir>` flag to avoid any permission
-    issues (see the section [Permission denied when mounting volumes](#permission-denied-when-mounting-volumes) on this page).
+    However, if you are mounting a volume elsewhere,
+    you also need to use the `-e CHOWN_EXTRA=<some-dir>` flag to avoid any permission issues
+    (see the section [Permission denied when mounting volumes](#permission-denied-when-mounting-volumes) on this page).
    ```
 
 2. **Dynamically assign the user ID and GID**
 
    The above case ensures that the `/home` directory is owned by a newly created user with a specific `UID` and `GID`,
-   but if you want to assign the `UID` and `GID` of the new user dynamically, you can make the following adjustments:
+   but if you want to assign the `UID` and `GID` of the new user dynamically,
+   you can make the following adjustments:
 
    ```bash
    docker run -it --rm \
@@ -202,8 +210,8 @@ If you have also **created a new user**, you might be experiencing any of the fo
   -v "${PWD}"/<my-vol>:/home/jovyan/work
   ```
 
-  This example uses the syntax `${PWD}`, which is replaced with the full path to the current directory at runtime. The destination
-  path should also be an absolute path starting with a `/` such as `/home/jovyan/work`.
+  This example uses the syntax `${PWD}`, which is replaced with the full path to the current directory at runtime.
+  The destination path should also be an absolute path starting with a `/` such as `/home/jovyan/work`.
 
 - You might want to consider using the Docker native `--user <UID>` and `--group-add users` flags instead of `-e NB_UID` and `-e NB_GID`:
 
@@ -217,10 +225,12 @@ If you have also **created a new user**, you might be experiencing any of the fo
       -v <my-vol>:/home/jovyan/work quay.io/jupyter/datascience-notebook
   ```
 
-  This command will launch the container with a specific user UID and add that user to the `users` group to modify the files in the default `/home` and `/opt/conda` directories.
+  This command will launch the container with a specific user UID and add that user to the `users` group
+  to modify the files in the default `/home` and `/opt/conda` directories.
   Further avoiding issues when trying to `conda install` additional packages.
 
-- Use `docker inspect <container_id>` and look for the [`Mounts` section](https://docs.docker.com/storage/volumes/#start-a-container-with-a-volume) to verify that the volume was created and mounted accordingly:
+- Use `docker inspect <container_id>` and look for the [`Mounts` section](https://docs.docker.com/storage/volumes/#start-a-container-with-a-volume)
+  to verify that the volume was created and mounted accordingly:
 
   ```json
   {
@@ -241,7 +251,8 @@ If you have also **created a new user**, you might be experiencing any of the fo
 
 ## Problems installing conda packages from specific channels
 
-By default, the docker-stacks images have the conda channels priority set to `strict`. This may cause problems when trying to install packages from a channel with lower priority.
+By default, the docker-stacks images have the conda channels priority set to `strict`.
+This may cause problems when trying to install packages from a channel with lower priority.
 
 ```bash
 conda config --show | grep priority
@@ -270,7 +281,8 @@ Additional details are provided in the [Using alternative channels](../using/com
 
 ## Tokens are being rejected
 
-If you are a regular user of VSCode and the Jupyter extension, you might experience either of these issues when using any of the docker-stacks images:
+If you are a regular user of VSCode and the Jupyter extension,
+you might experience either of these issues when using any of the docker-stacks images:
 
 - when clicking on the URL displayed on your command line logs, you face a "This site cannot be reached" page on your web browser
 - using the produced token and/or URL results in an "Invalid credentials" error on the Jupyter "Token authentication is enabled" page
@@ -326,4 +338,5 @@ If you are a regular user of VSCode and the Jupyter extension, you might experie
 
    In this example, we use 8001, so the edited link would be: <http://127.0.0.1:8001/lab?token=80d45d241a1ba4c2...>.
 
-   Note: Port mapping for Jupyter has other applications outside of Docker. For example, it can be used to allow multiple Jupyter instances when using SSH to control cloud devices.
+   Note: Port mapping for Jupyter has other applications outside of Docker.
+   For example, it can be used to allow multiple Jupyter instances when using SSH to control cloud devices.

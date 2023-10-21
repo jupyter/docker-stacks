@@ -14,12 +14,13 @@ To build new images and publish them to the Registry, do the following:
    except single-platform images are pushed to Registry and then tags are merged for `x86_64` and `aarch64`.
    ```
 
-4. Avoid merging another PR to the main branch until all pending builds are complete.
-   This way, you will know which commit might have broken the build and also have the correct tags for moving tags (like the `python` version).
+4. Avoid merging another PR to the main branch until all pending builds in the main branch are complete.
+   This way, you will know which commit might have broken the build
+   and also have the correct tags for moving tags (like the `python` version).
 
 ## Updating Python version
 
-When a new `Python` version is released, we wait for two things:
+When a new `Python` version is released, we wait for:
 
 - all the dependencies to be available (as wheels or in `conda-forge`).
 - the first `python` patch release for this version.
@@ -27,18 +28,20 @@ When a new `Python` version is released, we wait for two things:
 
 ## Updating the Ubuntu Base Image
 
-`docker-stacks-foundation` is based on the LTS Ubuntu docker image.
+`jupyter/docker-stacks-foundation` is based on the LTS Ubuntu docker image.
 We wait for the first point release of the new LTS Ubuntu before updating the version.
 Other images are directly or indirectly inherited from `docker-stacks-foundation`.
 We rebuild our images automatically each week, which means they frequently receive updates.
 
-When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger images rebuild [from the GitHub actions workflow UI](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
+When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger images rebuild
+[from the GitHub actions workflow UI](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
 Pushing the `Run Workflow` button will trigger this process.
 
 ## Adding a New Core Image to the Registry
 
 ```{note}
-In general, we do not add new core images and ask contributors to either create a [recipe](../using/recipes.md) or [community stack](../contributing/stacks.md).
+In general, we do not add new core images and ask contributors to either
+create a [recipe](../using/recipes.md) or [community stack](../contributing/stacks.md).
 ```
 
 You can see an example of adding a new image [here](https://github.com/jupyter/docker-stacks/pull/1936/files).
@@ -46,20 +49,19 @@ You can see an example of adding a new image [here](https://github.com/jupyter/d
 When there's a new stack definition, check before merging the PR:
 
 1. PR includes an update to the stack overview diagram
-   [in the documentation](https://github.com/jupyter/docker-stacks/blob/main/docs/using/selecting.md#image-relationships).
+   [in the documentation](../using/selecting.md#image-relationships).
    The image links to the [blockdiag source](http://interactive.blockdiag.com/) used to create it.
-2. PR updates the [Makefile](https://github.com/jupyter/docker-stacks/blob/main/Makefile), which is used to build the stacks in order on GitHub Actions.
-3. Necessary tags/manifests are added for the new image in the [tagging](https://github.com/jupyter/docker-stacks/tree/main/tagging) folder.
-4. A new repository is created in the `jupyter` org in the Registry,
+2. PR updates the [Makefile](https://github.com/jupyter/docker-stacks/blob/main/Makefile),
+   which is used to build the stacks in order on GitHub Actions.
+3. Necessary Tagger(s)/Manifest(s) are added for the new image
+   in the [tagging](https://github.com/jupyter/docker-stacks/tree/main/tagging) folder.
+4. A new repository is created in the `jupyter` organization in the Registry,
    and it's named after the stack folder in the git repo.
-5. Grant the `stacks` team permission to write to this repo.
 
-## Adding a New Maintainer Account
+## Adding a New Registry Owner Account
 
 1. Visit <https://quay.io/organization/jupyter/teams/owners>
 2. Add the maintainer's username.
-3. Visit <https://github.com/orgs/jupyter/teams/docker-image-maintainers/members>
-4. Add the maintainer's GitHub username.
 
 ## Restarting a failed build
 
