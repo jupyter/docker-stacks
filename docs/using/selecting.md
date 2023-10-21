@@ -191,7 +191,7 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pytorch-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pytorch-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/pytorch-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/pytorch-notebook?tab=tags)
 
 `jupyter/pytorch-notebook` includes popular Python deep learning libraries.
 
