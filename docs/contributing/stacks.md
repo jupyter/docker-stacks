@@ -45,7 +45,7 @@ stack_org [my-project]:
 Select an image from the `jupyter/docker-stacks` project that will serve as the base for your new image.
 
 ```text
-stack_base_image [jupyter/base-notebook]:
+stack_base_image [quay.io/jupyter/base-notebook]:
 ```
 
 Enter a longer description of the stack for your README.
