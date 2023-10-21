@@ -1,8 +1,9 @@
 name: Build, test and push Docker Images
 
-# [FAST_BUILD] in the commit message makes this workflow only build
-# `jupyter/docker-stacks-foundation` and `/jupyter/base-notebook`
+# [FAST_BUILD] in the PR title makes this workflow only build
+# `jupyter/docker-stacks-foundation` and `/jupyter/base-notebook` in the PR
 # This allows to run CI faster in case where full build is not required
+# This only works for `pull_request` event and has no effect on `push` to the `main` branch
 
 on:
   schedule:
