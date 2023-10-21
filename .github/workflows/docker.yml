@@ -96,6 +96,12 @@ jobs:
       runsOn: ubuntu-latest
     needs: [x86_64-foundation]
 
+  output-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output PR title
+        run: echo ${{ github.event.pull_request.title }}
+
   aarch64-minimal:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -104,7 +110,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-base]
-    if: github.repository_owner == 'jupyter' && ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+    if: ${{ github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-minimal:
     uses: ./.github/workflows/docker-build-test-upload.yml
