@@ -95,7 +95,7 @@ if not hooks_directory.is_dir():
 
 print(f"Running hooks in: {hooks_directory} as {os.getuid()} gid: {os.getgid()}")
 
-for f in hooks_directory.iterdir():
+for f in sorted(hooks_directory.iterdir()):
     if f.suffix == ".sh":
         print(f"Sourcing shell script: {f}")
         source(f)
