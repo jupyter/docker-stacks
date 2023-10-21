@@ -127,14 +127,14 @@ more information is available in the [documentation](https://jupyter-docker-stac
 This project only builds one set of images at a time.
 If you want to use older `Ubuntu` and/or `python` version, you can use following images:
 
-| Build Date   | Ubuntu | Python | Tag            |
-| ------------ | ------ | ------ | -------------- |
-| 2022-10-09   | 20.04  | 3.7    | `1aac87eb7fa5` |
-| 2022-10-09   | 20.04  | 3.8    | `a374cab4fcb6` |
-| 2022-10-09   | 20.04  | 3.9    | `5ae537728c69` |
-| 2022-10-09   | 20.04  | 3.10   | `f3079808ca8c` |
-| 2022-10-09   | 22.04  | 3.7    | `b86753318aa1` |
-| 2022-10-09   | 22.04  | 3.8    | `7285848c0a11` |
-| 2022-10-09   | 22.04  | 3.9    | `ed2908bbb62e` |
-| 2023-05-30   | 22.04  | 3.10   | `4d70cf8da953` |
-| weekly build | 22.04  | 3.11   | `latest`       |
+| Build Date   | Ubuntu | Python | Registry  | Tag            |
+| ------------ | ------ | ------ | --------- | -------------- |
+| 2022-10-09   | 20.04  | 3.7    | docker.io | `1aac87eb7fa5` |
+| 2022-10-09   | 20.04  | 3.8    | docker.io | `a374cab4fcb6` |
+| 2022-10-09   | 20.04  | 3.9    | docker.io | `5ae537728c69` |
+| 2022-10-09   | 20.04  | 3.10   | docker.io | `f3079808ca8c` |
+| 2022-10-09   | 22.04  | 3.7    | docker.io | `b86753318aa1` |
+| 2022-10-09   | 22.04  | 3.8    | docker.io | `7285848c0a11` |
+| 2022-10-09   | 22.04  | 3.9    | docker.io | `ed2908bbb62e` |
+| 2023-05-30   | 22.04  | 3.10   | docker.io | `4d70cf8da953` |
+| weekly build | 22.04  | 3.11   | quay.io   | `latest`       |
