@@ -49,7 +49,7 @@ If there's agreement that the feature belongs in one or more of the core stacks:
    If you use `make`, call:
 
    ```bash
-   make build/<somestack>-notebook
+   make build/<somestack>
    ```
 
 3. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)(PR) with your changes.
