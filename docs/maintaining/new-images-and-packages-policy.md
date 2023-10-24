@@ -26,8 +26,8 @@ Here is a non exhaustive list of things we do care about:
    - Does the package open additional ports, or add new web endpoints, that could be exploited?
 
 With all this in mind, we have a voting group, which consists of
-[mathbunnyru](http://github.com/mathbunnyru),
-[consideRatio](http://github.com/consideRatio),
+[mathbunnyru](https://github.com/mathbunnyru),
+[consideRatio](https://github.com/consideRatio),
 [yuvipanda](https://github.com/yuvipanda) and
 [minrk](https://github.com/minrk).
 
