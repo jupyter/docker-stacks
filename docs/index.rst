@@ -32,6 +32,7 @@ Table of Contents
    :maxdepth: 2
    :caption: Maintainer Guide
 
+   maintaining/new-images-and-packages-policy
    maintaining/tasks
    maintaining/aarch64-runner
 
