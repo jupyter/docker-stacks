@@ -75,7 +75,9 @@ USER ${NB_UID}
 # 2. Find the pandas version in the file spark/dev/infra/Dockerfile.
 RUN mamba install --yes \
     'pandas=2.0.3' \
-    'pyarrow' && \
+    'pyarrow' \
+    'grpcio' \
+    'grpcio_status' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
