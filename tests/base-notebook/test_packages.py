@@ -77,6 +77,8 @@ EXCLUDED_PACKAGES = [
     "python",
     "r-irkernel",
     "unixodbc",
+    "grpcio",
+    "grpcio-status",
 ]
 
 
