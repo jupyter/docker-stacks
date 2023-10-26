@@ -210,6 +210,8 @@ It contains:
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [Apache Spark](https://spark.apache.org/) with Hadoop binaries
 - [pyarrow](https://arrow.apache.org/docs/python/) library
+- [grpcio](https://grpc.io/docs/languages/python/quickstart/)
+- [grpcio-status](https://github.com/grpc/grpc/tree/master/src/python/grpcio_status)
 
 ### jupyter/all-spark-notebook
 
