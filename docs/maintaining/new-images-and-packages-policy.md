@@ -29,7 +29,7 @@ With all this in mind, we have a voting group, which consists of
 [mathbunnyru](https://github.com/mathbunnyru),
 [consideRatio](https://github.com/consideRatio),
 [yuvipanda](https://github.com/yuvipanda) and
-[minrk](https://github.com/minrk).
+[manics](https://github.com/manics).
 
 This voting group is responsible for accepting or declining new packages and stacks.
 The change is accepted, if there are **at least 2 positive votes**.
