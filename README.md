@@ -69,43 +69,12 @@ So, new notebooks will be saved there, unless you change the directory in the fi
 To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
 ```
 
-## Contributing
-
-Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
-for information about how to contribute recipes, features, tests, and community maintained stacks.
-
-## Maintainer Help Wanted
-
-We value all positive contributions to the Docker stacks project,
-from [bug reports](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/issues.html)
-to [pull requests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/features.html#submitting-a-pull-request)
-to help with answering questions.
-We'd also like to invite members of the community to help with two maintainer activities:
-
-- **Issue triaging**: Reading and providing a first response to issues, labeling issues appropriately,
-  redirecting cross-project questions to Jupyter Discourse
-- **Pull request reviews**: Reading proposed documentation and code changes, working with the submitter
-  to improve the contribution, deciding if the contribution should take another form (e.g., a recipe
-  instead of a permanent change to the images)
-
-Anyone in the community can jump in and help with these activities anytime.
-We will happily grant additional permissions (e.g., the ability to merge PRs) to anyone who shows an ongoing interest in working on the project.
-
 ## Choosing Jupyter frontend
 
 JupyterLab is the default for all the Jupyter Docker Stacks images.
 It is still possible to switch back to Jupyter Notebook (or to launch a different startup command).
 You can achieve this by passing the environment variable `DOCKER_STACKS_JUPYTER_CMD=notebook` (or any other valid `jupyter` subcommand) at container startup;
 more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#alternative-commands).
-
-## Alternatives
-
-- [jupyter/repo2docker](https://github.com/jupyterhub/repo2docker) - Turn git repositories into
-  Jupyter-enabled Docker Images
-- [openshift/source-to-image](https://github.com/openshift/source-to-image) - A tool for
-  building artifacts from source and injecting them into docker images
-- [jupyter-on-openshift/jupyter-notebooks](https://github.com/jupyter-on-openshift/jupyter-notebooks) -
-  OpenShift compatible S2I builder for basic notebook images
 
 ## Resources
 
@@ -127,14 +96,28 @@ more information is available in the [documentation](https://jupyter-docker-stac
 This project only builds one set of images at a time.
 If you want to use older `Ubuntu` and/or `python` version, you can use following images:
 
-| Build Date   | Ubuntu | Python | Tag            |
-| ------------ | ------ | ------ | -------------- |
-| 2022-10-09   | 20.04  | 3.7    | `1aac87eb7fa5` |
-| 2022-10-09   | 20.04  | 3.8    | `a374cab4fcb6` |
-| 2022-10-09   | 20.04  | 3.9    | `5ae537728c69` |
-| 2022-10-09   | 20.04  | 3.10   | `f3079808ca8c` |
-| 2022-10-09   | 22.04  | 3.7    | `b86753318aa1` |
-| 2022-10-09   | 22.04  | 3.8    | `7285848c0a11` |
-| 2022-10-09   | 22.04  | 3.9    | `ed2908bbb62e` |
-| 2023-05-30   | 22.04  | 3.10   | `4d70cf8da953` |
-| weekly build | 22.04  | 3.11   | `latest`       |
+| Build Date   | Ubuntu | Python | Registry  | Tag            |
+| ------------ | ------ | ------ | --------- | -------------- |
+| 2022-10-09   | 20.04  | 3.7    | docker.io | `1aac87eb7fa5` |
+| 2022-10-09   | 20.04  | 3.8    | docker.io | `a374cab4fcb6` |
+| 2022-10-09   | 20.04  | 3.9    | docker.io | `5ae537728c69` |
+| 2022-10-09   | 20.04  | 3.10   | docker.io | `f3079808ca8c` |
+| 2022-10-09   | 22.04  | 3.7    | docker.io | `b86753318aa1` |
+| 2022-10-09   | 22.04  | 3.8    | docker.io | `7285848c0a11` |
+| 2022-10-09   | 22.04  | 3.9    | docker.io | `ed2908bbb62e` |
+| 2023-05-30   | 22.04  | 3.10   | docker.io | `4d70cf8da953` |
+| weekly build | 22.04  | 3.11   | quay.io   | `latest`       |
+
+## Contributing
+
+Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
+for information about how to contribute recipes, features, tests, and community maintained stacks.
+
+## Alternatives
+
+- [jupyter/repo2docker](https://github.com/jupyterhub/repo2docker) -
+  Turn git repositories into Jupyter-enabled Docker Images
+- [openshift/source-to-image](https://github.com/openshift/source-to-image) -
+  A tool for building artifacts from source and injecting them into docker images
+- [jupyter-on-openshift/jupyter-notebooks](https://github.com/jupyter-on-openshift/jupyter-notebooks) -
+  OpenShift compatible S2I builder for basic notebook images
