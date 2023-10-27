@@ -42,6 +42,7 @@ Pushing the `Run Workflow` button will trigger this process.
 ```{note}
 In general, we do not add new core images and ask contributors to either
 create a [recipe](../using/recipes.md) or [community stack](../contributing/stacks.md).
+We have a [policy](./new-images-and-packages-policy.md), which we consider when adding new images or new packages to existing images.
 ```
 
 You can see an example of adding a new image [here](https://github.com/jupyter/docker-stacks/pull/1936/files).
