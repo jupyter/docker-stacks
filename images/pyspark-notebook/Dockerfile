@@ -74,6 +74,8 @@ USER ${NB_UID}
 # 1. Check out the Spark branch you are on.
 # 2. Find the pandas version in the file spark/dev/infra/Dockerfile.
 RUN mamba install --yes \
+    'grpcio-status' \
+    'grpcio' \
     'pandas=2.0.3' \
     'pyarrow' && \
     mamba clean --all -f -y && \
