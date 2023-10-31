@@ -67,7 +67,7 @@ jobs:
       image: docker-stacks-foundation
       platform: aarch64
       runsOn: ARM64
-    if: ${{ github.repository_owner == 'jupyter' }}
+    if: github.repository_owner == 'jupyter'
 
   x86_64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -85,7 +85,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-foundation]
-    if: ${{ github.repository_owner == 'jupyter' }}
+    if: github.repository_owner == 'jupyter'
 
   x86_64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
