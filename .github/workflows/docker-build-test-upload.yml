@@ -38,7 +38,7 @@ jobs:
       # Also, they might have running or stopped containers,
       # which are not cleaned up by `docker system prun`
       - name: Reset docker state and cleanup artifacts 🗑️
-        if: ${{ inputs.platform != 'x86_64' }}
+        if: inputs.platform != 'x86_64'
         run: |
           docker kill $(docker ps --quiet) || true
           docker rm $(docker ps --all --quiet) || true
@@ -47,14 +47,14 @@ jobs:
         shell: bash
 
       - name: Load parent built image to Docker 📥
-        if: ${{ inputs.parentImage != '' }}
+        if: inputs.parentImage != ''
         uses: ./.github/actions/load-image
         with:
           image: ${{ inputs.parentImage }}
           platform: ${{ inputs.platform }}
 
       - name: Pull ubuntu:22.04 image 📥
-        if: ${{ inputs.parentImage == '' }}
+        if: inputs.parentImage == ''
         run: docker pull ubuntu:22.04
         shell: bash
 

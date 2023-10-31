@@ -3,7 +3,7 @@ name: Download Docker image and its tags from GitHub artifacts, apply them and p
 env:
   REGISTRY: quay.io
   OWNER: ${{ github.repository_owner }}
-  PUSH_TO_REGISTRY: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
+  PUSH_TO_REGISTRY: ${{ (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && (github.ref == 'refs/heads/main' || github.event_name == 'schedule') }}
 
 on:
   workflow_call:
@@ -38,7 +38,7 @@ jobs:
           platform: ${{ inputs.platform }}
 
       - name: Login to Registry 🔐
-        if: env.PUSH_TO_REGISTRY
+        if: env.PUSH_TO_REGISTRY == 'true'
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: quay.io
@@ -54,6 +54,6 @@ jobs:
         run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
 
       - name: Push Images to Registry 📤
-        if: env.PUSH_TO_REGISTRY
+        if: env.PUSH_TO_REGISTRY == 'true'
         run: docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
         shell: bash

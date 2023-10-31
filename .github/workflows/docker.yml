@@ -175,6 +175,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-scipy]
+    if: github.repository_owner == 'jupyter'
 
   x86_64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
