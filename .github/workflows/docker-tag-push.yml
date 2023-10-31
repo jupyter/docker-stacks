@@ -37,6 +37,11 @@ jobs:
           image: ${{ inputs.image }}
           platform: ${{ inputs.platform }}
 
+      - name: Echo vars
+        run: |
+          echo OWNER is ${{ env.OWNER }}
+          echo PUSH_TO_REGISTRY is ${{ env.PUSH_TO_REGISTRY }}
+
       - name: Login to Registry 🔐
         if: env.PUSH_TO_REGISTRY
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
