@@ -11,7 +11,7 @@ runs:
       uses: actions/setup-python@v4
       with:
         python-version: 3.x
-      if: ${{ runner.arch == 'X64' }}
+      if: runner.arch == 'X64'
 
     - name: Install Dev Dependencies 📦
       run: |
