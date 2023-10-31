@@ -89,7 +89,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - We publish containers for both `x86_64` and `aarch64` platforms
 - Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `jupyter/base-notebook:aarch64-python-3.10.5`
 - Starting from `2022-09-21`, we create multi-platform images (except `tensorflow-notebook`)
-- Starting from `2023-10-20`, we create multi-platform `tensorflow-notebook` image as well
+- Starting from `2023-06-01`, we create multi-platform `tensorflow-notebook` image as well
 
 ## Using old images
 
