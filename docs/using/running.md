@@ -29,8 +29,8 @@ docker run -it -p 8888:8888 quay.io/jupyter/scipy-notebook:2023-10-31
 #     To access the server, open this file in a browser:
 #         file:///home/jovyan/.local/share/jupyter/runtime/jpserver-7-open.html
 #     Or copy and paste one of these URLs:
-#         http://042fc8ac2b0c:8888/lab?token=f31f2625f13d131f578fced0fc76b81d10f6c629e92c7099
-#      or http://127.0.0.1:8888/lab?token=f31f2625f13d131f578fced0fc76b81d10f6c629e92c7099
+#         http://eca4aa01751c:8888/lab?token=d4ac9278f5f5388e88097a3a8ebbe9401be206cfa0b83099
+#         http://127.0.0.1:8888/lab?token=d4ac9278f5f5388e88097a3a8ebbe9401be206cfa0b83099
 ```
 
 Pressing `Ctrl-C` twice shuts down the Server but leaves the container intact on disk for later restart or permanent deletion using commands like the following:
@@ -38,17 +38,17 @@ Pressing `Ctrl-C` twice shuts down the Server but leaves the container intact on
 ```bash
 # list containers
 docker ps --all
-# CONTAINER ID   IMAGE                                                 COMMAND                  CREATED          STATUS                     PORTS     NAMES
-# 221331c047c4   jupyter/scipy-notebook:2023-10-31                   "tini -g -- start-no…"   11 seconds ago   Exited (0) 8 seconds ago             cranky_benz
+# CONTAINER ID   IMAGE                                       COMMAND                  CREATED              STATUS                     PORTS     NAMES
+# eca4aa01751c   quay.io/jupyter/scipy-notebook:2023-10-31   "tini -g -- start-no…"   About a minute ago   Exited (0) 5 seconds ago             silly_panini
 
 # start the stopped container
-docker start --attach 221331c047c4
+docker start --attach -i eca4aa01751c
 # Entered start.sh with args: jupyter lab
 # ...
 
 # remove the stopped container
-docker rm 221331c047c4
-# 221331c047c4
+docker rm eca4aa01751c
+# eca4aa01751c
 ```
 
 ### Example 2
