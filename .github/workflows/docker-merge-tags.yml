@@ -2,6 +2,7 @@ name: Download images tags from GitHub artifacts and create multi-platform manif
 
 env:
   OWNER: ${{ github.repository_owner }}
+  PUSH_TO_REGISTRY: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
 
 on:
   workflow_call:
@@ -11,9 +12,9 @@ on:
         required: true
         type: string
     secrets:
-      DOCKERHUB_USERNAME:
+      REGISTRY_USERNAME:
         required: true
-      DOCKERHUB_TOKEN:
+      REGISTRY_TOKEN:
         required: true
 
 jobs:
@@ -22,11 +23,9 @@ jobs:
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
-        with:
-          platform: x86_64
 
       - name: Download x86_64 tags file 📥
         uses: actions/download-artifact@v3
@@ -48,14 +47,15 @@ jobs:
           sudo systemctl restart docker
         shell: bash
 
-      - name: Login to Docker Hub 🔐
-        if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
-        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2.2.0
+      - name: Login to Registry 🔐
+        if: env.PUSH_TO_REGISTRY
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: quay.io
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
 
       - name: Merge tags for the images 🔀
-        if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
+        if: env.PUSH_TO_REGISTRY
         run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/
         shell: bash

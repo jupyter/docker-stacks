@@ -1,0 +1,31 @@
+---
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
+version: "2"
+
+services:
+  notebook:
+    build: .
+    image: my-notebook
+    container_name: ${NAME}
+    volumes:
+      - "work:/home/jovyan/work"
+      - "secrets:/etc/letsencrypt"
+    ports:
+      - "${PORT}:8888"
+    environment:
+      USE_HTTPS: "yes"
+      PASSWORD: ${PASSWORD}
+    command: >
+      start-notebook.py
+      --ServerApp.certfile=/etc/letsencrypt/fullchain.pem
+      --ServerApp.keyfile=/etc/letsencrypt/privkey.pem
+
+volumes:
+  work:
+    external:
+      name: ${WORK_VOLUME}
+  secrets:
+    external:
+      name: ${SECRETS_VOLUME}

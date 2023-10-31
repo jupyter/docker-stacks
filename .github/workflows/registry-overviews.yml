@@ -1,0 +1,48 @@
+name: Update Registry overviews
+
+env:
+  OWNER: ${{ github.repository_owner }}
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/registry-overviews.yml"
+
+      - "images/*/README.md"
+  workflow_dispatch:
+
+jobs:
+  update-overview:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v4
+
+      - name: Push README to Registry 🐳
+        uses: christian-korneck/update-container-description-action@d36005551adeaba9698d8d67a296bd16fa91f8e8 # v1
+        env:
+          DOCKER_APIKEY: ${{ secrets.APIKEY__QUAY_IO }}
+        with:
+          destination_container_repo: quay.io/${{ env.OWNER }}/${{ matrix.image }}
+          provider: quay
+          readme_file: images/${{ matrix.image }}/README.md
+
+    strategy:
+      matrix:
+        image:
+          [
+            docker-stacks-foundation,
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            julia-notebook,
+            tensorflow-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
+          ]

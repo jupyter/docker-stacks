@@ -4,6 +4,7 @@
 
 # Use bash for inline if-statements in arch_patch target
 SHELL:=bash
+REGISTRY?=quay.io
 OWNER?=jupyter
 
 # Need to list the images in build dependency order
@@ -37,15 +38,15 @@ help:
 
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ## build the latest image for a stack using the system's architecture
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(OWNER)/$(notdir $@):latest" "./images/$(notdir $@)" --build-arg OWNER="$(OWNER)"
+	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" "./images/$(notdir $@)" --build-arg REGISTRY="$(REGISTRY)" --build-arg OWNER="$(OWNER)"
 	@echo -n "Built image size: "
-	@docker images "$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
+	@docker images "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
 
 
 check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report
-	@TEST_IMAGE="$(OWNER)/$(notdir $@)" pytest tests/docker-stacks-foundation/test_outdated.py
+	@TEST_IMAGE="$(REGISTRY)/$(OWNER)/$(notdir $@)" pytest tests/docker-stacks-foundation/test_outdated.py
 check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check all the stacks for outdated packages
 
 
@@ -68,9 +69,9 @@ linkcheck-docs: ## check broken links
 
 
 hook/%: ## run post-build hooks for an image
-	python3 -m tagging.write_tags_file --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --owner "$(OWNER)" && \
-	python3 -m tagging.write_manifest --short-image-name "$(notdir $@)" --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/ --owner "$(OWNER)" && \
-	python3 -m tagging.apply_tags --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --platform "$(shell uname -m)" --owner "$(OWNER)"
+	python3 -m tagging.write_tags_file --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --registry "$(REGISTRY)" --owner "$(OWNER)" && \
+	python3 -m tagging.write_manifest --short-image-name "$(notdir $@)" --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/ --registry "$(REGISTRY)" --owner "$(OWNER)" && \
+	python3 -m tagging.apply_tags --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --platform "$(shell uname -m)" --registry "$(REGISTRY)" --owner "$(OWNER)"
 hook-all: $(foreach I, $(ALL_IMAGES), hook/$(I)) ## run post-build hooks for all images
 
 
@@ -79,9 +80,11 @@ img-clean: img-rm-dang img-rm ## clean dangling and jupyter images
 img-list: ## list jupyter images
 	@echo "Listing $(OWNER) images ..."
 	docker images "$(OWNER)/*"
+	docker images "*/$(OWNER)/*"
 img-rm: ## remove jupyter images
 	@echo "Removing $(OWNER) images ..."
 	-docker rmi --force $(shell docker images --quiet "$(OWNER)/*") 2> /dev/null
+	-docker rmi --force $(shell docker images --quiet "*/$(OWNER)/*") 2> /dev/null
 img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
 	-docker rmi --force $(shell docker images -f "dangling=true" --quiet) 2> /dev/null
@@ -89,21 +92,21 @@ img-rm-dang: ## remove dangling images (tagged None)
 
 
 pull/%: ## pull a jupyter image
-	docker pull "$(OWNER)/$(notdir $@)"
+	docker pull "$(REGISTRY)/$(OWNER)/$(notdir $@)"
 pull-all: $(foreach I, $(ALL_IMAGES), pull/$(I)) ## pull all images
 push/%: ## push all tags for a jupyter image
-	docker push --all-tags "$(OWNER)/$(notdir $@)"
+	docker push --all-tags "$(REGISTRY)/$(OWNER)/$(notdir $@)"
 push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 
 
 run-shell/%: ## run a bash in interactive mode in a stack
-	docker run -it --rm "$(OWNER)/$(notdir $@)" $(SHELL)
+	docker run -it --rm "$(REGISTRY)/$(OWNER)/$(notdir $@)" $(SHELL)
 run-sudo-shell/%: ## run a bash in interactive mode as root in a stack
-	docker run -it --rm --user root "$(OWNER)/$(notdir $@)" $(SHELL)
+	docker run -it --rm --user root "$(REGISTRY)/$(OWNER)/$(notdir $@)" $(SHELL)
 
 
 
 test/%: ## run tests against a stack
-	python3 -m tests.run_tests --short-image-name "$(notdir $@)" --owner "$(OWNER)"
+	python3 -m tests.run_tests --short-image-name "$(notdir $@)" --registry "$(REGISTRY)" --owner "$(OWNER)"
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks

@@ -24,15 +24,14 @@ on:
 
 jobs:
   build-docs:
-    name: Build Sphinx Documentation
     permissions:
       contents: write
-    if: github.repository == 'jupyter/docker-stacks' || github.event_name != 'schedule'
+    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru' || github.event_name != 'schedule'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 

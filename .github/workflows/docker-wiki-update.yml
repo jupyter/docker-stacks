@@ -2,6 +2,9 @@ name: Download build manifests from GitHub artifacts and push them to GitHub wik
 # We're doing everything in one workflow on purpose
 # This way we make sure we don't access wiki pages from several jobs simultaneously
 
+env:
+  PUSH_TO_REGISTRY: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
+
 on:
   workflow_call:
 
@@ -11,11 +14,9 @@ jobs:
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
-        with:
-          platform: x86_64
 
       - name: Download all manifests and history lines 📥
         uses: ./.github/actions/download-manifests
@@ -29,7 +30,7 @@ jobs:
         shell: bash
 
       - name: Checkout Wiki Repo 📃
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: ${{ github.repository }}.wiki
           path: wiki/
@@ -39,8 +40,8 @@ jobs:
         shell: bash
 
       - name: Push Wiki to GitHub 📤
-        if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
-        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4.16.0
+        if: env.PUSH_TO_REGISTRY
+        uses: stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d # v5.0.0
         with:
           commit_message: "Automated wiki publish for ${{ github.sha }}"
           repository: wiki/
