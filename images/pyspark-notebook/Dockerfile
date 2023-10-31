@@ -1,7 +1,8 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+ARG REGISTRY=quay.io
 ARG OWNER=jupyter
-ARG BASE_CONTAINER=$OWNER/scipy-notebook
+ARG BASE_CONTAINER=$REGISTRY/$OWNER/scipy-notebook
 FROM $BASE_CONTAINER
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -73,6 +74,8 @@ USER ${NB_UID}
 # 1. Check out the Spark branch you are on.
 # 2. Find the pandas version in the file spark/dev/infra/Dockerfile.
 RUN mamba install --yes \
+    'grpcio-status' \
+    'grpcio' \
     'pandas=2.0.3' \
     'pyarrow' && \
     mamba clean --all -f -y && \

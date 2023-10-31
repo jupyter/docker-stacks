@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook
+FROM quay.io/jupyter/base-notebook
 
 RUN mamba install --yes 'py-xgboost' && \
     mamba clean --all -f -y && \

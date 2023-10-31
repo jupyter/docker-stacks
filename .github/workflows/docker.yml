@@ -23,6 +23,7 @@ on:
       - "images/**"
       - "!images/*/README.md"
       - "tagging/**"
+      - "!tagging/README.md"
       - "tests/**"
       - "requirements-dev.txt"
   push:
@@ -42,6 +43,7 @@ on:
       - "images/**"
       - "!images/*/README.md"
       - "tagging/**"
+      - "!tagging/README.md"
       - "tests/**"
       - "requirements-dev.txt"
   workflow_dispatch:
@@ -60,7 +62,7 @@ jobs:
       image: docker-stacks-foundation
       platform: aarch64
       runsOn: ARM64
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -78,7 +80,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-foundation]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -97,7 +99,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-base]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-minimal:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -116,7 +118,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-minimal]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-scipy:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -135,7 +137,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-minimal]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-r:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -154,7 +156,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-minimal]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-julia:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -173,6 +175,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-scipy]
+    if: github.repository_owner == 'jupyter'
 
   x86_64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -191,7 +194,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-scipy]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -210,7 +213,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-scipy]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-pyspark:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -229,7 +232,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-pyspark]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-all-spark:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -246,8 +249,8 @@ jobs:
       platform: aarch64
       image: ${{ matrix.image }}
     secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
         image:
@@ -276,7 +279,7 @@ jobs:
         aarch64-pyspark,
         aarch64-all-spark,
       ]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   x86_64-images-tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
@@ -284,8 +287,8 @@ jobs:
       platform: x86_64
       image: ${{ matrix.image }}
     secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
         image:
@@ -320,8 +323,8 @@ jobs:
     with:
       image: ${{ matrix.image }}
     secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
         image:
@@ -338,16 +341,16 @@ jobs:
             all-spark-notebook,
           ]
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: github.repository == 'jupyter/docker-stacks'
+    if: github.repository_owner == 'jupyter'
     permissions:
       contents: write
 
   contributed-recipes:
     uses: ./.github/workflows/contributed-recipes.yml
     needs: [merge-tags]
-    if: github.repository == 'jupyter/docker-stacks' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
+    if: github.repository_owner == 'jupyter' && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')

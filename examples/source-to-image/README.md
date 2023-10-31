@@ -34,13 +34,13 @@ s2i build \
     --scripts-url https://raw.githubusercontent.com/jupyter/docker-stacks/main/examples/source-to-image \
     --context-dir docs/source/examples/Notebook \
     https://github.com/jupyter/notebook \
-    jupyter/minimal-notebook:latest \
+    docker.io/jupyter/minimal-notebook:latest \
     notebook-examples
 ```
 
 This example command will pull down the Git repository <https://github.com/jupyter/notebook>
 and build the image `notebook-examples` using the files contained in the `docs/source/examples/Notebook` directory of that Git repository.
-The base image which the files will be combined with is `jupyter/minimal-notebook:latest`, but you can specify any of the Jupyter Project `docker-stacks` images as the base image.
+The base image which the files will be combined with is `docker.io/jupyter/minimal-notebook:latest`, but you can specify any of the Jupyter Project `docker-stacks` images as the base image.
 
 The resulting image from running the command can be seen by running `docker images` command:
 
@@ -117,7 +117,7 @@ with the extra system packages, and then use that image with the S2I build to co
 The `run` script in this directory is very simple and just runs the notebook application.
 
 ```bash
-exec start-notebook.sh "$@"
+exec start-notebook.py "$@"
 ```
 
 ## Integration with OpenShift
@@ -147,7 +147,7 @@ oc new-app --template jupyter-notebook-quickstart \
     --param APPLICATION_NAME=notebook-examples \
     --param GIT_REPOSITORY_URL=https://github.com/jupyter/notebook \
     --param CONTEXT_DIR=docs/source/examples/Notebook \
-    --param BUILDER_IMAGE=jupyter/minimal-notebook:latest \
+    --param BUILDER_IMAGE=docker.io/jupyter/minimal-notebook:latest \
     --param NOTEBOOK_PASSWORD=mypassword
 ```
 

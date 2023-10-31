@@ -17,7 +17,7 @@ For example:
 docker run -it --rm \
     --user root \
     -e GRANT_SUDO=yes \
-    jupyter/base-notebook
+    quay.io/jupyter/base-notebook
 ```
 
 **You should only enable `sudo` if you trust the user and/or if the container is running on an isolated host.**
@@ -298,7 +298,7 @@ This recipe is not tested and might be broken.
 ```
 
 ```dockerfile
-FROM jupyter/all-spark-notebook
+FROM quay.io/jupyter/all-spark-notebook
 
 # Set env vars for pydoop
 ENV HADOOP_HOME /usr/local/hadoop-2.7.3
@@ -375,14 +375,14 @@ Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/is
 The default security is very good.
 There are use cases, encouraged by containers, where the jupyter container and the system it runs within lie inside the security boundary.
 It is convenient to launch the server without a password or token in these use cases.
-In this case, you should use the `start-notebook.sh` script to launch the server with no token:
+In this case, you should use the `start-notebook.py` script to launch the server with no token:
 
 For JupyterLab:
 
 ```bash
 docker run -it --rm \
-    jupyter/base-notebook \
-    start-notebook.sh --IdentityProvider.token=''
+    quay.io/jupyter/base-notebook \
+    start-notebook.py --IdentityProvider.token=''
 ```
 
 For Jupyter Notebook:
@@ -390,8 +390,8 @@ For Jupyter Notebook:
 ```bash
 docker run -it --rm \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-    jupyter/base-notebook \
-    start-notebook.sh --IdentityProvider.token=''
+    quay.io/jupyter/base-notebook \
+    start-notebook.py --IdentityProvider.token=''
 ```
 
 ## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)
@@ -415,7 +415,7 @@ Please note that the [Delta Lake](https://delta.io/) packages are only available
 By adding the properties to `spark-defaults.conf`, the user no longer needs to enable Delta support in each notebook.
 
 ```dockerfile
-FROM jupyter/pyspark-notebook
+FROM quay.io/jupyter/pyspark-notebook
 
 RUN mamba install --yes 'delta-spark' && \
     mamba clean --all -f -y && \
@@ -446,7 +446,7 @@ This recipe is not tested and might be broken.
 The example below is a Dockerfile to load Source Han Sans with normal weight, usually used for the web.
 
 ```dockerfile
-FROM jupyter/scipy-notebook
+FROM quay.io/jupyter/scipy-notebook
 
 RUN PYV=$(ls "${CONDA_DIR}/lib" | grep ^python) && \
     MPL_DATA="${CONDA_DIR}/lib/${PYV}/site-packages/matplotlib/mpl-data" && \
@@ -477,7 +477,7 @@ and add these options when running `docker`: `-e DISPLAY -v /tmp/.X11-unix:/tmp/
 docker run -it --rm \
     -e DISPLAY \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
-    jupyter/minimal-notebook
+    quay.io/jupyter/minimal-notebook
 ```
 
 ## Add ijavascript kernel to container
@@ -489,7 +489,7 @@ This recipe is not tested and might be broken.
 The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
 
 ```dockerfile
-FROM jupyter/scipy-notebook
+FROM quay.io/jupyter/scipy-notebook
 
 # install ijavascript
 RUN npm install -g ijavascript

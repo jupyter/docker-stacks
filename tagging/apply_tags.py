@@ -16,6 +16,7 @@ LOGGER = logging.getLogger(__name__)
 
 def apply_tags(
     short_image_name: str,
+    registry: str,
     owner: str,
     tags_dir: Path,
     platform: str,
@@ -26,7 +27,7 @@ def apply_tags(
     """
     LOGGER.info(f"Tagging image: {short_image_name}")
 
-    image = f"{owner}/{short_image_name}:latest"
+    image = f"{registry}/{owner}/{short_image_name}:latest"
     filename = f"{platform}-{short_image_name}.txt"
     tags = (tags_dir / filename).read_text().splitlines()
 
@@ -61,6 +62,13 @@ if __name__ == "__main__":
         help="Image platform",
     )
     arg_parser.add_argument(
+        "--registry",
+        required=True,
+        type=str,
+        choices=["docker.io", "quay.io"],
+        help="Image registry",
+    )
+    arg_parser.add_argument(
         "--owner",
         required=True,
         help="Owner of the image",
@@ -68,4 +76,6 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
     args.platform = unify_aarch64(args.platform)
 
-    apply_tags(args.short_image_name, args.owner, args.tags_dir, args.platform)
+    apply_tags(
+        args.short_image_name, args.registry, args.owner, args.tags_dir, args.platform
+    )
