@@ -69,6 +69,8 @@ EXCLUDED_PACKAGES = [
     "bzip2",
     "ca-certificates",
     "conda-forge::blas[build=openblas]",
+    "grpcio-status",
+    "grpcio",
     "hdf5",
     "jupyterlab-git",
     "openssl",

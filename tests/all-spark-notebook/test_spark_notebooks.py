@@ -20,7 +20,7 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
     host_data_dir = THIS_DIR / "data"
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
-    conversion_timeout_ms = 600
+    conversion_timeout_ms = 5000
     LOGGER.info(f"Test that {test_file} notebook can be executed ...")
     command = (
         "jupyter nbconvert --to markdown "

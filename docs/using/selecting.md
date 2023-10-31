@@ -20,7 +20,7 @@ The following sections describe these images, including their contents, relation
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/docker-stacks-foundation) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/docker-stacks-foundation/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/docker-stacks-foundation/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/docker-stacks-foundation?tab=tags)
 
 `jupyter/docker-stacks-foundation` is a small image supporting a majority of [options common across all core stacks](common.md).
 It is the basis for all other stacks on which Jupyter-related applications can be built
@@ -46,7 +46,7 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/base-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/base-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/base-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/base-notebook?tab=tags)
 
 `jupyter/base-notebook` adds base Jupyter Applications like JupyterLab, Jupyter Notebook, JupyterHub and NBClassic
 and serves as the basis for all other stacks besides `jupyter/docker-stacks-foundation`.
@@ -71,7 +71,7 @@ The shim `.sh` files will be removed at some future date.
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/minimal-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/minimal-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/minimal-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/minimal-notebook?tab=tags)
 
 `jupyter/minimal-notebook` adds command-line tools useful when working in Jupyter applications.
 
@@ -91,7 +91,7 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/r-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/r-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/r-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/t-notebook?tab=tags)
 
 `jupyter/r-notebook` includes popular packages from the R ecosystem listed below:
 
@@ -122,7 +122,7 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/julia-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/julia-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/julia-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/julia-notebook?tab=tags)
 
 `jupyter/julia-notebook` includes popular packages from the Julia ecosystem listed below:
 
@@ -136,7 +136,7 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/scipy-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/scipy-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/scipy-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/scipy-notebook?tab=tags)
 
 `jupyter/scipy-notebook` includes popular packages from the scientific Python ecosystem.
 
@@ -180,7 +180,7 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/tensorflow-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/tensorflow-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/tensorflow-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/tensorflow-notebook?tab=tags)
 
 `jupyter/tensorflow-notebook` includes popular Python deep learning libraries.
 
@@ -191,7 +191,7 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/datascience-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/datascience-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/datascience-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/datascience-notebook?tab=tags)
 
 `jupyter/datascience-notebook` includes libraries for data analysis from the Python, and R, and Julia communities.
 
@@ -203,19 +203,21 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pyspark-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pyspark-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/pyspark-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/pyspark-notebook?tab=tags)
 
 `jupyter/pyspark-notebook` includes Python support for Apache Spark.
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [Apache Spark](https://spark.apache.org/) with Hadoop binaries
-- [pyarrow](https://arrow.apache.org/docs/python/) library
+- [grpcio-status](https://github.com/grpc/grpc/tree/master/src/python/grpcio_status)
+- [grpcio](https://grpc.io/docs/languages/python/quickstart/)
+- [pyarrow](https://arrow.apache.org/docs/python/)
 
 ### jupyter/all-spark-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/all-spark-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/all-spark-notebook/Dockerfile) |
-[Docker Hub image tags](https://hub.docker.com/r/jupyter/all-spark-notebook/tags/)
+[Quay.io image tags](https://quay.io/repository/jupyter/all-spark-notebook?tab=tags)
 
 `jupyter/all-spark-notebook` includes Python and R support for Apache Spark.
 
@@ -236,7 +238,7 @@ diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=d
 
 ### Builds
 
-Every Monday and whenever a pull request is merged, images are rebuilt and pushed to [the public container registry](https://hub.docker.com/u/jupyter).
+Every Monday and whenever a pull request is merged, images are rebuilt and pushed to [the public container registry](https://quay.io/organization/jupyter).
 
 ### Versioning via image tags
 
@@ -249,7 +251,8 @@ Whenever a docker image is pushed to the container registry, it is tagged with:
 - a set of software version tags like `python-3.10.8` and `lab-3.5.3`
 
 ```{warning}
-- Tags before `2022-07-05` were sometimes incorrect. Please, do not rely on them.
+- Tags before `2022-07-05` were sometimes incorrect.
+  Please, do not rely on them.
 - Single-platform images have either `aarch64` or `x86_64` tag prefixes, for example, `jupyter/base-notebook:aarch64-python-3.10.5`
 ```
 

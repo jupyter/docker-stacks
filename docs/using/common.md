@@ -15,14 +15,14 @@ You can pass [Jupyter Server options](https://jupyter-server.readthedocs.io/en/l
    you can run the following (this hash was generated for the `my-password` password):
 
    ```bash
-   docker run -it --rm -p 8888:8888 jupyter/base-notebook \
+   docker run -it --rm -p 8888:8888 quay.io/jupyter/base-notebook \
        start-notebook.py --PasswordIdentityProvider.hashed_password='argon2:$argon2id$v=19$m=10240,t=10,p=8$JdAN3fe9J45NvK/EPuGCvA$O/tbxglbwRpOFuBNTYrymAEH6370Q2z+eS1eF4GM6Do'
    ```
 
 2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the Jupyter Server, you can run the following:
 
    ```bash
-   docker run  -it --rm -p 8888:8888 jupyter/base-notebook \
+   docker run  -it --rm -p 8888:8888 quay.io/jupyter/base-notebook \
        start-notebook.py --ServerApp.base_url=/customized/url/prefix/
    ```
 
@@ -49,7 +49,7 @@ You do so by passing arguments to the `docker run` command.
       -e NB_USER="my-username" \
       -e CHOWN_HOME=yes \
       -w "/home/my-username" \
-      jupyter/base-notebook
+      quay.io/jupyter/base-notebook
   ```
 
 - `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
@@ -146,7 +146,7 @@ For example, to mount a host folder containing a `notebook.key` and `notebook.cr
 ```bash
 docker run -it --rm -p 8888:8888 \
     -v /some/host/folder:/etc/ssl/notebook \
-    jupyter/base-notebook \
+    quay.io/jupyter/base-notebook \
     start-notebook.py \
     --ServerApp.keyfile=/etc/ssl/notebook/notebook.key \
     --ServerApp.certfile=/etc/ssl/notebook/notebook.crt
@@ -158,7 +158,7 @@ For example:
 ```bash
 docker run -it --rm -p 8888:8888 \
     -v /some/host/folder/notebook.pem:/etc/ssl/notebook.pem \
-    jupyter/base-notebook \
+    quay.io/jupyter/base-notebook \
     start-notebook.py \
     --ServerApp.certfile=/etc/ssl/notebook.pem
 ```
@@ -207,14 +207,14 @@ Example:
 docker run -it --rm \
     -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
-    jupyter/base-notebook
+    quay.io/jupyter/base-notebook
 # Executing the command: jupyter notebook ...
 
 # Use Jupyter NBClassic frontend
 docker run -it --rm \
     -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
-    jupyter/base-notebook
+    quay.io/jupyter/base-notebook
 # Executing the command: jupyter nbclassic ...
 ```
 
@@ -225,7 +225,7 @@ The `start.sh` script supports all the features described above but allows you t
 For example, to run the text-based `ipython` console in a container, do the following:
 
 ```bash
-docker run -it --rm jupyter/base-notebook start.sh ipython
+docker run -it --rm quay.io/jupyter/base-notebook start.sh ipython
 ```
 
 This script is handy when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.

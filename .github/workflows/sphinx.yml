@@ -26,7 +26,7 @@ jobs:
   build-docs:
     permissions:
       contents: write
-    if: github.repository == 'jupyter/docker-stacks' || github.event_name != 'schedule'
+    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru' || github.event_name != 'schedule'
     runs-on: ubuntu-latest
 
     steps:
