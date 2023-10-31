@@ -43,7 +43,7 @@ jobs:
           echo PUSH_TO_REGISTRY is ${{ env.PUSH_TO_REGISTRY }}
 
       - name: Login to Registry 🔐
-        if: env.PUSH_TO_REGISTRY
+        if: env.PUSH_TO_REGISTRY == 'true'
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: quay.io
@@ -59,6 +59,6 @@ jobs:
         run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
 
       - name: Push Images to Registry 📤
-        if: env.PUSH_TO_REGISTRY
+        if: env.PUSH_TO_REGISTRY == 'true'
         run: docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
         shell: bash

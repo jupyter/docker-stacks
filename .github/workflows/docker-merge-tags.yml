@@ -48,7 +48,7 @@ jobs:
         shell: bash
 
       - name: Login to Registry 🔐
-        if: env.PUSH_TO_REGISTRY
+        if: env.PUSH_TO_REGISTRY == 'true'
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: quay.io
@@ -56,6 +56,6 @@ jobs:
           password: ${{ secrets.REGISTRY_TOKEN }}
 
       - name: Merge tags for the images 🔀
-        if: env.PUSH_TO_REGISTRY
+        if: env.PUSH_TO_REGISTRY == 'true'
         run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/
         shell: bash
