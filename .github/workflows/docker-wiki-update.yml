@@ -3,7 +3,7 @@ name: Download build manifests from GitHub artifacts and push them to GitHub wik
 # This way we make sure we don't access wiki pages from several jobs simultaneously
 
 env:
-  PUSH_TO_REGISTRY: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && (github.ref == 'refs/heads/main' || github.event_name == 'schedule')
+  PUSH_TO_REGISTRY: ${{ (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && (github.ref == 'refs/heads/main' || github.event_name == 'schedule') }}
 
 on:
   workflow_call:
