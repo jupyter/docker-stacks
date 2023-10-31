@@ -1,9 +1,10 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-ARG REGISTRY=quay.io
-ARG OWNER=jupyter
-ARG BASE_CONTAINER=$REGISTRY/$OWNER/base-notebook
-FROM $BASE_CONTAINER
+ARG QBRAID_DOCKER_REGISTRY=us-central1-docker.pkg.dev/qbraid-lab-gke
+# Use a default image unless a different one is specified at build using --build-arg
+ARG BASE_ARTIFACT_REGISTRY=staging-qbraid
+ARG BASE_IMAGE_GCP=lab-foundation-base:latest
+FROM $QBRAID_DOCKER_REGISTRY/$BASE_ARTIFACT_REGISTRY/$BASE_IMAGE_GCP
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
