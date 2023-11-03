@@ -13,7 +13,9 @@ def quoted_output(container: Container, cmd: str) -> str:
     return "\n".join(
         [
             "```",
-            DockerRunner.run_simple_command(container, cmd, print_result=False),
+            DockerRunner.run_simple_command(container, cmd, print_result=False).strip(
+                "\n"
+            ),
             "```",
         ]
     )
@@ -46,11 +48,12 @@ class ManifestHeader:
                 "",
                 "## Build Info",
                 "",
-                f"* Build datetime: {build_timestamp}",
-                f"* Docker image: `{registry}/{owner}/{short_image_name}:{commit_hash_tag}`",
-                f"* Docker image size: {image_size}",
-                f"* Git commit SHA: [{commit_hash}](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
-                "* Git commit message:",
+                f"- Build datetime: {build_timestamp}",
+                f"- Docker image: `{registry}/{owner}/{short_image_name}:{commit_hash_tag}`",
+                f"- Docker image size: {image_size}",
+                f"- Git commit SHA: [{commit_hash}](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
+                "- Git commit message:",
+                "",
                 "```",
                 f"{commit_message}",
                 "```",
@@ -73,9 +76,13 @@ class CondaEnvironmentManifest(ManifestInterface):
             [
                 "## Python Packages",
                 "",
-                quoted_output(container, "python --version"),
+                DockerRunner.run_simple_command(container, "python --version"),
+                "",
+                "`mamba info --quiet`:",
                 "",
                 quoted_output(container, "mamba info --quiet"),
+                "",
+                "`mamba list`:",
                 "",
                 quoted_output(container, "mamba list"),
             ]
@@ -88,6 +95,8 @@ class AptPackagesManifest(ManifestInterface):
         return "\n".join(
             [
                 "## Apt Packages",
+                "",
+                "`apt list --installed`:",
                 "",
                 quoted_output(container, "apt list --installed"),
             ]
