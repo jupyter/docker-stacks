@@ -23,6 +23,7 @@ jobs:
         with:
           histLineDir: /tmp/jupyter/hist_lines/
           manifestDir: /tmp/jupyter/manifests/
+          fastBuild: ${{ contains(github.event.pull_request.title, '[FAST_BUILD]') }}
       - name: Display structure of downloaded files 🔍️
         run: |
           ls -R /tmp/jupyter/hist_lines/
