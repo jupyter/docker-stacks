@@ -14,6 +14,10 @@ inputs:
     description: Directory to store manifest files
     required: true
     type: string
+  fastBuild:
+    description: Only build docker-stacks-foundation and base-notebook
+    required: true
+    type: bool
 
 runs:
   using: composite
@@ -40,81 +44,97 @@ runs:
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: minimal-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: minimal-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: scipy-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: scipy-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: r-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: r-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: julia-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: julia-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: tensorflow-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: tensorflow-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: datascience-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: datascience-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: pyspark-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: pyspark-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: all-spark-notebook-aarch64-history_line
         path: ${{ inputs.histLineDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: all-spark-notebook-x86_64-history_line
         path: ${{ inputs.histLineDir }}
@@ -141,71 +161,85 @@ runs:
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: minimal-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: minimal-notebook-x86_64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: scipy-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: scipy-notebook-x86_64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: r-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: r-notebook-x86_64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: tensorflow-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: tensorflow-notebook-x86_64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: datascience-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: datascience-notebook-x86_64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: pyspark-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: pyspark-notebook-x86_64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: all-spark-notebook-aarch64-manifest
         path: ${{ inputs.manifestDir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: ${{ !inputs.fastBuild }}
       with:
         name: all-spark-notebook-x86_64-manifest
         path: ${{ inputs.manifestDir }}
