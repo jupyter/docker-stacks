@@ -97,14 +97,14 @@ def run_source_in_dir(
     )
 
 
-def test_run_hooks_with_files(container: TrackedContainer) -> None:
+def test_run_hooks_executables(container: TrackedContainer) -> None:
     logs = run_source_in_dir(
         container,
-        subdir="run-hooks-data",
+        subdir="run-hooks-executables",
         command_suffix="&& echo SOME_VAR is ${SOME_VAR}",
     )
 
-    assert "Executable python file was successfully" in logs
+    assert "Executable python file was successfully run" in logs
     assert "Ignoring non-executable: /home/jovyan/data-copy/non_executable.py" in logs
     assert "SOME_VAR is 123" in logs
 
