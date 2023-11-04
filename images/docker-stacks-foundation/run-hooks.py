@@ -14,7 +14,7 @@ from pathlib import PosixPath
 from textwrap import dedent
 
 
-def source(path: PosixPath):
+def source(path: PosixPath) -> None:
     """
     Emulate the bash `source` command accurately
 
