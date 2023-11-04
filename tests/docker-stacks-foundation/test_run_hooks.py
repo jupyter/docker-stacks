@@ -135,3 +135,13 @@ def test_run_hooks_unset(container: TrackedContainer) -> None:
     assert "Inside b.sh MY_VAR variable has 123 value" in logs
     assert "Unsetting MY_VAR" in logs
     assert "Inside c.sh MY_VAR variable has  value" in logs
+
+
+def test_run_hooks_change(container: TrackedContainer) -> None:
+    logs = run_source_in_dir(container, subdir="run-hooks-change")
+
+    assert "Inside a.sh MY_VAR variable has 123 value" in logs
+    assert "Inside b.sh MY_VAR variable has 123 value" in logs
+    assert "Changing value of MY_VAR" in logs
+    assert "After change inside b.sh MY_VAR variable has 456 value" in logs
+    assert "Inside c.sh MY_VAR variable has 456 value" in logs
