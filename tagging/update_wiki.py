@@ -10,7 +10,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 def update_home_wiki_page(wiki_dir: Path, month: str) -> None:
-    TABLE_BEGINNING = "| - | - |\n"
+    TABLE_BEGINNING = """\
+| Month | File |
+| - | - |
+"""
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
     month_line = f"| `{month}` | [`link`](./{month}) |\n"
@@ -19,7 +22,7 @@ def update_home_wiki_page(wiki_dir: Path, month: str) -> None:
             TABLE_BEGINNING, TABLE_BEGINNING + month_line
         )
         wiki_home_file.write_text(wiki_home_content)
-        LOGGER.info("Wiki home file updated")
+        LOGGER.info(f"Wiki home file updated with month: {month}")
 
 
 def update_monthly_wiki_page(
@@ -33,8 +36,8 @@ def update_monthly_wiki_page(
 """
     monthly_page = wiki_dir / (month + ".md")
     if not monthly_page.exists():
-        LOGGER.info("Creating monthly page")
         monthly_page.write_text(MONTHLY_PAGE_HEADER)
+        LOGGER.info(f"Created monthly page: {month}")
 
     monthly_page_content = monthly_page.read_text().replace(
         MONTHLY_PAGE_HEADER, MONTHLY_PAGE_HEADER + build_history_line + "\n"
