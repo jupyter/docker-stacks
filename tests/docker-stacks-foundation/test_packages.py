@@ -24,15 +24,14 @@ Example:
     $ make test/base-notebook
 
     # [...]
-    # test/test_packages.py::test_python_packages
     # tests/base-notebook/test_packages.py::test_python_packages
     # ---------------------------------------------------------------------------------------------- live log setup ----------------------------------------------------------------------------------------------
-    # 2022-02-17 16:44:36 [    INFO] Starting container jupyter/base-notebook ... (package_helper.py:55)
-    # 2022-02-17 16:44:36 [    INFO] Running jupyter/base-notebook with args {'detach': True, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:95)
-    # 2022-02-17 16:44:37 [    INFO] Grabbing the list of manually requested packages ... (package_helper.py:83)
+    # 2023-11-04 23:59:01 [    INFO] Starting container quay.io/jupyter/base-notebook ... (package_helper.py:55)
+    # 2023-11-04 23:59:01 [    INFO] Running quay.io/jupyter/base-notebook with args {'detach': True, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:99)
+    # 2023-11-04 23:59:01 [    INFO] Grabbing the list of manually requested packages ... (package_helper.py:83)
     # ---------------------------------------------------------------------------------------------- live log call -----------------------------------------------------------------------------------------------
-    # 2022-02-17 16:44:38 [    INFO] Testing the import of packages ... (test_packages.py:144)
-    # 2022-02-17 16:44:38 [    INFO] Trying to import mamba (test_packages.py:146)
+    # 2023-11-04 23:59:02 [    INFO] Testing the import of packages ... (test_packages.py:152)
+    # 2023-11-04 23:59:02 [    INFO] Trying to import mamba (test_packages.py:154)
     # [...]
 
 """
