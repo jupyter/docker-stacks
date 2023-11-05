@@ -108,12 +108,14 @@ from tagging.manifests import ManifestInterface, quoted_output
 class AptPackagesManifest(ManifestInterface):
     @staticmethod
     def markdown_piece(container) -> str:
-        return "\n".join(
-            ["## Apt Packages", "", quoted_output(container, "apt list --installed")]
-        )
+        return f"""\
+## Apt Packages
+
+{quoted_output(container, "apt list --installed")}"""
 ```
 
 - `quoted_output` simply runs the command inside a container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece.
+  It also adds the command which was run to the markdown piece.
 - `manifests.py` contains all the manifests.
 - `write_manifest.py` is a python executable which is used to create the build manifest and history line for an image.
 
