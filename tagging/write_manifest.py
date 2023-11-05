@@ -43,7 +43,7 @@ def write_build_history_line(
             f"[Build manifest](./{filename})",
         ]
     )
-    build_history_line = "|".join([date_column, image_column, links_column]) + "|"
+    build_history_line = f"| {date_column} | {image_column} | {links_column} |"
     hist_line_dir.mkdir(parents=True, exist_ok=True)
     (hist_line_dir / f"{filename}.txt").write_text(build_history_line)
 
