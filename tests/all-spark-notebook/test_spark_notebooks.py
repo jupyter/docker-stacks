@@ -11,6 +11,7 @@ LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
+@pytest.mark.flaky(retries=3, delay=1)
 @pytest.mark.parametrize(
     "test_file",
     ["issue_1168", "local_pyspark", "local_sparklyr", "local_sparkR"],

@@ -91,7 +91,7 @@ It contains:
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/r-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/r-notebook/Dockerfile) |
-[Quay.io image tags](https://quay.io/repository/jupyter/t-notebook?tab=tags)
+[Quay.io image tags](https://quay.io/repository/jupyter/r-notebook?tab=tags)
 
 `jupyter/r-notebook` includes popular packages from the R ecosystem listed below:
 
