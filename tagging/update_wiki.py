@@ -11,8 +11,8 @@ LOGGER = logging.getLogger(__name__)
 
 def update_home_wiki_page(wiki_dir: Path, month: str) -> None:
     TABLE_BEGINNING = """\
-| Month | File |
-| - | - |
+| Month |
+| - |
 """
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
