@@ -16,7 +16,7 @@ def update_home_wiki_page(wiki_dir: Path, month: str) -> None:
 """
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
-    month_line = f"| `{month}` | [`link`](./{month}) |\n"
+    month_line = f"| [`{month}`](./{month}) |\n"
     if month_line not in wiki_home_content:
         wiki_home_content = wiki_home_content.replace(
             TABLE_BEGINNING, TABLE_BEGINNING + month_line
