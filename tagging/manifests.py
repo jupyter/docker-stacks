@@ -12,7 +12,7 @@ docker = plumbum.local["docker"]
 def quoted_output(container: Container, cmd: str) -> str:
     return "\n".join(
         [
-            "```",
+            "```text",
             DockerRunner.run_simple_command(container, cmd, print_result=False).strip(
                 "\n"
             ),
@@ -54,7 +54,7 @@ class ManifestHeader:
                 f"- Git commit SHA: [{commit_hash}](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
                 "- Git commit message:",
                 "",
-                "```",
+                "```text",
                 f"{commit_message}",
                 "```",
             ]
