@@ -16,6 +16,8 @@ def quoted_output(container: Container, cmd: str) -> str:
     # For example, R packages list contains trailing backspaces
     cmd_output = "\n".join(line.rstrip() for line in cmd_output.split("\n"))
     return f"""\
+`{cmd}`:
+
 ```text
 {cmd_output}
 ```"""
@@ -74,11 +76,7 @@ class CondaEnvironmentManifest(ManifestInterface):
 
 {DockerRunner.run_simple_command(container, "python --version")}
 
-`mamba info --quiet`:
-
 {quoted_output(container, "mamba info --quiet")}
-
-`mamba list`:
 
 {quoted_output(container, "mamba list")}"""
 
@@ -88,8 +86,6 @@ class AptPackagesManifest(ManifestInterface):
     def markdown_piece(container: Container) -> str:
         return f"""\
 ## Apt Packages
-
-`apt list --installed`:
 
 {quoted_output(container, "apt list --installed")}"""
 
