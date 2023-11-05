@@ -5,11 +5,9 @@ inputs:
   image:
     description: Image name
     required: true
-    type: string
   platform:
     description: Image platform
     required: true
-    type: string
 
 runs:
   using: composite

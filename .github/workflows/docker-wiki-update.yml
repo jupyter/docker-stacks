@@ -21,9 +21,9 @@ jobs:
       - name: Download all manifests and history lines 📥
         uses: ./.github/actions/download-manifests
         with:
-          histLineDir: /tmp/jupyter/hist_lines/
-          manifestDir: /tmp/jupyter/manifests/
-          fastBuild: ${{ contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+          hist-line-dir: /tmp/jupyter/hist_lines/
+          manifest-dir: /tmp/jupyter/manifests/
+          fast-build: ${{ contains(github.event.pull_request.title, '[FAST_BUILD]') }}
       - name: Display structure of downloaded files 🔍️
         run: |
           ls -R /tmp/jupyter/hist_lines/
