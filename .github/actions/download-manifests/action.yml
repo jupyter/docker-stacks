@@ -17,7 +17,7 @@ inputs:
   fastBuild:
     description: Only build docker-stacks-foundation and base-notebook
     required: true
-    type: bool
+    type: boolean
 
 runs:
   using: composite
