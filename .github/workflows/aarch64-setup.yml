@@ -26,8 +26,5 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 
-      - name: Debug
-        run: echo "${GITHUB_ACTIONS}"
-
       - name: Run setup script ✅
         run: sudo ./aarch64-runner/setup.sh
