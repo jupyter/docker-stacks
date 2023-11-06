@@ -43,7 +43,7 @@ def update_monthly_wiki_page(
         MONTHLY_PAGE_HEADER, MONTHLY_PAGE_HEADER + build_history_line + "\n"
     )
     monthly_page.write_text(monthly_page_content)
-    LOGGER.info(f"Updated monthly page: {month}")
+    LOGGER.info(f"Updated monthly page: {monthly_page.relative_to(wiki_dir)}")
 
 
 def get_manifest_timestamp(manifest_file: Path) -> str:
