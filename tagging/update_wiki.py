@@ -75,6 +75,7 @@ def update_wiki(wiki_dir: Path, hist_line_dir: Path, manifest_dir: Path) -> None
     for manifest_file in manifest_dir.glob("*.md"):
         month = get_manifest_month(manifest_file)
         copy_to = wiki_dir / "manifests" / month / manifest_file.name
+        copy_to.parent.mkdir(exist_ok=True)
         shutil.copy(manifest_file, copy_to)
         LOGGER.info(f"Added manifest file: {copy_to.relative_to(wiki_dir)}")
 
