@@ -204,6 +204,7 @@ jobs:
       platform: aarch64
       runsOn: ARM64
     needs: [aarch64-tensorflow]
+    if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   x86_64-deep-learning:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -213,6 +214,7 @@ jobs:
       platform: x86_64
       runsOn: ubuntu-latest
     needs: [x86_64-tensorflow]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
