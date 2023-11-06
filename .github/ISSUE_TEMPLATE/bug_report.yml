@@ -22,10 +22,10 @@ body:
         - all-spark-notebook
         - base-notebook
         - datascience-notebook
-        - ml-notebook
         - docker-stacks-foundation
         - julia-notebook
         - minimal-notebook
+        - ml-notebook
         - pyspark-notebook
         - r-notebook
         - scipy-notebook
