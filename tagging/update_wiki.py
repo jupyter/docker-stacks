@@ -34,10 +34,10 @@ def update_monthly_wiki_page(
 | Date | Image | Links |
 | - | - | - |
 """
-    monthly_page = wiki_dir / (month + ".md")
+    monthly_page = wiki_dir / "monthly-files" / (month + ".md")
     if not monthly_page.exists():
         monthly_page.write_text(MONTHLY_PAGE_HEADER)
-        LOGGER.info(f"Created monthly page: {month}")
+        LOGGER.info(f"Created monthly page: {monthly_page.relative_to(wiki_dir)}")
 
     monthly_page_content = monthly_page.read_text().replace(
         MONTHLY_PAGE_HEADER, MONTHLY_PAGE_HEADER + build_history_line + "\n"
