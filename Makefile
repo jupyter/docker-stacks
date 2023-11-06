@@ -17,7 +17,7 @@ ALL_IMAGES:= \
 	julia-notebook \
 	scipy-notebook \
 	tensorflow-notebook \
-	deep-learning-notebook \
+	ml-notebook \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook

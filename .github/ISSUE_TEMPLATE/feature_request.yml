@@ -20,7 +20,7 @@ body:
         - all-spark-notebook
         - base-notebook
         - datascience-notebook
-        - deep-learning-notebook
+        - ml-notebook
         - docker-stacks-foundation
         - julia-notebook
         - minimal-notebook

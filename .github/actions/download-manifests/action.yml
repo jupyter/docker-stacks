@@ -103,13 +103,13 @@ runs:
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
-        name: deep-learning-notebook-aarch64-history_line
+        name: ml-notebook-aarch64-history_line
         path: ${{ inputs.hist-line-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
-        name: deep-learning-notebook-x86_64-history_line
+        name: ml-notebook-x86_64-history_line
         path: ${{ inputs.hist-line-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3

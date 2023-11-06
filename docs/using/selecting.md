@@ -187,13 +187,13 @@ It contains:
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [tensorflow](https://www.tensorflow.org/) machine learning library
 
-### jupyter/deep-learning-notebook
+### jupyter/ml-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/deep-learning-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/deep-learning-notebook/Dockerfile) |
-[Quay.io image tags](https://quay.io/repository/jupyter/deep-learning-notebook?tab=tags)
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/ml-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/ml-notebook/Dockerfile) |
+[Quay.io image tags](https://quay.io/repository/jupyter/ml-notebook?tab=tags)
 
-`jupyter/deep-learning-notebook` includes popular Python deep learning libraries.
+`jupyter/ml-notebook` includes popular Python machine learning libraries.
 
 - Everything in `jupyter/tensorflow-notebook` and its ancestor images
 - [pytorch](https://pytorch.org/) machine learning library
@@ -245,7 +245,7 @@ The following diagram depicts the build dependency tree of the core images. (i.e
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFjzFuwzAMRfecQvCUDjpAEaQn6NaOBQraphPWCilIFIIkyN1LZQggo4XX958-9fsgwzwSHNxt49yIE5Sg35OwZrqi27vXnXFJhKygJGwoStIEpLuNRV3pC2v54u3754c7kx4tJ1aXMCBkfOmcf3OjXcHks8IwZz9J4fHRVsv_y-q73ho8i2IvMle5AdU4EdMJQiMtWfXyQPHSWC2pTqfIWdIU5PzkXVX_4I9ViNHbysTEh5Vu2wRGkQdc_WtaNX5KIFi5GC85Qpoba8mqByH4pXn_BcpKu8g)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFjzFuwzAMRfecgvDUDjpAEbQn6NaOBQraphPWDGlIFIK06N0rZSggI4HX95_-F3uxYR4ZD_CzAxhpwiz-OZl64m-CZ3jaF26RSR2dTQtaLHpE9v2uRF3us3r-0IfX9zc4sx9LzuoQSQgTPXYQXmAsKxRDchzmFCbLOl7bavm9rL7rS0NQc-rN5io3oBonVj6hNNKaVS8NvFwaqyXV6Zw0WZzEzv-8q-oNft2WjcJyCBZKOtDmB-Om8ZWFcWNxuaQF49xYa1Y9FAlr8_cPfxi3hg)
 
 ### Builds
 
