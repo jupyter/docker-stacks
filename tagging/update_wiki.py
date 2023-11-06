@@ -22,7 +22,7 @@ def update_home_wiki_page(wiki_dir: Path, month: str) -> None:
             TABLE_BEGINNING, TABLE_BEGINNING + month_line
         )
         wiki_home_file.write_text(wiki_home_content)
-        LOGGER.info(f"Update wiki home page with month: {month}")
+        LOGGER.info(f"Updated wiki home page with month: {month}")
 
 
 def update_monthly_wiki_page(
