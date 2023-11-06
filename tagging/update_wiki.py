@@ -53,7 +53,7 @@ def get_manifest_timestamp(manifest_file: Path) -> str:
 
 
 def get_manifest_month(manifest_file: Path) -> str:
-    return get_manifest_timestamp(manifest_file)[:10]
+    return get_manifest_timestamp(manifest_file)[:7]
 
 
 def remove_old_manifests(wiki_dir: Path) -> None:
