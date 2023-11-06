@@ -42,6 +42,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            deep-learning-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,

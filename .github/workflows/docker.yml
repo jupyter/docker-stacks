@@ -196,6 +196,24 @@ jobs:
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
+  aarch64-deep-learning:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: tensorflow-notebook
+      image: deep-learning-notebook
+      platform: aarch64
+      runsOn: ARM64
+    needs: [aarch64-tensorflow]
+
+  x86_64-deep-learning:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: tensorflow-notebook
+      image: deep-learning-notebook
+      platform: x86_64
+      runsOn: ubuntu-latest
+    needs: [x86_64-tensorflow]
+
   aarch64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -275,6 +293,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            deep-learning-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -288,6 +307,7 @@ jobs:
         aarch64-r,
         aarch64-julia,
         aarch64-tensorflow,
+        aarch64-deep-learning,
         aarch64-datascience,
         aarch64-pyspark,
         aarch64-all-spark,
@@ -327,6 +347,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            deep-learning-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -340,6 +361,7 @@ jobs:
         x86_64-r,
         x86_64-julia,
         x86_64-tensorflow,
+        x86_64-deep-learning,
         x86_64-datascience,
         x86_64-pyspark,
         x86_64-all-spark,
@@ -378,6 +400,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            deep-learning-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
