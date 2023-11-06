@@ -104,14 +104,16 @@ runs:
       if: inputs.fast-build == 'false'
       with:
         name: pytorch-notebook-aarch64-history_line
-        path: ${{ inputs.histLineDir }}
+        path: ${{ inputs.hist-line-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
       with:
         name: pytorch-notebook-x86_64-history_line
-        path: ${{ inputs.histLineDir }}
+        path: ${{ inputs.hist-line-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
       with:
         name: datascience-notebook-aarch64-history_line
         path: ${{ inputs.hist-line-dir }}
@@ -219,14 +221,16 @@ runs:
       if: inputs.fast-build == 'false'
       with:
         name: pytorch-notebook-aarch64-manifest
-        path: ${{ inputs.manifestDir }}
+        path: ${{ inputs.manifest-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
       with:
         name: pytorch-notebook-x86_64-manifest
-        path: ${{ inputs.manifestDir }}
+        path: ${{ inputs.manifest-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
       with:
         name: datascience-notebook-aarch64-manifest
         path: ${{ inputs.manifest-dir }}
