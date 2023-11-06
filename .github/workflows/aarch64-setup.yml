@@ -19,7 +19,7 @@ on:
 jobs:
   test-script:
     # The script itself is not aarch64 specific
-    # Tt is easier to test on ubuntu-latest
+    # It is easier to test on ubuntu-latest
     runs-on: ubuntu-latest
 
     steps:
