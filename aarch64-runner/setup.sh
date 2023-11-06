@@ -14,9 +14,9 @@ apt-get upgrade --yes
 echo "Setting up runner-user, who will run GitHub Actions runner"
 adduser --disabled-password --gecos "" ${GITHUB_RUNNER_USER}
 mkdir /home/${GITHUB_RUNNER_USER}/.ssh/
-set +x
+set +e
 cp "/home/${SUDO_USER}/.ssh/authorized_keys" "/home/${GITHUB_RUNNER_USER}/.ssh/authorized_keys"
-set -x
+set -e
 chown --recursive ${GITHUB_RUNNER_USER}:${GITHUB_RUNNER_USER} /home/${GITHUB_RUNNER_USER}/.ssh
 
 echo "Setting up python3"
