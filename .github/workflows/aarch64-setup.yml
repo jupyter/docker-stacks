@@ -27,5 +27,5 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run tests ✅
-        run: ./aarch64-runner/setup.sh
+        run: sudo ./aarch64-runner/setup.sh
         shell: bash
