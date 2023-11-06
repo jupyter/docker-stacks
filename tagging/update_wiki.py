@@ -97,19 +97,19 @@ if __name__ == "__main__":
         "--wiki-dir",
         required=True,
         type=Path,
-        help="Directory for wiki repo",
+        help="Directory of the wiki repo",
     )
     arg_parser.add_argument(
         "--hist-line-dir",
         required=True,
         type=Path,
-        help="Directory to save history line",
+        help="Directory with history lines",
     )
     arg_parser.add_argument(
         "--manifest-dir",
         required=True,
         type=Path,
-        help="Directory to save manifest file",
+        help="Directory with manifest files",
     )
     args = arg_parser.parse_args()
 

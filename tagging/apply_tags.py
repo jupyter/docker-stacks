@@ -22,8 +22,8 @@ def apply_tags(
     platform: str,
 ) -> None:
     """
-    Tags <owner>/<short_image_name>:latest with the tags
-    reported by all taggers for the given image.
+    Tags <registry>/<owner>/<short_image_name>:latest with the tags reported by all taggers for this image
+    Then removes latest tag
     """
     LOGGER.info(f"Tagging image: {short_image_name}")
 
