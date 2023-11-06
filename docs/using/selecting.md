@@ -189,9 +189,9 @@ It contains:
 
 ### jupyter/deep-learning-notebook
 
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pytorch-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pytorch-notebook/Dockerfile) |
-[Quay.io image tags](https://quay.io/repository/jupyter/pytorch-notebook?tab=tags)
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/deep-learning-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/deep-learning-notebook/Dockerfile) |
+[Quay.io image tags](https://quay.io/repository/jupyter/deep-learning-notebook?tab=tags)
 
 `jupyter/deep-learning-notebook` includes popular Python deep learning libraries.
 
