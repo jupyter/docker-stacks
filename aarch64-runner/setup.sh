@@ -14,7 +14,7 @@ apt-get upgrade --yes
 echo "Setting up runner-user, who will run GitHub Actions runner"
 adduser --disabled-password --gecos "" ${GITHUB_RUNNER_USER}
 mkdir /home/${GITHUB_RUNNER_USER}/.ssh/
-if [[ "${CI}" != "true" ]]; then
+if [[ "${GITHUB_ACTIONS}" != "true" ]]; then
     cp "/home/${SUDO_USER}/.ssh/authorized_keys" "/home/${GITHUB_RUNNER_USER}/.ssh/authorized_keys"
 fi
 chown --recursive ${GITHUB_RUNNER_USER}:${GITHUB_RUNNER_USER} /home/${GITHUB_RUNNER_USER}/.ssh
