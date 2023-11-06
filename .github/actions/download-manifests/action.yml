@@ -104,13 +104,13 @@ runs:
       if: inputs.fast-build == 'false'
       with:
         name: deep-learning-notebook-aarch64-history_line
-        path: ${{ inputs.histLineDir }}
+        path: ${{ inputs.hist-line-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
         name: deep-learning-notebook-x86_64-history_line
-        path: ${{ inputs.histLineDir }}
+        path: ${{ inputs.hist-line-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
@@ -221,13 +221,13 @@ runs:
       if: inputs.fast-build == 'false'
       with:
         name: deep-learning-notebook-aarch64-manifest
-        path: ${{ inputs.histLineDir }}
+        path: ${{ inputs.manifest-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
         name: deep-learning-notebook-x86_64-manifest
-        path: ${{ inputs.histLineDir }}
+        path: ${{ inputs.manifest-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
