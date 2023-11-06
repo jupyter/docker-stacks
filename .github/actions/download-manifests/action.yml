@@ -103,6 +103,18 @@ runs:
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
+        name: deep-learning-notebook-aarch64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
+      with:
+        name: deep-learning-notebook-x86_64-history_line
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
+      with:
         name: datascience-notebook-aarch64-history_line
         path: ${{ inputs.hist-line-dir }}
     - name: Download artifact 📥
@@ -208,6 +220,18 @@ runs:
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
+        name: deep-learning-notebook-aarch64-manifest
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
+      with:
+        name: deep-learning-notebook-x86_64-manifest
+        path: ${{ inputs.histLineDir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
+      with:
         name: datascience-notebook-aarch64-manifest
         path: ${{ inputs.manifest-dir }}
     - name: Download artifact 📥
@@ -240,14 +264,3 @@ runs:
       with:
         name: all-spark-notebook-x86_64-manifest
         path: ${{ inputs.manifest-dir }}
-    - name: Download artifact 📥
-      uses: actions/download-artifact@v3
-      if: inputs.fast-build == 'false'
-      with:
-        name: deep-learning-notebook-aarch64-history_line
-        path: ${{ inputs.histLineDir }}
-    - name: Download artifact 📥
-      uses: actions/download-artifact@v3
-      with:
-        name: deep-learning-notebook-x86_64-history_line
-        path: ${{ inputs.histLineDir }}
