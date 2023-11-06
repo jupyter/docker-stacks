@@ -232,13 +232,13 @@ runs:
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
-        name: deep-learning-notebook-aarch64-manifest
+        name: ml-notebook-aarch64-manifest
         path: ${{ inputs.manifest-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
-        name: deep-learning-notebook-x86_64-manifest
+        name: ml-notebook-x86_64-manifest
         path: ${{ inputs.manifest-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
