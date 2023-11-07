@@ -86,7 +86,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 
 ## Acknowledgments
 
-- Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by amazing [`2i2c project`](https://2i2c.org)
+- Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by amazing [`2i2c non-profit organization`](https://2i2c.org)
 
 ## CPU Architectures
 
