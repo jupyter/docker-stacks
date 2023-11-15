@@ -42,6 +42,7 @@ jobs:
           docker push quay.io/${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
 
     strategy:
+      fail-fast: false
       matrix:
         image:
           [
