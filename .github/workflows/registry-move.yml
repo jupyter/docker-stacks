@@ -57,14 +57,4 @@ jobs:
             pyspark-notebook,
             all-spark-notebook,
           ]
-        tag:
-          [
-            1aac87eb7fa5,
-            a374cab4fcb6,
-            5ae537728c69,
-            f3079808ca8c,
-            b86753318aa1,
-            7285848c0a11,
-            ed2908bbb62e,
-            4d70cf8da953,
-          ]
+        tag: []
