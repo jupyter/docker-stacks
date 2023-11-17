@@ -23,7 +23,6 @@ def apply_tags(
 ) -> None:
     """
     Tags <registry>/<owner>/<short_image_name>:latest with the tags reported by all taggers for this image
-    Then removes latest tag
     """
     LOGGER.info(f"Tagging image: {short_image_name}")
 
@@ -34,9 +33,6 @@ def apply_tags(
     for tag in tags:
         LOGGER.info(f"Applying tag: {tag}")
         docker["tag", image, tag] & plumbum.FG
-
-    LOGGER.info("Removing latest tag from the image")
-    docker["image", "rmi", image] & plumbum.FG
 
 
 if __name__ == "__main__":
