@@ -24,8 +24,10 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 
-      - name: Pull image from Docker Hub 📥
-        run: docker pull ${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
+      - name: Pull single-arch image from Docker Hub 📥
+        run: |
+          docker pull ${{ env.OWNER }}/${{ matrix.image }}:aarch64-${{ matrix.tag }}
+          docker pull ${{ env.OWNER }}/${{ matrix.image }}:x86_64-${{ matrix.tag }}
 
       - name: Login to Quay.io 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
@@ -35,11 +37,23 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_ROBOT_TOKEN }}
 
-      - name: Push image to Quay.io 🐳
+      - name: Push single-user images to Quay.io 🐳
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
-          docker tag ${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }} quay.io/${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
-          docker push quay.io/${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
+          docker tag ${{ env.OWNER }}/${{ matrix.image }}:aarch64-${{ matrix.tag }} quay.io/${{ env.OWNER }}/${{ matrix.image }}:aarch64-${{ matrix.tag }}
+          docker push quay.io/${{ env.OWNER }}/${{ matrix.image }}:aarch64-${{ matrix.tag }}
+
+          docker tag ${{ env.OWNER }}/${{ matrix.image }}:x86_64-${{ matrix.tag }} quay.io/${{ env.OWNER }}/${{ matrix.image }}:x86_64-${{ matrix.tag }}
+          docker push quay.io/${{ env.OWNER }}/${{ matrix.image }}:x86_64-${{ matrix.tag }}
+
+      - name: Merge single-user images to create multi-arch image 🐳
+        if: env.PUSH_TO_REGISTRY == 'true'
+        run: |
+          docker manifest create quay.io/${{ env.OWNER }}/${{ matrix.image }} \
+            quay.io/${{ env.OWNER }}/${{ matrix.image }}:aarch64-${{ matrix.tag }} \
+            quay.io/${{ env.OWNER }}/${{ matrix.image }}:x86_64-${{ matrix.tag }}
+
+          docker manifest push quay.io/${{ env.OWNER }}/${{ matrix.image }}
 
     strategy:
       fail-fast: false
