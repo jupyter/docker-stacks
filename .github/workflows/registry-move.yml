@@ -24,6 +24,9 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 
+      - name: Install skopeo 📦
+        run: sudo apt-get update && sudo apt-get install --yes skopeo
+
       - name: Login to Quay.io 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
@@ -31,9 +34,6 @@ jobs:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_ROBOT_TOKEN }}
-
-      - name: Install skopeo 📦
-        run: sudo apt-get update && sudo apt-get install --yes skopeo
 
       - name: Move image from Docker Hub to Quay.io 🐳
         if: env.PUSH_TO_REGISTRY == 'true'
