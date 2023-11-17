@@ -54,7 +54,7 @@ jobs:
         run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
       # This step is needed to prevent pushing non-multiarch "latest" tag
       - name: Remove "latest" tag from the image 🗑️
-        run: docker image rmi image ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest"
+        run: docker image rmi image ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest
 
       - name: Push Images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
