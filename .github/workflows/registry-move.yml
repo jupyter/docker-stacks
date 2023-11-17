@@ -38,8 +38,6 @@ jobs:
       - name: Move image from Docker Hub to Quay.io 🐳
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
-          skopeo copy docker://${{ env.OWNER }}/${{ matrix.image }}:aarch64-${{ matrix.tag }} docker://quay.io/${{ env.OWNER }}/${{ matrix.image }}:aarch64-${{ matrix.tag }}
-          skopeo copy docker://${{ env.OWNER }}/${{ matrix.image }}:x86_64-${{ matrix.tag }} docker://quay.io/${{ env.OWNER }}/${{ matrix.image }}:x86_64-${{ matrix.tag }}
           skopeo copy --multi-arch all docker://${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }} docker://quay.io/${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
 
     strategy:
