@@ -25,8 +25,10 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 
-      - name: Install skopeo 📦
-        run: brew install skopeo
+      - name: Install skopeo and Docker 📦
+        run: |
+          brew install skopeo
+          brew install --cask docker
 
       - name: Login to Quay.io 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
