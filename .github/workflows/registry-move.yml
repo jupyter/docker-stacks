@@ -17,29 +17,27 @@ on:
 
 jobs:
   update-overview:
-    runs-on: ubuntu-latest
+    # To be able to use latest skopeo
+    runs-on: macos-latest
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 
-      - name: Pull image from Docker Hub 📥
-        run: docker pull ${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
+      - name: Install skopeo and Docker 📦
+        run: |
+          brew install skopeo
+          brew install --cask docker
 
       - name: Login to Quay.io 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
-        with:
-          registry: quay.io
-          username: ${{ secrets.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_ROBOT_TOKEN }}
+        run: skopeo login quay.io --username ${{ secrets.QUAY_USERNAME }} --password ${{ secrets.QUAY_ROBOT_TOKEN }}
 
-      - name: Push image to Quay.io 🐳
+      - name: Move image from Docker Hub to Quay.io 🐳
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
-          docker tag ${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }} quay.io/${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
-          docker push quay.io/${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
+          skopeo copy --multi-arch all docker://${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }} docker://quay.io/${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
 
     strategy:
       fail-fast: false
@@ -57,4 +55,14 @@ jobs:
             pyspark-notebook,
             all-spark-notebook,
           ]
-        tag: [4d70cf8da953]
+        tag:
+          [
+            1aac87eb7fa5,
+            a374cab4fcb6,
+            5ae537728c69,
+            f3079808ca8c,
+            b86753318aa1,
+            7285848c0a11,
+            ed2908bbb62e,
+            4d70cf8da953,
+          ]
