@@ -196,6 +196,18 @@ runs:
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
+        name: julia-notebook-aarch64-manifest
+        path: ${{ inputs.manifest-dir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
+      with:
+        name: julia-notebook-x86_64-manifest
+        path: ${{ inputs.manifest-dir }}
+    - name: Download artifact 📥
+      uses: actions/download-artifact@v3
+      if: inputs.fast-build == 'false'
+      with:
         name: tensorflow-notebook-aarch64-manifest
         path: ${{ inputs.manifest-dir }}
     - name: Download artifact 📥
