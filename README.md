@@ -25,13 +25,18 @@ and want to launch a single Jupyter Application in a container.
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) describes additional uses and features in detail.
 
+```{note}
+Since `2023-10-20` our images are only pushed to `Quay.io` registry.
+Older images are available on Docker Hub, but they will no longer be updated.
+```
+
 ### Example 1
 
-This command pulls the `jupyter/scipy-notebook` image tagged `2023-10-31` from Quay.io if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `2023-11-17` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the container's internal port `8888` to port `10000` of the host machine:
 
 ```bash
-docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2023-10-31
+docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2023-11-17
 ```
 
 You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) to `-p 8888:8888`.
@@ -46,11 +51,11 @@ The container remains intact for restart after the Server exits.
 
 ### Example 2
 
-This command pulls the `jupyter/datascience-notebook` image tagged `2023-10-31` from Quay.io if it is not already present on the local host.
+This command pulls the `jupyter/datascience-notebook` image tagged `2023-11-17` from Quay.io if it is not already present on the local host.
 It then starts an _ephemeral_ container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/datascience-notebook:2023-10-31
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/datascience-notebook:2023-11-17
 ```
 
 The use of the `-v` flag in the command mounts the current working directory on the host (`${PWD}` in the example command) as `/home/jovyan/work` in the container.
@@ -66,7 +71,7 @@ system when the container exits, but any changes made to the `~/work` directory 
 By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
 So, new notebooks will be saved there, unless you change the directory in the file browser.
 
-To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
+To change the default directory, you must specify `ServerApp.root_dir` by adding this line to the previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
 ```
 
 ## Choosing Jupyter frontend
@@ -84,34 +89,38 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - [Jupyter Website](https://jupyter.org)
 - [Images on Quay.io](https://quay.io/organization/jupyter)
 
+## Acknowledgments
+
+- Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by amazing [`2i2c non-profit organization`](https://2i2c.org)
+
 ## CPU Architectures
 
 - We publish containers for both `x86_64` and `aarch64` platforms
 - Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `quay.io/jupyter/base-notebook:aarch64-python-3.10.5`
 - Starting from `2022-09-21`, we create multi-platform images (except `tensorflow-notebook`)
-- Starting from `2023-06-01`, we create multi-platform `tensorflow-notebook` image as well
+- Starting from `2023-06-01`, we create a multi-platform `tensorflow-notebook` image as well
 
 ## Using old images
 
 This project only builds one set of images at a time.
-If you want to use older `Ubuntu` and/or `python` version, you can use following images:
+If you want to use the older `Ubuntu` and/or `python` version, you can use the following images:
 
-| Build Date   | Ubuntu | Python | Registry  | Tag            |
-| ------------ | ------ | ------ | --------- | -------------- |
-| 2022-10-09   | 20.04  | 3.7    | docker.io | `1aac87eb7fa5` |
-| 2022-10-09   | 20.04  | 3.8    | docker.io | `a374cab4fcb6` |
-| 2022-10-09   | 20.04  | 3.9    | docker.io | `5ae537728c69` |
-| 2022-10-09   | 20.04  | 3.10   | docker.io | `f3079808ca8c` |
-| 2022-10-09   | 22.04  | 3.7    | docker.io | `b86753318aa1` |
-| 2022-10-09   | 22.04  | 3.8    | docker.io | `7285848c0a11` |
-| 2022-10-09   | 22.04  | 3.9    | docker.io | `ed2908bbb62e` |
-| 2023-05-30   | 22.04  | 3.10   | docker.io | `4d70cf8da953` |
-| weekly build | 22.04  | 3.11   | quay.io   | `latest`       |
+| Build Date   | Ubuntu | Python | Tag            |
+| ------------ | ------ | ------ | -------------- |
+| 2022-10-09   | 20.04  | 3.7    | `1aac87eb7fa5` |
+| 2022-10-09   | 20.04  | 3.8    | `a374cab4fcb6` |
+| 2022-10-09   | 20.04  | 3.9    | `5ae537728c69` |
+| 2022-10-09   | 20.04  | 3.10   | `f3079808ca8c` |
+| 2022-10-09   | 22.04  | 3.7    | `b86753318aa1` |
+| 2022-10-09   | 22.04  | 3.8    | `7285848c0a11` |
+| 2022-10-09   | 22.04  | 3.9    | `ed2908bbb62e` |
+| 2023-05-30   | 22.04  | 3.10   | `4d70cf8da953` |
+| weekly build | 22.04  | 3.11   | `latest`       |
 
 ## Contributing
 
 Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
-for information about how to contribute recipes, features, tests, and community maintained stacks.
+for information about how to contribute recipes, features, tests, and community-maintained stacks.
 
 ## Alternatives
 
