@@ -30,6 +30,7 @@ on:
       - "tagging/**"
       - "!tagging/README.md"
       - "tests/**"
+      - "!tests/README.md"
       - "requirements-dev.txt"
   push:
     branches:
@@ -50,6 +51,7 @@ on:
       - "tagging/**"
       - "!tagging/README.md"
       - "tests/**"
+      - "!tests/README.md"
       - "requirements-dev.txt"
   workflow_dispatch:
 
