@@ -50,7 +50,7 @@ The prefix of commit hash (namely, 12 letters) is used as an image tag to make i
 
 ### Tagger
 
-`Tagger` is a class which can be run inside a docker container to calculate some tag for an image.
+`Tagger` is a class that can be run inside a docker container to calculate some tag for an image.
 
 All the taggers are inherited from `TaggerInterface`:
 
@@ -79,12 +79,12 @@ class SHATagger(TaggerInterface):
 ```
 
 - `taggers.py` contains all the taggers.
-- `tag_image.py` is a python executable which is used to tag the image.
+- `tag_image.py` is a Python executable that is used to tag the image.
 
 ### Manifest
 
 `ManifestHeader` is a build manifest header.
-It contains information about `Build datetime`, `Docker image size` and `Git commit` info.
+It contains information about `Build datetime`, `Docker image size`, and `Git commit` info.
 
 All the other manifest classes are inherited from `ManifestInterface`:
 
@@ -97,7 +97,7 @@ class ManifestInterface:
         raise NotImplementedError
 ```
 
-- `markdown_piece(container)` method returns a piece of markdown file to be used as a part of the build manifest.
+- The `markdown_piece(container)` method returns a piece of markdown file to be used as a part of the build manifest.
 
 `AptPackagesManifest` example:
 
@@ -117,7 +117,7 @@ class AptPackagesManifest(ManifestInterface):
 - `quoted_output` simply runs the command inside a container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece.
   It also adds the command which was run to the markdown piece.
 - `manifests.py` contains all the manifests.
-- `write_manifest.py` is a python executable which is used to create the build manifest and history line for an image.
+- `write_manifest.py` is a Python executable that is used to create the build manifest and history line for an image.
 
 ### Images Hierarchy
 
