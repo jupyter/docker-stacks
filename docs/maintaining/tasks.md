@@ -10,7 +10,7 @@ To build new images and publish them to the Registry, do the following:
 
    ```{note}
    GitHub Actions are pretty reliable, so please investigate if some error occurs.
-   Building Docker images in PRs is the same as building them in default branch,
+   Building Docker images in PRs is the same as building them in the default branch,
    except single-platform images are pushed to Registry and then tags are merged for `x86_64` and `aarch64`.
    ```
 
@@ -29,7 +29,7 @@ When a new `Python` version is released, we wait for:
 ## Updating the Ubuntu Base Image
 
 `jupyter/docker-stacks-foundation` is based on the LTS Ubuntu docker image.
-We wait for the first point release of the new LTS Ubuntu before updating the version.
+We are waiting for the first point release of the new LTS Ubuntu before updating the version.
 Other images are directly or indirectly inherited from `docker-stacks-foundation`.
 We rebuild our images automatically each week, which means they frequently receive updates.
 
