@@ -71,7 +71,7 @@ system when the container exits, but any changes made to the `~/work` directory 
 By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
 So, new notebooks will be saved there, unless you change the directory in the file browser.
 
-To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
+To change the default directory, you must specify `ServerApp.root_dir` by adding this line to the previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
 ```
 
 ## Choosing Jupyter frontend
@@ -98,12 +98,12 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - We publish containers for both `x86_64` and `aarch64` platforms
 - Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `quay.io/jupyter/base-notebook:aarch64-python-3.10.5`
 - Starting from `2022-09-21`, we create multi-platform images (except `tensorflow-notebook`)
-- Starting from `2023-06-01`, we create multi-platform `tensorflow-notebook` image as well
+- Starting from `2023-06-01`, we create a multi-platform `tensorflow-notebook` image as well
 
 ## Using old images
 
 This project only builds one set of images at a time.
-If you want to use older `Ubuntu` and/or `python` version, you can use following images:
+If you want to use the older `Ubuntu` and/or `python` version, you can use the following images:
 
 | Build Date   | Ubuntu | Python | Tag            |
 | ------------ | ------ | ------ | -------------- |
@@ -120,7 +120,7 @@ If you want to use older `Ubuntu` and/or `python` version, you can use following
 ## Contributing
 
 Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
-for information about how to contribute recipes, features, tests, and community maintained stacks.
+for information about how to contribute recipes, features, tests, and community-maintained stacks.
 
 ## Alternatives
 
