@@ -11,13 +11,14 @@ LOGGER = logging.getLogger(__name__)
 
 def update_home_wiki_page(wiki_dir: Path, month: str) -> None:
     TABLE_BEGINNING = """\
-| Month |
-| - |
+| Month                  |
+| ---------------------- |
 """
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
     month_line = f"| [`{month}`](./{month}) |\n"
     if month_line not in wiki_home_content:
+        assert TABLE_BEGINNING in wiki_home_content
         wiki_home_content = wiki_home_content.replace(
             TABLE_BEGINNING, TABLE_BEGINNING + month_line
         )
@@ -39,7 +40,9 @@ def update_monthly_wiki_page(
         monthly_page.write_text(MONTHLY_PAGE_HEADER)
         LOGGER.info(f"Created monthly page: {monthly_page.relative_to(wiki_dir)}")
 
-    monthly_page_content = monthly_page.read_text().replace(
+    monthly_page_content = monthly_page.read_text()
+    assert MONTHLY_PAGE_HEADER in monthly_page_content
+    monthly_page_content = monthly_page_content.replace(
         MONTHLY_PAGE_HEADER, MONTHLY_PAGE_HEADER + build_history_line + "\n"
     )
     monthly_page.write_text(monthly_page_content)
@@ -97,19 +100,19 @@ if __name__ == "__main__":
         "--wiki-dir",
         required=True,
         type=Path,
-        help="Directory for wiki repo",
+        help="Directory of the wiki repo",
     )
     arg_parser.add_argument(
         "--hist-line-dir",
         required=True,
         type=Path,
-        help="Directory to save history line",
+        help="Directory with history lines",
     )
     arg_parser.add_argument(
         "--manifest-dir",
         required=True,
         type=Path,
-        help="Directory to save manifest file",
+        help="Directory with manifest files",
     )
     args = arg_parser.parse_args()
 
