@@ -1,8 +1,8 @@
 # Policy on adding new images and packages
 
-There are many things we consider, while adding new images and packages.
+There are many things we consider while adding new images and packages.
 
-Here is a non exhaustive list of things we do care about:
+Here is a non-exhaustive list of things we do care about:
 
 1. **Software health**, details, and maintenance status
    - reasonable versioning is adopted, and the version is considered to be stable
@@ -25,7 +25,7 @@ Here is a non exhaustive list of things we do care about:
 6. Impact on **security**
    - Does the package open additional ports, or add new web endpoints, that could be exploited?
 
-With all this in mind, we have a voting group, which consists of
+With all this in mind, we have a voting group, that consists of
 [mathbunnyru](https://github.com/mathbunnyru),
 [consideRatio](https://github.com/consideRatio),
 [yuvipanda](https://github.com/yuvipanda) and
