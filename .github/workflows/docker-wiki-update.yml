@@ -36,8 +36,8 @@ jobs:
           repository: ${{ github.repository }}.wiki
           path: wiki/
 
-      - name: Update wiki page 🏷
-        run: python3 -m tagging.update_wiki_page --wiki-dir wiki/ --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/
+      - name: Update wiki 🏷
+        run: python3 -m tagging.update_wiki --wiki-dir wiki/ --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/
         shell: bash
 
       - name: Push Wiki to GitHub 📤

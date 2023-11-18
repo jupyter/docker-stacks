@@ -1,0 +1,30 @@
+name: Test aarch64-runner setup script
+
+on:
+  schedule:
+    # Weekly, at 03:00 on Monday UTC time
+    - cron: "0 3 * * 1"
+  pull_request:
+    paths:
+      - ".github/workflows/aarch64-setup.yml"
+      - "aarch64-runner/setup.sh"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/aarch64-setup.yml"
+      - "aarch64-runner/setup.sh"
+  workflow_dispatch:
+
+jobs:
+  test-script:
+    # The script itself is not aarch64 specific
+    # It is easier to test on ubuntu-latest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v4
+
+      - name: Run setup script ✅
+        run: sudo ./aarch64-runner/setup.sh

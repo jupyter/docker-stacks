@@ -79,7 +79,7 @@ git push -u origin main
    ![GitHub page for jupyter/docker-stacks with the Actions tab active and a rectangle around the "Build Docker Images" workflow in the UI](../_static/contributing/stacks/github-actions-tab.png)
 
    ```{note}
-   First run is expected to fail, because we haven't yet added Docker credentials to push the image
+   The first run is expected to fail because we haven't yet added Docker credentials to push the image
    ```
 
 3. In the next screen, you will see information about the workflow run and duration.
@@ -103,7 +103,7 @@ you merge a GitHub pull request to the main branch of your project.
    ![Docker Hub - Create Repository page with the name field set to "My specialized jupyter stack"](../_static/contributing/stacks/docker-repo-name.png)
 
 3. Enter a description for your image.
-4. Click on your avatar in the top-right corner and select Account settings.
+4. Click on your avatar in the top-right corner and select Account Settings.
 
    ![Docker Hub page zoomed into the user's settings and accounts menu](../_static/contributing/stacks/docker-user-dropdown.png)
 
@@ -149,6 +149,6 @@ Finally, if you'd like to add a link to your project to this documentation site,
 
 1. Fork the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
 2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section in your fork.
-3. Add a table entry with a link to your project, a binder link and a short description of what your Docker image contains.
+3. Add a table entry with a link to your project, a binder link, and a short description of what your Docker image contains.
 4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)(PR) with your changes.
    Maintainers will respond and work with you to address any formatting or content issues.

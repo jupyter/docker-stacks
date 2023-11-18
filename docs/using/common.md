@@ -242,7 +242,7 @@ The `/opt/conda/bin` directory is part of the default `jovyan` user's `${PATH}`.
 That directory is also searched for binaries when run using `sudo` (`sudo my_binary` will search for `my_binary` in `/opt/conda/bin/`
 
 The `jovyan` user has full read/write access to the `/opt/conda` directory.
-You can use either `mamba`, `pip` or `conda` (`mamba` is recommended) to install new packages without any additional permissions.
+You can use either `mamba`, `pip`, or `conda` (`mamba` is recommended) to install new packages without any additional permissions.
 
 ```bash
 # install a package into the default (python 3.x) environment and cleanup it after

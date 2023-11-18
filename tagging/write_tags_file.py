@@ -19,7 +19,7 @@ def write_tags_file(
     tags_dir: Path,
 ) -> None:
     """
-    Writes tags file for the image <owner>/<short_image_name>:latest
+    Writes tags file for the image <registry>/<owner>/<short_image_name>:latest
     """
     LOGGER.info(f"Tagging image: {short_image_name}")
     taggers, _ = get_taggers_and_manifests(short_image_name)
