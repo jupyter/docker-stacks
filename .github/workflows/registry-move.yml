@@ -17,19 +17,26 @@ on:
 
 jobs:
   update-overview:
-    runs-on: ubuntu-latest
+    # To be able to use latest skopeo
+    runs-on: macos-latest
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 
-      # Using skopeo Docker image allows us to use `--multi-arch all` feature
+      - name: Install skopeo and Docker 📦
+        run: |
+          brew install skopeo
+          brew install --cask docker
+
+      - name: Login to Quay.io 🔐
+        if: env.PUSH_TO_REGISTRY == 'true'
+        run: skopeo login quay.io --username ${{ secrets.QUAY_USERNAME }} --password ${{ secrets.QUAY_ROBOT_TOKEN }}
+
       - name: Move image from Docker Hub to Quay.io 🐳
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
-          docker run --entrypoint /bin/bash quay.io/skopeo/stable:latest \
-          skopeo login quay.io --username ${{ secrets.QUAY_USERNAME }} --password ${{ secrets.QUAY_ROBOT_TOKEN }} && \
           skopeo copy --multi-arch all docker://${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }} docker://quay.io/${{ env.OWNER }}/${{ matrix.image }}:${{ matrix.tag }}
 
     strategy:
