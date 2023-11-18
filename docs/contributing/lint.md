@@ -44,7 +44,7 @@ More information can be found in [`.pre-commit-config.yaml` file](https://github
 
 ## Image Lint
 
-To comply with [Docker best practices][dbp], we are using the [Hadolint][hadolint] tool to analyse each `Dockerfile`.
+To comply with [Docker best practices][dbp], we are using the [Hadolint][hadolint] tool to analyze each `Dockerfile`.
 
 ### Ignoring Rules
 
@@ -52,10 +52,10 @@ Sometimes it is necessary to ignore [some rules][rules].
 The following rules are ignored by default for all images in the `.hadolint.yaml` file.
 
 - [`DL3006`][dl3006]: We use a specific policy to manage image tags.
-  - `base-notebook` `FROM` clause is fixed but based on an argument (`ARG`).
+  - The `docker-stacks-foundation` `FROM` clause is fixed but based on an argument (`ARG`).
   - Building downstream images from (`FROM`) the latest is done on purpose.
 - [`DL3008`][dl3008]: System packages are always updated (`apt-get`) to the latest version.
-- [`DL3013`][dl3013]: We always install latest packages using `pip`
+- [`DL3013`][dl3013]: We always install the latest packages using `pip`
 
 The preferred way to do it for other rules is to flag ignored ones in the `Dockerfile`.
 

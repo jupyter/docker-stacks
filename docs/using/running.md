@@ -10,7 +10,7 @@ This section provides details about the second.
 ## Using the Docker CLI
 
 You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command-line interface](https://docs.docker.com/engine/reference/commandline/cli/).
-There are numerous ways to configure containers using the CLI.
+There are numerous ways to configure containers using CLI.
 The following are some common patterns.
 
 ### Example 1
@@ -55,7 +55,7 @@ docker rm eca4aa01751c
 
 This command pulls the `jupyter/r-notebook` image tagged `2023-11-17` from Quay.io if it is not already present on the local host.
 It then starts a container running Server and exposes the server on host port 10000.
-The server logs appear in the terminal and include a URL to the Server, but with the internal container port (8888) instead of the correct host port (10000).
+The server logs appear in the terminal and include a URL to the Server but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
 docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/r-notebook:2023-11-17
@@ -69,7 +69,7 @@ Any other changes made in the container will be lost.
 By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
 So, new notebooks will be saved there, unless you change the directory in the file browser.
 
-To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
+To change the default directory, you will need to specify `ServerApp.root_dir` by adding this line to the previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
 ```
 
 ### Example 3
