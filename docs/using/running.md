@@ -140,7 +140,7 @@ subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Si
 
 This command pulls the `quay.io/jupyter/r-notebook` image tagged `2023-11-17` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
-The server logs appear in the terminal and include a URL to the server, but with the internal container port (8888) instead of the correct host port (10000).
+The server logs appear in the terminal and include a URL to the server but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
 podman run -it --rm -p 10000:8888 \
@@ -170,11 +170,11 @@ Any other changes made in the container will be lost.
 
 ## Using Binder
 
-[Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control.
+A [Binder](https://mybinder.org/) is a service that allows you to create and share custom computing environments for projects in version control.
 You can use any of the Jupyter Docker Stacks images as a basis for a Binder-compatible Dockerfile.
 See the
 [docker-stacks example](https://mybinder.readthedocs.io/en/latest/examples/sample_repos.html#using-a-docker-image-from-the-jupyter-docker-stacks-repository) and
-[Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html) sections in the
+[Using a Dockerfile](https://mybinder.readthedocs.io/en/latest/tutorials/dockerfile.html) section in the
 [Binder documentation](https://mybinder.readthedocs.io/en/latest/index.html) for instructions.
 
 ## Using JupyterHub
@@ -188,5 +188,5 @@ instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner
 ## Using Other Tools and Services
 
 You can use the Jupyter Docker Stacks with any Docker-compatible technology
-(e.g., [Docker Compose](https://docs.docker.com/compose/), [docker-py](https://github.com/docker/docker-py), your favorite cloud container service).
+(e.g., [Docker Compose](https://docs.docker.com/compose/), [docker-py](https://github.com/docker/docker-py), or your favorite cloud container service).
 See the documentation of the tool, library, or service for details about how to reference, configure, and launch containers from these images.

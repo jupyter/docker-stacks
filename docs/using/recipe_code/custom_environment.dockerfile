@@ -1,6 +1,6 @@
 FROM quay.io/jupyter/base-notebook
 
-# Name your environment and choose the python version
+# Name your environment and choose the Python version
 ARG env_name=python310
 ARG py_ver=3.10
 
@@ -40,5 +40,5 @@ RUN activate_custom_env_script=/usr/local/bin/before-notebook.d/activate_custom_
 USER ${NB_UID}
 
 # Making this environment default in Terminal
-# You can comment this line to keep the default environment in Terminal
+# You can comment this line to keep the default environment in a Terminal
 RUN echo "conda activate ${env_name}" >> "${HOME}/.bashrc"

@@ -2,7 +2,7 @@ name: Test aarch64-runner setup script
 
 on:
   schedule:
-    # Weekly, at 03:00 on Monday UTC time
+    # Weekly, at 03:00 on Monday UTC
     - cron: "0 3 * * 1"
   pull_request:
     paths:
@@ -18,7 +18,7 @@ on:
 
 jobs:
   test-script:
-    # The script itself is not aarch64 specific
+    # The script itself is not aarch64-specific
     # It is easier to test on ubuntu-latest
     runs-on: ubuntu-latest
 

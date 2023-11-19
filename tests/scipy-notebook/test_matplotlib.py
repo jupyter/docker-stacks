@@ -17,7 +17,7 @@ THIS_DIR = Path(__file__).parent.resolve()
         (
             "matplotlib_1.py",
             "test.png",
-            "Test that matplotlib is able to plot a graph and write it as an image ...",
+            "Test that matplotlib can plot a graph and write it as an image ...",
         ),
         (
             "matplotlib_fonts_1.py",

@@ -66,7 +66,7 @@ RUN mamba install --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Install facets which does not have a pip or conda package at the moment
+# Install facets package which does not have a `pip` or `conda-forge` package at the moment
 WORKDIR /tmp
 RUN git clone https://github.com/PAIR-code/facets && \
     jupyter nbclassic-extension install facets/facets-dist/ --sys-prefix && \

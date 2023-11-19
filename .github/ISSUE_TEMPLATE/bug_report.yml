@@ -125,5 +125,5 @@ body:
       label: Latest Docker version
       description: You should try to use the latest Docker version
       options:
-        - label: I've updated my Docker version to the latest available, and the issue still persists
+        - label: I've updated my Docker version to the latest available, and the issue persists
           required: true

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -exuo pipefail
 # Requirements:
-# - Run as non-root user
+# - Run as a non-root user
 # - The JULIA_PKGDIR environment variable is set
 # - Julia is already set up, with the setup-julia.bash command
 

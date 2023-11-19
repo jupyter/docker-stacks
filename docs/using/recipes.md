@@ -132,7 +132,7 @@ Sometimes it is helpful to run the Jupyter instance behind an nginx proxy, for e
   and want nginx to help improve server performance in managing the connections
 
 Here is a [quick example of NGINX configuration](https://gist.github.com/cboettig/8643341bd3c93b62b5c2) to get started.
-You'll need a server, a `.crt` and `.key` file for your server, and `docker` & `docker-compose` installed.
+You'll need a server, a `.crt`, and a `.key` file for your server, and `docker` & `docker-compose` installed.
 Then download the files at that gist and run `docker-compose up` to test it out.
 Customize the `nginx.conf` file to set the desired paths and add other services.
 
@@ -506,9 +506,9 @@ The following recipe demonstrates how to add functionality to read from and writ
 
 You can now use `pyodbc` and `sqlalchemy` to interact with the database.
 
-Pre-built images are hosted in the [realiserad/jupyter-docker-mssql](https://github.com/Realiserad/jupyter-docker-mssql) repository.
+Pre-built images are hosted in the [Realiserad/jupyter-docker-mssql](https://github.com/Realiserad/jupyter-docker-mssql) repository.
 
-## Add Oracle SQL Instant client, SQL\*Plus and other tools (Version 21.x)
+## Add Oracle SQL Instant client, SQL\*Plus, and other tools (Version 21.x)
 
 ```{note}
 This recipe only works for x86_64 architecture.
@@ -520,7 +520,7 @@ This recipe installs version `21.11.0.0.0`.
 
 Nonetheless, go to the [Oracle Instant Client Download page](https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html) for the complete list of versions available.
 You may need to perform different steps for older versions;
-the may be explained on the "Installation instructions" section of the Downloads page.
+they may be explained in the "Installation instructions" section of the Downloads page.
 
 ```{literalinclude} recipe_code/oracledb.dockerfile
 :language: docker
