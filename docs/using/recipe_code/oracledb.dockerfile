@@ -15,7 +15,7 @@ ARG INSTANTCLIENT_MAJOR_VERSION=21
 ARG INSTANTCLIENT_VERSION=${INSTANTCLIENT_MAJOR_VERSION}.11.0.0.0-1
 ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/2111000
 
-# Then install Oracle SQL Instant client, SQL+Plus, tools and JDBC.
+# Then install Oracle SQL Instant client, SQL+Plus, tools, and JDBC.
 # Note: You may need to change the URL to a newer version.
 # See: https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html
 RUN mkdir "/opt/oracle"
@@ -39,7 +39,7 @@ RUN echo "ORACLE_HOME=/usr/lib/oracle/${INSTANTCLIENT_MAJOR_VERSION}/client64" >
     echo "export PATH" >> "${HOME}/.bashrc" && \
     echo "export LD_LIBRARY_PATH" >> "${HOME}/.bashrc"
 
-# Add credentials for /redacted/ using Oracle Db.
+# Add credentials for /redacted/ using Oracle DB.
 WORKDIR /usr/lib/oracle/${INSTANTCLIENT_MAJOR_VERSION}/client64/lib/network/admin/
 # Add a wildcard `[]` on the last letter of the filename to avoid throwing an error if the file does not exist.
 # See: https://stackoverflow.com/questions/31528384/conditional-copy-add-in-dockerfile

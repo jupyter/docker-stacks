@@ -51,7 +51,7 @@ def update_monthly_wiki_page(
 
 def get_manifest_timestamp(manifest_file: Path) -> str:
     file_content = manifest_file.read_text()
-    pos = file_content.find("Build datetime: ")
+    pos = file_content.find("Build timestamp: ")
     return file_content[pos + 16 : pos + 36]
 
 

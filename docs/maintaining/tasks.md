@@ -33,7 +33,7 @@ We are waiting for the first point release of the new LTS Ubuntu before updating
 Other images are directly or indirectly inherited from `docker-stacks-foundation`.
 We rebuild our images automatically each week, which means they frequently receive updates.
 
-When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger images rebuild
+When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger the rebuild of images
 [from the GitHub actions workflow UI](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
 Pushing the `Run Workflow` button will trigger this process.
 

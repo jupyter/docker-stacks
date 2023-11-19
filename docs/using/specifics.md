@@ -14,7 +14,7 @@ This page provides details about features specific to one or more images.
   Every new spark context that is created is put onto an incrementing port (i.e. 4040, 4041, 4042, etc.), and it might be necessary to open multiple ports.
   ```
 
-  For example: `docker run --detach -p 8888:8888 -p 4040:4040 -p 4041:4041 quay.io/jupyter/pyspark-notebook`.
+  For example, `docker run --detach -p 8888:8888 -p 4040:4040 -p 4041:4041 quay.io/jupyter/pyspark-notebook`.
 
 #### IPython low-level output capture and forward
 
@@ -53,7 +53,7 @@ You can build a `pyspark-notebook` image with a different `Spark` version by ove
     - This version needs to match the version supported by the Spark distribution used above.
     - See [Spark Overview](https://spark.apache.org/docs/latest/#downloading) and [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
 
-- Starting with _Spark >= 3.2_, the distribution file might contain Scala version.
+- Starting with _Spark >= 3.2_, the distribution file might contain the Scala version.
 
 For example, here is how to build a `pyspark-notebook` image with Spark `3.2.0`, Hadoop `3.2`, and OpenJDK `11`.
 
@@ -161,7 +161,7 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
 0. Verify that the docker image (check the Dockerfile) and the Spark Cluster, which is being
    deployed, run the same version of Spark.
 1. [Deploy Spark in Standalone Mode](https://spark.apache.org/docs/latest/spark-standalone.html).
-2. Run the Docker container with `--net=host` in a location that is network addressable by all of
+2. Run the Docker container with `--net=host` in a location that is network-addressable by all of
    your Spark workers.
    (This is a [Spark networking requirement](https://spark.apache.org/docs/latest/cluster-overview.html#components).)
 
@@ -174,7 +174,7 @@ Connection to Spark Cluster on **[Standalone Mode](https://spark.apache.org/docs
 ##### Standalone Mode in Python
 
 The **same Python version** needs to be used on the notebook (where the driver is located) and on the Spark workers.
-The python version used at the driver and worker side can be adjusted by setting the environment variables `PYSPARK_PYTHON` and/or `PYSPARK_DRIVER_PYTHON`,
+The Python version used on the driver and worker side can be adjusted by setting the environment variables `PYSPARK_PYTHON` and/or `PYSPARK_DRIVER_PYTHON`,
 see [Spark Configuration][spark-conf] for more information.
 
 ```python

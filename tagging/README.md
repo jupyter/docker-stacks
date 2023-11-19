@@ -84,7 +84,7 @@ class SHATagger(TaggerInterface):
 ### Manifest
 
 `ManifestHeader` is a build manifest header.
-It contains information about `Build datetime`, `Docker image size`, and `Git commit` info.
+It contains the following sections: `Build timestamp`, `Docker image size`, and `Git commit` info.
 
 All the other manifest classes are inherited from `ManifestInterface`:
 
