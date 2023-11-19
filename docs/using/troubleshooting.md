@@ -40,7 +40,7 @@ The following sections cover a few of these scenarios and how to fix them.
    You can change the ownership of the volume mount using the `chown` command.
    In the case of the docker-stacks images, you can set the `CHOWN_EXTRA` and `CHOWN_EXTRA_OPTS` environment variables.
 
-   For example, to change the ownership of the volume mount to the jovyan user (non-privileged default user in the Docker images):
+   For example, to change the ownership of the volume mount to the `jovyan` user (non-privileged default user in the Docker images):
 
    ```bash
    # running in detached mode - can also be run in interactive mode
@@ -128,7 +128,7 @@ The following sections cover a few of these scenarios and how to fix them.
 
 If you have also **created a new user**, you might be experiencing any of the following issues:
 
-- `root` is the owner of `/home` or a mounted volume
+- the `root` user is the owner of `/home` or a mounted volume
 - when starting the container, you get an error such as `Failed to change ownership of the home directory.`
 - getting permission denied when trying to `conda install` packages
 
@@ -277,7 +277,7 @@ You can install packages from other conda channels (e.g. `bioconda`) by disablin
 conda install --no-channel-priority -c bioconda bioconductor-geoquery
 ```
 
-Additional details are provided in the [Using alternative channels](../using/common.md#using-alternative-channels) section of the [Common features](common.md) page.
+Additional details are provided in the [Using Alternative Channels](../using/common.md#using-alternative-channels) section of the [Common Features](common.md) page.
 
 ## Tokens are being rejected
 
@@ -334,7 +334,7 @@ you might experience either of these issues when using any of the docker-stacks 
    ```
 
    When the terminal provides the link to access Jupyter: <http://127.0.0.1:8888/lab?token=80d45d241a1ba4c2...>,
-   change the default port value of `8888` in the url to the port value mapped with the `docker run` command.
+   change the default port value of `8888` in the URL to the port value mapped with the `docker run` command.
 
    In this example, we use 8001, so the edited link would be: <http://127.0.0.1:8001/lab?token=80d45d241a1ba4c2...>.
 

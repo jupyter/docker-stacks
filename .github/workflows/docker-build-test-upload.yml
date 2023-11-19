@@ -1,4 +1,4 @@
-name: Download parent image, build a new one and test it; then upload the image, tags and manifests to GitHub artifacts
+name: Download a parent image, build a new one, and test it; then upload the image, tags, and manifests to GitHub artifacts
 
 env:
   REGISTRY: quay.io
@@ -7,7 +7,7 @@ env:
 on:
   workflow_call:
     inputs:
-      parentImage:
+      parent-image:
         description: Parent image name
         required: true
         type: string
@@ -19,14 +19,14 @@ on:
         description: Image platform
         required: true
         type: string
-      runsOn:
+      runs-on:
         description: GitHub Actions Runner image
         required: true
         type: string
 
 jobs:
   build-test-upload:
-    runs-on: ${{ inputs.runsOn }}
+    runs-on: ${{ inputs.runs-on }}
 
     steps:
       - name: Checkout Repo ⚡️
@@ -36,7 +36,7 @@ jobs:
 
       # Self-hosted runners share a state (whole VM) between runs
       # Also, they might have running or stopped containers,
-      # which are not cleaned up by `docker system prun`
+      # which are not cleaned up by `docker system prune`
       - name: Reset docker state and cleanup artifacts 🗑️
         if: inputs.platform != 'x86_64'
         run: |
@@ -47,14 +47,14 @@ jobs:
         shell: bash
 
       - name: Load parent built image to Docker 📥
-        if: inputs.parentImage != ''
+        if: inputs.parent-image != ''
         uses: ./.github/actions/load-image
         with:
-          image: ${{ inputs.parentImage }}
+          image: ${{ inputs.parent-image }}
           platform: ${{ inputs.platform }}
 
       - name: Pull ubuntu:22.04 image 📥
-        if: inputs.parentImage == ''
+        if: inputs.parent-image == ''
         run: docker pull ubuntu:22.04
         shell: bash
 

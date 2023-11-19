@@ -15,7 +15,7 @@ USER root
 
 # Spark dependencies
 # Default values can be overridden at build time
-# (ARGS are in lower case to distinguish them from ENV)
+# (ARGS are in lowercase to distinguish them from ENV)
 ARG spark_version="3.5.0"
 ARG hadoop_version="3"
 ARG scala_version
@@ -35,7 +35,7 @@ RUN apt-get update --yes && \
 WORKDIR /tmp
 
 # You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
-# But it seems to be slower, that's why we use recommended site for download
+# But it seems to be slower, that's why we use the recommended site for download
 RUN if [ -z "${scala_version}" ]; then \
     curl --progress-bar --location --output "spark.tgz" \
         "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz"; \

@@ -20,8 +20,7 @@ You can use a stack image to do any of the following (and more):
 You can try a [relatively recent build of the quay.io/jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/main?urlpath=lab/tree/README.ipynb)
 by simply clicking the preceding link.
 Otherwise, the examples below may help you get started if you [have Docker installed](https://docs.docker.com/get-docker/),
-know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use
-and want to launch a single Jupyter Application in a container.
+know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use, and want to launch a single Jupyter Application in a container.
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) describes additional uses and features in detail.
 
@@ -44,8 +43,8 @@ You can modify the port on which the container's port is exposed by [changing th
 Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
 where:
 
-- `hostname` is the name of the computer running Docker
-- `token` is the secret token printed in the console.
+- The `hostname` is the name of the computer running Docker
+- The `token` is the secret token printed in the console.
 
 The container remains intact for restart after the Server exits.
 
@@ -93,7 +92,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 
 - Starting from `2022-07-05`, `aarch64` self-hosted runners were sponsored by [`@mathbunnyru`](https://github.com/mathbunnyru/).
   Please, consider [sponsoring his work](https://github.com/sponsors/mathbunnyru) on GitHub
-- Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by amazing [`2i2c non-profit organization`](https://2i2c.org)
+- Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by an amazing [`2i2c non-profit organization`](https://2i2c.org)
 
 ## CPU Architectures
 
@@ -105,7 +104,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 ## Using old images
 
 This project only builds one set of images at a time.
-If you want to use the older `Ubuntu` and/or `python` version, you can use the following images:
+If you want to use the older `Ubuntu` and/or `Python` version, you can use the following images:
 
 | Build Date   | Ubuntu | Python | Tag            |
 | ------------ | ------ | ------ | -------------- |
@@ -129,6 +128,6 @@ for information about how to contribute recipes, features, tests, and community-
 - [jupyter/repo2docker](https://github.com/jupyterhub/repo2docker) -
   Turn git repositories into Jupyter-enabled Docker Images
 - [openshift/source-to-image](https://github.com/openshift/source-to-image) -
-  A tool for building artifacts from source and injecting them into docker images
+  A tool for building artifacts from source code and injecting them into docker images
 - [jupyter-on-openshift/jupyter-notebooks](https://github.com/jupyter-on-openshift/jupyter-notebooks) -
   OpenShift compatible S2I builder for basic notebook images

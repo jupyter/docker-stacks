@@ -18,12 +18,12 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install all OS dependencies for Server that starts
+# Install all OS dependencies for the Server that starts
 # but lacks all features (e.g., download as all possible file formats)
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update --yes && \
-    # - apt-get upgrade is run to patch known vulnerabilities in apt-get packages as
-    #   the ubuntu base image is rebuilt too seldom sometimes (less than once a month)
+    # - `apt-get upgrade` is run to patch known vulnerabilities in apt-get packages as
+    #   the Ubuntu base image is rebuilt too seldom sometimes (less than once a month)
     apt-get upgrade --yes && \
     apt-get install --yes --no-install-recommends \
     # - bzip2 is necessary to extract the micromamba executable.
@@ -76,19 +76,19 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
 
 USER ${NB_UID}
 
-# Pin python version here, or set it to "default"
+# Pin Python version here, or set it to "default"
 ARG PYTHON_VERSION=3.11
 
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
     fix-permissions "/home/${NB_USER}"
 
-# Download and install Micromamba, and initialize Conda prefix.
+# Download and install Micromamba, and initialize the Conda prefix.
 #   <https://github.com/mamba-org/mamba#micromamba>
 #   Similar projects using Micromamba:
 #     - Micromamba-Docker: <https://github.com/mamba-org/micromamba-docker>
 #     - repo2docker: <https://github.com/jupyterhub/repo2docker>
-# Install Python, Mamba and jupyter_core
+# Install Python, Mamba, and jupyter_core
 # Cleanup temporary files and remove Micromamba
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the

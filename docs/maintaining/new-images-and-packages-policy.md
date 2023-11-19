@@ -26,10 +26,10 @@ Here is a non-exhaustive list of things we do care about:
    - Does the package open additional ports, or add new web endpoints, that could be exploited?
 
 With all this in mind, we have a voting group, that consists of
-[mathbunnyru](https://github.com/mathbunnyru),
-[consideRatio](https://github.com/consideRatio),
-[yuvipanda](https://github.com/yuvipanda) and
-[manics](https://github.com/manics).
+[@mathbunnyru](https://github.com/mathbunnyru),
+[@consideRatio](https://github.com/consideRatio),
+[@yuvipanda](https://github.com/yuvipanda), and
+[@manics](https://github.com/manics).
 
 This voting group is responsible for accepting or declining new packages and stacks.
 The change is accepted, if there are **at least 2 positive votes**.

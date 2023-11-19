@@ -17,7 +17,7 @@ on:
 
 jobs:
   update-overview:
-    # To be able to use latest skopeo
+    # To be able to use the latest skopeo
     runs-on: macos-latest
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 

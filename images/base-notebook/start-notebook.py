@@ -34,7 +34,7 @@ command.append(jupyter_command)
 if "NOTEBOOK_ARGS" in os.environ:
     command += shlex.split(os.environ["NOTEBOOK_ARGS"])
 
-# Pass through any other args we were passed on the commandline
+# Pass through any other args we were passed on the command line
 command += sys.argv[1:]
 
 # Execute the command!

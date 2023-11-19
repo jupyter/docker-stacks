@@ -43,7 +43,7 @@ source /usr/local/bin/run-hooks.sh /usr/local/bin/start-notebook.d
 # things before we run the command passed to start.sh as the desired user
 # (NB_USER).
 #
-if [ "$(id -u)" == 0 ] ; then
+if [ "$(id -u)" == 0 ]; then
     # Environment variables:
     # - NB_USER: the desired username and associated home folder
     # - NB_UID: the desired user id
@@ -51,11 +51,11 @@ if [ "$(id -u)" == 0 ] ; then
     # - NB_GROUP: a group name we want for the group
     # - GRANT_SUDO: a boolean ("1" or "yes") to grant the user sudo rights
     # - CHOWN_HOME: a boolean ("1" or "yes") to chown the user's home folder
-    # - CHOWN_EXTRA: a comma separated list of paths to chown
+    # - CHOWN_EXTRA: a comma-separated list of paths to chown
     # - CHOWN_HOME_OPTS / CHOWN_EXTRA_OPTS: arguments to the chown commands
 
-    # Refit the jovyan user to the desired the user (NB_USER)
-    if id jovyan &> /dev/null ; then
+    # Refit the jovyan user to the desired user (NB_USER)
+    if id jovyan &> /dev/null; then
         if ! usermod --home "/home/${NB_USER}" --login "${NB_USER}" jovyan 2>&1 | grep "no changes" > /dev/null; then
             _log "Updated the jovyan user:"
             _log "- username: jovyan       -> ${NB_USER}"
@@ -78,7 +78,7 @@ if [ "$(id -u)" == 0 ] ; then
         useradd --no-log-init --home "/home/${NB_USER}" --shell /bin/bash --uid "${NB_UID}" --gid "${NB_GID}" --groups 100 "${NB_USER}"
     fi
 
-    # Move or symlink the jovyan home directory to the desired users home
+    # Move or symlink the jovyan home directory to the desired user's home
     # directory if it doesn't already exist, and update the current working
     # directory to the new location if needed.
     if [[ "${NB_USER}" != "jovyan" ]]; then
@@ -106,7 +106,7 @@ if [ "$(id -u)" == 0 ] ; then
         fi
     fi
 
-    # Optionally ensure the desired user get filesystem ownership of it's home
+    # Optionally ensure the desired user gets filesystem ownership of its home
     # folder and/or additional folders
     if [[ "${CHOWN_HOME}" == "1" || "${CHOWN_HOME}" == "yes" ]]; then
         _log "Ensuring /home/${NB_USER} is owned by ${NB_UID}:${NB_GID} ${CHOWN_HOME_OPTS:+(chown options: ${CHOWN_HOME_OPTS})}"
@@ -121,7 +121,7 @@ if [ "$(id -u)" == 0 ] ; then
         done
     fi
 
-    # Update potentially outdated environment variables since image build
+    # Update potentially outdated environment variables since the image build
     export XDG_CACHE_HOME="/home/${NB_USER}/.cache"
 
     # Prepend ${CONDA_DIR}/bin to sudo secure_path
@@ -163,7 +163,7 @@ if [ "$(id -u)" == 0 ] ; then
         # - We use the `--set-home` flag to set the HOME variable appropriately.
         #
         # - To reduce the default list of variables deleted by sudo, we could have
-        #   used `env_delete` from /etc/sudoers. It has higher priority than the
+        #   used `env_delete` from /etc/sudoers. It has a higher priority than the
         #   `--preserve-env` flag and the `env_keep` configuration.
         #
         # - We preserve LD_LIBRARY_PATH, PATH and PYTHONPATH explicitly. Note however that sudo
@@ -186,7 +186,7 @@ else
     # Attempt to ensure the user uid we currently run as has a named entry in
     # the /etc/passwd file, as it avoids software crashing on hard assumptions
     # on such entry. Writing to the /etc/passwd was allowed for the root group
-    # from the Dockerfile during build.
+    # from the Dockerfile during the build.
     #
     # ref: https://github.com/jupyter/docker-stacks/issues/552
     if ! whoami &> /dev/null; then
