@@ -10,7 +10,6 @@ on:
 
       - "docs/**"
       - "README.md"
-      - ".readthedocs.yaml"
   push:
     branches:
       - main
@@ -19,7 +18,6 @@ on:
 
       - "docs/**"
       - "README.md"
-      - ".readthedocs.yaml"
   workflow_dispatch:
 
 jobs:
