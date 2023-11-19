@@ -82,7 +82,7 @@ jobs:
           retention-days: 3
 
       - name: Write manifest and build history file 🏷
-        run: python3 -m tagging.write_manifest --short-image-name ${{ inputs.image }} --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/ --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
+        run: python3 -m tagging.write_manifest --short-image-name ${{ inputs.image }} --hist-lines-dir /tmp/jupyter/hist_lines/ --manifests-dir /tmp/jupyter/manifests/ --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
         shell: bash
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v3
