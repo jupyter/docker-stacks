@@ -72,17 +72,17 @@ def remove_old_manifests(wiki_dir: Path) -> None:
         LOGGER.info(f"Removed manifest: {file.relative_to(wiki_dir)}")
 
 
-def update_wiki(wiki_dir: Path, hist_line_dir: Path, manifest_dir: Path) -> None:
+def update_wiki(wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path) -> None:
     LOGGER.info("Updating wiki")
 
-    for manifest_file in manifest_dir.glob("*.md"):
+    for manifest_file in manifests_dir.glob("*.md"):
         month = get_manifest_month(manifest_file)
         copy_to = wiki_dir / "manifests" / month / manifest_file.name
         copy_to.parent.mkdir(exist_ok=True)
         shutil.copy(manifest_file, copy_to)
         LOGGER.info(f"Added manifest file: {copy_to.relative_to(wiki_dir)}")
 
-    for build_history_line_file in sorted(hist_line_dir.glob("*.txt")):
+    for build_history_line_file in sorted(hist_lines_dir.glob("*.txt")):
         build_history_line = build_history_line_file.read_text()
         assert build_history_line.startswith("| `")
         month = build_history_line[3:10]
@@ -116,4 +116,4 @@ if __name__ == "__main__":
     )
     args = arg_parser.parse_args()
 
-    update_wiki(args.wiki_dir, args.hist_line_dir, args.manifest_dir)
+    update_wiki(args.wiki_dir, args.hist_lines_dir, args.manifests_dir)
