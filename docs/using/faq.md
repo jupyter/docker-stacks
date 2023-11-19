@@ -15,11 +15,11 @@ There are 2 types of data, which you might want to persist.
    To make it work, install this package in your inherited image and rerun `docker build` command.
    ```
 
-2. If you want to persist user data (files created by you, like `python` scripts, notebooks, text files, and so on),
+2. If you want to persist user data (files created by you, like `Python` scripts, notebooks, text files, and so on),
    then you should use a
    [Docker bind mount](https://docs.docker.com/storage/bind-mounts/) or
    [Docker Volume](https://docs.docker.com/storage/volumes/).
-   You can find [an example of using bind mount here](./running.md#example-2).
+   You can find [an example of using a bind mount here](./running.md#example-2).
    There is also [a mount troubleshooting section](./troubleshooting.md#permission-denied-when-mounting-volumes) if you experience any issues.
 
 ## Why we do not add your favorite package

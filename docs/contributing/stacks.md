@@ -100,12 +100,12 @@ you merge a GitHub pull request to the main branch of your project.
 2. Create a new repository - make sure to use the correct namespace (account or organization).
    Enter the name of the image matching the one you entered when prompted with `stack_name` by the cookiecutter.
 
-   ![Docker Hub - Create Repository page with the name field set to "My specialized jupyter stack"](../_static/contributing/stacks/docker-repo-name.png)
+   ![Docker Hub - 'Create repository' page with the name field set to "My specialized jupyter stack"](../_static/contributing/stacks/docker-repo-name.png)
 
 3. Enter a description for your image.
 4. Click on your avatar in the top-right corner and select Account Settings.
 
-   ![Docker Hub page zoomed into the user's settings and accounts menu](../_static/contributing/stacks/docker-user-dropdown.png)
+   ![The Docker Hub page zoomed into the user's settings and accounts menu](../_static/contributing/stacks/docker-user-dropdown.png)
 
 5. Click on **Security** and then click on the **New Access Token** button.
 

@@ -16,14 +16,14 @@ To build new images and publish them to the Registry, do the following:
 
 4. Avoid merging another PR to the main branch until all pending builds in the main branch are complete.
    This way, you will know which commit might have broken the build
-   and also have the correct tags for moving tags (like the `python` version).
+   and also have the correct tags for moving tags (like the `Python` version).
 
 ## Updating Python version
 
 When a new `Python` version is released, we wait for:
 
 - all the dependencies to be available (as wheels or in `conda-forge`).
-- the first `python` patch release for this version.
+- the first `Python` patch release for this version.
   This allows us to avoid many bugs, which can happen in a major release.
 
 ## Updating the Ubuntu Base Image
@@ -33,7 +33,7 @@ We are waiting for the first point release of the new LTS Ubuntu before updating
 Other images are directly or indirectly inherited from `docker-stacks-foundation`.
 We rebuild our images automatically each week, which means they frequently receive updates.
 
-When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger images rebuild
+When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger the rebuild of images
 [from the GitHub actions workflow UI](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
 Pushing the `Run Workflow` button will trigger this process.
 

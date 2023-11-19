@@ -1,5 +1,5 @@
 name: Build environment
-description: Create build environment
+description: Create a build environment
 
 runs:
   using: composite

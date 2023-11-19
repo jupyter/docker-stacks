@@ -2,7 +2,7 @@ name: Build Sphinx Documentation and check links
 
 on:
   schedule:
-    # Weekly, at 03:00 on Monday UTC time
+    # Weekly, at 03:00 on Monday UTC
     - cron: "0 3 * * 1"
   pull_request:
     paths:
@@ -10,7 +10,6 @@ on:
 
       - "docs/**"
       - "README.md"
-      - ".readthedocs.yaml"
   push:
     branches:
       - main
@@ -19,7 +18,6 @@ on:
 
       - "docs/**"
       - "README.md"
-      - ".readthedocs.yaml"
   workflow_dispatch:
 
 jobs:

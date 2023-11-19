@@ -15,8 +15,8 @@ The goal is to detect import errors that can be caused by incompatibilities betw
 This module checks dynamically, through the `CondaPackageHelper`,
 only the requested packages i.e. packages requested by `mamba install` in the `Dockerfile`s.
 This means that it does not check dependencies.
-This choice is a tradeoff to cover the main requirements while achieving reasonable test duration.
-However it could be easily changed (or completed) to cover also dependencies.
+This choice is a tradeoff to cover the main requirements while achieving a reasonable test duration.
+However, it could be easily changed (or completed) to cover dependencies as well.
 Use `package_helper.installed_packages()` instead of `package_helper.requested_packages()`.
 
 Example:
@@ -145,7 +145,7 @@ def _check_import_packages(
     """Test if packages can be imported
 
     Note: using a list of packages instead of a fixture for the list of packages
-    since pytest prevents use of multiple yields
+    since pytest prevents the use of multiple yields
     """
     failures = {}
     LOGGER.info("Testing the import of packages ...")

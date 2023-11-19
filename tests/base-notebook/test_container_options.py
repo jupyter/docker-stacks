@@ -42,7 +42,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     # Use sleep, not wait, because the container sleeps forever.
     time.sleep(1)
     LOGGER.info(
-        f"Checking if home folder of {nb_user} contains the hidden '.jupyter' folder with appropriate permissions ..."
+        f"Checking if a home folder of {nb_user} contains the hidden '.jupyter' folder with appropriate permissions ..."
     )
     command = f'stat -c "%F %U %G" /home/{nb_user}/.jupyter'
     expected_output = f"directory {nb_user} users"
