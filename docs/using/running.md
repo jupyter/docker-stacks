@@ -140,7 +140,7 @@ subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Si
 
 This command pulls the `quay.io/jupyter/r-notebook` image tagged `2023-11-17` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
-The server logs appear in the terminal and include a URL to the server, but with the internal container port (8888) instead of the correct host port (10000).
+The server logs appear in the terminal and include a URL to the server but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
 podman run -it --rm -p 10000:8888 \
@@ -188,5 +188,5 @@ instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner
 ## Using Other Tools and Services
 
 You can use the Jupyter Docker Stacks with any Docker-compatible technology
-(e.g., [Docker Compose](https://docs.docker.com/compose/), [docker-py](https://github.com/docker/docker-py), your favorite cloud container service).
+(e.g., [Docker Compose](https://docs.docker.com/compose/), [docker-py](https://github.com/docker/docker-py), or your favorite cloud container service).
 See the documentation of the tool, library, or service for details about how to reference, configure, and launch containers from these images.

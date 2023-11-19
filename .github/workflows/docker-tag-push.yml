@@ -1,4 +1,4 @@
-name: Download Docker image and its tags from GitHub artifacts, apply them and push the image to the Registry
+name: Download a Docker image and its tags from GitHub artifacts, apply them and push the image to the Registry
 
 env:
   REGISTRY: quay.io
@@ -52,8 +52,8 @@ jobs:
           path: /tmp/jupyter/tags/
       - name: Apply tags to the loaded image 🏷
         run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
-      # This step is needed to prevent pushing non-multiarch "latest" tag
-      - name: Remove "latest" tag from the image 🗑️
+      # This step is needed to prevent pushing non-multi-arch "latest" tag
+      - name: Remove the "latest" tag from the image 🗑️
         run: docker image rmi ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest
 
       - name: Push Images to Registry 📤

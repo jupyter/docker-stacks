@@ -91,7 +91,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 
 ## Acknowledgments
 
-- Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by amazing [`2i2c non-profit organization`](https://2i2c.org)
+- Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by an amazing [`2i2c non-profit organization`](https://2i2c.org)
 
 ## CPU Architectures
 
@@ -103,7 +103,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 ## Using old images
 
 This project only builds one set of images at a time.
-If you want to use the older `Ubuntu` and/or `python` version, you can use the following images:
+If you want to use the older `Ubuntu` and/or `Python` version, you can use the following images:
 
 | Build Date   | Ubuntu | Python | Tag            |
 | ------------ | ------ | ------ | -------------- |

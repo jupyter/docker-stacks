@@ -262,7 +262,7 @@ conda install --yes some-package && \
     fix-permissions "/home/${NB_USER}"
 ```
 
-### Using alternative channels
+### Using Alternative Channels
 
 Conda is configured by default to use only the [`conda-forge`](https://anaconda.org/conda-forge) channel.
 However, you can use alternative channels, either one-shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.
