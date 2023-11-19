@@ -103,13 +103,13 @@ if __name__ == "__main__":
         help="Directory of the wiki repo",
     )
     arg_parser.add_argument(
-        "--hist-line-dir",
+        "--hist-lines-dir",
         required=True,
         type=Path,
         help="Directory with history lines",
     )
     arg_parser.add_argument(
-        "--manifest-dir",
+        "--manifests-dir",
         required=True,
         type=Path,
         help="Directory with manifest files",
