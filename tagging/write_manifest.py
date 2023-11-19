@@ -25,7 +25,7 @@ def write_build_history_line(
     short_image_name: str,
     registry: str,
     owner: str,
-    hist_line_dir: Path,
+    hist_lines_dir: Path,
     filename: str,
     all_tags: list[str],
 ) -> None:
@@ -44,15 +44,15 @@ def write_build_history_line(
         ]
     )
     build_history_line = f"| {date_column} | {image_column} | {links_column} |"
-    hist_line_dir.mkdir(parents=True, exist_ok=True)
-    (hist_line_dir / f"{filename}.txt").write_text(build_history_line)
+    hist_lines_dir.mkdir(parents=True, exist_ok=True)
+    (hist_lines_dir / f"{filename}.txt").write_text(build_history_line)
 
 
 def write_manifest_file(
     short_image_name: str,
     registry: str,
     owner: str,
-    manifest_dir: Path,
+    manifests_dir: Path,
     filename: str,
     manifests: list[ManifestInterface],
     container: Container,
@@ -65,16 +65,16 @@ def write_manifest_file(
     ] + [manifest.markdown_piece(container) for manifest in manifests]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
-    manifest_dir.mkdir(parents=True, exist_ok=True)
-    (manifest_dir / f"{filename}.md").write_text(markdown_content)
+    manifests_dir.mkdir(parents=True, exist_ok=True)
+    (manifests_dir / f"{filename}.md").write_text(markdown_content)
 
 
 def write_manifest(
     short_image_name: str,
     registry: str,
     owner: str,
-    hist_line_dir: Path,
-    manifest_dir: Path,
+    hist_lines_dir: Path,
+    manifests_dir: Path,
 ) -> None:
     LOGGER.info(f"Creating manifests for image: {short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
@@ -91,13 +91,13 @@ def write_manifest(
             tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
         ]
         write_build_history_line(
-            short_image_name, registry, owner, hist_line_dir, filename, all_tags
+            short_image_name, registry, owner, hist_lines_dir, filename, all_tags
         )
         write_manifest_file(
             short_image_name,
             registry,
             owner,
-            manifest_dir,
+            manifests_dir,
             filename,
             manifests,
             container,
@@ -145,6 +145,6 @@ if __name__ == "__main__":
         args.short_image_name,
         args.registry,
         args.owner,
-        args.hist_line_dir,
-        args.manifest_dir,
+        args.hist_lines_dir,
+        args.manifests_dir,
     )
