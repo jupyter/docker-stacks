@@ -104,13 +104,13 @@ runs:
       if: inputs.fast-build == 'false'
       with:
         name: ml-notebook-aarch64-history_line
-        path: ${{ inputs.hist-line-dir }}
+        path: ${{ inputs.hist-lines-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
         name: ml-notebook-x86_64-history_line
-        path: ${{ inputs.hist-line-dir }}
+        path: ${{ inputs.hist-lines-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
@@ -233,13 +233,13 @@ runs:
       if: inputs.fast-build == 'false'
       with:
         name: ml-notebook-aarch64-manifest
-        path: ${{ inputs.manifest-dir }}
+        path: ${{ inputs.manifests-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
       with:
         name: ml-notebook-x86_64-manifest
-        path: ${{ inputs.manifest-dir }}
+        path: ${{ inputs.manifests-dir }}
     - name: Download artifact 📥
       uses: actions/download-artifact@v3
       if: inputs.fast-build == 'false'
