@@ -21,8 +21,8 @@ jobs:
       - name: Download all manifests and history lines 📥
         uses: ./.github/actions/download-manifests
         with:
-          hist-line-dir: /tmp/jupyter/hist_lines/
-          manifest-dir: /tmp/jupyter/manifests/
+          hist-lines-dir: /tmp/jupyter/hist_lines/
+          manifests-dir: /tmp/jupyter/manifests/
           fast-build: ${{ contains(github.event.pull_request.title, '[FAST_BUILD]') }}
       - name: Display structure of downloaded files 🔍️
         run: |
@@ -37,7 +37,7 @@ jobs:
           path: wiki/
 
       - name: Update wiki 🏷
-        run: python3 -m tagging.update_wiki --wiki-dir wiki/ --hist-line-dir /tmp/jupyter/hist_lines/ --manifest-dir /tmp/jupyter/manifests/
+        run: python3 -m tagging.update_wiki --wiki-dir wiki/ --hist-lines-dir /tmp/jupyter/hist_lines/ --manifests-dir /tmp/jupyter/manifests/
         shell: bash
 
       - name: Push Wiki to GitHub 📤
