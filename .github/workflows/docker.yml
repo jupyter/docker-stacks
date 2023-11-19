@@ -201,20 +201,20 @@ jobs:
   aarch64-pytorch:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
-      parentImage: scipy-notebook
+      parent-image: scipy-notebook
       image: pytorch-notebook
       platform: aarch64
-      runsOn: ARM64
+      runs-on: ARM64
     needs: [aarch64-scipy]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   x86_64-pytorch:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
-      parentImage: scipy-notebook
+      parent-image: scipy-notebook
       image: pytorch-notebook
       platform: x86_64
-      runsOn: ubuntu-latest
+      runs-on: ubuntu-latest
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
