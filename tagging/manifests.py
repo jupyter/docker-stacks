@@ -49,7 +49,7 @@ class ManifestHeader:
 
 ## Build Info
 
-- Build datetime: {build_timestamp}
+- Build timestamp: {build_timestamp}
 - Docker image: `{registry}/{owner}/{short_image_name}:{commit_hash_tag}`
 - Docker image size: {image_size}
 - Git commit SHA: [{commit_hash}](https://github.com/jupyter/docker-stacks/commit/{commit_hash})

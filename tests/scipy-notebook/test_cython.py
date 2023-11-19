@@ -19,7 +19,7 @@ def test_cython(container: TrackedContainer) -> None:
             "start.sh",
             "bash",
             "-c",
-            # We copy our data to temporary folder to be able to modify the directory
+            # We copy our data to a temporary folder to be able to modify the directory
             f"cp -r {cont_data_dir}/ /tmp/test/ && cd /tmp/test && python3 setup.py build_ext",
         ],
     )

@@ -233,7 +233,7 @@ This script is handy when you derive a new Dockerfile from this image and instal
 ### Others
 
 You can bypass the provided scripts and specify an arbitrary start command.
-If you do, keep in mind that features supported by the `start.sh` script and its kin will not function (e.g., `GRANT_SUDO`).
+If you do, keep in mind that features, supported by the `start.sh` script and its kin, will not function (e.g., `GRANT_SUDO`).
 
 ## Conda Environments
 
@@ -262,7 +262,7 @@ conda install --yes some-package && \
     fix-permissions "/home/${NB_USER}"
 ```
 
-### Using alternative channels
+### Using Alternative Channels
 
 Conda is configured by default to use only the [`conda-forge`](https://anaconda.org/conda-forge) channel.
 However, you can use alternative channels, either one-shot by overwriting the default channel in the installation command or by configuring `mamba` to use different channels.

@@ -12,8 +12,8 @@ def generate_matrix() -> dict[str, Any]:
     dockerfiles = sorted(file.name for file in THIS_DIR.glob("*.dockerfile"))
     return {
         "dockerfile": dockerfiles,
-        "runsOn": ["ubuntu-latest", "ARM64"],
-        "exclude": [{"dockerfile": "oracledb.dockerfile", "runsOn": "ARM64"}],
+        "runs-on": ["ubuntu-latest", "ARM64"],
+        "exclude": [{"dockerfile": "oracledb.dockerfile", "runs-on": "ARM64"}],
     }
 
 
