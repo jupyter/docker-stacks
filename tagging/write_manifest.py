@@ -114,13 +114,13 @@ if __name__ == "__main__":
         help="Short image name to create manifests for",
     )
     arg_parser.add_argument(
-        "--hist-line-dir",
+        "--hist-lines-dir",
         required=True,
         type=Path,
         help="Directory to save history line",
     )
     arg_parser.add_argument(
-        "--manifest-dir",
+        "--manifests-dir",
         required=True,
         type=Path,
         help="Directory to save manifest file",
