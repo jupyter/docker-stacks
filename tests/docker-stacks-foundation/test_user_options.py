@@ -74,7 +74,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     ), f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
 
     LOGGER.info(
-        f"Checking if home folder of {nb_user} contains the 'work' folder with appropriate permissions ..."
+        f"Checking if a home folder of {nb_user} contains the 'work' folder with appropriate permissions ..."
     )
     command = f'stat -c "%F %U %G" /home/{nb_user}/work'
     expected_output = f"directory {nb_user} users"
@@ -86,7 +86,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
 
 
 def test_chown_extra(container: TrackedContainer) -> None:
-    """Container should change the UID/GID of a comma separated
+    """Container should change the UID/GID of a comma-separated
     CHOWN_EXTRA list of folders."""
     logs = container.run_and_wait(
         timeout=120,  # chown is slow so give it some time
@@ -184,7 +184,7 @@ def test_group_add(container: TrackedContainer) -> None:
 def test_set_uid(container: TrackedContainer) -> None:
     """Container should run with the specified uid and NB_USER.
     The /home/jovyan directory will not be writable since it's owned by 1000:users.
-    Additionally verify that "--group-add=users" is suggested in a warning to restore
+    Additionally, verify that "--group-add=users" is suggested in a warning to restore
     write access.
     """
     logs = container.run_and_wait(
@@ -270,7 +270,7 @@ def test_jupyter_env_vars_to_unset(
 
 
 def test_secure_path(container: TrackedContainer, tmp_path: pathlib.Path) -> None:
-    """Make sure that the sudo command has conda's python (not system's) on path.
+    """Make sure that the sudo command has conda's python (not system's) on PATH.
     See <https://github.com/jupyter/docker-stacks/issues/1053>.
     """
     d = tmp_path / "data"

@@ -13,7 +13,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install all OS dependencies for fully functional Server
+# Install all OS dependencies for a fully functional Server
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
     # Common useful utilities
@@ -43,7 +43,7 @@ RUN update-alternatives --install /usr/bin/nano nano /bin/nano-tiny 10
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 
-# Add R mimetype option to specify how the plot returns from R to the browser
+# Add an R mimetype option to specify how the plot returns from R to the browser
 COPY --chown=${NB_UID}:${NB_GID} Rprofile.site /opt/conda/lib/R/etc/
 
 # Add setup scripts that may be used by downstream images or inherited images

@@ -1,4 +1,4 @@
-name: Test contributed recipes
+name: Test the contributed recipes
 
 on:
   schedule:
@@ -33,7 +33,7 @@ jobs:
         run: docs/using/recipe_code/generate_matrix.py >> $GITHUB_OUTPUT
 
   test-recipes:
-    runs-on: ${{ matrix.runsOn }}
+    runs-on: ${{ matrix.runs-on }}
     needs: generate-matrix
     if: github.repository_owner == 'jupyter'
 
@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build recipe 🛠
-        # We're pulling here to avoid accidentally using image which migt be present on aarch64 self-hosted runner
+        # We're pulling here to avoid accidentally using an image that might be present on aarch64 self-hosted runner
         run: docker build --pull --rm --force-rm --tag my-custom-image -f ./${{ matrix.dockerfile }} ./
         env:
           DOCKER_BUILDKIT: 1
@@ -52,4 +52,4 @@ jobs:
         shell: bash
 
     strategy:
-      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
