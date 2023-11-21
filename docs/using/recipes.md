@@ -401,7 +401,7 @@ This recipe only works for NBCassic with Jupyter Notebook < 7.
 It is recommended to use [jupyterlab-spellchecker](https://github.com/jupyterlab-contrib/spellchecker) in modern environments.
 ```
 
-```{literalinclude} recipe_code/spellcheck_notebookv6.dockerfile
+```{literalinclude} recipe_code/spellcheck_notebook_v6.dockerfile
 :language: docker
 ```
 
