@@ -48,7 +48,7 @@ It contains:
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/base-notebook/Dockerfile) |
 [Quay.io image tags](https://quay.io/repository/jupyter/base-notebook?tab=tags)
 
-`jupyter/base-notebook` adds base Jupyter Applications like JupyterLab, Jupyter Notebook, JupyterHub and NBClassic
+`jupyter/base-notebook` adds base Jupyter Applications like JupyterLab, Jupyter Notebook, JupyterHub, and NBClassic
 and serves as the basis for all other stacks besides `jupyter/docker-stacks-foundation`.
 
 It contains:
@@ -83,7 +83,7 @@ It contains:
   [git](https://git-scm.com/),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`),
   [tzdata](https://www.iana.org/time-zones),
-  [unzip](https://code.launchpad.net/ubuntu/+source/unzip)
+  [unzip](https://code.launchpad.net/ubuntu/+source/unzip),
   and [vi](https://www.vim.org) (actually `vim-tiny`),
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 
@@ -193,7 +193,7 @@ It contains:
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/datascience-notebook/Dockerfile) |
 [Quay.io image tags](https://quay.io/repository/jupyter/datascience-notebook?tab=tags)
 
-`jupyter/datascience-notebook` includes libraries for data analysis from the Python, and R, and Julia communities.
+`jupyter/datascience-notebook` includes libraries for data analysis from the Python, R, and Julia communities.
 
 - Everything in the `jupyter/scipy-notebook`, `jupyter/r-notebook`, and `jupyter/julia-notebook` images and their ancestor
   images
@@ -244,7 +244,7 @@ Every Monday and whenever a pull request is merged, images are rebuilt and pushe
 
 Whenever a docker image is pushed to the container registry, it is tagged with:
 
-- a `latest` tag
+- the `latest` tag
 - a 12-character git commit SHA like `1ffe43816ba9`
 - a date formatted like `2023-01-30`
 - OS version like `ubuntu-22.04`

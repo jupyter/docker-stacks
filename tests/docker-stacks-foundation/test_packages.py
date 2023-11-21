@@ -4,7 +4,7 @@
 """
 test_packages
 ~~~~~~~~~~~~~~~
-This test module tests if R and Python packages installed can be imported.
+This test module tests if the R and Python packages installed can be imported.
 It's a basic test aiming to prove that the package is working properly.
 
 The goal is to detect import errors that can be caused by incompatibilities between packages, for example:

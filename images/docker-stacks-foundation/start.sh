@@ -4,9 +4,9 @@
 
 set -e
 
-# The _log function is used for everything this script wants to log. It will
-# always log errors and warnings, but can be silenced for other messages
-# by setting JUPYTER_DOCKER_STACKS_QUIET environment variable.
+# The _log function is used for everything this script wants to log.
+# It will always log errors and warnings but can be silenced for other messages
+# by setting the JUPYTER_DOCKER_STACKS_QUIET environment variable.
 _log () {
     if [[ "$*" == "ERROR:"* ]] || [[ "$*" == "WARNING:"* ]] || [[ "${JUPYTER_DOCKER_STACKS_QUIET}" == "" ]]; then
         echo "$@"
@@ -62,7 +62,7 @@ if [ "$(id -u)" == 0 ]; then
             _log "- home dir: /home/jovyan -> /home/${NB_USER}"
         fi
     elif ! id -u "${NB_USER}" &> /dev/null; then
-        _log "ERROR: Neither the jovyan user or '${NB_USER}' exists. This could be the result of stopping and starting, the container with a different NB_USER environment variable."
+        _log "ERROR: Neither the jovyan user nor '${NB_USER}' exists. This could be the result of stopping and starting, the container with a different NB_USER environment variable."
         exit 1
     fi
     # Ensure the desired user (NB_USER) gets its desired user id (NB_UID) and is
