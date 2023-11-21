@@ -150,7 +150,7 @@ repos:
     hooks:
       - id: blacken-docs
         # --skip-errors is added to allow us to have python syntax highlighting even if
-        # the python code blocks includes jupyter specific additions such as % or !
+        # the python code blocks include jupyter-specific additions such as % or !
         # See https://github.com/adamchainz/blacken-docs/issues/127 for an upstream
         # feature request about this.
         args: [--target-version=py39, --skip-errors]

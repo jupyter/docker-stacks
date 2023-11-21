@@ -12,7 +12,7 @@ Following these steps will:
 4. Update the [list of community stacks](../using/selecting.md#community-stacks) in this documentation to include your image.
 
 This approach mirrors how we build and share the core stack images.
-Feel free to follow it or pave your own path using alternative services and build tools.
+Feel free to follow it or pave your path using alternative services and build tools.
 
 ## Creating a Project
 
