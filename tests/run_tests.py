@@ -24,7 +24,7 @@ def test_image(short_image_name: str, registry: str, owner: str) -> None:
                 "-m",
                 "pytest",
                 "--numprocesses",
-                f"{max(multiprocessing.cpu_count(), 2)}",
+                f"{max(multiprocessing.cpu_count(), 4)}",
                 "-m",
                 "not info",
                 test_dirs,
