@@ -4,8 +4,7 @@ on:
   schedule:
     # Images are rebuilt at 03:00 on Monday UTC
     # So we're testing recipes one hour in advance
-    #
-    # They are also tested after building images
+    # They will also be tested after building images
     - cron: "0 2 * * 1"
   pull_request:
     paths:

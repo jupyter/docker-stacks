@@ -3,7 +3,6 @@
 # Distributed under the terms of the Modified BSD License.
 import argparse
 import logging
-import multiprocessing
 
 import plumbum
 
@@ -24,7 +23,7 @@ def test_image(short_image_name: str, registry: str, owner: str) -> None:
                 "-m",
                 "pytest",
                 "--numprocesses",
-                f"{max(multiprocessing.cpu_count(), 2)}",
+                "auto",
                 "-m",
                 "not info",
                 test_dirs,
