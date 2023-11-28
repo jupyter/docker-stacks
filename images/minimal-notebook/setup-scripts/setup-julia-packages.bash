@@ -15,7 +15,7 @@ set -exuo pipefail
 # If the architecture the container runs on is different, precompilation may still have to be
 # re-done on first startup - but this *should* catch most of the issues.
 # See https://github.com/jupyter/docker-stacks/issues/2015 for more information
-if [ $(uname -m)== "x86_64" ]; then
+if [ "$(uname -m)" == "x86_64" ]; then
     export JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1)"
 fi
 
