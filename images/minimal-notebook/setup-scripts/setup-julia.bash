@@ -4,7 +4,7 @@ set -exuo pipefail
 # - Run as the root user
 # - The JULIA_PKGDIR environment variable is set
 
-# Get last stable version of Julia
+# Get the last stable version of Julia
 # https://github.com/JuliaLang/www.julialang.org/issues/878#issuecomment-749234813
 
 JULIA_LATEST_STABLE_INSTALLER_URLS=$(
