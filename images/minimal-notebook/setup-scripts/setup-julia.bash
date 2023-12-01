@@ -7,29 +7,28 @@ set -exuo pipefail
 # Get the last stable version of Julia
 # https://github.com/JuliaLang/www.julialang.org/issues/878#issuecomment-749234813
 
-JULIA_LATEST_STABLE_INSTALLERS=$(
+JULIA_LATEST_INFO=$(
     wget -O - -o /dev/null 'https://julialang-s3.julialang.org/bin/versions.json' |
     jq '
         with_entries(select(.value.stable==true)) |
         to_entries |
         max_by(.key).value.files |
         .[]
-    '
+    ' |
+    jq "select(.triplet == \"$(uname -m)-linux-gnu\")"
 )
-JULIA_INSTALLER_URL=$(
-    echo "$JULIA_LATEST_STABLE_INSTALLERS" |
-    jq --raw-output "select(.triplet == \"$(uname -m)-linux-gnu\") | .url"
-)
+JULIA_INSTALLER_URL=$(echo "${JULIA_LATEST_INFO}" | jq --raw-output ".url")
+JULIA_VERSION=$(echo "${JULIA_LATEST_INFO}" | jq --raw-output ".version")
 
 # Download and install Julia
 cd /tmp
-mkdir "/opt/julia/"
+mkdir "/opt/julia-${JULIA_VERSION}"
 curl --progress-bar --location --output /tmp/julia.tar.gz "${JULIA_INSTALLER_URL}"
-tar xzf /tmp/julia.tar.gz -C "/opt/julia" --strip-components=1
+tar xzf /tmp/julia.tar.gz -C "/opt/julia-${JULIA_VERSION}" --strip-components=1
 rm /tmp/julia.tar.gz
 
 # Link Julia installed version to /usr/local/bin, so julia launches it
-ln -fs /opt/julia/bin/julia /usr/local/bin/julia
+ln -fs /opt/julia-*/bin/julia /usr/local/bin/julia
 
 # Tell Julia where conda libraries are
 mkdir -p /etc/julia
