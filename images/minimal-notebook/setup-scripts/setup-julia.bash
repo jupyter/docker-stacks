@@ -7,7 +7,7 @@ set -exuo pipefail
 # Get the last stable version of Julia
 # https://github.com/JuliaLang/www.julialang.org/issues/878#issuecomment-749234813
 
-JULIA_LATEST_STABLE_INSTALLER_URLS=$(
+JULIA_LATEST_STABLE_INSTALLERS=$(
     wget -O - -o /dev/null 'https://julialang-s3.julialang.org/bin/versions.json' |
     jq '
         with_entries(select(.value.stable==true)) |
@@ -17,8 +17,8 @@ JULIA_LATEST_STABLE_INSTALLER_URLS=$(
     '
 )
 JULIA_INSTALLER_URL=$(
-    echo "$JULIA_LATEST_STABLE_INSTALLER_URLS" |
-    jq "select(.triplet == \"$(uname -m)-linux-gnu\") | .url"
+    echo "$JULIA_LATEST_STABLE_INSTALLERS" |
+    jq --raw-output "select(.triplet == \"$(uname -m)-linux-gnu\") | .url"
 )
 
 # Download and install Julia
