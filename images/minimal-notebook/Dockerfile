@@ -19,6 +19,7 @@ RUN apt-get update --yes && \
     # Common useful utilities
     curl \
     git \
+    jq \
     nano-tiny \
     tzdata \
     unzip \
