@@ -21,7 +21,6 @@ JULIA_INSTALLER_URL=$(echo "${JULIA_LATEST_INFO}" | jq --raw-output ".url")
 JULIA_VERSION=$(echo "${JULIA_LATEST_INFO}" | jq --raw-output ".version")
 
 # Download and install Julia
-cd /tmp
 mkdir "/opt/julia-${JULIA_VERSION}"
 curl --progress-bar --location --output /tmp/julia.tar.gz "${JULIA_INSTALLER_URL}"
 tar xzf /tmp/julia.tar.gz -C "/opt/julia-${JULIA_VERSION}" --strip-components=1
