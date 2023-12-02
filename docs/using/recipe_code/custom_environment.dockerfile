@@ -28,17 +28,9 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --nam
 RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
     'flake8'
 
-# Creating a startup hook, which will activate our custom environment by default in Jupyter Notebook
-# More info about startup hooks: https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#startup-hooks
-# You can comment this section to keep the default environment in Jupyter Notebook
+# This changes a startup hook, which will activate our custom environment by default in Jupyter Notebook and Terminal
+# More information here: https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/activate_conda_env.sh
 USER root
-RUN activate_custom_env_script=/usr/local/bin/before-notebook.d/activate_custom_env.sh && \
-    echo "#!/bin/bash" > ${activate_custom_env_script} && \
-    echo "eval \"$(conda shell.bash activate "${env_name}")\"" >> ${activate_custom_env_script} && \
-    chmod +x ${activate_custom_env_script}
+RUN echo conda activate "${env_name}" >> /usr/local/bin/before-notebook.d/activate_conda_env.sh
 
 USER ${NB_UID}
-
-# Making this environment default in Terminal
-# You can comment this line to keep the default environment in a Terminal
-RUN echo "conda activate ${env_name}" >> "${HOME}/.bashrc"
