@@ -32,6 +32,7 @@ It contains:
 - Package managers
   - [conda](https://github.com/conda/conda): "cross-platform, language-agnostic binary package manager".
   - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
+  - [plumbum](https://plumbum.readthedocs.io/en/latest/) to easily run command-line-tools.
 - Unprivileged user `jovyan` (`uid=1000`, configurable, [see options in the common features section](./common.md) of this documentation) in group `users` (`gid=100`)
   with ownership over the `/home/jovyan` and `/opt/conda` paths
 - `tini` as the container entry point
