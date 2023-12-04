@@ -9,15 +9,10 @@
 import os
 import platform
 import shutil
+import subprocess
 from pathlib import Path
 
-import plumbum
 import requests
-
-curl = plumbum.local["curl"]
-ln = plumbum.local["ln"]
-chown = plumbum.local["chown"]
-fix_permissions = plumbum.local["fix-permissions"]
 
 
 def unify_aarch64(platform: str) -> str:
@@ -29,8 +24,10 @@ def unify_aarch64(platform: str) -> str:
 
 
 def get_latest_julia_url() -> tuple[str, str]:
-    # Get the last stable version of Julia
-    # https://github.com/JuliaLang/www.julialang.org/issues/878#issuecomment-749234813
+    """
+    Get the last stable version of Julia
+    Based on: https://github.com/JuliaLang/www.julialang.org/issues/878#issuecomment-749234813
+    """
 
     versions = requests.get(
         "https://julialang-s3.julialang.org/bin/versions.json"
@@ -43,17 +40,27 @@ def get_latest_julia_url() -> tuple[str, str]:
 
 
 def download_julia(julia_url: str) -> None:
+    """
+    Downloads and unpacks julia
+    The resulting julia directory is "/opt/julia-VERSION/"
+    """
     tmp_file = Path("/tmp/julia.tar.gz")
-    curl["--progress-bar", "--location", "--output", tmp_file, julia_url] & plumbum.FG
+    subprocess.check_call(
+        ["curl", "--progress-bar", "--location", "--output", tmp_file, julia_url]
+    )
     shutil.unpack_archive(tmp_file, "/opt/")
     tmp_file.unlink()
 
 
 def prepare_julia(julia_version: str) -> None:
+    """
+    Creates /usr/local/bin/julia symlink
+    Make Julia aware of conda libraries
+    Creates a directory for Julia user libraries
+    """
     # Link Julia installed version to /usr/local/bin, so julia launches it
-    (
-        ln["-fs", f"/opt/julia-{julia_version}/bin/julia", "/usr/local/bin/julia"]
-        & plumbum.FG
+    subprocess.check_call(
+        ["ln", "-fs", f"/opt/julia-{julia_version}/bin/julia", "/usr/local/bin/julia"]
     )
 
     # Tell Julia where conda libraries are
@@ -65,8 +72,8 @@ def prepare_julia(julia_version: str) -> None:
     # Create JULIA_PKGDIR, where user libraries are installed
     JULIA_PKGDIR = Path(os.environ["JULIA_PKGDIR"])
     JULIA_PKGDIR.mkdir()
-    chown[os.environ["NB_USER"], JULIA_PKGDIR] & plumbum.FG
-    fix_permissions[JULIA_PKGDIR] & plumbum.FG
+    subprocess.check_call(["chown", os.environ["NB_USER"], JULIA_PKGDIR])
+    subprocess.check_call(["fix_permissions", JULIA_PKGDIR])
 
 
 if __name__ == "__main__":
