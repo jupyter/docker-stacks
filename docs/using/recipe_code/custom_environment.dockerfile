@@ -32,7 +32,7 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
 USER root
 RUN \
     # This changes a startup hook, which will activate our custom environment for the process
-    echo conda activate "${env_name}" >> /usr/local/bin/before-notebook.d/activate_conda_env.sh && \
+    echo conda activate "${env_name}" >> /usr/local/bin/before-notebook.d/10activate-conda-env.sh && \
     # This makes the custom environment default in Jupyter Terminals for all users which might be created later
     echo conda activate "${env_name}" >> /etc/skel/.bashrc && \
     # This makes the custom environment default in Jupyter Terminals for already existing NB_USER

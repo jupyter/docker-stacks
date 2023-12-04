@@ -136,7 +136,7 @@ USER root
 RUN mkdir /usr/local/bin/start-notebook.d && \
     mkdir /usr/local/bin/before-notebook.d
 
-COPY activate_conda_env.sh /usr/local/bin/before-notebook.d/
+COPY 10activate-conda-env.sh /usr/local/bin/before-notebook.d/
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
