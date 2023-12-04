@@ -81,7 +81,6 @@ It contains:
 - Common useful utilities like
   [curl](https://curl.se),
   [git](https://git-scm.com/),
-  [jq](https://jqlang.github.io/jq/),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`),
   [tzdata](https://www.iana.org/time-zones),
   [unzip](https://code.launchpad.net/ubuntu/+source/unzip),
