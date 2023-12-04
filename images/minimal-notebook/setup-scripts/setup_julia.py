@@ -73,7 +73,7 @@ def prepare_julia(julia_version: str) -> None:
     JULIA_PKGDIR = Path(os.environ["JULIA_PKGDIR"])
     JULIA_PKGDIR.mkdir()
     subprocess.check_call(["chown", os.environ["NB_USER"], JULIA_PKGDIR])
-    subprocess.check_call(["fix_permissions", JULIA_PKGDIR])
+    subprocess.check_call(["fix-permissions", JULIA_PKGDIR])
 
 
 if __name__ == "__main__":
