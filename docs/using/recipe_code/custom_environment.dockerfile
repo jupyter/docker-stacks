@@ -28,12 +28,16 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/python" -m ipykernel install --user --nam
 RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
     'flake8'
 
-# Uncomment this section to activate custom environment by default
+# This changes the custom Python kernel so that the custom environment will
+# be activated for the respective Jupyter Notebook and Jupyter Console
+RUN sed -i.bak ":a;N;\$!ba;s| }\n}| },\n \"env\": {\n  \"XML_CATALOG_FILES\": \"\",\n  \"PATH\": \"${CONDA_DIR}/envs/${env_name}/bin:\$PATH\",\n  \"CONDA_PREFIX\": \"${CONDA_DIR}/envs/${env_name}\",\n  \"CONDA_PROMPT_MODIFIER\": \"\(${env_name}\) \",\n  \"CONDA_SHLVL\": \"2\",\n  \"CONDA_DEFAULT_ENV\": \"${env_name}\",\n  \"CONDA_PREFIX_1\": \"${CONDA_DIR}\"\n }\n}|g" "/home/${NB_USER}/.local/share/jupyter/kernels/${env_name}/kernel.json"
+
+# Comment the line above and uncomment the section below insead to activate the custom environment by default
 # Note: uncommenting this section makes "${env_name}" default both for Jupyter Notebook and Terminals
 # More information here: https://github.com/jupyter/docker-stacks/pull/2047
 # USER root
 # RUN \
-#     # This changes a startup hook, which will activate our custom environment for the process
+#     # This changes a startup hook, which will activate the custom environment for the process
 #     echo conda activate "${env_name}" >> /usr/local/bin/before-notebook.d/10activate-conda-env.sh && \
 #     # This makes the custom environment default in Jupyter Terminals for all users which might be created later
 #     echo conda activate "${env_name}" >> /etc/skel/.bashrc && \
