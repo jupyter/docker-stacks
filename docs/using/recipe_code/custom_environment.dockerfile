@@ -31,7 +31,27 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
 # This changes the custom Python kernel so that the custom environment will
 # be activated for the respective Jupyter Notebook and Jupyter Console
 # hadolint ignore=DL3059
-RUN sed -i.bak ":a;N;\$!ba;s| }\n}| },\n \"env\": {\n  \"XML_CATALOG_FILES\": \"\",\n  \"PATH\": \"${CONDA_DIR}/envs/${env_name}/bin:\$PATH\",\n  \"CONDA_PREFIX\": \"${CONDA_DIR}/envs/${env_name}\",\n  \"CONDA_PROMPT_MODIFIER\": \"\(${env_name}\) \",\n  \"CONDA_SHLVL\": \"2\",\n  \"CONDA_DEFAULT_ENV\": \"${env_name}\",\n  \"CONDA_PREFIX_1\": \"${CONDA_DIR}\"\n }\n}|g" "/home/${NB_USER}/.local/share/jupyter/kernels/${env_name}/kernel.json"
+RUN python <<HEREDOC
+from pathlib import Path
+import json
+
+
+env_name = "${env_name}"
+
+file = Path.home() / f".local/share/jupyter/kernels/{env_name}/kernel.json"
+content = json.loads(file.read_text())
+print(file.read_text())
+content["env"] = {
+    "XML_CATALOG_FILES": "",
+    "PATH": f"/opt/conda/envs/{env_name}/bin:$PATH",
+    "CONDA_PREFIX": f"/opt/conda/envs/{env_name}",
+    "CONDA_PROMPT_MODIFIER": f"({env_name}) ",
+    "CONDA_SHLVL": "2",
+    "CONDA_DEFAULT_ENV": env_name,
+    "CONDA_PREFIX_1": "/opt/conda",
+}
+file.write_text(json.dumps(content, indent=2))
+HEREDOC
 
 # Comment the line above and uncomment the section below insead to activate the custom environment by default
 # Note: uncommenting this section makes "${env_name}" default both for Jupyter Notebook and Terminals
