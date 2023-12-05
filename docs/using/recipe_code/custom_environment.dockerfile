@@ -32,9 +32,8 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
 # be activated for the respective Jupyter Notebook and Jupyter Console
 # hadolint ignore=DL3059
 RUN python <<HEREDOC
-from pathlib import Path
 import json
-
+from pathlib import Path
 
 env_name = "${env_name}"
 
