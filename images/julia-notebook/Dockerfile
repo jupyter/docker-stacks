@@ -19,7 +19,7 @@ ENV JULIA_DEPOT_PATH=/opt/julia \
     JULIA_PKGDIR=/opt/julia
 
 # Setup Julia
-RUN /opt/setup-scripts/setup-julia.bash
+RUN /opt/setup-scripts/setup_julia.py
 
 USER ${NB_UID}
 

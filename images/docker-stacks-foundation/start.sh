@@ -129,9 +129,6 @@ if [ "$(id -u)" == 0 ]; then
         done
     fi
 
-    # Update potentially outdated environment variables since the image build
-    export XDG_CACHE_HOME="/home/${NB_USER}/.cache"
-
     # Prepend ${CONDA_DIR}/bin to sudo secure_path
     sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"${CONDA_DIR}/bin:\1\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
 
