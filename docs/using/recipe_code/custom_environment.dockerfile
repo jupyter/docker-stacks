@@ -33,20 +33,22 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
 # hadolint ignore=DL3059
 RUN python <<HEREDOC
 import json
+import os
 from pathlib import Path
 
 env_name = "${env_name}"
+CONDA_DIR = os.environ["CONDA_DIR"]
 
 file = Path.home() / f".local/share/jupyter/kernels/{env_name}/kernel.json"
 content = json.loads(file.read_text())
 content["env"] = {
     "XML_CATALOG_FILES": "",
-    "PATH": f"/opt/conda/envs/{env_name}/bin:$PATH",
-    "CONDA_PREFIX": f"/opt/conda/envs/{env_name}",
+    "PATH": f"{CONDA_DIR}/envs/{env_name}/bin:$PATH",
+    "CONDA_PREFIX": f"{CONDA_DIR}/envs/{env_name}",
     "CONDA_PROMPT_MODIFIER": f"({env_name}) ",
     "CONDA_SHLVL": "2",
     "CONDA_DEFAULT_ENV": env_name,
-    "CONDA_PREFIX_1": "/opt/conda",
+    "CONDA_PREFIX_1": CONDA_DIR,
 }
 file.write_text(json.dumps(content, indent=2))
 HEREDOC
