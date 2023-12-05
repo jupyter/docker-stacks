@@ -30,6 +30,7 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
 
 # This changes the custom Python kernel so that the custom environment will
 # be activated for the respective Jupyter Notebook and Jupyter Console
+# hadolint ignore=DL3059
 RUN sed -i.bak ":a;N;\$!ba;s| }\n}| },\n \"env\": {\n  \"XML_CATALOG_FILES\": \"\",\n  \"PATH\": \"${CONDA_DIR}/envs/${env_name}/bin:\$PATH\",\n  \"CONDA_PREFIX\": \"${CONDA_DIR}/envs/${env_name}\",\n  \"CONDA_PROMPT_MODIFIER\": \"\(${env_name}\) \",\n  \"CONDA_SHLVL\": \"2\",\n  \"CONDA_DEFAULT_ENV\": \"${env_name}\",\n  \"CONDA_PREFIX_1\": \"${CONDA_DIR}\"\n }\n}|g" "/home/${NB_USER}/.local/share/jupyter/kernels/${env_name}/kernel.json"
 
 # Comment the line above and uncomment the section below insead to activate the custom environment by default
