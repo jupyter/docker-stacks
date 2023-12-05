@@ -40,7 +40,6 @@ env_name = "${env_name}"
 
 file = Path.home() / f".local/share/jupyter/kernels/{env_name}/kernel.json"
 content = json.loads(file.read_text())
-print(file.read_text())
 content["env"] = {
     "XML_CATALOG_FILES": "",
     "PATH": f"/opt/conda/envs/{env_name}/bin:$PATH",
