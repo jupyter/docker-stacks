@@ -53,7 +53,7 @@ content["env"] = {
 file.write_text(json.dumps(content, indent=2))
 HEREDOC
 
-# Comment the line above and uncomment the section below insead to activate the custom environment by default
+# Comment the section above and uncomment the section below instead to activate the custom environment by default
 # Note: uncommenting this section makes "${env_name}" default both for Jupyter Notebook and Terminals
 # More information here: https://github.com/jupyter/docker-stacks/pull/2047
 # USER root
