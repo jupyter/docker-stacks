@@ -50,7 +50,7 @@ content["env"] = {
     "CONDA_DEFAULT_ENV": env_name,
     "CONDA_PREFIX_1": CONDA_DIR,
 }
-file.write_text(json.dumps(content, indent=2))
+file.write_text(json.dumps(content, indent=1))
 HEREDOC
 
 # Comment the section above and uncomment the section below instead to activate the custom environment by default
