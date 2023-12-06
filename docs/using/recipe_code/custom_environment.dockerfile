@@ -31,29 +31,9 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
 # This changes the custom Python kernel so that the custom environment will
 # be activated for the respective Jupyter Notebook and Jupyter Console
 # hadolint ignore=DL3059
-RUN python <<HEREDOC
-import json
-import os
-from pathlib import Path
+RUN python /opt/setup-scripts/activate_notebook_custom_env.py "{env_name}"
 
-env_name = "${env_name}"
-CONDA_DIR = os.environ["CONDA_DIR"]
-
-file = Path.home() / f".local/share/jupyter/kernels/{env_name}/kernel.json"
-content = json.loads(file.read_text())
-content["env"] = {
-    "XML_CATALOG_FILES": "",
-    "PATH": f"{CONDA_DIR}/envs/{env_name}/bin:$PATH",
-    "CONDA_PREFIX": f"{CONDA_DIR}/envs/{env_name}",
-    "CONDA_PROMPT_MODIFIER": f"({env_name}) ",
-    "CONDA_SHLVL": "2",
-    "CONDA_DEFAULT_ENV": env_name,
-    "CONDA_PREFIX_1": CONDA_DIR,
-}
-file.write_text(json.dumps(content, indent=1))
-HEREDOC
-
-# Comment the section above and uncomment the section below instead to activate the custom environment by default
+# Comment the line above and uncomment the section below instead to activate the custom environment by default
 # Note: uncommenting this section makes "${env_name}" default both for Jupyter Notebook and Terminals
 # More information here: https://github.com/jupyter/docker-stacks/pull/2047
 # USER root
