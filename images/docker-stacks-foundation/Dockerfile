@@ -119,8 +119,8 @@ RUN set -x && \
     rm micromamba && \
     # Temporary fix till mamba 1.5.5 is released
     # Download mamba.py after merged fix for `mamba clean`: https://github.com/mamba-org/mamba/pull/3040
-    wget https://raw.githubusercontent.com/mamba-org/mamba/cf9c063479c7bd32f1e6e8adfd04a1e15ba12981/mamba/mamba/mamba.py \
-        -o /opt/conda/lib/python3.11/site-packages/mamba/mamba.py && \
+    wget --progress=dot:giga https://raw.githubusercontent.com/mamba-org/mamba/cf9c063479c7bd32f1e6e8adfd04a1e15ba12981/mamba/mamba/mamba.py \
+        -O /opt/conda/lib/python3.11/site-packages/mamba/mamba.py && \
     # Pin major.minor version of python
     mamba list python | grep '^python ' | tr -s ' ' | cut -d ' ' -f 1,2 >> "${CONDA_DIR}/conda-meta/pinned" && \
     mamba clean --all -f -y && \
