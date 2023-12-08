@@ -106,5 +106,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}
-          path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst
+          path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst.zip
           retention-days: 3

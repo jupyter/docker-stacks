@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+
 set -ex
 
 GITHUB_RUNNER_USER="runner-user"
@@ -34,6 +37,9 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.
     tee /etc/apt/sources.list.d/docker.list > /dev/null
 apt-get update --yes
 apt-get install --yes docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+echo "Installing zip and unzip"
+apt-get install --yes zip unzip
 
 usermod -aG docker ${GITHUB_RUNNER_USER}
 chmod 666 /var/run/docker.sock
