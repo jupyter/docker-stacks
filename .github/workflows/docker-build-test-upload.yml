@@ -69,7 +69,7 @@ jobs:
       - name: Run tests in background ✅
         run: |
           mkdir -p /tmp/jupyter/tests/
-          tests/run_tests_in_background.sh python3 -m tests.run_tests --short-image-name ${{ inputs.image }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }} > tmp/jupyter/tests/logs 2> tmp/jupyter/tests/error_logs &
+          tests/run_tests_in_background.sh python3 -m tests.run_tests --short-image-name ${{ inputs.image }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }} > /tmp/jupyter/tests/logs 2> /tmp/jupyter/tests/error_logs &
         shell: bash
 
       - name: Write tags file 🏷
