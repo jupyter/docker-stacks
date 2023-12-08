@@ -16,9 +16,8 @@ content["env"] = {
     "PATH": f"{CONDA_DIR}/envs/{env_name}/bin:$PATH",
     "CONDA_PREFIX": f"{CONDA_DIR}/envs/{env_name}",
     "CONDA_PROMPT_MODIFIER": f"({env_name}) ",
-    "CONDA_SHLVL": "2",
+    "CONDA_SHLVL": "1",
     "CONDA_DEFAULT_ENV": env_name,
-    "CONDA_PREFIX_1": CONDA_DIR,
 }
 
 file.write_text(json.dumps(content, indent=1))
