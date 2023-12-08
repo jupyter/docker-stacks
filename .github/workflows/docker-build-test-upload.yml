@@ -66,8 +66,10 @@ jobs:
           BUILDKIT_PROGRESS: plain
         shell: bash
 
-      - name: Run tests ✅
-        run: python3 -m tests.run_tests --short-image-name ${{ inputs.image }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
+      - name: Run tests in background ✅
+        run: |
+          mkdir /tmp/jupyter/tests/
+          tests/run_tests_in_background.sh python3 -m tests.run_tests --short-image-name ${{ inputs.image }} --jupyter-tests-dir /tmp/jupyter/tests --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }} > tmp/jupyter/tests/logs 2> tmp/jupyter/tests/error_logs &
         shell: bash
 
       - name: Write tags file 🏷
@@ -108,3 +110,8 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}
           path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst
           retention-days: 3
+
+      - name: Wait for tests to finish ✅
+        if: always()
+        run: python3 -m tests.wait_to_finish --tests-results-dir /tmp/jupyter/tests/
+        shell: bash
