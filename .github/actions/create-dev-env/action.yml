@@ -8,7 +8,7 @@ runs:
     # See: https://github.com/actions/setup-python/issues/108
     # python3 is manually preinstalled in the aarch64 VM self-hosted runner
     - name: Set Up Python 🐍
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: 3.x
       if: runner.arch == 'X64'
