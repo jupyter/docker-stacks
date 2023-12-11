@@ -19,8 +19,12 @@ def wait_to_finish(tests_results_dir: Path) -> int:
     for attempt in range(300):
         LOGGER.info(f"attempt #{attempt}")
         if rc_file.exists():
+            sys.stdout.flush()
+            sys.stderr.flush()
             print(logs_file.read_text(), file=sys.stdout)
+            sys.stdout.flush()
             print(error_logs_file.read_text(), file=sys.stderr)
+            sys.stderr.flush()
             rc = int(rc_file.read_text())
             LOGGER.info(f"rc file was found, rc: {rc}")
             return rc
