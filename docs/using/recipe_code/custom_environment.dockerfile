@@ -37,4 +37,4 @@ RUN /opt/setup-scripts/activate_notebook_custom_env.py "${env_name}"
 # to activate the "${env_name}" custom environment default
 # both for Jupyter Notebook and Terminals
 # More information here: https://github.com/jupyter/docker-stacks/pull/2047
-ENV DOCKER_STACKS_CONDA_ENV "${env_name}}"
+ENV DOCKER_STACKS_CONDA_ENV "${env_name}"
