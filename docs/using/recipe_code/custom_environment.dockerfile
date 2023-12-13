@@ -34,7 +34,7 @@ RUN "${CONDA_DIR}/envs/${env_name}/bin/pip" install --no-cache-dir \
 RUN /opt/setup-scripts/activate_notebook_custom_env.py "${env_name}"
 
 # Comment the line above and uncomment the line below instead
-# to activate the "${env_name}" custom environment default
-# both for Jupyter Notebook and Terminals
+# to activate the "${env_name}" custom environment by default
+# for both Jupyter Notebook(s) and Terminal(s)
 # More information here: https://github.com/jupyter/docker-stacks/pull/2047
 ENV DOCKER_STACKS_CONDA_ENV "${env_name}"
