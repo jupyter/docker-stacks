@@ -17,7 +17,7 @@ fi
 
 echo "Running hooks in: ${1} as uid: $(id -u) gid: $(id -g)"
 for f in "${1}/"*; do
-    # Hadling a case when the directory is empty
+    # Handling a case when the directory is empty
     [ -e "${f}" ] || continue
     case "${f}" in
         *.sh)
