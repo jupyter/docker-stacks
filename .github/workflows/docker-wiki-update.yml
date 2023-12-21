@@ -24,19 +24,11 @@ jobs:
           pattern: "*-history_line"
           path: /tmp/jupyter/hist_lines/
 
-      - name: List the history lines directory 🔍️
-        run: ls -R /tmp/jupyter/hist_lines/
-        shell: bash
-
       - name: Download all manifests 📥
         uses: actions/download-artifact@v4
         with:
           pattern: "*-manifest"
           path: /tmp/jupyter/manifests/
-
-      - name: List the manifests directory 🔍️
-        run: ls -R /tmp/jupyter/manifests/
-        shell: bash
 
       - name: Checkout Wiki Repo 📃
         uses: actions/checkout@v4
