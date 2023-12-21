@@ -125,9 +125,9 @@ for information about how to contribute recipes, features, tests, and community-
 
 ## Alternatives
 
-- [rocker/binder](https://rocker-project.org/images/versioned/binder.html) - From the R
-  focused [rocker-project](https://rocker-project.org), lets you run both RStudio and Jupyter
-  either standalone or in a JupyterHub.
+- [rocker/binder](https://rocker-project.org/images/versioned/binder.html) -
+  From the R focused [rocker-project](https://rocker-project.org),
+  lets you run both RStudio and Jupyter either standalone or in a JupyterHub
 - [jupyter/repo2docker](https://github.com/jupyterhub/repo2docker) -
   Turn git repositories into Jupyter-enabled Docker Images
 - [openshift/source-to-image](https://github.com/openshift/source-to-image) -
