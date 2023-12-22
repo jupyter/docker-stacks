@@ -29,7 +29,7 @@ language = "en"
 html_theme = "alabaster"
 html_static_path = ["_static"]
 
-# The file above was generated using sphinx 6.2.1 with this command:
+# The file above was generated using sphinx 7.2.6 with this command:
 # sphinx-quickstart --project "docker-stacks" --author "Project Jupyter" -v "latest" -r "latest" -l en --no-sep --no-makefile --no-batchfile
 # These are custom options for this project
 
