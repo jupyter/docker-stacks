@@ -2,15 +2,20 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import json
-import os
 from pathlib import Path
+import warnings
 
 import requests
+
+# Import Jupyter paths ignoring deprecation warning that does not affect this script
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
+    from jupyter_core import paths
 
 # Several operations below deliberately don't check for possible errors
 # As this is a healthcheck, it should succeed or raise an exception on error
 
-runtime_dir = Path("/home/") / os.environ["NB_USER"] / ".local/share/jupyter/runtime/"
+runtime_dir = Path(paths.jupyter_runtime_dir())
 json_file = next(runtime_dir.glob("*server-*.json"))
 
 url = json.loads(json_file.read_bytes())["url"]
