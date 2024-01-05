@@ -39,50 +39,9 @@ ipython profile create
 
 ### Build an Image with a Different Version of Spark
 
-You can build a `pyspark-notebook` image with a different `Spark` version by overriding the default value of the following arguments at build time.
+You can build a `pyspark-notebook` image with a different `Spark` version by adjusting
+the ['setup_spark.py'](https://github.com/jupyter/docker-stacks/blob/main/images/pyspark-notebook/setup_spark.py) script.
 `all-spark-notebook` is inherited from `pyspark-notebook`, so you have to first build `pyspark-notebook` and then `all-spark-notebook` to get the same version in `all-spark-notebook`.
-
-- Spark distribution is defined by the combination of Spark, Hadoop, and Scala versions and verified by the package checksum,
-  see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
-
-  - `spark_version`: The Spark version to install (`3.3.0`).
-  - `hadoop_version`: The Hadoop version (`3.2`).
-  - `scala_version`: The Scala version (`2.13`, optional).
-  - `spark_checksum`: The package checksum (`BFE4540...`).
-  - `openjdk_version`: The version of the OpenJDK (JRE headless) distribution (`17`).
-    - This version needs to match the version supported by the Spark distribution used above.
-    - See [Spark Overview](https://spark.apache.org/docs/latest/#downloading) and [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
-
-- Starting with _Spark >= 3.2_, the distribution file might contain the Scala version.
-
-For example, here is how to build a `pyspark-notebook` image with Spark `3.2.0`, Hadoop `3.2`, and OpenJDK `11`.
-
-```{warning}
-This recipe is not tested and might be broken.
-```
-
-```bash
-# From the root of the project
-# Build the image with different arguments
-docker build --rm --force-rm \
-    -t jupyter/pyspark-notebook:spark-3.2.0 ./images/pyspark-notebook \
-    --build-arg spark_version=3.2.0 \
-    --build-arg hadoop_version=3.2 \
-    --build-arg spark_checksum=707DDE035926A50B75E53FCA72CADA519F3239B14A96546911CB4916A58DCF69A1D2BFDD2C7DD5899324DBD82B6EEAB9797A7B4ABF86736FFCA4C26D0E0BF0EE \
-    --build-arg openjdk_version=11
-
-# Check the newly built image
-docker run -it --rm quay.io/jupyter/pyspark-notebook:spark-3.2.0 pyspark --version
-
-# Welcome to
-#       ____              __
-#      / __/__  ___ _____/ /__
-#     _\ \/ _ \/ _ `/ __/  '_/
-#    /___/ .__/\_,_/_/ /_/\_\   version 3.2.0
-#       /_/
-
-# Using Scala version 2.13.5, OpenJDK 64-Bit Server VM, 11.0.15
-```
 
 ### Usage Examples
 

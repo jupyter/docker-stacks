@@ -41,10 +41,12 @@ repos:
         args: [--config, ./mypy.ini]
         additional_dependencies:
           [
+            "beautifulsoup4",
             "numpy",
             "pytest",
             "requests",
             "urllib3",
+            "types-beautifulsoup4",
             "types-requests",
             "types-tabulate",
             "types-urllib3",
