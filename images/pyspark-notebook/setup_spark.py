@@ -6,7 +6,6 @@
 # - Run as the root user
 
 import os
-import shutil
 import subprocess
 from pathlib import Path
 
@@ -52,8 +51,20 @@ def download_spark(spark_version: str, hadoop_version: str) -> None:
     subprocess.check_call(
         ["curl", "--progress-bar", "--location", "--output", tmp_file, spark_url]
     )
-    # tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner
-    shutil.unpack_archive(tmp_file, "/usr/local/")
+    subprocess.check_call(
+        [
+            "tar",
+            "xzf",
+            tmp_file,
+            "-C",
+            "/usr/local",
+            "--owner",
+            "root",
+            "--group",
+            "root",
+            "--no-same-owner",
+        ]
+    )
     tmp_file.unlink()
 
 
