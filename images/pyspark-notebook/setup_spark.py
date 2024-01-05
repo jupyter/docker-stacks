@@ -4,6 +4,7 @@
 
 # Requirements:
 # - Run as the root user
+# - The SPARK_HOME environment variable is set
 
 import os
 import subprocess
