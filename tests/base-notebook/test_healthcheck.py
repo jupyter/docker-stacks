@@ -42,7 +42,7 @@ LOGGER = logging.getLogger(__name__)
             ["start-notebook.py", "--ServerApp.base_url=/test"],
             "root",
         ),
-        (["JUPYTER_RUNTIME_DIR=/jupyter-runtime"], ["start-notebook.sh"], None),
+        (["JUPYTER_RUNTIME_DIR=/tmp/jupyter-runtime"], ["start-notebook.sh"], None),
     ],
 )
 def test_health(
