@@ -128,7 +128,12 @@ class JuliaVersionTagger(TaggerInterface):
 class SparkVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container: Container) -> str:
-        return "spark-" + _get_env_variable(container, "APACHE_SPARK_VERSION")
+        SPARK_VERSION_LINE_PREFIX = r"   /___/ .__/\_,_/_/ /_/\_\   version"
+
+        spark_version = _get_program_version(container, "spark-submit")
+        version_line = spark_version.split("\n")[4]
+        assert version_line.startswith(SPARK_VERSION_LINE_PREFIX)
+        return "spark-" + version_line.split(" ")[-1]
 
 
 class HadoopVersionTagger(TaggerInterface):
