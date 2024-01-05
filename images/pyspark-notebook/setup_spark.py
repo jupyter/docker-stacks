@@ -41,7 +41,7 @@ def get_latest_spark_version() -> str:
 def download_spark(spark_version: str, hadoop_version: str) -> None:
     """
     Downloads and unpacks spark
-    The resulting spark directory is "/usr/local/spark/"
+    The resulting spark directory is f"/usr/local/spark-{spark_version}/"
     """
     # You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
     # But it seems to be slower, that's why we use the recommended site for download
@@ -70,13 +70,18 @@ def download_spark(spark_version: str, hadoop_version: str) -> None:
 
 def prepare_spark(spark_version: str, hadoop_version: str) -> None:
     """
-    Creates a SPARK_HOME symlink
+    Creates a SPARK_HOME symlink to a versioned spark directory
     Creates a 10spark-config.sh symlink to source automatically PYTHONPATH
     """
     SPARK_HOME = Path(os.environ["SPARK_HOME"])
 
     subprocess.check_call(
-        ["ln", "-s", f"spark-{spark_version}-bin-hadoop{hadoop_version}", SPARK_HOME]
+        [
+            "ln",
+            "-s",
+            f"/usr/local/spark-{spark_version}-bin-hadoop{hadoop_version}",
+            SPARK_HOME,
+        ]
     )
 
     # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
