@@ -25,7 +25,7 @@ def get_all_refs(url: str) -> list[str]:
 
 def get_latest_spark_version() -> str:
     """
-    Get the last stable version of Spark
+    Get the last stable version of Spark using spark archive
     """
     all_refs = get_all_refs("https://archive.apache.org/dist/spark/")
     stable_versions = [
@@ -33,13 +33,16 @@ def get_latest_spark_version() -> str:
         for ref in all_refs
         if ref.startswith("spark-") and "incubating" not in ref and "preview" not in ref
     ]
-    return sorted(stable_versions, key=lambda x: [int(y) for y in x.split(".")])[-1]
+    # We sort versions semantically
+    return sorted(
+        stable_versions, key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")]
+    )[-1]
 
 
 def download_spark(spark_version: str, hadoop_version: str) -> None:
     """
     Downloads and unpacks spark
-    The resulting spark directory is "/usr/local/"
+    The resulting spark directory is "/usr/local/spark/"
     """
     # You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
     # But it seems to be slower, that's why we use the recommended site for download
