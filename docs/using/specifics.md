@@ -51,12 +51,11 @@ You can build a `pyspark-notebook` image with a different `Spark` version by ove
   - `spark_version` (optional): The Spark version to install, for example `3.5.0`.
     If not specified (this is the default), latest stable Spark will be installed.
   - `hadoop_version`: The Hadoop version (`3` by default).
-    Note, that Spark versions `<3.3.0` require to specify full Hadoop version (i.e. `3.2`).
+    Note, that _Spark < 3.3_ require to specify `major.minor` Hadoop version (i.e. `3.2`).
   - `scala_version` (optional): The Scala version, for example `2.13` (not specified by default).
+    Starting with _Spark >= 3.2_, the distribution file might contain the Scala version.
   - `spark_download_url`: URL to use for Spark downloads.
-    You need to use <https://archive.apache.org/dist/spark/> website if you want to download old Spark versions.
-
-- Starting with _Spark >= 3.2_, the distribution file might contain the Scala version.
+    You may need to use <https://archive.apache.org/dist/spark/> url if you want to download old Spark versions.
 
 For example, here is how to build a `pyspark-notebook` image with Spark `3.2.0`, Hadoop `3.2`, and OpenJDK `11`.
 
