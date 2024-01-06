@@ -3,24 +3,23 @@
 # Distributed under the terms of the Modified BSD License.
 import json
 import os
-import warnings
+import subprocess
 from pathlib import Path
 
 import requests
 
-# Import Jupyter paths ignoring deprecation warning that does not affect this script
-with warnings.catch_warnings():
-    warnings.filterwarnings("ignore", category=DeprecationWarning)
-    from jupyter_core import paths
-
-# Set HOME according to the user in NB_USER
-# This is necessary for paths.jupyter_runtime_dir() to work correctly
-os.environ["HOME"] = str(Path("/home") / os.environ["NB_USER"])
-
 # Several operations below deliberately don't check for possible errors
 # As this is a healthcheck, it should succeed or raise an exception on error
 
-runtime_dir = Path(paths.jupyter_runtime_dir())
+result = subprocess.run(
+    ["jupyter", "--runtime-dir"],
+    check=True,
+    capture_output=True,
+    text=True,
+    env=dict(os.environ) | {"HOME": str(Path("/home") / os.environ["NB_USER"])},
+)
+runtime_dir = Path(result.stdout.rstrip())
+
 json_file = next(runtime_dir.glob("*server-*.json"))
 
 url = json.loads(json_file.read_bytes())["url"]
