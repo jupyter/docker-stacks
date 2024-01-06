@@ -33,10 +33,10 @@ def get_latest_spark_version() -> str:
         for ref in all_refs
         if ref.startswith("spark-") and "incubating" not in ref and "preview" not in ref
     ]
-    # We sort versions semantically
-    return sorted(
+    # Compare versions semantically
+    return max(
         stable_versions, key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")]
-    )[-1]
+    )
 
 
 def download_spark(spark_version: str, hadoop_version: str) -> None:
