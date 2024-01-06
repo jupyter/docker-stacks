@@ -4,8 +4,8 @@
 
 # Requirements:
 # - Run as the root user
-# - The SPARK_HOME environment variable is set
-# - The HADOOP_VERSION environment variable is set
+# - Required env variables: SPARK_HOME, HADOOP_VERSION, SPARK_DOWNLOAD_URL
+# - Optional env variables: SPARK_VERSION, SCALA_VERSION
 
 import os
 import subprocess
@@ -24,10 +24,14 @@ def get_all_refs(url: str) -> list[str]:
     return [a["href"] for a in soup.find_all("a", href=True)]
 
 
-def get_latest_spark_version() -> str:
+def get_spark_version() -> str:
     """
-    Get the last stable version of Spark using spark archive
+    If ${SPARK_VERSION} env variable is specified, simply returns it
+    Otherwise, returns the last stable version of Spark using spark archive
     """
+    if (version := os.environ["SPARK_VERSION"]) != "":
+        return version
+    # Using archive with it's easy structure to get the latest version
     all_refs = get_all_refs("https://archive.apache.org/dist/spark/")
     stable_versions = [
         ref.removeprefix("spark-").removesuffix("/")
@@ -40,14 +44,17 @@ def get_latest_spark_version() -> str:
     )
 
 
-def download_spark(spark_version: str, hadoop_version: str) -> None:
+def download_spark(spark_version: str, hadoop_version: str, scala_version: str) -> str:
     """
     Downloads and unpacks spark
-    The resulting spark directory is f"/usr/local/spark-{spark_version}/"
+    The resulting spark directory name is returned
     """
-    # You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
-    # But it seems to be slower, that's why we use the recommended site for download
-    spark_url = f"https://dlcdn.apache.org/spark/spark-{spark_version}/spark-{spark_version}-bin-hadoop3.tgz"
+    dir_name = f"spark-{spark_version}-bin-hadoop{hadoop_version}"
+    if scala_version:
+        dir_name += f"-scala{scala_version}"
+    spark_url = (
+        f"{os.environ['SPARK_DOWNLOAD_URL']}/spark-{spark_version}/{dir_name}.tgz"
+    )
 
     tmp_file = Path("/tmp/spark.tar.gz")
     subprocess.check_call(
@@ -68,9 +75,10 @@ def download_spark(spark_version: str, hadoop_version: str) -> None:
         ]
     )
     tmp_file.unlink()
+    return dir_name
 
 
-def prepare_spark(spark_version: str, hadoop_version: str) -> None:
+def prepare_spark(dir_name: str) -> None:
     """
     Creates a SPARK_HOME symlink to a versioned spark directory
     Creates a 10spark-config.sh symlink to source automatically PYTHONPATH
@@ -81,7 +89,7 @@ def prepare_spark(spark_version: str, hadoop_version: str) -> None:
         [
             "ln",
             "-s",
-            f"/usr/local/spark-{spark_version}-bin-hadoop{hadoop_version}",
+            f"/usr/local/{dir_name}",
             SPARK_HOME,
         ]
     )
@@ -98,7 +106,10 @@ def prepare_spark(spark_version: str, hadoop_version: str) -> None:
 
 
 if __name__ == "__main__":
-    HADOOP_VERSION = os.environ["HADOOP_VERSION"]
-    spark_version = get_latest_spark_version()
-    download_spark(spark_version=spark_version, hadoop_version=HADOOP_VERSION)
-    prepare_spark(spark_version=spark_version, hadoop_version=HADOOP_VERSION)
+    spark_version = get_spark_version()
+    dir_name = download_spark(
+        spark_version=spark_version,
+        hadoop_version=os.environ["HADOOP_VERSION"],
+        scala_version=os.environ["SCALA_VERSION"],
+    )
+    prepare_spark(dir_name=dir_name)

@@ -39,9 +39,58 @@ ipython profile create
 
 ### Build an Image with a Different Version of Spark
 
-You can build a `pyspark-notebook` image with a different `Spark` version by adjusting
-the ['setup_spark.py'](https://github.com/jupyter/docker-stacks/blob/main/images/pyspark-notebook/setup_spark.py) script.
+You can build a `pyspark-notebook` image with a different `Spark` version by overriding the default value of the following arguments at build time.
 `all-spark-notebook` is inherited from `pyspark-notebook`, so you have to first build `pyspark-notebook` and then `all-spark-notebook` to get the same version in `all-spark-notebook`.
+
+- Spark distribution is defined by the combination of Spark, Hadoop, and Scala versions and verified by the package checksum,
+  see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
+
+  - `openjdk_version`: The version of the OpenJDK (JRE headless) distribution (`17` by default).
+    - This version needs to match the version supported by the Spark distribution used above.
+    - See [Spark Overview](https://spark.apache.org/docs/latest/#downloading) and [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
+  - `spark_version` (optional): The Spark version to install, for example `3.5.0`.
+    If not specified (this is the default), latest stable Spark will be installed.
+  - `hadoop_version`: The Hadoop version (`3` by default).
+    Note, that some Spark versions specify full hadoop version (i.e. `3.2`), while others don't.
+  - `scala_version` (optional): The Scala version, for example `2.13` (not specified by default).
+  - `spark_download_url`: URL to use for spark downloads.
+    You need to use <https://archive.apache.org/dist/spark/> website if you want to download old Spark versions.
+
+- Starting with _Spark >= 3.2_, the distribution file might contain the Scala version.
+
+For example, here is how to build a `pyspark-notebook` image with Spark `3.2.0`, Hadoop `3.2`, and OpenJDK `11`.
+
+```{warning}
+This recipe is not tested and might be broken.
+```
+
+```bash
+# From the root of the project
+# Build the image with different arguments
+docker build --rm --force-rm \
+    -t my-spark-notebook ./images/pyspark-notebook \
+    --build-arg openjdk_version=11 \
+    --build-arg spark_version=3.2.0 \
+    --build-arg hadoop_version=3.2 \
+    --build-arg spark_download_url="https://archive.apache.org/dist/spark/"
+
+# Check the newly built image
+docker run -it --rm my-spark-notebook pyspark --version
+
+# Welcome to
+#       ____              __
+#      / __/__  ___ _____/ /__
+#     _\ \/ _ \/ _ `/ __/  '_/
+#    /___/ .__/\_,_/_/ /_/\_\   version 3.2.0
+#       /_/
+
+# Using Scala version 2.12.15, OpenJDK 64-Bit Server VM, 11.0.21
+# Branch HEAD
+# Compiled by user ubuntu on 2021-10-06T12:46:30Z
+# Revision 5d45a415f3a29898d92380380cfd82bfc7f579ea
+# Url https://github.com/apache/spark
+# Type --help for more information.
+```
 
 ### Usage Examples
 

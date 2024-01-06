@@ -13,8 +13,20 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
+# Spark dependencies
+# Default values can be overridden at build time
+# (ARGS are in lowercase to distinguish them from ENV)
 ARG openjdk_version="17"
+
+# If spark_version is not set, latest stable Spark will be installed
+ARG spark_version
 ARG hadoop_version="3"
+# If scala_version is not set, Spark without scala will be installed
+ARG scala_version
+# URL to use for spark downloads
+# You need to use https://archive.apache.org/dist/spark/ website if you want to download old Spark versions
+# But it seems to be slower, that's why we use the recommended site for download
+ARG spark_download_url="https://dlcdn.apache.org/spark/"
 
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
@@ -23,7 +35,11 @@ RUN apt-get update --yes && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configure Spark
-ENV HADOOP_VERSION="${hadoop_version}"
+ENV SPARK_VERSION="${spark_version}" \
+    HADOOP_VERSION="${hadoop_version}" \
+    SCALA_VERSION="${scala_version}" \
+    SPARK_DOWNLOAD_URL="${spark_download_url}"
+
 ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info"
