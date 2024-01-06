@@ -20,7 +20,7 @@ result = subprocess.run(
     check=True,
     capture_output=True,
     text=True,
-    env=dict(os.environ) | {"HOME": "/home" + os.environ["NB_USER"]},
+    env=dict(os.environ) | {"HOME": "/home/" + os.environ["NB_USER"]},
 )
 runtime_dir = Path(result.stdout.rstrip())
 
