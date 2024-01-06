@@ -54,7 +54,7 @@ LOGGER = logging.getLogger(__name__)
         ),
     ],
 )
-def test_health(
+def test_healthy(
     container: TrackedContainer,
     env: Optional[list[str]],
     cmd: Optional[list[str]],
@@ -101,7 +101,7 @@ def test_health(
         ),
     ],
 )
-def test_health_proxy(
+def test_healthy_with_proxy(
     container: TrackedContainer,
     env: Optional[list[str]],
     cmd: Optional[list[str]],
