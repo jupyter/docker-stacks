@@ -36,6 +36,7 @@ def get_latest_julia_url() -> tuple[str, str]:
         "https://julialang-s3.julialang.org/bin/versions.json"
     ).json()
     stable_versions = {k: v for k, v in versions.items() if v["stable"]}
+    # Compare versions semantically
     latest_stable_version = max(
         stable_versions, key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")]
     )
