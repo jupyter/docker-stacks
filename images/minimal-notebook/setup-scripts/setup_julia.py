@@ -37,8 +37,7 @@ def get_latest_julia_url() -> tuple[str, str]:
     ).json()
     stable_versions = {k: v for k, v in versions.items() if v["stable"]}
     latest_stable_version = max(
-        stable_versions,
-        key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")]
+        stable_versions, key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")]
     )
     latest_version_files = stable_versions[latest_stable_version]["files"]
     triplet = unify_aarch64(platform.machine()) + "-linux-gnu"
