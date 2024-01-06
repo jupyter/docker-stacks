@@ -31,7 +31,6 @@ def get_spark_version() -> str:
     """
     if (version := os.environ["SPARK_VERSION"]) != "":
         return version
-    # Using archive with it's easy structure to get the latest version
     all_refs = get_all_refs("https://archive.apache.org/dist/spark/")
     stable_versions = [
         ref.removeprefix("spark-").removesuffix("/")
@@ -83,19 +82,15 @@ def download_spark(
 
 def prepare_spark(spark_dir_name: str, spark_home: Path) -> None:
     """
-    Creates a SPARK_HOME symlink to a versioned spark directory
+    Creates a ${SPARK_HOME} symlink to a versioned spark directory
     Creates a 10spark-config.sh symlink to source automatically PYTHONPATH
     """
     subprocess.check_call(["ln", "-s", f"/usr/local/{spark_dir_name}", spark_home])
 
     # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
+    CONFIG_SCRIPT = "/usr/local/bin/before-notebook.d/10spark-config.sh"
     subprocess.check_call(
-        [
-            "ln",
-            "-s",
-            spark_home / "sbin/spark-config.sh",
-            "/usr/local/bin/before-notebook.d/10spark-config.sh",
-        ]
+        ["ln", "-s", spark_home / "sbin/spark-config.sh", CONFIG_SCRIPT]
     )
 
 
