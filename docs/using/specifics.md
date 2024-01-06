@@ -51,9 +51,9 @@ You can build a `pyspark-notebook` image with a different `Spark` version by ove
   - `spark_version` (optional): The Spark version to install, for example `3.5.0`.
     If not specified (this is the default), latest stable Spark will be installed.
   - `hadoop_version`: The Hadoop version (`3` by default).
-    Note, that Spark versions `<3.3.0` specify full hadoop version (i.e. `3.2`) in the filename.
+    Note, that Spark versions `<3.3.0` require to specify full Hadoop version (i.e. `3.2`).
   - `scala_version` (optional): The Scala version, for example `2.13` (not specified by default).
-  - `spark_download_url`: URL to use for spark downloads.
+  - `spark_download_url`: URL to use for Spark downloads.
     You need to use <https://archive.apache.org/dist/spark/> website if you want to download old Spark versions.
 
 - Starting with _Spark >= 3.2_, the distribution file might contain the Scala version.
@@ -68,14 +68,14 @@ This recipe is not tested and might be broken.
 # From the root of the project
 # Build the image with different arguments
 docker build --rm --force-rm \
-    -t my-spark-notebook ./images/pyspark-notebook \
+    -t my-pyspark-notebook ./images/pyspark-notebook \
     --build-arg openjdk_version=11 \
     --build-arg spark_version=3.2.0 \
     --build-arg hadoop_version=3.2 \
     --build-arg spark_download_url="https://archive.apache.org/dist/spark/"
 
 # Check the newly built image
-docker run -it --rm my-spark-notebook pyspark --version
+docker run -it --rm my-pyspark-notebook pyspark --version
 
 # Welcome to
 #       ____              __

@@ -27,9 +27,9 @@ RUN apt-get update --yes && \
 # If spark_version is not set, latest stable Spark will be installed
 ARG spark_version
 ARG hadoop_version="3"
-# If scala_version is not set, Spark without scala will be installed
+# If scala_version is not set, Spark without Scala will be installed
 ARG scala_version
-# URL to use for spark downloads
+# URL to use for Spark downloads
 # You need to use https://archive.apache.org/dist/spark/ website if you want to download old Spark versions
 # But it seems to be slower, that's why we use the recommended site for download
 ARG spark_download_url="https://dlcdn.apache.org/spark/"
