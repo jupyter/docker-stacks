@@ -41,7 +41,7 @@ def get_latest_julia_url() -> tuple[str, str]:
             stable_versions,
             key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")],
         )
-    ]
+    ]["files"]
     triplet = unify_aarch64(platform.machine()) + "-linux-gnu"
     file_info = [vf for vf in latest_version_files if vf["triplet"] == triplet][0]
     return file_info["url"], file_info["version"]
