@@ -26,7 +26,7 @@ def get_all_refs(url: str) -> list[str]:
 
 def get_spark_version() -> str:
     """
-    If ${SPARK_VERSION} env variable is specified, simply returns it
+    If ${SPARK_VERSION} env variable is non-empty, simply returns it
     Otherwise, returns the last stable version of Spark using spark archive
     """
     if (version := os.environ["SPARK_VERSION"]) != "":
@@ -44,7 +44,12 @@ def get_spark_version() -> str:
     )
 
 
-def download_spark(spark_version: str, hadoop_version: str, scala_version: str) -> str:
+def download_spark(
+    spark_version: str,
+    hadoop_version: str,
+    scala_version: str,
+    spark_download_url: Path,
+) -> str:
     """
     Downloads and unpacks spark
     The resulting spark directory name is returned
@@ -52,9 +57,7 @@ def download_spark(spark_version: str, hadoop_version: str, scala_version: str) 
     spark_dir_name = f"spark-{spark_version}-bin-hadoop{hadoop_version}"
     if scala_version:
         spark_dir_name += f"-scala{scala_version}"
-    spark_url = (
-        f"{os.environ['SPARK_DOWNLOAD_URL']}/spark-{spark_version}/{spark_dir_name}.tgz"
-    )
+    spark_url = spark_download_url / f"spark-{spark_version}" / f"{spark_dir_name}.tgz"
 
     tmp_file = Path("/tmp/spark.tar.gz")
     subprocess.check_call(
@@ -78,21 +81,19 @@ def download_spark(spark_version: str, hadoop_version: str, scala_version: str) 
     return spark_dir_name
 
 
-def prepare_spark(spark_dir_name: str) -> None:
+def prepare_spark(spark_dir_name: str, spark_home: Path) -> None:
     """
     Creates a SPARK_HOME symlink to a versioned spark directory
     Creates a 10spark-config.sh symlink to source automatically PYTHONPATH
     """
-    SPARK_HOME = Path(os.environ["SPARK_HOME"])
-
-    subprocess.check_call(["ln", "-s", f"/usr/local/{spark_dir_name}", SPARK_HOME])
+    subprocess.check_call(["ln", "-s", f"/usr/local/{spark_dir_name}", spark_home])
 
     # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
     subprocess.check_call(
         [
             "ln",
             "-s",
-            f"{SPARK_HOME}/sbin/spark-config.sh",
+            spark_home / "sbin/spark-config.sh",
             "/usr/local/bin/before-notebook.d/10spark-config.sh",
         ]
     )
@@ -104,5 +105,8 @@ if __name__ == "__main__":
         spark_version=spark_version,
         hadoop_version=os.environ["HADOOP_VERSION"],
         scala_version=os.environ["SCALA_VERSION"],
+        spark_download_url=Path(os.environ["SPARK_DOWNLOAD_URL"]),
     )
-    prepare_spark(spark_dir_name=spark_dir_name)
+    prepare_spark(
+        spark_dir_name=spark_dir_name, spark_home=Path(os.environ["SPARK_HOME"])
+    )
