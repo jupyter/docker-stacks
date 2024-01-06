@@ -20,7 +20,7 @@ def get_all_refs(url: str) -> list[str]:
     Get all the references for a given webpage
     """
     resp = requests.get(url)
-    soup = BeautifulSoup(resp.text)
+    soup = BeautifulSoup(resp.text, "html.parser")
     return [a["href"] for a in soup.find_all("a", href=True)]
 
 
