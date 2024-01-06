@@ -42,7 +42,7 @@ ipython profile create
 You can build a `pyspark-notebook` image with a different `Spark` version by overriding the default value of the following arguments at build time.
 `all-spark-notebook` is inherited from `pyspark-notebook`, so you have to first build `pyspark-notebook` and then `all-spark-notebook` to get the same version in `all-spark-notebook`.
 
-- Spark distribution is defined by the combination of Spark, Hadoop, and Scala versions and verified by the package checksum,
+- Spark distribution is defined by the combination of Spark, Hadoop, and Scala versions,
   see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
 
   - `openjdk_version`: The version of the OpenJDK (JRE headless) distribution (`17` by default).
