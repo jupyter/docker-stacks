@@ -11,12 +11,16 @@ import requests
 # Several operations below deliberately don't check for possible errors
 # As this is a healthcheck, it should succeed or raise an exception on error
 
+# Docker runs healtchecks using an exec
+# It uses the default user configured when running the image: root for the case of a custom NB_USER or jovyan for the case of the default image user.
+# We manually change HOME to make `jupyter --runtime-dir` report a correct path
+# More information: <https://github.com/jupyter/docker-stacks/pull/2074#issuecomment-1879778409>
 result = subprocess.run(
     ["jupyter", "--runtime-dir"],
     check=True,
     capture_output=True,
     text=True,
-    env=dict(os.environ) | {"HOME": str(Path("/home") / os.environ["NB_USER"])},
+    env=dict(os.environ) | {"HOME": "/home" + os.environ["NB_USER"]},
 )
 runtime_dir = Path(result.stdout.rstrip())
 
