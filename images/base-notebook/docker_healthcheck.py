@@ -2,6 +2,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import json
+import os
 import warnings
 from pathlib import Path
 
@@ -11,6 +12,10 @@ import requests
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     from jupyter_core import paths
+
+# Set HOME according to the user in NB_USER
+# This is necessary for paths.jupyter_runtime_dir() to work correctly
+os.environ["HOME"] = str(Path("/home") / os.environ["NB_USER"])
 
 # Several operations below deliberately don't check for possible errors
 # As this is a healthcheck, it should succeed or raise an exception on error
