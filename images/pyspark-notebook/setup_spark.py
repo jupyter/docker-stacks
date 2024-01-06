@@ -83,11 +83,11 @@ def download_spark(
 def prepare_spark(spark_dir_name: str, spark_home: Path) -> None:
     """
     Creates a ${SPARK_HOME} symlink to a versioned spark directory
-    Creates a 10spark-config.sh symlink to source automatically PYTHONPATH
+    Creates a 10spark-config.sh symlink to source PYTHONPATH automatically
     """
     subprocess.check_call(["ln", "-s", f"/usr/local/{spark_dir_name}", spark_home])
 
-    # Add a link in the before_notebook hook in order to source automatically PYTHONPATH
+    # Add a link in the before_notebook hook in order to source PYTHONPATH automatically
     CONFIG_SCRIPT = "/usr/local/bin/before-notebook.d/10spark-config.sh"
     subprocess.check_call(
         ["ln", "-s", spark_home / "sbin/spark-config.sh", CONFIG_SCRIPT]
