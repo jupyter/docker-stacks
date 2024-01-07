@@ -78,8 +78,8 @@ class TrackedContainer:
         self.kwargs: Any = kwargs
 
     def run_detached(self, **kwargs: Any) -> Container:
-        """Runs a docker container using the preconfigured image name
-        and a mix of the preconfigured container options and those passed
+        """Runs a docker container using the pre-configured image name
+        and a mix of the pre-configured container options and those passed
         to this method.
 
         Keeps track of the docker.Container instance spawned to kill it

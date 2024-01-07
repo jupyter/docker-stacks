@@ -21,30 +21,32 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
+    rev: 5.13.2
     hooks:
       - id: isort
         args: [--profile, black]
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black
-    rev: 23.10.1
+    rev: 23.12.1
     hooks:
       - id: black
         args: [--target-version=py39]
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.6.1
+    rev: v1.8.0
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
         additional_dependencies:
           [
+            "beautifulsoup4",
             "numpy",
             "pytest",
             "requests",
             "urllib3",
+            "types-beautifulsoup4",
             "types-requests",
             "types-tabulate",
             "types-urllib3",
@@ -60,7 +62,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.3
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
 
@@ -93,7 +95,7 @@ repos:
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.32.0
+    rev: v1.33.0
     hooks:
       - id: yamllint
         args: ["-d {extends: relaxed, rules: {line-length: disable}}", "-s"]
@@ -121,7 +123,7 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.37.0
+    rev: v0.38.0
     hooks:
       - id: markdownlint
         args: ["--fix"]
@@ -135,7 +137,7 @@ repos:
   # nbQA provides tools from the Python ecosystem like
   # pyupgrade, isort, black, and flake8, adjusted for notebooks.
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.7.0
+    rev: 1.7.1
     hooks:
       - id: nbqa-pyupgrade
         args: [--py39-plus]
@@ -150,7 +152,7 @@ repos:
     hooks:
       - id: blacken-docs
         # --skip-errors is added to allow us to have python syntax highlighting even if
-        # the python code blocks includes jupyter specific additions such as % or !
+        # the python code blocks include jupyter-specific additions such as % or !
         # See https://github.com/adamchainz/blacken-docs/issues/127 for an upstream
         # feature request about this.
         args: [--target-version=py39, --skip-errors]

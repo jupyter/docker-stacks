@@ -26,10 +26,6 @@ RUN apt-get update --yes && \
 
 USER ${NB_UID}
 
-# mamba downgrades these packages to previous major versions, which causes issues
-RUN echo 'jupyterlab >=4.0.4' >> "${CONDA_DIR}/conda-meta/pinned" && \
-    echo 'notebook >=7.0.2' >> "${CONDA_DIR}/conda-meta/pinned"
-
 # Install Python 3 packages
 RUN mamba install --yes \
     'altair' \
@@ -74,9 +70,7 @@ RUN git clone https://github.com/PAIR-code/facets && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Import matplotlib the first time to build the font cache.
-ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
-
+# Import matplotlib the first time to build the font cache
 RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
     fix-permissions "/home/${NB_USER}"
 

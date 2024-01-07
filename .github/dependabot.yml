@@ -9,3 +9,15 @@ updates:
     directory: /
     schedule:
       interval: weekly
+  - package-ecosystem: github-actions
+    directory: .github/actions/create-dev-env/
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    directory: .github/actions/download-manifests/
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
+    directory: .github/actions/load-image/
+    schedule:
+      interval: weekly

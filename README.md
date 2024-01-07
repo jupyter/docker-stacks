@@ -90,6 +90,8 @@ more information is available in the [documentation](https://jupyter-docker-stac
 
 ## Acknowledgments
 
+- Starting from `2022-07-05`, `aarch64` self-hosted runners were sponsored by [`@mathbunnyru`](https://github.com/mathbunnyru/).
+  Please, consider [sponsoring his work](https://github.com/sponsors/mathbunnyru) on GitHub
 - Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by an amazing [`2i2c non-profit organization`](https://2i2c.org)
 
 ## CPU Architectures
@@ -123,6 +125,9 @@ for information about how to contribute recipes, features, tests, and community-
 
 ## Alternatives
 
+- [rocker/binder](https://rocker-project.org/images/versioned/binder.html) -
+  From the R focused [rocker-project](https://rocker-project.org),
+  lets you run both RStudio and Jupyter either standalone or in a JupyterHub
 - [jupyter/repo2docker](https://github.com/jupyterhub/repo2docker) -
   Turn git repositories into Jupyter-enabled Docker Images
 - [openshift/source-to-image](https://github.com/openshift/source-to-image) -

@@ -16,14 +16,7 @@ USER root
 # Spark dependencies
 # Default values can be overridden at build time
 # (ARGS are in lowercase to distinguish them from ENV)
-ARG spark_version="3.5.0"
-ARG hadoop_version="3"
-ARG scala_version
-ARG spark_checksum="8883c67e0a138069e597f3e7d4edbbd5c3a565d50b28644aad02856a1ec1da7cb92b8f80454ca427118f69459ea326eaa073cf7b1a860c3b796f4b07c2101319"
 ARG openjdk_version="17"
-
-ENV APACHE_SPARK_VERSION="${spark_version}" \
-    HADOOP_VERSION="${hadoop_version}"
 
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
@@ -31,34 +24,30 @@ RUN apt-get update --yes && \
     ca-certificates-java && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Spark installation
-WORKDIR /tmp
-
-# You need to use https://archive.apache.org/dist/ website if you want to download old Spark versions
+# If spark_version is not set, latest stable Spark will be installed
+ARG spark_version
+ARG hadoop_version="3"
+# If scala_version is not set, Spark without Scala will be installed
+ARG scala_version
+# URL to use for Spark downloads
+# You need to use https://archive.apache.org/dist/spark/ website if you want to download old Spark versions
 # But it seems to be slower, that's why we use the recommended site for download
-RUN if [ -z "${scala_version}" ]; then \
-    curl --progress-bar --location --output "spark.tgz" \
-        "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz"; \
-  else \
-    curl --progress-bar --location --output "spark.tgz" \
-        "https://dlcdn.apache.org/spark/spark-${APACHE_SPARK_VERSION}/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}.tgz"; \
-  fi && \
-  echo "${spark_checksum} *spark.tgz" | sha512sum -c - && \
-  tar xzf "spark.tgz" -C /usr/local --owner root --group root --no-same-owner && \
-  rm "spark.tgz"
+ARG spark_download_url="https://dlcdn.apache.org/spark/"
 
 # Configure Spark
-ENV SPARK_HOME=/usr/local/spark
-ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
-    PATH="${PATH}:${SPARK_HOME}/bin"
+ENV SPARK_VERSION="${spark_version}" \
+    HADOOP_VERSION="${hadoop_version}" \
+    SCALA_VERSION="${scala_version}" \
+    SPARK_DOWNLOAD_URL="${spark_download_url}"
 
-RUN if [ -z "${scala_version}" ]; then \
-    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}" "${SPARK_HOME}"; \
-  else \
-    ln -s "spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}-scala${scala_version}" "${SPARK_HOME}"; \
-  fi && \
-  # Add a link in the before_notebook hook in order to source automatically PYTHONPATH && \
-  ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh
+ENV SPARK_HOME=/usr/local/spark
+ENV PATH="${PATH}:${SPARK_HOME}/bin"
+ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info"
+
+COPY setup_spark.py /opt/setup-scripts/
+
+# Setup Spark
+RUN /opt/setup-scripts/setup_spark.py
 
 # Configure IPython system-wide
 COPY ipython_kernel_config.py "/etc/ipython/"
@@ -71,8 +60,8 @@ USER ${NB_UID}
 # The pandas version in this Dockerfile should match the version
 # on which the Pandas API for Spark is built.
 # To find the right version:
-# 1. Check out the Spark branch you are on.
-# 2. Find the pandas version in the file spark/dev/infra/Dockerfile.
+# 1. Check out the Spark branch you are on: <https://github.com/apache/spark>
+# 2. Find the pandas version in the file `dev/infra/Dockerfile`.
 RUN mamba install --yes \
     'grpcio-status' \
     'grpcio' \

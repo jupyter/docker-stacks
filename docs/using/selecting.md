@@ -48,7 +48,7 @@ It contains:
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/base-notebook/Dockerfile) |
 [Quay.io image tags](https://quay.io/repository/jupyter/base-notebook?tab=tags)
 
-`jupyter/base-notebook` adds base Jupyter Applications like JupyterLab, Jupyter Notebook, JupyterHub and NBClassic
+`jupyter/base-notebook` adds base Jupyter Applications like JupyterLab, Jupyter Notebook, JupyterHub, and NBClassic
 and serves as the basis for all other stacks besides `jupyter/docker-stacks-foundation`.
 
 It contains:
@@ -83,7 +83,7 @@ It contains:
   [git](https://git-scm.com/),
   [nano](https://www.nano-editor.org/) (actually `nano-tiny`),
   [tzdata](https://www.iana.org/time-zones),
-  [unzip](https://code.launchpad.net/ubuntu/+source/unzip)
+  [unzip](https://code.launchpad.net/ubuntu/+source/unzip),
   and [vi](https://www.vim.org) (actually `vim-tiny`),
 - [TeX Live](https://www.tug.org/texlive/) for notebook document conversion
 
@@ -187,13 +187,24 @@ It contains:
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [tensorflow](https://www.tensorflow.org/) machine learning library
 
+### jupyter/pytorch-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pytorch-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pytorch-notebook/Dockerfile) |
+[Quay.io image tags](https://quay.io/repository/jupyter/pytorch-notebook?tab=tags)
+
+`jupyter/pytorch-notebook` includes popular Python deep learning libraries.
+
+- Everything in `jupyter/scipy-notebook` and its ancestor images
+- [pytorch](https://pytorch.org/) machine learning library
+
 ### jupyter/datascience-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/datascience-notebook) |
 [Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/datascience-notebook/Dockerfile) |
 [Quay.io image tags](https://quay.io/repository/jupyter/datascience-notebook?tab=tags)
 
-`jupyter/datascience-notebook` includes libraries for data analysis from the Python, and R, and Julia communities.
+`jupyter/datascience-notebook` includes libraries for data analysis from the Python, R, and Julia communities.
 
 - Everything in the `jupyter/scipy-notebook`, `jupyter/r-notebook`, and `jupyter/julia-notebook` images and their ancestor
   images
@@ -234,7 +245,7 @@ The following diagram depicts the build dependency tree of the core images. (i.e
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFjkFuwkAMRfecwsqKLuYACMEJuqPLSshJHDAZ7GjGIwSIuzPTRaWJWmX7_vP_br12Y894gucKoKcBk7fjoGKRHwQ72Gwz18AkhsYqGU0aLCDbdpWjJrVJLH3L-vPrADe2c85ZDAJ5wkgfDbg99HmFgouG3RjdoEn6n7ZS_l9W7trc4ESNWtWxyBUoxpWFr-grac6KFzue7pVVk-I0RhI1DF5vv7z5W80vYqYkHS1Oh0XjkjzjwnPTPU4Yxsqas-Kh925uvt4imKoO)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFz8FOwzAMgOH7nsLqCQ55ADTBE3CDIxJyU5eZZnaUOJoK2rsv4YCUSlOvv784yRjULxPjF_weACaasQT7nFUs8w_BMzwda9fEJIbGKjVFTZaQ7Xioo6GMRax8yMPr-xtc2E51zmKQKBBmehzAvcBUb6HksqFfspu1yPS3rS2_N2vnxrrBiRqNqkvDXWjizMJnDB3atuay57h2qi_NDEaSNc1BL_99uEPjapr8ac_Vr2CtJJ52n5h2xXcJjDufiGuOmJZObVtzGILbyusNkda3zw)
 
 ### Builds
 
@@ -244,7 +255,7 @@ Every Monday and whenever a pull request is merged, images are rebuilt and pushe
 
 Whenever a docker image is pushed to the container registry, it is tagged with:
 
-- a `latest` tag
+- the `latest` tag
 - a 12-character git commit SHA like `1ffe43816ba9`
 - a date formatted like `2023-01-30`
 - OS version like `ubuntu-22.04`

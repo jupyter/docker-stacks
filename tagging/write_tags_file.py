@@ -50,7 +50,7 @@ if __name__ == "__main__":
     arg_parser.add_argument(
         "--short-image-name",
         required=True,
-        help="Short image name to write tags for",
+        help="Short image name",
     )
     arg_parser.add_argument(
         "--tags-dir",

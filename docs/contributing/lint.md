@@ -2,7 +2,7 @@
 
 To enforce some rules, **linters** are used in this project.
 Linters can be run either during the **development phase** (by the developer) or the **integration phase** (by GitHub Actions).
-To integrate and enforce this process in the project lifecycle, we are using **git hooks** through [pre-commit][pre-commit].
+To integrate and enforce this process in the project lifecycle, we are using **git hooks** through [pre-commit](https://pre-commit.com/).
 
 ## Using pre-commit hooks
 
@@ -44,11 +44,12 @@ More information can be found in [`.pre-commit-config.yaml` file](https://github
 
 ## Image Lint
 
-To comply with [Docker best practices][dbp], we are using the [Hadolint][hadolint] tool to analyze each `Dockerfile`.
+To comply with [Docker best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices),
+we are using the [Hadolint](https://github.com/hadolint/hadolint) tool to analyze each `Dockerfile`.
 
 ### Ignoring Rules
 
-Sometimes it is necessary to ignore [some rules][rules].
+Sometimes it is necessary to ignore [some rules](https://github.com/hadolint/hadolint#rules).
 The following rules are ignored by default for all images in the `.hadolint.yaml` file.
 
 - [`DL3006`][dl3006]: We use a specific policy to manage image tags.
@@ -70,10 +71,6 @@ FROM ubuntu
 RUN cd /tmp && echo "hello!"
 ```
 
-[hadolint]: https://github.com/hadolint/hadolint
-[dbp]: https://docs.docker.com/develop/develop-images/dockerfile_best-practices
-[rules]: https://github.com/hadolint/hadolint#rules
 [dl3006]: https://github.com/hadolint/hadolint/wiki/DL3006
 [dl3008]: https://github.com/hadolint/hadolint/wiki/DL3008
 [dl3013]: https://github.com/hadolint/hadolint/wiki/DL3013
-[pre-commit]: https://pre-commit.com/
