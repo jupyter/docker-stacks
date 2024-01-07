@@ -58,6 +58,7 @@ When there's a new stack definition, check before merging the PR:
    in the [tagging](https://github.com/jupyter/docker-stacks/tree/main/tagging) folder.
 4. A new repository is created in the `jupyter` organization in the Registry,
    and it's named after the stack folder in the git repo.
+5. Robot `Write` permission is added in the `Repository Settings`.
 
 ## Adding a New Registry Owner Account
 

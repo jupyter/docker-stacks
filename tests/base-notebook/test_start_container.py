@@ -48,7 +48,7 @@ def test_start_notebook(
         ports={"8888/tcp": host_port},
     )
     # sleeping some time to let the server start
-    time.sleep(1)
+    time.sleep(2)
     logs = running_container.logs().decode("utf-8")
     LOGGER.debug(logs)
     # checking that the expected command is launched

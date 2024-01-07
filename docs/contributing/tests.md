@@ -25,7 +25,7 @@ defined in the [conftest.py](https://github.com/jupyter/docker-stacks/blob/main/
 You can add a unit test if you want to run a Python script in one of our images.
 You should create a `tests/<somestack>/units/` directory, if it doesn't already exist, and put your file there.
 Files in this folder will be executed in the container when tests are run.
-You can see an [example for the TensorFlow package here](https://github.com/jupyter/docker-stacks/blob/HEAD/tests/tensorflow-notebook/units/unit_tensorflow.py).
+You can see an [TensorFlow package example here](https://github.com/jupyter/docker-stacks/blob/HEAD/tests/tensorflow-notebook/units/unit_tensorflow.py).
 
 ## Contributing New Tests
 

@@ -111,7 +111,7 @@ if __name__ == "__main__":
     arg_parser.add_argument(
         "--short-image-name",
         required=True,
-        help="Short image name to create manifests for",
+        help="Short image name",
     )
     arg_parser.add_argument(
         "--hist-lines-dir",

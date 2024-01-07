@@ -198,6 +198,26 @@ jobs:
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
+  aarch64-pytorch:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: pytorch-notebook
+      platform: aarch64
+      runs-on: ARM64
+    needs: [aarch64-scipy]
+    if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
+
+  x86_64-pytorch:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: pytorch-notebook
+      platform: x86_64
+      runs-on: ubuntu-latest
+    needs: [x86_64-scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
   aarch64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -277,6 +297,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            pytorch-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -290,6 +311,7 @@ jobs:
         aarch64-r,
         aarch64-julia,
         aarch64-tensorflow,
+        aarch64-pytorch,
         aarch64-datascience,
         aarch64-pyspark,
         aarch64-all-spark,
@@ -329,6 +351,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            pytorch-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -342,6 +365,7 @@ jobs:
         x86_64-r,
         x86_64-julia,
         x86_64-tensorflow,
+        x86_64-pytorch,
         x86_64-datascience,
         x86_64-pyspark,
         x86_64-all-spark,
@@ -380,6 +404,7 @@ jobs:
             r-notebook,
             julia-notebook,
             tensorflow-notebook,
+            pytorch-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
