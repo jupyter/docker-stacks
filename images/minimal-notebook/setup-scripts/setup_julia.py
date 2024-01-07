@@ -36,7 +36,11 @@ def get_latest_julia_url() -> tuple[str, str]:
         "https://julialang-s3.julialang.org/bin/versions.json"
     ).json()
     stable_versions = {k: v for k, v in versions.items() if v["stable"]}
-    latest_version_files = stable_versions[max(stable_versions)]["files"]
+    # Compare versions semantically
+    latest_stable_version = max(
+        stable_versions, key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")]
+    )
+    latest_version_files = stable_versions[latest_stable_version]["files"]
     triplet = unify_aarch64(platform.machine()) + "-linux-gnu"
     file_info = [vf for vf in latest_version_files if vf["triplet"] == triplet][0]
     return file_info["url"], file_info["version"]
