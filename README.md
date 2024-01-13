@@ -17,8 +17,7 @@ You can use a stack image to do any of the following (and more):
 
 ## Quick Start
 
-You can try a [relatively recent build of the quay.io/jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/main?urlpath=lab/tree/README.ipynb)
-by simply clicking the preceding link.
+You can [try a relatively recent build of the quay.io/jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/main?urlpath=lab/tree/README.ipynb).
 Otherwise, the examples below may help you get started if you [have Docker installed](https://docs.docker.com/get-docker/),
 know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use, and want to launch a single Jupyter Application in a container.
 
@@ -31,11 +30,11 @@ Older images are available on Docker Hub, but they will no longer be updated.
 
 ### Example 1
 
-This command pulls the `jupyter/scipy-notebook` image tagged `2023-11-17` from Quay.io if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `2024-01-08` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the container's internal port `8888` to port `10000` of the host machine:
 
 ```bash
-docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2023-11-17
+docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2024-01-08
 ```
 
 You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) to `-p 8888:8888`.
@@ -50,11 +49,11 @@ The container remains intact for restart after the Server exits.
 
 ### Example 2
 
-This command pulls the `jupyter/datascience-notebook` image tagged `2023-11-17` from Quay.io if it is not already present on the local host.
+This command pulls the `jupyter/datascience-notebook` image tagged `2024-01-08` from Quay.io if it is not already present on the local host.
 It then starts an _ephemeral_ container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/datascience-notebook:2023-11-17
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/datascience-notebook:2024-01-08
 ```
 
 The use of the `-v` flag in the command mounts the current working directory on the host (`${PWD}` in the example command) as `/home/jovyan/work` in the container.

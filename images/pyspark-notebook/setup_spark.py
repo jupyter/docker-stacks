@@ -7,12 +7,15 @@
 # - Required env variables: SPARK_HOME, HADOOP_VERSION, SPARK_DOWNLOAD_URL
 # - Optional env variables: SPARK_VERSION, SCALA_VERSION
 
+import logging
 import os
 import subprocess
 from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
+
+LOGGER = logging.getLogger(__name__)
 
 
 def get_all_refs(url: str) -> list[str]:
@@ -31,6 +34,7 @@ def get_spark_version() -> str:
     """
     if (version := os.environ["SPARK_VERSION"]) != "":
         return version
+    LOGGER.info("Downloading Spark versions information")
     all_refs = get_all_refs("https://archive.apache.org/dist/spark/")
     stable_versions = [
         ref.removeprefix("spark-").removesuffix("/")
@@ -38,9 +42,11 @@ def get_spark_version() -> str:
         if ref.startswith("spark-") and "incubating" not in ref and "preview" not in ref
     ]
     # Compare versions semantically
-    return max(
+    latest_version = max(
         stable_versions, key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")]
     )
+    LOGGER.info(f"Latest version: {latest_version}")
+    return latest_version
 
 
 def download_spark(
@@ -53,9 +59,11 @@ def download_spark(
     Downloads and unpacks spark
     The resulting spark directory name is returned
     """
+    LOGGER.info("Downloading and unpacking Spark")
     spark_dir_name = f"spark-{spark_version}-bin-hadoop{hadoop_version}"
     if scala_version:
         spark_dir_name += f"-scala{scala_version}"
+    LOGGER.info(f"Spark directory name: {spark_dir_name}")
     spark_url = spark_download_url / f"spark-{spark_version}" / f"{spark_dir_name}.tgz"
 
     tmp_file = Path("/tmp/spark.tar.gz")
@@ -80,11 +88,12 @@ def download_spark(
     return spark_dir_name
 
 
-def prepare_spark(spark_dir_name: str, spark_home: Path) -> None:
+def configure_spark(spark_dir_name: str, spark_home: Path) -> None:
     """
     Creates a ${SPARK_HOME} symlink to a versioned spark directory
     Creates a 10spark-config.sh symlink to source PYTHONPATH automatically
     """
+    LOGGER.info("Configuring Spark")
     subprocess.check_call(["ln", "-s", f"/usr/local/{spark_dir_name}", spark_home])
 
     # Add a link in the before_notebook hook in order to source PYTHONPATH automatically
@@ -95,6 +104,8 @@ def prepare_spark(spark_dir_name: str, spark_home: Path) -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+
     spark_version = get_spark_version()
     spark_dir_name = download_spark(
         spark_version=spark_version,
@@ -102,6 +113,6 @@ if __name__ == "__main__":
         scala_version=os.environ["SCALA_VERSION"],
         spark_download_url=Path(os.environ["SPARK_DOWNLOAD_URL"]),
     )
-    prepare_spark(
+    configure_spark(
         spark_dir_name=spark_dir_name, spark_home=Path(os.environ["SPARK_HOME"])
     )

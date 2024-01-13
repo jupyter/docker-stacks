@@ -75,7 +75,7 @@ jobs:
           python3 -m tagging.write_tags_file --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
         shell: bash
       - name: Upload tags file 💾
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-tags
           path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.image }}.txt
@@ -85,13 +85,13 @@ jobs:
         run: python3 -m tagging.write_manifest --short-image-name ${{ inputs.image }} --hist-lines-dir /tmp/jupyter/hist_lines/ --manifests-dir /tmp/jupyter/manifests/ --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
         shell: bash
       - name: Upload manifest file 💾
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-manifest
           path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.image }}-*.md
           retention-days: 3
       - name: Upload build history line 💾
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-history_line
           path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.image }}-*.txt
@@ -103,7 +103,7 @@ jobs:
           docker save ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst
         shell: bash
       - name: Upload image as artifact 💾
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}
           path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst

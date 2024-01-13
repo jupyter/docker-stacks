@@ -3,7 +3,7 @@ set -exuo pipefail
 # Requirements:
 # - Run as a non-root user
 # - The JULIA_PKGDIR environment variable is set
-# - Julia is already set up, with the setup-julia.bash command
+# - Julia is already set up, with the setup_julia.py command
 
 
 # If we don't specify what CPUs the precompilation should be done for, it's
