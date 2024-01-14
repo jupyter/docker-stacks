@@ -51,8 +51,15 @@ def update_monthly_wiki_page(
 
 def get_manifest_timestamp(manifest_file: Path) -> str:
     file_content = manifest_file.read_text()
-    pos = file_content.find("Build timestamp: ")
-    return file_content[pos + 16 : pos + 36]
+    TIMESTAMP_PREFIX = "Build timestamp: "
+    TIMESTAMP_LENGTH = 20
+    timestamp = file_content[
+        file_content.find(TIMESTAMP_PREFIX) + len(TIMESTAMP_PREFIX) :
+    ][:TIMESTAMP_LENGTH]
+    # Should be good enough till year 2100
+    assert timestamp.startswith("20"), timestamp
+    assert timestamp.endswith("Z"), timestamp
+    return timestamp
 
 
 def get_manifest_month(manifest_file: Path) -> str:
@@ -75,14 +82,18 @@ def remove_old_manifests(wiki_dir: Path) -> None:
 def update_wiki(wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path) -> None:
     LOGGER.info("Updating wiki")
 
-    for manifest_file in manifests_dir.glob("*.md"):
+    manifest_files = list(manifests_dir.rglob("*.md"))
+    assert manifest_files, "expected to have some manifest files"
+    for manifest_file in manifest_files:
         month = get_manifest_month(manifest_file)
         copy_to = wiki_dir / "manifests" / month / manifest_file.name
         copy_to.parent.mkdir(exist_ok=True)
         shutil.copy(manifest_file, copy_to)
         LOGGER.info(f"Added manifest file: {copy_to.relative_to(wiki_dir)}")
 
-    for build_history_line_file in sorted(hist_lines_dir.glob("*.txt")):
+    build_history_line_files = sorted(hist_lines_dir.rglob("*.txt"))
+    assert build_history_line_files, "expected to have some build history line files"
+    for build_history_line_file in build_history_line_files:
         build_history_line = build_history_line_file.read_text()
         assert build_history_line.startswith("| `")
         month = build_history_line[3:10]

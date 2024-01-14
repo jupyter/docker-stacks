@@ -28,12 +28,12 @@ jobs:
         uses: ./.github/actions/create-dev-env
 
       - name: Download x86_64 tags file 📥
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.image }}-x86_64-tags
           path: /tmp/jupyter/tags/
       - name: Download aarch64 tags file 📥
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.image }}-aarch64-tags
           path: /tmp/jupyter/tags/
