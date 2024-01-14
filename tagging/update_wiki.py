@@ -52,7 +52,11 @@ def update_monthly_wiki_page(
 def get_manifest_timestamp(manifest_file: Path) -> str:
     file_content = manifest_file.read_text()
     pos = file_content.find("Build timestamp: ")
-    return file_content[pos + 17 : pos + 37]
+    timestamp = file_content[pos + 17 : pos + 37]
+    # Should be good enough till year 2100
+    assert timestamp.startswith("20"), timestamp
+    assert timestamp.endswith("Z"), timestamp
+    return timestamp
 
 
 def get_manifest_month(manifest_file: Path) -> str:
