@@ -222,7 +222,7 @@ jobs:
       parent-image: scipy-notebook
       image: datascience-notebook
       platform: aarch64
-      runs-on: ARM64_FAST
+      runs-on: ARM64_SLOW
     needs: [aarch64-scipy]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
