@@ -54,6 +54,7 @@ You do so by passing arguments to the `docker run` command.
 
   ```{note}
   If you set `NB_USER` to `root`, the `root` home dir will be set to `/home/root`.
+  See discussion [here](https://github.com/jupyter/docker-stacks/issues/2042).
   ```
 
 - `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.
