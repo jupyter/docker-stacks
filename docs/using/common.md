@@ -22,7 +22,7 @@ You can pass [Jupyter Server options](https://jupyter-server.readthedocs.io/en/l
 2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the Jupyter Server, you can run the following:
 
    ```bash
-   docker run  -it --rm -p 8888:8888 quay.io/jupyter/base-notebook \
+   docker run -it --rm -p 8888:8888 quay.io/jupyter/base-notebook \
        start-notebook.py --ServerApp.base_url=/customized/url/prefix/
    ```
 
