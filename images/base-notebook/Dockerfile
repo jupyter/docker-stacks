@@ -13,16 +13,18 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-# Install all OS dependencies for the Server that starts but lacks all
-# features (e.g., download as all possible file formats)
+# Install all OS dependencies for the Server that starts
+# but lacks all features (e.g., download as all possible file formats)
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
+    # - Add necessary fonts for matplotlib/seaborn
+    #   See https://github.com/jupyter/docker-stacks/pull/380 for details
     fonts-liberation \
-    # - pandoc is used to convert notebooks to html files
+    # - `pandoc` is used to convert notebooks to html files
     #   it's not present in the aarch64 Ubuntu image, so we install it here
     pandoc \
-    # - run-one - a wrapper script that runs no more
-    #   than one unique  instance  of  some  command with a unique set of arguments,
+    # - `run-one` - a wrapper script that runs no more
+    #   than one unique instance of some command with a unique set of arguments,
     #   we use `run-one-constantly` to support the `RESTARTABLE` option
     run-one && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
