@@ -24,13 +24,15 @@ if os.environ.get("RESTARTABLE") == "yes":
 # We always launch a jupyter subcommand from this script
 command.append("jupyter")
 
-# Launch the configured subcommand. Note that this should be a single string, so we don't split it
-# We default to lab
+# Launch the configured subcommand.
+# Note that this should be a single string, so we don't split it.
+# We default to `lab`.
 jupyter_command = os.environ.get("DOCKER_STACKS_JUPYTER_CMD", "lab")
 command.append(jupyter_command)
 
-# Append any optional NOTEBOOK_ARGS we were passed in. This is supposed to be multiple args passed
-# on to the notebook command, so we split it correctly with shlex
+# Append any optional NOTEBOOK_ARGS we were passed in.
+# This is supposed to be multiple args passed on to the notebook command,
+# so we split it correctly with shlex
 if "NOTEBOOK_ARGS" in os.environ:
     command += shlex.split(os.environ["NOTEBOOK_ARGS"])
 
