@@ -67,13 +67,11 @@ def test_healthy(
         user=user,
     )
 
-    # sleeping some time to let the server start
-    time_spent = 0.0
-    wait_time = 0.1
-    time_limit = 15
-    while time_spent < time_limit:
-        time.sleep(wait_time)
-        time_spent += wait_time
+    # giving some time to let the server start
+    finish_time = time.time() + 4
+    sleep_time = 0.1
+    while time.time() < finish_time:
+        time.sleep(sleep_time)
         if get_health(running_container) == "healthy":
             return
 
@@ -114,13 +112,11 @@ def test_healthy_with_proxy(
         user=user,
     )
 
-    # sleeping some time to let the server start
-    time_spent = 0.0
-    wait_time = 0.1
-    time_limit = 15
-    while time_spent < time_limit:
-        time.sleep(wait_time)
-        time_spent += wait_time
+    # giving some time to let the server start
+    finish_time = time.time() + 4
+    sleep_time = 0.1
+    while time.time() < finish_time:
+        time.sleep(sleep_time)
         if get_health(running_container) == "healthy":
             return
 
@@ -152,13 +148,11 @@ def test_not_healthy(
         command=cmd,
     )
 
-    # sleeping some time to let the server start
-    time_spent = 0.0
-    wait_time = 0.1
-    time_limit = 15
-    while time_spent < time_limit:
-        time.sleep(wait_time)
-        time_spent += wait_time
+    # giving some time to let the server start
+    finish_time = time.time() + 4
+    sleep_time = 0.1
+    while time.time() < finish_time:
+        time.sleep(sleep_time)
         if get_health(running_container) == "healthy":
             raise RuntimeError("Container should not be healthy for this testcase")
 
