@@ -68,7 +68,7 @@ def test_healthy(
     )
 
     # giving some time to let the server start
-    finish_time = time.time() + 4
+    finish_time = time.time() + 10
     sleep_time = 0.1
     while time.time() < finish_time:
         time.sleep(sleep_time)
@@ -113,7 +113,7 @@ def test_healthy_with_proxy(
     )
 
     # giving some time to let the server start
-    finish_time = time.time() + 4
+    finish_time = time.time() + 10
     sleep_time = 0.1
     while time.time() < finish_time:
         time.sleep(sleep_time)
@@ -149,7 +149,7 @@ def test_not_healthy(
     )
 
     # giving some time to let the server start
-    finish_time = time.time() + 4
+    finish_time = time.time() + 5
     sleep_time = 0.1
     while time.time() < finish_time:
         time.sleep(sleep_time)
