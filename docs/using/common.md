@@ -22,7 +22,7 @@ You can pass [Jupyter Server options](https://jupyter-server.readthedocs.io/en/l
 2. To set the [base URL](https://jupyter-server.readthedocs.io/en/latest/operators/public-server.html#running-the-notebook-with-a-customized-url-prefix) of the Jupyter Server, you can run the following:
 
    ```bash
-   docker run  -it --rm -p 8888:8888 quay.io/jupyter/base-notebook \
+   docker run -it --rm -p 8888:8888 quay.io/jupyter/base-notebook \
        start-notebook.py --ServerApp.base_url=/customized/url/prefix/
    ```
 
@@ -50,6 +50,11 @@ You do so by passing arguments to the `docker run` command.
       -e CHOWN_HOME=yes \
       -w "/home/my-username" \
       quay.io/jupyter/base-notebook
+  ```
+
+  ```{note}
+  If you set `NB_USER` to `root`, the `root` home dir will be set to `/home/root`.
+  See discussion [here](https://github.com/jupyter/docker-stacks/issues/2042).
   ```
 
 - `-e NB_UID=<numeric uid>` - Instructs the startup script to switch the numeric user ID of `${NB_USER}` to the given value.

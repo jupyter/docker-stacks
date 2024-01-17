@@ -6,6 +6,7 @@
 # - Run as the root user
 # - The JULIA_PKGDIR environment variable is set
 
+import logging
 import os
 import platform
 import shutil
@@ -13,6 +14,8 @@ import subprocess
 from pathlib import Path
 
 import requests
+
+LOGGER = logging.getLogger(__name__)
 
 
 def unify_aarch64(platform: str) -> str:
@@ -31,7 +34,7 @@ def get_latest_julia_url() -> tuple[str, str]:
     Get the last stable version of Julia
     Based on: https://github.com/JuliaLang/www.julialang.org/issues/878#issuecomment-749234813
     """
-
+    LOGGER.info("Downloading Julia versions information")
     versions = requests.get(
         "https://julialang-s3.julialang.org/bin/versions.json"
     ).json()
@@ -43,6 +46,7 @@ def get_latest_julia_url() -> tuple[str, str]:
     latest_version_files = stable_versions[latest_stable_version]["files"]
     triplet = unify_aarch64(platform.machine()) + "-linux-gnu"
     file_info = [vf for vf in latest_version_files if vf["triplet"] == triplet][0]
+    LOGGER.info(f"Latest version: {file_info['version']} url: {file_info['url']}")
     return file_info["url"], file_info["version"]
 
 
@@ -51,6 +55,7 @@ def download_julia(julia_url: str) -> None:
     Downloads and unpacks julia
     The resulting julia directory is "/opt/julia-VERSION/"
     """
+    LOGGER.info("Downloading and unpacking Julia")
     tmp_file = Path("/tmp/julia.tar.gz")
     subprocess.check_call(
         ["curl", "--progress-bar", "--location", "--output", tmp_file, julia_url]
@@ -59,12 +64,13 @@ def download_julia(julia_url: str) -> None:
     tmp_file.unlink()
 
 
-def prepare_julia(julia_version: str) -> None:
+def configure_julia(julia_version: str) -> None:
     """
     Creates /usr/local/bin/julia symlink
     Make Julia aware of conda libraries
     Creates a directory for Julia user libraries
     """
+    LOGGER.info("Configuring Julia")
     # Link Julia installed version to /usr/local/bin, so julia launches it
     subprocess.check_call(
         ["ln", "-fs", f"/opt/julia-{julia_version}/bin/julia", "/usr/local/bin/julia"]
@@ -84,6 +90,8 @@ def prepare_julia(julia_version: str) -> None:
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+
     julia_url, julia_version = get_latest_julia_url()
     download_julia(julia_url=julia_url)
-    prepare_julia(julia_version=julia_version)
+    configure_julia(julia_version=julia_version)

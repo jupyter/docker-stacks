@@ -7,8 +7,7 @@
 # Logs are particularly verbose with Spark, that is why we turn them off through this flag.
 # <https://github.com/jupyter/docker-stacks/issues/1423>
 
-# Attempt to capture and forward low-level output, e.g. produced by Extension
-#  libraries.
-#  Default: True
+# Attempt to capture and forward low-level output, e.g. produced by Extension libraries.
+# Default: True
 # type:ignore
 c.IPKernelApp.capture_fd_output = False  # noqa: F821

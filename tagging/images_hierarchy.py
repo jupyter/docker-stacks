@@ -13,7 +13,6 @@ from tagging.manifests import (
 )
 from tagging.taggers import (
     DateTagger,
-    HadoopVersionTagger,
     JavaVersionTagger,
     JuliaVersionTagger,
     JupyterHubVersionTagger,
@@ -83,7 +82,7 @@ ALL_IMAGES = {
     ),
     "pyspark-notebook": ImageDescription(
         parent_image="scipy-notebook",
-        taggers=[SparkVersionTagger(), HadoopVersionTagger(), JavaVersionTagger()],
+        taggers=[SparkVersionTagger(), JavaVersionTagger()],
         manifests=[SparkInfoManifest()],
     ),
     "all-spark-notebook": ImageDescription(

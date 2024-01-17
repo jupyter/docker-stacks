@@ -34,12 +34,6 @@ ARG scala_version
 # But it seems to be slower, that's why we use the recommended site for download
 ARG spark_download_url="https://dlcdn.apache.org/spark/"
 
-# Configure Spark
-ENV SPARK_VERSION="${spark_version}" \
-    HADOOP_VERSION="${hadoop_version}" \
-    SCALA_VERSION="${scala_version}" \
-    SPARK_DOWNLOAD_URL="${spark_download_url}"
-
 ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
 ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info"
@@ -47,7 +41,11 @@ ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M 
 COPY setup_spark.py /opt/setup-scripts/
 
 # Setup Spark
-RUN /opt/setup-scripts/setup_spark.py
+RUN /opt/setup-scripts/setup_spark.py \
+    --spark-version="${spark_version}" \
+    --hadoop-version="${hadoop_version}" \
+    --scala-version="${scala_version}" \
+    --spark-download-url="${spark_download_url}"
 
 # Configure IPython system-wide
 COPY ipython_kernel_config.py "/etc/ipython/"

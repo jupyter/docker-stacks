@@ -46,7 +46,7 @@ jobs:
           password: ${{ secrets.REGISTRY_TOKEN }}
 
       - name: Download tags file 📥
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-tags
           path: /tmp/jupyter/tags/
