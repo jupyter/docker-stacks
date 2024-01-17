@@ -12,18 +12,6 @@ def _get_program_version(container: Container, program: str) -> str:
     return DockerRunner.run_simple_command(container, cmd=f"{program} --version")
 
 
-def _get_env_variable(container: Container, variable: str) -> str:
-    env = DockerRunner.run_simple_command(
-        container,
-        cmd="env",
-        print_result=False,
-    ).split()
-    for env_entry in env:
-        if env_entry.startswith(variable):
-            return env_entry[len(variable) + 1 :]
-    raise KeyError(variable)
-
-
 def _get_pip_package_version(container: Container, package: str) -> str:
     PIP_VERSION_PREFIX = "Version: "
 
@@ -134,12 +122,6 @@ class SparkVersionTagger(TaggerInterface):
         version_line = spark_version.split("\n")[4]
         assert version_line.startswith(SPARK_VERSION_LINE_PREFIX)
         return "spark-" + version_line.split(" ")[-1]
-
-
-class HadoopVersionTagger(TaggerInterface):
-    @staticmethod
-    def tag_value(container: Container) -> str:
-        return "hadoop-" + _get_env_variable(container, "HADOOP_VERSION")
 
 
 class JavaVersionTagger(TaggerInterface):
