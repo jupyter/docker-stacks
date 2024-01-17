@@ -77,6 +77,13 @@ if [ "$(id -u)" == 0 ]; then
         userdel "${NB_USER}"
         useradd --no-log-init --home "/home/${NB_USER}" --shell /bin/bash --uid "${NB_UID}" --gid "${NB_GID}" --groups 100 "${NB_USER}"
     fi
+    # Update the home directory if the desired user (NB_USER) is root and the
+    # desired user id (NB_UID) is 0 and the desired group id (NB_GID) is 0.
+    if [ "${NB_USER}" = "root" ] && [ "${NB_UID}" = "$(id -u "${NB_USER}")" ] && [ "${NB_GID}" = "$(id -g "${NB_USER}")" ]; then
+        sed -i "s|/root|/home/root|g" /etc/passwd
+        # Do not preserve ownership in rootless mode
+        CP_OPTS="-a --no-preserve=ownership"
+    fi
 
     # Move or symlink the jovyan home directory to the desired user's home
     # directory if it doesn't already exist, and update the current working
@@ -85,7 +92,8 @@ if [ "$(id -u)" == 0 ]; then
         if [[ ! -e "/home/${NB_USER}" ]]; then
             _log "Attempting to copy /home/jovyan to /home/${NB_USER}..."
             mkdir "/home/${NB_USER}"
-            if cp -a /home/jovyan/. "/home/${NB_USER}/"; then
+            # shellcheck disable=SC2086
+            if cp ${CP_OPTS:--a} /home/jovyan/. "/home/${NB_USER}/"; then
                 _log "Success!"
             else
                 _log "Failed to copy data from /home/jovyan to /home/${NB_USER}!"

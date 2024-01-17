@@ -65,10 +65,10 @@ def test_unsigned_ssl(
         environment=["GEN_CERT=yes"],
         ports={"8888/tcp": host_port},
     )
-    # NOTE: The requests.Session backing the http_client fixture does not retry
-    # properly while the server is booting up. An SSL handshake error seems to
-    # abort the retry logic. Forcing a long sleep for the moment until I have
-    # time to dig more.
+    # NOTE: The requests.Session backing the http_client fixture
+    # does not retry properly while the server is booting up.
+    # An SSL handshake error seems to abort the retry logic.
+    # Forcing a long sleep for the moment until I have time to dig more.
     time.sleep(1)
     resp = http_client.get(f"https://localhost:{host_port}", verify=False)
     resp.raise_for_status()

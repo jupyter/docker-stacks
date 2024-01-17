@@ -24,7 +24,7 @@ def check_pluto_proxy(
         ports={"8888/tcp": host_port},
     )
     # Give the server a bit of time to start
-    time.sleep(3)
+    time.sleep(2)
     resp = http_client.get(f"http://localhost:{host_port}/pluto?token={token}")
     resp.raise_for_status()
     assert "Pluto.jl notebooks" in resp.text, "Pluto.jl text not found in /pluto page"

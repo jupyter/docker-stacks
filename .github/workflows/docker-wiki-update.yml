@@ -18,17 +18,17 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      - name: Download all manifests and history lines 📥
-        uses: ./.github/actions/download-manifests
+      - name: Download all history lines 📥
+        uses: actions/download-artifact@v4
         with:
-          hist-lines-dir: /tmp/jupyter/hist_lines/
-          manifests-dir: /tmp/jupyter/manifests/
-          fast-build: ${{ contains(github.event.pull_request.title, '[FAST_BUILD]') }}
-      - name: Display structure of downloaded files 🔍️
-        run: |
-          ls -R /tmp/jupyter/hist_lines/
-          ls -R /tmp/jupyter/manifests/
-        shell: bash
+          pattern: "*-history_line"
+          path: /tmp/jupyter/hist_lines/
+
+      - name: Download all manifests 📥
+        uses: actions/download-artifact@v4
+        with:
+          pattern: "*-manifest"
+          path: /tmp/jupyter/manifests/
 
       - name: Checkout Wiki Repo 📃
         uses: actions/checkout@v4

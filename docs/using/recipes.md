@@ -304,7 +304,7 @@ FROM quay.io/jupyter/all-spark-notebook
 ENV HADOOP_HOME /usr/local/hadoop-2.7.3
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 ENV HADOOP_CONF_HOME /usr/local/hadoop-2.7.3/etc/hadoop
-ENV HADOOP_CONF_DIR  /usr/local/hadoop-2.7.3/etc/hadoop
+ENV HADOOP_CONF_DIR /usr/local/hadoop-2.7.3/etc/hadoop
 
 USER root
 # Add proper open-jdk-8 not the jre only, needed for pydoop
@@ -331,7 +331,7 @@ RUN echo 'deb https://cdn-fastly.deb.debian.org/debian jessie-backports main' > 
 COPY example-hadoop-conf/ /usr/local/hadoop-2.7.3/etc/hadoop/
 
 # Spark-Submit doesn't work unless I set the following
-RUN echo "spark.driver.extraJavaOptions -Dhdp.version=2.5.3.0-37" >> /usr/local/spark/conf/spark-defaults.conf  && \
+RUN echo "spark.driver.extraJavaOptions -Dhdp.version=2.5.3.0-37" >> /usr/local/spark/conf/spark-defaults.conf && \
     echo "spark.yarn.am.extraJavaOptions -Dhdp.version=2.5.3.0-37" >> /usr/local/spark/conf/spark-defaults.conf && \
     echo "spark.master=yarn" >>  /usr/local/spark/conf/spark-defaults.conf && \
     echo "spark.hadoop.yarn.timeline-service.enabled=false" >> /usr/local/spark/conf/spark-defaults.conf && \

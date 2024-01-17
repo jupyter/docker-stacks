@@ -11,15 +11,8 @@ LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-@pytest.mark.parametrize(
-    "test_file, output_format",
-    [
-        ("notebook_math", "pdf"),
-        ("notebook_math", "html"),
-        ("notebook_svg", "pdf"),
-        ("notebook_svg", "html"),
-    ],
-)
+@pytest.mark.parametrize("test_file", ["notebook_math", "notebook_svg"])
+@pytest.mark.parametrize("output_format", ["pdf", "html"])
 def test_nbconvert(
     container: TrackedContainer, test_file: str, output_format: str
 ) -> None:

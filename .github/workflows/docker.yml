@@ -22,7 +22,6 @@ on:
       # We use local composite actions to combine multiple workflow steps within one action
       # https://docs.github.com/en/actions/creating-actions/about-custom-actions#composite-actions
       - ".github/actions/create-dev-env/action.yml"
-      - ".github/actions/download-manifests/action.yml"
       - ".github/actions/load-image/action.yml"
 
       - "images/**"
@@ -43,7 +42,6 @@ on:
       - ".github/workflows/docker-wiki-update.yml"
 
       - ".github/actions/create-dev-env/action.yml"
-      - ".github/actions/download-manifests/action.yml"
       - ".github/actions/load-image/action.yml"
 
       - "images/**"
@@ -68,7 +66,7 @@ jobs:
       parent-image: ""
       image: docker-stacks-foundation
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_FAST
     if: github.repository_owner == 'jupyter'
 
   x86_64-foundation:
@@ -85,7 +83,7 @@ jobs:
       parent-image: docker-stacks-foundation
       image: base-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_FAST
     needs: [aarch64-foundation]
     if: github.repository_owner == 'jupyter'
 
@@ -104,7 +102,7 @@ jobs:
       parent-image: base-notebook
       image: minimal-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_FAST
     needs: [aarch64-base]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -124,7 +122,7 @@ jobs:
       parent-image: minimal-notebook
       image: scipy-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_FAST
     needs: [aarch64-minimal]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -144,7 +142,7 @@ jobs:
       parent-image: minimal-notebook
       image: r-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_SLOW
     needs: [aarch64-minimal]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -164,7 +162,7 @@ jobs:
       parent-image: minimal-notebook
       image: julia-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_SLOW
     needs: [aarch64-minimal]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -184,7 +182,7 @@ jobs:
       parent-image: scipy-notebook
       image: tensorflow-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_SLOW
     needs: [aarch64-scipy]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -204,7 +202,7 @@ jobs:
       parent-image: scipy-notebook
       image: pytorch-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_SLOW
     needs: [aarch64-scipy]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -224,7 +222,7 @@ jobs:
       parent-image: scipy-notebook
       image: datascience-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_SLOW
     needs: [aarch64-scipy]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -244,7 +242,7 @@ jobs:
       parent-image: scipy-notebook
       image: pyspark-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_FAST
     needs: [aarch64-scipy]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -264,7 +262,7 @@ jobs:
       parent-image: pyspark-notebook
       image: all-spark-notebook
       platform: aarch64
-      runs-on: ARM64
+      runs-on: ARM64_FAST
     needs: [aarch64-pyspark]
     if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
