@@ -22,3 +22,13 @@ def test_python_version(container: TrackedContainer) -> None:
     major_minor_version = full_version[: full_version.rfind(".")]
 
     assert major_minor_version == EXPECTED_PYTHON_VERSION
+
+
+def test_python_pinned_version(container: TrackedContainer) -> None:
+    LOGGER.info(f"Checking that pinned python version is {EXPECTED_PYTHON_VERSION}.*")
+    logs = container.run_and_wait(
+        timeout=5,
+        tty=True,
+        command=["cat", "/opt/conda/conda-meta/pinned"],
+    )
+    assert logs.startswith(f"python {EXPECTED_PYTHON_VERSION}.*")
