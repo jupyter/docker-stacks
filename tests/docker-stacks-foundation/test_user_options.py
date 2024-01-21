@@ -302,5 +302,6 @@ def test_startsh_multiple_exec(container: TrackedContainer) -> None:
     warnings = TrackedContainer.get_warnings(logs)
     assert len(warnings) == 1
     assert (
-        "WARNING: start.sh is the default ENTRYPOINT, do not include it in CMD" in warnings[0]
+        "WARNING: start.sh is the default ENTRYPOINT, do not include it in CMD"
+        in warnings[0]
     )
