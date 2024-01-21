@@ -37,7 +37,7 @@ It then starts a container running a Jupyter Server with the JupyterLab frontend
 docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2024-01-15
 ```
 
-You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/reference/run/#expose-incoming-ports) to `-p 8888:8888`.
+You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/reference/run/#exposed-ports) to `-p 8888:8888`.
 
 Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
 where:
@@ -61,9 +61,11 @@ The server logs appear in the terminal.
 
 Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
 
-Due to the usage of [the flag `--rm`](https://docs.docker.com/engine/reference/run/#clean-up---rm) Docker automatically cleans up the container and removes the file
-system when the container exits, but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
-[The `-it` flag](https://docs.docker.com/engine/reference/commandline/run/#name) allocates pseudo-TTY.
+Due to the usage of [the `--rm` flag](https://docs.docker.com/engine/reference/commandline/container_run/#rm)
+Docker automatically cleans up the container and removes the file system when the container exits,
+but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
+[The `-i` flag](https://docs.docker.com/engine/reference/commandline/container_run/#interactive) keeps the container's `STDIN` open, and lets you send input to the container through standard input.
+[The `-t` flag](https://docs.docker.com/engine/reference/commandline/container_run/#tty) attaches a pseudo-TTY to the container.
 
 ```{note}
 By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
