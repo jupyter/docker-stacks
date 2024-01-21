@@ -34,8 +34,8 @@ else
     cmd=( "$@" )
 fi
 
-# Backwards compatibility: start.sh is executed by default in ENTRYPOINT so
-# should no longer be specified in CMD
+# Backwards compatibility: `start.sh` is executed by default in ENTRYPOINT
+# so it should no longer be specified in CMD
 if [ "${_START_SH_EXECUTED}" = "1" ]; then
     _log "WARNING: start.sh is the default ENTRYPOINT, do not include it in CMD"
     _log "Executing the command:" "${cmd[@]}"
