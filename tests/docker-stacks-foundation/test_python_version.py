@@ -41,4 +41,4 @@ def test_python_pinned_version(container: TrackedContainer) -> None:
         if line.startswith(f"python {EXPECTED_PYTHON_VERSION}.*"):
             break
     else:
-        raise Exception(f"Expected version not found in output")
+        raise Exception("Expected version not found in output")
