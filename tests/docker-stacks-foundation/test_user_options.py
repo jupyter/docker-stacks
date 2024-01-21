@@ -292,12 +292,15 @@ def test_startsh_multiple_exec(container: TrackedContainer) -> None:
     """If start.sh is executed multiple times check that configuration only occurs once."""
     logs = container.run_and_wait(
         timeout=10,
+        no_warnings=False,
         tty=True,
         user="root",
         environment=["GRANT_SUDO=yes"],
         command=["start.sh", "sudo", "id"],
     )
     assert "uid=0(root)" in logs
+    warnings = TrackedContainer.get_warnings(logs)
+    assert len(warnings) == 1
     assert (
-        "WARNING: start.sh is the default ENTRYPOINT, do not include it in CMD" in logs
+        "WARNING: start.sh is the default ENTRYPOINT, do not include it in CMD" in warnings[0]
     )
