@@ -30,7 +30,7 @@ jobs:
 
       - name: Calculate recipes matrix 🛠
         id: set-matrix
-        run: docs/using/recipe_code/generate_matrix.py >> $GITHUB_OUTPUT
+        run: docs/using/recipe_code/generate_matrix.py >> "${GITHUB_OUTPUT}"
 
   test-recipes:
     runs-on: ${{ matrix.runs-on }}
