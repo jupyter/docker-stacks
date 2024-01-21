@@ -53,7 +53,7 @@ def test_start_notebook(
     LOGGER.debug(logs)
     # checking that the expected command is launched
     assert (
-        f"Executing the command: {expected_command}" in logs
+        f"Executing: {expected_command}" in logs
     ), f"Not the expected command ({expected_command}) was launched"
     # checking errors and warnings in logs
     assert "ERROR" not in logs, "ERROR(s) found in logs"

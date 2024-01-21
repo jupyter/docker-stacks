@@ -21,4 +21,5 @@ if "NOTEBOOK_ARGS" in os.environ:
 command += sys.argv[1:]
 
 # Execute the command!
+print("Executing: " + " ".join(command))
 os.execvp(command[0], command)
