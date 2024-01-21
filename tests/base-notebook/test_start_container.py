@@ -76,10 +76,7 @@ def test_tini_entrypoint(
     https://superuser.com/questions/632979/if-i-know-the-pid-number-of-a-process-how-can-i-get-its-name
     """
     LOGGER.info(f"Test that {command} is launched as PID {pid} ...")
-    running_container = container.run_detached(
-        tty=True,
-        command=["start.sh"],
-    )
+    running_container = container.run_detached(tty=True)
     # Select the PID 1 and get the corresponding command
     cmd = running_container.exec_run(f"ps -p {pid} -o comm=")
     output = cmd.output.decode("utf-8").strip("\n")

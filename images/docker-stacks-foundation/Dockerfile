@@ -124,8 +124,7 @@ RUN set -x && \
     fix-permissions "/home/${NB_USER}"
 
 # Configure container startup
-ENTRYPOINT ["tini", "-g", "--"]
-CMD ["start.sh"]
+ENTRYPOINT ["tini", "-g", "--", "start.sh"]
 
 # Copy local files as late as possible to avoid cache busting
 COPY run-hooks.sh start.sh /usr/local/bin/

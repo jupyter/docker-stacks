@@ -225,20 +225,16 @@ docker run -it --rm \
 
 ### `start.sh`
 
-The `start-notebook.py` script inherits most of its option handling capability from a more generic `start.sh` script.
-The `start.sh` script supports all the features described above but allows you to specify an arbitrary command to execute.
+Most of the configuration options in the `start-notebook.py` script are handled by an internal `start.sh` script that automatically runs before the command provided to the container
+(it's set as the container entrypoint).
+This allows you to specify an arbitrary command that takes advantage of all these features.
 For example, to run the text-based `ipython` console in a container, do the following:
 
 ```bash
-docker run -it --rm quay.io/jupyter/base-notebook start.sh ipython
+docker run -it --rm quay.io/jupyter/base-notebook ipython
 ```
 
 This script is handy when you derive a new Dockerfile from this image and install additional Jupyter applications with subcommands like `jupyter console`, `jupyter kernelgateway`, etc.
-
-### Others
-
-You can bypass the provided scripts and specify an arbitrary start command.
-If you do, keep in mind that features, supported by the `start.sh` script and its kin, will not function (e.g., `GRANT_SUDO`).
 
 ## Conda Environments
 

@@ -16,7 +16,6 @@ def test_cython(container: TrackedContainer) -> None:
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=[
-            "start.sh",
             "bash",
             "-c",
             # We copy our data to a temporary folder to be able to modify the directory

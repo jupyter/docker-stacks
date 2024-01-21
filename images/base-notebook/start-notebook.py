@@ -14,8 +14,8 @@ if "JUPYTERHUB_API_TOKEN" in os.environ:
     os.execvp(command[0], command)
 
 
-# Wrap everything in start.sh, no matter what
-command = ["/usr/local/bin/start.sh"]
+# Entrypoint is start.sh
+command = []
 
 # If we want to survive restarts, tell that to start.sh
 if os.environ.get("RESTARTABLE") == "yes":

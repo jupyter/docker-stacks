@@ -35,7 +35,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
         tty=True,
         user="root",
         environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
-        command=["start.sh", "bash", "-c", "sleep infinity"],
+        command=["bash", "-c", "sleep infinity"],
     )
 
     # Give the chown time to complete.

@@ -33,7 +33,7 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
         timeout=60,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
-        command=["start.sh", "bash", "-c", command],
+        command=["bash", "-c", command],
     )
 
     expected_file = f"{output_dir}/{test_file}.md"

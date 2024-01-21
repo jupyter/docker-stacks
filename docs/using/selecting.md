@@ -34,8 +34,7 @@ It contains:
   - [mamba](https://github.com/mamba-org/mamba): "reimplementation of the conda package manager in C++". We use this package manager by default when installing packages.
 - Unprivileged user `jovyan` (`uid=1000`, configurable, [see options in the common features section](./common.md) of this documentation) in group `users` (`gid=100`)
   with ownership over the `/home/jovyan` and `/opt/conda` paths
-- `tini` as the container entry point
-- A `start.sh` script as the default command - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
+- `tini` and a `start.sh` script as the container entry point - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 - A `run-hooks.sh` script, which can source/run files in a given directory
 - Options for a passwordless sudo
 - Common system libraries like `bzip2`, `ca-certificates`, `locales`

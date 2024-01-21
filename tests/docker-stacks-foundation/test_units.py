@@ -34,5 +34,5 @@ def test_units(container: TrackedContainer) -> None:
                 timeout=30,
                 volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
                 tty=True,
-                command=["start.sh", "python", f"{cont_data_dir}/{test_file_name}"],
+                command=["python", f"{cont_data_dir}/{test_file_name}"],
             )
