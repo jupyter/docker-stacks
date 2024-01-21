@@ -84,7 +84,7 @@ The following sections cover a few of these scenarios and how to fix them.
 
    Docker handles mounting host directories differently from mounting volumes, even though the syntax is essentially the same (i.e. `-v`).
 
-   When you initialize a Docker container using the flag `-v`, the host directories are bind-mounted directly into the container.
+   When you initialize a Docker container using the `-v`flag, the host directories are bind-mounted directly into the container.
    Therefore, the permissions and ownership are copied over and will be **the same** as the ones in your local host
    (including user ids) which may result in permissions errors when trying to access directories or create/modify files inside.
 
