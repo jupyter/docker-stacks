@@ -44,7 +44,7 @@ def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
             "source /usr/local/bin/run-hooks.sh /tmp/missing-dir/",
         ],
     )
-    assert "Directory /tmp/missing-dir/ doesn't exist or is not a directory" in logs
+    assert "Directory /tmp/missing-dir does not exist" in logs
 
 
 def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
@@ -58,7 +58,7 @@ def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
             "touch /tmp/some-file && source /usr/local/bin/run-hooks.sh /tmp/some-file",
         ],
     )
-    assert "Directory /tmp/some-file doesn't exist or is not a directory" in logs
+    assert "/tmp/some-file is not a directory" in logs
 
 
 def test_run_hooks_empty_dir(container: TrackedContainer) -> None:
@@ -105,7 +105,7 @@ def test_run_hooks_executables(container: TrackedContainer) -> None:
     )
 
     assert "Executable python file was successfully run" in logs
-    assert "Ignoring non-executable: /home/jovyan/data-copy//non_executable.py" in logs
+    assert "Ignoring non-executable: /home/jovyan/data-copy/non_executable.py" in logs
     assert "SOME_VAR is 123" in logs
 
 
