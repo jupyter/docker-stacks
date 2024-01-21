@@ -21,17 +21,20 @@ Use `package_helper.installed_packages()` instead of `package_helper.requested_p
 
 Example:
 
-    $ make test/base-notebook
+    $ make test/docker-stacks-foundation
 
     # [...]
-    # tests/base-notebook/test_packages.py::test_python_packages
-    # ---------------------------------------------------------------------------------------------- live log setup ----------------------------------------------------------------------------------------------
-    # 2023-11-04 23:59:01 [    INFO] Starting container quay.io/jupyter/base-notebook ... (package_helper.py:55)
-    # 2023-11-04 23:59:01 [    INFO] Running quay.io/jupyter/base-notebook with args {'detach': True, 'tty': True, 'command': ['start.sh', 'bash', '-c', 'sleep infinity']} ... (conftest.py:99)
-    # 2023-11-04 23:59:01 [    INFO] Grabbing the list of manually requested packages ... (package_helper.py:83)
-    # ---------------------------------------------------------------------------------------------- live log call -----------------------------------------------------------------------------------------------
-    # 2023-11-04 23:59:02 [    INFO] Testing the import of packages ... (test_packages.py:152)
-    # 2023-11-04 23:59:02 [    INFO] Trying to import mamba (test_packages.py:154)
+    # tests/docker-stacks-foundation/test_packages.py::test_python_packages
+    # -------------------------------- live log setup --------------------------------
+    # 2024-01-21 17:46:43 [    INFO] Starting container quay.io/jupyter/docker-stacks-foundation ... (package_helper.py:55)
+    # 2024-01-21 17:46:43 [    INFO] Running quay.io/jupyter/docker-stacks-foundation with args {'detach': True, 'tty': True, 'command': ['bash', '-c', 'sleep infinity']} ... (conftest.py:99)
+    # 2024-01-21 17:46:44 [    INFO] Grabbing the list of manually requested packages ... (package_helper.py:83)
+    # -------------------------------- live log call ---------------------------------
+    # 2024-01-21 17:46:44 [    INFO] Testing the import of packages ... (test_packages.py:151)
+    # 2024-01-21 17:46:44 [    INFO] Trying to import mamba (test_packages.py:153)
+    # 2024-01-21 17:46:44 [    INFO] Trying to import jupyter_core (test_packages.py:153)
+    PASSED                                                                   [ 17%]
+    # ------------------------------ live log teardown -------------------------------
     # [...]
 
 """
