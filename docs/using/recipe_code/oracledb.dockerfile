@@ -33,7 +33,7 @@ RUN wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-basiclit
 
 # And configure variables
 RUN echo "ORACLE_HOME=/usr/lib/oracle/${INSTANTCLIENT_MAJOR_VERSION}/client64" >> "${HOME}/.bashrc" && \
-    echo "PATH=${ORACLE_HOME}/bin:$PATH" >> "${HOME}/.bashrc" && \
+    echo "PATH=${ORACLE_HOME}/bin:${PATH}" >> "${HOME}/.bashrc" && \
     echo "LD_LIBRARY_PATH=${ORACLE_HOME}/lib:${LD_LIBRARY_PATH}" >> "${HOME}/.bashrc" && \
     echo "export ORACLE_HOME" >> "${HOME}/.bashrc" && \
     echo "export PATH" >> "${HOME}/.bashrc" && \

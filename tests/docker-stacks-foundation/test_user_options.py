@@ -260,7 +260,7 @@ def test_jupyter_env_vars_to_unset(
         command=[
             "bash",
             "-c",
-            "echo I like $FRUIT and ${SECRET_FRUIT:-stuff}, and love ${SECRET_ANIMAL:-to keep secrets}!",
+            "echo I like ${FRUIT} and ${SECRET_FRUIT:-stuff}, and love ${SECRET_ANIMAL:-to keep secrets}!",
         ],
         **root_args,  # type: ignore
     )
