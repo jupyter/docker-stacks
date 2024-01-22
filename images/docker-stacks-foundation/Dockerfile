@@ -123,11 +123,11 @@ RUN set -x && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Configure container startup
-ENTRYPOINT ["tini", "-g", "--", "start.sh"]
-
 # Copy local files as late as possible to avoid cache busting
 COPY run-hooks.sh start.sh /usr/local/bin/
+
+# Configure container entrypoint
+ENTRYPOINT ["tini", "-g", "--", "start.sh"]
 
 USER root
 
