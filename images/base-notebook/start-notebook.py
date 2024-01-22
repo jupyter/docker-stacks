@@ -17,7 +17,7 @@ if "JUPYTERHUB_API_TOKEN" in os.environ:
 # Entrypoint is start.sh
 command = []
 
-# If we want to survive restarts, tell that to start.sh
+# If we want to survive restarts, launch the command using `run-one-constantly`
 if os.environ.get("RESTARTABLE") == "yes":
     command.append("run-one-constantly")
 
