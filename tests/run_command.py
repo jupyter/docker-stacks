@@ -18,5 +18,5 @@ def run_command(
     return container.run_and_wait(
         timeout=timeout,
         tty=True,
-        command=["start.sh", "bash", "-c", command],
+        command=["bash", "-c", command],
     )

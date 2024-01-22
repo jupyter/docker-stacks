@@ -53,7 +53,7 @@ def test_start_notebook(
     LOGGER.debug(logs)
     # checking that the expected command is launched
     assert (
-        f"Executing the command: {expected_command}" in logs
+        f"Executing: {expected_command}" in logs
     ), f"Not the expected command ({expected_command}) was launched"
     # checking errors and warnings in logs
     assert "ERROR" not in logs, "ERROR(s) found in logs"
@@ -76,10 +76,7 @@ def test_tini_entrypoint(
     https://superuser.com/questions/632979/if-i-know-the-pid-number-of-a-process-how-can-i-get-its-name
     """
     LOGGER.info(f"Test that {command} is launched as PID {pid} ...")
-    running_container = container.run_detached(
-        tty=True,
-        command=["start.sh"],
-    )
+    running_container = container.run_detached(tty=True)
     # Select the PID 1 and get the corresponding command
     cmd = running_container.exec_run(f"ps -p {pid} -o comm=")
     output = cmd.output.decode("utf-8").strip("\n")

@@ -55,7 +55,7 @@ class CondaPackageHelper:
         LOGGER.info(f"Starting container {container.image_name} ...")
         return container.run_detached(
             tty=True,
-            command=["start.sh", "bash", "-c", "sleep infinity"],
+            command=["bash", "-c", "sleep infinity"],
         )
 
     @staticmethod

@@ -5,7 +5,8 @@ import os
 import shlex
 import sys
 
-command = ["/usr/local/bin/start.sh", "jupyterhub-singleuser"]
+# Entrypoint is start.sh
+command = ["jupyterhub-singleuser"]
 
 # set default ip to 0.0.0.0
 if "--ip=" not in os.environ.get("NOTEBOOK_ARGS", ""):
@@ -20,4 +21,5 @@ if "NOTEBOOK_ARGS" in os.environ:
 command += sys.argv[1:]
 
 # Execute the command!
+print("Executing: " + " ".join(command))
 os.execvp(command[0], command)

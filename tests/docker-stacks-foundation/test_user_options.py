@@ -18,7 +18,7 @@ def test_uid_change(container: TrackedContainer) -> None:
         tty=True,
         user="root",
         environment=["NB_UID=1010"],
-        command=["start.sh", "bash", "-c", "id && touch /opt/conda/test-file"],
+        command=["bash", "-c", "id && touch /opt/conda/test-file"],
     )
     assert "uid=1010(jovyan)" in logs
 
@@ -30,7 +30,7 @@ def test_gid_change(container: TrackedContainer) -> None:
         tty=True,
         user="root",
         environment=["NB_GID=110"],
-        command=["start.sh", "id"],
+        command=["id"],
     )
     assert "gid=110(jovyan)" in logs
     assert "groups=110(jovyan),100(users)" in logs
@@ -43,7 +43,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
         tty=True,
         user="root",
         environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
-        command=["start.sh", "bash", "-c", "sleep infinity"],
+        command=["bash", "-c", "sleep infinity"],
     )
 
     # Give the chown time to complete.
@@ -99,7 +99,6 @@ def test_chown_extra(container: TrackedContainer) -> None:
             "CHOWN_EXTRA_OPTS=-R",
         ],
         command=[
-            "start.sh",
             "bash",
             "-c",
             "stat -c '%n:%u:%g' /home/jovyan/.bashrc /opt/conda/bin/jupyter",
@@ -123,7 +122,7 @@ def test_chown_home(container: TrackedContainer) -> None:
             "NB_UID=1010",
             "NB_GID=101",
         ],
-        command=["start.sh", "bash", "-c", "stat -c '%n:%u:%g' /home/kitten/.bashrc"],
+        command=["bash", "-c", "stat -c '%n:%u:%g' /home/kitten/.bashrc"],
     )
     assert "/home/kitten/.bashrc:1010:101" in logs
 
@@ -135,7 +134,7 @@ def test_sudo(container: TrackedContainer) -> None:
         tty=True,
         user="root",
         environment=["GRANT_SUDO=yes"],
-        command=["start.sh", "sudo", "id"],
+        command=["sudo", "id"],
     )
     assert "uid=0(root)" in logs
 
@@ -147,7 +146,7 @@ def test_sudo_path(container: TrackedContainer) -> None:
         tty=True,
         user="root",
         environment=["GRANT_SUDO=yes"],
-        command=["start.sh", "sudo", "which", "jupyter"],
+        command=["sudo", "which", "jupyter"],
     )
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
@@ -158,7 +157,7 @@ def test_sudo_path_without_grant(container: TrackedContainer) -> None:
         timeout=10,
         tty=True,
         user="root",
-        command=["start.sh", "which", "jupyter"],
+        command=["which", "jupyter"],
     )
     assert logs.rstrip().endswith("/opt/conda/bin/jupyter")
 
@@ -173,7 +172,7 @@ def test_group_add(container: TrackedContainer) -> None:
         no_warnings=False,
         user="1010:1010",
         group_add=["users"],  # Ensures write access to /home/jovyan
-        command=["start.sh", "id"],
+        command=["id"],
     )
     warnings = TrackedContainer.get_warnings(logs)
     assert len(warnings) == 1
@@ -191,7 +190,7 @@ def test_set_uid(container: TrackedContainer) -> None:
         timeout=5,
         no_warnings=False,
         user="1010",
-        command=["start.sh", "id"],
+        command=["id"],
     )
     assert "uid=1010(jovyan) gid=0(root)" in logs
     warnings = TrackedContainer.get_warnings(logs)
@@ -207,7 +206,7 @@ def test_set_uid_and_nb_user(container: TrackedContainer) -> None:
         user="1010",
         environment=["NB_USER=kitten"],
         group_add=["users"],  # Ensures write access to /home/jovyan
-        command=["start.sh", "id"],
+        command=["id"],
     )
     assert "uid=1010(kitten) gid=0(root)" in logs
     warnings = TrackedContainer.get_warnings(logs)
@@ -236,7 +235,7 @@ def test_container_not_delete_bind_mount(
             "CHOWN_HOME=yes",
         ],
         volumes={d: {"bind": "/home/jovyan/data", "mode": "rw"}},
-        command=["start.sh", "ls"],
+        command=["ls"],
     )
     assert p.read_text() == "some-content"
     assert len(list(tmp_path.iterdir())) == 1
@@ -259,7 +258,6 @@ def test_jupyter_env_vars_to_unset(
             "SECRET_FRUIT=mango",
         ],
         command=[
-            "start.sh",
             "bash",
             "-c",
             "echo I like ${FRUIT} and ${SECRET_FRUIT:-stuff}, and love ${SECRET_ANIMAL:-to keep secrets}!",
@@ -284,7 +282,26 @@ def test_secure_path(container: TrackedContainer, tmp_path: pathlib.Path) -> Non
         tty=True,
         user="root",
         volumes={p: {"bind": "/usr/bin/python", "mode": "ro"}},
-        command=["start.sh", "python", "--version"],
+        command=["python", "--version"],
     )
     assert "Wrong python" not in logs
     assert "Python" in logs
+
+
+def test_startsh_multiple_exec(container: TrackedContainer) -> None:
+    """If start.sh is executed multiple times check that configuration only occurs once."""
+    logs = container.run_and_wait(
+        timeout=10,
+        no_warnings=False,
+        tty=True,
+        user="root",
+        environment=["GRANT_SUDO=yes"],
+        command=["start.sh", "sudo", "id"],
+    )
+    assert "uid=0(root)" in logs
+    warnings = TrackedContainer.get_warnings(logs)
+    assert len(warnings) == 1
+    assert (
+        "WARNING: start.sh is the default ENTRYPOINT, do not include it in CMD"
+        in warnings[0]
+    )

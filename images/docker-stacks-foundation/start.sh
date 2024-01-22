@@ -34,6 +34,17 @@ else
     cmd=( "$@" )
 fi
 
+# Backwards compatibility: `start.sh` is executed by default in ENTRYPOINT
+# so it should no longer be specified in CMD
+if [ "${_START_SH_EXECUTED}" = "1" ]; then
+    _log "WARNING: start.sh is the default ENTRYPOINT, do not include it in CMD"
+    _log "Executing the command:" "${cmd[@]}"
+    exec "${cmd[@]}"
+else
+    export _START_SH_EXECUTED=1
+fi
+
+
 # NOTE: This hook will run as the user the container was started with!
 # shellcheck disable=SC1091
 source /usr/local/bin/run-hooks.sh /usr/local/bin/start-notebook.d

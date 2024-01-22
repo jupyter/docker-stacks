@@ -42,7 +42,7 @@ def test_matplotlib(
     running_container = container.run_detached(
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
-        command=["start.sh", "bash", "-c", command],
+        command=["bash", "-c", command],
     )
     command = f"python {cont_data_dir}/{test_file}"
     cmd = running_container.exec_run(command)

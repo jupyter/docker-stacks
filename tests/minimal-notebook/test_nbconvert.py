@@ -28,7 +28,7 @@ def test_nbconvert(
         timeout=30,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
-        command=["start.sh", "bash", "-c", command],
+        command=["bash", "-c", command],
     )
     expected_file = f"{output_dir}/{test_file}.{output_format}"
     assert expected_file in logs, f"Expected file {expected_file} not generated"

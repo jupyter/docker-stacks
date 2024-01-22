@@ -30,5 +30,5 @@ def test_check_extension(container: TrackedContainer, extension: str) -> None:
     container.run_and_wait(
         timeout=10,
         tty=True,
-        command=["start.sh", "jupyter", "labextension", "check", extension],
+        command=["jupyter", "labextension", "check", extension],
     )

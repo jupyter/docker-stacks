@@ -17,8 +17,8 @@ def test_python_version(container: TrackedContainer) -> None:
         tty=True,
         command=["python", "--version"],
     )
-    assert logs.startswith("Python ")
-    full_version = logs.split()[1]
+    python = next(line for line in logs.splitlines() if line.startswith("Python "))
+    full_version = python.split()[1]
     major_minor_version = full_version[: full_version.rfind(".")]
 
     assert major_minor_version == EXPECTED_PYTHON_VERSION
@@ -31,4 +31,4 @@ def test_python_pinned_version(container: TrackedContainer) -> None:
         tty=True,
         command=["cat", "/opt/conda/conda-meta/pinned"],
     )
-    assert logs.startswith(f"python {EXPECTED_PYTHON_VERSION}.*")
+    assert f"python {EXPECTED_PYTHON_VERSION}.*" in logs
