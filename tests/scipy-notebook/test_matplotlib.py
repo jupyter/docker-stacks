@@ -38,11 +38,10 @@ def test_matplotlib(
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
     LOGGER.info(description)
-    command = "sleep infinity"
     running_container = container.run_detached(
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
-        command=["bash", "-c", command],
+        command=["bash", "-c", "sleep infinity"],
     )
     command = f"python {cont_data_dir}/{test_file}"
     cmd = running_container.exec_run(command)
