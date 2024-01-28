@@ -202,9 +202,9 @@ import os
 
 # To figure out what version of Hadoop, run:
 # ls /usr/local/spark/jars/hadoop*
-os.environ[
-    "PYSPARK_SUBMIT_ARGS"
-] = '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
+os.environ["PYSPARK_SUBMIT_ARGS"] = (
+    '--packages "org.apache.hadoop:hadoop-aws:2.7.3" pyspark-shell'
+)
 
 import pyspark
 
@@ -226,9 +226,9 @@ Using Spark context for Hadoop 2.6.0
 ```python
 import os
 
-os.environ[
-    "PYSPARK_SUBMIT_ARGS"
-] = "--packages com.amazonaws:aws-java-sdk:1.10.34,org.apache.hadoop:hadoop-aws:2.6.0 pyspark-shell"
+os.environ["PYSPARK_SUBMIT_ARGS"] = (
+    "--packages com.amazonaws:aws-java-sdk:1.10.34,org.apache.hadoop:hadoop-aws:2.6.0 pyspark-shell"
+)
 
 import pyspark
 
@@ -259,9 +259,9 @@ This recipe is not tested and might be broken.
 ```python
 import os
 
-os.environ[
-    "PYSPARK_SUBMIT_ARGS"
-] = "--jars /home/jovyan/spark-streaming-kafka-assembly_2.10-1.6.1.jar pyspark-shell"
+os.environ["PYSPARK_SUBMIT_ARGS"] = (
+    "--jars /home/jovyan/spark-streaming-kafka-assembly_2.10-1.6.1.jar pyspark-shell"
+)
 import pyspark
 from pyspark.streaming.kafka import KafkaUtils
 from pyspark.streaming import StreamingContext
