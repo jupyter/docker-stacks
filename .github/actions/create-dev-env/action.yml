@@ -4,9 +4,6 @@ description: Create a build environment
 runs:
   using: composite
   steps:
-    # actions/setup-python doesn't support Linux aarch64 runners
-    # See: https://github.com/actions/setup-python/issues/108
-    # python3 is manually preinstalled in the aarch64 VM self-hosted runner
     - name: Set Up Python 🐍
       uses: actions/setup-python@v5
       with:
@@ -19,4 +16,6 @@ runs:
       shell: bash
 
     - name: Set up Docker Buildx 🐳
-      uses: docker/setup-buildx-action@v3
+      run: brew install docker
+      shell: bash
+      if: runner.os = 'macOS'
