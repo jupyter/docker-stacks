@@ -17,3 +17,6 @@ runs:
         pip install --upgrade pip
         pip install --upgrade -r requirements-dev.txt
       shell: bash
+
+    - name: Set up Docker Buildx 🐳
+      uses: docker/setup-buildx-action@v3
