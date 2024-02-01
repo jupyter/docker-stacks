@@ -17,6 +17,7 @@ runs:
 
     - name: Set up Docker (missing on macOS) 🐳
       run: |
+        brew install colima
         brew install --cask docker
         colima start
       shell: bash
