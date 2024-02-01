@@ -15,9 +15,9 @@ runs:
         pip install --upgrade -r requirements-dev.txt
       shell: bash
 
-    - name: Set up Docker 🐳
+    - name: Set up Docker (missing on macOS) 🐳
       run: |
         brew install --cask docker
-        sudo ln -s ~/.docker/run/docker.sock /var/run/docker.sock
+        colima start
       shell: bash
       if: runner.os == 'macOS'
