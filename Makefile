@@ -19,6 +19,8 @@ ALL_IMAGES:= \
 	scipy-notebook \
 	tensorflow-notebook \
 	pytorch-notebook \
+	pytorch-cuda-notebook \
+	pytorch-cuda11-notebook \
 	datascience-notebook \
 	pyspark-notebook \
 	all-spark-notebook

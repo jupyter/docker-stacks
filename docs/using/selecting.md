@@ -195,7 +195,29 @@ It contains:
 `jupyter/pytorch-notebook` includes popular Python deep learning libraries.
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
-- [pytorch](https://pytorch.org/) machine learning library
+- [pytorch](https://pytorch.org/) machine learning library (only CPU)
+
+### jupyter/pytorch-cuda-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pytorch-cuda-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pytorch-cuda-notebook/Dockerfile) |
+[Quay.io image tags](https://quay.io/repository/jupyter/pytorch-cuda-notebook?tab=tags)
+
+`jupyter/pytorch-cuda-notebook` includes popular Python deep learning libraries.
+
+- Everything in `jupyter/scipy-notebook` and its ancestor images
+- [pytorch](https://pytorch.org/) machine learning library (with CUDA 12.X)
+
+### jupyter/pytorch-cuda11-notebook
+
+[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pytorch-cuda11-notebook) |
+[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pytorch-cuda11-notebook/Dockerfile) |
+[Quay.io image tags](https://quay.io/repository/jupyter/pytorch-cuda11-notebook?tab=tags)
+
+`jupyter/pytorch-cuda11-notebook` includes popular Python deep learning libraries.
+
+- Everything in `jupyter/scipy-notebook` and its ancestor images
+- [pytorch](https://pytorch.org/) machine learning library (with CUDA 11.8)
 
 ### jupyter/datascience-notebook
 
@@ -317,7 +339,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [almond]: https://almond.sh
 [almond_b]: https://mybinder.org/v2/gh/almond-sh/examples/master?urlpath=lab%2Ftree%2Fnotebooks%2Findex.ipynb
 
-### GPU-accelerated notebooks
+### Other GPU-accelerated notebooks
 
 | Flavor             | Description                                                                                                                                                                                                                                                                                                                                                  |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

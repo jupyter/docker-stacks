@@ -216,6 +216,46 @@ jobs:
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
+  aarch64-pytorch-cuda:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: pytorch-cuda-notebook
+      platform: aarch64
+      runs-on: ARM64_SLOW
+    needs: [aarch64-scipy]
+    if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
+
+  x86_64-pytorch-cuda:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: pytorch-cuda-notebook
+      platform: x86_64
+      runs-on: ubuntu-latest
+    needs: [x86_64-scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  aarch64-pytorch-cuda11:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: pytorch-cuda11-notebook
+      platform: aarch64
+      runs-on: ARM64_SLOW
+    needs: [aarch64-scipy]
+    if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
+
+  x86_64-pytorch-cuda11:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: pytorch-cuda11-notebook
+      platform: x86_64
+      runs-on: ubuntu-latest
+    needs: [x86_64-scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
   aarch64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -296,6 +336,8 @@ jobs:
             julia-notebook,
             tensorflow-notebook,
             pytorch-notebook,
+            pytorch-cuda-notebook,
+            pytorch-cuda11-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -350,6 +392,8 @@ jobs:
             julia-notebook,
             tensorflow-notebook,
             pytorch-notebook,
+            pytorch-cuda-notebook,
+            pytorch-cuda11-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
@@ -403,6 +447,8 @@ jobs:
             julia-notebook,
             tensorflow-notebook,
             pytorch-notebook,
+            pytorch-cuda-notebook,
+            pytorch-cuda11-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,
