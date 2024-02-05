@@ -75,12 +75,6 @@ ALL_IMAGES = {
     "pytorch-notebook": ImageDescription(
         parent_image="scipy-notebook", taggers=[PytorchVersionTagger()]
     ),
-    "pytorch-cuda-notebook": ImageDescription(
-        parent_image="scipy-notebook", taggers=[PytorchVersionTagger()]
-    ),
-    "pytorch-cuda11-notebook": ImageDescription(
-        parent_image="scipy-notebook", taggers=[PytorchVersionTagger()]
-    ),
     "datascience-notebook": ImageDescription(
         parent_image="scipy-notebook",
         taggers=[RVersionTagger(), JuliaVersionTagger()],

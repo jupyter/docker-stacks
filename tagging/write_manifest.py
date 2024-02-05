@@ -9,7 +9,7 @@ from pathlib import Path
 from docker.models.containers import Container
 
 from tagging.docker_runner import DockerRunner
-from tagging.get_platform import get_platform
+from tagging.get_prefix import get_file_prefix, get_tag_prefix
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
 from tagging.git_helper import GitHelper
 from tagging.manifests import ManifestHeader, ManifestInterface
@@ -73,6 +73,7 @@ def write_manifest(
     short_image_name: str,
     registry: str,
     owner: str,
+    variant: str,
     hist_lines_dir: Path,
     manifests_dir: Path,
 ) -> None:
@@ -81,12 +82,12 @@ def write_manifest(
 
     image = f"{registry}/{owner}/{short_image_name}:latest"
 
-    file_prefix = get_platform()
+    file_prefix = get_file_prefix(variant)
     commit_hash_tag = GitHelper.commit_hash_tag()
     filename = f"{file_prefix}-{short_image_name}-{commit_hash_tag}"
 
     with DockerRunner(image) as container:
-        tags_prefix = get_platform()
+        tags_prefix = get_tag_prefix(variant)
         all_tags = [
             tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
         ]
@@ -137,6 +138,11 @@ if __name__ == "__main__":
         required=True,
         help="Owner of the image",
     )
+    arg_parser.add_argument(
+        "--variant",
+        required=True,
+        help="Variant tag prefix",
+    )
     args = arg_parser.parse_args()
 
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
@@ -145,6 +151,7 @@ if __name__ == "__main__":
         args.short_image_name,
         args.registry,
         args.owner,
+        args.variant,
         args.hist_lines_dir,
         args.manifests_dir,
     )

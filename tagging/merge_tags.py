@@ -8,6 +8,7 @@ from pathlib import Path
 import plumbum
 
 from tagging.get_platform import ALL_PLATFORMS
+from tagging.get_prefix import get_file_prefix_for_platform, get_tag_prefix_for_platform
 
 docker = plumbum.local["docker"]
 
@@ -16,6 +17,7 @@ LOGGER = logging.getLogger(__name__)
 
 def merge_tags(
     short_image_name: str,
+    variant: str,
     tags_dir: Path,
 ) -> None:
     """
@@ -26,9 +28,12 @@ def merge_tags(
     all_tags: set[str] = set()
 
     for platform in ALL_PLATFORMS:
-        filename = f"{platform}-{short_image_name}.txt"
-        tags = (tags_dir / filename).read_text().splitlines()
-        all_tags.update(tag.replace(platform + "-", "") for tag in tags)
+        file_prefix = get_file_prefix_for_platform(platform, variant)
+        filename = f"{file_prefix}-{short_image_name}.txt"
+        file_path = tags_dir / filename
+        if file_path.exists():
+            tags = file_path.read_text().splitlines()
+            all_tags.update(tag.replace(platform + "-", "") for tag in tags)
 
     LOGGER.info(f"Got tags: {all_tags}")
 
@@ -62,6 +67,11 @@ if __name__ == "__main__":
         help="Short image name",
     )
     arg_parser.add_argument(
+        "--variant",
+        required=True,
+        help="Variant tag prefix",
+    )
+    arg_parser.add_argument(
         "--tags-dir",
         required=True,
         type=Path,
@@ -69,4 +79,4 @@ if __name__ == "__main__":
     )
     args = arg_parser.parse_args()
 
-    merge_tags(args.short_image_name, args.tags_dir)
+    merge_tags(args.short_image_name, args.variant, args.tags_dir)

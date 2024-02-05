@@ -8,6 +8,9 @@ inputs:
   platform:
     description: Image platform
     required: true
+  variant:
+    description: Variant tag prefix
+    required: true
 
 runs:
   using: composite
@@ -15,10 +18,10 @@ runs:
     - name: Download built image 📥
       uses: actions/download-artifact@v4
       with:
-        name: ${{ inputs.image }}-${{ inputs.platform }}
+        name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
         path: /tmp/jupyter/images/
     - name: Load downloaded image to docker 📥
       run: |
-        zstd --uncompress --stdout --rm /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst | docker load
+        zstd --uncompress --stdout --rm /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst | docker load
         docker image ls --all
       shell: bash

@@ -1,0 +1,244 @@
+name: Build, test, and push Docker Images
+
+env:
+  REGISTRY: quay.io
+  OWNER: ${{ github.repository_owner }}
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        description: Image platform
+        required: true
+        type: string
+      runs-on-fast:
+        description: GitHub Actions Runner image (fast)
+        required: true
+        type: string
+      runs-on-slow:
+        description: GitHub Actions Runner image (slow)
+        required: true
+        type: string
+    secrets:
+      REGISTRY_USERNAME:
+        required: true
+      REGISTRY_TOKEN:
+        required: true
+
+jobs:
+  foundation:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: ""
+      parent-variant: default
+      image: docker-stacks-foundation
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-fast }}
+
+  base:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: docker-stacks-foundation
+      parent-variant: default
+      image: base-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-fast }}
+    needs: [foundation]
+
+  minimal:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: base-notebook
+      parent-variant: default
+      image: minimal-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-fast }}
+    needs: [base]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  scipy:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: minimal-notebook
+      parent-variant: default
+      image: scipy-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-fast }}
+    needs: [minimal]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  r:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: minimal-notebook
+      parent-variant: default
+      image: r-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-slow }}
+    needs: [minimal]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  julia:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: minimal-notebook
+      parent-variant: default
+      image: julia-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-slow }}
+    needs: [minimal]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  tensorflow:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      parent-variant: default
+      image: tensorflow-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-slow }}
+    needs: [scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  pytorch:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      parent-variant: default
+      image: pytorch-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-slow }}
+    needs: [scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  pytorch-cuda:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      parent-variant: default
+      image: pytorch-notebook
+      variant: cuda
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-slow }}
+    needs: [scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  pytorch-cuda11:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      parent-variant: default
+      image: pytorch-notebook
+      variant: cuda11
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-slow }}
+    needs: [scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  datascience:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      parent-variant: default
+      image: datascience-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-slow }}
+    needs: [scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  pyspark:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      parent-variant: default
+      image: pyspark-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-fast }}
+    needs: [scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  all-spark:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: pyspark-notebook
+      parent-variant: default
+      image: all-spark-notebook
+      variant: default
+      platform: ${{ inputs.platform }}
+      runs-on: ${{ inputs.runs-on-fast }}
+    needs: [pyspark]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  tag-push:
+    uses: ./.github/workflows/docker-tag-push.yml
+    with:
+      platform: ${{ inputs.platform }}
+      image: ${{ matrix.image-variant.image }}
+      variant: ${{ matrix.image-variant.variant }}
+    secrets:
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+    strategy:
+      matrix:
+        image-variant:
+          [
+            { image: docker-stacks-foundation, variant: default },
+            { image: base-notebook, variant: default },
+            { image: minimal-notebook, variant: default },
+            { image: scipy-notebook, variant: default },
+            { image: r-notebook, variant: default },
+            { image: julia-notebook, variant: default },
+            { image: tensorflow-notebook, variant: default },
+            { image: pytorch-notebook, variant: default },
+            { image: pytorch-notebook, variant: cuda },
+            { image: pytorch-notebook, variant: cuda11 },
+            { image: datascience-notebook, variant: default },
+            { image: pyspark-notebook, variant: default },
+            { image: all-spark-notebook, variant: default },
+          ]
+    needs:
+      [
+        foundation,
+        base,
+        minimal,
+        scipy,
+        r,
+        julia,
+        tensorflow,
+        pytorch,
+        pytorch-cuda,
+        pytorch-cuda11,
+        datascience,
+        pyspark,
+        all-spark,
+      ]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  tag-push-fast:
+    uses: ./.github/workflows/docker-tag-push.yml
+    with:
+      platform: ${{ inputs.platform }}
+      image: ${{ matrix.image-variant.image }}
+      variant: ${{ matrix.image-variant.variant }}
+    secrets:
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+    strategy:
+      matrix:
+        image-variant:
+          [
+            { image: docker-stacks-foundation, variant: default },
+            { image: base-notebook, variant: default },
+          ]
+    needs: [foundation, base]
+    if: ${{ contains(github.event.pull_request.title, '[FAST_BUILD]') }}

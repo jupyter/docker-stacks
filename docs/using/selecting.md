@@ -195,29 +195,7 @@ It contains:
 `jupyter/pytorch-notebook` includes popular Python deep learning libraries.
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
-- [pytorch](https://pytorch.org/) machine learning library (only CPU)
-
-### jupyter/pytorch-cuda-notebook
-
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pytorch-cuda-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pytorch-cuda-notebook/Dockerfile) |
-[Quay.io image tags](https://quay.io/repository/jupyter/pytorch-cuda-notebook?tab=tags)
-
-`jupyter/pytorch-cuda-notebook` includes popular Python deep learning libraries.
-
-- Everything in `jupyter/scipy-notebook` and its ancestor images
-- [pytorch](https://pytorch.org/) machine learning library (with CUDA 12.X)
-
-### jupyter/pytorch-cuda11-notebook
-
-[Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/pytorch-cuda11-notebook) |
-[Dockerfile commit history](https://github.com/jupyter/docker-stacks/commits/main/images/pytorch-cuda11-notebook/Dockerfile) |
-[Quay.io image tags](https://quay.io/repository/jupyter/pytorch-cuda11-notebook?tab=tags)
-
-`jupyter/pytorch-cuda11-notebook` includes popular Python deep learning libraries.
-
-- Everything in `jupyter/scipy-notebook` and its ancestor images
-- [pytorch](https://pytorch.org/) machine learning library (with CUDA 11.8)
+- [pytorch](https://pytorch.org/) machine learning library (optionally with CUDA)
 
 ### jupyter/datascience-notebook
 

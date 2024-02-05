@@ -42,7 +42,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: [
+        image:
+          [
             docker-stacks-foundation,
             base-notebook,
             minimal-notebook,
@@ -51,8 +52,6 @@ jobs:
             julia-notebook,
             tensorflow-notebook,
             pytorch-notebook,
-            # pytorch-cuda-notebook,
-            # pytorch-cuda11-notebook,
             datascience-notebook,
             pyspark-notebook,
             all-spark-notebook,

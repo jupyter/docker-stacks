@@ -7,6 +7,10 @@ env:
 on:
   workflow_call:
     inputs:
+      variant:
+        description: Variant tag prefix
+        required: true
+        type: string
       image:
         description: Image name
         required: true
@@ -30,13 +34,14 @@ jobs:
       - name: Download x86_64 tags file 📥
         uses: actions/download-artifact@v4
         with:
-          name: ${{ inputs.image }}-x86_64-tags
+          name: ${{ inputs.image }}-x86_64-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/
       - name: Download aarch64 tags file 📥
         uses: actions/download-artifact@v4
         with:
-          name: ${{ inputs.image }}-aarch64-tags
+          name: ${{ inputs.image }}-aarch64-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/
+        if: github.repository_owner == 'jupyter'
 
       # Docker might be stuck when pulling images
       # https://github.com/docker/for-mac/issues/2083
@@ -57,5 +62,5 @@ jobs:
 
       - name: Merge tags for the images 🔀
         if: env.PUSH_TO_REGISTRY == 'true'
-        run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/
+        run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --variant ${{ inputs.variant }}
         shell: bash

@@ -16,8 +16,6 @@ ALL_IMAGES = {
     "julia-notebook": "minimal-notebook",
     "tensorflow-notebook": "scipy-notebook",
     "pytorch-notebook": "scipy-notebook",
-    "pytorch-cuda-notebook": "scipy-notebook",
-    "pytorch-cuda11-notebook": "scipy-notebook",
     "datascience-notebook": "scipy-notebook",
     "pyspark-notebook": "scipy-notebook",
     "all-spark-notebook": "pyspark-notebook",
