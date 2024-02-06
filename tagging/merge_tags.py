@@ -8,7 +8,7 @@ from pathlib import Path
 import plumbum
 
 from tagging.get_platform import ALL_PLATFORMS
-from tagging.get_prefix import get_file_prefix_for_platform, get_tag_prefix_for_platform
+from tagging.get_prefix import get_file_prefix_for_platform
 
 docker = plumbum.local["docker"]
 
