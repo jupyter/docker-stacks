@@ -5,14 +5,14 @@ from tagging.get_platform import get_platform
 DEFAULT_VARIANT = "default"
 
 
-def get_file_prefix_for_platform(platform: str, name: str) -> str:
-    return f"{platform}-{name}"
+def get_file_prefix_for_platform(platform: str, variant: str) -> str:
+    return f"{platform}-{variant}"
 
 
-def get_tag_prefix_for_platform(platform: str, name: str) -> str:
-    if name == DEFAULT_VARIANT:
+def get_tag_prefix_for_platform(platform: str, variant: str) -> str:
+    if variant == DEFAULT_VARIANT:
         return platform
-    return f"{platform}-{name}"
+    return f"{platform}-{variant}"
 
 
 def get_file_prefix(variant: str) -> str:
