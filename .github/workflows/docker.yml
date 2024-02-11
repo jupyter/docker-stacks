@@ -493,7 +493,11 @@ jobs:
             { image: all-spark-notebook, variant: default },
           ]
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: |
+      always() &&
+      needs.x86_64-images-tag-push.result == 'success' &&
+      (needs.aarch64-images-tag-push.result == 'success' || needs.aarch64-images-tag-push.result == 'skipped') &&
+      !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   merge-tags-fast:
     uses: ./.github/workflows/docker-merge-tags.yml
@@ -511,7 +515,11 @@ jobs:
             { image: base-notebook, variant: default },
           ]
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
-    if: github.repository_owner == 'jupyter' && contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: |
+      always() &&
+      needs.x86_64-images-tag-push-fast.result == 'success' &&
+      (needs.aarch64-images-tag-push-fast.result == 'success' || needs.aarch64-images-tag-push-fast.result == 'skipped') &&
+      contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
