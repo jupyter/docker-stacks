@@ -81,18 +81,8 @@ jobs:
         run: docker pull ubuntu:22.04
         shell: bash
 
-      - name: Build image (default) 🛠
-        if: inputs.variant == 'default'
-        run: docker build --rm --force-rm --tag ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} images/${{ inputs.image }}/ --build-arg REGISTRY=${{ env.REGISTRY }} --build-arg OWNER=${{ env.OWNER }}
-        env:
-          DOCKER_BUILDKIT: 1
-          # Full logs for CI build
-          BUILDKIT_PROGRESS: plain
-        shell: bash
-
-      - name: Build image (variant) 🛠
-        if: inputs.variant != 'default'
-        run: docker build --rm --force-rm --tag ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} images/${{ inputs.image }}/${{ inputs.variant }}/ --build-arg REGISTRY=${{ env.REGISTRY }} --build-arg OWNER=${{ env.OWNER }}
+      - name: Build image 🛠
+        run: docker build --rm --force-rm --tag ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} images/${{ inputs.image }}/${{ inputs.variant != 'default' && inputs.variant || '.' }}/ --build-arg REGISTRY=${{ env.REGISTRY }} --build-arg OWNER=${{ env.OWNER }}
         env:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build
