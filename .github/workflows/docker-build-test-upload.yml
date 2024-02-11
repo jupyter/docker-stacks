@@ -13,8 +13,9 @@ on:
         type: string
       parent-variant:
         description: Parent variant tag prefix
-        required: true
+        required: false
         type: string
+        default: default
       image:
         description: Image name
         required: true
