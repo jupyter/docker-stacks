@@ -66,6 +66,7 @@ linkcheck-docs: ## check broken links
 	sphinx-build -W --keep-going --color -b linkcheck docs/ docs/_build/
 
 
+
 hook/%: VARIANT?=default
 hook/%: ## run post-build hooks for an image
 	python3 -m tagging.write_tags_file --short-image-name "$(notdir $@)" --tags-dir /tmp/jupyter/tags/ --registry "$(REGISTRY)" --owner "$(OWNER)" --variant "$(VARIANT)" && \
