@@ -197,7 +197,7 @@ It contains:
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [pytorch](https://pytorch.org/) machine learning library
 
-> **GPU Acceleration:** Append a CUDA version prefix (`cuda12-` for CUDA 12 or `cuda11-` for CUDA 11) to the image tag to allow PyTorch operations to use compatible NVIDIA GPUs for accelerated computation.
+> **GPU Acceleration:** Append a CUDA version prefix (`cuda11-` for CUDA 11 or `cuda12-` for CUDA 12) to the image tag to allow PyTorch operations to use compatible NVIDIA GPUs for accelerated computation.
 
 ### jupyter/datascience-notebook
 
