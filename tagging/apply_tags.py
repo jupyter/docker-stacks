@@ -75,7 +75,6 @@ if __name__ == "__main__":
     arg_parser.add_argument(
         "--variant",
         required=True,
-        type=str,
         help="Variant tag prefix",
     )
     args = arg_parser.parse_args()
