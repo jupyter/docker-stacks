@@ -22,8 +22,9 @@ on:
         type: string
       variant:
         description: Variant tag prefix
-        required: true
+        required: false
         type: string
+        default: default
       platform:
         description: Image platform
         required: true
