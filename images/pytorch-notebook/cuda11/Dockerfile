@@ -19,3 +19,7 @@ RUN pip install --no-cache-dir --extra-index-url=https://pypi.nvidia.com --index
     'torchaudio'  && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+# # https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/1.14.5/docker-specialized.html#dockerfiles
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
