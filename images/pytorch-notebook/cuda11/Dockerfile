@@ -13,9 +13,13 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install PyTorch with pip (https://pytorch.org/get-started/locally/)
 # hadolint ignore=DL3013
-RUN pip install --no-cache-dir --index-url 'https://download.pytorch.org/whl/cpu' \
+RUN pip install --no-cache-dir --extra-index-url=https://pypi.nvidia.com --index-url 'https://download.pytorch.org/whl/cu118' \
     'torch' \
     'torchvision' \
     'torchaudio'  && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+# https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#dockerfiles
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility

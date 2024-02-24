@@ -197,6 +197,8 @@ It contains:
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [pytorch](https://pytorch.org/) machine learning library
 
+> **GPU Acceleration:** Append a CUDA version prefix (`cuda11-` for CUDA 11 or `cuda12-` for CUDA 12) to the image tag to allow PyTorch operations to use compatible NVIDIA GPUs for accelerated computation.
+
 ### jupyter/datascience-notebook
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/datascience-notebook) |
@@ -317,7 +319,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [almond]: https://almond.sh
 [almond_b]: https://mybinder.org/v2/gh/almond-sh/examples/master?urlpath=lab%2Ftree%2Fnotebooks%2Findex.ipynb
 
-### GPU-accelerated notebooks
+### Other GPU-accelerated notebooks
 
 | Flavor             | Description                                                                                                                                                                                                                                                                                                                                                  |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

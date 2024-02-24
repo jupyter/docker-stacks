@@ -11,10 +11,20 @@ on:
         description: Parent image name
         required: true
         type: string
+      parent-variant:
+        description: Parent variant tag prefix
+        required: false
+        type: string
+        default: default
       image:
         description: Image name
         required: true
         type: string
+      variant:
+        description: Variant tag prefix
+        required: false
+        type: string
+        default: default
       platform:
         description: Image platform
         required: true
@@ -29,6 +39,19 @@ jobs:
     runs-on: ${{ inputs.runs-on }}
 
     steps:
+      # Image with CUDA needs extra disk space
+      - name: Free disk space 🧹
+        if: contains(inputs.variant, 'cuda') && inputs.platform == 'x86_64'
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
       - name: Create dev environment 📦
@@ -52,6 +75,7 @@ jobs:
         with:
           image: ${{ inputs.parent-image }}
           platform: ${{ inputs.platform }}
+          variant: ${{ inputs.parent-variant }}
 
       - name: Pull ubuntu:22.04 image 📥
         if: inputs.parent-image == ''
@@ -59,7 +83,7 @@ jobs:
         shell: bash
 
       - name: Build image 🛠
-        run: docker build --rm --force-rm --tag ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} images/${{ inputs.image }}/ --build-arg REGISTRY=${{ env.REGISTRY }} --build-arg OWNER=${{ env.OWNER }}
+        run: docker build --rm --force-rm --tag ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} images/${{ inputs.image }}/${{ inputs.variant != 'default' && inputs.variant || '.' }}/ --build-arg REGISTRY=${{ env.REGISTRY }} --build-arg OWNER=${{ env.OWNER }}
         env:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build
@@ -72,39 +96,39 @@ jobs:
 
       - name: Write tags file 🏷
         run: |
-          python3 -m tagging.write_tags_file --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
+          python3 -m tagging.write_tags_file --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }} --variant ${{ inputs.variant }}
         shell: bash
       - name: Upload tags file 💾
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-tags
-          path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.image }}.txt
+          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
+          path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}.txt
           retention-days: 3
 
       - name: Write manifest and build history file 🏷
-        run: python3 -m tagging.write_manifest --short-image-name ${{ inputs.image }} --hist-lines-dir /tmp/jupyter/hist_lines/ --manifests-dir /tmp/jupyter/manifests/ --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
+        run: python3 -m tagging.write_manifest --short-image-name ${{ inputs.image }} --hist-lines-dir /tmp/jupyter/hist_lines/ --manifests-dir /tmp/jupyter/manifests/ --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }} --variant ${{ inputs.variant }}
         shell: bash
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-manifest
-          path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.image }}-*.md
+          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-manifest
+          path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.md
           retention-days: 3
       - name: Upload build history line 💾
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-history_line
-          path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.image }}-*.txt
+          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-history_line
+          path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.txt
           retention-days: 3
 
       - name: Save image as a tar for later use 💾
         run: |
           mkdir -p /tmp/jupyter/images/
-          docker save ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst
+          docker save ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
         shell: bash
       - name: Upload image as artifact 💾
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}
-          path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}.tar.zst
+          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
+          path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
           retention-days: 3
