@@ -61,11 +61,11 @@ The server logs appear in the terminal.
 
 Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
 
-Due to the usage of [the `--rm` flag](https://docs.docker.com/engine/reference/commandline/container_run/#rm)
+Due to the usage of [the `--rm` flag](https://docs.docker.com/reference/cli/docker/container/run/#rm)
 Docker automatically cleans up the container and removes the file system when the container exits,
 but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
-[The `-i` flag](https://docs.docker.com/engine/reference/commandline/container_run/#interactive) keeps the container's `STDIN` open, and lets you send input to the container through standard input.
-[The `-t` flag](https://docs.docker.com/engine/reference/commandline/container_run/#tty) attaches a pseudo-TTY to the container.
+[The `-i` flag](https://docs.docker.com/reference/cli/docker/container/run/#interactive) keeps the container's `STDIN` open, and lets you send input to the container through standard input.
+[The `-t` flag](https://docs.docker.com/reference/cli/docker/container/run/#tty) attaches a pseudo-TTY to the container.
 
 ```{note}
 By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
