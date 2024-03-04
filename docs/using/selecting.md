@@ -242,7 +242,7 @@ It contains:
 - Everything in `jupyter/pyspark-notebook` and its ancestor images
 - [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
 - [rcurl](https://cran.r-project.org/web/packages/RCurl/index.html),
-  [sparklyr](https://spark.rstudio.com),
+  [sparklyr](https://spark.posit.co),
   [ggplot2](https://ggplot2.tidyverse.org)
   packages
 

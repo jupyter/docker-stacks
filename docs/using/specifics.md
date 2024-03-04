@@ -303,5 +303,5 @@ sess.run(hello)
 ```
 
 [sparkr]: https://spark.apache.org/docs/latest/sparkr.html
-[sparklyr]: https://spark.rstudio.com/
+[sparklyr]: https://spark.posit.co
 [spark-conf]: https://spark.apache.org/docs/latest/configuration.html
