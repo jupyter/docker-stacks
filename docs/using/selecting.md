@@ -18,11 +18,11 @@ The following sections describe these images, including their contents, relation
 
 ## CUDA enabled variant
 
-We provide CUDA accelerated version of `pytorch-notebook` image.
-Prepend a CUDA version prefix (like `cuda12-`) to the image tag to allow PyTorch operations to use compatible NVIDIA GPUs for accelerated computation.
+We provide CUDA accelerated version of `pytorch-notebook` and `tensorflow-notebook` images.
+Prepend a CUDA version prefix (like `cuda12-`) to the image tag to allow PyTorch or TensorFlow operations to use compatible NVIDIA GPUs for accelerated computation.
 We only build images for 2 last major versions of CUDA.
 
-For example, you can use an image `quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.8`
+For example, you can use an image `quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.8` or `quay.io/jupyter/tensorflow-notebook:cuda12-latest`
 
 ### jupyter/docker-stacks-foundation
 

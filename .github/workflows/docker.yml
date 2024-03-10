@@ -196,6 +196,17 @@ jobs:
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
+  x86_64-tensorflow-cuda12:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: tensorflow-notebook
+      variant: cuda12
+      platform: x86_64
+      runs-on: ubuntu-latest
+    needs: [x86_64-scipy]
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
   aarch64-pytorch:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -378,6 +389,7 @@ jobs:
             { image: r-notebook, variant: default },
             { image: julia-notebook, variant: default },
             { image: tensorflow-notebook, variant: default },
+            { image: tensorflow-notebook, variant: cuda12 },
             { image: pytorch-notebook, variant: default },
             { image: pytorch-notebook, variant: cuda11 },
             { image: pytorch-notebook, variant: cuda12 },
@@ -439,6 +451,7 @@ jobs:
             { image: r-notebook, variant: default },
             { image: julia-notebook, variant: default },
             { image: tensorflow-notebook, variant: default },
+            { image: tensorflow-notebook, variant: cuda12 },
             { image: pytorch-notebook, variant: default },
             { image: pytorch-notebook, variant: cuda11 },
             { image: pytorch-notebook, variant: cuda12 },
