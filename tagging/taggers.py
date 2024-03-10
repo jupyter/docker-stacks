@@ -100,7 +100,7 @@ class TensorflowVersionTagger(TaggerInterface):
     def tag_value(container: Container) -> str:
         try:
             return "tensorflow-" + _get_pip_package_version(container, "tensorflow")
-        except IndexError:
+        except AssertionError:
             return "tensorflow-" + _get_pip_package_version(container, "tensorflow-cpu")
 
 
