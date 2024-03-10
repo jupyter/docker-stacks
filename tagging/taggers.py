@@ -98,7 +98,10 @@ class RVersionTagger(TaggerInterface):
 class TensorflowVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container: Container) -> str:
-        return "tensorflow-" + _get_pip_package_version(container, "tensorflow")
+        try:
+            return "tensorflow-" + _get_pip_package_version(container, "tensorflow")
+        except IndexError:
+            return "tensorflow-" + _get_pip_package_version(container, "tensorflow-cpu")
 
 
 class PytorchVersionTagger(TaggerInterface):

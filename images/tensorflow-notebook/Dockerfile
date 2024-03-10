@@ -12,6 +12,6 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install Tensorflow with pip
-RUN pip install --no-cache-dir tensorflow && \
+RUN pip install --no-cache-dir tensorflow-cpu && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
