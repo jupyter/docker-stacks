@@ -22,8 +22,7 @@ RUN mamba install --yes -c nvidia/label/cuda-12.3.2 \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-ENV XLA_FLAGS="--xla_gpu_cuda_data_dir=${CONDA_DIR}" \
-    LD_LIBRARY_PATH="${CONDA_DIR}/lib/${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}" \
+ENV LD_LIBRARY_PATH="${CONDA_DIR}/lib/${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}" \
     # https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#dockerfiles
     NVIDIA_VISIBLE_DEVICES="all" \
     NVIDIA_DRIVER_CAPABILITIES="compute,utility"
