@@ -13,10 +13,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install CUDA libs and cuDNN with mamba
 RUN mamba install --yes -c nvidia/label/cuda-12.3.2 \
+    'cuda-cupti' \
     'cuda-libraries-dev' \
     'cuda-nvcc' \
     'cuda-nvtx' \
-    'cuda-cupti' \
     'cudnn' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
