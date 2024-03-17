@@ -196,12 +196,12 @@ jobs:
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
-  x86_64-tensorflow-cuda12:
+  x86_64-tensorflow-cuda:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
       parent-image: scipy-notebook
       image: tensorflow-notebook
-      variant: cuda12
+      variant: cuda
       platform: x86_64
       runs-on: ubuntu-latest
     needs: [x86_64-scipy]
@@ -389,7 +389,7 @@ jobs:
             { image: r-notebook, variant: default },
             { image: julia-notebook, variant: default },
             { image: tensorflow-notebook, variant: default },
-            { image: tensorflow-notebook, variant: cuda12 },
+            { image: tensorflow-notebook, variant: cuda },
             { image: pytorch-notebook, variant: default },
             { image: pytorch-notebook, variant: cuda11 },
             { image: pytorch-notebook, variant: cuda12 },
@@ -451,7 +451,7 @@ jobs:
             { image: r-notebook, variant: default },
             { image: julia-notebook, variant: default },
             { image: tensorflow-notebook, variant: default },
-            { image: tensorflow-notebook, variant: cuda12 },
+            { image: tensorflow-notebook, variant: cuda },
             { image: pytorch-notebook, variant: default },
             { image: pytorch-notebook, variant: cuda11 },
             { image: pytorch-notebook, variant: cuda12 },
