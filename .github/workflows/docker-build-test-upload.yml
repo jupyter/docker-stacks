@@ -67,6 +67,12 @@ jobs:
           docker rm $(docker ps --all --quiet) || true
           docker system prune --all --force
           rm -rf /tmp/jupyter/
+
+          # Unfortunately, steps above are not enough for docker to completely clean overlay2
+          # So, we remove it manually before each `docker build` run
+          sudo systemctl stop docker
+          sudo rm -rf /var/lib/docker
+          sudo systemctl start docker
         shell: bash
 
       - name: Load parent built image to Docker 📥
