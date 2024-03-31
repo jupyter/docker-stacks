@@ -22,7 +22,7 @@ if [ "$(uname -m)" == "x86_64" ]; then
     # for an explanation of these options
     export JULIA_CPU_TARGET="generic;sandybridge,-xsaveopt,clone_all;haswell,-rdrnd,base(1);x86-64-v4,-rdrnd,base(1)"
 elif [ "$(uname -m)" == "aarch64" ]; then
-    # See https://github.com/JuliaCI/julia-buildkite/blob/70bde73f6cb17d4381b62236fc2d96b1c7acbba7/utilities/build_envs.sh#L54
+    # See https://github.com/JuliaCI/julia-buildkite/blob/9f354745a1f2bf31a5952462aa1ff2d869507cb8/utilities/build_envs.sh#L56
     # for an explanation of these options
     export JULIA_CPU_TARGET="generic;cortex-a57;thunderx2t99;carmel,clone_all;apple-m1,base(3);neoverse-512tvb,base(3)"
 fi
