@@ -69,5 +69,8 @@ RUN mamba install --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
+# install dependecies pyspark 
+RUN pip install pyspark
+
 WORKDIR "${HOME}"
 EXPOSE 4040
