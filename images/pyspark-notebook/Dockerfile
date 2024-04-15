@@ -64,10 +64,11 @@ RUN mamba install --yes \
     'grpcio-status' \
     'grpcio' \
     'pandas=2.0.3' \
+    'pyspark' \
     'pyarrow' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
-RUN pip install pyspark
+
 WORKDIR "${HOME}"
 EXPOSE 4040
