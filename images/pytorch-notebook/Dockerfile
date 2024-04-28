@@ -11,11 +11,12 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install PyTorch with pip (https://pytorch.org/get-started/locally/)
-# hadolint ignore=DL3013
-RUN pip install --no-cache-dir --index-url 'https://download.pytorch.org/whl/cpu' \
-    'torch' \
+# Install PyTorch with mamba (https://pytorch.org/get-started/locally/)
+RUN mamba install --yes \
+    'pytorch' \
     'torchvision' \
-    'torchaudio'  && \
+    'torchaudio' \
+    'cpuonly' \
+    -c pytorch && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
