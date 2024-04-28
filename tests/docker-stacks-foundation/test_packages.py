@@ -71,6 +71,7 @@ EXCLUDED_PACKAGES = [
     "bzip2",
     "ca-certificates",
     "conda-forge::blas[build=openblas]",
+    "cpuonly",
     "grpcio-status",
     "grpcio",
     "hdf5",
@@ -79,6 +80,7 @@ EXCLUDED_PACKAGES = [
     "pandas[version='>",
     "protobuf",
     "python",
+    "pytorch",
     "r-irkernel",
     "unixodbc",
 ]
