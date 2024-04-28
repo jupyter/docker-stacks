@@ -17,7 +17,7 @@ RUN mamba install --yes \
     'torchvision' \
     'torchaudio' \
     'pytorch-cuda=11.8' \
-    -c pytorch \ 
+    -c pytorch \
     -c nvidia && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
