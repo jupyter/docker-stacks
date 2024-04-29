@@ -12,7 +12,7 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install PyTorch with mamba (https://pytorch.org/get-started/locally/)
-RUN mamba config --prepend channels pytorch && \
+RUN conda config --system --prepend channels pytorch && \
     mamba install --yes \
     'pytorch' \
     'torchvision' \
