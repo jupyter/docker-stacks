@@ -12,11 +12,11 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install PyTorch with mamba (https://pytorch.org/get-started/locally/)
-RUN mamba install --yes \
+RUN mamba config --prepend channels pytorch && \
+    mamba install --yes \
     'pytorch' \
     'torchvision' \
     'torchaudio' \
-    'cpuonly' \
-    -c pytorch && \
+    'cpuonly' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
