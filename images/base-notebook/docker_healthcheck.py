@@ -9,9 +9,9 @@ from pathlib import Path
 import requests
 
 # Several operations below deliberately don't check for possible errors
-# As this is a healthcheck, it should succeed or raise an exception on error
+# As this is a health check, it should succeed or raise an exception on error
 
-# Docker runs healtchecks using an exec
+# Docker runs health checks using an exec
 # It uses the default user configured when running the image: root for the case of a custom NB_USER or jovyan for the case of the default image user.
 # We manually change HOME to make `jupyter --runtime-dir` report a correct path
 # More information: <https://github.com/jupyter/docker-stacks/pull/2074#issuecomment-1879778409>
