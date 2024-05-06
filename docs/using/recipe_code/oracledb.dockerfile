@@ -12,7 +12,7 @@ RUN apt-get update --yes && \
 
 # Oracle
 ARG INSTANTCLIENT_MAJOR_VERSION=21
-ARG INSTANTCLIENT_VERSION=${INSTANTCLIENT_MAJOR_VERSION}.11.0.0.0-1
+ARG INSTANTCLIENT_BIN_SUFFIX=${INSTANTCLIENT_MAJOR_VERSION}.11.0.0.0-1.el8.x86_64.rpm
 ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/2111000
 
 # Then install Oracle SQL Instant client, SQL+Plus, tools, and JDBC.
@@ -20,14 +20,14 @@ ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclie
 # See: https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html
 RUN mkdir "/opt/oracle"
 WORKDIR "/opt/oracle"
-RUN wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-basiclite-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
-    alien --install --scripts "oracle-instantclient-basiclite-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
-    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-sqlplus-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
-    alien --install --scripts "oracle-instantclient-sqlplus-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
-    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-tools-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
-    alien --install --scripts "oracle-instantclient-tools-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
-    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-jdbc-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
-    alien --install --scripts "oracle-instantclient-jdbc-${INSTANTCLIENT_VERSION}.el8.x86_64.rpm" && \
+RUN wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-basiclite-${INSTANTCLIENT_BIN_SUFFIX}" && \
+    alien --install --scripts "oracle-instantclient-basiclite-${INSTANTCLIENT_BIN_SUFFIX}" && \
+    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-sqlplus-${INSTANTCLIENT_BIN_SUFFIX}" && \
+    alien --install --scripts "oracle-instantclient-sqlplus-${INSTANTCLIENT_BIN_SUFFIX}" && \
+    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-tools-${INSTANTCLIENT_BIN_SUFFIX}" && \
+    alien --install --scripts "oracle-instantclient-tools-${INSTANTCLIENT_BIN_SUFFIX}" && \
+    wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-jdbc-${INSTANTCLIENT_BIN_SUFFIX}" && \
+    alien --install --scripts "oracle-instantclient-jdbc-${INSTANTCLIENT_BIN_SUFFIX}" && \
     chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb" && \
     rm -f ./*.rpm
 
