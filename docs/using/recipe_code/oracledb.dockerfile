@@ -20,10 +20,11 @@ ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclie
 # See: https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html
 RUN mkdir "/opt/oracle"
 WORKDIR "/opt/oracle"
+# alien doesn't work well with sqlplus, so skipping it for now
 RUN wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-basiclite-${INSTANTCLIENT_BIN_SUFFIX}" && \
     alien --install --scripts "oracle-instantclient-basiclite-${INSTANTCLIENT_BIN_SUFFIX}" && \
     wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-sqlplus-${INSTANTCLIENT_BIN_SUFFIX}" && \
-    alien --install --scripts "oracle-instantclient-sqlplus-${INSTANTCLIENT_BIN_SUFFIX}" && \
+    # alien --install --scripts "oracle-instantclient-sqlplus-${INSTANTCLIENT_BIN_SUFFIX}" && \
     wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-tools-${INSTANTCLIENT_BIN_SUFFIX}" && \
     alien --install --scripts "oracle-instantclient-tools-${INSTANTCLIENT_BIN_SUFFIX}" && \
     wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-jdbc-${INSTANTCLIENT_BIN_SUFFIX}" && \
