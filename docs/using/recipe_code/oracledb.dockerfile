@@ -11,9 +11,9 @@ RUN apt-get update --yes && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Oracle
-ARG INSTANTCLIENT_MAJOR_VERSION=21
-ARG INSTANTCLIENT_BIN_SUFFIX=${INSTANTCLIENT_MAJOR_VERSION}.11.0.0.0-1.el8.x86_64.rpm
-ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/2111000
+ARG INSTANTCLIENT_MAJOR_VERSION=23
+ARG INSTANTCLIENT_BIN_SUFFIX=${INSTANTCLIENT_MAJOR_VERSION}.4.0.24.05-1.el9.x86_64.rpm
+ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/2340000
 
 # Then install Oracle SQL Instant client, SQL+Plus, tools, and JDBC.
 # Note: You may need to change the URL to a newer version.
