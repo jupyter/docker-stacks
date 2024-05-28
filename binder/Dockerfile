@@ -16,3 +16,5 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV TAG="2024-05-27"
 
 COPY --chown=${NB_UID}:${NB_GID} binder/README.ipynb "${HOME}"/README.ipynb
+
+RUN jupyter labextension disable "@jupyterlab/apputils-extension:announcements"
