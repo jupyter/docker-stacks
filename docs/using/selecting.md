@@ -16,7 +16,7 @@ This section provides details about the first.
 The Jupyter team maintains a set of Docker image definitions in the <https://github.com/jupyter/docker-stacks> GitHub repository.
 The following sections describe these images, including their contents, relationships, and versioning strategy.
 
-## CUDA enabled variant
+### CUDA enabled variant
 
 We provide CUDA accelerated version of `pytorch-notebook` and `tensorflow-notebook` images.
 Prepend a CUDA prefix (versioned prefix like `cuda12-` for `pytorch-notebook` or just `cuda-` for `tensorflow-notebook`) to the image tag
