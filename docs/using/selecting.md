@@ -336,7 +336,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [b-data][b-data]                  | GPU accelerated, multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images for [R][r_cuda], [Python][python_cuda] and [Julia][julia_cuda]. Derived from nvidia/cuda `devel`-flavored images, including TensortRT and TensorRT plugin libraries. With [code-server][code-server] next to JupyterLab. Just Python – no [Conda][conda]/[Mamba][mamba].         |
 
 [gpu]: https://github.com/iot-salzburg/gpu-jupyter
-[gpu_thl]: https://hub.docker.com/r/hanseware/jhub-images
+[gpu_thl]: https://hub.docker.com/r/hanseware/jlab-images
 [gpu_mylab]: https://mylab.th-luebeck.de
 [prp_gpu]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/-/tree/prp
 [prp_reg]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/container_registry
