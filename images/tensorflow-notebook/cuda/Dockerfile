@@ -25,3 +25,8 @@ COPY --chown="${NB_UID}:${NB_GID}" nvidia-lib-dirs.sh "${CONDA_DIR}/etc/conda/ac
 # https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#dockerfiles
 ENV NVIDIA_VISIBLE_DEVICES="all" \
     NVIDIA_DRIVER_CAPABILITIES="compute,utility"
+
+# Puts the nvidia-smi binary (system management interface) on path with
+# associated library files to execute it
+ENV PATH=${PATH}:/usr/local/nvidia/bin
+ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/nvidia/lib64
