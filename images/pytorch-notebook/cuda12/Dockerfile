@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir --extra-index-url=https://pypi.nvidia.com --index
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 
-# Puts the nvidia-smi binary (system management interface) on path with
-# associated library files to execute it
+# Puts the nvidia-smi binary (system management interface) on path
+# with associated library files to execute it
 ENV PATH=${PATH}:/usr/local/nvidia/bin
 ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/nvidia/lib64
