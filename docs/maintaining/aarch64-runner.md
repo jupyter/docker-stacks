@@ -6,7 +6,7 @@ Each runner is recommended to have at least _2 cores_ and _30 GB_ of disk space.
 
 Add a new runner:
 
-- To use [Oracle OCI](https://www.oracle.com/cloud/), create a compute instance `VM.Standard.A1.Flex`.
+- To use [Oracle OCI](https://www.oracle.com/cloud-0/), create a compute instance `VM.Standard.A1.Flex`.
 - To use [Google Cloud](https://cloud.google.com), use [this instruction](https://cloud.google.com/compute/docs/instances/create-arm-vm-instance#armpublicimage).
 
 Configure your runner:
