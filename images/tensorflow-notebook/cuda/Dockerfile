@@ -12,7 +12,8 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install TensorFlow, CUDA and cuDNN with pip
-RUN pip install --no-cache-dir "tensorflow[and-cuda]" \
+RUN pip install --no-cache-dir \
+    "tensorflow[and-cuda]" \
     "jupyter-server-proxy" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
