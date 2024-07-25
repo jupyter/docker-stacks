@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-COPY --chown="${NB_UID}:${NB_GID}" ../20tensorboard-proxy-env.sh /usr/local/bin/before-notebook.d/
+COPY --chown="${NB_UID}:${NB_GID}" 20tensorboard-proxy-env.sh /usr/local/bin/before-notebook.d/
 
 # workaround for https://github.com/tensorflow/tensorflow/issues/63362
 RUN mkdir -p "${CONDA_DIR}/etc/conda/activate.d/" && \

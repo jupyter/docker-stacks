@@ -19,4 +19,4 @@ RUN [[ $(uname -m) = x86_64 ]] && TF_POSTFIX="-cpu" || TF_POSTFIX="" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-COPY --chown="${NB_UID}:${NB_GID}" 20tensorboard-proxy-env.sh /usr/local/bin/before-notebook.d/
+COPY --chown="${NB_UID}:${NB_GID}" cuda/20tensorboard-proxy-env.sh /usr/local/bin/before-notebook.d/
