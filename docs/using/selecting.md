@@ -194,7 +194,7 @@ It contains:
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
 - [TensorFlow](https://www.tensorflow.org/) machine learning library
-- [Jupyter Server Proxy](https://jupyter-server-proxy.readthedocs.io/) to support [TensorBoard](https://www.tensorflow.org/tensorboard)
+- [Jupyter Server Proxy](https://jupyter-server-proxy.readthedocs.io/en/latest/) to support [TensorBoard](https://www.tensorflow.org/tensorboard)
 
 ### jupyter/pytorch-notebook
 
