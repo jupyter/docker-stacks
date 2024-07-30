@@ -30,6 +30,7 @@ RUN apt-get update --yes && \
     bzip2 \
     ca-certificates \
     locales \
+    netbase \
     sudo \
     # - `tini` is installed as a helpful container entrypoint,
     #   that reaps zombie processes and such of the actual executable we want to start
