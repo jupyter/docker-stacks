@@ -30,6 +30,9 @@ RUN apt-get update --yes && \
     bzip2 \
     ca-certificates \
     locales \
+    # - `netbase` provides /etc/{protocols,rpc,services}, part of POSIX
+    #   and required by various C functions like getservbyname and getprotobyname
+    #   https://github.com/jupyter/docker-stacks/pull/2129
     netbase \
     sudo \
     # - `tini` is installed as a helpful container entrypoint,
