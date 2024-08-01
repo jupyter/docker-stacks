@@ -193,7 +193,8 @@ It contains:
 `jupyter/tensorflow-notebook` includes popular Python deep learning libraries.
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
-- [tensorflow](https://www.tensorflow.org/) machine learning library
+- [TensorFlow](https://www.tensorflow.org/) machine learning library
+- [Jupyter Server Proxy](https://jupyter-server-proxy.readthedocs.io/en/latest/) to support [TensorBoard](https://www.tensorflow.org/tensorboard)
 
 ### jupyter/pytorch-notebook
 

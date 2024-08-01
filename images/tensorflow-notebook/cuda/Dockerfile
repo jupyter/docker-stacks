@@ -12,9 +12,13 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install TensorFlow, CUDA and cuDNN with pip
-RUN pip install --no-cache-dir "tensorflow[and-cuda]" && \
+RUN pip install --no-cache-dir \
+    "tensorflow[and-cuda]" \
+    "jupyter-server-proxy" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+COPY --chown="${NB_UID}:${NB_GID}" 20tensorboard-proxy-env.sh /usr/local/bin/before-notebook.d/
 
 # workaround for https://github.com/tensorflow/tensorflow/issues/63362
 RUN mkdir -p "${CONDA_DIR}/etc/conda/activate.d/" && \
