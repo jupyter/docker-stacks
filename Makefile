@@ -36,9 +36,9 @@ help:
 
 
 build/%: DOCKER_BUILD_ARGS?=
-build/%: ROOT_CONTAINER?=ubuntu:22.04
+build/%: ROOT_CONTAINER?=ubuntu:24.04
 build/%: ## build the latest image for a stack using the system's architecture
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" "./images/$(notdir $@)" --build-arg REGISTRY="$(REGISTRY)" --build-arg OWNER="$(OWNER)"
+	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" "./images/$(notdir $@)" --build-arg REGISTRY="$(REGISTRY)" --build-arg OWNER="$(OWNER)" --build-arg ROOT_CONTAINER="$(ROOT_CONTAINER)"
 	@echo -n "Built image size: "
 	@docker images "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks

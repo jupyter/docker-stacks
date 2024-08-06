@@ -38,7 +38,7 @@ body:
       label: Host OS system
       placeholder: |
         Example:
-        Ubuntu 22.04
+        Ubuntu 24.04
     validations:
       required: true
 
