@@ -200,7 +200,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
 
    where:
 
-   - `"$(id -u)" and "$(id -g)"` will dynamically assign the `UID` and `GID` of the user executing the `docker run` command to the new user (`callisto`)
+   - `"$(id -u)"` and `"$(id -g)"` will dynamically assign the `UID` and `GID` of the user executing the `docker run` command to the new user (`callisto`)
 
 ## Additional tips and troubleshooting commands for permission-related errors
 

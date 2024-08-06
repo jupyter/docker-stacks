@@ -1,3 +1,4 @@
+# type: ignore
 # Matplotlib: Create a simple plot example.
 # Refs: https://matplotlib.org/stable/gallery/lines_bars_and_markers/simple_plot.html
 

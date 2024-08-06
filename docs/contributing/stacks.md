@@ -71,7 +71,7 @@ git push -u origin main
 
 1. By default, the newly `.github/workflows/docker.yaml` will trigger the CI pipeline whenever you push to your `main` branch
    and when any Pull Requests are made to your repository.
-   For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
+   For more details on this configuration, visit the [GitHub actions documentation on triggers](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows).
 
 2. Go to your repository and click on the **Actions** tab.
    From there, you can click on the workflows on the left-hand side of the screen.

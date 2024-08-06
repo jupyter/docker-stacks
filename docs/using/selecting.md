@@ -16,7 +16,7 @@ This section provides details about the first.
 The Jupyter team maintains a set of Docker image definitions in the <https://github.com/jupyter/docker-stacks> GitHub repository.
 The following sections describe these images, including their contents, relationships, and versioning strategy.
 
-## CUDA enabled variant
+### CUDA enabled variant
 
 We provide CUDA accelerated version of `pytorch-notebook` and `tensorflow-notebook` images.
 Prepend a CUDA prefix (versioned prefix like `cuda12-` for `pytorch-notebook` or just `cuda-` for `tensorflow-notebook`) to the image tag
@@ -193,7 +193,8 @@ It contains:
 `jupyter/tensorflow-notebook` includes popular Python deep learning libraries.
 
 - Everything in `jupyter/scipy-notebook` and its ancestor images
-- [tensorflow](https://www.tensorflow.org/) machine learning library
+- [TensorFlow](https://www.tensorflow.org/) machine learning library
+- [Jupyter Server Proxy](https://jupyter-server-proxy.readthedocs.io/en/latest/) to support [TensorBoard](https://www.tensorflow.org/tensorboard)
 
 ### jupyter/pytorch-notebook
 
@@ -336,7 +337,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [b-data][b-data]                  | GPU accelerated, multi-arch (`linux/amd64`, `linux/arm64/v8`) docker images for [R][r_cuda], [Python][python_cuda] and [Julia][julia_cuda]. Derived from nvidia/cuda `devel`-flavored images, including TensortRT and TensorRT plugin libraries. With [code-server][code-server] next to JupyterLab. Just Python – no [Conda][conda]/[Mamba][mamba].         |
 
 [gpu]: https://github.com/iot-salzburg/gpu-jupyter
-[gpu_thl]: https://hub.docker.com/r/hanseware/jhub-images
+[gpu_thl]: https://hub.docker.com/r/hanseware/jlab-images
 [gpu_mylab]: https://mylab.th-luebeck.de
 [prp_gpu]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/-/tree/prp
 [prp_reg]: https://gitlab.nrp-nautilus.io/prp/jupyter-stack/container_registry

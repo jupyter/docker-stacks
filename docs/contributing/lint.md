@@ -44,7 +44,7 @@ More information can be found in [`.pre-commit-config.yaml` file](https://github
 
 ## Image Lint
 
-To comply with [Docker best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices),
+To comply with [Docker best practices](https://docs.docker.com/build/building/best-practices/),
 we are using the [Hadolint](https://github.com/hadolint/hadolint) tool to analyze each `Dockerfile`.
 
 ### Ignoring Rules
