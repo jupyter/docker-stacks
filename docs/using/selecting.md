@@ -267,7 +267,7 @@ Whenever a docker image is pushed to the container registry, it is tagged with:
 - the `latest` tag
 - a 12-character git commit SHA like `1ffe43816ba9`
 - a date formatted like `2023-01-30`
-- OS version like `ubuntu-22.04`
+- OS version like `ubuntu-24.04`
 - a set of software version tags like `python-3.10.8` and `lab-3.5.3`
 
 ```{warning}
