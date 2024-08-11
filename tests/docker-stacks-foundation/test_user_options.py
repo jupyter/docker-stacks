@@ -328,7 +328,7 @@ def test_rootless_triplet_home(container: TrackedContainer) -> None:
         tty=True,
         user="root",
         environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
-        command=["echo HOME=${HOME} && getent passwd root"],
+        command=["bash", "-c", "echo HOME=${HOME} && getent passwd root"],
     )
     assert "HOME=/home/root" in logs
     assert "root:x:0:0:root:/home/root:/bin/bash" in logs
