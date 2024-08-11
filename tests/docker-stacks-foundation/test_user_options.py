@@ -305,3 +305,42 @@ def test_startsh_multiple_exec(container: TrackedContainer) -> None:
         "WARNING: start.sh is the default ENTRYPOINT, do not include it in CMD"
         in warnings[0]
     )
+
+
+def test_rootless_triplet_change(container: TrackedContainer) -> None:
+    """Container should change the username (`NB_USER`), the UID and the GID of the default user."""
+    logs = container.run_and_wait(
+        timeout=10,
+        tty=True,
+        user="root",
+        environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
+        command=["id"],
+    )
+    assert "uid=0(root)" in logs
+    assert "gid=0(root)" in logs
+    assert "groups=0(root)" in logs
+
+
+def test_rootless_triplet_home(container: TrackedContainer) -> None:
+    """Container should change the home directory for triplet NB_USER=root, NB_UID=0, NB_GID=0."""
+    logs = container.run_and_wait(
+        timeout=10,
+        tty=True,
+        user="root",
+        environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
+        command=["bash", "-c", "echo HOME=${HOME} && getent passwd root"],
+    )
+    assert "HOME=/home/root" in logs
+    assert "root:x:0:0:root:/home/root:/bin/bash" in logs
+
+
+def test_rootless_triplet_sudo(container: TrackedContainer) -> None:
+    """Container should not be started with sudo for triplet NB_USER=root, NB_UID=0, NB_GID=0."""
+    logs = container.run_and_wait(
+        timeout=10,
+        tty=True,
+        user="root",
+        environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
+        command=["env"],
+    )
+    assert "SUDO" not in logs
