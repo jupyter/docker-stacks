@@ -1,9 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# Ubuntu 22.04 (jammy)
-# https://hub.docker.com/_/ubuntu/tags?page=1&name=jammy
-ARG ROOT_CONTAINER=ubuntu:22.04
+# Ubuntu 24.04 (noble)
+# https://hub.docker.com/_/ubuntu/tags?page=1&name=noble
+ARG ROOT_CONTAINER=ubuntu:24.04
 
 FROM $ROOT_CONTAINER
 
@@ -73,6 +73,8 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
 RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
     sed -i.bak -e 's/^%sudo/#%sudo/' /etc/sudoers && \
+    # Delete existing user 'ubuntu' with UID=1000
+    userdel -Rz ubuntu && \
     useradd --no-log-init --create-home --shell /bin/bash --uid "${NB_UID}" --no-user-group "${NB_USER}" && \
     mkdir -p "${CONDA_DIR}" && \
     chown "${NB_USER}:${NB_GID}" "${CONDA_DIR}" && \
