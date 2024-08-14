@@ -14,7 +14,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 USER root
 
 # RSpark config
-ENV R_LIBS_USER "${SPARK_HOME}/R/lib"
+ENV R_LIBS_USER="${SPARK_HOME}/R/lib"
 RUN fix-permissions "${R_LIBS_USER}"
 
 # R pre-requisites
