@@ -32,5 +32,5 @@ ENV NVIDIA_VISIBLE_DEVICES="all" \
 
 # Puts the nvidia-smi binary (system management interface) on path
 # with associated library files to execute it
-ENV PATH=${PATH}:/usr/local/nvidia/bin
-ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/nvidia/lib64
+ENV PATH="${PATH}:/usr/local/nvidia/bin" \
+    LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/nvidia/lib64"
