@@ -31,7 +31,7 @@ RUN apt-get update --yes && \
 
 USER ${NB_UID}
 
-# Install JupyterLab, Jupyter Notebook, JupyterHub and NBClassic
+# Install JupyterHub, JupyterLab, NBClassic and Jupyter Notebook
 # Generate a Jupyter Server config
 # Cleanup temporary files
 # Correct permissions
@@ -39,10 +39,10 @@ USER ${NB_UID}
 # files across image layers when the permissions change
 WORKDIR /tmp
 RUN mamba install --yes \
-    'jupyterlab' \
-    'notebook' \
     'jupyterhub' \
-    'nbclassic' && \
+    'jupyterlab' \
+    'nbclassic' \
+    'notebook' && \
     jupyter server --generate-config && \
     mamba clean --all -f -y && \
     npm cache clean --force && \

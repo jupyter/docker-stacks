@@ -38,7 +38,7 @@ RUN mamba install --yes \
     'dask' \
     'dill' \
     'h5py' \
-    'ipympl'\
+    'ipympl' \
     'ipywidgets' \
     'jupyterlab-git' \
     'matplotlib-base' \
@@ -56,7 +56,7 @@ RUN mamba install --yes \
     'sqlalchemy' \
     'statsmodels' \
     'sympy' \
-    'widgetsnbextension'\
+    'widgetsnbextension' \
     'xlrd' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \

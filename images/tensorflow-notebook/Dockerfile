@@ -14,8 +14,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install tensorflow with pip, on x86_64 tensorflow-cpu
 RUN [[ $(uname -m) = x86_64 ]] && TF_POSTFIX="-cpu" || TF_POSTFIX="" && \
     pip install --no-cache-dir \
-    "tensorflow${TF_POSTFIX}" \
-    "jupyter-server-proxy" && \
+    "jupyter-server-proxy" \
+    "tensorflow${TF_POSTFIX}" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
