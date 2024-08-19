@@ -77,7 +77,7 @@ jobs:
           platform: ${{ inputs.platform }}
           variant: ${{ inputs.parent-variant }}
 
-      - name: Pull ubuntu:24.04 image 📥
+      - name: Pull base ubuntu image 📥
         if: inputs.parent-image == ''
         run: docker pull ubuntu:24.04
         shell: bash
