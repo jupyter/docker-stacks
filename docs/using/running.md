@@ -9,7 +9,7 @@ This section provides details about the second.
 
 ## Using the Docker CLI
 
-You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command-line interface](https://docs.docker.com/engine/reference/commandline/cli/).
+You can launch a local Docker container from the Jupyter Docker Stacks using the [Docker command-line interface](https://docs.docker.com/reference/cli/docker/).
 There are numerous ways to configure containers using CLI.
 The following are some common patterns.
 

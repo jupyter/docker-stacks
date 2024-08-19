@@ -17,8 +17,8 @@ There are 2 types of data, which you might want to persist.
 
 2. If you want to persist user data (files created by you, like `Python` scripts, notebooks, text files, and so on),
    then you should use a
-   [Docker bind mount](https://docs.docker.com/storage/bind-mounts/) or
-   [Docker Volume](https://docs.docker.com/storage/volumes/).
+   [Docker bind mount](https://docs.docker.com/engine/storage/bind-mounts/) or
+   [Docker Volume](https://docs.docker.com/engine/storage/volumes/).
    You can find [an example of using a bind mount here](./running.md#example-2).
    There is also [a mount troubleshooting section](./troubleshooting.md#permission-denied-when-mounting-volumes) if you experience any issues.
 

@@ -6,7 +6,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 USER root
 
-ENV MSSQL_DRIVER "ODBC Driver 18 for SQL Server"
+ENV MSSQL_DRIVER="ODBC Driver 18 for SQL Server"
 ENV PATH="/opt/mssql-tools18/bin:${PATH}"
 
 RUN apt-get update --yes && \

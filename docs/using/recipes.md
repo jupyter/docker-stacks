@@ -301,10 +301,10 @@ This recipe is not tested and might be broken.
 FROM quay.io/jupyter/all-spark-notebook
 
 # Set env vars for pydoop
-ENV HADOOP_HOME /usr/local/hadoop-2.7.3
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
-ENV HADOOP_CONF_HOME /usr/local/hadoop-2.7.3/etc/hadoop
-ENV HADOOP_CONF_DIR /usr/local/hadoop-2.7.3/etc/hadoop
+ENV HADOOP_HOME=/usr/local/hadoop-2.7.3
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV HADOOP_CONF_HOME=/usr/local/hadoop-2.7.3/etc/hadoop
+ENV HADOOP_CONF_DIR=/usr/local/hadoop-2.7.3/etc/hadoop
 
 USER root
 # Add proper open-jdk-8 not the jre only, needed for pydoop
