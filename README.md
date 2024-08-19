@@ -101,7 +101,8 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `quay.io/jupyter/base-notebook:aarch64-python-3.11.6`
 - Starting from `2022-09-21`, we create multi-platform images (except `tensorflow-notebook`)
 - Starting from `2023-06-01`, we create a multi-platform `tensorflow-notebook` image as well
-- Starting from `2024-02-24`, we create CUDA enabled variant of `pytorch-notebook` image for `x86_64` platform
+- Starting from `2024-02-24`, we create CUDA enabled variants of `pytorch-notebook` image for `x86_64` platform
+- Starting from `2024-03-26`, we create CUDA enabled variant of `tensorflow-notebook` image for `x86_64` platform
 
 ## Using old images
 
