@@ -18,7 +18,7 @@ You can use a stack image to do any of the following (and more):
 ## Quick Start
 
 You can [try a relatively recent build of the quay.io/jupyter/base-notebook image on mybinder.org](https://mybinder.org/v2/gh/jupyter/docker-stacks/main?urlpath=lab/tree/README.ipynb).
-Otherwise, the examples below may help you get started if you [have Docker installed](https://docs.docker.com/get-docker/),
+Otherwise, the examples below may help you get started if you [have Docker installed](https://docs.docker.com/get-started/get-docker/),
 know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html) you want to use, and want to launch a single Jupyter Application in a container.
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) describes additional uses and features in detail.
