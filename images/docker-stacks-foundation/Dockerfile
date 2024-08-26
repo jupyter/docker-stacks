@@ -68,7 +68,7 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
     # and docs: https://docs.conda.io/projects/conda/en/latest/dev-guide/deep-dives/activation.html
     echo 'eval "$(conda shell.bash hook)"' >> /etc/skel/.bashrc
 
-# Create NB_USER with name jovyan user with UID=1000 and in the 'users' group
+# Create "${NB_USER}" user (`jovyan` by default) with UID="${NB_UID}" (`1000` by default) and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
 RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
