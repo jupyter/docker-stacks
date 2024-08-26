@@ -69,7 +69,8 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
     echo 'eval "$(conda shell.bash hook)"' >> /etc/skel/.bashrc
 
 # Delete existing user with UID="${NB_UID}" if it exists
-RUN if $(grep -q "${NB_UID}" /etc/passwd); then \
+# hadolint ignore=SC2046
+RUN if grep -q "${NB_UID}" /etc/passwd; then \
         userdel --remove $(id -un "${NB_UID}"); \
     fi
 
