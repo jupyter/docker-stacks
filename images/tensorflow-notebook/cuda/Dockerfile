@@ -13,8 +13,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install TensorFlow, CUDA and cuDNN with pip
 RUN pip install --no-cache-dir \
-    "tensorflow[and-cuda]" \
-    "jupyter-server-proxy" && \
+    "jupyter-server-proxy" \
+    "tensorflow[and-cuda]" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -32,5 +32,5 @@ ENV NVIDIA_VISIBLE_DEVICES="all" \
 
 # Puts the nvidia-smi binary (system management interface) on path
 # with associated library files to execute it
-ENV PATH=${PATH}:/usr/local/nvidia/bin
-ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/nvidia/lib64
+ENV PATH="${PATH}:/usr/local/nvidia/bin" \
+    LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/nvidia/lib64"

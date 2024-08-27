@@ -20,7 +20,7 @@ USER root
 
 # Install all OS dependencies for the Server that starts
 # but lacks all features (e.g., download as all possible file formats)
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update --yes && \
     # - `apt-get upgrade` is run to patch known vulnerabilities in system packages
     #   as the Ubuntu base image is rebuilt too seldom sometimes (less than once a month)
@@ -68,7 +68,7 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
     # and docs: https://docs.conda.io/projects/conda/en/latest/dev-guide/deep-dives/activation.html
     echo 'eval "$(conda shell.bash hook)"' >> /etc/skel/.bashrc
 
-# Create NB_USER with name jovyan user with UID=1000 and in the 'users' group
+# Create "${NB_USER}" user (`jovyan` by default) with UID="${NB_UID}" (`1000` by default) and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
 RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     sed -i.bak -e 's/^%admin/#%admin/' /etc/sudoers && \
@@ -117,9 +117,9 @@ RUN set -x && \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
-        "${PYTHON_SPECIFIER}" \
+        'jupyter_core' \
         'mamba' \
-        'jupyter_core' && \
+        "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
