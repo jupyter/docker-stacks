@@ -1,9 +1,9 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
-# Ubuntu 22.04 (jammy)
-# https://hub.docker.com/_/ubuntu/tags?page=1&name=jammy
-ARG ROOT_CONTAINER=ubuntu:22.04
+# Ubuntu 24.04 (noble)
+# https://hub.docker.com/_/ubuntu/tags?page=1&name=noble
+ARG ROOT_CONTAINER=ubuntu:24.04
 
 FROM $ROOT_CONTAINER
 
@@ -67,6 +67,12 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
     # More information in: https://github.com/jupyter/docker-stacks/pull/2047
     # and docs: https://docs.conda.io/projects/conda/en/latest/dev-guide/deep-dives/activation.html
     echo 'eval "$(conda shell.bash hook)"' >> /etc/skel/.bashrc
+
+# Delete existing user with UID="${NB_UID}" if it exists
+# hadolint ignore=SC2046
+RUN if grep -q "${NB_UID}" /etc/passwd; then \
+        userdel --remove $(id -un "${NB_UID}"); \
+    fi
 
 # Create "${NB_USER}" user (`jovyan` by default) with UID="${NB_UID}" (`1000` by default) and in the 'users' group
 # and make sure these dirs are writable by the `users` group.
