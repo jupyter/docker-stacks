@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/base-notebook
+FROM quay.io/jupyter/base-notebook:ubuntu-22.04
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014

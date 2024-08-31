@@ -31,11 +31,13 @@ jobs:
       - name: Calculate recipes matrix 🛠
         id: set-matrix
         run: docs/using/recipe_code/generate_matrix.py >> "${GITHUB_OUTPUT}"
+        env:
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
 
   test-recipes:
     runs-on: ${{ matrix.runs-on }}
     needs: generate-matrix
-    if: github.repository_owner == 'jupyter'
+    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 
     steps:
       - name: Checkout Repo ⚡️
