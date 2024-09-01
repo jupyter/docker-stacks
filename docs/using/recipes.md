@@ -571,7 +571,7 @@ Include the below file in your project:
 
 To build this stack, in the same directory run:
 
-```
+```bash
 docker buildx bake
 ```
 
@@ -581,7 +581,7 @@ the stack as requested.
 
 This image can then be run using
 
-```
+```bash
 docker run custom-jupyter
 ```
 
