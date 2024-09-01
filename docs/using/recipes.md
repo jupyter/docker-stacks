@@ -552,6 +552,7 @@ As a basic example, if you want to build a custom
 image based on the `minimal-notebook`
 image using `Python 3.12`, then with a
 Dockerfile like:
+
 ```{code-block} Dockerfile
 :caption: Dockerfile
 
@@ -561,6 +562,7 @@ FROM $BASE_CONTAINER
 ```
 
 Include the below file in your project:
+
 ```{literalinclude} recipe_code/docker-bake.python312.hcl
 :force:
 :language: hcl
@@ -568,15 +570,19 @@ Include the below file in your project:
 ```
 
 To build this stack, in the same directory run:
+
 ```
 docker buildx bake
 ```
+
 Docker Bake then determines the correct build
 order from the `contexts` parameters and builds
 the stack as requested.
 
 This image can then be run using
+
 ```
 docker run custom-jupyter
 ```
+
 or referenced in a docker compose file.
