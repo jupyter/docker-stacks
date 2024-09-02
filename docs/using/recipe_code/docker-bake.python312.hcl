@@ -33,7 +33,7 @@ target "minimal-notebook" {
     tags = ["minimal-notebook"]
 }
 
-target "custom-jupyter" {
+target "custom-notebook" {
     context = "."
     contexts = {
         minimal-notebook = "target:minimal-notebook"
