@@ -482,18 +482,10 @@ docker run -it --rm \
 
 ## Add ijavascript kernel to container
 
-```{warning}
-This recipe is not tested and might be broken.
-```
+The example below is a Dockerfile to install the [IJavascript kernel](https://github.com/n-riesco/ijavascript).
 
-The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
-
-```dockerfile
-FROM quay.io/jupyter/scipy-notebook
-
-# install ijavascript
-RUN npm install -g ijavascript
-RUN ijsinstall
+```{literalinclude} recipe_code/ijavascript.dockerfile
+:language: docker
 ```
 
 ## Add Microsoft SQL Server ODBC driver
