@@ -482,7 +482,7 @@ docker run -it --rm \
 
 ## Add ijavascript kernel to container
 
-The example below is a Dockerfile to install the [ijavascript kernel](https://github.com/n-riesco/ijavascript).
+The example below is a Dockerfile to install the [IJavascript kernel](https://github.com/n-riesco/ijavascript).
 
 ```{literalinclude} recipe_code/ijavascript.dockerfile
 :language: docker
