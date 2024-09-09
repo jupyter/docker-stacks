@@ -19,7 +19,7 @@ Existing customization points:
 
 ## Building stack images with custom arguments
 
-A selection of prebuilt images are available from [quay.io](https://quay.io/organization/jupyter),
+A selection of prebuilt images are available from [Quay.io](https://quay.io/organization/jupyter),
 however, it's impossible to cater to everybody's needs.
 For extensive customization with an automated build pipeline,
 you may wish to create a [community-maintained stack](../contributing/stacks),
