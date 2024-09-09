@@ -73,5 +73,7 @@ or referenced in a docker compose file.
 
 ## Forking our repository
 
-If for some reason, you need to change more things in our images, feel free to fork it and change it the way you like it.
+If for some reason, you need to change more things in our images, feel free to fork it and change it any way you want.
 If your customization is easy to backport to the main repo and might be helpful for other users, feel free to create a PR.
+
+It is almost always a great idea to keep your diff as small as possible and to merge/rebase the latest version of our repo in your project.
