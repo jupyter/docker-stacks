@@ -10,7 +10,6 @@ target "foundation" {
     tags = ["docker-stacks-foundation"]
 }
 
-
 target "base-notebook" {
     context = "https://github.com/jupyter/docker-stacks.git#main:images/base-notebook"
     contexts = {
