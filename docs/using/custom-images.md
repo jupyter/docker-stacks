@@ -1,4 +1,4 @@
-# Building custom set of images
+# Building a custom set of images
 
 This section describes how to build a custom set of images.
 It may be helpful if you need to change Ubuntu or Python version, or make a significant change to the build process itself.
