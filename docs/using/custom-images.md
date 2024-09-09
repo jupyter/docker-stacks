@@ -3,6 +3,20 @@
 This section describes how to build a custom set of images.
 It may be helpful if you need to change Ubuntu or Python version, or make a significant change to the build process itself.
 
+## Automating your build using template cookiecutter project
+
+If you wish to build your own image on top of one of our images and automate your build process,
+please, [take a look at cookiecutter template](../contributing/stacks.md).
+
+## Custom arguments
+
+Existing customization points:
+
+- `ROOT_CONTAINER` - a docker argument of `docker-stacks-foundation` image
+- `PYTHON_VERSION` - a docker argument of `docker-stacks-foundation` image
+- `REGISTRY`, `OWNER`, `BASE_CONTAINER` - docker arguments for all the other images we build
+- `REGISTRY`, `OWNER` - part of `env` in most of our GitHub workflows
+
 ## Building stack images with custom arguments
 
 A selection of prebuilt images are available from Quay.io,
@@ -59,16 +73,5 @@ or referenced in a docker compose file.
 
 ## Forking our repository
 
-The project tries to make it's best for users, who would like to fork the repository, and change a few things and build their set of images.
-
-Existing customization points:
-
-- `ROOT_CONTAINER` - a docker argument of `docker-stacks-foundation` image
-- `PYTHON_VERSION` - a docker argument of `docker-stacks-foundation` image
-- `REGISTRY`, `OWNER`, `BASE_CONTAINER` - docker arguments for all the other images we build
-- `REGISTRY`, `OWNER` - part of `env` in most of our GitHub workflows
-
-## Automating your build using template cookiecutter project
-
-We have created a cookiecutter project, helping you to automate building a custom image.
-Please, take a look at [the documentation](../contributing/stacks.md).
+If for some reason, you need to change more things in our images, feel free to fork it and change it the way you like it.
+If your customization is easy to backport to the main repo and might be helpful for other users, feel free to create a PR.
