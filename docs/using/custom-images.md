@@ -1,7 +1,7 @@
 # Building a custom set of images
 
 This section describes how to build a custom set of images.
-It may be helpful if you need to change Ubuntu or Python version, or make a significant change to the build process itself.
+It may be helpful if you need to change the Ubuntu or Python version, or to make a significant change to the build process itself.
 
 ## Automating your build using template cookiecutter project
 
@@ -19,13 +19,13 @@ Existing customization points:
 
 ## Building stack images with custom arguments
 
-A selection of prebuilt images are available from Quay.io,
+A selection of prebuilt images are available from [quay.io](https://quay.io/organization/jupyter),
 however, it's impossible to cater to everybody's needs.
 For extensive customization with an automated build pipeline,
-you may wish to create a [community-maintained stack](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/stacks.html),
+you may wish to create a [community-maintained stack](../contributing/stacks),
 however, for minor customizations, this may be overkill.
-For example, you may wish to use the same jupyter stacks but built on a different base image,
-or build with a different Python version.
+For example, you may wish to use the same Jupyter stacks but built on a different base image,
+or built with a different Python version.
 
 To achieve this you can use [Docker Bake](https://docs.docker.com/build/bake/)
 to build the stacks locally with custom arguments.
@@ -69,7 +69,7 @@ This image can then be run using:
 docker run custom-jupyter
 ```
 
-or referenced in a docker compose file.
+or referenced in a Docker Compose file.
 
 ## Forking our repository
 
