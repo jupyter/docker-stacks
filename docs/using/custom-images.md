@@ -66,10 +66,10 @@ docker buildx bake
 Docker Bake then determines the correct build order from the `contexts` parameters
 and builds the stack as requested.
 
-This image can then be run using:
+This image can then be run the same way as any other image provided by this project, for example:
 
 ```bash
-docker run custom-jupyter
+docker run -it --rm -p 8888:8888 custom-jupyter
 ```
 
 or referenced in a Docker Compose file.
