@@ -15,8 +15,7 @@ please, [take a look at cookiecutter template](../contributing/stacks.md).
 
 Existing customization points:
 
-- `ROOT_CONTAINER` - a docker argument of `docker-stacks-foundation` image
-- `PYTHON_VERSION` - a docker argument of `docker-stacks-foundation` image
+- `ROOT_CONTAINER`, `PYTHON_VERSION` - docker arguments of a `docker-stacks-foundation` image
 - `REGISTRY`, `OWNER`, `BASE_CONTAINER` - docker arguments for all the other images we build
 - `REGISTRY`, `OWNER` - part of `env` in most of our GitHub workflows
 
