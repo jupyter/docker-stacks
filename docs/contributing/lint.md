@@ -38,7 +38,7 @@ pre-commit run --all-files --hook-stage manual
 ```
 
 ```{note}
-We're running `pre-commit` with `--hook-stage manual`, because works with changed files, which doesn't work well for mypy.
+We're running `pre-commit` with `--hook-stage manual`, because `pre-commit` is run on modified files only, which doesn't work well with `mypy --follow-imports error`.
 More information can be found in [`.pre-commit-config.yaml` file](https://github.com/jupyter/docker-stacks/blob/main/.pre-commit-config.yaml)
 ```
 
