@@ -16,15 +16,6 @@ This section provides details about the first.
 The Jupyter team maintains a set of Docker image definitions in the <https://github.com/jupyter/docker-stacks> GitHub repository.
 The following sections describe these images, including their contents, relationships, and versioning strategy.
 
-### CUDA enabled variant
-
-We provide CUDA accelerated version of `pytorch-notebook` and `tensorflow-notebook` images.
-Prepend a CUDA prefix (versioned prefix like `cuda12-` for `pytorch-notebook` or just `cuda-` for `tensorflow-notebook`) to the image tag
-to allow PyTorch or TensorFlow operations to use compatible NVIDIA GPUs for accelerated computation.
-Note: We only build `pytorch-notebook` for 2 last major versions of CUDA, `tensorflow-notebook` image only supports the latest CUDA version listed in the [officially tested build configurations](https://www.tensorflow.org/install/source#gpu).
-
-For example, you can use an image `quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.8` or `quay.io/jupyter/tensorflow-notebook:cuda-latest`
-
 ### jupyter/docker-stacks-foundation
 
 [Source on GitHub](https://github.com/jupyter/docker-stacks/tree/main/images/docker-stacks-foundation) |
@@ -247,6 +238,16 @@ It contains:
   [sparklyr](https://spark.posit.co),
   [ggplot2](https://ggplot2.tidyverse.org)
   packages
+
+### CUDA enabled variants
+
+We provide CUDA accelerated versions of the `pytorch-notebook` and `tensorflow-notebook` images.
+Prepend a CUDA prefix (versioned prefix like `cuda12-` for `pytorch-notebook` or just `cuda-` for `tensorflow-notebook`) to the image tag
+to allow PyTorch or TensorFlow operations to use compatible NVIDIA GPUs for accelerated computation.
+We only build `pytorch-notebook` for last two major versions of CUDA.
+The `tensorflow-notebook` image only supports the latest CUDA version listed in the [officially tested build configurations](https://www.tensorflow.org/install/source#gpu).
+
+For example, you could use the image `quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.8` or `quay.io/jupyter/tensorflow-notebook:cuda-latest`.
 
 ### Image Relationships
 

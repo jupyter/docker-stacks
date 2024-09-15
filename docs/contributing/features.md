@@ -12,6 +12,7 @@ Please follow the process below to suggest a new feature for inclusion in one of
    describing the feature you'd like to contribute.
 2. Discuss with the maintainers whether the addition makes sense
    in [one of the core stacks](../using/selecting.md#core-stacks),
+   as a [way to build a custom set of images](../using/custom-images.md),
    as a [recipe in the documentation](recipes.md),
    as a [community stack](stacks.md),
    or as something else entirely.
