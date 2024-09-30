@@ -238,7 +238,7 @@ This script is handy when you derive a new Dockerfile from this image and instal
 
 ## Conda Environments
 
-The default Python 3.x [Conda environment](https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html) resides in `/opt/conda`.
+The default Python 3.x [Conda environment](https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html) resides in `/opt/conda`.
 The `/opt/conda/bin` directory is part of the default `jovyan` user's `${PATH}`.
 That directory is also searched for binaries when run using `sudo` (`sudo my_binary` will search for `my_binary` in `/opt/conda/bin/`
 
