@@ -124,9 +124,9 @@ RUN set -x && \
         --prefix="${CONDA_DIR}" \
         --yes \
         'jupyter_core' \
-        # excluding mamba==2.0.0 due to a breaking change causing these errors:
-        # "The following argument was not expected: --full-name"
-        'mamba!=2.0.0' \
+        # excluding mamba 2.X due to several breaking changes
+        # https://github.com/jupyter/docker-stacks/pull/2147
+        'mamba<2.0.0' \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
