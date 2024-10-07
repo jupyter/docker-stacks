@@ -255,7 +255,7 @@ The following diagram depicts the build dependency tree of the core images. (i.e
 Any given image inherits the complete content of all ancestor images pointing to it.
 
 [![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFz8FOwzAMgOH7nsLqCQ55ADTBE3CDIxJyU5eZZnaUOJoK2rsv4YCUSlOvv784yRjULxPjF_weACaasQT7nFUs8w_BMzwda9fEJIbGKjVFTZaQ7Xioo6GMRax8yMPr-xtc2E51zmKQKBBmehzAvcBUb6HksqFfspu1yPS3rS2_N2vnxrrBiRqNqkvDXWjizMJnDB3atuay57h2qi_NDEaSNc1BL_99uEPjapr8ac_Vr2CtJJ52n5h2xXcJjDufiGuOmJZObVtzGILbyusNkda3zw)
+diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFj0FqwzAQRfc5hfAqpYiS7kpoT9BdugyEsTxuplZmjDRqcEvvXinQggzGK8Gb97_4rRc3dATv5ntjTIc9JK-nXlgjfaF5Nk_7zCUQsoKScEajBA1Aut_kU5PaxJqOvH19O5gr6TnfidUE9AgR7xpjX0yXf8Fgo4Ibou0lcXdrK-VLt5Jrc4NlUWxFhiJXoBgXYrqAr6Q5K150NE6VVZPiNIocJfRerv_8yPcudWA-IRCwNgvJcVIJ7jyP7XYPt-fxLx8XCvJkyBTZ4eqUsGp8JE-wMnac4ghhqKw5Kx54b-fmzy_M3cYh)
 
 ### Builds
 

@@ -22,13 +22,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import json
 import logging
 import re
 from collections import defaultdict
 from itertools import chain
 from typing import Any, Optional
 
+import yaml
 from docker.models.containers import Container
 from tabulate import tabulate
 
@@ -61,7 +61,7 @@ class CondaPackageHelper:
     @staticmethod
     def _conda_export_command(from_history: bool) -> list[str]:
         """Return the mamba export command with or without history"""
-        cmd = ["mamba", "env", "export", "-n", "base", "--json", "--no-builds"]
+        cmd = ["mamba", "env", "export", "--no-build"]
         if from_history:
             cmd.append("--from-history")
         return cmd
@@ -70,7 +70,7 @@ class CondaPackageHelper:
         """Return the installed packages"""
         if self.installed is None:
             LOGGER.info("Grabbing the list of installed packages ...")
-            self.installed = CondaPackageHelper._packages_from_json(
+            self.installed = CondaPackageHelper._parse_package_versions(
                 self._execute_command(
                     CondaPackageHelper._conda_export_command(from_history=False)
                 )
@@ -81,7 +81,7 @@ class CondaPackageHelper:
         """Return the requested package (i.e. `mamba install <package>`)"""
         if self.requested is None:
             LOGGER.info("Grabbing the list of manually requested packages ...")
-            self.requested = CondaPackageHelper._packages_from_json(
+            self.requested = CondaPackageHelper._parse_package_versions(
                 self._execute_command(
                     CondaPackageHelper._conda_export_command(from_history=True)
                 )
@@ -94,12 +94,12 @@ class CondaPackageHelper:
         return rc.output.decode("utf-8")  # type: ignore
 
     @staticmethod
-    def _packages_from_json(env_export: str) -> dict[str, set[str]]:
+    def _parse_package_versions(env_export: str) -> dict[str, set[str]]:
         """Extract packages and versions from the lines returned by the list of specifications"""
-        # dependencies = filter(lambda x: isinstance(x, str), json.loads(env_export).get("dependencies"))
-        dependencies = json.loads(env_export).get("dependencies")
-        # Filtering packages installed through pip in this case it's a dict {'pip': ['toree==0.3.0']}
-        # Since we only manage packages installed through mamba here
+        dependencies = yaml.safe_load(env_export).get("dependencies")
+        # Filtering packages installed through pip
+        # since we only manage packages installed through mamba here
+        # They are represented by a dict with a key 'pip'
         dependencies = filter(lambda x: isinstance(x, str), dependencies)
         packages_dict: dict[str, set[str]] = dict()
         for split in map(lambda x: re.split("=?=", x), dependencies):

@@ -124,14 +124,14 @@ RUN set -x && \
         --prefix="${CONDA_DIR}" \
         --yes \
         'jupyter_core' \
-        # excluding mamba==2.0.0 due to a breaking change causing these errors:
-        # "The following argument was not expected: --full-name"
-        'mamba!=2.0.0' \
+        # excluding mamba 2.X due to several breaking changes
+        # https://github.com/jupyter/docker-stacks/pull/2147
+        'mamba<2.0.0' \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
-    mamba list --full-name 'python' | tail -1 | tr -s ' ' | cut -d ' ' -f 1,2 | sed 's/\.[^.]*$/.*/' >> "${CONDA_DIR}/conda-meta/pinned" && \
+    mamba list --full-name 'python' | awk 'END{sub("[^.]*$", "*", $2); print $1 " " $2}' >> "${CONDA_DIR}/conda-meta/pinned" && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
