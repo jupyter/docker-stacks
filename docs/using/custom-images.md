@@ -15,9 +15,9 @@ please, [take a look at cookiecutter template](../contributing/stacks.md).
 
 Our repository provides several customization points:
 
-- `ROOT_CONTAINER` (docker argument) - the parent image for `docker-stacks-foundation` image
+- `ROOT_IMAGE` (docker argument) - the parent image for `docker-stacks-foundation` image
 - `PYTHON_VERSION` (docker argument) - the Python version to install in `docker-stacks-foundation` image
-- `REGISTRY`, `OWNER`, `BASE_CONTAINER` (docker arguments) - they allow to specify parent image for all the other images
+- `REGISTRY`, `OWNER`, `BASE_IMAGE` (docker arguments) - they allow to specify parent image for all the other images
 - `REGISTRY`, `OWNER` (part of `env` in some GitHub workflows) - these allow to properly tag and refer to images during following steps:
   [`build-test-upload`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml),
   [`tag-push`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-tag-push.yml) and
@@ -50,8 +50,8 @@ then with a Dockerfile like:
 ```{code-block} Dockerfile
 :caption: Dockerfile
 
-ARG BASE_CONTAINER=minimal-notebook
-FROM $BASE_CONTAINER
+ARG BASE_IMAGE=minimal-notebook
+FROM $BASE_IMAGE
 ...
 ```
 

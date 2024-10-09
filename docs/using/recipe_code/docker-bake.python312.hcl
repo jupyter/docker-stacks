@@ -16,7 +16,7 @@ target "base-notebook" {
         docker-stacks-foundation = "target:foundation"
     }
     args = {
-        BASE_CONTAINER = "docker-stacks-foundation"
+        BASE_IMAGE = "docker-stacks-foundation"
     }
     tags = ["base-notebook"]
 }
@@ -27,7 +27,7 @@ target "minimal-notebook" {
         base-notebook = "target:base-notebook"
     }
     args = {
-        BASE_CONTAINER = "base-notebook"
+        BASE_IMAGE = "base-notebook"
     }
     tags = ["minimal-notebook"]
 }
@@ -38,7 +38,7 @@ target "custom-notebook" {
         minimal-notebook = "target:minimal-notebook"
     }
     args = {
-        BASE_CONTAINER = "minimal-notebook"
+        BASE_IMAGE = "minimal-notebook"
     }
     tags = ["custom-jupyter"]
 }
