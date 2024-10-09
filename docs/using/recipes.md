@@ -151,7 +151,7 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/199>
 
 ## Manpage installation
 
-Most containers, including our Ubuntu base image, ship without manpages installed to save space.
+Most images, including our Ubuntu base image, ship without manpages installed to save space.
 You can use the following Dockerfile to inherit from one of our images to enable manpages:
 
 ```{literalinclude} recipe_code/manpage_install.dockerfile
@@ -161,8 +161,8 @@ You can use the following Dockerfile to inherit from one of our images to enable
 Adding the documentation on top of the existing image wastes a lot of space
 and requires reinstalling every system package,
 which can take additional time and bandwidth.
-Enabling manpages in the base Ubuntu layer prevents this container bloat.
-To achieve this, use the previous `Dockerfile`'s commands with the original `ubuntu` image as your base container:
+Enabling manpages in the base Ubuntu layer prevents this image bloat.
+To achieve this, use the previous `Dockerfile`'s commands with the original `ubuntu` image as your base image:
 
 ```dockerfile
 FROM ubuntu:22.04
@@ -483,7 +483,7 @@ docker run -it --rm \
     quay.io/jupyter/minimal-notebook
 ```
 
-## Add ijavascript kernel to container
+## Install ijavascript kernel in your image
 
 The example below is a Dockerfile to install the [IJavascript kernel](https://github.com/n-riesco/ijavascript).
 
