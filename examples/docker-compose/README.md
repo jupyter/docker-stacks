@@ -12,7 +12,7 @@ See the [installation instructions](https://docs.docker.com/engine/installation/
 
 ## Quickstart
 
-Build and run a `jupyter/minimal-notebook` container on a VirtualBox VM on local desktop.
+Build and run a `jupyter/minimal-notebook` image on a VirtualBox VM on local desktop.
 
 ```bash
 # create a Docker Machine-controlled VirtualBox VM
