@@ -165,7 +165,7 @@ Enabling manpages in the base Ubuntu layer prevents this image bloat.
 To achieve this, use the previous `Dockerfile`'s commands with the original `ubuntu` image as your base image:
 
 ```dockerfile
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 ```
 
 Be sure to check the current base image in `jupyter/docker-stacks-foundation` before building.
