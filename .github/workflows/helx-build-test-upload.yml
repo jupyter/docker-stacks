@@ -35,13 +35,6 @@ on:
 jobs:
   build-test-upload:
     runs-on: ${{ inputs.runsOn }}
-    # This will create a registry that we use for docker images
-    # as an intermediary between build and test. 
-    # services:
-    #   registry:
-    #     image: registry:2
-    #     ports:
-    #       - 5000:5000
 
     steps:
       - name: Checkout Repo ⚡️
