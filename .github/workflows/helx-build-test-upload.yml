@@ -1,0 +1,172 @@
+name: Download parent image, build a new one and test it; then upload the image, tags and manifests to GitHub artifacts
+
+env:
+  OWNER: ${{ github.repository_owner }}
+
+on:
+  workflow_call:
+    inputs:
+      parentImage:
+        description: Parent image name
+        required: true
+        type: string
+      image:
+        description: Image name
+        required: true
+        type: string
+      # platform:
+      #   description: Image platform
+      #   required: true
+      #   type: string
+      runsOn:
+        description: GitHub Actions Runner image
+        required: true
+        type: string
+    secrets:
+      DOCKERHUB_USERNAME:
+        required: true
+      DOCKERHUB_TOKEN:
+        required: true
+      CONTAINERHUB_USERNAME:
+        required: true
+      CONTAINERHUB_TOKEN:
+        required: true
+
+jobs:
+  build-test-upload:
+    runs-on: ${{ inputs.runsOn }}
+    # This will create a registry that we use for docker images
+    # as an intermediary between build and test. 
+    # services:
+    #   registry:
+    #     image: registry:2
+    #     ports:
+    #       - 5000:5000
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@v4
+
+      - name: Set Up Python 🐍
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.x
+
+      - uses: actions/cache@v3
+        name: Cache Python
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.txt') }}
+
+      - name: Install Dev Dependencies 📦
+        run: |
+          pip install --upgrade pip
+          pip install --upgrade -r requirements-dev.txt
+        shell: bash
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            network=host
+      -
+        name: Download artifact 📥
+        if: ${{ inputs.parentImage != '' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.parentImage }}
+          path: /tmp/jupyter/images/
+
+      - name: Load parent built image to Docker 🐳
+        if: ${{ inputs.parentImage != '' }}
+        run: |
+          docker load --input /tmp/jupyter/images/${{ inputs.parentImage }}.tar
+
+      - name: Login to Docker Hub 🔐
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          logout: true
+
+      - name: Login to Containers 🫙
+        uses: docker/login-action@v3
+        with:
+          registry: containers.renci.org
+          username: ${{ secrets.CONTAINERHUB_USERNAME }}
+          password: ${{ secrets.CONTAINERHUB_TOKEN }}
+          logout: true
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ${{ env.OWNER }}/${{ inputs.image }}
+          # containers.renci.org/${{ env.OWNER }}/jupyter/docker-stacks/${{ inputs.image }}
+          # generate Docker tags based on the following events/attributes
+          # using the type=raw,value="" syntax allows for custom tags.
+          tags: |
+            type=ref,event=branch
+            type=sha
+            type=raw,value=cuda
+            type=raw,value=latest
+
+      - name: Build Containers 🛠️
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ inputs.image }}/
+          push: false
+          build-args: |
+            NB_GID=0
+            ROOT_CONTAINER=nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
+          # Push to renci-registry and dockerhub here. 
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+          outputs: type=docker, dest=/tmp/jupyter/images/${{ inputs.image }}.tar
+          cache-from: type=registry,ref=${{ env.OWNER }}/${{ inputs.image }}:buildcache-${{ inputs.image }}
+          cache-to: type=registry,ref=${{ env.OWNER }}/${{ inputs.image }}:buildcache-${{ inputs.image }},mode=max
+
+      - name: Load image to docker 
+        run: |
+          docker load --input /tmp/jupyter/images/${{ inputs.image }}.tar
+
+      - name: Run tests ✅
+        run: python3 -m tests.run_tests --short-image-name ${{ inputs.image }} --owner ${{ env.OWNER }}
+        shell: bash
+
+      # We do not want to push "latest" tag unless 
+      # the images being built are in the main branch. 
+      # the 'Run tests' step however expects "latest" tag;
+      # hence - we just delete the tag after the image is tested. 
+      - name: Remove latest tag if Develop Branch
+        if: ${{  github.ref != 'refs/heads/main'  }}
+        run: |
+          docker rmi ${{ env.OWNER }}/${{ inputs.image }}:latest
+
+      - name: Upload artifact 📤
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.image }}
+          path: /tmp/jupyter/images/${{ inputs.image }}.tar
+
+      - name: Push to Docker 🛠️
+        run: |
+          docker push --all-tags ${{ env.OWNER }}/${{ inputs.image }}
+
+      # Because Containers often fails, we keep going and display a message.
+      - name: Push to Containers 🫙
+        id: containers
+        run: |
+          docker push --all-tags containers.renci.org/${{ env.OWNER }}/jupyter/docker-stacks/${{ inputs.image }}
+        continue-on-error: true
+
+      # Sometimes containers.recnci.org fails so we try again.
+      - name: If Containers Failed 
+        if: ${{ steps.containers.conclusion == 'failure' }}
+        run: |
+          echo "Last push failed retrying "
+          docker push --all-tags containers.renci.org/${{ env.OWNER }}/jupyter/docker-stacks/${{ inputs.image }}
+          echo "Completed!"
+        continue-on-error: true

@@ -1,0 +1,148 @@
+name: Build, test and push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    # paths-ignore:
+    #   - ".github/workflows/*"
+    #   - ".github/*"
+  workflow_dispatch:
+
+# https://docs.github.com/en/actions/using-jobs/using-concurrency
+concurrency:
+  # only cancel in-progress jobs or runs for the current workflow - matches against branch & tags
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  foundation:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: ""
+      image: docker-stacks-foundation
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+
+  base:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: docker-stacks-foundation
+      image: base-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+    needs: [foundation]
+
+  minimal:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: base-notebook
+      image: minimal-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}      
+    needs: [base]
+
+  scipy:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: scipy-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+    needs: [minimal]
+
+  r:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: r-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+    needs: [minimal]
+
+  tensorflow:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: tensorflow-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+    needs: [scipy]
+
+  datascience:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: datascience-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+    needs: [scipy]
+
+  julia:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: minimal-notebook
+      image: julia-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+    needs: [minimal]
+
+  pyspark:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: scipy-notebook
+      image: pyspark-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+    needs: [scipy]
+
+  all-spark:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parentImage: pyspark-notebook
+      image: all-spark-notebook
+      runsOn: ubuntu-latest
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      CONTAINERHUB_USERNAME: ${{ secrets.CONTAINERHUB_USERNAME }}
+      CONTAINERHUB_TOKEN: ${{ secrets.CONTAINERHUB_TOKEN }}
+    needs: [pyspark]
