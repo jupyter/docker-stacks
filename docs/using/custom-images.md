@@ -13,11 +13,18 @@ please, [take a look at cookiecutter template](../contributing/stacks.md).
 
 ## Custom arguments
 
-Existing customization points:
+Our repository provides several customization points:
 
-- `ROOT_CONTAINER`, `PYTHON_VERSION` - docker arguments of a `docker-stacks-foundation` image
-- `REGISTRY`, `OWNER`, `BASE_CONTAINER` - docker arguments for all the other images we build
-- `REGISTRY`, `OWNER` - part of `env` in most of our GitHub workflows
+- `ROOT_IMAGE` (docker argument) - the parent image for `docker-stacks-foundation` image
+- `PYTHON_VERSION` (docker argument) - the Python version to install in `docker-stacks-foundation` image
+- `REGISTRY`, `OWNER`, `BASE_IMAGE` (docker arguments) - they allow to specify parent image for all the other images
+- `REGISTRY`, `OWNER` (part of `env` in some GitHub workflows) - these allow to properly tag and refer to images during following steps:
+  [`build-test-upload`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml),
+  [`tag-push`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-tag-push.yml) and
+  [`merge-tags`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-merge-tags.yml)
+
+These customization points can't be changed during runtime.
+Read more about [Docker build arguments](https://docs.docker.com/build/building/variables/#arg-usage-example) and [GitHub environment variables for a single workflow](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#defining-environment-variables-for-a-single-workflow).
 
 ## Building stack images with custom arguments
 
@@ -43,8 +50,8 @@ then with a Dockerfile like:
 ```{code-block} Dockerfile
 :caption: Dockerfile
 
-ARG BASE_CONTAINER=minimal-notebook
-FROM $BASE_CONTAINER
+ARG BASE_IMAGE=minimal-notebook
+FROM $BASE_IMAGE
 ...
 ```
 
