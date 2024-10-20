@@ -16,7 +16,7 @@ Table of Contents
    using/custom-images
    using/troubleshooting
    using/faq
-   ../changelog_link
+   using/changelog_link
 
 .. toctree::
    :maxdepth: 2
