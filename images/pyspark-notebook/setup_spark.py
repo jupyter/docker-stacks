@@ -38,10 +38,18 @@ def get_latest_spark_version() -> str:
         for ref in all_refs
         if ref.startswith("spark-") and "incubating" not in ref and "preview" not in ref
     ]
+
     # Compare versions semantically
-    latest_version = max(
-        stable_versions, key=lambda ver: [int(sub_ver) for sub_ver in ver.split(".")]
-    )
+    def version_array(ver: str) -> tuple[int, int, int, str]:
+        # 3.5.3 -> [3, 5, 3, ""]
+        # 4.0.0-preview2 -> [4, 0, 0, "preview2"]
+        arr = ver.split(".")
+        assert len(arr) == 3, arr
+        major, minor = int(arr[0]), int(arr[1])
+        patch, _, preview = arr[2].partition("-")
+        return (major, minor, int(patch), preview)
+
+    latest_version = max(stable_versions, key=lambda ver: version_array(ver))
     LOGGER.info(f"Latest version: {latest_version}")
     return latest_version
 
