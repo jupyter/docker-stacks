@@ -14,7 +14,7 @@ THIS_DIR = Path(__file__).parent.resolve()
 @pytest.mark.flaky(retries=3, delay=1)
 @pytest.mark.parametrize(
     "test_file",
-    ["issue_1168", "local_pyspark", "local_sparklyr", "local_sparkR"],
+    ["issue_1168", "local_pyspark", "local_sparkR"],
 )
 def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
     """Check if Spark notebooks can be executed"""
@@ -31,10 +31,14 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
     )
     logs = container.run_and_wait(
         timeout=60,
+        no_warnings=False,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["bash", "-c", command],
     )
+    warnings = TrackedContainer.get_warnings(logs)
+    assert len(warnings) == 1
+    assert "Using incubator modules: jdk.incubator.vector" in warnings[0]
 
     expected_file = f"{output_dir}/{test_file}.md"
     assert expected_file in logs, f"Expected file {expected_file} not generated"

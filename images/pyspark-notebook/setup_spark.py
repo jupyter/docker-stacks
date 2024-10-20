@@ -36,7 +36,7 @@ def get_latest_spark_version() -> str:
     stable_versions = [
         ref.removeprefix("spark-").removesuffix("/")
         for ref in all_refs
-        if ref.startswith("spark-") and "incubating" not in ref and "preview" not in ref
+        if ref.startswith("spark-") and "incubating" not in ref
     ]
 
     # Compare versions semantically
