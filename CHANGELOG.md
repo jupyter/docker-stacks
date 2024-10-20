@@ -8,6 +8,7 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 Affected: `pyspark-notebook` and `all-spark-notebook` images users
 
 - **Breaking:** Start using Spark 4.0.0 preview versions ([#2159](https://github.com/jupyter/docker-stacks/pull/2159)).
+  `sparklyr` doesn't seem to support Spark v4 yet when using Spark locally.
 
   Reason: Spark v3 is not compatible with Python 3.12, and [the voting group has decided](https://github.com/jupyter/docker-stacks/pull/2072#issuecomment-2414123851) to switch to Spark v4 preview version.
 
