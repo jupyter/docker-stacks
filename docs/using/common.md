@@ -213,14 +213,20 @@ docker run -it --rm \
     -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=notebook \
     quay.io/jupyter/base-notebook
-# Executing the command: jupyter notebook ...
+
+# Executing the command: start-notebook.py
+# Executing: jupyter notebook
+# ...
 
 # Use Jupyter NBClassic frontend
 docker run -it --rm \
     -p 8888:8888 \
     -e DOCKER_STACKS_JUPYTER_CMD=nbclassic \
     quay.io/jupyter/base-notebook
-# Executing the command: jupyter nbclassic ...
+
+# Executing the command: start-notebook.py
+# Executing: jupyter nbclassic
+# ...
 ```
 
 ### `start.sh`
