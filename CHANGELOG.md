@@ -5,7 +5,7 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 
 ## 2024-10-22
 
-Affected: `pyspark-notebook` and `all-spark-notebook` images users
+Affected: `pyspark-notebook` and `all-spark-notebook` images.
 
 - **Breaking:** Start using Spark 4.0.0 preview versions ([#2159](https://github.com/jupyter/docker-stacks/pull/2159)).
   `sparklyr` doesn't seem to support Spark v4 yet when using Spark locally.
@@ -14,6 +14,6 @@ Affected: `pyspark-notebook` and `all-spark-notebook` images users
 
 ## 2024-10-09
 
-Affected: users building a custom set of images
+Affected: users building a custom set of images.
 
-- **Breaking:** Rename: `ROOT_CONTAINER`->`ROOT_IMAGE`, `BASE_CONTAINER`->`BASE_IMAGE` ([#2154](https://github.com/jupyter/docker-stacks/issues/2154), [#2155](https://github.com/jupyter/docker-stacks/pull/2155))
+- **Breaking:** Rename: `ROOT_CONTAINER`->`ROOT_IMAGE`, `BASE_CONTAINER`->`BASE_IMAGE` ([#2154](https://github.com/jupyter/docker-stacks/issues/2154), [#2155](https://github.com/jupyter/docker-stacks/pull/2155)).
