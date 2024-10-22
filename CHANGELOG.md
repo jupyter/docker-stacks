@@ -5,7 +5,7 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 
 ## 2024-10-23
 
-Affected: all images users
+Affected: all images.
 
 - **Breaking:** Switch to Python 3.12 ([#2072](https://github.com/jupyter/docker-stacks/pull/2072)).
 
