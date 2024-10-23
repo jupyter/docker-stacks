@@ -124,9 +124,7 @@ RUN set -x && \
         --prefix="${CONDA_DIR}" \
         --yes \
         'jupyter_core' \
-        # excluding mamba 2.X due to several breaking changes
-        # https://github.com/jupyter/docker-stacks/pull/2147
-        'mamba<2.0.0' \
+        'mamba' \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
