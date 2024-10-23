@@ -22,13 +22,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import json
 import logging
 import re
 from collections import defaultdict
 from itertools import chain
 from typing import Any, Optional
 
-import yaml
 from docker.models.containers import Container
 from tabulate import tabulate
 
@@ -61,7 +61,7 @@ class CondaPackageHelper:
     @staticmethod
     def _conda_export_command(from_history: bool) -> list[str]:
         """Return the mamba export command with or without history"""
-        cmd = ["mamba", "env", "export", "--no-build"]
+        cmd = ["mamba", "env", "export", "--no-build", "--json"]
         if from_history:
             cmd.append("--from-history")
         return cmd
@@ -96,7 +96,7 @@ class CondaPackageHelper:
     @staticmethod
     def _parse_package_versions(env_export: str) -> dict[str, set[str]]:
         """Extract packages and versions from the lines returned by the list of specifications"""
-        dependencies = yaml.safe_load(env_export).get("dependencies")
+        dependencies = json.loads(env_export).get("dependencies")
         # Filtering packages installed through pip
         # since we only manage packages installed through mamba here
         # They are represented by a dict with a key 'pip'

@@ -47,7 +47,6 @@ repos:
             "requests",
             "urllib3",
             "types-beautifulsoup4",
-            "types-PyYAML",
             "types-requests",
             "types-tabulate",
             "types-urllib3",
