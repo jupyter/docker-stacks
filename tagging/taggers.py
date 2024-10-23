@@ -122,8 +122,12 @@ class SparkVersionTagger(TaggerInterface):
         SPARK_VERSION_LINE_PREFIX = r"   /___/ .__/\_,_/_/ /_/\_\   version"
 
         spark_version = _get_program_version(container, "spark-submit")
-        version_line = spark_version.split("\n")[4]
-        assert version_line.startswith(SPARK_VERSION_LINE_PREFIX)
+        version_line = next(
+            filter(
+                lambda line: line.startswith(SPARK_VERSION_LINE_PREFIX),
+                spark_version.split("\n"),
+            )
+        )
         return "spark-" + version_line.split(" ")[-1]
 
 
