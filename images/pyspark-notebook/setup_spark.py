@@ -29,11 +29,11 @@ def get_all_refs(url: str) -> list[str]:
 
 def get_latest_spark_version() -> str:
     """
-    Returns the last stable version of Spark using spark archive
+    Returns the last version of Spark using spark archive
     """
     LOGGER.info("Downloading Spark versions information")
     all_refs = get_all_refs("https://archive.apache.org/dist/spark/")
-    stable_versions = [
+    versions = [
         ref.removeprefix("spark-").removesuffix("/")
         for ref in all_refs
         if ref.startswith("spark-") and "incubating" not in ref
@@ -49,7 +49,7 @@ def get_latest_spark_version() -> str:
         patch, _, preview = arr[2].partition("-")
         return (major, minor, int(patch), preview)
 
-    latest_version = max(stable_versions, key=lambda ver: version_array(ver))
+    latest_version = max(versions, key=lambda ver: version_array(ver))
     LOGGER.info(f"Latest version: {latest_version}")
     return latest_version
 
