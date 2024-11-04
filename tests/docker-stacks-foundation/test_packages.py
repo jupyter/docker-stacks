@@ -76,6 +76,7 @@ EXCLUDED_PACKAGES = [
     "hdf5",
     "jupyterlab-git",
     "mamba[version='<2.0.0']",
+    "notebook[version='>",
     "openssl",
     "pandas[version='>",
     "protobuf",

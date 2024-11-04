@@ -42,7 +42,7 @@ RUN mamba install --yes \
     'jupyterhub' \
     'jupyterlab' \
     'nbclassic' \
-    'notebook' && \
+    'notebook>=7.2.2' && \
     jupyter server --generate-config && \
     mamba clean --all -f -y && \
     npm cache clean --force && \
