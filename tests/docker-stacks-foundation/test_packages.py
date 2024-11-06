@@ -77,7 +77,6 @@ EXCLUDED_PACKAGES = [
     "jupyterhub-base",
     "jupyterlab-git",
     "mamba[version='<2.0.0']",
-    "nodejs",
     "notebook[version='>",
     "openssl",
     "pandas[version='>",
