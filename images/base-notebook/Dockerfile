@@ -42,10 +42,11 @@ RUN mamba install --yes \
     'jupyterhub-base' \
     'jupyterlab' \
     'nbclassic' \
-    # nodejs has historically been installed indirectly as a dependency. When it
-    # was no longer getting installed indirectly, we started installing it
-    # explicitly to avoid introducing a breaking change for users building on
-    # top of these images.
+    # nodejs has historically been installed indirectly as a dependency.
+    # When it was no longer getting installed indirectly,
+    # we started installing it explicitly to avoid introducing a breaking change
+    # for users building on top of these images.
+    # See: https://github.com/jupyter/docker-stacks/pull/2171
     'nodejs' \
     # Sometimes, when the new version of `jupyterlab` is released, latest `notebook` might not support it for some time
     # Old versions of `notebook` (<v7) didn't have a restriction on the `jupyterlab` version, and old `notebook` is getting installed
