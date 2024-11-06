@@ -3,6 +3,12 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2024-11-06
+
+Affected: all images except `docker-stacks-foundation`.
+
+- **Non-breaking** Install `jupyterhub-base` and `nodejs` packages instead of `jupyterhub` package ([#2171](https://github.com/jupyter/docker-stacks/pull/2171)).
+
 ## 2024-10-23
 
 Affected: all images.
