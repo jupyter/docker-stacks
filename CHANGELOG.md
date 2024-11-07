@@ -8,7 +8,14 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 Affected: all images.
 
 - **Breaking:** Switch to `mamba` v2 ([#2147](https://github.com/jupyter/docker-stacks/pull/2147)).
-  More information about changes made: <https://mamba.readthedocs.io/en/latest/developer_zone/changes-2.0.html>
+  More information about changes made: <https://mamba.readthedocs.io/en/latest/developer_zone/changes-2.0.html>.
+
+## 2024-11-06
+
+Affected: all images except `docker-stacks-foundation`.
+
+- **Non-breaking** Install `jupyterhub-base` and `nodejs` packages instead of `jupyterhub` package ([#2171](https://github.com/jupyter/docker-stacks/pull/2171)).
+
 
 ## 2024-10-23
 
