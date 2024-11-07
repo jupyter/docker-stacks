@@ -16,7 +16,6 @@ Affected: all images except `docker-stacks-foundation`.
 
 - **Non-breaking** Install `jupyterhub-base` and `nodejs` packages instead of `jupyterhub` package ([#2171](https://github.com/jupyter/docker-stacks/pull/2171)).
 
-
 ## 2024-10-23
 
 Affected: all images.
