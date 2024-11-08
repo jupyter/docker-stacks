@@ -54,9 +54,7 @@ It contains:
 
 - Everything in `jupyter/docker-stacks-foundation`
 - Minimally functional Server (e.g., no LaTeX support for saving notebooks as PDFs)
-- `notebook`, `jupyterhub-base`, and `jupyterlab` packages
-  Note: we're also installing `nodejs` as it has historically been installed indirectly as a dependency of `jupyterhub` package, which was used before.
-  See more at: <https://github.com/jupyter/docker-stacks/pull/2171>
+- `notebook`, `jupyterhub-singleuser`, and `jupyterlab` packages
 - A `start-notebook.py` script as the default command
 - A `start-singleuser.py` script useful for launching containers in JupyterHub
 - Options for a self-signed HTTPS certificate
