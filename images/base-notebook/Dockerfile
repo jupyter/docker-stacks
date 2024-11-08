@@ -39,7 +39,7 @@ USER ${NB_UID}
 # files across image layers when the permissions change
 WORKDIR /tmp
 RUN mamba install --yes \
-    'jupyterhub-base' \
+    'jupyterhub-singleuser' \
     'jupyterlab' \
     'nbclassic' \
     # Sometimes, when the new version of `jupyterlab` is released, latest `notebook` might not support it for some time

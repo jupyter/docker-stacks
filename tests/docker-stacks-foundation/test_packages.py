@@ -74,7 +74,7 @@ EXCLUDED_PACKAGES = [
     "grpcio-status",
     "grpcio",
     "hdf5",
-    "jupyterhub-base",
+    "jupyterhub-singleuser",
     "jupyterlab-git",
     "mamba[version='<2.0.0']",
     "notebook[version='>",
