@@ -1,0 +1,5 @@
+[default.extend-identifiers]
+# Don't correct the nick "@consideRatio"
+consideRatio = "consideRatio"
+# Don't correct the 12-character git commit SHA
+1ffe43816ba9 = "1ffe43816ba9"
