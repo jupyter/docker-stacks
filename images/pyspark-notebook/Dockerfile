@@ -24,7 +24,7 @@ RUN apt-get update --yes && \
     ca-certificates-java && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# If spark_version is not set, latest stable Spark will be installed
+# If spark_version is not set, latest Spark will be installed
 ARG spark_version
 ARG hadoop_version="3"
 # If scala_version is not set, Spark without Scala will be installed

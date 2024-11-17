@@ -49,7 +49,8 @@ You can build a `pyspark-notebook` image with a different `Spark` version by ove
     - This version needs to match the version supported by the Spark distribution used above.
     - See [Spark Overview](https://spark.apache.org/docs/latest/#downloading) and [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
   - `spark_version` (optional): The Spark version to install, for example `3.5.0`.
-    If not specified (this is the default), latest stable Spark will be installed.
+    If not specified (this is the default), latest Spark will be installed.
+    Note: to support Python 3.12, we currently install Spark v4 preview versions: <https://github.com/jupyter/docker-stacks/pull/2072#issuecomment-2414123851>.
   - `hadoop_version`: The Hadoop version (`3` by default).
     Note, that _Spark < 3.3_ require to specify `major.minor` Hadoop version (i.e. `3.2`).
   - `scala_version` (optional): The Scala version, for example `2.13` (not specified by default).
