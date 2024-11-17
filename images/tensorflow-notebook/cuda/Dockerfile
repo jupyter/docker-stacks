@@ -14,7 +14,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Install TensorFlow, CUDA and cuDNN with pip
 RUN pip install --no-cache-dir \
     "jupyter-server-proxy" \
-    "tensorflow[and-cuda]" && \
+    "tensorflow[and-cuda]<=2.17.1" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 

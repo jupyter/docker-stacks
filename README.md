@@ -1,7 +1,6 @@
 # Jupyter Docker Stacks
 
-[![GitHub actions badge](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml/badge.svg)
-](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml?query=branch%3Amain "Docker images build status")
+[![GitHub actions badge](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml/badge.svg)](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml?query=branch%3Amain "Docker images build status")
 [![Read the Docs badge](https://img.shields.io/readthedocs/jupyter-docker-stacks.svg)](https://jupyter-docker-stacks.readthedocs.io/en/latest/ "Documentation build status")
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/jupyter/docker-stacks/main.svg)](https://results.pre-commit.ci/latest/github/jupyter/docker-stacks/main "pre-commit.ci build status")
 [![Discourse badge](https://img.shields.io/discourse/users.svg?color=%23f37626&server=https%3A%2F%2Fdiscourse.jupyter.org)](https://discourse.jupyter.org/ "Jupyter Discourse Forum")
@@ -120,7 +119,8 @@ If you want to use the older `Ubuntu` and/or `Python` version, you can use the f
 | 2022-10-09   | 22.04  | 3.9    | `ed2908bbb62e` |
 | 2023-05-30   | 22.04  | 3.10   | `4d70cf8da953` |
 | 2024-08-26   | 22.04  | 3.11   | `00987883e58d` |
-| weekly build | 24.04  | 3.11   | `latest`       |
+| 2024-10-22   | 24.04  | 3.11   | `b74418220768` |
+| weekly build | 24.04  | 3.12   | `latest`       |
 
 ## Contributing
 
