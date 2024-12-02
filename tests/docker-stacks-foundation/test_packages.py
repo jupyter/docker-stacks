@@ -79,7 +79,6 @@ EXCLUDED_PACKAGES = [
     "mamba[version='<2.0.0']",
     "notebook[version='>",
     "openssl",
-    "pandas[version='>",
     "protobuf",
     "python",
     "r-irkernel",
