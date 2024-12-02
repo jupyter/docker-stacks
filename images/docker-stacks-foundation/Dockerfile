@@ -124,6 +124,7 @@ RUN set -x && \
         --prefix="${CONDA_DIR}" \
         --yes \
         'jupyter_core' \
+        'conda' \
         'mamba' \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
