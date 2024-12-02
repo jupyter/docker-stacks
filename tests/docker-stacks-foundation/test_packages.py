@@ -70,7 +70,7 @@ PACKAGE_MAPPING = {
 EXCLUDED_PACKAGES = [
     "bzip2",
     "ca-certificates",
-    "conda-forge::blas[build=openblas]",
+    "conda-forge::blas=*",
     "grpcio-status",
     "grpcio",
     "hdf5",
