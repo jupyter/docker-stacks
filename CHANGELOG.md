@@ -13,7 +13,7 @@ Affected: all images.
 
 Affected: all images.
 
-- **Breaking:** Switch to `mamba` v2 ([#2147](https://github.com/jupyter/docker-stacks/pull/2147)).
+- **Breaking:** `docker-stacks-foundation`: switch to `mamba` v2 ([#2147](https://github.com/jupyter/docker-stacks/pull/2147)).
   More information about changes made: <https://mamba.readthedocs.io/en/latest/developer_zone/changes-2.0.html>.
 
 ## 2024-11-08
@@ -22,7 +22,7 @@ Affected: all images except `docker-stacks-foundation`.
 
 - **Breaking:** `base-notebook`: stop installing `nodejs` from `conda-forge` ([#2172](https://github.com/jupyter/docker-stacks/pull/2172)).
 
-  Reason: It isn't a direct dependency on anything in the images any more, and increased the image size with ~150MB.
+  Reason: It isn't a direct dependency on anything in the images anymore, and increased the image size by ~150MB.
 
 ## 2024-11-06
 
