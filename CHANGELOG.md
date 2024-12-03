@@ -9,6 +9,13 @@ Affected: all images.
 
 - **Breaking:** `docker-stacks-foundation`: switch to Python 3.13 ([#2163](https://github.com/jupyter/docker-stacks/pull/2163)).
 
+## 2024-12-03
+
+Affected: all images.
+
+- **Breaking:** Switch to `mamba` v2 ([#2147](https://github.com/jupyter/docker-stacks/pull/2147)).
+  More information about changes made: <https://mamba.readthedocs.io/en/latest/developer_zone/changes-2.0.html>.
+
 ## 2024-11-08
 
 Affected: all images except `docker-stacks-foundation`.
