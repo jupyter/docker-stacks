@@ -47,6 +47,11 @@ def get_latest_julia_url() -> tuple[str, str]:
     triplet = unify_aarch64(platform.machine()) + "-linux-gnu"
     file_info = [vf for vf in latest_version_files if vf["triplet"] == triplet][0]
     LOGGER.info(f"Latest version: {file_info['version']} url: {file_info['url']}")
+    if file_info["version"] == "1.11.2":
+        LOGGER.warning(
+            "Not using Julia 1.11.2, because it hangs in GitHub self-hosted runners"
+        )
+        return file_info["url"].replace("1.11.2", "1.11.1"), "1.11.1"
     return file_info["url"], file_info["version"]
 
 
