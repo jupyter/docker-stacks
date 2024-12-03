@@ -3,6 +3,13 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2024-12-03
+
+Affected: all images.
+
+- **Breaking:** Switch to `mamba` v2 ([#2147](https://github.com/jupyter/docker-stacks/pull/2147)).
+  More information about changes made: <https://mamba.readthedocs.io/en/latest/developer_zone/changes-2.0.html>.
+
 ## 2024-11-08
 
 Affected: all images except `docker-stacks-foundation`.
