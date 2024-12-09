@@ -12,7 +12,7 @@ REPOSITORY_OWNER = os.environ["REPOSITORY_OWNER"]
 
 def generate_matrix() -> dict[str, Any]:
     dockerfiles = sorted(file.name for file in THIS_DIR.glob("*.dockerfile"))
-    runs_on = ["ubuntu-latest"]
+    runs_on = ["ubuntu-24.04"]
     if REPOSITORY_OWNER == "jupyter":
         runs_on.append("ARM64")
     return {
