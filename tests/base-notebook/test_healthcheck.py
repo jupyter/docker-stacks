@@ -82,7 +82,10 @@ def test_healthy(
     "env,cmd,user",
     [
         (
-            ["HTTPS_PROXY=host.docker.internal", "HTTP_PROXY=host.docker.internal"],
+            [
+                "HTTPS_PROXY=https://host.docker.internal",
+                "HTTP_PROXY=http://host.docker.internal",
+            ],
             None,
             None,
         ),
@@ -91,8 +94,8 @@ def test_healthy(
                 "NB_USER=testuser",
                 "CHOWN_HOME=1",
                 "JUPYTER_PORT=8123",
-                "HTTPS_PROXY=host.docker.internal",
-                "HTTP_PROXY=host.docker.internal",
+                "HTTPS_PROXY=https://host.docker.internal",
+                "HTTP_PROXY=http://host.docker.internal",
             ],
             ["start-notebook.py", "--ServerApp.base_url=/test"],
             "root",
