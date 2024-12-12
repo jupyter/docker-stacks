@@ -86,6 +86,12 @@ class CondaPackageHelper:
                     CondaPackageHelper._conda_export_command(from_history=True)
                 )
             )
+            env = self._execute_command(
+                CondaPackageHelper._conda_export_command(from_history=True)
+            )
+            LOGGER.debug(env)
+            self.requested = CondaPackageHelper._parse_package_versions(env)
+            LOGGER.debug(self.requested)
         return self.requested
 
     def _execute_command(self, command: list[str]) -> str:
