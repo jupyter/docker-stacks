@@ -125,7 +125,7 @@ RUN set -x && \
         --yes \
         'jupyter_core' \
         'conda' \
-        'mamba' \
+        'mamba=2.0.4' \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
