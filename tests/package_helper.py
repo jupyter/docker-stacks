@@ -81,11 +81,13 @@ class CondaPackageHelper:
         """Return the requested package (i.e. `mamba install <package>`)"""
         if self.requested is None:
             LOGGER.info("Grabbing the list of manually requested packages ...")
-            self.requested = CondaPackageHelper._parse_package_versions(
-                self._execute_command(
-                    CondaPackageHelper._conda_export_command(from_history=True)
-                )
-            )
+            # self.requested = CondaPackageHelper._parse_package_versions(
+            #     self._execute_command(
+            #         CondaPackageHelper._conda_export_command(from_history=True)
+            #     )
+            # )
+            vers = self._execute_command(["mamba", "--version"])
+            LOGGER.debug(vers)
             env = self._execute_command(
                 CondaPackageHelper._conda_export_command(from_history=True)
             )
