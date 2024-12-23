@@ -19,8 +19,8 @@ on:
 jobs:
   test-script:
     # The script itself is not aarch64-specific
-    # It is easier to test on ubuntu-latest
-    runs-on: ubuntu-latest
+    # It is easier to test on ubuntu-22.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout Repo ⚡️
