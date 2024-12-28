@@ -10,20 +10,35 @@ LOGGER = logging.getLogger(__name__)
 
 
 def update_home_wiki_page(wiki_dir: Path, year_month: str) -> None:
-    TABLE_BEGINNING = """\
+    YEAR_MONTHLY_TABLES = "<!-- YEAR_MONTHLY_TABLES -->\n"
+
+    TABLE_HEADER = """\
 | Month                  |
 | ---------------------- |
 """
+
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
+
+    year = year_month[:4]
+    year_header = f"## {year}\n"
+    if year_header not in wiki_home_content:
+        assert YEAR_MONTHLY_TABLES in wiki_home_content
+        wiki_home_content = wiki_home_content.replace(
+            YEAR_MONTHLY_TABLES,
+            YEAR_MONTHLY_TABLES + f"\n{year_header}\n{TABLE_HEADER}",
+        )
+        LOGGER.info(f"Updated wiki home page with year header for year: {year}")
+
     year_month_line = f"| [`{year_month}`](./{year_month}) |\n"
     if year_month_line not in wiki_home_content:
-        assert TABLE_BEGINNING in wiki_home_content
+        assert TABLE_HEADER in wiki_home_content
         wiki_home_content = wiki_home_content.replace(
-            TABLE_BEGINNING, TABLE_BEGINNING + year_month_line
+            TABLE_HEADER, TABLE_HEADER + year_month_line
         )
-        wiki_home_file.write_text(wiki_home_content)
         LOGGER.info(f"Updated wiki home page with month: {year_month}")
+
+    wiki_home_file.write_text(wiki_home_content)
 
 
 def update_monthly_wiki_page(
