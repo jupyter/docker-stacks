@@ -9,33 +9,34 @@ from pathlib import Path
 LOGGER = logging.getLogger(__name__)
 
 
-def update_home_wiki_page(wiki_dir: Path, month: str) -> None:
+def update_home_wiki_page(wiki_dir: Path, year_month: str) -> None:
     TABLE_BEGINNING = """\
 | Month                  |
 | ---------------------- |
 """
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
-    month_line = f"| [`{month}`](./{month}) |\n"
-    if month_line not in wiki_home_content:
+    year_month_line = f"| [`{year_month}`](./{year_month}) |\n"
+    if year_month_line not in wiki_home_content:
         assert TABLE_BEGINNING in wiki_home_content
         wiki_home_content = wiki_home_content.replace(
-            TABLE_BEGINNING, TABLE_BEGINNING + month_line
+            TABLE_BEGINNING, TABLE_BEGINNING + year_month_line
         )
         wiki_home_file.write_text(wiki_home_content)
-        LOGGER.info(f"Updated wiki home page with month: {month}")
+        LOGGER.info(f"Updated wiki home page with month: {year_month}")
 
 
 def update_monthly_wiki_page(
-    wiki_dir: Path, month: str, build_history_line: str
+    wiki_dir: Path, year_month: str, build_history_line: str
 ) -> None:
     MONTHLY_PAGE_HEADER = f"""\
-# Images built during {month}
+# Images built during {year_month}
 
 | Date | Image | Links |
 | - | - | - |
 """
-    monthly_page = wiki_dir / "monthly-files" / (month + ".md")
+    year = year_month[:4]
+    monthly_page = wiki_dir / "monthly-files" / year / (year_month + ".md")
     if not monthly_page.exists():
         monthly_page.write_text(MONTHLY_PAGE_HEADER)
         LOGGER.info(f"Created monthly page: {monthly_page.relative_to(wiki_dir)}")
@@ -62,7 +63,7 @@ def get_manifest_timestamp(manifest_file: Path) -> str:
     return timestamp
 
 
-def get_manifest_month(manifest_file: Path) -> str:
+def get_manifest_year_month(manifest_file: Path) -> str:
     return get_manifest_timestamp(manifest_file)[:7]
 
 
@@ -85,8 +86,9 @@ def update_wiki(wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path) -> No
     manifest_files = list(manifests_dir.rglob("*.md"))
     assert manifest_files, "expected to have some manifest files"
     for manifest_file in manifest_files:
-        month = get_manifest_month(manifest_file)
-        copy_to = wiki_dir / "manifests" / month / manifest_file.name
+        year_month = get_manifest_year_month(manifest_file)
+        year = year_month[:4]
+        copy_to = wiki_dir / "manifests" / year / year_month / manifest_file.name
         copy_to.parent.mkdir(exist_ok=True)
         shutil.copy(manifest_file, copy_to)
         LOGGER.info(f"Added manifest file: {copy_to.relative_to(wiki_dir)}")
@@ -96,9 +98,9 @@ def update_wiki(wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path) -> No
     for build_history_line_file in build_history_line_files:
         build_history_line = build_history_line_file.read_text()
         assert build_history_line.startswith("| `")
-        month = build_history_line[3:10]
-        update_home_wiki_page(wiki_dir, month)
-        update_monthly_wiki_page(wiki_dir, month, build_history_line)
+        year_month = build_history_line[3:10]
+        update_home_wiki_page(wiki_dir, year_month)
+        update_monthly_wiki_page(wiki_dir, year_month, build_history_line)
 
     remove_old_manifests(wiki_dir)
 
