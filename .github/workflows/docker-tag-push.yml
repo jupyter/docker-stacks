@@ -69,7 +69,7 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/
       - name: Apply tags to the loaded image 🏷
-        run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --variant ${{ inputs.variant }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
+        run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }} --variant ${{ inputs.variant }}
       # This step is needed to prevent pushing non-multi-arch "latest" tag
       - name: Remove the "latest" tag from the image 🗑️
         run: docker image rmi ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest
