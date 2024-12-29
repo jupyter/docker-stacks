@@ -7,7 +7,7 @@ RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends software-properties-common && \
     add-apt-repository universe && \
     apt-get update --yes && \
-    apt-get install --yes --no-install-recommends alien default-jre default-jdk openjdk-11-jdk libaio1 && \
+    apt-get install --yes --no-install-recommends alien default-jre default-jdk openjdk-11-jdk libaio1t64 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Oracle
