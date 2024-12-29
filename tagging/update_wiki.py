@@ -9,36 +9,43 @@ from pathlib import Path
 LOGGER = logging.getLogger(__name__)
 
 
-def update_home_wiki_page(wiki_dir: Path, year_month: str) -> None:
+def regenerate_home_wiki_page(wiki_dir: Path) -> None:
     YEAR_MONTHLY_TABLES = "<!-- YEAR_MONTHLY_TABLES -->\n"
 
-    TABLE_HEADER = """\
-| Month                  |
-| ---------------------- |
+    YEAR_TABLE_HEADER = """\
+## {year}
+
+| Month                  | Builds | Images |
+| ---------------------- | ------ | ------ |
 """
 
     wiki_home_file = wiki_dir / "Home.md"
     wiki_home_content = wiki_home_file.read_text()
 
-    year = year_month[:4]
-    year_header = f"## {year}\n"
-    if year_header not in wiki_home_content:
-        assert YEAR_MONTHLY_TABLES in wiki_home_content
-        wiki_home_content = wiki_home_content.replace(
-            YEAR_MONTHLY_TABLES,
-            YEAR_MONTHLY_TABLES + f"\n{year_header}\n{TABLE_HEADER}",
-        )
-        LOGGER.info(f"Updated wiki home page with year header for year: {year}")
+    assert YEAR_MONTHLY_TABLES in wiki_home_content
+    wiki_home_content = wiki_home_content[
+        : wiki_home_content.find(YEAR_MONTHLY_TABLES) + len(YEAR_MONTHLY_TABLES)
+    ]
 
-    year_month_line = f"| [`{year_month}`](./{year_month}) |\n"
-    if year_month_line not in wiki_home_content:
-        assert TABLE_HEADER in wiki_home_content
-        wiki_home_content = wiki_home_content.replace(
-            TABLE_HEADER, TABLE_HEADER + year_month_line
-        )
-        LOGGER.info(f"Updated wiki home page with month: {year_month}")
+    all_year_dirs = sorted((wiki_dir / "monthly-files").glob("*"), reverse=True)
+    for year_dir in all_year_dirs:
+        wiki_home_content += "\n" + YEAR_TABLE_HEADER.format(year=year_dir.name)
+
+        all_year_month_files = sorted(year_dir.glob("*.md"), reverse=True)
+        for year_month_file in all_year_month_files:
+            year_month_file_content = year_month_file.read_text()
+            images = year_month_file_content.count("Build manifest")
+            builds = sum(
+                "jupyter/base-notebook" in line and "aarch64" not in line
+                for line in year_month_file_content.split("\n")
+            )
+            year_month = year_month_file.stem
+            wiki_home_content += (
+                f"| [`{year_month}`](./{year_month}) | {builds: <6} | {images: <6} |\n"
+            )
 
     wiki_home_file.write_text(wiki_home_content)
+    LOGGER.info("Updated Home page")
 
 
 def update_monthly_wiki_page(
@@ -114,9 +121,9 @@ def update_wiki(wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path) -> No
         build_history_line = build_history_line_file.read_text()
         assert build_history_line.startswith("| `")
         year_month = build_history_line[3:10]
-        update_home_wiki_page(wiki_dir, year_month)
         update_monthly_wiki_page(wiki_dir, year_month, build_history_line)
 
+    regenerate_home_wiki_page(wiki_dir)
     remove_old_manifests(wiki_dir)
 
 
