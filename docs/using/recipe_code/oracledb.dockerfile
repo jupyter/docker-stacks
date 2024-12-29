@@ -12,12 +12,12 @@ RUN apt-get update --yes && \
 
 # Oracle
 ARG INSTANTCLIENT_MAJOR_VERSION=23
-ARG INSTANTCLIENT_BIN_SUFFIX=${INSTANTCLIENT_MAJOR_VERSION}.4.0.24.05-1.el9.x86_64.rpm
-ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/2340000
+ARG INSTANTCLIENT_BIN_SUFFIX=${INSTANTCLIENT_MAJOR_VERSION}.6.0.24.10-1.el9.x86_64.rpm
+ARG INSTANTCLIENT_URL=https://download.oracle.com/otn_software/linux/instantclient/2360000
 
 # Then install Oracle SQL Instant client, SQL+Plus, tools, and JDBC.
 # Note: You may need to change the URL to a newer version.
-# See: https://www.oracle.com/es/database/technologies/instant-client/linux-x86-64-downloads.html
+# See: https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
 RUN mkdir "/opt/oracle"
 WORKDIR "/opt/oracle"
 # alien doesn't work well with sqlplus, so skipping it for now
