@@ -118,11 +118,14 @@ def remove_old_manifests(wiki_dir: Path) -> None:
         LOGGER.info(f"Removed manifest: {file.relative_to(wiki_dir)}")
 
 
-def update_wiki(wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path) -> None:
+def update_wiki(
+    wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path, allow_no_files: bool
+) -> None:
     LOGGER.info("Updating wiki")
 
     manifest_files = list(manifests_dir.rglob("*.md"))
-    assert manifest_files, "expected to have some manifest files"
+    if not allow_no_files:
+        assert manifest_files, "expected to have some manifest files"
     for manifest_file in manifest_files:
         year_month = get_manifest_year_month(manifest_file)
         year = year_month[:4]
@@ -132,7 +135,10 @@ def update_wiki(wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path) -> No
         LOGGER.info(f"Added manifest file: {copy_to.relative_to(wiki_dir)}")
 
     build_history_line_files = sorted(hist_lines_dir.rglob("*.txt"))
-    assert build_history_line_files, "expected to have some build history line files"
+    if not allow_no_files:
+        assert (
+            build_history_line_files
+        ), "expected to have some build history line files"
     for build_history_line_file in build_history_line_files:
         build_history_line = build_history_line_file.read_text()
         assert build_history_line.startswith("| `")
@@ -165,6 +171,13 @@ if __name__ == "__main__":
         type=Path,
         help="Directory with manifest files",
     )
+    arg_parser.add_argument(
+        "--allow-no-files",
+        action="store_true",
+        help="Allow no manifest or history line files",
+    )
     args = arg_parser.parse_args()
 
-    update_wiki(args.wiki_dir, args.hist_lines_dir, args.manifests_dir)
+    update_wiki(
+        args.wiki_dir, args.hist_lines_dir, args.manifests_dir, args.allow_no_files
+    )
