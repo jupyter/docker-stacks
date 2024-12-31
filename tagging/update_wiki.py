@@ -34,10 +34,19 @@ def build_monthly_table_line(year_month_file: Path) -> str:
         year=int(year_month[:4]), month=int(year_month[5:]), day=1
     )
     next_month = current_month + relativedelta.relativedelta(months=1)
-    future = (
-        git["log", "--oneline", "--since", current_month, "--until", next_month]
-        & plumbum.BG
-    )
+    with plumbum.local.env(TZ="UTC"):
+        future = (
+            git[
+                "log",
+                "--oneline",
+                "--since",
+                f"{current_month}.midnight",
+                "--until",
+                f"{next_month}.midnight",
+                "--first-parent",
+            ]
+            & plumbum.BG
+        )
     future.wait()
     commits = len(future.stdout.splitlines())
 
