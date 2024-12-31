@@ -14,21 +14,17 @@ git = plumbum.local["git"]
 
 LOGGER = logging.getLogger(__name__)
 
-YEAR_TABLE_HEADER = """\
-## {year}
 
-| Month                  | Builds | Images | Commits |
-| ---------------------- | ------ | ------ | ------- |
-"""
-
-
-def build_monthly_table_line(year_month_file: Path) -> str:
+def calculate_monthly_stat(year_month_file: Path) -> tuple[int, int, int]:
     year_month_file_content = year_month_file.read_text()
-    images = year_month_file_content.count("Build manifest")
+
     builds = sum(
         "jupyter/base-notebook" in line and "aarch64" not in line
         for line in year_month_file_content.split("\n")
     )
+
+    images = year_month_file_content.count("Build manifest")
+
     year_month = year_month_file.stem
     current_month = datetime.date(
         year=int(year_month[:4]), month=int(year_month[5:]), day=1
@@ -50,7 +46,7 @@ def build_monthly_table_line(year_month_file: Path) -> str:
     future.wait()
     commits = len(future.stdout.splitlines())
 
-    return f"| [`{year_month}`](./{year_month}) | {builds: <6} | {images: <6} | {commits: <7} |\n"
+    return builds, images, commits
 
 
 def regenerate_home_wiki_page(wiki_dir: Path) -> None:
@@ -64,10 +60,26 @@ def regenerate_home_wiki_page(wiki_dir: Path) -> None:
         : wiki_home_content.find(YEAR_MONTHLY_TABLES) + len(YEAR_MONTHLY_TABLES)
     ]
 
+    YEAR_TABLE_HEADER = """\
+## {year}
+
+| Month                  | Builds | Images | Commits |
+| ---------------------- | ------ | ------ | ------- |
+"""
+
     for year_dir in sorted((wiki_dir / "monthly-files").glob("*"), reverse=True):
         wiki_home_content += "\n" + YEAR_TABLE_HEADER.format(year=year_dir.name)
+        year_builds, year_images, year_commits = 0, 0, 0
         for year_month_file in sorted(year_dir.glob("*.md"), reverse=True):
-            wiki_home_content += build_monthly_table_line(year_month_file)
+            builds, images, commits = calculate_monthly_stat(year_month_file)
+            year_builds += builds
+            year_images += images
+            year_commits += commits
+            year_month = year_month_file.stem
+            monthly_line = f"| [`{year_month}`](./{year_month}) | {builds: <6} | {images: <6} | {commits: <7} |\n"
+            wiki_home_content += monthly_line
+        year_total_line = f"| **Total**              | {year_builds: <6} | {year_images: <6} | {year_commits: <7} |\n"
+        wiki_home_content += year_total_line
 
     wiki_home_file.write_text(wiki_home_content)
     LOGGER.info("Updated Home page")
