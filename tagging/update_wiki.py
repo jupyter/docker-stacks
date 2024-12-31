@@ -15,7 +15,9 @@ git = plumbum.local["git"]
 LOGGER = logging.getLogger(__name__)
 
 
-def calculate_monthly_stat(year_month_file: Path) -> tuple[int, int, int]:
+def calculate_monthly_stat(
+    year_month_file: Path, year_month_date: datetime.date
+) -> tuple[int, int, int]:
     year_month_file_content = year_month_file.read_text()
 
     builds = sum(
@@ -25,20 +27,15 @@ def calculate_monthly_stat(year_month_file: Path) -> tuple[int, int, int]:
 
     images = year_month_file_content.count("Build manifest")
 
-    year_month = year_month_file.stem
-    current_month = datetime.date(
-        year=int(year_month[:4]), month=int(year_month[5:]), day=1
-    )
-    next_month = current_month + relativedelta.relativedelta(months=1)
     with plumbum.local.env(TZ="UTC"):
         future = (
             git[
                 "log",
                 "--oneline",
                 "--since",
-                f"{current_month}.midnight",
+                f"{year_month_date}.midnight",
                 "--until",
-                f"{next_month}.midnight",
+                f"{year_month_date + relativedelta.relativedelta(months=1)}.midnight",
                 "--first-parent",
             ]
             & plumbum.BG
@@ -63,22 +60,39 @@ def regenerate_home_wiki_page(wiki_dir: Path) -> None:
     YEAR_TABLE_HEADER = """\
 ## {year}
 
-| Month                  | Builds | Images | Commits |
-| ---------------------- | ------ | ------ | ------- |
+| Month                  | Builds | Images | Commits                                                                                         |
+| ---------------------- | ------ | ------ | ----------------------------------------------------------------------------------------------- |
 """
+
+    GITHUB_COMMITS_URL = (
+        "[{}](https://github.com/jupyter/docker-stacks/commits/main/?since={}&until={})"
+    )
 
     for year_dir in sorted((wiki_dir / "monthly-files").glob("*"), reverse=True):
         wiki_home_content += "\n" + YEAR_TABLE_HEADER.format(year=year_dir.name)
         year_builds, year_images, year_commits = 0, 0, 0
         for year_month_file in sorted(year_dir.glob("*.md"), reverse=True):
-            builds, images, commits = calculate_monthly_stat(year_month_file)
+            year_month = year_month_file.stem
+            year_month_date = datetime.date(
+                year=int(year_month[:4]), month=int(year_month[5:]), day=1
+            )
+            builds, images, commits = calculate_monthly_stat(
+                year_month_file, year_month_date
+            )
             year_builds += builds
             year_images += images
             year_commits += commits
-            year_month = year_month_file.stem
-            monthly_line = f"| [`{year_month}`](./{year_month}) | {builds: <6} | {images: <6} | {commits: <7} |\n"
+            commits_url = GITHUB_COMMITS_URL.format(
+                commits,
+                year_month_date,
+                year_month_date + relativedelta.relativedelta(day=31),
+            )
+            monthly_line = f"| [`{year_month}`](./{year_month}) | {builds: <6} | {images: <6} | {commits_url: <95} |\n"
             wiki_home_content += monthly_line
-        year_total_line = f"| **Total**              | {year_builds: <6} | {year_images: <6} | {year_commits: <7} |\n"
+        year_commits_url = GITHUB_COMMITS_URL.format(
+            year_commits, f"{year_dir.name}-01-01", f"{year_dir.name}-12-31"
+        )
+        year_total_line = f"| **Total**              | {year_builds: <6} | {year_images: <6} | {year_commits_url: <95} |\n"
         wiki_home_content += year_total_line
 
     wiki_home_file.write_text(wiki_home_content)
