@@ -111,6 +111,7 @@ def update_monthly_wiki_page(
     year = year_month[:4]
     monthly_page = wiki_dir / "monthly-files" / year / (year_month + ".md")
     if not monthly_page.exists():
+        monthly_page.parent.mkdir(exist_ok=True)
         monthly_page.write_text(MONTHLY_PAGE_HEADER)
         LOGGER.info(f"Created monthly page: {monthly_page.relative_to(wiki_dir)}")
 
@@ -165,7 +166,7 @@ def update_wiki(
         year_month = get_manifest_year_month(manifest_file)
         year = year_month[:4]
         copy_to = wiki_dir / "manifests" / year / year_month / manifest_file.name
-        copy_to.parent.mkdir(exist_ok=True)
+        copy_to.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(manifest_file, copy_to)
         LOGGER.info(f"Added manifest file: {copy_to.relative_to(wiki_dir)}")
 
