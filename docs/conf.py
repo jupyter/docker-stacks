@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "docker-stacks"
-copyright = "2024, Project Jupyter"
+copyright = "2025, Project Jupyter"
 author = "Project Jupyter"
 
 version = "latest"
@@ -29,7 +29,7 @@ language = "en"
 html_theme = "alabaster"
 html_static_path = ["_static"]
 
-# The file above was generated using sphinx 7.2.6 with this command:
+# The file above was generated using sphinx 8.1.3 with this command:
 # sphinx-quickstart --project "docker-stacks" --author "Project Jupyter" -v "latest" -r "latest" -l en --no-sep --no-makefile --no-batchfile
 # These are custom options for this project
 

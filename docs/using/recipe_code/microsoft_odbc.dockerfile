@@ -1,4 +1,4 @@
-FROM quay.io/jupyter/base-notebook:ubuntu-22.04
+FROM quay.io/jupyter/base-notebook
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
@@ -11,7 +11,7 @@ ENV PATH="/opt/mssql-tools18/bin:${PATH}"
 
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends curl gnupg2 lsb-release && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl -fsSL "https://packages.microsoft.com/keys/microsoft.asc" | gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg && \
     curl "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list" > /etc/apt/sources.list.d/mssql-release.list && \
     apt-get update --yes && \
     ACCEPT_EULA=Y apt-get install --yes --no-install-recommends msodbcsql18 && \

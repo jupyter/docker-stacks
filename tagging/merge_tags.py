@@ -67,15 +67,15 @@ if __name__ == "__main__":
         help="Short image name",
     )
     arg_parser.add_argument(
-        "--variant",
-        required=True,
-        help="Variant tag prefix",
-    )
-    arg_parser.add_argument(
         "--tags-dir",
         required=True,
         type=Path,
         help="Directory with saved tags file",
+    )
+    arg_parser.add_argument(
+        "--variant",
+        required=True,
+        help="Variant tag prefix",
     )
     args = arg_parser.parse_args()
 

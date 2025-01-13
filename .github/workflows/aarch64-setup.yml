@@ -19,7 +19,8 @@ on:
 jobs:
   test-script:
     # The script itself is not aarch64-specific
-    # It is easier to test on ubuntu-22.04
+    # It is easier to test on x86_64
+    # Using `ubuntu-22.04` as this is what our aarch64 runners currently use
     runs-on: ubuntu-22.04
 
     steps:

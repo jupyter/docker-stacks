@@ -11,10 +11,13 @@ docker = plumbum.local["docker"]
 
 def quoted_output(container: Container, cmd: str) -> str:
     cmd_output = DockerRunner.run_simple_command(container, cmd, print_result=False)
-    # For example, `mamba info --quiet` adds redundant empty lines
+    # For example, `mamba info` adds redundant empty lines
     cmd_output = cmd_output.strip("\n")
     # For example, R packages list contains trailing backspaces
     cmd_output = "\n".join(line.rstrip() for line in cmd_output.split("\n"))
+
+    assert cmd_output, f"Command `{cmd}` returned empty output"
+
     return f"""\
 `{cmd}`:
 
@@ -76,7 +79,9 @@ class CondaEnvironmentManifest(ManifestInterface):
 
 {DockerRunner.run_simple_command(container, "python --version")}
 
-{quoted_output(container, "mamba info --quiet")}
+{quoted_output(container, "conda info")}
+
+{quoted_output(container, "mamba info")}
 
 {quoted_output(container, "mamba list")}"""
 
