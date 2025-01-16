@@ -365,7 +365,7 @@ jobs:
             { image: base-notebook, variant: default },
           ]
     needs: [aarch64-foundation, aarch64-base]
-    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   x86_64-images-tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
