@@ -123,11 +123,11 @@ repos:
       - id: flake8
 
   # Lint: Markdown
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.43.0
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.17.1
     hooks:
-      - id: markdownlint
-        args: ["--fix"]
+      - id: markdownlint-cli2
+        args: [--fix]
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
