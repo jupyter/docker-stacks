@@ -3,6 +3,12 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2024-01-17
+
+Affected: all images.
+
+- **Non-breaking:**: start using GitHub-hosted `aarch64` runners.
+
 ## 2024-12-03
 
 Affected: all images.

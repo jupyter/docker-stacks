@@ -57,18 +57,6 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      # Self-hosted runners share a state (whole VM) between runs
-      # Also, they might have running or stopped containers,
-      # which are not cleaned up by `docker system prune`
-      - name: Reset docker state and cleanup artifacts 🗑️
-        if: inputs.platform != 'x86_64'
-        run: |
-          docker kill $(docker ps --quiet) || true
-          docker rm $(docker ps --all --quiet) || true
-          docker system prune --all --force
-          rm -rf /tmp/jupyter/
-        shell: bash
-
       - name: Load parent built image to Docker 📥
         if: inputs.parent-image != ''
         uses: ./.github/actions/load-image
