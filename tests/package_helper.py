@@ -90,7 +90,7 @@ class CondaPackageHelper:
 
     def _execute_command(self, command: list[str]) -> str:
         """Execute a command on a running container"""
-        rc = self.running_container.exec_run(command)
+        rc = self.running_container.exec_run(command, stderr=False)
         return rc.output.decode("utf-8")  # type: ignore
 
     @staticmethod
