@@ -53,7 +53,7 @@ jobs:
           swap-storage: false
 
       - name: Sleep to allow Docker daemon to start 🕒
-        if: runner.arch == 'aarch64'
+        if: runner.arch == 'ARM64'
         run: sleep 10
         shell: bash
       - name: Checkout Repo ⚡️
