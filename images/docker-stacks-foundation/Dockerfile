@@ -119,13 +119,13 @@ RUN set -x && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     # Install the packages
-    ./bin/micromamba install \
+    ./bin/micromamba install -c conda-forge/label/mamba_prerelease -c conda-forge \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
         'jupyter_core' \
         'conda' \
-        'conda-forge/label/mamba_prerelease::mamba==2.0.6.rc1' \
+        'mamba==2.0.6.rc1' \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
