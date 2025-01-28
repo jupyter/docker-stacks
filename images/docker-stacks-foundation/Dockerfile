@@ -115,7 +115,7 @@ RUN set -x && \
     fi && \
     # https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html#linux-and-macos
     wget --progress=dot:giga -O - \
-        "https://micro.mamba.pm/api/micromamba/linux-${arch}/latest" | tar -xvj bin/micromamba && \
+        "https://micro.mamba.pm/api/micromamba/linux-${arch}/2.0.6.rc1" | tar -xvj bin/micromamba && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     # Install the packages
@@ -125,7 +125,7 @@ RUN set -x && \
         --yes \
         'jupyter_core' \
         'conda' \
-        'mamba' \
+        'conda-forge/label/mamba_prerelease::mamba==2.0.6.rc1' \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
