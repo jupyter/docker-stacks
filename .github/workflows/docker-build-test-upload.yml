@@ -41,7 +41,7 @@ jobs:
     steps:
       # Image with CUDA needs extra disk space
       - name: Free disk space 🧹
-        if: contains(inputs.variant, 'cuda') && inputs.platform == 'x86_64'
+        if: contains(inputs.variant, 'cuda') && runner.arch == 'X64'
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
         with:
           tool-cache: false
@@ -52,22 +52,14 @@ jobs:
           docker-images: false
           swap-storage: false
 
+      - name: Sleep to allow Docker daemon to start 🕒
+        if: runner.arch == 'ARM64'
+        run: sleep 10
+        shell: bash
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
-
-      # Self-hosted runners share a state (whole VM) between runs
-      # Also, they might have running or stopped containers,
-      # which are not cleaned up by `docker system prune`
-      - name: Reset docker state and cleanup artifacts 🗑️
-        if: inputs.platform != 'x86_64'
-        run: |
-          docker kill $(docker ps --quiet) || true
-          docker rm $(docker ps --all --quiet) || true
-          docker system prune --all --force
-          rm -rf /tmp/jupyter/
-        shell: bash
 
       - name: Load parent built image to Docker 📥
         if: inputs.parent-image != ''
