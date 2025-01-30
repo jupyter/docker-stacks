@@ -4,13 +4,15 @@ import logging
 import time
 from pathlib import Path
 
-from tests.conftest import Container, TrackedContainer, get_health
+from docker.models import Container
+
+from tests.conftest import TrackedContainer, get_health
 
 LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-def wait_healthy(container: Container, timeout: int):
+def wait_healthy(container: Container, timeout: int) -> None:
     finish_time = time.time() + timeout
     sleep_time = 1
     while time.time() < finish_time:
