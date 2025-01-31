@@ -40,10 +40,6 @@ jobs:
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 
     steps:
-      - name: Sleep to allow Docker daemon to start 🕒
-        if: runner.arch == 'ARM64'
-        run: sleep 10
-        shell: bash
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 

@@ -52,10 +52,6 @@ jobs:
           docker-images: false
           swap-storage: false
 
-      - name: Sleep to allow Docker daemon to start 🕒
-        if: runner.arch == 'ARM64'
-        run: sleep 10
-        shell: bash
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
       - name: Create dev environment 📦
