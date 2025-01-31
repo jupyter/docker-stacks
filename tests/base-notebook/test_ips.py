@@ -4,7 +4,7 @@ import logging
 import time
 from pathlib import Path
 
-from docker.models import Container
+from docker.models.containers import Container
 
 from tests.conftest import TrackedContainer, get_health
 
