@@ -3,10 +3,8 @@
 import logging
 import os
 import socket
-from collections.abc import Generator
 from contextlib import closing
 from typing import Any, Optional
-from uuid import uuid4
 
 import docker
 import pytest  # type: ignore
@@ -52,15 +50,6 @@ def docker_client() -> docker.DockerClient:
 def image_name() -> str:
     """Image name to test"""
     return os.environ["TEST_IMAGE"]
-
-
-@pytest.fixture(scope="session")
-def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, None]:
-    """Create a dual-stack IPv6 docker network"""
-    name = str(uuid4())
-    docker_client.networks.create(name, enable_ipv6=True)
-    yield name
-    docker_client.networks.get(name).remove()
 
 
 class TrackedContainer:

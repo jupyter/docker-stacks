@@ -1,26 +1,36 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
-import time
+from collections.abc import Generator
 from pathlib import Path
+from random import randint
 
-from docker.models.containers import Container
+import docker
+import pytest  # type: ignore
 
-from tests.conftest import TrackedContainer, get_health
+from tests.conftest import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-def wait_healthy(container: Container, timeout: int) -> None:
-    finish_time = time.time() + timeout
-    sleep_time = 1
-    while time.time() < finish_time:
-        time.sleep(sleep_time)
-        if get_health(container) == "healthy":
-            return
-
-    raise Exception(f"Container {container.name} not healthy after {int} s")
+@pytest.fixture(scope="session")
+def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, None]:
+    """Create a dual-stack IPv6 docker network"""
+    # Doesn't have to be routable since we're testing inside the container
+    subnet64 = "fc00:" + ":".join(hex(randint(0, 2**16))[2:] for _ in range(3))
+    name = subnet64.replace(":", "-")
+    docker_client.networks.create(
+        name,
+        ipam=docker.types.IPAMPool(
+            subnet=subnet64 + "::/64",
+            gateway=subnet64 + "::1",
+        ),
+        enable_ipv6=True,
+        internal=True,
+    )
+    yield name
+    docker_client.networks.get(name).remove()
 
 
 def test_ipv46(container: TrackedContainer, ipv6_network: str) -> None:
