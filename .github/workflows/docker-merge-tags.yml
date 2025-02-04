@@ -41,7 +41,7 @@ jobs:
         with:
           name: ${{ inputs.image }}-aarch64-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/
-        if: github.repository_owner == 'jupyter' && !contains(inputs.variant, 'cuda')
+        if: ${{ !contains(inputs.variant, 'cuda') }}
 
       # Docker might be stuck when pulling images
       # https://github.com/docker/for-mac/issues/2083
