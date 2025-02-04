@@ -115,7 +115,7 @@ RUN set -x && \
     fi && \
     # https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html#linux-and-macos
     wget --progress=dot:giga -O - \
-        "https://micro.mamba.pm/api/micromamba/linux-${arch}/2.0.6.rc1" | tar -xvj bin/micromamba && \
+        "https://micro.mamba.pm/api/micromamba/linux-${arch}/2.0.6.rc3" | tar -xvj bin/micromamba && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     # Install the packages
@@ -125,13 +125,13 @@ RUN set -x && \
         --yes \
         'jupyter_core' \
         'conda' \
-        'mamba==2.0.6.rc1' \
+        'mamba==2.0.6.rc3' \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
     mamba list --full-name 'python' | awk 'END{sub("[^.]*$", "*", $2); print $1 " " $2}' >> "${CONDA_DIR}/conda-meta/pinned" && \
-    echo 'mamba=2.0.6.rc1' >> "${CONDA_DIR}/conda-meta/pinned" && \
+    echo 'mamba=2.0.6.rc3' >> "${CONDA_DIR}/conda-meta/pinned" && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
