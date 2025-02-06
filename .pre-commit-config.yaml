@@ -21,14 +21,14 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
+    rev: 6.0.0
     hooks:
       - id: isort
         args: [--profile, black]
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black
-    rev: 24.10.0
+    rev: 25.1.0
     hooks:
       - id: black
         args: [--target-version=py39]
@@ -123,11 +123,11 @@ repos:
       - id: flake8
 
   # Lint: Markdown
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.43.0
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.17.2
     hooks:
-      - id: markdownlint
-        args: ["--fix"]
+      - id: markdownlint-cli2
+        args: [--fix]
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout

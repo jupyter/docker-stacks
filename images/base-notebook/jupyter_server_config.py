@@ -9,7 +9,8 @@ from pathlib import Path
 from jupyter_core.paths import jupyter_data_dir
 
 c = get_config()  # noqa: F821
-c.ServerApp.ip = "0.0.0.0"
+# Listen on all interfaces (ipv4 and ipv6)
+c.ServerApp.ip = ""
 c.ServerApp.open_browser = False
 
 # to output both image/svg+xml and application/pdf plot formats in the notebook file
