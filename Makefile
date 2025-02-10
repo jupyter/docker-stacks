@@ -37,8 +37,15 @@ help:
 
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ROOT_IMAGE?=ubuntu:24.04
+build/%: PYTHON_VERSION?=ubuntu:3.12
 build/%: ## build the latest image for a stack using the system's architecture
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm --tag "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" "./images/$(notdir $@)" --build-arg REGISTRY="$(REGISTRY)" --build-arg OWNER="$(OWNER)" --build-arg ROOT_IMAGE="$(ROOT_IMAGE)"
+	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm \
+	  --tag "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" \
+	  "./images/$(notdir $@)" \
+	  --build-arg REGISTRY="$(REGISTRY)" \
+	  --build-arg OWNER="$(OWNER)" \
+	  --build-arg ROOT_IMAGE="$(ROOT_IMAGE)" \
+	  --build-arg PYTHON_VERSION="$(PYTHON_VERSION)"
 	@echo -n "Built image size: "
 	@docker images "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
