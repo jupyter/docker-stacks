@@ -93,7 +93,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - Starting from `2022-07-05`, `aarch64` self-hosted runners were sponsored by [`@mathbunnyru`](https://github.com/mathbunnyru/).
   Please, consider [sponsoring his work](https://github.com/sponsors/mathbunnyru) on GitHub
 - Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by an amazing [`2i2c non-profit organization`](https://2i2c.org)
-- Starting from `2025-01-28`, we use GitHub-hosted `aarch64` runners
+- Starting from `2025-02-11`, we use GitHub-hosted `aarch64` runners
 
 ## CPU Architectures
 
