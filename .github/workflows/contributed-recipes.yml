@@ -44,7 +44,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build recipe 🛠
-        # We're pulling here to avoid accidentally using an image that might be present on aarch64 self-hosted runner
         run: docker build --pull --rm --force-rm --tag my-custom-image -f ./${{ matrix.dockerfile }} ./
         env:
           DOCKER_BUILDKIT: 1
