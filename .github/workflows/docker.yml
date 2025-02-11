@@ -74,7 +74,7 @@ jobs:
       parent-image: ""
       image: docker-stacks-foundation
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
 
   aarch64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -91,7 +91,7 @@ jobs:
       parent-image: docker-stacks-foundation
       image: base-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-foundation]
 
   aarch64-minimal:
@@ -110,7 +110,7 @@ jobs:
       parent-image: base-notebook
       image: minimal-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-base]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -130,7 +130,7 @@ jobs:
       parent-image: minimal-notebook
       image: scipy-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -150,7 +150,7 @@ jobs:
       parent-image: minimal-notebook
       image: r-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -170,7 +170,7 @@ jobs:
       parent-image: minimal-notebook
       image: julia-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -190,7 +190,7 @@ jobs:
       parent-image: scipy-notebook
       image: tensorflow-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -201,7 +201,7 @@ jobs:
       image: tensorflow-notebook
       variant: cuda
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -221,7 +221,7 @@ jobs:
       parent-image: scipy-notebook
       image: pytorch-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -232,7 +232,7 @@ jobs:
       image: pytorch-notebook
       variant: cuda11
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -243,7 +243,7 @@ jobs:
       image: pytorch-notebook
       variant: cuda12
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -263,7 +263,7 @@ jobs:
       parent-image: scipy-notebook
       image: datascience-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -283,7 +283,7 @@ jobs:
       parent-image: scipy-notebook
       image: pyspark-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -303,7 +303,7 @@ jobs:
       parent-image: pyspark-notebook
       image: all-spark-notebook
       platform: x86_64
-      runs-on: ubuntu-latest
+      runs-on: ubuntu-24.04
     needs: [x86_64-pyspark]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
