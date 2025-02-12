@@ -3,11 +3,17 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2025-02-12
+
+Affected: all images.
+
+- **Non-breaking:**: switch from `ubuntu-22.04-arm` to `ubuntu-24.04-arm` runners.
+
 ## 2025-02-11
 
 Affected: all images.
 
-- **Non-breaking:**: start using GitHub-hosted `aarch64` runners.
+- **Non-breaking:**: start using `ubuntu-22.04-arm` GitHub-hosted `aarch64` runners.
 
 ## 2024-12-03
 
