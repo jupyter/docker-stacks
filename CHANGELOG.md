@@ -7,7 +7,7 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 
 Affected: all images.
 
-- **Non-breaking:**: start using GitHub-hosted `aarch64` runners ([#2202](https://github.com/jupyter/docker-stacks/pull/2202)).
+- **Non-breaking:**: start using `ubuntu-22.04-arm` GitHub-hosted `aarch64` runners ([#2202](https://github.com/jupyter/docker-stacks/pull/2202)).
 
 ## 2024-12-03
 
