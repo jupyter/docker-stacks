@@ -20,13 +20,9 @@ LOGGER = logging.getLogger(__name__)
 
 def unify_aarch64(platform: str) -> str:
     """
-    Renames arm64->aarch64 to support local builds on on aarch64 Macs
+    Renames arm64->aarch64 to support local builds on aarch64 Macs
     """
-    return {
-        "aarch64": "aarch64",
-        "arm64": "aarch64",
-        "x86_64": "x86_64",
-    }[platform]
+    return {"arm64": "aarch64"}.get(platform, platform)
 
 
 def get_latest_julia_url() -> tuple[str, str]:
@@ -47,11 +43,6 @@ def get_latest_julia_url() -> tuple[str, str]:
     triplet = unify_aarch64(platform.machine()) + "-linux-gnu"
     file_info = [vf for vf in latest_version_files if vf["triplet"] == triplet][0]
     LOGGER.info(f"Latest version: {file_info['version']} url: {file_info['url']}")
-    if file_info["version"] == "1.11.2":
-        LOGGER.warning(
-            "Not using Julia 1.11.2, because it hangs in GitHub self-hosted runners"
-        )
-        return file_info["url"].replace("1.11.2", "1.11.1"), "1.11.1"
     return file_info["url"], file_info["version"]
 
 

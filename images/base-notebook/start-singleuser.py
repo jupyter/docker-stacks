@@ -8,9 +8,7 @@ import sys
 # Entrypoint is start.sh
 command = ["jupyterhub-singleuser"]
 
-# set default ip to 0.0.0.0
-if "--ip=" not in os.environ.get("NOTEBOOK_ARGS", ""):
-    command.append("--ip=0.0.0.0")
+# JupyterHub singleuser arguments are set using environment variables
 
 # Append any optional NOTEBOOK_ARGS we were passed in.
 # This is supposed to be multiple args passed on to the notebook command,

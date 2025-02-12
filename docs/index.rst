@@ -36,7 +36,6 @@ Table of Contents
 
    maintaining/new-images-and-packages-policy
    maintaining/tasks
-   maintaining/aarch64-runner
 
 .. toctree::
    :maxdepth: 2

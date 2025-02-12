@@ -35,10 +35,10 @@ body:
 
   - type: input
     attributes:
-      label: Host OS system
+      label: Host OS
       placeholder: |
         Example:
-        Ubuntu 22.04
+        Ubuntu 24.04
     validations:
       required: true
 
