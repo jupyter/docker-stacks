@@ -35,6 +35,7 @@ help:
 
 
 
+# Note that `ROOT_IMAGE` and `PYTHON_VERSION` arguments are only applicable to `docker-stacks-foundation` image
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ROOT_IMAGE?=ubuntu:24.04
 build/%: PYTHON_VERSION?=3.12
