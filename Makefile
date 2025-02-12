@@ -37,7 +37,7 @@ help:
 
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ROOT_IMAGE?=ubuntu:24.04
-build/%: PYTHON_VERSION?=ubuntu:3.12
+build/%: PYTHON_VERSION?=3.12
 build/%: ## build the latest image for a stack using the system's architecture
 	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm \
 	  --tag "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" \
