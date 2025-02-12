@@ -12,7 +12,7 @@ REPOSITORY_OWNER = os.environ["REPOSITORY_OWNER"]
 
 def generate_matrix() -> dict[str, Any]:
     dockerfiles = sorted(file.name for file in THIS_DIR.glob("*.dockerfile"))
-    runs_on = ["ubuntu-latest", "ubuntu-24.04-arm"]
+    runs_on = ["ubuntu-24.04", "ubuntu-24.04-arm"]
     return {
         "dockerfile": dockerfiles,
         "runs-on": runs_on,
