@@ -12,13 +12,13 @@ REPOSITORY_OWNER = os.environ["REPOSITORY_OWNER"]
 
 def generate_matrix() -> dict[str, Any]:
     dockerfiles = sorted(file.name for file in THIS_DIR.glob("*.dockerfile"))
-    runs_on = ["ubuntu-latest"]
-    if REPOSITORY_OWNER == "jupyter":
-        runs_on.append("ARM64")
+    runs_on = ["ubuntu-24.04", "ubuntu-22.04-arm"]
     return {
         "dockerfile": dockerfiles,
         "runs-on": runs_on,
-        "exclude": [{"dockerfile": "oracledb.dockerfile", "runs-on": "ARM64"}],
+        "exclude": [
+            {"dockerfile": "oracledb.dockerfile", "runs-on": "ubuntu-22.04-arm"}
+        ],
     }
 
 

@@ -63,7 +63,6 @@ myst_heading_anchors = 3
 
 linkcheck_ignore = [
     r".*github\.com.*#",  # javascript based anchors
-    r"https://github\.com/jupyter/docker-stacks/settings/actions/runners/new\?arch=arm64\&amp;os=linux",  # only works for users with permissions to change runners
     r"http://127\.0\.0\.1:.*",  # various examples
     r"https://mybinder\.org/v2/gh/.*",  # lots of 500 errors
     r"https://packages\.ubuntu\.com/search\?keywords=openjdk",  # frequent read timeouts

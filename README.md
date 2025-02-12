@@ -29,11 +29,11 @@ Older images are available on Docker Hub, but they will no longer be updated.
 
 ### Example 1
 
-This command pulls the `jupyter/scipy-notebook` image tagged `2024-12-23` from Quay.io if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `2025-02-12` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the container's internal port `8888` to port `10000` of the host machine:
 
 ```bash
-docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2024-12-23
+docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2025-02-12
 ```
 
 You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/containers/run/#exposed-ports) to `-p 8888:8888`.
@@ -48,11 +48,11 @@ The container remains intact for restart after the Server exits.
 
 ### Example 2
 
-This command pulls the `jupyter/datascience-notebook` image tagged `2024-12-23` from Quay.io if it is not already present on the local host.
+This command pulls the `jupyter/datascience-notebook` image tagged `2025-02-12` from Quay.io if it is not already present on the local host.
 It then starts an _ephemeral_ container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/datascience-notebook:2024-12-23
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/datascience-notebook:2025-02-12
 ```
 
 The use of the `-v` flag in the command mounts the current working directory on the host (`${PWD}` in the example command) as `/home/jovyan/work` in the container.
@@ -93,6 +93,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - Starting from `2022-07-05`, `aarch64` self-hosted runners were sponsored by [`@mathbunnyru`](https://github.com/mathbunnyru/).
   Please, consider [sponsoring his work](https://github.com/sponsors/mathbunnyru) on GitHub
 - Starting from `2023-10-31`, `aarch64` self-hosted runners are sponsored by an amazing [`2i2c non-profit organization`](https://2i2c.org)
+- Starting from `2025-02-11`, we use GitHub-hosted `aarch64` runners
 
 ## CPU Architectures
 

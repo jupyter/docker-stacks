@@ -9,6 +9,12 @@ Affected: all images.
 
 - **Breaking:** `docker-stacks-foundation`: switch to Python 3.13 ([#2163](https://github.com/jupyter/docker-stacks/pull/2163)).
 
+## 2025-02-11
+
+Affected: all images.
+
+- **Non-breaking:**: start using GitHub-hosted `aarch64` runners.
+
 ## 2024-12-03
 
 Affected: all images.

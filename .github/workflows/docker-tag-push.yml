@@ -28,12 +28,12 @@ on:
 
 jobs:
   tag-push:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       # Image with CUDA needs extra disk space
       - name: Free disk space 🧹
-        if: contains(inputs.variant, 'cuda') && inputs.platform == 'x86_64'
+        if: contains(inputs.variant, 'cuda') && runner.arch == 'X64'
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
         with:
           tool-cache: false
