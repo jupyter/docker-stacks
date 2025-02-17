@@ -309,6 +309,9 @@ jobs:
 
   aarch64-builds-finished:
     runs-on: ubuntu-24.04
+    steps:
+      - name: Be happy 😊
+        run: echo "All aarch64 builds are finished!"
     needs:
       [
         aarch64-foundation,
@@ -327,6 +330,9 @@ jobs:
 
   x86_64-builds-finished:
     runs-on: ubuntu-24.04
+    steps:
+      - name: Be happy 😊
+        run: echo "All x86_64 builds are finished!"
     needs:
       [
         x86_64-foundation,
