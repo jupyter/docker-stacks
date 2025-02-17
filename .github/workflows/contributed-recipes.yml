@@ -55,7 +55,6 @@ jobs:
         uses: ./.github/actions/load-image
         with:
           image: ${{ matrix.parent-image }}
-          platform: ${{ matrix.platform }}
           variant: default
 
       # Not pulling the image, because it might be loaded from previous step or will be downloaded automatically

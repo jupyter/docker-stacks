@@ -25,10 +25,6 @@ on:
         required: false
         type: string
         default: default
-      platform:
-        description: Image platform
-        required: true
-        type: string
       runs-on:
         description: GitHub Actions Runner image
         required: true
@@ -37,6 +33,8 @@ on:
 jobs:
   build-test-upload:
     runs-on: ${{ inputs.runs-on }}
+    env:
+      PLATFORM: ${{ inputs.runs-on == 'ubuntu-24.04' && 'x86_64' || 'aarch64' }}
 
     steps:
       # Image with CUDA needs extra disk space
@@ -62,7 +60,6 @@ jobs:
         uses: ./.github/actions/load-image
         with:
           image: ${{ inputs.parent-image }}
-          platform: ${{ inputs.platform }}
           variant: ${{ inputs.parent-variant }}
 
       - name: Pull base ubuntu image 📥
@@ -85,8 +82,8 @@ jobs:
       - name: Upload tags file 💾
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
-          path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}.txt
+          name: ${{ inputs.image }}-${{ env.PLATFORM }}-${{ inputs.variant }}-tags
+          path: /tmp/jupyter/tags/${{ env.PLATFORM }}-${{ inputs.variant }}-${{ inputs.image }}.txt
           retention-days: 3
 
       - name: Write manifest and build history file 🏷
@@ -95,26 +92,26 @@ jobs:
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-manifest
-          path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.md
+          name: ${{ inputs.image }}-${{ env.PLATFORM }}-${{ inputs.variant }}-manifest
+          path: /tmp/jupyter/manifests/${{ env.PLATFORM }}-${{ inputs.variant }}-${{ inputs.image }}-*.md
           retention-days: 3
       - name: Upload build history line 💾
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-history_line
-          path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.txt
+          name: ${{ inputs.image }}-${{ env.PLATFORM }}-${{ inputs.variant }}-history_line
+          path: /tmp/jupyter/hist_lines/${{ env.PLATFORM }}-${{ inputs.variant }}-${{ inputs.image }}-*.txt
           retention-days: 3
 
       - name: Save image as a tar for later use 💾
         run: |
           mkdir -p /tmp/jupyter/images/
-          docker save ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
+          docker save ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ env.PLATFORM }}-${{ inputs.variant }}.tar.zst
         shell: bash
       - name: Upload image as artifact 💾
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
-          path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
+          name: ${{ inputs.image }}-${{ env.PLATFORM }}-${{ inputs.variant }}
+          path: /tmp/jupyter/images/${{ inputs.image }}-${{ env.PLATFORM }}-${{ inputs.variant }}.tar.zst
           retention-days: 3
 
       - name: Run tests ✅

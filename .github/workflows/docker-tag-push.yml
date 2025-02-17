@@ -52,7 +52,6 @@ jobs:
         uses: ./.github/actions/load-image
         with:
           image: ${{ inputs.image }}
-          platform: ${{ inputs.platform }}
           variant: ${{ inputs.variant }}
 
       - name: Login to Registry 🔐
