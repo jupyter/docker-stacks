@@ -307,48 +307,6 @@ jobs:
     needs: [x86_64-pyspark]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
-  aarch64-builds-finished:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Be happy 😊
-        run: echo "All aarch64 builds are finished!"
-    needs:
-      [
-        aarch64-foundation,
-        aarch64-base,
-        aarch64-minimal,
-        aarch64-scipy,
-        aarch64-r,
-        aarch64-julia,
-        aarch64-tensorflow,
-        aarch64-pytorch,
-        aarch64-datascience,
-        aarch64-pyspark,
-        aarch64-all-spark,
-      ]
-    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
-
-  x86_64-builds-finished:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Be happy 😊
-        run: echo "All x86_64 builds are finished!"
-    needs:
-      [
-        x86_64-foundation,
-        x86_64-base,
-        x86_64-minimal,
-        x86_64-scipy,
-        x86_64-r,
-        x86_64-julia,
-        x86_64-tensorflow,
-        x86_64-pytorch,
-        x86_64-datascience,
-        x86_64-pyspark,
-        x86_64-all-spark,
-      ]
-    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
-
   aarch64-images-tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
@@ -374,7 +332,20 @@ jobs:
             { image: pyspark-notebook, variant: default },
             { image: all-spark-notebook, variant: default },
           ]
-    needs: [aarch64-builds-finished]
+    needs:
+      [
+        aarch64-foundation,
+        aarch64-base,
+        aarch64-minimal,
+        aarch64-scipy,
+        aarch64-r,
+        aarch64-julia,
+        aarch64-tensorflow,
+        aarch64-pytorch,
+        aarch64-datascience,
+        aarch64-pyspark,
+        aarch64-all-spark,
+      ]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-images-tag-push-fast:
@@ -424,7 +395,20 @@ jobs:
             { image: pyspark-notebook, variant: default },
             { image: all-spark-notebook, variant: default },
           ]
-    needs: [x86_64-builds-finished]
+    needs:
+      [
+        x86_64-foundation,
+        x86_64-base,
+        x86_64-minimal,
+        x86_64-scipy,
+        x86_64-r,
+        x86_64-julia,
+        x86_64-tensorflow,
+        x86_64-pytorch,
+        x86_64-datascience,
+        x86_64-pyspark,
+        x86_64-all-spark,
+      ]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-images-tag-push-fast:
@@ -510,4 +494,4 @@ jobs:
 
   contributed-recipes:
     uses: ./.github/workflows/contributed-recipes.yml
-    needs: [aarch64-builds-finished, x86_64-builds-finished]
+    needs: [aarch64-base, x86_64-base, aarch64-minimal, x86_64-minimal]
