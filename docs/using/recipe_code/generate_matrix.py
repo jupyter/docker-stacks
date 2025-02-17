@@ -8,11 +8,11 @@ from typing import Any
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-def generate_matrix() -> list[dict[str, Any]]:
+def generate_matrix() -> Any:
     dockerfiles = sorted(THIS_DIR.glob("*.dockerfile"))
     runs_on = ["ubuntu-24.04", "ubuntu-22.04-arm"]
 
-    matrix = []
+    configurations = []
     for dockerfile in dockerfiles:
         dockerfile_name = dockerfile.name
         for run in runs_on:
@@ -26,7 +26,7 @@ def generate_matrix() -> list[dict[str, Any]]:
             # Handling a case of `docker.io/jupyter/base-notebook:notebook-6.5.4` image
             if ":" in base_image_short:
                 base_image_short = ""
-            matrix.append(
+            configurations.append(
                 {
                     "dockerfile": dockerfile_name,
                     "runs-on": run,
@@ -34,7 +34,7 @@ def generate_matrix() -> list[dict[str, Any]]:
                     "parent-image": base_image_short,
                 }
             )
-    return matrix
+    return {"include": configurations}
 
 
 if __name__ == "__main__":
