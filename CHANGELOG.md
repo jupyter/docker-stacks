@@ -3,11 +3,21 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2025-02-17
+
+Affected: all images.
+
+- **Non-breaking:** build contributed recipes in PRs ([#2212](https://github.com/jupyter/docker-stacks/pull/2212), [#2213](https://github.com/jupyter/docker-stacks/pull/2213)).
+- **Non-breaking:** Remove information about Docker Hub images from Quay.io READMEs ([#2211](https://github.com/jupyter/docker-stacks/pull/2211)).
+- **Non-breaking:** First upload artifacts and then run tests to make sure we can easily debug broken images ([#2214](https://github.com/jupyter/docker-stacks/pull/2214)).
+- **Breaking:** Pin some packages to fix `r-notebook` and `datascience-notebook` under aarch64 ([#2215](https://github.com/jupyter/docker-stacks/pull/2215)).
+- **Non-breaking:** Don't use matrix.image-variant, use 2 separate variables ([#2217](https://github.com/jupyter/docker-stacks/pull/2217)).
+
 ## 2025-02-11
 
 Affected: all images.
 
-- **Non-breaking:**: start using `ubuntu-22.04-arm` GitHub-hosted `aarch64` runners ([#2202](https://github.com/jupyter/docker-stacks/pull/2202)).
+- **Non-breaking:** start using `ubuntu-22.04-arm` GitHub-hosted `aarch64` runners ([#2202](https://github.com/jupyter/docker-stacks/pull/2202)).
 
 ## 2024-12-03
 
