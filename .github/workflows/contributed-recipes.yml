@@ -43,8 +43,17 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
 
+      - name: Load image to Docker 📥
+        if: ${{ github.event_name == 'workflow_call' && matrix.parent-image != '' }}
+        uses: ./.github/actions/load-image
+        with:
+          image: ${{ matrix.parent-image }}
+          platform: ${{ matrix.platform }}
+          variant: default
+
+      # Not pulling the image, because it might be loaded from previous step or will be downloaded automatically
       - name: Build recipe 🛠
-        run: docker build --pull --rm --force-rm --tag my-custom-image -f ./${{ matrix.dockerfile }} ./
+        run: docker build --rm --force-rm --tag my-custom-image -f ./${{ matrix.dockerfile }} ./
         env:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build

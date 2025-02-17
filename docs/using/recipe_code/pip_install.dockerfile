@@ -1,4 +1,5 @@
-FROM quay.io/jupyter/base-notebook
+ARG BASE_IMAGE=quay.io/jupyter/base-notebook
+FROM $BASE_IMAGE
 
 # Install in the default python3 environment
 RUN pip install --no-cache-dir 'flake8' && \
