@@ -494,5 +494,10 @@ jobs:
 
   contributed-recipes:
     uses: ./.github/workflows/contributed-recipes.yml
-    needs: [merge-tags]
-    if: github.ref == 'refs/heads/main' || github.event_name == 'schedule'
+    with:
+      called-using-workflow-call: true
+    # Contributed recipes only use these images
+    # If recipes using other images will be added, they should be added here as well
+    #
+    # contributed-recipes will give an error if the image is not yet built and uploaded
+    needs: [aarch64-base, x86_64-base, aarch64-minimal, x86_64-minimal]
