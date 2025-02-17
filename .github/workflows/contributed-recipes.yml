@@ -23,7 +23,7 @@ on:
       # https://github.com/actions/runner/discussions/1884
       called-using-workflow-call:
         description: "Was the workflow called using workflow_call"
-        required: false
+        required: true
         type: boolean
 
 jobs:
