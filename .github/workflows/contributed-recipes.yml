@@ -18,6 +18,13 @@ on:
       - "docs/using/recipe_code/**"
   workflow_dispatch:
   workflow_call:
+    inputs:
+      # There is no good way to detect if the workflow was called using workflow_call
+      # https://github.com/actions/runner/discussions/1884
+      called-using-workflow-call:
+        description: "Was the workflow called using workflow_call"
+        required: false
+        type: boolean
 
 jobs:
   generate-matrix:
@@ -44,7 +51,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Load image to Docker 📥
-        if: ${{ github.event_name == 'workflow_call' && matrix.parent-image != '' }}
+        if: ${{ inputs.called-using-workflow-call && matrix.parent-image != '' }}
         uses: ./.github/actions/load-image
         with:
           image: ${{ matrix.parent-image }}

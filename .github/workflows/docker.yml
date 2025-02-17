@@ -495,3 +495,5 @@ jobs:
   contributed-recipes:
     uses: ./.github/workflows/contributed-recipes.yml
     needs: [aarch64-base, x86_64-base, aarch64-minimal, x86_64-minimal]
+    with:
+      called-using-workflow-call: true
