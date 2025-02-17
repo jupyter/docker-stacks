@@ -311,27 +311,28 @@ jobs:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
       platform: aarch64
-      image: ${{ matrix.image-variant.image }}
-      variant: ${{ matrix.image-variant.variant }}
+      image: ${{ matrix.image }}
+      variant: ${{ matrix.variant }}
     secrets:
       REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
       REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
-        image-variant:
+        image:
           [
-            { image: docker-stacks-foundation, variant: default },
-            { image: base-notebook, variant: default },
-            { image: minimal-notebook, variant: default },
-            { image: scipy-notebook, variant: default },
-            { image: r-notebook, variant: default },
-            { image: julia-notebook, variant: default },
-            { image: tensorflow-notebook, variant: default },
-            { image: pytorch-notebook, variant: default },
-            { image: datascience-notebook, variant: default },
-            { image: pyspark-notebook, variant: default },
-            { image: all-spark-notebook, variant: default },
+            docker-stacks-foundation,
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            julia-notebook,
+            tensorflow-notebook,
+            pytorch-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
           ]
+        variant: [default]
     needs:
       [
         aarch64-foundation,
@@ -352,18 +353,15 @@ jobs:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
       platform: aarch64
-      image: ${{ matrix.image-variant.image }}
-      variant: ${{ matrix.image-variant.variant }}
+      image: ${{ matrix.image }}
+      variant: ${{ matrix.variant }}
     secrets:
       REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
       REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
-        image-variant:
-          [
-            { image: docker-stacks-foundation, variant: default },
-            { image: base-notebook, variant: default },
-          ]
+        image: [docker-stacks-foundation, base-notebook]
+        variant: [default]
     needs: [aarch64-foundation, aarch64-base]
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
@@ -371,30 +369,35 @@ jobs:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
       platform: x86_64
-      image: ${{ matrix.image-variant.image }}
-      variant: ${{ matrix.image-variant.variant }}
+      image: ${{ matrix.image }}
+      variant: ${{ matrix.variant }}
     secrets:
       REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
       REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
-        image-variant:
+        image:
           [
-            { image: docker-stacks-foundation, variant: default },
-            { image: base-notebook, variant: default },
-            { image: minimal-notebook, variant: default },
-            { image: scipy-notebook, variant: default },
-            { image: r-notebook, variant: default },
-            { image: julia-notebook, variant: default },
-            { image: tensorflow-notebook, variant: default },
-            { image: tensorflow-notebook, variant: cuda },
-            { image: pytorch-notebook, variant: default },
-            { image: pytorch-notebook, variant: cuda11 },
-            { image: pytorch-notebook, variant: cuda12 },
-            { image: datascience-notebook, variant: default },
-            { image: pyspark-notebook, variant: default },
-            { image: all-spark-notebook, variant: default },
+            docker-stacks-foundation,
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            julia-notebook,
+            tensorflow-notebook,
+            pytorch-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
           ]
+        variant: [default]
+        include:
+          - image: tensorflow-notebook
+            variant: cuda
+          - image: pytorch-notebook
+            variant: cuda11
+          - image: pytorch-notebook
+            variant: cuda12
     needs:
       [
         x86_64-foundation,
@@ -415,66 +418,65 @@ jobs:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
       platform: x86_64
-      image: ${{ matrix.image-variant.image }}
-      variant: ${{ matrix.image-variant.variant }}
+      image: ${{ matrix.image }}
+      variant: ${{ matrix.variant }}
     secrets:
       REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
       REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
-        image-variant:
-          [
-            { image: docker-stacks-foundation, variant: default },
-            { image: base-notebook, variant: default },
-          ]
+        image: [docker-stacks-foundation, base-notebook]
+        variant: [default]
     needs: [x86_64-foundation, x86_64-base]
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   merge-tags:
     uses: ./.github/workflows/docker-merge-tags.yml
     with:
-      image: ${{ matrix.image-variant.image }}
-      variant: ${{ matrix.image-variant.variant }}
+      image: ${{ matrix.image }}
+      variant: ${{ matrix.variant }}
     secrets:
       REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
       REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
-        image-variant:
+        image:
           [
-            { image: docker-stacks-foundation, variant: default },
-            { image: base-notebook, variant: default },
-            { image: minimal-notebook, variant: default },
-            { image: scipy-notebook, variant: default },
-            { image: r-notebook, variant: default },
-            { image: julia-notebook, variant: default },
-            { image: tensorflow-notebook, variant: default },
-            { image: tensorflow-notebook, variant: cuda },
-            { image: pytorch-notebook, variant: default },
-            { image: pytorch-notebook, variant: cuda11 },
-            { image: pytorch-notebook, variant: cuda12 },
-            { image: datascience-notebook, variant: default },
-            { image: pyspark-notebook, variant: default },
-            { image: all-spark-notebook, variant: default },
+            docker-stacks-foundation,
+            base-notebook,
+            minimal-notebook,
+            scipy-notebook,
+            r-notebook,
+            julia-notebook,
+            tensorflow-notebook,
+            pytorch-notebook,
+            datascience-notebook,
+            pyspark-notebook,
+            all-spark-notebook,
           ]
+        variant: [default]
+        include:
+          - image: tensorflow-notebook
+            variant: cuda
+          - image: pytorch-notebook
+            variant: cuda11
+          - image: pytorch-notebook
+            variant: cuda12
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
     if: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && !contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   merge-tags-fast:
     uses: ./.github/workflows/docker-merge-tags.yml
     with:
-      image: ${{ matrix.image-variant.image }}
-      variant: ${{ matrix.image-variant.variant }}
+      image: ${{ matrix.image }}
+      variant: ${{ matrix.variant }}
     secrets:
       REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
       REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
     strategy:
       matrix:
-        image-variant:
-          [
-            { image: docker-stacks-foundation, variant: default },
-            { image: base-notebook, variant: default },
-          ]
+        image: [docker-stacks-foundation, base-notebook]
+        variant: [default]
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
     if: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && contains(github.event.pull_request.title, '[FAST_BUILD]')
 
