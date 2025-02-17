@@ -12,6 +12,7 @@ Affected: all images.
 - **Non-breaking:** First upload artifacts and then run tests to make sure we can easily debug broken images ([#2214](https://github.com/jupyter/docker-stacks/pull/2214)).
 - **Breaking:** Pin some packages to fix `r-notebook` and `datascience-notebook` under aarch64 ([#2215](https://github.com/jupyter/docker-stacks/pull/2215)).
 - **Non-breaking:** Don't use matrix.image-variant, use 2 separate variables ([#2217](https://github.com/jupyter/docker-stacks/pull/2217)).
+- **Non-breaking:** Don't create extra free space in runners for cuda images ([#2218](https://github.com/jupyter/docker-stacks/pull/2218)).
 
 ## 2025-02-11
 
