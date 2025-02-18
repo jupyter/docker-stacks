@@ -7,7 +7,10 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 
 Affected: all images.
 
-- **Non-breaking:**: switch from `ubuntu-22.04-arm` to `ubuntu-24.04-arm` runners ([#2209](https://github.com/jupyter/docker-stacks/pull/2209)).
+- **Non-breaking:** switch from `ubuntu-22.04-arm` to `ubuntu-24.04-arm` runners ([#2209](https://github.com/jupyter/docker-stacks/pull/2209)).
+- **Non-breaking:** don't create extra free space in runners for cuda images ([#2218](https://github.com/jupyter/docker-stacks/pull/2218)).
+- **Non-breaking:** revert "Pin some packages to fix `r-notebook` and `datascience-notebook` under aarch64" ([#2220](https://github.com/jupyter/docker-stacks/pull/2220)).
+- **Non-breaking:** Simplify and improve `test_packages.py` ([#2219](https://github.com/jupyter/docker-stacks/pull/2219)).
 
 ## 2025-02-17
 
