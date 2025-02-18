@@ -10,13 +10,13 @@ THIS_DIR = Path(__file__).parent.resolve()
 
 def generate_matrix() -> Any:
     dockerfiles = sorted(THIS_DIR.glob("*.dockerfile"))
-    runs_on = ["ubuntu-24.04", "ubuntu-22.04-arm"]
+    runs_on = ["ubuntu-24.04", "ubuntu-24.04-arm"]
 
     configurations = []
     for dockerfile in dockerfiles:
         dockerfile_name = dockerfile.name
         for run in runs_on:
-            if dockerfile_name == "oracledb.dockerfile" and run == "ubuntu-22.04-arm":
+            if dockerfile_name == "oracledb.dockerfile" and run == "ubuntu-24.04-arm":
                 continue
             dockerfile_lines = dockerfile.read_text().splitlines()
             base_image = [
