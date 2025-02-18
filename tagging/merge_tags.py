@@ -16,6 +16,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 def merge_tags(
+    *,
     short_image_name: str,
     variant: str,
     tags_dir: Path,
@@ -69,4 +70,8 @@ if __name__ == "__main__":
     )
     args = arg_parser.parse_args()
 
-    merge_tags(args.short_image_name, args.variant, args.tags_dir)
+    merge_tags(
+        short_image_name=args.short_image_name,
+        variant=args.variant,
+        tags_dir=args.tags_dir,
+    )

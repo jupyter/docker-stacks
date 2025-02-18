@@ -22,9 +22,10 @@ MARKDOWN_LINE_BREAK = "<br />"
 
 
 def write_build_history_line(
-    short_image_name: str,
+    *,
     registry: str,
     owner: str,
+    short_image_name: str,
     hist_lines_dir: Path,
     filename: str,
     all_tags: list[str],
@@ -49,9 +50,10 @@ def write_build_history_line(
 
 
 def write_manifest_file(
-    short_image_name: str,
+    *,
     registry: str,
     owner: str,
+    short_image_name: str,
     manifests_dir: Path,
     filename: str,
     manifests: list[ManifestInterface],
@@ -70,6 +72,7 @@ def write_manifest_file(
 
 
 def write_manifest(
+    *,
     registry: str,
     owner: str,
     short_image_name: str,
@@ -92,16 +95,21 @@ def write_manifest(
             tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
         ]
         write_build_history_line(
-            short_image_name, registry, owner, hist_lines_dir, filename, all_tags
+            registry=registry,
+            owner=owner,
+            short_image_name=short_image_name,
+            hist_lines_dir=hist_lines_dir,
+            filename=filename,
+            all_tags=all_tags,
         )
         write_manifest_file(
-            short_image_name,
-            registry,
-            owner,
-            manifests_dir,
-            filename,
-            manifests,
-            container,
+            registry=registry,
+            owner=owner,
+            short_image_name=short_image_name,
+            manifests_dir=manifests_dir,
+            filename=filename,
+            manifests=manifests,
+            container=container,
         )
 
 
@@ -126,10 +134,10 @@ if __name__ == "__main__":
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
     write_manifest(
-        args.registry,
-        args.owner,
-        args.short_image_name,
-        args.variant,
-        args.hist_lines_dir,
-        args.manifests_dir,
+        registry=args.registry,
+        owner=args.owner,
+        short_image_name=args.short_image_name,
+        variant=args.variant,
+        hist_lines_dir=args.hist_lines_dir,
+        manifests_dir=args.manifests_dir,
     )

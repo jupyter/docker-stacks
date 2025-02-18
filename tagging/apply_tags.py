@@ -16,6 +16,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 def apply_tags(
+    *,
     registry: str,
     owner: str,
     short_image_name: str,
@@ -59,10 +60,10 @@ if __name__ == "__main__":
     args.platform = unify_aarch64(args.platform)
 
     apply_tags(
-        args.registry,
-        args.owner,
-        args.short_image_name,
-        args.variant,
-        args.platform,
-        args.tags_dir,
+        registry=args.registry,
+        owner=args.owner,
+        short_image_name=args.short_image_name,
+        variant=args.variant,
+        platform=args.platform,
+        tags_dir=args.tags_dir,
     )

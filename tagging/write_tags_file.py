@@ -13,6 +13,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 def write_tags_file(
+    *,
     registry: str,
     owner: str,
     short_image_name: str,
@@ -58,9 +59,9 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
 
     write_tags_file(
-        args.registry,
-        args.owner,
-        args.short_image_name,
-        args.variant,
-        args.tags_dir,
+        registry=args.registry,
+        owner=args.owner,
+        short_image_name=args.short_image_name,
+        variant=args.variant,
+        tags_dir=args.tags_dir,
     )
