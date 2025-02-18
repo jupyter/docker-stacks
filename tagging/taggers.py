@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from datetime import datetime
+import datetime
 
 from docker.models.containers import Container
 
@@ -42,7 +42,7 @@ class SHATagger(TaggerInterface):
 class DateTagger(TaggerInterface):
     @staticmethod
     def tag_value(container: Container) -> str:
-        return datetime.utcnow().strftime("%Y-%m-%d")
+        return datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%d")
 
 
 class UbuntuVersionTagger(TaggerInterface):

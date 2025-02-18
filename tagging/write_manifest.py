@@ -17,7 +17,7 @@ from tagging.manifests import ManifestHeader, ManifestInterface
 LOGGER = logging.getLogger(__name__)
 
 # We use a manifest creation timestamp, which happens right after a build
-BUILD_TIMESTAMP = datetime.datetime.utcnow().isoformat()[:-7] + "Z"
+BUILD_TIMESTAMP = datetime.datetime.now(datetime.UTC).isoformat()[:-13] + "Z"
 MARKDOWN_LINE_BREAK = "<br />"
 
 
