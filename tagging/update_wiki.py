@@ -218,9 +218,4 @@ if __name__ == "__main__":
     )
     args = arg_parser.parse_args()
 
-    update_wiki(
-        wiki_dir=args.wiki_dir,
-        hist_lines_dir=args.hist_lines_dir,
-        manifests_dir=args.manifests_dir,
-        allow_no_files=args.allow_no_files,
-    )
+    update_wiki(**vars(args))

@@ -57,11 +57,6 @@ if __name__ == "__main__":
         required=True,
         help="Short image name",
     )
-
     args = arg_parser.parse_args()
 
-    test_image(
-        registry=args.registry,
-        owner=args.owner,
-        short_image_name=args.short_image_name,
-    )
+    test_image(**vars(args))

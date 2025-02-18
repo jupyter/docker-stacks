@@ -133,11 +133,4 @@ if __name__ == "__main__":
 
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
-    write_manifest(
-        registry=args.registry,
-        owner=args.owner,
-        short_image_name=args.short_image_name,
-        variant=args.variant,
-        hist_lines_dir=args.hist_lines_dir,
-        manifests_dir=args.manifests_dir,
-    )
+    write_manifest(**vars(args))

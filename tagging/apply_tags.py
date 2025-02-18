@@ -59,11 +59,4 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
     args.platform = unify_aarch64(args.platform)
 
-    apply_tags(
-        registry=args.registry,
-        owner=args.owner,
-        short_image_name=args.short_image_name,
-        variant=args.variant,
-        platform=args.platform,
-        tags_dir=args.tags_dir,
-    )
+    apply_tags(**vars(args))
