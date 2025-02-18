@@ -79,25 +79,25 @@ linkcheck-docs: ## check broken links
 hook/%: VARIANT?=default
 hook/%: ## run post-build hooks for an image
 	python3 -m tagging.write_tags_file \
-	  --short-image-name "$(notdir $@)" \
-	  --tags-dir /tmp/jupyter/tags/ \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
-	  --variant "$(VARIANT)"
+	  --short-image-name "$(notdir $@)" \
+	  --variant "$(VARIANT)" \
+	  --tags-dir /tmp/jupyter/tags/
 	python3 -m tagging.write_manifest \
+	  --registry "$(REGISTRY)" \
+	  --owner "$(OWNER)" \
 	  --short-image-name "$(notdir $@)" \
+	  --variant "$(VARIANT)" \
 	  --hist-lines-dir /tmp/jupyter/hist_lines/ \
-	  --manifests-dir /tmp/jupyter/manifests/ \
-	  --registry "$(REGISTRY)" \
-	  --owner "$(OWNER)" \
-	  --variant "$(VARIANT)"
+	  --manifests-dir /tmp/jupyter/manifests/
 	python3 -m tagging.apply_tags \
-	  --short-image-name "$(notdir $@)" \
-	  --tags-dir /tmp/jupyter/tags/ \
-	  --platform "$(shell uname -m)" \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
-	  --variant "$(VARIANT)"
+	  --short-image-name "$(notdir $@)" \
+	  --variant "$(VARIANT)" \
+	  --platform "$(shell uname -m)" \
+	  --tags-dir /tmp/jupyter/tags/
 hook-all: $(foreach I, $(ALL_IMAGES), hook/$(I)) ## run post-build hooks for all images
 
 
@@ -135,7 +135,7 @@ run-sudo-shell/%: ## run bash in interactive mode as root in a stack
 
 test/%: ## run tests against a stack
 	python3 -m tests.run_tests \
-	  --short-image-name "$(notdir $@)" \
 	  --registry "$(REGISTRY)" \
-	  --owner "$(OWNER)"
+	  --owner "$(OWNER)" \
+	  --short-image-name "$(notdir $@)"
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks

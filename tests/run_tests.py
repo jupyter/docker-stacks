@@ -37,14 +37,8 @@ if __name__ == "__main__":
 
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(
-        "--short-image-name",
-        required=True,
-        help="Short image name",
-    )
-    arg_parser.add_argument(
         "--registry",
         required=True,
-        type=str,
         choices=["docker.io", "quay.io"],
         help="Image registry",
     )
@@ -52,6 +46,11 @@ if __name__ == "__main__":
         "--owner",
         required=True,
         help="Owner of the image",
+    )
+    arg_parser.add_argument(
+        "--short-image-name",
+        required=True,
+        help="Short image name",
     )
 
     args = arg_parser.parse_args()
