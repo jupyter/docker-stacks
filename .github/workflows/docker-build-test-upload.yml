@@ -39,19 +39,6 @@ jobs:
     runs-on: ${{ inputs.runs-on }}
 
     steps:
-      # Image with CUDA needs extra disk space
-      - name: Free disk space 🧹
-        if: contains(inputs.variant, 'cuda') && runner.arch == 'X64'
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: false
-          docker-images: false
-          swap-storage: false
-
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
       - name: Create dev environment 📦
@@ -76,10 +63,6 @@ jobs:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build
           BUILDKIT_PROGRESS: plain
-        shell: bash
-
-      - name: Run tests ✅
-        run: python3 -m tests.run_tests --short-image-name ${{ inputs.image }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
         shell: bash
 
       - name: Write tags file 🏷
@@ -120,3 +103,7 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
           path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
           retention-days: 3
+
+      - name: Run tests ✅
+        run: python3 -m tests.run_tests --short-image-name ${{ inputs.image }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }}
+        shell: bash

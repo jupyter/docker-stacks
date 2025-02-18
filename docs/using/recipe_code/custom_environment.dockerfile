@@ -1,4 +1,5 @@
-FROM quay.io/jupyter/minimal-notebook
+ARG BASE_IMAGE=quay.io/jupyter/minimal-notebook
+FROM $BASE_IMAGE
 
 # Name your environment and choose the Python version
 ARG env_name=python310
