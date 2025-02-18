@@ -48,9 +48,6 @@ RUN mamba install --yes \
     'r-shiny' \
     'r-tidymodels' \
     'r-tidyverse' \
-    # Temporary fix
-    'r-parsnip<1.3.0' \
-    'r-recipes<1.1.1' \
     'unixodbc' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
