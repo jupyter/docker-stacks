@@ -81,8 +81,6 @@ EXCLUDED_PACKAGES = [
     "openssl",
     "protobuf",
     "python",
-    "r-parsnip<1.3.0",
-    "r-recipes<1.1.1",
     "r-irkernel",
     "unixodbc",
 ]
