@@ -39,19 +39,6 @@ jobs:
     runs-on: ${{ inputs.runs-on }}
 
     steps:
-      # Image with CUDA needs extra disk space
-      - name: Free disk space 🧹
-        if: contains(inputs.variant, 'cuda') && runner.arch == 'X64'
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: false
-          docker-images: false
-          swap-storage: false
-
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
       - name: Create dev environment 📦
