@@ -1,4 +1,4 @@
-# Jupyter Notebook Deep Learning Stack
+# Jupyter Notebook PyTorch Deep Learning Stack
 
 GitHub Actions in the <https://github.com/jupyter/docker-stacks> project builds and pushes this image to the Registry.
 

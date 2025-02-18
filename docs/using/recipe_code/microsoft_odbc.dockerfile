@@ -1,4 +1,5 @@
-FROM quay.io/jupyter/base-notebook
+ARG BASE_IMAGE=quay.io/jupyter/base-notebook
+FROM $BASE_IMAGE
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
