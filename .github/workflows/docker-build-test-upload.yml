@@ -67,11 +67,11 @@ jobs:
 
       - name: Write tags file 🏷
         run: |
-          python3 -m tagging.write_tags_file \
-            --registry ${{ env.REGISTRY }} \
-            --owner ${{ env.OWNER }} \
-            --short-image-name ${{ inputs.image }} \
-            --variant ${{ inputs.variant }} \
+          python3 -m tagging.write_tags_file
+            --registry ${{ env.REGISTRY }}
+            --owner ${{ env.OWNER }}
+            --short-image-name ${{ inputs.image }}
+            --variant ${{ inputs.variant }}
             --tags-dir /tmp/jupyter/tags/
         shell: bash
       - name: Upload tags file 💾
@@ -82,12 +82,12 @@ jobs:
           retention-days: 3
 
       - name: Write manifest and build history file 🏷
-        run: python3 -m tagging.write_manifest \
-          --registry ${{ env.REGISTRY }} \
-          --owner ${{ env.OWNER }} \
-          --short-image-name ${{ inputs.image }} \
-          --variant ${{ inputs.variant }} \
-          --hist-lines-dir /tmp/jupyter/hist_lines/ \
+        run: python3 -m tagging.write_manifest
+          --registry ${{ env.REGISTRY }}
+          --owner ${{ env.OWNER }}
+          --short-image-name ${{ inputs.image }}
+          --variant ${{ inputs.variant }}
+          --hist-lines-dir /tmp/jupyter/hist_lines/
           --manifests-dir /tmp/jupyter/manifests/
         shell: bash
       - name: Upload manifest file 💾
@@ -116,8 +116,8 @@ jobs:
           retention-days: 3
 
       - name: Run tests ✅
-        run: python3 -m tests.run_tests \
-          --registry ${{ env.REGISTRY }} \
-          --owner ${{ env.OWNER }} \
+        run: python3 -m tests.run_tests
+          --registry ${{ env.REGISTRY }}
+          --owner ${{ env.OWNER }}
           --short-image-name ${{ inputs.image }}
         shell: bash
