@@ -17,7 +17,6 @@ import requests
 # More information: <https://github.com/jupyter/docker-stacks/pull/2074#issuecomment-1879778409>
 result = subprocess.run(
     ["jupyter", "--runtime-dir"],
-    check=True,
     capture_output=True,
     text=True,
     env=dict(os.environ) | {"HOME": "/home/" + os.environ["NB_USER"]},
