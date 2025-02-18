@@ -155,7 +155,11 @@ def remove_old_manifests(wiki_dir: Path) -> None:
 
 
 def update_wiki(
-    wiki_dir: Path, hist_lines_dir: Path, manifests_dir: Path, allow_no_files: bool
+    *,
+    wiki_dir: Path,
+    hist_lines_dir: Path,
+    manifests_dir: Path,
+    allow_no_files: bool,
 ) -> None:
     LOGGER.info("Updating wiki")
 
@@ -214,6 +218,4 @@ if __name__ == "__main__":
     )
     args = arg_parser.parse_args()
 
-    update_wiki(
-        args.wiki_dir, args.hist_lines_dir, args.manifests_dir, args.allow_no_files
-    )
+    update_wiki(**vars(args))

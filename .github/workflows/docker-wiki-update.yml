@@ -39,7 +39,11 @@ jobs:
           path: wiki/
 
       - name: Update wiki 🏷
-        run: python3 -m tagging.update_wiki --wiki-dir wiki/ --hist-lines-dir /tmp/jupyter/hist_lines/ --manifests-dir /tmp/jupyter/manifests/
+        run: >
+          python3 -m tagging.update_wiki
+          --wiki-dir wiki/
+          --hist-lines-dir /tmp/jupyter/hist_lines/
+          --manifests-dir /tmp/jupyter/manifests/
         shell: bash
 
       - name: Push Wiki to GitHub 📤

@@ -62,5 +62,9 @@ jobs:
 
       - name: Merge tags for the images 🔀
         if: env.PUSH_TO_REGISTRY == 'true'
-        run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --variant ${{ inputs.variant }}
+        run: >
+          python3 -m tagging.merge_tags
+          --short-image-name ${{ inputs.image }}
+          --variant ${{ inputs.variant }}
+          --tags-dir /tmp/jupyter/tags/
         shell: bash
