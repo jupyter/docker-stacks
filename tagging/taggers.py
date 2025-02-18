@@ -95,6 +95,12 @@ class RVersionTagger(TaggerInterface):
         return "r-" + _get_program_version(container, "R").split()[2]
 
 
+class JuliaVersionTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(container: Container) -> str:
+        return "julia-" + _get_program_version(container, "julia").split()[2]
+
+
 class TensorflowVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container: Container) -> str:
@@ -108,12 +114,6 @@ class PytorchVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container: Container) -> str:
         return "pytorch-" + _get_pip_package_version(container, "torch").split("+")[0]
-
-
-class JuliaVersionTagger(TaggerInterface):
-    @staticmethod
-    def tag_value(container: Container) -> str:
-        return "julia-" + _get_program_version(container, "julia").split()[2]
 
 
 class SparkVersionTagger(TaggerInterface):

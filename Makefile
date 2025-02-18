@@ -14,9 +14,9 @@ ALL_IMAGES:= \
 	docker-stacks-foundation \
 	base-notebook \
 	minimal-notebook \
+	scipy-notebook \
 	r-notebook \
 	julia-notebook \
-	scipy-notebook \
 	tensorflow-notebook \
 	pytorch-notebook \
 	datascience-notebook \
