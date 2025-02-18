@@ -1,4 +1,5 @@
-FROM quay.io/jupyter/base-notebook
+ARG BASE_IMAGE=quay.io/jupyter/base-notebook
+FROM $BASE_IMAGE
 
 RUN mamba install --yes 'flake8' && \
     mamba clean --all -f -y && \

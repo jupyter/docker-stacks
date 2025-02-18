@@ -93,30 +93,21 @@ def package_helper(container: TrackedContainer) -> CondaPackageHelper:
 
 
 @pytest.fixture(scope="function")
-def packages(package_helper: CondaPackageHelper) -> dict[str, set[str]]:
+def requested_packages(package_helper: CondaPackageHelper) -> dict[str, set[str]]:
     """Return the list of requested packages (i.e. packages explicitly installed excluding dependencies)"""
     return package_helper.requested_packages()
 
 
+def is_r_package(package: str) -> bool:
+    """Check if a package is an R package"""
+    return package.startswith("r-")
+
+
 def get_package_import_name(package: str) -> str:
-    """Perform a mapping between the python package name and the name used for the import"""
+    """Perform a mapping between the package name and the name used for the import"""
+    if is_r_package(package):
+        package = package[2:]
     return PACKAGE_MAPPING.get(package, package)
-
-
-def excluded_package_predicate(package: str) -> bool:
-    """Return whether a package is excluded from the list
-    (i.e. a package that cannot be tested with standard imports)"""
-    return package in EXCLUDED_PACKAGES
-
-
-def python_package_predicate(package: str) -> bool:
-    """Predicate matching python packages"""
-    return not excluded_package_predicate(package) and not r_package_predicate(package)
-
-
-def r_package_predicate(package: str) -> bool:
-    """Predicate matching R packages"""
-    return not excluded_package_predicate(package) and package.startswith("r-")
 
 
 def _check_import_package(
@@ -125,9 +116,7 @@ def _check_import_package(
     """Generic function executing a command"""
     LOGGER.debug(f"Trying to import a package with [{command}] ...")
     exec_result = package_helper.running_container.exec_run(command)
-    assert (
-        exec_result.exit_code == 0
-    ), f"Import package failed, output: {exec_result.output}"
+    assert exec_result.exit_code == 0, exec_result.output.decode("utf-8")
 
 
 def check_import_python_package(
@@ -152,25 +141,26 @@ def _check_import_packages(
     Note: using a list of packages instead of a fixture for the list of packages
     since pytest prevents the use of multiple yields
     """
-    failures = {}
+    failed_imports = []
     LOGGER.info("Testing the import of packages ...")
     for package in packages_to_check:
         LOGGER.info(f"Trying to import {package}")
         try:
             check_function(package_helper, package)
         except AssertionError as err:
-            failures[package] = err
-    if len(failures) > 0:
-        raise AssertionError(failures)
+            failed_imports.append(package)
+            LOGGER.error(f"Failed to import package: {package}, output:\n  {err}")
+    if failed_imports:
+        pytest.fail(f"following packages are not import-able: {failed_imports}")
 
 
 @pytest.fixture(scope="function")
-def r_packages(packages: dict[str, set[str]]) -> Iterable[str]:
+def r_packages(requested_packages: dict[str, set[str]]) -> Iterable[str]:
     """Return an iterable of R packages"""
-    # package[2:] is to remove the leading "r-" appended on R packages
-    return map(
-        lambda package: get_package_import_name(package[2:]),
-        filter(r_package_predicate, packages),
+    return (
+        get_package_import_name(pkg)
+        for pkg in requested_packages
+        if is_r_package(pkg) and pkg not in EXCLUDED_PACKAGES
     )
 
 
@@ -182,9 +172,13 @@ def test_r_packages(
 
 
 @pytest.fixture(scope="function")
-def python_packages(packages: dict[str, set[str]]) -> Iterable[str]:
+def python_packages(requested_packages: dict[str, set[str]]) -> Iterable[str]:
     """Return an iterable of Python packages"""
-    return map(get_package_import_name, filter(python_package_predicate, packages))
+    return (
+        get_package_import_name(pkg)
+        for pkg in requested_packages
+        if not is_r_package(pkg) and pkg not in EXCLUDED_PACKAGES
+    )
 
 
 def test_python_packages(

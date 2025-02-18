@@ -1,5 +1,6 @@
 # Using Docker Hub here, because this image is old and not pushed to Quay.io
-FROM docker.io/jupyter/base-notebook:notebook-6.5.4
+ARG BASE_IMAGE=docker.io/jupyter/base-notebook:notebook-6.5.4
+FROM $BASE_IMAGE
 
 RUN pip install --no-cache-dir 'jupyter_contrib_nbextensions' && \
     jupyter contrib nbextension install --user && \

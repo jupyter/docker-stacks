@@ -1,4 +1,5 @@
-FROM quay.io/jupyter/base-notebook
+ARG BASE_IMAGE=quay.io/jupyter/base-notebook
+FROM $BASE_IMAGE
 
 # Install the Dask dashboard
 RUN mamba install --yes 'dask-labextension' && \
