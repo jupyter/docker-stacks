@@ -13,14 +13,14 @@ on:
     paths:
       - ".github/workflows/docker.yml"
       # We use local reusable workflows to make architecture clean and simple
-      # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+      # https://docs.github.com/en/actions/sharing-automations/reusing-workflows
       - ".github/workflows/docker-build-test-upload.yml"
       - ".github/workflows/docker-merge-tags.yml"
       - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
       # We use local composite actions to combine multiple workflow steps within one action
-      # https://docs.github.com/en/actions/creating-actions/about-custom-actions#composite-actions
+      # https://docs.github.com/en/actions/sharing-automations/creating-actions/about-custom-actions#composite-actions
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
 
@@ -53,7 +53,7 @@ on:
       - "requirements-dev.txt"
   workflow_dispatch:
 
-# https://docs.github.com/en/actions/using-jobs/using-concurrency
+# https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/control-the-concurrency-of-workflows-and-jobs
 concurrency:
   # Only cancel in-progress jobs or runs for the current workflow - matches against branch & tags
   group: ${{ github.workflow }}-${{ github.ref }}
