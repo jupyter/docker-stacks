@@ -463,7 +463,7 @@ jobs:
           - image: pytorch-notebook
             variant: cuda12
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && !contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   merge-tags-fast:
     uses: ./.github/workflows/docker-merge-tags.yml
@@ -478,19 +478,19 @@ jobs:
         image: [docker-stacks-foundation, base-notebook]
         variant: [default]
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
-    if: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
     permissions:
       contents: write
 
   wiki-update-fast:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
-    if: github.repository_owner == 'jupyter' && contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
     permissions:
       contents: write
 

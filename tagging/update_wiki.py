@@ -13,6 +13,7 @@ from dateutil import relativedelta
 git = plumbum.local["git"]
 
 LOGGER = logging.getLogger(__name__)
+THIS_DIR = Path(__file__).parent.resolve()
 
 
 def calculate_monthly_stat(
@@ -46,16 +47,16 @@ def calculate_monthly_stat(
     return builds, images, commits
 
 
-def regenerate_home_wiki_page(wiki_dir: Path) -> None:
+def generate_home_wiki_page(wiki_dir: Path, repository: str) -> None:
     YEAR_MONTHLY_TABLES = "<!-- YEAR_MONTHLY_TABLES -->\n"
 
-    wiki_home_file = wiki_dir / "Home.md"
-    wiki_home_content = wiki_home_file.read_text()
+    wiki_home_content = (THIS_DIR / "Home.md").read_text()
 
     assert YEAR_MONTHLY_TABLES in wiki_home_content
     wiki_home_content = wiki_home_content[
         : wiki_home_content.find(YEAR_MONTHLY_TABLES) + len(YEAR_MONTHLY_TABLES)
     ]
+    wiki_home_content = wiki_home_content.format(REPOSITORY=repository)
 
     YEAR_TABLE_HEADER = """\
 ## {year}
@@ -65,7 +66,7 @@ def regenerate_home_wiki_page(wiki_dir: Path) -> None:
 """
 
     GITHUB_COMMITS_URL = (
-        "[{}](https://github.com/jupyter/docker-stacks/commits/main/?since={}&until={})"
+        f"[{{}}](https://github.com/{repository}/commits/main/?since={{}}&until={{}})"
     )
 
     for year_dir in sorted((wiki_dir / "monthly-files").glob("*"), reverse=True):
@@ -95,7 +96,7 @@ def regenerate_home_wiki_page(wiki_dir: Path) -> None:
         year_total_line = f"| **Total**              | {year_builds: <6} | {year_images: <6} | {year_commits_url: <95} |\n"
         wiki_home_content += year_total_line
 
-    wiki_home_file.write_text(wiki_home_content)
+    (wiki_dir / "Home.md").write_text(wiki_home_content)
     LOGGER.info("Updated Home page")
 
 
@@ -159,6 +160,7 @@ def update_wiki(
     wiki_dir: Path,
     hist_lines_dir: Path,
     manifests_dir: Path,
+    repository: str,
     allow_no_files: bool,
 ) -> None:
     LOGGER.info("Updating wiki")
@@ -185,7 +187,7 @@ def update_wiki(
         year_month = build_history_line[3:10]
         update_monthly_wiki_page(wiki_dir, year_month, build_history_line)
 
-    regenerate_home_wiki_page(wiki_dir)
+    generate_home_wiki_page(wiki_dir, repository)
     remove_old_manifests(wiki_dir)
 
 
@@ -210,6 +212,11 @@ if __name__ == "__main__":
         required=True,
         type=Path,
         help="Directory with manifest files",
+    )
+    arg_parser.add_argument(
+        "--repository",
+        required=True,
+        help="Repository name on GitHub",
     )
     arg_parser.add_argument(
         "--allow-no-files",
