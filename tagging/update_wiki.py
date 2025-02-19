@@ -111,7 +111,7 @@ def update_monthly_wiki_page(
     year = year_month[:4]
     monthly_page = wiki_dir / "monthly-files" / year / (year_month + ".md")
     if not monthly_page.exists():
-        monthly_page.parent.mkdir(exist_ok=True)
+        monthly_page.parent.mkdir(parents=True, exist_ok=True)
         monthly_page.write_text(MONTHLY_PAGE_HEADER)
         LOGGER.info(f"Created monthly page: {monthly_page.relative_to(wiki_dir)}")
 
