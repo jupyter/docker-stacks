@@ -3,7 +3,7 @@ name: Download build manifests from GitHub artifacts and push them to GitHub wik
 # This way we make sure we don't access wiki pages from several jobs simultaneously
 
 env:
-  PUSH_TO_REGISTRY: ${{ (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && (github.ref == 'refs/heads/main' || github.event_name == 'schedule') }}
+  PUSH_TO_REGISTRY: ${{ github.ref == 'refs/heads/main' || github.event_name == 'schedule' }}
 
 on:
   workflow_call:
@@ -11,6 +11,7 @@ on:
 jobs:
   wiki-update:
     runs-on: ubuntu-24.04
+    timeout-minutes: 1
 
     steps:
       - name: Checkout Repo ⚡️
@@ -39,7 +40,12 @@ jobs:
           path: wiki/
 
       - name: Update wiki 🏷
-        run: python3 -m tagging.update_wiki --wiki-dir wiki/ --hist-lines-dir /tmp/jupyter/hist_lines/ --manifests-dir /tmp/jupyter/manifests/
+        run: >
+          python3 -m tagging.update_wiki
+          --wiki-dir wiki/
+          --hist-lines-dir /tmp/jupyter/hist_lines/
+          --manifests-dir /tmp/jupyter/manifests/
+          --repository ${{ github.repository }}
         shell: bash
 
       - name: Push Wiki to GitHub 📤

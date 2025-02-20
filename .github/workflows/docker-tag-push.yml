@@ -20,6 +20,10 @@ on:
         description: Variant tag prefix
         required: true
         type: string
+      timeout-minutes:
+        description: Timeout in minutes
+        default: 25
+        type: number
     secrets:
       REGISTRY_USERNAME:
         required: true
@@ -29,6 +33,7 @@ on:
 jobs:
   tag-push:
     runs-on: ubuntu-24.04
+    timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:
       - name: Checkout Repo ⚡️
@@ -56,7 +61,14 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/
       - name: Apply tags to the loaded image 🏷
-        run: python3 -m tagging.apply_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --platform ${{ inputs.platform }} --registry ${{ env.REGISTRY }} --owner ${{ env.OWNER }} --variant ${{ inputs.variant }}
+        run: >
+          python3 -m tagging.apply_tags
+          --registry ${{ env.REGISTRY }}
+          --owner ${{ env.OWNER }}
+          --short-image-name ${{ inputs.image }}
+          --variant ${{ inputs.variant }}
+          --platform ${{ inputs.platform }}
+          --tags-dir /tmp/jupyter/tags/
       # This step is needed to prevent pushing non-multi-arch "latest" tag
       - name: Remove the "latest" tag from the image 🗑️
         run: docker image rmi ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest

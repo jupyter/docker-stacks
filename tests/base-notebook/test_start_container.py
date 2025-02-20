@@ -2,7 +2,6 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 import time
-from typing import Optional
 
 import pytest  # type: ignore
 import requests
@@ -32,7 +31,7 @@ LOGGER = logging.getLogger(__name__)
 def test_start_notebook(
     container: TrackedContainer,
     http_client: requests.Session,
-    env: Optional[list[str]],
+    env: list[str] | None,
     expected_command: str,
     expected_start: bool,
     expected_warnings: list[str],

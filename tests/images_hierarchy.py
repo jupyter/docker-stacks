@@ -1,7 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 from pathlib import Path
-from typing import Optional
 
 THIS_DIR = Path(__file__).parent.resolve()
 
@@ -23,7 +22,7 @@ ALL_IMAGES = {
 
 
 def get_test_dirs(
-    short_image_name: Optional[str],
+    short_image_name: str | None,
 ) -> list[Path]:
     if short_image_name is None:
         return []

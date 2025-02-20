@@ -11,6 +11,7 @@ Affected: all images.
 - **Non-breaking:** don't create extra free space in runners for cuda images ([#2218](https://github.com/jupyter/docker-stacks/pull/2218)).
 - **Non-breaking:** revert "Pin some packages to fix `r-notebook` and `datascience-notebook` under aarch64" ([#2220](https://github.com/jupyter/docker-stacks/pull/2220)).
 - **Non-breaking:** Simplify and improve `test_packages.py` ([#2219](https://github.com/jupyter/docker-stacks/pull/2219)).
+- **Non-breaking:** Use Python 3.12 for internal code ([#2222](https://github.com/jupyter/docker-stacks/pull/2222)).
 
 ## 2025-02-17
 
