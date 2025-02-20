@@ -16,6 +16,7 @@ on:
 jobs:
   update-overview:
     runs-on: ubuntu-24.04
+    timeout-minutes: 1
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 
     steps:

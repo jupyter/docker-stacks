@@ -24,10 +24,11 @@ on:
 
 jobs:
   build-docs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru' || github.event_name != 'schedule'
     permissions:
       contents: write
-    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru' || github.event_name != 'schedule'
-    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout Repo ⚡️
