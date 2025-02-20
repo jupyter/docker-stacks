@@ -19,6 +19,7 @@ jobs:
   update-overview:
     # To be able to use the latest skopeo
     runs-on: macos-latest
+    timeout-minutes: 5
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 
     steps:

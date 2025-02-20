@@ -15,6 +15,10 @@ on:
         description: Image name
         required: true
         type: string
+      timeout-minutes:
+        description: Timeout in minutes
+        type: number
+        default: 20
     secrets:
       REGISTRY_USERNAME:
         required: true
@@ -24,6 +28,7 @@ on:
 jobs:
   merge-tags:
     runs-on: ubuntu-24.04
+    timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:
       - name: Checkout Repo ⚡️

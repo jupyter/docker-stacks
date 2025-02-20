@@ -20,6 +20,10 @@ on:
         description: Variant tag prefix
         required: true
         type: string
+      timeout-minutes:
+        description: Timeout in minutes
+        default: 20
+        type: number
     secrets:
       REGISTRY_USERNAME:
         required: true
@@ -29,6 +33,7 @@ on:
 jobs:
   tag-push:
     runs-on: ubuntu-24.04
+    timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:
       - name: Checkout Repo ⚡️

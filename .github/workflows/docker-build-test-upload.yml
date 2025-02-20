@@ -33,10 +33,15 @@ on:
         description: GitHub Actions Runner image
         required: true
         type: string
+      timeout-minutes:
+        description: Timeout in minutes
+        required: true
+        type: number
 
 jobs:
   build-test-upload:
     runs-on: ${{ inputs.runs-on }}
+    timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:
       - name: Checkout Repo ⚡️
