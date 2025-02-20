@@ -3,39 +3,53 @@
 # Distributed under the terms of the Modified BSD License.
 import json
 from pathlib import Path
-from typing import Any
 
 THIS_DIR = Path(__file__).parent.resolve()
 
+RUNS_ON = ["ubuntu-24.04", "ubuntu-24.04-arm"]
+ARM_INCOMPATIBLE_IMAGES = {"oracledb.dockerfile"}
+BASE_IMAGE_PREFIX = "ARG BASE_IMAGE="
 
-def generate_matrix() -> Any:
+
+def extract_base_image(dockerfile: Path) -> str:
+    """Extract base image from dockerfile"""
+    for line in dockerfile.read_text().splitlines():
+        if line.startswith(BASE_IMAGE_PREFIX):
+            full_image = line[len(BASE_IMAGE_PREFIX) :]
+            image_name = full_image[full_image.rfind("/") + 1 :]
+            return "" if ":" in image_name else image_name
+    raise RuntimeError(f"Base image not found in {dockerfile}")
+
+
+def get_platform(runs_on: str) -> str:
+    """Get platform architecture based on runner"""
+    return "x86_64" if runs_on == "ubuntu-24.04" else "aarch64"
+
+
+def generate_matrix() -> dict[str, list[dict[str, str]]]:
+    """Generate build matrix for GitHub Actions"""
     dockerfiles = sorted(THIS_DIR.glob("*.dockerfile"))
-    runs_on = ["ubuntu-24.04", "ubuntu-24.04-arm"]
+    configurations: list[dict[str, str]] = []
 
-    configurations = []
     for dockerfile in dockerfiles:
         dockerfile_name = dockerfile.name
-        for run in runs_on:
-            if dockerfile_name == "oracledb.dockerfile" and run == "ubuntu-24.04-arm":
+
+        for run in RUNS_ON:
+            # Skip ARM builds for incompatible images
+            if dockerfile_name in ARM_INCOMPATIBLE_IMAGES and run == "ubuntu-24.04-arm":
                 continue
-            dockerfile_lines = dockerfile.read_text().splitlines()
-            base_image = [
-                line for line in dockerfile_lines if line.startswith("ARG BASE_IMAGE=")
-            ][0][15:]
-            base_image_short = base_image[base_image.rfind("/") + 1 :]
-            # Handling a case of `docker.io/jupyter/base-notebook:notebook-6.5.4` image
-            if ":" in base_image_short:
-                base_image_short = ""
+
             configurations.append(
                 {
                     "dockerfile": dockerfile_name,
                     "runs-on": run,
-                    "platform": "x86_64" if run == "ubuntu-24.04" else "aarch64",
-                    "parent-image": base_image_short,
+                    "platform": get_platform(run),
+                    "parent-image": extract_base_image(dockerfile),
                 }
             )
+
     return {"include": configurations}
 
 
 if __name__ == "__main__":
-    print("matrix=" + json.dumps(generate_matrix()))
+    print(f"matrix={json.dumps(generate_matrix())}")

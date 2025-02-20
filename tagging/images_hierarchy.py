@@ -1,7 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 from dataclasses import dataclass, field
-from typing import Optional
 
 from tagging.manifests import (
     AptPackagesManifest,
@@ -32,7 +31,7 @@ from tagging.taggers import (
 
 @dataclass
 class ImageDescription:
-    parent_image: Optional[str]
+    parent_image: str | None
     taggers: list[TaggerInterface] = field(default_factory=list)
     manifests: list[ManifestInterface] = field(default_factory=list)
 

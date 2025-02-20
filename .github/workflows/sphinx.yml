@@ -24,10 +24,11 @@ on:
 
 jobs:
   build-docs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru' || github.event_name != 'schedule'
     permissions:
       contents: write
-    if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru' || github.event_name != 'schedule'
-    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout Repo ⚡️
@@ -38,7 +39,7 @@ jobs:
       - name: Set Up Python 🐍
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: 3.12
 
       - name: Install Doc Dependencies 📦
         run: |

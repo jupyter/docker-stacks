@@ -4,7 +4,7 @@ import logging
 import os
 import socket
 from contextlib import closing
-from typing import Any, Optional
+from typing import Any
 
 import docker
 import pytest  # type: ignore
@@ -72,7 +72,7 @@ class TrackedContainer:
         image_name: str,
         **kwargs: Any,
     ):
-        self.container: Optional[Container] = None
+        self.container: Container | None = None
         self.docker_client: docker.DockerClient = docker_client
         self.image_name: str = image_name
         self.kwargs: Any = kwargs

@@ -29,6 +29,7 @@ on:
 jobs:
   generate-matrix:
     runs-on: ubuntu-24.04
+    timeout-minutes: 1
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -43,6 +44,7 @@ jobs:
 
   test-recipes:
     runs-on: ${{ matrix.runs-on }}
+    timeout-minutes: 5
     needs: generate-matrix
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 

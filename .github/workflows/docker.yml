@@ -13,14 +13,14 @@ on:
     paths:
       - ".github/workflows/docker.yml"
       # We use local reusable workflows to make architecture clean and simple
-      # https://docs.github.com/en/actions/using-workflows/reusing-workflows
+      # https://docs.github.com/en/actions/sharing-automations/reusing-workflows
       - ".github/workflows/docker-build-test-upload.yml"
       - ".github/workflows/docker-merge-tags.yml"
       - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
       # We use local composite actions to combine multiple workflow steps within one action
-      # https://docs.github.com/en/actions/creating-actions/about-custom-actions#composite-actions
+      # https://docs.github.com/en/actions/sharing-automations/creating-actions/about-custom-actions#composite-actions
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
 
@@ -53,7 +53,7 @@ on:
       - "requirements-dev.txt"
   workflow_dispatch:
 
-# https://docs.github.com/en/actions/using-jobs/using-concurrency
+# https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/control-the-concurrency-of-workflows-and-jobs
 concurrency:
   # Only cancel in-progress jobs or runs for the current workflow - matches against branch & tags
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -67,6 +67,7 @@ jobs:
       image: docker-stacks-foundation
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 10
 
   x86_64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -75,6 +76,7 @@ jobs:
       image: docker-stacks-foundation
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 10
 
   aarch64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -83,6 +85,7 @@ jobs:
       image: base-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 15
     needs: [aarch64-foundation]
 
   x86_64-base:
@@ -92,6 +95,7 @@ jobs:
       image: base-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 15
     needs: [x86_64-foundation]
 
   aarch64-minimal:
@@ -101,6 +105,7 @@ jobs:
       image: minimal-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 15
     needs: [aarch64-base]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -111,6 +116,7 @@ jobs:
       image: minimal-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 15
     needs: [x86_64-base]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -121,6 +127,7 @@ jobs:
       image: scipy-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 15
     needs: [aarch64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -131,6 +138,7 @@ jobs:
       image: scipy-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 15
     needs: [x86_64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -141,6 +149,7 @@ jobs:
       image: r-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 15
     needs: [aarch64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -151,6 +160,7 @@ jobs:
       image: r-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 15
     needs: [x86_64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -161,6 +171,8 @@ jobs:
       image: julia-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      # This workflow sometimes takes quite long to build
+      timeout-minutes: 30
     needs: [aarch64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -171,6 +183,7 @@ jobs:
       image: julia-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 20
     needs: [x86_64-minimal]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -181,6 +194,7 @@ jobs:
       image: tensorflow-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 15
     needs: [aarch64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -191,6 +205,7 @@ jobs:
       image: tensorflow-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 15
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -202,6 +217,7 @@ jobs:
       variant: cuda
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 20
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -212,6 +228,7 @@ jobs:
       image: pytorch-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 20
     needs: [aarch64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -222,6 +239,7 @@ jobs:
       image: pytorch-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 20
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -233,6 +251,7 @@ jobs:
       variant: cuda11
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 20
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -244,6 +263,7 @@ jobs:
       variant: cuda12
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 20
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -254,6 +274,8 @@ jobs:
       image: datascience-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      # This workflow sometimes takes quite long to build
+      timeout-minutes: 30
     needs: [aarch64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -264,6 +286,7 @@ jobs:
       image: datascience-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 25
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -274,6 +297,7 @@ jobs:
       image: pyspark-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 20
     needs: [aarch64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -284,6 +308,7 @@ jobs:
       image: pyspark-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 15
     needs: [x86_64-scipy]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -294,6 +319,7 @@ jobs:
       image: all-spark-notebook
       platform: aarch64
       runs-on: ubuntu-24.04-arm
+      timeout-minutes: 20
     needs: [aarch64-pyspark]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -304,6 +330,7 @@ jobs:
       image: all-spark-notebook
       platform: x86_64
       runs-on: ubuntu-24.04
+      timeout-minutes: 15
     needs: [x86_64-pyspark]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -463,7 +490,7 @@ jobs:
           - image: pytorch-notebook
             variant: cuda12
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && !contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   merge-tags-fast:
     uses: ./.github/workflows/docker-merge-tags.yml
@@ -478,19 +505,19 @@ jobs:
         image: [docker-stacks-foundation, base-notebook]
         variant: [default]
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
-    if: (github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru') && contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: github.repository_owner == 'jupyter' && !contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
     permissions:
       contents: write
 
   wiki-update-fast:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
-    if: github.repository_owner == 'jupyter' && contains(github.event.pull_request.title, '[FAST_BUILD]')
+    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
     permissions:
       contents: write
 

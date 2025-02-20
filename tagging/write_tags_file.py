@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-import argparse
 import logging
 from pathlib import Path
 
+from tagging.common_arguments import common_arguments_parser
 from tagging.docker_runner import DockerRunner
 from tagging.get_prefix import get_file_prefix, get_tag_prefix
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
@@ -13,9 +13,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 def write_tags_file(
-    short_image_name: str,
+    *,
     registry: str,
     owner: str,
+    short_image_name: str,
     variant: str,
     tags_dir: Path,
 ) -> None:
@@ -48,41 +49,13 @@ def write_tags_file(
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument(
-        "--short-image-name",
-        required=True,
-        help="Short image name",
-    )
+    arg_parser = common_arguments_parser()
     arg_parser.add_argument(
         "--tags-dir",
         required=True,
         type=Path,
         help="Directory to save tags file",
     )
-    arg_parser.add_argument(
-        "--registry",
-        required=True,
-        type=str,
-        choices=["docker.io", "quay.io"],
-        help="Image registry",
-    )
-    arg_parser.add_argument(
-        "--owner",
-        required=True,
-        help="Owner of the image",
-    )
-    arg_parser.add_argument(
-        "--variant",
-        required=True,
-        help="Variant tag prefix",
-    )
     args = arg_parser.parse_args()
 
-    write_tags_file(
-        args.short_image_name,
-        args.registry,
-        args.owner,
-        args.variant,
-        args.tags_dir,
-    )
+    write_tags_file(**vars(args))

@@ -27,7 +27,7 @@ import logging
 import re
 from collections import defaultdict
 from itertools import chain
-from typing import Any, Optional
+from typing import Any
 
 from docker.models.containers import Container
 from tabulate import tabulate
@@ -44,9 +44,9 @@ class CondaPackageHelper:
         self.running_container: Container = CondaPackageHelper.start_container(
             container
         )
-        self.requested: Optional[dict[str, set[str]]] = None
-        self.installed: Optional[dict[str, set[str]]] = None
-        self.available: Optional[dict[str, set[str]]] = None
+        self.requested: dict[str, set[str]] | None = None
+        self.installed: dict[str, set[str]] | None = None
+        self.available: dict[str, set[str]] | None = None
         self.comparison: list[dict[str, str]] = []
 
     @staticmethod

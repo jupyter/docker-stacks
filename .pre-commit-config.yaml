@@ -17,7 +17,7 @@ repos:
     rev: v3.19.1
     hooks:
       - id: pyupgrade
-        args: [--py39-plus]
+        args: [--py312-plus]
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
@@ -31,7 +31,7 @@ repos:
     rev: 25.1.0
     hooks:
       - id: black
-        args: [--target-version=py39]
+        args: [--target-version=py312]
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
@@ -141,10 +141,10 @@ repos:
     rev: 1.9.1
     hooks:
       - id: nbqa-pyupgrade
-        args: [--py39-plus]
+        args: [--py312-plus]
       - id: nbqa-isort
       - id: nbqa-black
-        args: [--target-version=py39]
+        args: [--target-version=py312]
       - id: nbqa-flake8
 
   # Run black on python code blocks in documentation files.
@@ -156,7 +156,7 @@ repos:
         # the python code blocks include jupyter-specific additions such as % or !
         # See https://github.com/adamchainz/blacken-docs/issues/127 for an upstream
         # feature request about this.
-        args: [--target-version=py39, --skip-errors]
+        args: [--target-version=py312, --skip-errors]
 
 # pre-commit.ci config reference: https://pre-commit.ci/#configuration
 ci:

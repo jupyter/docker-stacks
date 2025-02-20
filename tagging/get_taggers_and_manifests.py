@@ -1,6 +1,5 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from typing import Optional
 
 from tagging.images_hierarchy import ALL_IMAGES
 from tagging.manifests import ManifestInterface
@@ -8,7 +7,7 @@ from tagging.taggers import TaggerInterface
 
 
 def get_taggers_and_manifests(
-    short_image_name: Optional[str],
+    short_image_name: str | None,
 ) -> tuple[list[TaggerInterface], list[ManifestInterface]]:
     if short_image_name is None:
         return [[], []]  # type: ignore

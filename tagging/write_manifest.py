@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-import argparse
 import datetime
 import logging
 from pathlib import Path
 
 from docker.models.containers import Container
 
+from tagging.common_arguments import common_arguments_parser
 from tagging.docker_runner import DockerRunner
 from tagging.get_prefix import get_file_prefix, get_tag_prefix
 from tagging.get_taggers_and_manifests import get_taggers_and_manifests
@@ -17,14 +17,15 @@ from tagging.manifests import ManifestHeader, ManifestInterface
 LOGGER = logging.getLogger(__name__)
 
 # We use a manifest creation timestamp, which happens right after a build
-BUILD_TIMESTAMP = datetime.datetime.utcnow().isoformat()[:-7] + "Z"
+BUILD_TIMESTAMP = datetime.datetime.now(datetime.UTC).isoformat()[:-13] + "Z"
 MARKDOWN_LINE_BREAK = "<br />"
 
 
 def write_build_history_line(
-    short_image_name: str,
+    *,
     registry: str,
     owner: str,
+    short_image_name: str,
     hist_lines_dir: Path,
     filename: str,
     all_tags: list[str],
@@ -49,9 +50,10 @@ def write_build_history_line(
 
 
 def write_manifest_file(
-    short_image_name: str,
+    *,
     registry: str,
     owner: str,
+    short_image_name: str,
     manifests_dir: Path,
     filename: str,
     manifests: list[ManifestInterface],
@@ -70,9 +72,10 @@ def write_manifest_file(
 
 
 def write_manifest(
-    short_image_name: str,
+    *,
     registry: str,
     owner: str,
+    short_image_name: str,
     variant: str,
     hist_lines_dir: Path,
     manifests_dir: Path,
@@ -92,28 +95,28 @@ def write_manifest(
             tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
         ]
         write_build_history_line(
-            short_image_name, registry, owner, hist_lines_dir, filename, all_tags
+            registry=registry,
+            owner=owner,
+            short_image_name=short_image_name,
+            hist_lines_dir=hist_lines_dir,
+            filename=filename,
+            all_tags=all_tags,
         )
         write_manifest_file(
-            short_image_name,
-            registry,
-            owner,
-            manifests_dir,
-            filename,
-            manifests,
-            container,
+            registry=registry,
+            owner=owner,
+            short_image_name=short_image_name,
+            manifests_dir=manifests_dir,
+            filename=filename,
+            manifests=manifests,
+            container=container,
         )
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument(
-        "--short-image-name",
-        required=True,
-        help="Short image name",
-    )
+    arg_parser = common_arguments_parser()
     arg_parser.add_argument(
         "--hist-lines-dir",
         required=True,
@@ -126,32 +129,8 @@ if __name__ == "__main__":
         type=Path,
         help="Directory to save manifest file",
     )
-    arg_parser.add_argument(
-        "--registry",
-        required=True,
-        type=str,
-        choices=["docker.io", "quay.io"],
-        help="Image registry",
-    )
-    arg_parser.add_argument(
-        "--owner",
-        required=True,
-        help="Owner of the image",
-    )
-    arg_parser.add_argument(
-        "--variant",
-        required=True,
-        help="Variant tag prefix",
-    )
     args = arg_parser.parse_args()
 
     LOGGER.info(f"Current build timestamp: {BUILD_TIMESTAMP}")
 
-    write_manifest(
-        args.short_image_name,
-        args.registry,
-        args.owner,
-        args.variant,
-        args.hist_lines_dir,
-        args.manifests_dir,
-    )
+    write_manifest(**vars(args))

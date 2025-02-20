@@ -2,7 +2,6 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 import time
-from typing import Optional
 
 import pytest  # type: ignore
 
@@ -56,9 +55,9 @@ LOGGER = logging.getLogger(__name__)
 )
 def test_healthy(
     container: TrackedContainer,
-    env: Optional[list[str]],
-    cmd: Optional[list[str]],
-    user: Optional[str],
+    env: list[str] | None,
+    cmd: list[str] | None,
+    user: str | None,
 ) -> None:
     running_container = container.run_detached(
         tty=True,
@@ -104,9 +103,9 @@ def test_healthy(
 )
 def test_healthy_with_proxy(
     container: TrackedContainer,
-    env: Optional[list[str]],
-    cmd: Optional[list[str]],
-    user: Optional[str],
+    env: list[str] | None,
+    cmd: list[str] | None,
+    user: str | None,
 ) -> None:
     running_container = container.run_detached(
         tty=True,
@@ -142,8 +141,8 @@ def test_healthy_with_proxy(
 )
 def test_not_healthy(
     container: TrackedContainer,
-    env: Optional[list[str]],
-    cmd: Optional[list[str]],
+    env: list[str] | None,
+    cmd: list[str] | None,
 ) -> None:
     running_container = container.run_detached(
         tty=True,

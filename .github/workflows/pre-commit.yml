@@ -13,6 +13,7 @@ permissions:
 jobs:
   run-hooks:
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
 
     steps:
       - name: Checkout Repo ⚡️
@@ -21,7 +22,7 @@ jobs:
       - name: Set Up Python 🐍
         uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          python-version: 3.12
 
       - name: Install pre-commit 📦
         run: |

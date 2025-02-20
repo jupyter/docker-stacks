@@ -2,7 +2,6 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 from types import TracebackType
-from typing import Optional
 
 import docker
 from docker.models.containers import Container
@@ -17,7 +16,7 @@ class DockerRunner:
         docker_client: docker.DockerClient = docker.from_env(),
         command: str = "sleep infinity",
     ):
-        self.container: Optional[Container] = None
+        self.container: Container | None = None
         self.image_name: str = image_name
         self.command: str = command
         self.docker_client: docker.DockerClient = docker_client
@@ -34,9 +33,9 @@ class DockerRunner:
 
     def __exit__(
         self,
-        exc_type: Optional[type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
     ) -> None:
         assert self.container is not None
         LOGGER.info(f"Removing container {self.container.name} ...")
