@@ -51,12 +51,8 @@ def write_tags_file(
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = common_arguments_parser()
-    arg_parser.add_argument(
-        "--tags-dir",
-        required=True,
-        type=Path,
-        help="Directory to save tags file",
+    arg_parser = common_arguments_parser(
+        registry=True, owner=True, short_image_name=True, variant=True, tags_dir=True
     )
     args = arg_parser.parse_args()
 

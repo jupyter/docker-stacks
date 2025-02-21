@@ -119,18 +119,13 @@ def write_manifest(
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = common_arguments_parser()
-    arg_parser.add_argument(
-        "--hist-lines-dir",
-        required=True,
-        type=Path,
-        help="Directory to save history line",
-    )
-    arg_parser.add_argument(
-        "--manifests-dir",
-        required=True,
-        type=Path,
-        help="Directory to save manifest file",
+    arg_parser = common_arguments_parser(
+        registry=True,
+        owner=True,
+        short_image_name=True,
+        variant=True,
+        hist_lines_dir=True,
+        manifests_dir=True,
     )
     args = arg_parser.parse_args()
 

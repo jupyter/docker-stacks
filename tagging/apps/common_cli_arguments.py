@@ -1,13 +1,18 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import argparse
+from pathlib import Path
 
 
 def common_arguments_parser(
-    registry: bool = True,
-    owner: bool = True,
-    short_image_name: bool = True,
-    variant: bool = True,
+    *,
+    registry: bool = False,
+    owner: bool = False,
+    short_image_name: bool = False,
+    variant: bool = False,
+    tags_dir: bool = False,
+    hist_lines_dir: bool = False,
+    manifests_dir: bool = False,
 ) -> argparse.ArgumentParser:
     """Add common CLI arguments to parser"""
 
@@ -36,6 +41,27 @@ def common_arguments_parser(
             "--variant",
             required=True,
             help="Variant tag prefix",
+        )
+    if tags_dir:
+        parser.add_argument(
+            "--tags-dir",
+            required=True,
+            type=Path,
+            help="Directory for tags file",
+        )
+    if hist_lines_dir:
+        parser.add_argument(
+            "--hist-lines-dir",
+            required=True,
+            type=Path,
+            help="Directory for hist_lines file",
+        )
+    if manifests_dir:
+        parser.add_argument(
+            "--manifests-dir",
+            required=True,
+            type=Path,
+            help="Directory for manifests file",
         )
 
     return parser
