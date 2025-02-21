@@ -56,17 +56,14 @@ def merge_tags(
         LOGGER.info(f"Found images: {existing_images}")
         docker["manifest", "create", tag][existing_images] & plumbum.FG
         docker["manifest", "push", tag] & plumbum.FG
+        LOGGER.info(f"Successfully merged and pushed tag: {tag}")
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = common_arguments_parser(registry=False, owner=False)
-    arg_parser.add_argument(
-        "--tags-dir",
-        required=True,
-        type=Path,
-        help="Directory with saved tags file",
+    arg_parser = common_arguments_parser(
+        short_image_name=True, variant=True, tags_dir=True
     )
     args = arg_parser.parse_args()
 

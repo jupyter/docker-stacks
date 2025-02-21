@@ -25,7 +25,7 @@ def write_tags_file(
     """
     Writes tags file for the image <registry>/<owner>/<short_image_name>:latest
     """
-    LOGGER.info(f"Tagging image: {short_image_name}")
+    LOGGER.info(f"Tagging image: {registry}/{owner}/{short_image_name}")
     taggers, _ = get_taggers_and_manifests(short_image_name)
 
     image = f"{registry}/{owner}/{short_image_name}:latest"
@@ -45,18 +45,16 @@ def write_tags_file(
                 f"{registry}/{owner}/{short_image_name}:{tags_prefix}-{tag_value}"
             )
     tags_dir.mkdir(parents=True, exist_ok=True)
-    (tags_dir / filename).write_text("\n".join(tags))
+    file = tags_dir / filename
+    file.write_text("\n".join(tags))
+    LOGGER.info(f"Tags file written to: {file}")
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = common_arguments_parser()
-    arg_parser.add_argument(
-        "--tags-dir",
-        required=True,
-        type=Path,
-        help="Directory to save tags file",
+    arg_parser = common_arguments_parser(
+        registry=True, owner=True, short_image_name=True, variant=True, tags_dir=True
     )
     args = arg_parser.parse_args()
 

@@ -32,6 +32,7 @@ def write_build_history_line(
     hist_lines_dir: Path,
     filename: str,
     all_tags: list[str],
+    repository: str,
 ) -> None:
     LOGGER.info("Appending build history line")
 
@@ -42,14 +43,16 @@ def write_build_history_line(
     commit_hash = GitHelper.commit_hash()
     links_column = MARKDOWN_LINE_BREAK.join(
         [
-            f"[Git diff](https://github.com/jupyter/docker-stacks/commit/{commit_hash})",
-            f"[Dockerfile](https://github.com/jupyter/docker-stacks/blob/{commit_hash}/images/{short_image_name}/Dockerfile)",
+            f"[Git diff](https://github.com/{repository}/commit/{commit_hash})",
+            f"[Dockerfile](https://github.com/{repository}/blob/{commit_hash}/images/{short_image_name}/Dockerfile)",
             f"[Build manifest](./{filename})",
         ]
     )
     build_history_line = f"| {date_column} | {image_column} | {links_column} |"
     hist_lines_dir.mkdir(parents=True, exist_ok=True)
-    (hist_lines_dir / f"{filename}.txt").write_text(build_history_line)
+    file = hist_lines_dir / f"{filename}.txt"
+    file.write_text(build_history_line)
+    LOGGER.info(f"Build history line written to: {file}")
 
 
 def write_manifest_file(
@@ -61,17 +64,26 @@ def write_manifest_file(
     filename: str,
     manifests: list[ManifestInterface],
     container: Container,
+    repository: str,
 ) -> None:
     manifest_names = [manifest.__class__.__name__ for manifest in manifests]
     LOGGER.info(f"Using manifests: {manifest_names}")
 
     markdown_pieces = [
-        ManifestHeader.create_header(short_image_name, registry, owner, BUILD_TIMESTAMP)
+        ManifestHeader.create_header(
+            registry=registry,
+            owner=owner,
+            short_image_name=short_image_name,
+            build_timestamp=BUILD_TIMESTAMP,
+            repository=repository,
+        )
     ] + [manifest.markdown_piece(container) for manifest in manifests]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
     manifests_dir.mkdir(parents=True, exist_ok=True)
-    (manifests_dir / f"{filename}.md").write_text(markdown_content)
+    file = manifests_dir / f"{filename}.md"
+    file.write_text(markdown_content)
+    LOGGER.info(f"Manifest file written to: {file}")
 
 
 def write_manifest(
@@ -82,8 +94,9 @@ def write_manifest(
     variant: str,
     hist_lines_dir: Path,
     manifests_dir: Path,
+    repository: str,
 ) -> None:
-    LOGGER.info(f"Creating manifests for image: {short_image_name}")
+    LOGGER.info(f"Creating manifests for image: {registry}/{owner}/{short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 
     image = f"{registry}/{owner}/{short_image_name}:latest"
@@ -104,6 +117,7 @@ def write_manifest(
             hist_lines_dir=hist_lines_dir,
             filename=filename,
             all_tags=all_tags,
+            repository=repository,
         )
         write_manifest_file(
             registry=registry,
@@ -113,24 +127,25 @@ def write_manifest(
             filename=filename,
             manifests=manifests,
             container=container,
+            repository=repository,
         )
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = common_arguments_parser()
-    arg_parser.add_argument(
-        "--hist-lines-dir",
-        required=True,
-        type=Path,
-        help="Directory to save history line",
+    arg_parser = common_arguments_parser(
+        registry=True,
+        owner=True,
+        short_image_name=True,
+        variant=True,
+        hist_lines_dir=True,
+        manifests_dir=True,
     )
     arg_parser.add_argument(
-        "--manifests-dir",
+        "--repository",
         required=True,
-        type=Path,
-        help="Directory to save manifest file",
+        help="Repository name on GitHub",
     )
     args = arg_parser.parse_args()
 

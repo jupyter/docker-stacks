@@ -42,19 +42,15 @@ def apply_tags(
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = common_arguments_parser()
+    arg_parser = common_arguments_parser(
+        registry=True, owner=True, short_image_name=True, variant=True, tags_dir=True
+    )
     arg_parser.add_argument(
         "--platform",
         required=True,
         type=str,
         choices=["x86_64", "aarch64", "arm64"],
         help="Image platform",
-    )
-    arg_parser.add_argument(
-        "--tags-dir",
-        required=True,
-        type=Path,
-        help="Directory with saved tags file",
     )
     args = arg_parser.parse_args()
     args.platform = unify_aarch64(args.platform)
