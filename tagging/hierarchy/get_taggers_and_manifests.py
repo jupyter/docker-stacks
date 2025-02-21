@@ -6,12 +6,12 @@ from tagging.taggers.tagger_interface import TaggerInterface
 
 
 def get_taggers_and_manifests(
-    short_image_name: str | None,
+    image: str | None,
 ) -> tuple[list[TaggerInterface], list[ManifestInterface]]:
-    if short_image_name is None:
+    if image is None:
         return [], []
 
-    image_description = ALL_IMAGES[short_image_name]
+    image_description = ALL_IMAGES[image]
     parent_taggers, parent_manifests = get_taggers_and_manifests(
         image_description.parent_image
     )

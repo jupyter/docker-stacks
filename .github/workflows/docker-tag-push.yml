@@ -65,7 +65,7 @@ jobs:
           python3 -m tagging.apps.apply_tags
           --registry ${{ env.REGISTRY }}
           --owner ${{ env.OWNER }}
-          --short-image-name ${{ inputs.image }}
+          --image ${{ inputs.image }}
           --variant ${{ inputs.variant }}
           --platform ${{ inputs.platform }}
           --tags-dir /tmp/jupyter/tags/

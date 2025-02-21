@@ -69,7 +69,7 @@ jobs:
         if: env.PUSH_TO_REGISTRY == 'true'
         run: >
           python3 -m tagging.apps.merge_tags
-          --short-image-name ${{ inputs.image }}
+          --image ${{ inputs.image }}
           --variant ${{ inputs.variant }}
           --tags-dir /tmp/jupyter/tags/
         shell: bash
