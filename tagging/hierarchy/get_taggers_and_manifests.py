@@ -1,6 +1,5 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-
 from tagging.hierarchy.images_hierarchy import ALL_IMAGES
 from tagging.manifests.manifest_interface import ManifestInterface
 from tagging.taggers.tagger_interface import TaggerInterface

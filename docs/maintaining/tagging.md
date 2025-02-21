@@ -28,6 +28,7 @@ For example, we dump all `conda` packages with their versions into the manifest.
 
 ```{literalinclude} tagging_examples/docker_runner.py
 :language: py
+:lines: 3-
 ```
 
 ### GitHelper
@@ -36,6 +37,7 @@ For example, we dump all `conda` packages with their versions into the manifest.
 
 ```{literalinclude} tagging_examples/git_helper.py
 :language: py
+:lines: 3-
 ```
 
 The prefix of commit hash (namely, 12 letters) is used as an image tag to make it easy to inherit from a fixed version of a docker image.
@@ -50,6 +52,7 @@ All the taggers are inherited from `TaggerInterface`:
 
 ```{literalinclude} ../../tagging/taggers/tagger_interface.py
 :language: py
+:lines: 3-
 ```
 
 So, the `tag_value(container)` method gets a docker container as an input and returns a tag.
@@ -58,6 +61,7 @@ So, the `tag_value(container)` method gets a docker container as an input and re
 
 ```{literalinclude} ../../tagging/taggers/sha.py
 :language: py
+:lines: 3-
 ```
 
 - `taggers/` subdirectory contains all the taggers.
@@ -72,6 +76,7 @@ All the other manifest classes are inherited from `ManifestInterface`:
 
 ```{literalinclude} ../../tagging/manifests/manifest_interface.py
 :language: py
+:lines: 3-
 ```
 
 - The `markdown_piece(container)` method returns a piece of markdown file to be used as a part of the build manifest.
@@ -80,6 +85,7 @@ All the other manifest classes are inherited from `ManifestInterface`:
 
 ```{literalinclude} ../../tagging/manifests/apt_packages.py
 :language: py
+:lines: 3-
 ```
 
 - `quoted_output(container, cmd)` simply runs the command inside a container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece.
@@ -87,7 +93,7 @@ All the other manifest classes are inherited from `ManifestInterface`:
 - `manifests/` subdirectory contains all the manifests.
 - `apps/write_manifest.py` is a Python executable to create the build manifest and history line for an image.
 
-### Images Hierarchy
+## Images Hierarchy
 
 All images' dependencies on each other and what taggers and manifest are applicable to them are defined in `hierarchy/images_hierarchy.py`.
 
