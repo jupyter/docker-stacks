@@ -3,6 +3,13 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2025-02-21
+
+Affected: all images.
+
+- **Non-breaking:** Better tagging directory structure ([#2228](https://github.com/jupyter/docker-stacks/pull/2228)).
+- **Non-breaking:** Better testing directory structure ([#2231](https://github.com/jupyter/docker-stacks/pull/2231)).
+
 ## 2025-02-18
 
 Affected: all images.
@@ -11,6 +18,7 @@ Affected: all images.
 - **Non-breaking:** don't create extra free space in runners for cuda images ([#2218](https://github.com/jupyter/docker-stacks/pull/2218)).
 - **Non-breaking:** revert "Pin some packages to fix `r-notebook` and `datascience-notebook` under aarch64" ([#2220](https://github.com/jupyter/docker-stacks/pull/2220)).
 - **Non-breaking:** Simplify and improve `test_packages.py` ([#2219](https://github.com/jupyter/docker-stacks/pull/2219)).
+- **Non-breaking:** Use Python 3.12 for internal code ([#2222](https://github.com/jupyter/docker-stacks/pull/2222)).
 
 ## 2025-02-17
 

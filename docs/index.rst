@@ -35,6 +35,7 @@ Table of Contents
    :caption: Maintainer Guide
 
    maintaining/new-images-and-packages-policy
+   maintaining/tagging
    maintaining/tasks
 
 .. toctree::

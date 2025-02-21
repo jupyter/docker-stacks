@@ -15,6 +15,10 @@ on:
         description: Image name
         required: true
         type: string
+      timeout-minutes:
+        description: Timeout in minutes
+        type: number
+        default: 25
     secrets:
       REGISTRY_USERNAME:
         required: true
@@ -24,6 +28,7 @@ on:
 jobs:
   merge-tags:
     runs-on: ubuntu-24.04
+    timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:
       - name: Checkout Repo ⚡️
@@ -62,5 +67,9 @@ jobs:
 
       - name: Merge tags for the images 🔀
         if: env.PUSH_TO_REGISTRY == 'true'
-        run: python3 -m tagging.merge_tags --short-image-name ${{ inputs.image }} --tags-dir /tmp/jupyter/tags/ --variant ${{ inputs.variant }}
+        run: >
+          python3 -m tagging.apps.merge_tags
+          --short-image-name ${{ inputs.image }}
+          --variant ${{ inputs.variant }}
+          --tags-dir /tmp/jupyter/tags/
         shell: bash
