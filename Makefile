@@ -77,6 +77,7 @@ linkcheck-docs: ## check broken links
 
 
 hook/%: VARIANT?=default
+hook/%: REPOSITORY?=$(OWNER)/docker-stacks
 hook/%: ## run post-build hooks for an image
 	python3 -m tagging.apps.write_tags_file \
 	  --registry "$(REGISTRY)" \
@@ -90,7 +91,8 @@ hook/%: ## run post-build hooks for an image
 	  --short-image-name "$(notdir $@)" \
 	  --variant "$(VARIANT)" \
 	  --hist-lines-dir /tmp/jupyter/hist_lines/ \
-	  --manifests-dir /tmp/jupyter/manifests/
+	  --manifests-dir /tmp/jupyter/manifests/ \
+	  --repository "$(REPOSITORY)"
 	python3 -m tagging.apps.apply_tags \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \

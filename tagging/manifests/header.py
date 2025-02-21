@@ -12,7 +12,11 @@ class ManifestHeader:
 
     @staticmethod
     def create_header(
-        short_image_name: str, registry: str, owner: str, build_timestamp: str
+        registry: str,
+        owner: str,
+        short_image_name: str,
+        build_timestamp: str,
+        repository: str,
     ) -> str:
         commit_hash = GitHelper.commit_hash()
         commit_hash_tag = GitHelper.commit_hash_tag()
@@ -36,7 +40,7 @@ class ManifestHeader:
 - Build timestamp: {build_timestamp}
 - Docker image: `{registry}/{owner}/{short_image_name}:{commit_hash_tag}`
 - Docker image size: {image_size}
-- Git commit SHA: [{commit_hash}](https://github.com/jupyter/docker-stacks/commit/{commit_hash})
+- Git commit SHA: [{commit_hash}](https://github.com/{repository}/commit/{commit_hash})
 - Git commit message:
 
 ```text

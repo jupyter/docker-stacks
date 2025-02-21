@@ -101,6 +101,7 @@ jobs:
           --variant ${{ inputs.variant }}
           --hist-lines-dir /tmp/jupyter/hist_lines/
           --manifests-dir /tmp/jupyter/manifests/
+          --repository ${{ github.repository }}
         shell: bash
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v4
