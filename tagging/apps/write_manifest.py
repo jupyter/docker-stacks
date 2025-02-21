@@ -50,7 +50,9 @@ def write_build_history_line(
     )
     build_history_line = f"| {date_column} | {image_column} | {links_column} |"
     hist_lines_dir.mkdir(parents=True, exist_ok=True)
-    (hist_lines_dir / f"{filename}.txt").write_text(build_history_line)
+    file = hist_lines_dir / f"{filename}.txt"
+    file.write_text(build_history_line)
+    LOGGER.info(f"Build history line written to: {file}")
 
 
 def write_manifest_file(
@@ -79,7 +81,9 @@ def write_manifest_file(
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
     manifests_dir.mkdir(parents=True, exist_ok=True)
-    (manifests_dir / f"{filename}.md").write_text(markdown_content)
+    file = manifests_dir / f"{filename}.md"
+    file.write_text(markdown_content)
+    LOGGER.info(f"Manifest file written to: {file}")
 
 
 def write_manifest(
@@ -92,7 +96,7 @@ def write_manifest(
     manifests_dir: Path,
     repository: str,
 ) -> None:
-    LOGGER.info(f"Creating manifests for image: {short_image_name}")
+    LOGGER.info(f"Creating manifests for image: {registry}/{owner}/{short_image_name}")
     taggers, manifests = get_taggers_and_manifests(short_image_name)
 
     image = f"{registry}/{owner}/{short_image_name}:latest"

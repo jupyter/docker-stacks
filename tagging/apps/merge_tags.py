@@ -56,6 +56,7 @@ def merge_tags(
         LOGGER.info(f"Found images: {existing_images}")
         docker["manifest", "create", tag][existing_images] & plumbum.FG
         docker["manifest", "push", tag] & plumbum.FG
+        LOGGER.info(f"Successfully merged and pushed tag: {tag}")
 
 
 if __name__ == "__main__":
