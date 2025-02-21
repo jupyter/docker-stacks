@@ -53,4 +53,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@e348103e9026cc0eee72ae06630dbe30c8bf7a79 # v5.1.0
         with:
           commit_message: "Automated wiki publish for ${{ github.sha }}"
-          repository: wiki/
+          repository: wiki_src/
