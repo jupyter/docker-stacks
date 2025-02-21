@@ -8,6 +8,7 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 Affected: all images.
 
 - **Non-breaking:** Better tagging directory structure ([#2228](https://github.com/jupyter/docker-stacks/pull/2228)).
+- **Non-breaking:** Better testing directory structure ([#2231](https://github.com/jupyter/docker-stacks/pull/2231)).
 
 ## 2025-02-18
 
