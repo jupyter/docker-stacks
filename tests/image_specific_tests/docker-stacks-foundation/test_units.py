@@ -22,8 +22,8 @@ def test_units(container: TrackedContainer) -> None:
         LOGGER.info(f"Searching for units tests in {host_data_dir}")
         cont_data_dir = "/home/jovyan/data"
 
+        LOGGER.info(f"Units tests dir found: {host_data_dir.exists()}")
         if not host_data_dir.exists():
-            LOGGER.info(f"Not found unit tests for image: {container.image_name}")
             continue
 
         for test_file in host_data_dir.iterdir():
