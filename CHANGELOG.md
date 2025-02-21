@@ -9,6 +9,12 @@ Affected: all images.
 
 - **Breaking:** `docker-stacks-foundation`: switch to Python 3.13 ([#2163](https://github.com/jupyter/docker-stacks/pull/2163)).
 
+## 2025-02-21
+
+Affected: all images.
+
+- **Non-breaking:**: Better tagging directory structure ([#2228](https://github.com/jupyter/docker-stacks/pull/2228)).
+
 ## 2025-02-18
 
 Affected: all images.

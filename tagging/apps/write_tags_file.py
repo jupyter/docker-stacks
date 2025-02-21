@@ -4,10 +4,12 @@
 import logging
 from pathlib import Path
 
-from tagging.common_arguments import common_arguments_parser
-from tagging.docker_runner import DockerRunner
-from tagging.get_prefix import get_file_prefix, get_tag_prefix
-from tagging.get_taggers_and_manifests import get_taggers_and_manifests
+from tagging.apps.common_cli_arguments import common_arguments_parser
+from tagging.hierarchy.get_taggers_and_manifests import (
+    get_taggers_and_manifests,
+)
+from tagging.utils.docker_runner import DockerRunner
+from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
 
 LOGGER = logging.getLogger(__name__)
 

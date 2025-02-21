@@ -2,16 +2,17 @@
 # Distributed under the terms of the Modified BSD License.
 from dataclasses import dataclass, field
 
-from tagging.manifests import (
-    AptPackagesManifest,
-    CondaEnvironmentManifest,
-    JuliaPackagesManifest,
-    ManifestInterface,
-    RPackagesManifest,
-    SparkInfoManifest,
-)
-from tagging.taggers import (
-    DateTagger,
+from tagging.manifests.apt_packages import AptPackagesManifest
+from tagging.manifests.conda_environment import CondaEnvironmentManifest
+from tagging.manifests.julia_packages import JuliaPackagesManifest
+from tagging.manifests.manifest_interface import ManifestInterface
+from tagging.manifests.r_packages import RPackagesManifest
+from tagging.manifests.spark_info import SparkInfoManifest
+from tagging.taggers.date import DateTagger
+from tagging.taggers.sha import SHATagger
+from tagging.taggers.tagger_interface import TaggerInterface
+from tagging.taggers.ubuntu_version import UbuntuVersionTagger
+from tagging.taggers.versions import (
     JavaVersionTagger,
     JuliaVersionTagger,
     JupyterHubVersionTagger,
@@ -21,11 +22,8 @@ from tagging.taggers import (
     PythonVersionTagger,
     PytorchVersionTagger,
     RVersionTagger,
-    SHATagger,
     SparkVersionTagger,
-    TaggerInterface,
     TensorflowVersionTagger,
-    UbuntuVersionTagger,
 )
 
 
