@@ -78,20 +78,20 @@ linkcheck-docs: ## check broken links
 
 hook/%: VARIANT?=default
 hook/%: ## run post-build hooks for an image
-	python3 -m tagging.write_tags_file \
+	python3 -m tagging.apps.write_tags_file \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
 	  --short-image-name "$(notdir $@)" \
 	  --variant "$(VARIANT)" \
 	  --tags-dir /tmp/jupyter/tags/
-	python3 -m tagging.write_manifest \
+	python3 -m tagging.apps.write_manifest \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
 	  --short-image-name "$(notdir $@)" \
 	  --variant "$(VARIANT)" \
 	  --hist-lines-dir /tmp/jupyter/hist_lines/ \
 	  --manifests-dir /tmp/jupyter/manifests/
-	python3 -m tagging.apply_tags \
+	python3 -m tagging.apps.apply_tags \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
 	  --short-image-name "$(notdir $@)" \
