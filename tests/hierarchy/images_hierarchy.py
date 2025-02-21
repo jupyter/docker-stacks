@@ -9,7 +9,7 @@ assert IMAGE_SPECIFIC_TESTS_DIR.exists(), f"{IMAGE_SPECIFIC_TESTS_DIR} does not 
 
 # Please, take a look at the hierarchy of the images here:
 # https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#image-relationships
-ALL_IMAGES = {
+_IMAGE_PARENT = {
     "docker-stacks-foundation": None,
     "base-notebook": "docker-stacks-foundation",
     "minimal-notebook": "base-notebook",
@@ -30,9 +30,8 @@ def get_test_dirs(
     if short_image_name is None:
         return []
 
-    test_dirs = get_test_dirs(ALL_IMAGES[short_image_name])
-    if (
-        current_image_tests_dir := IMAGE_SPECIFIC_TESTS_DIR / short_image_name
-    ).exists():
-        test_dirs.append(current_image_tests_dir)
+    test_dirs = get_test_dirs(_IMAGE_PARENT[short_image_name])
+    current_test_dir = IMAGE_SPECIFIC_TESTS_DIR / short_image_name
+    assert current_test_dir.exists(), f"{current_test_dir} does not exist."
+    test_dirs.append(current_test_dir)
     return test_dirs
