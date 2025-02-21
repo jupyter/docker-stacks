@@ -10,7 +10,7 @@ def get_taggers_and_manifests(
     short_image_name: str | None,
 ) -> tuple[list[TaggerInterface], list[ManifestInterface]]:
     if short_image_name is None:
-        return [[], []]  # type: ignore
+        return [], []
 
     image_description = ALL_IMAGES[short_image_name]
     parent_taggers, parent_manifests = get_taggers_and_manifests(
