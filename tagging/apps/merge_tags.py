@@ -6,9 +6,9 @@ from pathlib import Path
 
 import plumbum
 
-from tagging.common_arguments import common_arguments_parser
-from tagging.get_platform import ALL_PLATFORMS
-from tagging.get_prefix import get_file_prefix_for_platform
+from tagging.apps.common_cli_arguments import common_arguments_parser
+from tagging.utils.get_platform import ALL_PLATFORMS
+from tagging.utils.get_prefix import get_file_prefix_for_platform
 
 docker = plumbum.local["docker"]
 

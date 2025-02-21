@@ -62,7 +62,7 @@ jobs:
           path: /tmp/jupyter/tags/
       - name: Apply tags to the loaded image 🏷
         run: >
-          python3 -m tagging.apply_tags
+          python3 -m tagging.apps.apply_tags
           --registry ${{ env.REGISTRY }}
           --owner ${{ env.OWNER }}
           --short-image-name ${{ inputs.image }}

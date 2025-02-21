@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from tagging.get_platform import get_platform
+from tagging.utils.get_platform import get_platform
 
 DEFAULT_VARIANT = "default"
 
