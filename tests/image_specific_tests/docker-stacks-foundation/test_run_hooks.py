@@ -100,7 +100,7 @@ def run_source_in_dir(
 def test_run_hooks_executables(container: TrackedContainer) -> None:
     logs = run_source_in_dir(
         container,
-        subdir="run-hooks-executables",
+        subdir="data/run-hooks/executables",
         command_suffix="&& echo SOME_VAR is ${SOME_VAR}",
     )
 
@@ -110,7 +110,9 @@ def test_run_hooks_executables(container: TrackedContainer) -> None:
 
 
 def test_run_hooks_with_failures(container: TrackedContainer) -> None:
-    logs = run_source_in_dir(container, subdir="run-hooks-failures", no_failure=False)
+    logs = run_source_in_dir(
+        container, subdir="data/run-hooks/failures", no_failure=False
+    )
 
     for file in ["a.sh", "b.py", "c.sh", "d.sh"]:
         assert f"Started: {file}" in logs
@@ -129,7 +131,7 @@ def test_run_hooks_with_failures(container: TrackedContainer) -> None:
 
 
 def test_run_hooks_unset(container: TrackedContainer) -> None:
-    logs = run_source_in_dir(container, subdir="run-hooks-unset")
+    logs = run_source_in_dir(container, subdir="data/run-hooks/unset")
 
     assert "Inside a.sh MY_VAR variable has 123 value" in logs
     assert "Inside b.sh MY_VAR variable has 123 value" in logs
@@ -138,7 +140,7 @@ def test_run_hooks_unset(container: TrackedContainer) -> None:
 
 
 def test_run_hooks_change(container: TrackedContainer) -> None:
-    logs = run_source_in_dir(container, subdir="run-hooks-change")
+    logs = run_source_in_dir(container, subdir="data/run-hooks/change")
 
     assert "Inside a.sh MY_VAR variable has 123 value" in logs
     assert "Inside b.sh MY_VAR variable has 123 value" in logs
