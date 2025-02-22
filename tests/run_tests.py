@@ -13,16 +13,11 @@ python3 = plumbum.local["python3"]
 LOGGER = logging.getLogger(__name__)
 
 
-def test_image(
-    *,
-    registry: str,
-    owner: str,
-    short_image_name: str,
-) -> None:
-    LOGGER.info(f"Testing image: {short_image_name}")
-    test_dirs = get_test_dirs(short_image_name)
+def test_image(*, registry: str, owner: str, image: str) -> None:
+    LOGGER.info(f"Testing image: {image}")
+    test_dirs = get_test_dirs(image)
     LOGGER.info(f"Test dirs to be run: {test_dirs}")
-    with plumbum.local.env(TEST_IMAGE=f"{registry}/{owner}/{short_image_name}"):
+    with plumbum.local.env(TEST_IMAGE=f"{registry}/{owner}/{image}"):
         (
             python3[
                 "-m",
@@ -53,7 +48,7 @@ if __name__ == "__main__":
         help="Owner of the image",
     )
     arg_parser.add_argument(
-        "--short-image-name",
+        "--image",
         required=True,
         help="Short image name",
     )

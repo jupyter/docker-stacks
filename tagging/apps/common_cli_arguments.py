@@ -3,17 +3,22 @@
 import argparse
 from pathlib import Path
 
+from tagging.utils.config import Config
+from tagging.utils.get_platform import unify_aarch64
+
 
 def common_arguments_parser(
     *,
     registry: bool = False,
     owner: bool = False,
-    short_image_name: bool = False,
+    image: bool = False,
     variant: bool = False,
+    platform: bool = False,
     tags_dir: bool = False,
     hist_lines_dir: bool = False,
     manifests_dir: bool = False,
-) -> argparse.ArgumentParser:
+    repository: bool = False,
+) -> Config:
     """Add common CLI arguments to parser"""
 
     parser = argparse.ArgumentParser()
@@ -30,9 +35,9 @@ def common_arguments_parser(
             required=True,
             help="Owner of the image",
         )
-    if short_image_name:
+    if image:
         parser.add_argument(
-            "--short-image-name",
+            "--image",
             required=True,
             help="Short image name",
         )
@@ -41,6 +46,14 @@ def common_arguments_parser(
             "--variant",
             required=True,
             help="Variant tag prefix",
+        )
+    if platform:
+        parser.add_argument(
+            "--platform",
+            required=True,
+            type=str,
+            choices=["x86_64", "aarch64", "arm64"],
+            help="Image platform",
         )
     if tags_dir:
         parser.add_argument(
@@ -63,5 +76,14 @@ def common_arguments_parser(
             type=Path,
             help="Directory for manifests file",
         )
+    if repository:
+        parser.add_argument(
+            "--repository",
+            required=True,
+            help="Repository name on GitHub",
+        )
+    args = parser.parse_args()
+    if platform:
+        args.platform = unify_aarch64(args.platform)
 
-    return parser
+    return Config(**vars(args))

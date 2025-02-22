@@ -24,14 +24,12 @@ _IMAGE_PARENT = {
 }
 
 
-def get_test_dirs(
-    short_image_name: str | None,
-) -> list[Path]:
-    if short_image_name is None:
+def get_test_dirs(image: str | None) -> list[Path]:
+    if image is None:
         return []
 
-    test_dirs = get_test_dirs(_IMAGE_PARENT[short_image_name])
-    current_test_dir = IMAGE_SPECIFIC_TESTS_DIR / short_image_name
+    test_dirs = get_test_dirs(_IMAGE_PARENT[image])
+    current_test_dir = IMAGE_SPECIFIC_TESTS_DIR / image
     assert current_test_dir.exists(), f"{current_test_dir} does not exist."
     test_dirs.append(current_test_dir)
     return test_dirs
