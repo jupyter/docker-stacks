@@ -13,12 +13,7 @@ python3 = plumbum.local["python3"]
 LOGGER = logging.getLogger(__name__)
 
 
-def test_image(
-    *,
-    registry: str,
-    owner: str,
-    image: str,
-) -> None:
+def test_image(*, registry: str, owner: str, image: str) -> None:
     LOGGER.info(f"Testing image: {image}")
     test_dirs = get_test_dirs(image)
     LOGGER.info(f"Test dirs to be run: {test_dirs}")

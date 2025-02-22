@@ -12,10 +12,7 @@ class ManifestHeader:
     """ManifestHeader doesn't fall under common interface, and we run it separately"""
 
     @staticmethod
-    def create_header(
-        config: Config,
-        build_timestamp: str,
-    ) -> str:
+    def create_header(config: Config, build_timestamp: str) -> str:
         commit_hash = GitHelper.commit_hash()
         commit_hash_tag = GitHelper.commit_hash_tag()
         commit_message = GitHelper.commit_message()
