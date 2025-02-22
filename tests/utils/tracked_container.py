@@ -70,7 +70,7 @@ class TrackedContainer:
     ) -> str:
         running_container = self.run_detached(**kwargs)
         rv = running_container.wait(timeout=timeout)
-        logs = running_container.logs().decode("utf-8")
+        logs = running_container.logs().decode()
         assert isinstance(logs, str)
         LOGGER.debug(logs)
         assert no_warnings == (not self.get_warnings(logs))
