@@ -39,9 +39,8 @@ class DockerRunner:
     ) -> None:
         assert self.container is not None
         LOGGER.info(f"Removing container {self.container.name} ...")
-        if self.container:
-            self.container.remove(force=True)
-            LOGGER.info(f"Container {self.container.name} removed")
+        self.container.remove(force=True)
+        LOGGER.info(f"Container {self.container.name} removed")
 
     @staticmethod
     def run_simple_command(

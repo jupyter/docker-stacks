@@ -92,5 +92,9 @@ class TrackedContainer:
 
     def remove(self) -> None:
         """Kills and removes the tracked docker container."""
-        if self.container:
+        if self.container is None:
+            LOGGER.info("No container to remove")
+        else:
+            LOGGER.info(f"Removing container {self.container.name} ...")
             self.container.remove(force=True)
+            LOGGER.info(f"Container {self.container.name} removed")
