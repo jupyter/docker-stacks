@@ -48,7 +48,7 @@ class DockerRunner:
     ) -> str:
         LOGGER.info(f"Running cmd: '{cmd}' on container: {container}")
         out = container.exec_run(cmd)
-        result = out.output.decode("utf-8").rstrip()
+        result = out.output.decode().rstrip()
         assert isinstance(result, str)
         if print_result:
             LOGGER.info(f"Command result: {result}")
