@@ -1,5 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+import textwrap
+
 import plumbum
 
 from tagging.manifests.manifest_interface import MarkdownPiece
@@ -28,18 +30,17 @@ class BuildInfo:
             "{{.Size}}",
         ]().rstrip()
 
-        return MarkdownPiece(
-            title="## Build Info",
-            sections=[
-                f"""\
-- Build timestamp: {build_timestamp}
-- Docker image: `{config.full_image()}:{commit_hash_tag}`
-- Docker image size: {image_size}
-- Git commit SHA: [{commit_hash}](https://github.com/{config.repository}/commit/{commit_hash})
-- Git commit message:
+        build_info = textwrap.dedent(
+            f"""\
+            - Build timestamp: {build_timestamp}
+            - Docker image: `{config.full_image()}:{commit_hash_tag}`
+            - Docker image size: {image_size}
+            - Git commit SHA: [{commit_hash}](https://github.com/{config.repository}/commit/{commit_hash})
+            - Git commit message:
 
-```text
-{commit_message}
-```"""
-            ],
+            ```text
+            {commit_message}
+            ```"""
         )
+
+        return MarkdownPiece(title="## Build Info", sections=[build_info])
