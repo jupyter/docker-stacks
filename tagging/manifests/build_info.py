@@ -2,17 +2,18 @@
 # Distributed under the terms of the Modified BSD License.
 import plumbum
 
+from tagging.manifests.manifest_interface import MarkdownPiece
 from tagging.utils.config import Config
 from tagging.utils.git_helper import GitHelper
 
 docker = plumbum.local["docker"]
 
 
-class ManifestHeader:
-    """ManifestHeader doesn't fall under common interface, and we run it separately"""
+class BuildInfo:
+    """BuildInfo doesn't fall under common interface, and we run it separately"""
 
     @staticmethod
-    def create_header(config: Config, build_timestamp: str) -> str:
+    def markdown_piece(config: Config, build_timestamp: str) -> MarkdownPiece:
         commit_hash = GitHelper.commit_hash()
         commit_hash_tag = GitHelper.commit_hash_tag()
         commit_message = GitHelper.commit_message()
@@ -27,11 +28,10 @@ class ManifestHeader:
             "{{.Size}}",
         ]().rstrip()
 
-        return f"""\
-# Build manifest for image: {config.image}:{commit_hash_tag}
-
-## Build Info
-
+        return MarkdownPiece(
+            title="## Build Info",
+            sections=[
+                f"""\
 - Build timestamp: {build_timestamp}
 - Docker image: `{config.full_image()}:{commit_hash_tag}`
 - Docker image size: {image_size}
@@ -41,3 +41,5 @@ class ManifestHeader:
 ```text
 {commit_message}
 ```"""
+            ],
+        )
