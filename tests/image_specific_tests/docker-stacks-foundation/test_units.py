@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 
-from tests.hierarchy.images_hierarchy import get_test_dirs
+from tests.hierarchy.get_test_dirs import get_test_dirs
 from tests.utils.tracked_container import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)

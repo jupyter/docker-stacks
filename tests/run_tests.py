@@ -6,7 +6,7 @@ import logging
 
 import plumbum
 
-from tests.hierarchy.images_hierarchy import get_test_dirs
+from tests.hierarchy.get_test_dirs import get_test_dirs
 
 python3 = plumbum.local["python3"]
 
