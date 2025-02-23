@@ -10,7 +10,7 @@ from tagging.apps.common_cli_arguments import common_arguments_parser
 from tagging.hierarchy.get_taggers_and_manifests import (
     get_taggers_and_manifests,
 )
-from tagging.manifests.header import ManifestHeader
+from tagging.manifests.build_info import BuildInfo
 from tagging.manifests.manifest_interface import ManifestInterface
 from tagging.utils.config import Config
 from tagging.utils.docker_runner import DockerRunner
@@ -51,14 +51,17 @@ def write_build_history_line(
 def write_manifest_file(
     config: Config,
     filename: str,
+    commit_hash_tag: str,
     manifests: list[ManifestInterface],
     container: Container,
 ) -> None:
     manifest_names = [manifest.__class__.__name__ for manifest in manifests]
     LOGGER.info(f"Using manifests: {manifest_names}")
 
-    markdown_pieces = [ManifestHeader.create_header(config, BUILD_TIMESTAMP)] + [
-        manifest.markdown_piece(container) for manifest in manifests
+    markdown_pieces = [
+        f"# Build manifest for image: {config.image}:{commit_hash_tag}",
+        BuildInfo.markdown_piece(config, BUILD_TIMESTAMP).get_str(),
+        *(manifest.markdown_piece(container).get_str() for manifest in manifests),
     ]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
@@ -82,7 +85,7 @@ def write_manifest(config: Config) -> None:
             tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
         ]
         write_build_history_line(config, filename, all_tags)
-        write_manifest_file(config, filename, manifests, container)
+        write_manifest_file(config, filename, commit_hash_tag, manifests, container)
 
 
 if __name__ == "__main__":
