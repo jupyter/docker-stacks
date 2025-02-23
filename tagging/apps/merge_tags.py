@@ -15,24 +15,31 @@ docker = plumbum.local["docker"]
 LOGGER = logging.getLogger(__name__)
 
 
-def merge_tags(config: Config) -> None:
-    """
-    Merge tags for x86_64 and aarch64 images when possible.
-    """
-    LOGGER.info(f"Merging tags for image: {config.image}")
+def read_tags_from_files(config: Config) -> set[str]:
+    LOGGER.info(f"Read tags from file(s) for image: {config.image}")
 
-    all_tags: set[str] = set()
-
+    tags: set[str] = set()
     for platform in ALL_PLATFORMS:
+        LOGGER.info(f"Reading tags for platform: {platform}")
+
         file_prefix = get_file_prefix_for_platform(platform, config.variant)
         filename = f"{file_prefix}-{config.image}.txt"
-        file_path = config.tags_dir / filename
-        if file_path.exists():
-            tags = file_path.read_text().splitlines()
-            all_tags.update(tag.replace(platform + "-", "") for tag in tags)
+        path = config.tags_dir / filename
+        if path.exists():
+            LOGGER.info(f"Tag file: {path} found")
+            lines = path.read_text().splitlines()
+            tags.update(tag.replace(platform + "-", "") for tag in lines)
+        else:
+            LOGGER.info(f"Tag file: {path} doesn't exist")
 
-    LOGGER.info(f"Got tags: {all_tags}")
+    LOGGER.info(f"Tags read for image: {config.image}")
+    return tags
 
+
+def merge_tags(config: Config) -> None:
+    LOGGER.info(f"Merging tags for image: {config.image}")
+
+    all_tags = read_tags_from_files(config)
     for tag in all_tags:
         LOGGER.info(f"Trying to merge tag: {tag}")
         existing_images = []
@@ -51,7 +58,10 @@ def merge_tags(config: Config) -> None:
         LOGGER.info(f"Found images: {existing_images}")
         docker["manifest", "create", tag][existing_images] & plumbum.FG
         docker["manifest", "push", tag] & plumbum.FG
+
         LOGGER.info(f"Successfully merged and pushed tag: {tag}")
+
+    LOGGER.info(f"All tags merged for image: {config.image}")
 
 
 if __name__ == "__main__":

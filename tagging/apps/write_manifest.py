@@ -7,11 +7,9 @@ import logging
 from docker.models.containers import Container
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
-from tagging.hierarchy.get_taggers_and_manifests import (
-    get_taggers_and_manifests,
-)
+from tagging.hierarchy.get_manifests import get_manifests
+from tagging.hierarchy.get_taggers import get_taggers
 from tagging.manifests.build_info import BuildInfo
-from tagging.manifests.manifest_interface import ManifestInterface
 from tagging.utils.config import Config
 from tagging.utils.docker_runner import DockerRunner
 from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
@@ -24,10 +22,12 @@ BUILD_TIMESTAMP = datetime.datetime.now(datetime.UTC).isoformat()[:-13] + "Z"
 MARKDOWN_LINE_BREAK = "<br />"
 
 
-def write_build_history_line(
-    config: Config, filename: str, all_tags: list[str]
-) -> None:
-    LOGGER.info("Appending build history line")
+def get_build_history_line(config: Config, filename: str, container: Container) -> str:
+    LOGGER.info(f"Calculating build history line for image: {config.image}")
+
+    taggers = get_taggers(config.image)
+    tags_prefix = get_tag_prefix(config.variant)
+    all_tags = [tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers]
 
     date_column = f"`{BUILD_TIMESTAMP}`"
     image_column = MARKDOWN_LINE_BREAK.join(
@@ -42,19 +42,28 @@ def write_build_history_line(
         ]
     )
     build_history_line = f"| {date_column} | {image_column} | {links_column} |"
-    config.hist_lines_dir.mkdir(parents=True, exist_ok=True)
-    file = config.hist_lines_dir / f"{filename}.txt"
-    file.write_text(build_history_line)
-    LOGGER.info(f"Build history line written to: {file}")
+
+    LOGGER.info(f"Build history line calculated for image: {config.image}")
+    return build_history_line
 
 
-def write_manifest_file(
-    config: Config,
-    filename: str,
-    commit_hash_tag: str,
-    manifests: list[ManifestInterface],
-    container: Container,
+def write_build_history_line(
+    config: Config, filename: str, container: Container
 ) -> None:
+    LOGGER.info(f"Writing tags for image: {config.image}")
+
+    path = config.hist_lines_dir / f"{filename}.txt"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    build_history_line = get_build_history_line(config, filename, container)
+    path.write_text(build_history_line)
+
+    LOGGER.info(f"Build history line written to: {path}")
+
+
+def get_manifest(config: Config, commit_hash_tag: str, container: Container) -> str:
+    LOGGER.info(f"Calculating manifest file for image: {config.image}")
+
+    manifests = get_manifests(config.image)
     manifest_names = [manifest.__class__.__name__ for manifest in manifests]
     LOGGER.info(f"Using manifests: {manifest_names}")
 
@@ -65,27 +74,35 @@ def write_manifest_file(
     ]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
-    config.manifests_dir.mkdir(parents=True, exist_ok=True)
-    file = config.manifests_dir / f"{filename}.md"
-    file.write_text(markdown_content)
-    LOGGER.info(f"Manifest file written to: {file}")
+    LOGGER.info(f"Manifest file calculated for image: {config.image}")
+    return markdown_content
 
 
-def write_manifest(config: Config) -> None:
-    LOGGER.info(f"Creating manifests for image: {config.image}")
-    taggers, manifests = get_taggers_and_manifests(config.image)
+def write_manifest(
+    config: Config, filename: str, commit_hash_tag: str, container: Container
+) -> None:
+    LOGGER.info(f"Writing manifest file for image: {config.image}")
+
+    path = config.manifests_dir / f"{filename}.md"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    manifest = get_manifest(config, commit_hash_tag, container)
+    path.write_text(manifest)
+
+    LOGGER.info(f"Manifest file wrtitten to: {path}")
+
+
+def write_all(config: Config) -> None:
+    LOGGER.info(f"Writing all files for image: {config.image}")
 
     file_prefix = get_file_prefix(config.variant)
     commit_hash_tag = GitHelper.commit_hash_tag()
     filename = f"{file_prefix}-{config.image}-{commit_hash_tag}"
 
     with DockerRunner(config.full_image()) as container:
-        tags_prefix = get_tag_prefix(config.variant)
-        all_tags = [
-            tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers
-        ]
-        write_build_history_line(config, filename, all_tags)
-        write_manifest_file(config, filename, commit_hash_tag, manifests, container)
+        write_build_history_line(config, filename, container)
+        write_manifest(config, filename, commit_hash_tag, container)
+
+    LOGGER.info(f"All files written for image: {config.image}")
 
 
 if __name__ == "__main__":
@@ -101,4 +118,4 @@ if __name__ == "__main__":
         manifests_dir=True,
         repository=True,
     )
-    write_manifest(config)
+    write_all(config)

@@ -4,9 +4,7 @@
 import logging
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
-from tagging.hierarchy.get_taggers_and_manifests import (
-    get_taggers_and_manifests,
-)
+from tagging.hierarchy.get_taggers import get_taggers
 from tagging.utils.config import Config
 from tagging.utils.docker_runner import DockerRunner
 from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
@@ -14,16 +12,10 @@ from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
 LOGGER = logging.getLogger(__name__)
 
 
-def write_tags_file(config: Config) -> None:
-    """
-    Writes tags file for the image {config.full_image()}
-    """
-    LOGGER.info(f"Tagging image: {config.image}")
-    taggers, _ = get_taggers_and_manifests(config.image)
+def get_tags(config: Config) -> list[str]:
+    LOGGER.info(f"Calculating tags for image: {config.image}")
 
-    file_prefix = get_file_prefix(config.variant)
-    filename = f"{file_prefix}-{config.image}.txt"
-
+    taggers = get_taggers(config.image)
     tags_prefix = get_tag_prefix(config.variant)
     tags = [f"{config.full_image()}:{tags_prefix}-latest"]
     with DockerRunner(config.full_image()) as container:
@@ -34,10 +26,22 @@ def write_tags_file(config: Config) -> None:
                 f"Calculated tag, tagger_name: {tagger_name} tag_value: {tag_value}"
             )
             tags.append(f"{config.full_image()}:{tags_prefix}-{tag_value}")
-    config.tags_dir.mkdir(parents=True, exist_ok=True)
-    file = config.tags_dir / filename
-    file.write_text("\n".join(tags))
-    LOGGER.info(f"Tags file written to: {file}")
+
+    LOGGER.info(f"Tags calculated for image: {config.image}")
+    return tags
+
+
+def write_tags_file(config: Config) -> None:
+    LOGGER.info(f"Writing tags for image: {config.image}")
+
+    file_prefix = get_file_prefix(config.variant)
+    filename = f"{file_prefix}-{config.image}.txt"
+    path = config.tags_dir / filename
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tags = get_tags(config)
+    path.write_text("\n".join(tags))
+
+    LOGGER.info(f"Tags wrtitten to: {path}")
 
 
 if __name__ == "__main__":

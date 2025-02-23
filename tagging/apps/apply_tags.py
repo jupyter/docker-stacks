@@ -15,9 +15,6 @@ LOGGER = logging.getLogger(__name__)
 
 
 def apply_tags(config: Config) -> None:
-    """
-    Tags <config.full_image()> with the tags reported by all taggers for this image
-    """
     LOGGER.info(f"Tagging image: {config.image}")
 
     file_prefix = get_file_prefix_for_platform(config.platform, config.variant)
@@ -27,6 +24,8 @@ def apply_tags(config: Config) -> None:
     for tag in tags:
         LOGGER.info(f"Applying tag: {tag}")
         docker["tag", config.full_image(), tag] & plumbum.FG
+
+    LOGGER.info(f"All tags applied to image: {config.image}")
 
 
 if __name__ == "__main__":
