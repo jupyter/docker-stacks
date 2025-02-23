@@ -30,6 +30,7 @@ on:
       - "!tagging/README.md"
       - "tests/**"
       - "!tests/README.md"
+      - "wiki/**"
       - "requirements-dev.txt"
   push:
     branches:
@@ -50,6 +51,7 @@ on:
       - "!tagging/README.md"
       - "tests/**"
       - "!tests/README.md"
+      - "wiki/**"
       - "requirements-dev.txt"
   workflow_dispatch:
 
@@ -434,7 +436,10 @@ jobs:
         x86_64-r,
         x86_64-julia,
         x86_64-tensorflow,
+        x86_64-tensorflow-cuda,
         x86_64-pytorch,
+        x86_64-pytorch-cuda11,
+        x86_64-pytorch-cuda12,
         x86_64-datascience,
         x86_64-pyspark,
         x86_64-all-spark,

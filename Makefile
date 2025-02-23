@@ -41,7 +41,7 @@ build/%: ROOT_IMAGE?=ubuntu:24.04
 build/%: PYTHON_VERSION?=3.12
 build/%: ## build the latest image for a stack using the system's architecture
 	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm \
-	  --tag "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" \
+	  --tag "$(REGISTRY)/$(OWNER)/$(notdir $@)" \
 	  "./images/$(notdir $@)" \
 	  --build-arg REGISTRY="$(REGISTRY)" \
 	  --build-arg OWNER="$(OWNER)" \
@@ -77,24 +77,26 @@ linkcheck-docs: ## check broken links
 
 
 hook/%: VARIANT?=default
+hook/%: REPOSITORY?=$(OWNER)/docker-stacks
 hook/%: ## run post-build hooks for an image
-	python3 -m tagging.write_tags_file \
+	python3 -m tagging.apps.write_tags_file \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
-	  --short-image-name "$(notdir $@)" \
+	  --image "$(notdir $@)" \
 	  --variant "$(VARIANT)" \
 	  --tags-dir /tmp/jupyter/tags/
-	python3 -m tagging.write_manifest \
+	python3 -m tagging.apps.write_manifest \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
-	  --short-image-name "$(notdir $@)" \
+	  --image "$(notdir $@)" \
 	  --variant "$(VARIANT)" \
 	  --hist-lines-dir /tmp/jupyter/hist_lines/ \
-	  --manifests-dir /tmp/jupyter/manifests/
-	python3 -m tagging.apply_tags \
+	  --manifests-dir /tmp/jupyter/manifests/ \
+	  --repository "$(REPOSITORY)"
+	python3 -m tagging.apps.apply_tags \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
-	  --short-image-name "$(notdir $@)" \
+	  --image "$(notdir $@)" \
 	  --variant "$(VARIANT)" \
 	  --platform "$(shell uname -m)" \
 	  --tags-dir /tmp/jupyter/tags/
@@ -137,5 +139,5 @@ test/%: ## run tests against a stack
 	python3 -m tests.run_tests \
 	  --registry "$(REGISTRY)" \
 	  --owner "$(OWNER)" \
-	  --short-image-name "$(notdir $@)"
+	  --image "$(notdir $@)"
 test-all: $(foreach I, $(ALL_IMAGES), test/$(I)) ## test all stacks

@@ -78,10 +78,10 @@ jobs:
 
       - name: Write tags file 🏷
         run: >
-          python3 -m tagging.write_tags_file
+          python3 -m tagging.apps.write_tags_file
           --registry ${{ env.REGISTRY }}
           --owner ${{ env.OWNER }}
-          --short-image-name ${{ inputs.image }}
+          --image ${{ inputs.image }}
           --variant ${{ inputs.variant }}
           --tags-dir /tmp/jupyter/tags/
         shell: bash
@@ -94,13 +94,14 @@ jobs:
 
       - name: Write manifest and build history file 🏷
         run: >
-          python3 -m tagging.write_manifest
+          python3 -m tagging.apps.write_manifest
           --registry ${{ env.REGISTRY }}
           --owner ${{ env.OWNER }}
-          --short-image-name ${{ inputs.image }}
+          --image ${{ inputs.image }}
           --variant ${{ inputs.variant }}
           --hist-lines-dir /tmp/jupyter/hist_lines/
           --manifests-dir /tmp/jupyter/manifests/
+          --repository ${{ github.repository }}
         shell: bash
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@v4
@@ -132,5 +133,5 @@ jobs:
           python3 -m tests.run_tests
           --registry ${{ env.REGISTRY }}
           --owner ${{ env.OWNER }}
-          --short-image-name ${{ inputs.image }}
+          --image ${{ inputs.image }}
         shell: bash
