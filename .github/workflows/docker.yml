@@ -523,8 +523,6 @@ jobs:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
-    permissions:
-      contents: write
 
   contributed-recipes:
     uses: ./.github/workflows/contributed-recipes.yml
