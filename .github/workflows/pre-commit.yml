@@ -7,9 +7,6 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   run-hooks:
     runs-on: ubuntu-24.04
