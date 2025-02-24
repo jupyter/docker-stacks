@@ -11,10 +11,13 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install TensorFlow, CUDA and cuDNN with pip
-RUN pip install --no-cache-dir \
-    "jupyter-server-proxy" \
-    "tensorflow[and-cuda]<=2.17.1" && \
+# Install TensorFlow, CUDA and cuDNN
+# Specifying `CONDA_OVERRIDE_CUDA` to use gpu version on a machine with cpu only:
+# https://github.com/conda-forge/tensorflow-feedstock/issues/174
+RUN CONDA_OVERRIDE_CUDA=12.6 mamba install --yes \
+    'jupyter-server-proxy' \
+    'tensorflow-gpu' && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
