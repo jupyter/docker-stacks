@@ -11,11 +11,22 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install tensorflow with pip, on x86_64 tensorflow-cpu
-RUN [[ $(uname -m) = x86_64 ]] && TF_POSTFIX="-cpu" || TF_POSTFIX="" && \
-    pip install --no-cache-dir \
-    "jupyter-server-proxy" \
-    "tensorflow${TF_POSTFIX}" && \
+RUN mamba install --yes \
+    'jupyter-server-proxy' && \
+    mamba clean --all -f -y && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
+
+# Can't use `conda-forge` for aarch64 tensorflow:
+# https://github.com/conda-forge/tensorflow-feedstock/issues/136
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        mamba install --yes \
+            'tensorflow-cpu' && \
+            mamba clean --all -f -y ; \
+    else \
+        pip install --no-cache-dir \
+            'tensorflow'; \
+    fi && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 

@@ -11,10 +11,11 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install TensorFlow, CUDA and cuDNN with pip
-RUN pip install --no-cache-dir \
-    "jupyter-server-proxy" \
-    "tensorflow[and-cuda]" && \
+# Install TensorFlow, CUDA and cuDNN
+RUN mamba install --yes \
+    'jupyter-server-proxy' \
+    'tensorflow-gpu' && \
+    mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
