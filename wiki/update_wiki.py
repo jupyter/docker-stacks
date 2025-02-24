@@ -5,9 +5,11 @@ import argparse
 import datetime
 import logging
 import shutil
+import textwrap
 from pathlib import Path
 
 import plumbum
+import tabulate
 from dateutil import relativedelta
 
 git = plumbum.local["git"]
@@ -48,7 +50,7 @@ def calculate_monthly_stat(
 
 
 def generate_home_wiki_page(wiki_dir: Path, repository: str) -> None:
-    YEAR_MONTHLY_TABLES = "<!-- YEAR_MONTHLY_TABLES -->\n"
+    YEAR_MONTHLY_TABLES = "<!-- YEAR_MONTHLY_TABLES -->"
 
     wiki_home_content = (THIS_DIR / "Home.md").read_text()
 
@@ -58,25 +60,21 @@ def generate_home_wiki_page(wiki_dir: Path, repository: str) -> None:
     ]
     wiki_home_content = wiki_home_content.format(REPOSITORY=repository)
 
-    YEAR_TABLE_HEADER = """\
-## {year}
-
-| Month                  | Builds | Images | Commits                                                                                         |
-| ---------------------- | ------ | ------ | ----------------------------------------------------------------------------------------------- |
-"""
-
     GITHUB_COMMITS_URL = (
         f"[{{}}](https://github.com/{repository}/commits/main/?since={{}}&until={{}})"
     )
 
+    YEAR_TABLE_HEADERS = ["Month", "Builds", "Images", "Commits"]
+
     for year_dir in sorted((wiki_dir / "monthly-files").glob("*"), reverse=True):
-        wiki_home_content += "\n" + YEAR_TABLE_HEADER.format(year=year_dir.name)
+        year = int(year_dir.name)
+        wiki_home_content += f"\n\n## {year}\n\n"
+        year_table_rows = []
+
         year_builds, year_images, year_commits = 0, 0, 0
         for year_month_file in sorted(year_dir.glob("*.md"), reverse=True):
             year_month = year_month_file.stem
-            year_month_date = datetime.date(
-                year=int(year_month[:4]), month=int(year_month[5:]), day=1
-            )
+            year_month_date = datetime.date(year=year, month=int(year_month[5:]), day=1)
             builds, images, commits = calculate_monthly_stat(
                 year_month_file, year_month_date
             )
@@ -88,13 +86,21 @@ def generate_home_wiki_page(wiki_dir: Path, repository: str) -> None:
                 year_month_date,
                 year_month_date + relativedelta.relativedelta(day=31),
             )
-            monthly_line = f"| [`{year_month}`](./{year_month}) | {builds: <6} | {images: <6} | {commits_url: <95} |\n"
-            wiki_home_content += monthly_line
+            year_table_rows.append(
+                [f"[`{year_month}`](./{year_month})", builds, images, commits_url]
+            )
+
         year_commits_url = GITHUB_COMMITS_URL.format(
-            year_commits, f"{year_dir.name}-01-01", f"{year_dir.name}-12-31"
+            year_commits, f"{year}-01-01", f"{year}-12-31"
         )
-        year_total_line = f"| **Total**              | {year_builds: <6} | {year_images: <6} | {year_commits_url: <95} |\n"
-        wiki_home_content += year_total_line
+        year_table_rows.append(
+            ["**Total**", year_builds, year_images, year_commits_url]
+        )
+
+        wiki_home_content += tabulate.tabulate(
+            year_table_rows, YEAR_TABLE_HEADERS, tablefmt="github"
+        )
+    wiki_home_content += "\n"
 
     (wiki_dir / "Home.md").write_text(wiki_home_content)
     LOGGER.info("Updated Home page")
@@ -103,12 +109,14 @@ def generate_home_wiki_page(wiki_dir: Path, repository: str) -> None:
 def update_monthly_wiki_page(
     wiki_dir: Path, year_month: str, build_history_line: str
 ) -> None:
-    MONTHLY_PAGE_HEADER = f"""\
-# Images built during {year_month}
+    MONTHLY_PAGE_HEADER = textwrap.dedent(
+        f"""\
+        # Images built during {year_month}
 
-| Date | Image | Links |
-| - | - | - |
-"""
+        | Date | Image | Links |
+        | - | - | - |
+        """
+    )
     year = year_month[:4]
     monthly_page = wiki_dir / "monthly-files" / year / (year_month + ".md")
     if not monthly_page.exists():
