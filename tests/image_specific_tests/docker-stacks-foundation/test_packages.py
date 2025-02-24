@@ -58,6 +58,8 @@ PACKAGE_MAPPING = {
     "pytables": "tables",
     "scikit-image": "skimage",
     "scikit-learn": "sklearn",
+    "tensorflow-cpu": "tensorflow",
+    "tensorflow-gpu": "tensorflow",
     # R
     "randomforest": "randomForest",
     "rcurl": "RCurl",
@@ -73,6 +75,7 @@ EXCLUDED_PACKAGES = [
     "grpcio-status",
     "grpcio",
     "hdf5",
+    "jupyter-server-proxy",
     "jupyterhub-singleuser",
     "jupyterlab-git",
     "mamba",
