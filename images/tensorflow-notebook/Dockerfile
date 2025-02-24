@@ -20,8 +20,7 @@ RUN mamba install --yes \
 # Can't use `conda-forge` for aarch64 tensorflow:
 # https://github.com/conda-forge/tensorflow-feedstock/issues/136
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
-        # https://github.com/conda-forge/tensorflow-feedstock/issues/174
-        CONDA_OVERRIDE_CUDA=12.6 mamba install --yes \
+        mamba install --yes \
             'tensorflow-cpu' && \
             mamba clean --all -f -y ; \
     else \
