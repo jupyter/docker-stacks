@@ -14,7 +14,7 @@ More info on `pytest` can be found [here](https://docs.pytest.org/en/latest/cont
 The actual image-specific test files are located in folders like `tests/by_image/<somestack>/` (e.g., `tests/by_image/docker-stacks-foundation/`, etc.).
 
 ```{note}
-If your test is located in `tests/by_image/<somestack>/`, it will be run against the `jupyter/<somestack>` image and against all the [images inherited from this image](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#image-relationships).
+If your test is located in `tests/by_image/<somestack>/`, it will be run against the `jupyter/<somestack>` image and against all the [images inherited from this image](../using/selecting.md#image-relationships).
 ```
 
 Many tests make use of global [pytest fixtures](https://docs.pytest.org/en/latest/reference/fixtures.html)

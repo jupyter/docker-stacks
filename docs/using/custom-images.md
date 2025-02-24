@@ -4,7 +4,7 @@ This section describes how to build a custom set of images.
 It may be helpful if you need to change the Ubuntu or Python version, or to make a significant change to the build process itself.
 
 This project only builds one set of images at a time.
-If you want to use older images, take a look [here](https://jupyter-docker-stacks.readthedocs.io/en/latest/#using-old-images).
+If you want to use older images, take a look [here](../index.rst/#using-old-images).
 
 ## Automating your build using template cookiecutter project
 
