@@ -46,21 +46,16 @@ def calculate_monthly_stat(
     images = year_month_file.content.count("Build manifest")
 
     with plumbum.local.env(TZ="UTC"):
-        future = (
-            git[
-                "log",
-                "--oneline",
-                "--since",
-                f"{year_month_date}.midnight",
-                "--until",
-                f"{year_month_date + relativedelta.relativedelta(months=1)}.midnight",
-                "--first-parent",
-            ]
-            & plumbum.BG
-        )
-    future.wait()
-    commits = len(future.stdout.splitlines())
-
+        git_log = git[
+            "log",
+            "--oneline",
+            "--since",
+            f"{year_month_date}.midnight",
+            "--until",
+            f"{year_month_date + relativedelta.relativedelta(months=1)}.midnight",
+            "--first-parent",
+        ]()
+    commits = len(git_log.splitlines())
     return Statistics(builds=builds, images=images, commits=commits)
 
 
