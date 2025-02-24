@@ -27,10 +27,10 @@ pre-commit install
 ### Run
 
 Now, _pre-commit_ (and so configured hooks) will run automatically on `git commit` on each changed file.
-However, it is also possible to trigger it against all files.
+However, you can also run it against all files manually.
 
 ```{note}
-Hadolint pre-commit uses Docker to run, so `docker` should be running while running this command.
+Hadolint pre-commit uses Docker to run, so `docker` should be running while executing this command.
 ```
 
 ```sh
@@ -58,7 +58,7 @@ The following rules are ignored by default for all images in the `.hadolint.yaml
 - [`DL3008`][dl3008]: System packages are always updated (`apt-get`) to the latest version.
 - [`DL3013`][dl3013]: We always install the latest packages using `pip`
 
-The preferred way to do it for other rules is to flag ignored ones in the `Dockerfile`.
+The preferred way to ignore other rules is to flag them in the `Dockerfile`.
 
 > It is also possible to ignore rules by using a special comment directly above the Dockerfile instruction you want to make an exception for.
 > Ignore rule comments look like `# hadolint ignore=DL3001,SC1081`.

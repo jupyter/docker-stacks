@@ -35,8 +35,8 @@ This will serve as both the git repository name and the part of the Docker image
 stack_name [my-jupyter-stack]:
 ```
 
-Enter the user or organization name under which this stack will reside on Quay.io.
-You must have access to manage this Quay.io organization to push images here.
+Enter the user or organization name under which this stack will reside on Docker Hub.
+You must have access to manage this Docker Hub organization to push images here.
 
 ```text
 stack_org [my-project]:
@@ -150,5 +150,5 @@ Finally, if you'd like to add a link to your project to this documentation site,
 1. Fork the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
 2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section in your fork.
 3. Add a table entry with a link to your project, a binder link, and a short description of what your Docker image contains.
-4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)(PR) with your changes.
+4. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with your changes.
    Maintainers will respond and work with you to address any formatting or content issues.

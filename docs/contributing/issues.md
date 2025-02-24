@@ -1,6 +1,6 @@
 # Project Issues
 
-We appreciate your taking the time to report an issue you encountered using the Jupyter Docker Stacks.
+We appreciate you taking the time to report an issue you encountered while using the Jupyter Docker Stacks.
 Please review the following guidelines when reporting your problem.
 
 - If you believe you've found a security vulnerability in any of the Jupyter projects included in Jupyter Docker Stacks images,
