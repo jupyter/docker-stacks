@@ -2,11 +2,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
-from pathlib import Path
 
 import plumbum
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
+from tagging.utils.config import Config
 from tagging.utils.get_platform import ALL_PLATFORMS
 from tagging.utils.get_prefix import get_file_prefix_for_platform
 
@@ -15,29 +15,31 @@ docker = plumbum.local["docker"]
 LOGGER = logging.getLogger(__name__)
 
 
-def merge_tags(
-    *,
-    short_image_name: str,
-    variant: str,
-    tags_dir: Path,
-) -> None:
-    """
-    Merge tags for x86_64 and aarch64 images when possible.
-    """
-    LOGGER.info(f"Merging tags for image: {short_image_name}")
+def read_tags_from_files(config: Config) -> set[str]:
+    LOGGER.info(f"Read tags from file(s) for image: {config.image}")
 
-    all_tags: set[str] = set()
-
+    tags: set[str] = set()
     for platform in ALL_PLATFORMS:
-        file_prefix = get_file_prefix_for_platform(platform, variant)
-        filename = f"{file_prefix}-{short_image_name}.txt"
-        file_path = tags_dir / filename
-        if file_path.exists():
-            tags = file_path.read_text().splitlines()
-            all_tags.update(tag.replace(platform + "-", "") for tag in tags)
+        LOGGER.info(f"Reading tags for platform: {platform}")
 
-    LOGGER.info(f"Got tags: {all_tags}")
+        file_prefix = get_file_prefix_for_platform(platform, config.variant)
+        filename = f"{file_prefix}-{config.image}.txt"
+        path = config.tags_dir / filename
+        if path.exists():
+            LOGGER.info(f"Tag file: {path} found")
+            lines = path.read_text().splitlines()
+            tags.update(tag.replace(platform + "-", "") for tag in lines)
+        else:
+            LOGGER.info(f"Tag file: {path} doesn't exist")
 
+    LOGGER.info(f"Tags read for image: {config.image}")
+    return tags
+
+
+def merge_tags(config: Config) -> None:
+    LOGGER.info(f"Merging tags for image: {config.image}")
+
+    all_tags = read_tags_from_files(config)
     for tag in all_tags:
         LOGGER.info(f"Trying to merge tag: {tag}")
         existing_images = []
@@ -56,15 +58,14 @@ def merge_tags(
         LOGGER.info(f"Found images: {existing_images}")
         docker["manifest", "create", tag][existing_images] & plumbum.FG
         docker["manifest", "push", tag] & plumbum.FG
+
         LOGGER.info(f"Successfully merged and pushed tag: {tag}")
+
+    LOGGER.info(f"All tags merged for image: {config.image}")
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    arg_parser = common_arguments_parser(
-        short_image_name=True, variant=True, tags_dir=True
-    )
-    args = arg_parser.parse_args()
-
-    merge_tags(**vars(args))
+    config = common_arguments_parser(image=True, variant=True, tags_dir=True)
+    merge_tags(config)

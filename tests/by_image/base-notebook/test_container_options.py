@@ -21,7 +21,7 @@ def test_cli_args(container: TrackedContainer, http_client: requests.Session) ->
     )
     resp = http_client.get(f"http://localhost:{host_port}")
     resp.raise_for_status()
-    logs = running_container.logs().decode("utf-8")
+    logs = running_container.logs().decode()
     LOGGER.debug(logs)
     assert "ERROR" not in logs
     warnings = TrackedContainer.get_warnings(logs)
@@ -48,7 +48,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     command = f'stat -c "%F %U %G" /home/{nb_user}/.jupyter'
     expected_output = f"directory {nb_user} users"
     cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
-    output = cmd.output.decode("utf-8").strip("\n")
+    output = cmd.output.decode().strip("\n")
     assert (
         output == expected_output
     ), f"Hidden folder .jupyter was not copied properly to {nb_user} home folder. stat: {output}, expected {expected_output}"
@@ -74,7 +74,7 @@ def test_unsigned_ssl(
     resp = http_client.get(f"https://localhost:{host_port}", verify=False)
     resp.raise_for_status()
     assert "login_submit" in resp.text
-    logs = running_container.logs().decode("utf-8")
+    logs = running_container.logs().decode()
     assert "ERROR" not in logs
     warnings = TrackedContainer.get_warnings(logs)
     assert not warnings
@@ -109,7 +109,7 @@ def test_custom_internal_port(
     )
     resp = http_client.get(f"http://localhost:{host_port}")
     resp.raise_for_status()
-    logs = running_container.logs().decode("utf-8")
+    logs = running_container.logs().decode()
     LOGGER.debug(logs)
     assert "ERROR" not in logs
     warnings = TrackedContainer.get_warnings(logs)

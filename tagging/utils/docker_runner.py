@@ -39,9 +39,8 @@ class DockerRunner:
     ) -> None:
         assert self.container is not None
         LOGGER.info(f"Removing container {self.container.name} ...")
-        if self.container:
-            self.container.remove(force=True)
-            LOGGER.info(f"Container {self.container.name} removed")
+        self.container.remove(force=True)
+        LOGGER.info(f"Container {self.container.name} removed")
 
     @staticmethod
     def run_simple_command(
@@ -49,7 +48,7 @@ class DockerRunner:
     ) -> str:
         LOGGER.info(f"Running cmd: '{cmd}' on container: {container}")
         out = container.exec_run(cmd)
-        result = out.output.decode("utf-8").rstrip()
+        result = out.output.decode().rstrip()
         assert isinstance(result, str)
         if print_result:
             LOGGER.info(f"Command result: {result}")

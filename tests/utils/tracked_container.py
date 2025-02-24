@@ -70,7 +70,7 @@ class TrackedContainer:
     ) -> str:
         running_container = self.run_detached(**kwargs)
         rv = running_container.wait(timeout=timeout)
-        logs = running_container.logs().decode("utf-8")
+        logs = running_container.logs().decode()
         assert isinstance(logs, str)
         LOGGER.debug(logs)
         assert no_warnings == (not self.get_warnings(logs))
@@ -92,5 +92,9 @@ class TrackedContainer:
 
     def remove(self) -> None:
         """Kills and removes the tracked docker container."""
-        if self.container:
+        if self.container is None:
+            LOGGER.info("No container to remove")
+        else:
+            LOGGER.info(f"Removing container {self.container.name} ...")
             self.container.remove(force=True)
+            LOGGER.info(f"Container {self.container.name} removed")

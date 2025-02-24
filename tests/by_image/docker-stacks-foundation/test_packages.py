@@ -115,7 +115,7 @@ def _check_import_package(
     """Generic function executing a command"""
     LOGGER.debug(f"Trying to import a package with [{command}] ...")
     exec_result = package_helper.running_container.exec_run(command)
-    assert exec_result.exit_code == 0, exec_result.output.decode("utf-8")
+    assert exec_result.exit_code == 0, exec_result.output.decode()
 
 
 def check_import_python_package(

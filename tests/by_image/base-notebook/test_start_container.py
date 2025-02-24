@@ -49,7 +49,7 @@ def test_start_notebook(
     )
     # sleeping some time to let the server start
     time.sleep(2)
-    logs = running_container.logs().decode("utf-8")
+    logs = running_container.logs().decode()
     LOGGER.debug(logs)
     # checking that the expected command is launched
     assert (
@@ -79,7 +79,7 @@ def test_tini_entrypoint(
     running_container = container.run_detached(tty=True)
     # Select the PID 1 and get the corresponding command
     cmd = running_container.exec_run(f"ps -p {pid} -o comm=")
-    output = cmd.output.decode("utf-8").strip("\n")
+    output = cmd.output.decode().strip("\n")
     assert "ERROR" not in output
     assert "WARNING" not in output
     assert output == command, f"{command} shall be launched as pid {pid}, got {output}"

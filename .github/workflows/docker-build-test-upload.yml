@@ -81,7 +81,7 @@ jobs:
           python3 -m tagging.apps.write_tags_file
           --registry ${{ env.REGISTRY }}
           --owner ${{ env.OWNER }}
-          --short-image-name ${{ inputs.image }}
+          --image ${{ inputs.image }}
           --variant ${{ inputs.variant }}
           --tags-dir /tmp/jupyter/tags/
         shell: bash
@@ -97,7 +97,7 @@ jobs:
           python3 -m tagging.apps.write_manifest
           --registry ${{ env.REGISTRY }}
           --owner ${{ env.OWNER }}
-          --short-image-name ${{ inputs.image }}
+          --image ${{ inputs.image }}
           --variant ${{ inputs.variant }}
           --hist-lines-dir /tmp/jupyter/hist_lines/
           --manifests-dir /tmp/jupyter/manifests/
@@ -133,5 +133,5 @@ jobs:
           python3 -m tests.run_tests
           --registry ${{ env.REGISTRY }}
           --owner ${{ env.OWNER }}
-          --short-image-name ${{ inputs.image }}
+          --image ${{ inputs.image }}
         shell: bash

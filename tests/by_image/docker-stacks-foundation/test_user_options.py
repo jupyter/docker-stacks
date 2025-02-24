@@ -50,7 +50,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     # Use sleep, not wait, because the container sleeps forever.
     time.sleep(1)
     LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
-    output = running_container.logs().decode("utf-8")
+    output = running_container.logs().decode()
     assert "ERROR" not in output
     assert "WARNING" not in output
     assert (
@@ -61,14 +61,14 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     command = "id"
     expected_output = f"uid=1000({nb_user}) gid=100(users) groups=100(users)"
     cmd = running_container.exec_run(command, user=nb_user, workdir=f"/home/{nb_user}")
-    output = cmd.output.decode("utf-8").strip("\n")
+    output = cmd.output.decode().strip("\n")
     assert output == expected_output, f"Bad user {output}, expected {expected_output}"
 
     LOGGER.info(f"Checking if {nb_user} owns his home folder ...")
     command = f'stat -c "%U %G" /home/{nb_user}/'
     expected_output = f"{nb_user} users"
     cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
-    output = cmd.output.decode("utf-8").strip("\n")
+    output = cmd.output.decode().strip("\n")
     assert (
         output == expected_output
     ), f"Bad owner for the {nb_user} home folder {output}, expected {expected_output}"
@@ -79,7 +79,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     command = f'stat -c "%F %U %G" /home/{nb_user}/work'
     expected_output = f"directory {nb_user} users"
     cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
-    output = cmd.output.decode("utf-8").strip("\n")
+    output = cmd.output.decode().strip("\n")
     assert (
         output == expected_output
     ), f"Folder work was not copied properly to {nb_user} home folder. stat: {output}, expected {expected_output}"

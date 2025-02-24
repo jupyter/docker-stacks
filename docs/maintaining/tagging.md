@@ -69,17 +69,13 @@ So, the `tag_value(container)` method gets a docker container as an input and re
 
 ### Manifest
 
-`ManifestHeader` is a build manifest header.
-It contains the following sections: `Build timestamp`, `Docker image size`, and `Git commit` info.
-
-All the other manifest classes are inherited from `ManifestInterface`:
+All manifest classes except `BuildInfo` are inherited from `ManifestInterface`
+and `markdown_piece(container)` method returns a piece of the build manifest.
 
 ```{literalinclude} ../../tagging/manifests/manifest_interface.py
 :language: py
 :start-at: class ManifestInterface
 ```
-
-- The `markdown_piece(container)` method returns a piece of markdown file to be used as a part of the build manifest.
 
 `AptPackagesManifest` example:
 

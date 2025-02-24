@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 
-from tests.hierarchy.images_hierarchy import get_test_dirs
+from tests.hierarchy.get_test_dirs import get_test_dirs
 from tests.utils.tracked_container import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
@@ -12,10 +12,10 @@ def test_units(container: TrackedContainer) -> None:
     """Various units tests
     Add a py file in the `tests/<somestack>/units` dir, and it will be automatically tested
     """
-    short_image_name = container.image_name[container.image_name.rfind("/") + 1 :]
-    LOGGER.info(f"Running unit tests for: {short_image_name}")
+    image = container.image_name[container.image_name.rfind("/") + 1 :]
+    LOGGER.info(f"Running unit tests for: {image}")
 
-    test_dirs = get_test_dirs(short_image_name)
+    test_dirs = get_test_dirs(image)
 
     for test_dir in test_dirs:
         host_data_dir = test_dir / "units"
