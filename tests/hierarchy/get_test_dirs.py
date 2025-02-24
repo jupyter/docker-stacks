@@ -5,7 +5,7 @@ from pathlib import Path
 from tests.hierarchy.images_hierarchy import IMAGE_PARENT
 
 THIS_DIR = Path(__file__).parent.resolve()
-IMAGE_SPECIFIC_TESTS_DIR = THIS_DIR.parent / "image_specific_tests"
+IMAGE_SPECIFIC_TESTS_DIR = THIS_DIR.parent / "by_image"
 
 assert IMAGE_SPECIFIC_TESTS_DIR.exists(), f"{IMAGE_SPECIFIC_TESTS_DIR} does not exist."
 
