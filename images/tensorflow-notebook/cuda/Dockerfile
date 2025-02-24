@@ -12,7 +12,9 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install TensorFlow, CUDA and cuDNN
-RUN mamba install --yes \
+# Specifying `CONDA_OVERRIDE_CUDA` to use gpu version on a machine with cpu only:
+# https://github.com/conda-forge/tensorflow-feedstock/issues/174
+RUN CONDA_OVERRIDE_CUDA=12.6 mamba install --yes \
     'jupyter-server-proxy' \
     'tensorflow-gpu' && \
     mamba clean --all -f -y && \
