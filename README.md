@@ -22,10 +22,9 @@ know [which Docker image](https://jupyter-docker-stacks.readthedocs.io/en/latest
 
 The [User Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/) describes additional uses and features in detail.
 
-```{note}
-Since `2023-10-20` our images are only pushed to `Quay.io` registry.
-Older images are available on Docker Hub, but they will no longer be updated.
-```
+> [!WARNING]
+> Since `2023-10-20` our images are only pushed to `Quay.io` registry.
+> Older images are available on Docker Hub, but they will no longer be updated.
 
 ### Example 1
 
@@ -66,12 +65,11 @@ but any changes made to the `~/work` directory and its files in the container wi
 [The `-i` flag](https://docs.docker.com/reference/cli/docker/container/run/#interactive) keeps the container's `STDIN` open, and lets you send input to the container through standard input.
 [The `-t` flag](https://docs.docker.com/reference/cli/docker/container/run/#tty) attaches a pseudo-TTY to the container.
 
-```{note}
-By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
-So, new notebooks will be saved there, unless you change the directory in the file browser.
-
-To change the default directory, you must specify `ServerApp.root_dir` by adding this line to the previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
-```
+> [!TIP]
+> By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
+> So, new notebooks will be saved there, unless you change the directory in the file browser.
+>
+> To change the default directory, you must specify `ServerApp.root_dir` by adding this line to the previous command: `start-notebook.py --ServerApp.root_dir=/home/jovyan/work`.
 
 ## Choosing Jupyter frontend
 
