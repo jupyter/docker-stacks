@@ -91,6 +91,8 @@ USER ${NB_UID}
 # Pin the Python version here, or set it to "default"
 ARG PYTHON_VERSION=3.12
 
+ARG MAMBA_VERSION=2.0.7.rc0
+
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
     fix-permissions "/home/${NB_USER}"
@@ -115,22 +117,23 @@ RUN set -x && \
     fi && \
     # https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html#linux-and-macos
     wget --progress=dot:giga -O - \
-        "https://micro.mamba.pm/api/micromamba/linux-${arch}/latest" | tar -xvj bin/micromamba && \
+        "https://micro.mamba.pm/api/micromamba/linux-${arch}/${MAMBA_VERSION}" | tar -xvj bin/micromamba && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     # Install the packages
-    ./bin/micromamba install \
+    ./bin/micromamba install -c conda-forge/label/mamba_prerelease -c conda-forge \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
         'jupyter_core' \
         'conda' \
-        'mamba' \
+        "mamba==${MAMBA_VERSION}" \
         "${PYTHON_SPECIFIER}" && \
     rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
     mamba list --full-name 'python' | awk 'END{sub("[^.]*$", "*", $2); print $1 " " $2}' >> "${CONDA_DIR}/conda-meta/pinned" && \
+    echo "mamba=${MAMBA_VERSION}" >> "${CONDA_DIR}/conda-meta/pinned" && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
