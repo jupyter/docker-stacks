@@ -1,6 +1,5 @@
 # Jupyter Docker Stacks
 
-[![Python versions badge](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/downloads/ "Python versions supported")
 [![GitHub actions badge](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml/badge.svg)](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml?query=branch%3Amain "Docker images build status")
 [![Read the Docs badge](https://img.shields.io/readthedocs/jupyter-docker-stacks.svg)](https://jupyter-docker-stacks.readthedocs.io/en/latest/ "Documentation build status")
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/jupyter/docker-stacks/main.svg)](https://results.pre-commit.ci/latest/github/jupyter/docker-stacks/main "pre-commit.ci build status")
@@ -106,6 +105,8 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - Starting from `2024-03-26`, we create CUDA enabled variant of `tensorflow-notebook` image for `x86_64` platform
 
 ## Using old images
+
+[![Python versions badge](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/downloads/ "Python versions supported")
 
 This project only builds one set of images at a time.
 If you want to use the older `Ubuntu` and/or `Python` version, you can use the following images:
