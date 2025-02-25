@@ -106,6 +106,8 @@ more information is available in the [documentation](https://jupyter-docker-stac
 
 ## Using old images
 
+[![Python versions badge](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/downloads/ "Python versions supported")
+
 This project only builds one set of images at a time.
 If you want to use the older `Ubuntu` and/or `Python` version, you can use the following images:
 
