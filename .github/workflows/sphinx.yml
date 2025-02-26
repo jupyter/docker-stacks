@@ -7,19 +7,35 @@ on:
   pull_request:
     paths:
       - ".github/workflows/sphinx.yml"
+      - "Makefile"
 
       - "docs/**"
+
+      # Thse files are also rendered as docs pages
       - "README.md"
       - "CHANGELOG.md"
+
+      # These files are used to generate some code snippets in the docs
+      - "tagging/manifests/apt_packages.py"
+      - "tagging/manifests/manifest_interface.py"
+      - "tagging/taggers/sha.py"
+      - "tagging/taggers/tagger_interface.py"
   push:
     branches:
       - main
     paths:
       - ".github/workflows/sphinx.yml"
+      - "Makefile"
 
       - "docs/**"
+
       - "README.md"
       - "CHANGELOG.md"
+
+      - "tagging/manifests/apt_packages.py"
+      - "tagging/manifests/manifest_interface.py"
+      - "tagging/taggers/sha.py"
+      - "tagging/taggers/tagger_interface.py"
   workflow_dispatch:
 
 jobs:
