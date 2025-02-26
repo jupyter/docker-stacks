@@ -54,7 +54,7 @@ build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
 
 check-outdated/%: ## check the outdated mamba/conda packages in a stack and produce a report
-	@TEST_IMAGE="$(REGISTRY)/$(OWNER)/$(notdir $@)" pytest tests/docker-stacks-foundation/test_outdated.py
+	@TEST_IMAGE="$(REGISTRY)/$(OWNER)/$(notdir $@)" pytest tests/by_image/docker-stacks-foundation/test_outdated.py
 check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check all the stacks for outdated packages
 
 
