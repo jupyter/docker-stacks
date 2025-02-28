@@ -16,7 +16,7 @@ The following are some common patterns.
 ### Example 1
 
 This command pulls the `jupyter/scipy-notebook` image tagged `2025-02-12` from Quay.io if it is not already present on the local host.
-It then starts a container running Jupyter Server with the JupyterLab frontend and exposes the server on host port 8888.
+It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 8888.
 The server logs appear in the terminal and include a URL to the server.
 
 ```bash
@@ -54,7 +54,7 @@ docker rm eca4aa01751c
 ### Example 2
 
 This command pulls the `jupyter/r-notebook` image tagged `2025-02-12` from Quay.io if it is not already present on the local host.
-It then starts a container running Server and exposes the server on host port 10000.
+It then starts a container running a Jupyter Server and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the Server but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
@@ -179,7 +179,7 @@ See the
 
 ## Using JupyterHub
 
-You can configure JupyterHub to launcher Docker containers from the Jupyter Docker Stacks images.
+You can configure JupyterHub to launch Docker containers from the Jupyter Docker Stacks images.
 If you've been following the [Zero to JupyterHub with Kubernetes](https://z2jh.jupyter.org/en/latest/) guide,
 see the [Use an existing Docker image](https://z2jh.jupyter.org/en/latest/jupyterhub/customizing/user-environment.html#choose-and-use-an-existing-docker-image) section for details.
 If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://jupyterhub-dockerspawner.readthedocs.io/en/latest/docker-image.html)
