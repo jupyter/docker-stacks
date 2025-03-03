@@ -46,7 +46,7 @@ The prefix of commit hash (namely, 12 letters) is used as an image tag to make i
 
 ### Tagger
 
-`Tagger` is a class that can be run inside a docker container to calculate some tag for an image.
+`Tagger` is a class that can be run inside a docker container to calculate a tag for an image.
 
 All the taggers are inherited from `TaggerInterface`:
 
@@ -91,6 +91,6 @@ and `markdown_piece(container)` method returns a piece of the build manifest.
 
 ## Images Hierarchy
 
-All images' dependencies on each other and what taggers and manifest are applicable to them are defined in `hierarchy/images_hierarchy.py`.
+All images' dependencies on each other and what taggers and manifests are applicable to them are defined in `hierarchy/images_hierarchy.py`.
 
 `hierarchy/get_taggers_and_manifests.py` defines a function to get the taggers and manifests for a specific image.

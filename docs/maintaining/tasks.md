@@ -10,8 +10,8 @@ To build new images and publish them to the Registry, do the following:
 
    ```{note}
    GitHub Actions are pretty reliable, so please investigate if some error occurs.
-   Building Docker images in PRs is the same as building them in the default branch,
-   except single-platform images are pushed to Registry and then tags are merged for `x86_64` and `aarch64`.
+   Building Docker images in PRs is the same as building them in the default branch.
+   The only difference is that single-platform images are pushed to Registry and then tags are merged for `x86_64` and `aarch64`.
    ```
 
 4. Avoid merging another PR to the main branch until all pending builds in the main branch are complete.
@@ -29,12 +29,12 @@ When a new `Python` version is released, we wait for:
 ## Updating the Ubuntu Base Image
 
 `jupyter/docker-stacks-foundation` is based on the LTS Ubuntu docker image.
-We are waiting for the first point release of the new LTS Ubuntu before updating the version.
-Other images are directly or indirectly inherited from `docker-stacks-foundation`.
+We wait for the first point release of the new LTS Ubuntu before updating the version.
+Other images are directly or indirectly inherited from `jupyter/docker-stacks-foundation`.
 We rebuild our images automatically each week, which means they frequently receive updates.
 
 When there's a security fix in the Ubuntu base image, it's a good idea to manually trigger the rebuild of images
-[from the GitHub actions workflow UI](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
+[from the GitHub Actions workflow UI](https://github.com/jupyter/docker-stacks/actions/workflows/docker.yml).
 Pushing the `Run Workflow` button will trigger this process.
 
 ## Adding a New Core Image to the Registry
@@ -67,5 +67,5 @@ When there's a new stack definition, check before merging the PR:
 
 ## Restarting a failed build
 
-If an automated build in GitHub Actions has got you down, you can restart failed steps on GitHub.
+If an automated build in GitHub Actions fails, you can restart the failed jobs on GitHub.
 You can also download the artifacts and investigate them for any issues.
