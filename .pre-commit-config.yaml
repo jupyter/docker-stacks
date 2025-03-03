@@ -21,7 +21,7 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: 6.0.0
+    rev: 6.0.1
     hooks:
       - id: isort
         args: [--profile, black]
@@ -35,7 +35,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.1
+    rev: v1.15.0
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -63,7 +63,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: v3.4.2
+    rev: v3.5.3
     hooks:
       - id: prettier
 
@@ -120,7 +120,7 @@ repos:
 
   # Lint: Python
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.1
+    rev: 7.1.2
     hooks:
       - id: flake8
 
