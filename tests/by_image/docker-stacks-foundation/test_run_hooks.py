@@ -82,7 +82,7 @@ def run_source_in_dir(
     host_data_dir = THIS_DIR / subdir
     cont_data_dir = "/home/jovyan/data"
     # https://forums.docker.com/t/all-files-appear-as-executable-in-file-paths-using-bind-mount/99921
-    # Unfortunately, Docker treats all files in mounter dir as executable files
+    # Unfortunately, Docker treats all files in mounted dir as executable files
     # So we make a copy of the mounted dir inside a container
     command = (
         "cp -r /home/jovyan/data/ /home/jovyan/data-copy/ &&"
