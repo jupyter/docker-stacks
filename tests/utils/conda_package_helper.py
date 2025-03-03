@@ -101,7 +101,7 @@ class CondaPackageHelper:
         # since we only manage packages installed through mamba here
         # They are represented by a dict with a key 'pip'
         dependencies = filter(lambda x: isinstance(x, str), dependencies)
-        packages_dict: dict[str, set[str]] = dict()
+        packages_dict: dict[str, set[str]] = {}
         for split in map(lambda x: re.split("=?=", x), dependencies):
             # default values
             package = split[0]
