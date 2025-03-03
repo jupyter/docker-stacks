@@ -72,6 +72,8 @@ repos:
     rev: v5.0.0
     hooks:
       - id: check-added-large-files
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
       - id: end-of-file-fixer
       - id: requirements-txt-fixer
       - id: trailing-whitespace
