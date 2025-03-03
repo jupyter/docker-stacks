@@ -97,6 +97,16 @@ def run_source_in_dir(
     )
 
 
+def test_run_hooks_change(container: TrackedContainer) -> None:
+    logs = run_source_in_dir(container, subdir="data/run-hooks/change")
+
+    assert "Inside a.sh MY_VAR variable has 123 value" in logs
+    assert "Inside b.sh MY_VAR variable has 123 value" in logs
+    assert "Changing value of MY_VAR" in logs
+    assert "After change inside b.sh MY_VAR variable has 456 value" in logs
+    assert "Inside c.sh MY_VAR variable has 456 value" in logs
+
+
 def test_run_hooks_executables(container: TrackedContainer) -> None:
     logs = run_source_in_dir(
         container,
@@ -109,7 +119,7 @@ def test_run_hooks_executables(container: TrackedContainer) -> None:
     assert "SOME_VAR is 123" in logs
 
 
-def test_run_hooks_with_failures(container: TrackedContainer) -> None:
+def test_run_hooks_failures(container: TrackedContainer) -> None:
     logs = run_source_in_dir(
         container, subdir="data/run-hooks/failures", no_failure=False
     )
@@ -130,6 +140,13 @@ def test_run_hooks_with_failures(container: TrackedContainer) -> None:
     assert "OTHER_VAR=456" in logs
 
 
+def test_run_hooks_sh_files(container: TrackedContainer) -> None:
+    logs = run_source_in_dir(container, subdir="data/run-hooks/sh-files")
+
+    assert "Inside executable.sh MY_VAR variable has 0 value" in logs
+    assert "Inside non-executable.sh MY_VAR variable has 1 value" in logs
+
+
 def test_run_hooks_unset(container: TrackedContainer) -> None:
     logs = run_source_in_dir(container, subdir="data/run-hooks/unset")
 
@@ -137,13 +154,3 @@ def test_run_hooks_unset(container: TrackedContainer) -> None:
     assert "Inside b.sh MY_VAR variable has 123 value" in logs
     assert "Unsetting MY_VAR" in logs
     assert "Inside c.sh MY_VAR variable has  value" in logs
-
-
-def test_run_hooks_change(container: TrackedContainer) -> None:
-    logs = run_source_in_dir(container, subdir="data/run-hooks/change")
-
-    assert "Inside a.sh MY_VAR variable has 123 value" in logs
-    assert "Inside b.sh MY_VAR variable has 123 value" in logs
-    assert "Changing value of MY_VAR" in logs
-    assert "After change inside b.sh MY_VAR variable has 456 value" in logs
-    assert "Inside c.sh MY_VAR variable has 456 value" in logs
