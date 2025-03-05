@@ -7,10 +7,10 @@ import logging
 from docker.models.containers import Container
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
+from tagging.apps.config import Config
 from tagging.hierarchy.get_manifests import get_manifests
 from tagging.hierarchy.get_taggers import get_taggers
-from tagging.manifests.build_info import BuildInfo
-from tagging.utils.config import Config
+from tagging.manifests.build_info import BuildInfo, BuildInfoConfig
 from tagging.utils.docker_runner import DockerRunner
 from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
 from tagging.utils.git_helper import GitHelper
@@ -67,9 +67,17 @@ def get_manifest(config: Config, commit_hash_tag: str, container: Container) -> 
     manifest_names = [manifest.__class__.__name__ for manifest in manifests]
     LOGGER.info(f"Using manifests: {manifest_names}")
 
+    build_info_config = BuildInfoConfig(
+        registry=config.registry,
+        owner=config.owner,
+        image=config.image,
+        repository=config.repository,
+        build_timestamp=BUILD_TIMESTAMP,
+    )
+
     markdown_pieces = [
         f"# Build manifest for image: {config.image}:{commit_hash_tag}",
-        BuildInfo.markdown_piece(config, BUILD_TIMESTAMP).get_str(),
+        BuildInfo.markdown_piece(build_info_config).get_str(),
         *(manifest.markdown_piece(container).get_str() for manifest in manifests),
     ]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"

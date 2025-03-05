@@ -4,8 +4,8 @@
 import logging
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
+from tagging.apps.config import Config
 from tagging.hierarchy.get_taggers import get_taggers
-from tagging.utils.config import Config
 from tagging.utils.docker_runner import DockerRunner
 from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
 

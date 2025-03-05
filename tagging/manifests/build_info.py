@@ -1,21 +1,35 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import textwrap
+from dataclasses import dataclass
 
 import plumbum
 
 from tagging.manifests.manifest_interface import MarkdownPiece
-from tagging.utils.config import Config
 from tagging.utils.git_helper import GitHelper
 
 docker = plumbum.local["docker"]
+
+
+@dataclass(frozen=True)
+class BuildInfoConfig:
+    registry: str
+    owner: str
+    image: str
+
+    repository: str
+
+    build_timestamp: str
+
+    def full_image(self) -> str:
+        return f"{self.registry}/{self.owner}/{self.image}"
 
 
 class BuildInfo:
     """BuildInfo doesn't fall under common interface, and we run it separately"""
 
     @staticmethod
-    def markdown_piece(config: Config, build_timestamp: str) -> MarkdownPiece:
+    def markdown_piece(config: BuildInfoConfig) -> MarkdownPiece:
         commit_hash = GitHelper.commit_hash()
         commit_hash_tag = GitHelper.commit_hash_tag()
         commit_message = GitHelper.commit_message()
@@ -32,7 +46,7 @@ class BuildInfo:
 
         build_info = textwrap.dedent(
             f"""\
-            - Build timestamp: {build_timestamp}
+            - Build timestamp: {config.build_timestamp}
             - Docker image: `{config.full_image()}:{commit_hash_tag}`
             - Docker image size: {image_size}
             - Git commit SHA: [{commit_hash}](https://github.com/{config.repository}/commit/{commit_hash})
