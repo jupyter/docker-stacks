@@ -91,7 +91,7 @@ USER ${NB_UID}
 # Pin the Python version here, or set it to "default"
 ARG PYTHON_VERSION=3.12
 
-ARG MAMBA_VERSION=2.0.7.rc0
+ARG MAMBA_VERSION=2.0.7.rc1
 
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
