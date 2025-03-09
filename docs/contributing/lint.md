@@ -59,10 +59,9 @@ The following rules are ignored by default for all images in the `.hadolint.yaml
 - [`DL3013`][dl3013]: We always install the latest packages using `pip`
 
 The preferred way to ignore other rules is to flag them in the `Dockerfile`.
-
-> It is also possible to ignore rules by using a special comment directly above the Dockerfile instruction you want to make an exception for.
-> Ignore rule comments look like `# hadolint ignore=DL3001,SC1081`.
-> For example:
+You can use a special comment directly above the Dockerfile instruction you want to make an exception for.
+Ignore rule comments look like `# hadolint ignore=DL3001,SC1081`.
+For example:
 
 ```dockerfile
 FROM ubuntu
