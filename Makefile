@@ -35,7 +35,7 @@ help:
 
 
 
-# Note that `ROOT_IMAGE` and `PYTHON_VERSION` arguments are only applicable to `docker-stacks-foundation` image
+# Note that `ROOT_IMAGE` and `PYTHON_VERSION` arguments are only applicable to the `docker-stacks-foundation` image
 build/%: DOCKER_BUILD_ARGS?=
 build/%: ROOT_IMAGE?=ubuntu:24.04
 build/%: PYTHON_VERSION?=3.12
@@ -71,7 +71,7 @@ cont-clean-all: cont-stop-all cont-rm-all ## clean all containers (stop + rm)
 
 docs: ## build HTML documentation
 	sphinx-build -W --keep-going --color docs/ docs/_build/
-linkcheck-docs: ## check broken links
+linkcheck-docs: ## check for broken links
 	sphinx-build -W --keep-going --color -b linkcheck docs/ docs/_build/
 
 

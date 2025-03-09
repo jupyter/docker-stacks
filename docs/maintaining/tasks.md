@@ -52,8 +52,7 @@ When there's a new stack definition, check before merging the PR:
 1. PR includes an update to the stack overview diagram
    [in the documentation](../using/selecting.md#image-relationships).
    The image links to the [blockdiag source](http://interactive.blockdiag.com/) used to create it.
-2. PR updates the [Makefile](https://github.com/jupyter/docker-stacks/blob/main/Makefile),
-   which is used to build the stacks in order on GitHub Actions.
+2. PR updates the [Makefile](https://github.com/jupyter/docker-stacks/blob/main/Makefile).
 3. Necessary Tagger(s)/Manifest(s) are added for the new image
    in the [tagging](https://github.com/jupyter/docker-stacks/tree/main/tagging) folder.
 4. A new repository is created in the `jupyter` organization in the Registry,
