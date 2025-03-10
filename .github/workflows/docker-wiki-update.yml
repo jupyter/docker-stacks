@@ -1,4 +1,4 @@
-name: Download build manifests from GitHub artifacts and push them to GitHub wiki
+name: Download build history lines and manifests from GitHub artifacts and push them to the GitHub wiki
 # We're doing everything in one workflow on purpose
 # This way we make sure we don't access wiki pages from several jobs simultaneously
 
