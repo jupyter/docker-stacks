@@ -1,5 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+import textwrap
+
 from docker.models.containers import Container
 
 from tagging.utils.docker_runner import DockerRunner
@@ -14,9 +16,11 @@ def quoted_output(container: Container, cmd: str) -> str:
 
     assert cmd_output, f"Command `{cmd}` returned empty output"
 
-    return f"""\
-`{cmd}`:
+    return textwrap.dedent(
+        f"""\
+        `{cmd}`:
 
-```text
-{cmd_output}
-```"""
+        ```text
+        {{output}}
+        ```"""
+    ).format(output=cmd_output)
