@@ -53,8 +53,8 @@ class BuildInfo:
             - Git commit message:
 
             ```text
-            {commit_message}
+            {{message}}
             ```"""
-        )
+        ).format(message=commit_message)
 
         return MarkdownPiece(title="## Build Info", sections=[build_info])
