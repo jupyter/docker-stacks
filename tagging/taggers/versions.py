@@ -7,16 +7,16 @@ from tagging.utils.docker_runner import DockerRunner
 
 
 def _get_program_version(container: Container, program: str) -> str:
-    return DockerRunner.run_simple_command(container, cmd=f"{program} --version")
+    return DockerRunner.exec_cmd(container, cmd=f"{program} --version")
 
 
 def _get_pip_package_version(container: Container, package: str) -> str:
     PIP_VERSION_PREFIX = "Version: "
 
-    package_info = DockerRunner.run_simple_command(
+    package_info = DockerRunner.exec_cmd(
         container,
         cmd=f"pip show {package}",
-        print_result=False,
+        print_output=False,
     )
     version_line = package_info.split("\n")[1]
     assert version_line.startswith(PIP_VERSION_PREFIX)

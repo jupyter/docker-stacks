@@ -44,12 +44,12 @@ def test_matplotlib(
         command=["bash", "-c", "sleep infinity"],
     )
     command = f"python {cont_data_dir}/{test_file}"
-    cmd = running_container.exec_run(command)
-    LOGGER.debug(cmd.output.decode())
-    assert cmd.exit_code == 0, f"Command {command} failed"
+    exec_result = running_container.exec_run(command)
+    LOGGER.debug(exec_result.output.decode())
+    assert exec_result.exit_code == 0, f"Command {command} failed"
     # Checking if the file is generated
     # https://stackoverflow.com/a/15895594/4413446
     command = f"test -s {output_dir}/{expected_file}"
-    cmd = running_container.exec_run(command)
-    LOGGER.debug(cmd.output.decode())
-    assert cmd.exit_code == 0, f"Command {command} failed"
+    exec_result = running_container.exec_run(command)
+    LOGGER.debug(exec_result.output.decode())
+    assert exec_result.exit_code == 0, f"Command {command} failed"

@@ -47,8 +47,8 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     )
     command = f'stat -c "%F %U %G" /home/{nb_user}/.jupyter'
     expected_output = f"directory {nb_user} users"
-    cmd = running_container.exec_run(command, workdir=f"/home/{nb_user}")
-    output = cmd.output.decode().strip("\n")
+    exec_result = running_container.exec_run(command, workdir=f"/home/{nb_user}")
+    output = exec_result.output.decode().strip("\n")
     assert (
         output == expected_output
     ), f"Hidden folder .jupyter was not copied properly to {nb_user} home folder. stat: {output}, expected {expected_output}"

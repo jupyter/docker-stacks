@@ -9,7 +9,7 @@ from tagging.utils.docker_runner import DockerRunner
 class UbuntuVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container: Container) -> str:
-        os_release = DockerRunner.run_simple_command(
+        os_release = DockerRunner.exec_cmd(
             container,
             "cat /etc/os-release",
         ).split("\n")

@@ -90,8 +90,8 @@ class CondaPackageHelper:
 
     def _execute_command(self, command: list[str]) -> str:
         """Execute a command on a running container"""
-        rc = self.running_container.exec_run(command, stderr=False)
-        return rc.output.decode()  # type: ignore
+        exec_result = self.running_container.exec_run(command, stderr=False)
+        return exec_result.output.decode()  # type: ignore
 
     @staticmethod
     def _parse_package_versions(env_export: str) -> dict[str, set[str]]:

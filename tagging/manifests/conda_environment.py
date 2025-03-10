@@ -13,7 +13,7 @@ class CondaEnvironmentManifest(ManifestInterface):
         return MarkdownPiece(
             title="## Python Packages",
             sections=[
-                DockerRunner.run_simple_command(container, "python --version"),
+                DockerRunner.exec_cmd(container, "python --version"),
                 quoted_output(container, "conda info"),
                 quoted_output(container, "mamba info"),
                 quoted_output(container, "mamba list"),

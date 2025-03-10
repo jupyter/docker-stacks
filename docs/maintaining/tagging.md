@@ -84,7 +84,7 @@ and `markdown_piece(container)` method returns a piece of the build manifest.
 :start-at: class AptPackagesManifest
 ```
 
-- `quoted_output(container, cmd)` simply runs the command inside a container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece.
+- `quoted_output(container, cmd)` simply runs the command inside a container using `DockerRunner.exec_cmd` and wraps it to triple quotes to create a valid markdown piece.
   It also adds the command which was run to the markdown piece.
 - `manifests/` subdirectory contains all the manifests.
 - `apps/write_manifest.py` is a Python executable to create the build manifest and history line for an image.

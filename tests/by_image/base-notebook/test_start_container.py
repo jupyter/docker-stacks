@@ -78,8 +78,8 @@ def test_tini_entrypoint(
     LOGGER.info(f"Test that {command} is launched as PID {pid} ...")
     running_container = container.run_detached(tty=True)
     # Select the PID 1 and get the corresponding command
-    cmd = running_container.exec_run(f"ps -p {pid} -o comm=")
-    output = cmd.output.decode().strip("\n")
+    exec_result = running_container.exec_run(f"ps -p {pid} -o comm=")
+    output = exec_result.output.decode().strip("\n")
     assert "ERROR" not in output
     assert "WARNING" not in output
     assert output == command, f"{command} shall be launched as pid {pid}, got {output}"
