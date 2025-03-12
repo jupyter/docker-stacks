@@ -13,11 +13,13 @@ from tagging.taggers.sha import SHATagger
 from tagging.taggers.tagger_interface import TaggerInterface
 from tagging.taggers.ubuntu_version import UbuntuVersionTagger
 from tagging.taggers.versions import (
+    CondaVersionTagger,
     JavaVersionTagger,
     JuliaVersionTagger,
     JupyterHubVersionTagger,
     JupyterLabVersionTagger,
     JupyterNotebookVersionTagger,
+    MambaVersionTagger,
     PythonMajorMinorVersionTagger,
     PythonVersionTagger,
     PytorchVersionTagger,
@@ -43,6 +45,8 @@ ALL_IMAGES = {
             UbuntuVersionTagger(),
             PythonMajorMinorVersionTagger(),
             PythonVersionTagger(),
+            MambaVersionTagger(),
+            CondaVersionTagger(),
         ],
         manifests=[CondaEnvironmentManifest(), AptPackagesManifest()],
     ),

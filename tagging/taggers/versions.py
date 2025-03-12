@@ -36,6 +36,18 @@ class PythonMajorMinorVersionTagger(TaggerInterface):
         return full_version[: full_version.rfind(".")]
 
 
+class MambaVersionTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(container: Container) -> str:
+        return "mamba-" + _get_program_version(container, "mamba")
+
+
+class CondaVersionTagger(TaggerInterface):
+    @staticmethod
+    def tag_value(container: Container) -> str:
+        return "conda-" + _get_program_version(container, "conda").split()[1]
+
+
 class JupyterNotebookVersionTagger(TaggerInterface):
     @staticmethod
     def tag_value(container: Container) -> str:
