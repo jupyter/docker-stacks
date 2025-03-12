@@ -94,4 +94,4 @@ and `manifest(container)` method returns a piece of the build manifest.
 
 All images' dependencies on each other and what taggers and manifests are applicable to them are defined in `hierarchy/images_hierarchy.py`.
 
-`hierarchy/get_taggers_and_manifests.py` defines a function to get the taggers and manifests for a specific image.
+`hierarchy/get_taggers.py` and `hierarchy/get_manifests.py` define functions to get the taggers and manifests for a specific image.
