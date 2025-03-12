@@ -23,12 +23,12 @@ Table of Contents
    :caption: Contributor Guide
 
    contributing/issues
-   contributing/packages
-   contributing/recipes
-   contributing/lint
-   contributing/tests
    contributing/features
+   contributing/tests
+   contributing/lint
+   contributing/recipes
    contributing/stacks
+   contributing/packages
 
 .. toctree::
    :maxdepth: 2
