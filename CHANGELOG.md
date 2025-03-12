@@ -8,6 +8,7 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 Affected: all images.
 
 - **Non-breaking:** Add `conda` and `mamba` version taggers ([#2251](https://github.com/jupyter/docker-stacks/pull/2251)).
+- **Non-breaking:** Make taggers and manifests functions ([#2252](https://github.com/jupyter/docker-stacks/pull/2252)).
 
 ## 2025-02-21
 

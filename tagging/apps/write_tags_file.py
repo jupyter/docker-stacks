@@ -20,8 +20,8 @@ def get_tags(config: Config) -> list[str]:
     tags = [f"{config.full_image()}:{tags_prefix}-latest"]
     with DockerRunner(config.full_image()) as container:
         for tagger in taggers:
-            tagger_name = tagger.__class__.__name__
-            tag_value = tagger.tag_value(container)
+            tagger_name = tagger.__name__
+            tag_value = tagger(container)
             LOGGER.info(
                 f"Calculated tag, tagger_name: {tagger_name} tag_value: {tag_value}"
             )
