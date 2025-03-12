@@ -1,5 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
+from collections.abc import Callable
 from dataclasses import dataclass
 
 from docker.models.containers import Container
@@ -18,9 +19,4 @@ class MarkdownPiece:
         return "\n\n".join([self.title, *self.sections])
 
 
-class ManifestInterface:
-    """Common interface for all manifests"""
-
-    @staticmethod
-    def markdown_piece(container: Container) -> MarkdownPiece:
-        raise NotImplementedError
+ManifestInterface = Callable[[Container], MarkdownPiece]
