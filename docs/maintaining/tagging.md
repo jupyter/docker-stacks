@@ -1,4 +1,4 @@
-# Tagging and manifest creation
+# Tags and manifests
 
 The main purpose of the source code in [the `tagging` folder](https://github.com/jupyter/docker-stacks/tree/main/tagging) is to
 properly write tags file, build history line and manifest for a single-platform image,
@@ -58,7 +58,7 @@ All the taggers follow `TaggerInterface`:
 
 So, the `tagger(container)` gets a docker container as an input and returns a tag.
 
-`commit_sha_tagger` example:
+For example:
 
 ```{literalinclude} ../../tagging/taggers/sha.py
 :language: py
@@ -66,24 +66,26 @@ So, the `tagger(container)` gets a docker container as an input and returns a ta
 ```
 
 - `taggers/` subdirectory contains all taggers.
-- `apps/write_tags_file.py`, `apps/apply_tags.py`, and `apps/merge_tags.py` are Python executable used to write tags for an image, apply tags from a file, and create multi-arch images.
+- `apps/write_tags_file.py`, `apps/apply_tags.py`, and `apps/merge_tags.py` are Python executables used to write tags for an image, apply tags from a file, and create multi-arch images.
 
 ### Manifest
 
 All manifest functions except `build_info_manifest` follow `ManifestInterface`
-and `manifest(container)` method returns a piece of the build manifest.
+and `manifest(container)` method returns a piece of the manifest.
 
 ```{literalinclude} ../../tagging/manifests/manifest_interface.py
 :language: py
 :start-at: ManifestInterface
 ```
 
-`apt_packages_manifest` example:
+For example:
 
 ```{literalinclude} ../../tagging/manifests/apt_packages.py
 :language: py
 :start-at: def
 ```
+
+where:
 
 - `quoted_output(container, cmd)` simply runs the command inside a container using `DockerRunner.exec_cmd` and wraps it to triple quotes to create a valid markdown piece.
   It also adds the command which was run to the markdown piece.
