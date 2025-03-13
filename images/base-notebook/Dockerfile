@@ -5,6 +5,11 @@ ARG OWNER=jupyter
 ARG BASE_IMAGE=$REGISTRY/$OWNER/docker-stacks-foundation
 FROM $BASE_IMAGE
 
+# mamba doesn't respect and of the normal TLS environment variables REQUESTS_CA_BUNDLE, SSL_CERT_FILE, CURL_CA_BUNDLE
+# This causes a problem when building images behind a corporate proxy even when the images have the certificates installed
+# mamba config set ssl_verify "$SSL_CERT_FILE"; needs to be called. 
+ARG SSL_CERT_FILE
+
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
@@ -38,7 +43,10 @@ USER ${NB_UID}
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 WORKDIR /tmp
-RUN mamba install --yes \
+RUN if [ -n "$SSL_CERT_FILE" ]; then \
+        mamba config set ssl_verify "$SSL_CERT_FILE"; \
+    fi && \
+    mamba install --yes \
     'jupyterhub-singleuser' \
     'jupyterlab' \
     'nbclassic' \
