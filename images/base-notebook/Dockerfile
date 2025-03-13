@@ -7,7 +7,7 @@ FROM $BASE_IMAGE
 
 # mamba doesn't respect and of the normal TLS environment variables REQUESTS_CA_BUNDLE, SSL_CERT_FILE, CURL_CA_BUNDLE
 # This causes a problem when building images behind a corporate proxy even when the images have the certificates installed
-# mamba config set ssl_verify "$SSL_CERT_FILE"; needs to be called. 
+# mamba config set ssl_verify "$SSL_CERT_FILE"; needs to be called.
 ARG SSL_CERT_FILE
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
