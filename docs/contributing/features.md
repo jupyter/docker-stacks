@@ -8,7 +8,7 @@ to balance the value of the images to the Jupyter community with the cost of mai
 
 Please follow the process below to suggest a new feature for inclusion in one of the core stacks:
 
-1. Open a [GitHub feature request issue](https://github.com/jupyter/docker-stacks/issues/new?assignees=&labels=type%3AEnhancement&projects=&template=feature_request.yml)
+1. Open a [GitHub feature request issue](https://github.com/jupyter/docker-stacks/issues/new?template=feature_request.yml)
    describing the feature you'd like to contribute.
 2. Discuss with the maintainers whether the addition makes sense
    in [one of the core stacks](../using/selecting.md#core-stacks),
