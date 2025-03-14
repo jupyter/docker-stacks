@@ -46,7 +46,7 @@ fi
 
 
 # NOTE: This hook will run as the user the container was started with!
-# shellcheck disable=SC1091
+# shellcheck source=images/docker-stacks-foundation/run-hooks.sh
 source /usr/local/bin/run-hooks.sh /usr/local/bin/start-notebook.d
 
 # If the container started as the root user, then we have permission to refit
@@ -150,7 +150,7 @@ if [ "$(id -u)" == 0 ]; then
     fi
 
     # NOTE: This hook is run as the root user!
-    # shellcheck disable=SC1091
+    # shellcheck source=images/docker-stacks-foundation/run-hooks.sh
     source /usr/local/bin/run-hooks.sh /usr/local/bin/before-notebook.d
     unset_explicit_env_vars
 
@@ -251,7 +251,7 @@ else
     fi
 
     # NOTE: This hook is run as the user we started the container as!
-    # shellcheck disable=SC1091
+    # shellcheck source=images/docker-stacks-foundation/run-hooks.sh
     source /usr/local/bin/run-hooks.sh /usr/local/bin/before-notebook.d
     unset_explicit_env_vars
 
