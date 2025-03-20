@@ -19,7 +19,7 @@ runs:
       id: docker
       uses: docker/setup-docker-action@b60f85385d03ac8acfca6d9996982511d8620a19 # v4.3.0
 
-  outputs:
-    sock:
-      description: "Docker socket path"
-      value: ${{ steps.docker.outputs.sock }}
+outputs:
+  sock:
+    description: "Docker socket path"
+    value: ${{ steps.docker.outputs.sock }}
