@@ -17,6 +17,8 @@ THIS_DIR = Path(__file__).parent.resolve()
 @pytest.fixture(scope="session")
 def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, None]:
     """Create a dual-stack IPv6 docker network"""
+    LOGGER.info(f"MORE LOGS: {docker_client.version()}")
+
     # Doesn't have to be routable since we're testing inside the container
     subnet64 = "fc00:" + ":".join(hex(randint(0, 2**16))[2:] for _ in range(3))
     name = subnet64.replace(":", "-")
