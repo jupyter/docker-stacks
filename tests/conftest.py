@@ -28,10 +28,7 @@ def http_client() -> requests.Session:
 @pytest.fixture(scope="session")
 def docker_client() -> docker.DockerClient:
     """Docker client configured based on the host environment"""
-    if "DOCKER_SOCK" in os.environ:
-        client = docker.DockerClient(base_url=os.environ["DOCKER_SOCK"])
-    else:
-        client = docker.from_env()
+    client = docker.from_env()
     LOGGER.info(f"Docker client created: {client.version()}")
     return client
 
