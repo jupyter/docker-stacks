@@ -17,3 +17,7 @@ runs:
 
     - name: Set Up Docker 🐳
       uses: docker/setup-docker-action@b60f85385d03ac8acfca6d9996982511d8620a19 # v4.3.0
+
+    - name: Output Docker Version
+      run: docker --version
+      shell: bash
