@@ -11,6 +11,32 @@ from tests.utils.tracked_container import TrackedContainer
 LOGGER = logging.getLogger(__name__)
 
 
+def get_healthy_status(
+    container: TrackedContainer,
+    env: list[str] | None,
+    cmd: list[str] | None,
+    user: str | None,
+) -> str:
+    running_container = container.run_detached(
+        tty=True,
+        environment=env,
+        command=cmd,
+        user=user,
+    )
+
+    # giving some time to let the server start
+    finish_time = time.time() + 10
+    sleep_time = 1
+    while time.time() < finish_time:
+        time.sleep(sleep_time)
+
+        status = get_health(running_container)
+        if status == "healthy":
+            return status
+
+    return get_health(running_container)
+
+
 @pytest.mark.parametrize(
     "env,cmd,user",
     [
@@ -60,22 +86,7 @@ def test_healthy(
     cmd: list[str] | None,
     user: str | None,
 ) -> None:
-    running_container = container.run_detached(
-        tty=True,
-        environment=env,
-        command=cmd,
-        user=user,
-    )
-
-    # giving some time to let the server start
-    finish_time = time.time() + 10
-    sleep_time = 0.1
-    while time.time() < finish_time:
-        time.sleep(sleep_time)
-        if get_health(running_container) == "healthy":
-            return
-
-    assert get_health(running_container) == "healthy"
+    assert get_healthy_status(container, env, cmd, user) == "healthy"
 
 
 @pytest.mark.parametrize(
@@ -108,22 +119,7 @@ def test_healthy_with_proxy(
     cmd: list[str] | None,
     user: str | None,
 ) -> None:
-    running_container = container.run_detached(
-        tty=True,
-        environment=env,
-        command=cmd,
-        user=user,
-    )
-
-    # giving some time to let the server start
-    finish_time = time.time() + 10
-    sleep_time = 0.1
-    while time.time() < finish_time:
-        time.sleep(sleep_time)
-        if get_health(running_container) == "healthy":
-            return
-
-    assert get_health(running_container) == "healthy"
+    assert get_healthy_status(container, env, cmd, user) == "healthy"
 
 
 @pytest.mark.parametrize(
@@ -145,18 +141,6 @@ def test_not_healthy(
     env: list[str] | None,
     cmd: list[str] | None,
 ) -> None:
-    running_container = container.run_detached(
-        tty=True,
-        environment=env,
-        command=cmd,
-    )
-
-    # giving some time to let the server start
-    finish_time = time.time() + 5
-    sleep_time = 0.1
-    while time.time() < finish_time:
-        time.sleep(sleep_time)
-        if get_health(running_container) == "healthy":
-            raise RuntimeError("Container should not be healthy for this testcase")
-
-    assert get_health(running_container) != "healthy"
+    assert (
+        get_healthy_status(container, env, cmd, user=None) != "healthy"
+    ), "Container should not be healthy for this testcase"
