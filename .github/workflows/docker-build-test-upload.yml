@@ -47,6 +47,7 @@ jobs:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@v4
       - name: Create dev environment 📦
+        id: dev_env_setup
         uses: ./.github/actions/create-dev-env
 
       - name: Load parent built image to Docker 📥
@@ -136,3 +137,5 @@ jobs:
           --owner ${{ env.OWNER }}
           --image ${{ inputs.image }}
         shell: bash
+        env:
+          DOCKER_SOCK: ${{ steps.dev_env_setup.outputs.sock }}
