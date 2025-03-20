@@ -14,3 +14,12 @@ runs:
         pip install --upgrade pip
         pip install --upgrade -r requirements-dev.txt
       shell: bash
+
+    # We need to have a recent docker version
+    # More info: https://github.com/jupyter/docker-stacks/pull/2255
+    # Can be removed after Docker Engine is updated
+    # https://github.com/actions/runner-images/issues/11766
+    - name: Set Up Docker 🐳
+      uses: docker/setup-docker-action@b60f85385d03ac8acfca6d9996982511d8620a19 # v4.3.0
+      with:
+        set-host: true
