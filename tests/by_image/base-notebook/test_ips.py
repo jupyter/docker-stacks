@@ -15,16 +15,23 @@ LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-@pytest.fixture(scope="session")
-def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, None]:
-    """Create a dual-stack IPv6 docker network"""
-
+def _custom_docker_client(client: docker.DockerClient) -> docker.DockerClient:
     if "CUSTOM_DOCKER_SOCK" in os.environ:
         # https://github.com/jupyter/docker-stacks/pull/2255
         # Remove when https://github.com/actions/runner-images/issues/11766 is resolved
         LOGGER.info("Using custom docker client")
-        docker_client = docker.DockerClient(base_url=os.environ["CUSTOM_DOCKER_SOCK"])
-        LOGGER.info(f"Custom Docker client created: {docker_client.version()}")
+        client = docker.DockerClient(base_url=os.environ["CUSTOM_DOCKER_SOCK"])
+        LOGGER.info(f"Custom Docker client created: {client.version()}")
+    else:
+        LOGGER.info("Using default Docker client")
+    return client
+
+
+@pytest.fixture(scope="session")
+def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, None]:
+    """Create a dual-stack IPv6 docker network"""
+
+    docker_client = _custom_docker_client(docker_client)
 
     # Doesn't have to be routable since we're testing inside the container
     subnet64 = "fc00:" + ":".join(hex(randint(0, 2**16))[2:] for _ in range(3))
