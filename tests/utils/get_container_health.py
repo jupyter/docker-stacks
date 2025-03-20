@@ -5,5 +5,5 @@ from docker.models.containers import Container
 
 
 def get_health(container: Container, client: docker.DockerClient) -> str:
-    inspect_results = client.inspect_container(container.name)
+    inspect_results = client.api.inspect_container(container.name)
     return inspect_results["State"]["Health"]["Status"]  # type: ignore
