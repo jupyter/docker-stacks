@@ -53,7 +53,7 @@ def test_ipv46(container: TrackedContainer, ipv6_network: str) -> None:
         tty=True,
     )
 
-    command = ["python", "./data/check_listening.py"]
+    command = ["python", f"{cont_data_dir}/check_listening.py"]
     r = running_container.exec_run(command)
     LOGGER.info(r.output.decode())
     assert r.exit_code == 0
