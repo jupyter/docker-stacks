@@ -1,6 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
+import os
 from collections.abc import Generator
 from pathlib import Path
 from random import randint
@@ -17,7 +18,12 @@ THIS_DIR = Path(__file__).parent.resolve()
 @pytest.fixture(scope="session")
 def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, None]:
     """Create a dual-stack IPv6 docker network"""
-    LOGGER.info(f"MORE LOGS: {docker_client.version()}")
+
+    if "CUSTOM_DOCKER_SOCK" in os.environ:
+        # https://github.com/jupyter/docker-stacks/pull/2255
+        # Remove when https://github.com/actions/runner-images/issues/11766 is resolved
+        LOGGER.info("Using custom docker client")
+        docker_client = docker.DockerClient(base_url=os.environ["CUSTOM_DOCKER_SOCK"])
 
     # Doesn't have to be routable since we're testing inside the container
     subnet64 = "fc00:" + ":".join(hex(randint(0, 2**16))[2:] for _ in range(3))

@@ -138,4 +138,4 @@ jobs:
           --image ${{ inputs.image }}
         shell: bash
         env:
-          DOCKER_SOCK: ${{ steps.create-dev-env.outputs.docker-sock }}
+          CUSTOM_DOCKER_SOCK: ${{ steps.create-dev-env.outputs.docker-sock }}
