@@ -24,6 +24,7 @@ def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, Non
         # Remove when https://github.com/actions/runner-images/issues/11766 is resolved
         LOGGER.info("Using custom docker client")
         docker_client = docker.DockerClient(base_url=os.environ["CUSTOM_DOCKER_SOCK"])
+        LOGGER.info(f"Custom Docker client created: {docker_client.version()}")
 
     # Doesn't have to be routable since we're testing inside the container
     subnet64 = "fc00:" + ":".join(hex(randint(0, 2**16))[2:] for _ in range(3))
