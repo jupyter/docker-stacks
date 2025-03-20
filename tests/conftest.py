@@ -32,7 +32,7 @@ def docker_client() -> docker.DockerClient:
         client = docker.DockerClient(base_url=os.environ["DOCKER_SOCK"])
     else:
         client = docker.from_env()
-    LOGGER.info(f"Docker client created: {client.version()}")
+    raise LookupError(f"Docker client created: {client.version()}")
     return client
 
 
