@@ -41,8 +41,9 @@ class CondaPackageHelper:
 
     def __init__(self, container: TrackedContainer):
         self.container = container
-        LOGGER.info(f"Starting container {container.image_name} ...")
-        container.run_detached(
+
+        LOGGER.info(f"Starting container {self.container.image_name} ...")
+        self.container.run_detached(
             tty=True,
             command=["bash", "-c", "sleep infinity"],
         )

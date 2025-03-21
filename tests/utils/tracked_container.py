@@ -29,7 +29,7 @@ class TrackedContainer:
         image_name: str,
         **kwargs: Any,
     ):
-        self.running: Container | None = None
+        self.container: Container | None = None
         self.docker_client: docker.DockerClient = docker_client
         self.image_name: str = image_name
         self.kwargs: Any = kwargs
@@ -50,20 +50,20 @@ class TrackedContainer:
         """
         all_kwargs = self.kwargs | kwargs
         LOGGER.info(f"Running {self.image_name} with args {all_kwargs} ...")
-        self.running = self.docker_client.containers.run(
+        self.container = self.docker_client.containers.run(
             self.image_name,
             **all_kwargs,
         )
 
     def get_logs(self) -> str:
-        assert self.running is not None
-        logs = self.running.logs().decode()
+        assert self.container is not None
+        logs = self.container.logs().decode()
         assert isinstance(logs, str)
         return logs
 
     def exec_cmd(self, cmd: str, print_output: bool = True, **kwargs: Any) -> str:
-        assert self.running is not None
-        container = self.running
+        assert self.container is not None
+        container = self.container
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
         exec_result = container.exec_run(cmd, **kwargs)
         output = exec_result.output.decode().rstrip()
@@ -82,8 +82,8 @@ class TrackedContainer:
         **kwargs: Any,
     ) -> str:
         self.run_detached(**kwargs)
-        assert self.running is not None
-        rv = self.running.wait(timeout=timeout)
+        assert self.container is not None
+        rv = self.container.wait(timeout=timeout)
         logs = self.get_logs()
         LOGGER.debug(logs)
         assert no_warnings == (not self.get_warnings(logs))
@@ -105,9 +105,9 @@ class TrackedContainer:
 
     def remove(self) -> None:
         """Kills and removes the tracked docker container."""
-        if self.running is None:
+        if self.container is None:
             LOGGER.info("No container to remove")
         else:
-            LOGGER.info(f"Removing container {self.running.name} ...")
-            self.running.remove(force=True)
-            LOGGER.info(f"Container {self.running.name} removed")
+            LOGGER.info(f"Removing container {self.container.name} ...")
+            self.container.remove(force=True)
+            LOGGER.info(f"Container {self.container.name} removed")
