@@ -55,12 +55,15 @@ class TrackedContainer:
             **all_kwargs,
         )
 
-    def get_running(self) -> Container:
+    def get_logs(self) -> str:
         assert self.running is not None
-        return self.running
+        logs = self.running.logs().decode()
+        assert isinstance(logs, str)
+        return logs
 
     def exec_cmd(self, cmd: str, print_output: bool = True, **kwargs: Any) -> str:
-        container = self.get_running()
+        assert self.running is not None
+        container = self.running
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
         exec_result = container.exec_run(cmd, **kwargs)
         output = exec_result.output.decode().rstrip()
@@ -79,9 +82,9 @@ class TrackedContainer:
         **kwargs: Any,
     ) -> str:
         self.run_detached(**kwargs)
-        rv = self.get_running().wait(timeout=timeout)
-        logs = self.get_running().logs().decode()
-        assert isinstance(logs, str)
+        assert self.running is not None
+        rv = self.running.wait(timeout=timeout)
+        logs = self.get_logs()
         LOGGER.debug(logs)
         assert no_warnings == (not self.get_warnings(logs))
         assert no_errors == (not self.get_errors(logs))

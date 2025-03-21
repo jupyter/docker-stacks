@@ -50,7 +50,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     # Use sleep, not wait, because the container sleeps forever.
     time.sleep(1)
     LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
-    output = container.get_running().logs().decode()
+    output = container.get_logs()
     assert "ERROR" not in output
     assert "WARNING" not in output
     assert (

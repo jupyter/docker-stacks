@@ -32,7 +32,7 @@ def get_healthy_status(
     while time.time() < finish_time:
         time.sleep(sleep_time)
 
-        status = get_health(container.get_running(), docker_client)
+        status = get_health(container, docker_client)
         if status == "healthy":
             return status
 

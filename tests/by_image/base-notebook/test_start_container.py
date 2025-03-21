@@ -49,7 +49,7 @@ def test_start_notebook(
     )
     # sleeping some time to let the server start
     time.sleep(2)
-    logs = container.get_running().logs().decode()
+    logs = container.get_logs()
     LOGGER.debug(logs)
     # checking that the expected command is launched
     assert (
