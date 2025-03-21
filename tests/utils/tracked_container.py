@@ -61,6 +61,11 @@ class TrackedContainer:
         assert isinstance(logs, str)
         return logs
 
+    def get_health(self) -> str:
+        assert self.container is not None
+        inspect_results = self.docker_client.api.inspect_container(self.container.name)
+        return inspect_results["State"]["Health"]["Status"]  # type: ignore
+
     def exec_cmd(self, cmd: str, print_output: bool = True, **kwargs: Any) -> str:
         assert self.container is not None
         container = self.container

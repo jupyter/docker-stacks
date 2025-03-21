@@ -6,7 +6,6 @@ import time
 import docker
 import pytest  # type: ignore
 
-from tests.utils.get_container_health import get_health
 from tests.utils.tracked_container import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
@@ -32,7 +31,7 @@ def get_healthy_status(
     while time.time() < finish_time:
         time.sleep(sleep_time)
 
-        status = get_health(container, docker_client)
+        status = container.get_health()
         if status == "healthy":
             return status
 
