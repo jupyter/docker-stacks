@@ -15,7 +15,6 @@ def test_uid_change(container: TrackedContainer) -> None:
     """Container should change the UID of the default user."""
     logs = container.run_and_wait(
         timeout=120,  # usermod is slow so give it some time
-        tty=True,
         user="root",
         environment=["NB_UID=1010"],
         command=["bash", "-c", "id && touch /opt/conda/test-file"],
@@ -27,7 +26,6 @@ def test_gid_change(container: TrackedContainer) -> None:
     """Container should change the GID of the default user."""
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         user="root",
         environment=["NB_GID=110"],
         command=["id"],
@@ -40,7 +38,6 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     """Container should change the username (`NB_USER`) of the default user."""
     nb_user = "nayvoj"
     container.run_detached(
-        tty=True,
         user="root",
         environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
         command=["bash", "-c", "sleep infinity"],
@@ -87,7 +84,6 @@ def test_chown_extra(container: TrackedContainer) -> None:
     CHOWN_EXTRA list of folders."""
     logs = container.run_and_wait(
         timeout=120,  # chown is slow so give it some time
-        tty=True,
         user="root",
         environment=[
             "NB_UID=1010",
@@ -110,7 +106,6 @@ def test_chown_home(container: TrackedContainer) -> None:
     group to the current value of NB_UID and NB_GID."""
     logs = container.run_and_wait(
         timeout=120,  # chown is slow so give it some time
-        tty=True,
         user="root",
         environment=[
             "CHOWN_HOME=yes",
@@ -128,7 +123,6 @@ def test_sudo(container: TrackedContainer) -> None:
     """Container should grant passwordless sudo to the default user."""
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         user="root",
         environment=["GRANT_SUDO=yes"],
         command=["sudo", "id"],
@@ -140,7 +134,6 @@ def test_sudo_path(container: TrackedContainer) -> None:
     """Container should include /opt/conda/bin in the sudo secure_path."""
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         user="root",
         environment=["GRANT_SUDO=yes"],
         command=["sudo", "which", "jupyter"],
@@ -152,7 +145,6 @@ def test_sudo_path_without_grant(container: TrackedContainer) -> None:
     """Container should include /opt/conda/bin in the sudo secure_path."""
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         user="root",
         command=["which", "jupyter"],
     )
@@ -224,7 +216,6 @@ def test_container_not_delete_bind_mount(
 
     container.run_and_wait(
         timeout=5,
-        tty=True,
         user="root",
         working_dir="/home/",
         environment=[
@@ -247,7 +238,6 @@ def test_jupyter_env_vars_to_unset(
     root_args = {"user": "root"} if enable_root else {}
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         environment=[
             "JUPYTER_ENV_VARS_TO_UNSET=SECRET_ANIMAL,UNUSED_ENV,SECRET_FRUIT",
             "FRUIT=bananas",
@@ -276,7 +266,6 @@ def test_secure_path(container: TrackedContainer, tmp_path: pathlib.Path) -> Non
 
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         user="root",
         volumes={p: {"bind": "/usr/bin/python", "mode": "ro"}},
         command=["python", "--version"],
@@ -290,7 +279,6 @@ def test_startsh_multiple_exec(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=10,
         no_warnings=False,
-        tty=True,
         user="root",
         environment=["GRANT_SUDO=yes"],
         command=["start.sh", "sudo", "id"],
@@ -308,7 +296,6 @@ def test_rootless_triplet_change(container: TrackedContainer) -> None:
     """Container should change the username (`NB_USER`), the UID and the GID of the default user."""
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         user="root",
         environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
         command=["id"],
@@ -322,7 +309,6 @@ def test_rootless_triplet_home(container: TrackedContainer) -> None:
     """Container should change the home directory for triplet NB_USER=root, NB_UID=0, NB_GID=0."""
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         user="root",
         environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
         command=["bash", "-c", "echo HOME=${HOME} && getent passwd root"],
@@ -335,7 +321,6 @@ def test_rootless_triplet_sudo(container: TrackedContainer) -> None:
     """Container should not be started with sudo for triplet NB_USER=root, NB_UID=0, NB_GID=0."""
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         user="root",
         environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
         command=["env"],

@@ -17,7 +17,6 @@ def get_healthy_status(
     user: str | None,
 ) -> str:
     container.run_detached(
-        tty=True,
         environment=env,
         command=cmd,
         user=user,

@@ -41,6 +41,5 @@ def test_ipv46(container: TrackedContainer, ipv6_network: str) -> None:
     container.run_detached(
         network=ipv6_network,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro,z"}},
-        tty=True,
     )
     container.exec_cmd(f"python {cont_data_dir}/check_listening.py")
