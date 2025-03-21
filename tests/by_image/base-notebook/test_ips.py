@@ -38,13 +38,9 @@ def test_ipv46(container: TrackedContainer, ipv6_network: str) -> None:
     host_data_dir = THIS_DIR / "data"
     cont_data_dir = "/home/jovyan/data"
     LOGGER.info("Testing that server is listening on IPv4 and IPv6 ...")
-    running_container = container.run_detached(
+    container.run_detached(
         network=ipv6_network,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro,z"}},
         tty=True,
     )
-
-    command = ["python", f"{cont_data_dir}/check_listening.py"]
-    exec_result = running_container.exec_run(command)
-    LOGGER.info(exec_result.output.decode())
-    assert exec_result.exit_code == 0
+    container.exec_cmd(f"python {cont_data_dir}/check_listening.py")

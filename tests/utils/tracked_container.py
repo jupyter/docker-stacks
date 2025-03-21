@@ -29,12 +29,12 @@ class TrackedContainer:
         image_name: str,
         **kwargs: Any,
     ):
-        self.container: Container | None = None
+        self.running: Container | None = None
         self.docker_client: docker.DockerClient = docker_client
         self.image_name: str = image_name
         self.kwargs: Any = kwargs
 
-    def run_detached(self, **kwargs: Any) -> Container:
+    def run_detached(self, **kwargs: Any) -> None:
         """Runs a docker container using the pre-configured image name
         and a mix of the pre-configured container options and those passed
         to this method.
@@ -47,18 +47,28 @@ class TrackedContainer:
         **kwargs: dict, optional
             Keyword arguments to pass to docker.DockerClient.containers.run
             extending and/or overriding key/value pairs passed to the constructor
-
-        Returns
-        -------
-        docker.Container
         """
         all_kwargs = self.kwargs | kwargs
         LOGGER.info(f"Running {self.image_name} with args {all_kwargs} ...")
-        self.container = self.docker_client.containers.run(
+        self.running = self.docker_client.containers.run(
             self.image_name,
             **all_kwargs,
         )
-        return self.container
+
+    def get_running(self) -> Container:
+        assert self.running is not None
+        return self.running
+
+    def exec_cmd(self, cmd: str, print_output: bool = True, **kwargs: Any) -> str:
+        container = self.get_running()
+        LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
+        exec_result = container.exec_run(cmd, **kwargs)
+        output = exec_result.output.decode().rstrip()
+        assert isinstance(output, str)
+        if print_output:
+            LOGGER.info(f"Command output: {output}")
+        assert exec_result.exit_code == 0, f"Command: `{cmd}` failed"
+        return output
 
     def run_and_wait(
         self,
@@ -68,9 +78,9 @@ class TrackedContainer:
         no_failure: bool = True,
         **kwargs: Any,
     ) -> str:
-        running_container = self.run_detached(**kwargs)
-        rv = running_container.wait(timeout=timeout)
-        logs = running_container.logs().decode()
+        self.run_detached(**kwargs)
+        rv = self.get_running().wait(timeout=timeout)
+        logs = self.get_running().logs().decode()
         assert isinstance(logs, str)
         LOGGER.debug(logs)
         assert no_warnings == (not self.get_warnings(logs))
@@ -92,9 +102,9 @@ class TrackedContainer:
 
     def remove(self) -> None:
         """Kills and removes the tracked docker container."""
-        if self.container is None:
+        if self.running is None:
             LOGGER.info("No container to remove")
         else:
-            LOGGER.info(f"Removing container {self.container.name} ...")
-            self.container.remove(force=True)
-            LOGGER.info(f"Container {self.container.name} removed")
+            LOGGER.info(f"Removing container {self.running.name} ...")
+            self.running.remove(force=True)
+            LOGGER.info(f"Container {self.running.name} removed")

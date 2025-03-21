@@ -29,7 +29,6 @@ from collections import defaultdict
 from itertools import chain
 from typing import Any
 
-from docker.models.containers import Container
 from tabulate import tabulate
 
 from tests.utils.tracked_container import TrackedContainer
@@ -41,57 +40,35 @@ class CondaPackageHelper:
     """Conda package helper permitting to get information about packages"""
 
     def __init__(self, container: TrackedContainer):
-        self.running_container: Container = CondaPackageHelper.start_container(
-            container
+        self.container = container
+        LOGGER.info(f"Starting container {container.image_name} ...")
+        container.run_detached(
+            tty=True,
+            command=["bash", "-c", "sleep infinity"],
         )
+
         self.requested: dict[str, set[str]] | None = None
         self.installed: dict[str, set[str]] | None = None
         self.available: dict[str, set[str]] | None = None
         self.comparison: list[dict[str, str]] = []
 
-    @staticmethod
-    def start_container(container: TrackedContainer) -> Container:
-        """Start the TrackedContainer and return an instance of a running container"""
-        LOGGER.info(f"Starting container {container.image_name} ...")
-        return container.run_detached(
-            tty=True,
-            command=["bash", "-c", "sleep infinity"],
-        )
-
-    @staticmethod
-    def _conda_export_command(from_history: bool) -> list[str]:
-        """Return the mamba export command with or without history"""
-        cmd = ["mamba", "env", "export", "--no-build", "--json"]
-        if from_history:
-            cmd.append("--from-history")
-        return cmd
-
     def installed_packages(self) -> dict[str, set[str]]:
         """Return the installed packages"""
         if self.installed is None:
             LOGGER.info("Grabbing the list of installed packages ...")
-            self.installed = CondaPackageHelper._parse_package_versions(
-                self._execute_command(
-                    CondaPackageHelper._conda_export_command(from_history=False)
-                )
-            )
+            env_export = self.container.exec_cmd("mamba env export --no-build --json")
+            self.installed = CondaPackageHelper._parse_package_versions(env_export)
         return self.installed
 
     def requested_packages(self) -> dict[str, set[str]]:
         """Return the requested package (i.e. `mamba install <package>`)"""
         if self.requested is None:
             LOGGER.info("Grabbing the list of manually requested packages ...")
-            self.requested = CondaPackageHelper._parse_package_versions(
-                self._execute_command(
-                    CondaPackageHelper._conda_export_command(from_history=True)
-                )
+            env_export = self.container.exec_cmd(
+                "mamba env export --no-build --json --from-history"
             )
+            self.requested = CondaPackageHelper._parse_package_versions(env_export)
         return self.requested
-
-    def _execute_command(self, command: list[str]) -> str:
-        """Execute a command on a running container"""
-        exec_result = self.running_container.exec_run(command, stderr=False)
-        return exec_result.output.decode()  # type: ignore
 
     @staticmethod
     def _parse_package_versions(env_export: str) -> dict[str, set[str]]:
@@ -126,7 +103,7 @@ class CondaPackageHelper:
             )
             # Keeping command line output since `mamba search --outdated --json` is way too long ...
             self.available = CondaPackageHelper._extract_available(
-                self._execute_command(["mamba", "search", "--outdated", "--quiet"])
+                self.container.exec_cmd("mamba search --outdated --quiet")
             )
         return self.available
 

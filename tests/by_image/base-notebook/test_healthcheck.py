@@ -19,7 +19,7 @@ def get_healthy_status(
     cmd: list[str] | None,
     user: str | None,
 ) -> str:
-    running_container = container.run_detached(
+    container.run_detached(
         tty=True,
         environment=env,
         command=cmd,
@@ -32,11 +32,11 @@ def get_healthy_status(
     while time.time() < finish_time:
         time.sleep(sleep_time)
 
-        status = get_health(running_container, docker_client)
+        status = get_health(container.get_running(), docker_client)
         if status == "healthy":
             return status
 
-    return get_health(running_container, docker_client)
+    return status
 
 
 @pytest.mark.parametrize(
