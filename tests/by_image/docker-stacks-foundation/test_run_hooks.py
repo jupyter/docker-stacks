@@ -12,7 +12,6 @@ THIS_DIR = Path(__file__).parent.resolve()
 def test_run_hooks_zero_args(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         no_failure=False,
         command=["bash", "-c", "source /usr/local/bin/run-hooks.sh"],
     )
@@ -22,7 +21,6 @@ def test_run_hooks_zero_args(container: TrackedContainer) -> None:
 def test_run_hooks_two_args(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         no_failure=False,
         command=[
             "bash",
@@ -36,7 +34,6 @@ def test_run_hooks_two_args(container: TrackedContainer) -> None:
 def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         no_failure=False,
         command=[
             "bash",
@@ -50,7 +47,6 @@ def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
 def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         no_failure=False,
         command=[
             "bash",
@@ -64,7 +60,6 @@ def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
 def test_run_hooks_empty_dir(container: TrackedContainer) -> None:
     container.run_and_wait(
         timeout=5,
-        tty=True,
         command=[
             "bash",
             "-c",
@@ -91,7 +86,6 @@ def run_source_in_dir(
     return container.run_and_wait(
         timeout=5,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-        tty=True,
         no_failure=no_failure,
         command=["bash", "-c", command],
     )

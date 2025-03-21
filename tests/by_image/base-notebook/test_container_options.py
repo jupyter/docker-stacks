@@ -33,7 +33,6 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     """Container should change the username (`NB_USER`) of the default user."""
     nb_user = "nayvoj"
     container.run_detached(
-        tty=True,
         user="root",
         environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
         command=["bash", "-c", "sleep infinity"],

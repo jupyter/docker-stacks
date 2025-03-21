@@ -12,11 +12,8 @@ def run_command(
     command: str,
     timeout: int = 5,
 ) -> str:
-    """Runs the given package manager with its version argument."""
-
     LOGGER.info(f"Test that the command '{command}' is working properly ...")
     return container.run_and_wait(
         timeout=timeout,
-        tty=True,
         command=["bash", "-c", command],
     )

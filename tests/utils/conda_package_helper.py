@@ -43,10 +43,7 @@ class CondaPackageHelper:
         self.container = container
 
         LOGGER.info(f"Starting container {self.container.image_name} ...")
-        self.container.run_detached(
-            tty=True,
-            command=["bash", "-c", "sleep infinity"],
-        )
+        self.container.run_detached(command=["bash", "-c", "sleep infinity"])
 
         self.requested: dict[str, set[str]] | None = None
         self.installed: dict[str, set[str]] | None = None
