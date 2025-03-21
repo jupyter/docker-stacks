@@ -19,20 +19,16 @@ class TrackedContainer:
         Docker client instance
     image_name: str
         Name of the docker image to launch
-    **kwargs: dict, optional
-        Default keyword arguments to pass to docker.DockerClient.containers.run
     """
 
     def __init__(
         self,
         docker_client: docker.DockerClient,
         image_name: str,
-        **kwargs: Any,
     ):
         self.container: Container | None = None
         self.docker_client: docker.DockerClient = docker_client
         self.image_name: str = image_name
-        self.kwargs: Any = kwargs
 
     def run_detached(self, **kwargs: Any) -> None:
         """Runs a docker container using the pre-configured image name
@@ -48,11 +44,9 @@ class TrackedContainer:
             Keyword arguments to pass to docker.DockerClient.containers.run
             extending and/or overriding key/value pairs passed to the constructor
         """
-        all_kwargs = self.kwargs | kwargs
-        LOGGER.info(f"Running {self.image_name} with args {all_kwargs} ...")
+        LOGGER.info(f"Running {self.image_name} with args {kwargs} ...")
         self.container = self.docker_client.containers.run(
-            self.image_name,
-            **all_kwargs,
+            self.image_name, **kwargs, detach=True
         )
 
     def get_logs(self) -> str:
@@ -66,15 +60,14 @@ class TrackedContainer:
         inspect_results = self.docker_client.api.inspect_container(self.container.name)
         return inspect_results["State"]["Health"]["Status"]  # type: ignore
 
-    def exec_cmd(self, cmd: str, print_output: bool = True, **kwargs: Any) -> str:
+    def exec_cmd(self, cmd: str, **kwargs: Any) -> str:
         assert self.container is not None
         container = self.container
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
         exec_result = container.exec_run(cmd, **kwargs)
         output = exec_result.output.decode().rstrip()
         assert isinstance(output, str)
-        if print_output:
-            LOGGER.info(f"Command output: {output}")
+        LOGGER.info(f"Command output: {output}")
         assert exec_result.exit_code == 0, f"Command: `{cmd}` failed"
         return output
 
