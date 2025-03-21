@@ -43,6 +43,7 @@ def test_matplotlib(
         tty=True,
         command=["bash", "-c", "sleep infinity"],
     )
+
     command = f"python {cont_data_dir}/{test_file}"
     container.exec_cmd(command)
 

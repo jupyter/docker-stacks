@@ -3,7 +3,6 @@
 import logging
 import time
 
-import docker
 import pytest  # type: ignore
 
 from tests.utils.tracked_container import TrackedContainer
@@ -13,7 +12,6 @@ LOGGER = logging.getLogger(__name__)
 
 def get_healthy_status(
     container: TrackedContainer,
-    docker_client: docker.DockerClient,
     env: list[str] | None,
     cmd: list[str] | None,
     user: str | None,
@@ -83,12 +81,11 @@ def get_healthy_status(
 )
 def test_healthy(
     container: TrackedContainer,
-    docker_client: docker.DockerClient,
     env: list[str] | None,
     cmd: list[str] | None,
     user: str | None,
 ) -> None:
-    assert get_healthy_status(container, docker_client, env, cmd, user) == "healthy"
+    assert get_healthy_status(container, env, cmd, user) == "healthy"
 
 
 @pytest.mark.parametrize(
@@ -117,12 +114,11 @@ def test_healthy(
 )
 def test_healthy_with_proxy(
     container: TrackedContainer,
-    docker_client: docker.DockerClient,
     env: list[str] | None,
     cmd: list[str] | None,
     user: str | None,
 ) -> None:
-    assert get_healthy_status(container, docker_client, env, cmd, user) == "healthy"
+    assert get_healthy_status(container, env, cmd, user) == "healthy"
 
 
 @pytest.mark.parametrize(
@@ -141,10 +137,9 @@ def test_healthy_with_proxy(
 )
 def test_not_healthy(
     container: TrackedContainer,
-    docker_client: docker.DockerClient,
     env: list[str] | None,
     cmd: list[str] | None,
 ) -> None:
     assert (
-        get_healthy_status(container, docker_client, env, cmd, user=None) != "healthy"
+        get_healthy_status(container, env, cmd, user=None) != "healthy"
     ), "Container should not be healthy for this testcase"
