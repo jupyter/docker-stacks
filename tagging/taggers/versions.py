@@ -15,7 +15,6 @@ def _get_pip_package_version(container: Container, package: str) -> str:
     package_info = DockerRunner.exec_cmd(
         container,
         cmd=f"pip show {package}",
-        print_output=False,
     )
     version_line = package_info.split("\n")[1]
     assert version_line.startswith(PIP_VERSION_PREFIX)

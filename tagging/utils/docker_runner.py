@@ -43,12 +43,11 @@ class DockerRunner:
         LOGGER.info(f"Container {self.container.name} removed")
 
     @staticmethod
-    def exec_cmd(container: Container, cmd: str, print_output: bool = True) -> str:
+    def exec_cmd(container: Container, cmd: str) -> str:
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
         exec_result = container.exec_run(cmd)
         output = exec_result.output.decode().rstrip()
         assert isinstance(output, str)
-        if print_output:
-            LOGGER.info(f"Command output: {output}")
+        LOGGER.info(f"Command output: {output}")
         assert exec_result.exit_code == 0, f"Command: `{cmd}` failed"
         return output

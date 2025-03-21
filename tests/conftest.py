@@ -51,7 +51,6 @@ def container(
     container = TrackedContainer(
         docker_client,
         image_name,
-        detach=True,
     )
     yield container
     container.remove()

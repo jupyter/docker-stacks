@@ -8,7 +8,7 @@ from tagging.utils.docker_runner import DockerRunner
 
 
 def quoted_output(container: Container, cmd: str) -> str:
-    cmd_output = DockerRunner.exec_cmd(container, cmd, print_output=False)
+    cmd_output = DockerRunner.exec_cmd(container, cmd)
     # For example, `mamba info` adds redundant empty lines
     cmd_output = cmd_output.strip("\n")
     # For example, R packages list contains trailing backspaces

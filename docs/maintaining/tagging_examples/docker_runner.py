@@ -3,4 +3,4 @@
 from tagging.utils.docker_runner import DockerRunner
 
 with DockerRunner("ubuntu") as container:
-    DockerRunner.exec_cmd(container, cmd="env", print_output=True)
+    DockerRunner.exec_cmd(container, cmd="env")

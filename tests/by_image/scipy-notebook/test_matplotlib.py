@@ -38,18 +38,16 @@ def test_matplotlib(
     cont_data_dir = "/home/jovyan/data"
     output_dir = "/tmp"
     LOGGER.info(description)
-    running_container = container.run_detached(
+    container.run_detached(
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
         tty=True,
         command=["bash", "-c", "sleep infinity"],
     )
+
     command = f"python {cont_data_dir}/{test_file}"
-    exec_result = running_container.exec_run(command)
-    LOGGER.debug(exec_result.output.decode())
-    assert exec_result.exit_code == 0, f"Command {command} failed"
+    container.exec_cmd(command)
+
     # Checking if the file is generated
     # https://stackoverflow.com/a/15895594/4413446
     command = f"test -s {output_dir}/{expected_file}"
-    exec_result = running_container.exec_run(command)
-    LOGGER.debug(exec_result.output.decode())
-    assert exec_result.exit_code == 0, f"Command {command} failed"
+    container.exec_cmd(command)

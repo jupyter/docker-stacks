@@ -109,25 +109,16 @@ def get_package_import_name(package: str) -> str:
     return PACKAGE_MAPPING.get(package, package)
 
 
-def _check_import_package(
-    package_helper: CondaPackageHelper, command: list[str]
-) -> None:
-    """Generic function executing a command"""
-    LOGGER.debug(f"Trying to import a package with [{command}] ...")
-    exec_result = package_helper.running_container.exec_run(command)
-    assert exec_result.exit_code == 0, exec_result.output.decode()
-
-
 def check_import_python_package(
     package_helper: CondaPackageHelper, package: str
 ) -> None:
     """Try to import a Python package from the command line"""
-    _check_import_package(package_helper, ["python", "-c", f"import {package}"])
+    package_helper.container.exec_cmd(f'python -c "import {package}"')
 
 
 def check_import_r_package(package_helper: CondaPackageHelper, package: str) -> None:
     """Try to import an R package from the command line"""
-    _check_import_package(package_helper, ["R", "--slave", "-e", f"library({package})"])
+    package_helper.container.exec_cmd(f"R --slave -e library({package})")
 
 
 def _check_import_packages(
