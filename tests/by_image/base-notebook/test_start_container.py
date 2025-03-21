@@ -42,11 +42,7 @@ def test_start_notebook(
         f"Test that the start-notebook.py launches the {expected_command} server from the env {env} ..."
     )
     host_port = find_free_port()
-    container.run_detached(
-        tty=True,
-        environment=env,
-        ports={"8888/tcp": host_port},
-    )
+    container.run_detached(environment=env, ports={"8888/tcp": host_port})
     # sleeping some time to let the server start
     time.sleep(2)
     logs = container.get_logs()
