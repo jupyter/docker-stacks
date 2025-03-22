@@ -18,25 +18,6 @@ This means that it does not check dependencies.
 This choice is a tradeoff to cover the main requirements while achieving a reasonable test duration.
 However, it could be easily changed (or completed) to cover dependencies as well.
 Use `package_helper.installed_packages()` instead of `package_helper.requested_packages()`.
-
-Example:
-
-    $ make test/docker-stacks-foundation
-
-    # [...]
-    # tests/by_image/docker-stacks-foundation/test_packages.py::test_python_packages
-    # -------------------------------- live log setup --------------------------------
-    # 2024-01-21 17:46:43 [    INFO] Starting container quay.io/jupyter/docker-stacks-foundation ... (package_helper.py:55)
-    # 2024-01-21 17:46:43 [    INFO] Running quay.io/jupyter/docker-stacks-foundation with args {'detach': True, 'tty': True, 'command': ['bash', '-c', 'sleep infinity']} ... (conftest.py:99)
-    # 2024-01-21 17:46:44 [    INFO] Grabbing the list of manually requested packages ... (package_helper.py:83)
-    # -------------------------------- live log call ---------------------------------
-    # 2024-01-21 17:46:44 [    INFO] Testing the import of packages ... (test_packages.py:151)
-    # 2024-01-21 17:46:44 [    INFO] Trying to import mamba (test_packages.py:153)
-    # 2024-01-21 17:46:44 [    INFO] Trying to import jupyter_core (test_packages.py:153)
-    PASSED                                                                   [ 17%]
-    # ------------------------------ live log teardown -------------------------------
-    # [...]
-
 """
 
 import logging
