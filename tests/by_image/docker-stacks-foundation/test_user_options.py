@@ -175,6 +175,8 @@ def test_set_uid(container: TrackedContainer) -> None:
     Additionally, verify that "--group-add=users" is suggested in a warning to restore
     write access.
     """
+    # This test needs to have tty disabled, the reason is explained here:
+    # https://github.com/jupyter/docker-stacks/pull/2260#discussion_r2008821257
     logs = container.run_and_wait(
         timeout=5, no_warnings=False, user="1010", command=["id"], tty=False
     )
