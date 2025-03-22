@@ -91,6 +91,7 @@ class TrackedContainer:
         assert no_warnings == (not self.get_warnings(logs))
         assert no_errors == (not self.get_errors(logs))
         assert no_failure == (rv["StatusCode"] == 0)
+        self.remove()
         return logs
 
     @staticmethod
@@ -113,3 +114,4 @@ class TrackedContainer:
             LOGGER.info(f"Removing container {self.container.name} ...")
             self.container.remove(force=True)
             LOGGER.info(f"Container {self.container.name} removed")
+            self.container = None
