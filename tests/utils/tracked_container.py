@@ -45,8 +45,10 @@ class TrackedContainer:
             extending and/or overriding key/value pairs passed to the constructor
         """
         LOGGER.info(f"Running {self.image_name} with args {kwargs} ...")
+        default_kwargs = {"detach": True, "tty": True}
+        final_kwargs = default_kwargs | kwargs
         self.container = self.docker_client.containers.run(
-            self.image_name, **kwargs, detach=True
+            self.image_name, **final_kwargs
         )
 
     def get_logs(self) -> str:
@@ -64,7 +66,9 @@ class TrackedContainer:
         assert self.container is not None
         container = self.container
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
-        exec_result = container.exec_run(cmd, **kwargs)
+        default_kwargs = {"tty": True}
+        final_kwargs = default_kwargs | kwargs
+        exec_result = container.exec_run(cmd, **final_kwargs)
         output = exec_result.output.decode().rstrip()
         assert isinstance(output, str)
         LOGGER.info(f"Command output: {output}")
