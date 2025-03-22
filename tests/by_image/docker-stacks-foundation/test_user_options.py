@@ -176,10 +176,7 @@ def test_set_uid(container: TrackedContainer) -> None:
     write access.
     """
     logs = container.run_and_wait(
-        timeout=5,
-        no_warnings=False,
-        user="1010",
-        command=["id"],
+        timeout=5, no_warnings=False, user="1010", command=["id"], tty=False
     )
     assert "uid=1010(jovyan) gid=0(root)" in logs
     warnings = TrackedContainer.get_warnings(logs)
