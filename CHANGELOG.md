@@ -5,17 +5,17 @@ All image manifests can be found in [the wiki](https://github.com/jupyter/docker
 
 ## 2025-03-22
 
-Affected: all images except `docker-stacks-foundation`.
+Affected: all images.
 
-- **Non-breaking:** `base-notebook`: Use tty for running docker commands by default ([#2260](https://github.com/jupyter/docker-stacks/pull/2260)).
-- **Non-breaking:** `base-notebook`: Improve logs around running docker ([#2261](https://github.com/jupyter/docker-stacks/pull/2261)).
+- **Non-breaking:** Use tty for running docker commands by default ([#2260](https://github.com/jupyter/docker-stacks/pull/2260)).
+- **Non-breaking:** Improve logs around running docker ([#2261](https://github.com/jupyter/docker-stacks/pull/2261)).
 
 ## 2025-03-21
 
-Affected: all images except `docker-stacks-foundation`.
+Affected: all images.
 
-- **Non-breaking:** `base-notebook`: Refactor TrackedContainer run_detached/exec_cmd functions ([#2256](https://github.com/jupyter/docker-stacks/pull/2256)).
-- **Non-breaking:** `base-notebook`: Do not allocate TTY in tests if not needed ([#2257](https://github.com/jupyter/docker-stacks/pull/2257)).
+- **Non-breaking:** Refactor TrackedContainer run_detached/exec_cmd functions ([#2256](https://github.com/jupyter/docker-stacks/pull/2256)).
+- **Non-breaking:** Do not allocate TTY in tests if not needed ([#2257](https://github.com/jupyter/docker-stacks/pull/2257)).
 - **Non-breaking:** `base-notebook`: Flush output in Python before running execvp ([#2258](https://github.com/jupyter/docker-stacks/pull/2258)).
 
 ## 2025-03-20
