@@ -12,7 +12,6 @@ THIS_DIR = Path(__file__).parent.resolve()
 def test_run_hooks_zero_args(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         no_failure=False,
         command=["bash", "-c", "source /usr/local/bin/run-hooks.sh"],
     )
@@ -22,7 +21,6 @@ def test_run_hooks_zero_args(container: TrackedContainer) -> None:
 def test_run_hooks_two_args(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         no_failure=False,
         command=[
             "bash",
@@ -36,7 +34,6 @@ def test_run_hooks_two_args(container: TrackedContainer) -> None:
 def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         no_failure=False,
         command=[
             "bash",
@@ -50,7 +47,6 @@ def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
 def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=5,
-        tty=True,
         no_failure=False,
         command=[
             "bash",
@@ -64,7 +60,6 @@ def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
 def test_run_hooks_empty_dir(container: TrackedContainer) -> None:
     container.run_and_wait(
         timeout=5,
-        tty=True,
         command=[
             "bash",
             "-c",
@@ -82,7 +77,7 @@ def run_source_in_dir(
     host_data_dir = THIS_DIR / subdir
     cont_data_dir = "/home/jovyan/data"
     # https://forums.docker.com/t/all-files-appear-as-executable-in-file-paths-using-bind-mount/99921
-    # Unfortunately, Docker treats all files in mounter dir as executable files
+    # Unfortunately, Docker treats all files in mounted dir as executable files
     # So we make a copy of the mounted dir inside a container
     command = (
         "cp -r /home/jovyan/data/ /home/jovyan/data-copy/ &&"
@@ -91,10 +86,19 @@ def run_source_in_dir(
     return container.run_and_wait(
         timeout=5,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-        tty=True,
         no_failure=no_failure,
         command=["bash", "-c", command],
     )
+
+
+def test_run_hooks_change(container: TrackedContainer) -> None:
+    logs = run_source_in_dir(container, subdir="data/run-hooks/change")
+
+    assert "Inside a.sh MY_VAR variable has 123 value" in logs
+    assert "Inside b.sh MY_VAR variable has 123 value" in logs
+    assert "Changing value of MY_VAR" in logs
+    assert "After change inside b.sh MY_VAR variable has 456 value" in logs
+    assert "Inside c.sh MY_VAR variable has 456 value" in logs
 
 
 def test_run_hooks_executables(container: TrackedContainer) -> None:
@@ -109,7 +113,7 @@ def test_run_hooks_executables(container: TrackedContainer) -> None:
     assert "SOME_VAR is 123" in logs
 
 
-def test_run_hooks_with_failures(container: TrackedContainer) -> None:
+def test_run_hooks_failures(container: TrackedContainer) -> None:
     logs = run_source_in_dir(
         container, subdir="data/run-hooks/failures", no_failure=False
     )
@@ -130,6 +134,13 @@ def test_run_hooks_with_failures(container: TrackedContainer) -> None:
     assert "OTHER_VAR=456" in logs
 
 
+def test_run_hooks_sh_files(container: TrackedContainer) -> None:
+    logs = run_source_in_dir(container, subdir="data/run-hooks/sh-files")
+
+    assert "Inside executable.sh MY_VAR variable has 0 value" in logs
+    assert "Inside non-executable.sh MY_VAR variable has 1 value" in logs
+
+
 def test_run_hooks_unset(container: TrackedContainer) -> None:
     logs = run_source_in_dir(container, subdir="data/run-hooks/unset")
 
@@ -137,13 +148,3 @@ def test_run_hooks_unset(container: TrackedContainer) -> None:
     assert "Inside b.sh MY_VAR variable has 123 value" in logs
     assert "Unsetting MY_VAR" in logs
     assert "Inside c.sh MY_VAR variable has  value" in logs
-
-
-def test_run_hooks_change(container: TrackedContainer) -> None:
-    logs = run_source_in_dir(container, subdir="data/run-hooks/change")
-
-    assert "Inside a.sh MY_VAR variable has 123 value" in logs
-    assert "Inside b.sh MY_VAR variable has 123 value" in logs
-    assert "Changing value of MY_VAR" in logs
-    assert "After change inside b.sh MY_VAR variable has 456 value" in logs
-    assert "Inside c.sh MY_VAR variable has 456 value" in logs

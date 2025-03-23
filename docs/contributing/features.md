@@ -8,7 +8,7 @@ to balance the value of the images to the Jupyter community with the cost of mai
 
 Please follow the process below to suggest a new feature for inclusion in one of the core stacks:
 
-1. Open a [GitHub feature request issue](https://github.com/jupyter/docker-stacks/issues/new?assignees=&labels=type%3AEnhancement&projects=&template=feature_request.yml)
+1. Open a [GitHub feature request issue](https://github.com/jupyter/docker-stacks/issues/new?template=feature_request.yml)
    describing the feature you'd like to contribute.
 2. Discuss with the maintainers whether the addition makes sense
    in [one of the core stacks](../using/selecting.md#core-stacks),
@@ -53,6 +53,6 @@ If there's agreement that the feature belongs in one or more of the core stacks:
    make build/<somestack>
    ```
 
-3. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)(PR) with your changes.
+3. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request) (PR) with your changes.
 4. Watch for GitHub to report a build success or failure for your PR on GitHub.
 5. Discuss changes with the maintainers and address any build issues.

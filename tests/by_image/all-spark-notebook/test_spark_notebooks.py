@@ -33,7 +33,6 @@ def test_nbconvert(container: TrackedContainer, test_file: str) -> None:
         timeout=60,
         no_warnings=False,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-        tty=True,
         command=["bash", "-c", command],
     )
     warnings = TrackedContainer.get_warnings(logs)

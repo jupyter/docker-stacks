@@ -6,11 +6,15 @@ import datetime
 import logging
 import shutil
 import textwrap
+from dataclasses import dataclass
 from pathlib import Path
 
 import plumbum
 import tabulate
 from dateutil import relativedelta
+
+from wiki.config import Config
+from wiki.manifest_time import get_manifest_timestamp, get_manifest_year_month
 
 git = plumbum.local["git"]
 
@@ -18,47 +22,51 @@ LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-def calculate_monthly_stat(
-    year_month_file: Path, year_month_date: datetime.date
-) -> tuple[int, int, int]:
-    year_month_file_content = year_month_file.read_text()
+@dataclass
+class YearMonthFile:
+    month: int
+    content: str
 
+
+@dataclass
+class Statistics:
+    builds: int
+    images: int
+    commits: int
+
+
+def calculate_monthly_stat(
+    year_month_file: YearMonthFile, year_month_date: datetime.date
+) -> Statistics:
     builds = sum(
         "jupyter/base-notebook" in line and "aarch64" not in line
-        for line in year_month_file_content.split("\n")
+        for line in year_month_file.content.split("\n")
     )
 
-    images = year_month_file_content.count("Build manifest")
+    images = year_month_file.content.count("Build manifest")
 
     with plumbum.local.env(TZ="UTC"):
-        future = (
-            git[
-                "log",
-                "--oneline",
-                "--since",
-                f"{year_month_date}.midnight",
-                "--until",
-                f"{year_month_date + relativedelta.relativedelta(months=1)}.midnight",
-                "--first-parent",
-            ]
-            & plumbum.BG
-        )
-    future.wait()
-    commits = len(future.stdout.splitlines())
-
-    return builds, images, commits
+        git_log = git[
+            "log",
+            "--oneline",
+            "--since",
+            f"{year_month_date}.midnight",
+            "--until",
+            f"{year_month_date + relativedelta.relativedelta(months=1)}.midnight",
+            "--first-parent",
+        ]()
+    commits = len(git_log.splitlines())
+    return Statistics(builds=builds, images=images, commits=commits)
 
 
-def generate_home_wiki_page(wiki_dir: Path, repository: str) -> None:
-    YEAR_MONTHLY_TABLES = "<!-- YEAR_MONTHLY_TABLES -->"
+@dataclass
+class YearFiles:
+    year: int
+    files: list[YearMonthFile]
 
-    wiki_home_content = (THIS_DIR / "Home.md").read_text()
 
-    assert YEAR_MONTHLY_TABLES in wiki_home_content
-    wiki_home_content = wiki_home_content[
-        : wiki_home_content.find(YEAR_MONTHLY_TABLES) + len(YEAR_MONTHLY_TABLES)
-    ]
-    wiki_home_content = wiki_home_content.format(REPOSITORY=repository)
+def generate_home_wiki_tables(repository: str, all_years: list[YearFiles]) -> str:
+    tables = ""
 
     GITHUB_COMMITS_URL = (
         f"[{{}}](https://github.com/{repository}/commits/main/?since={{}}&until={{}})"
@@ -66,49 +74,84 @@ def generate_home_wiki_page(wiki_dir: Path, repository: str) -> None:
 
     YEAR_TABLE_HEADERS = ["Month", "Builds", "Images", "Commits"]
 
-    for year_dir in sorted((wiki_dir / "monthly-files").glob("*"), reverse=True):
-        year = int(year_dir.name)
-        wiki_home_content += f"\n\n## {year}\n\n"
+    for year_files in all_years:
+        year = year_files.year
+
+        tables += f"\n\n## {year}\n\n"
         year_table_rows = []
 
-        year_builds, year_images, year_commits = 0, 0, 0
-        for year_month_file in sorted(year_dir.glob("*.md"), reverse=True):
-            year_month = year_month_file.stem
-            year_month_date = datetime.date(year=year, month=int(year_month[5:]), day=1)
-            builds, images, commits = calculate_monthly_stat(
-                year_month_file, year_month_date
-            )
-            year_builds += builds
-            year_images += images
-            year_commits += commits
+        year_stat = Statistics(builds=0, images=0, commits=0)
+        for year_month_file in year_files.files:
+            month = year_month_file.month
+            year_month_date = datetime.date(year=year, month=month, day=1)
+            month_stat = calculate_monthly_stat(year_month_file, year_month_date)
+
+            year_stat.builds += month_stat.builds
+            year_stat.images += month_stat.images
+            year_stat.commits += month_stat.commits
+
             commits_url = GITHUB_COMMITS_URL.format(
-                commits,
+                month_stat.commits,
                 year_month_date,
                 year_month_date + relativedelta.relativedelta(day=31),
             )
+            year_month = f"{year}-{month:0>2}"
             year_table_rows.append(
-                [f"[`{year_month}`](./{year_month})", builds, images, commits_url]
+                [
+                    f"[`{year_month}`](./{year_month})",
+                    month_stat.builds,
+                    month_stat.images,
+                    commits_url,
+                ]
             )
 
         year_commits_url = GITHUB_COMMITS_URL.format(
-            year_commits, f"{year}-01-01", f"{year}-12-31"
+            year_stat.commits, f"{year}-01-01", f"{year}-12-31"
         )
         year_table_rows.append(
-            ["**Total**", year_builds, year_images, year_commits_url]
+            ["**Total**", year_stat.builds, year_stat.images, year_commits_url]
         )
 
-        wiki_home_content += tabulate.tabulate(
+        tables += tabulate.tabulate(
             year_table_rows, YEAR_TABLE_HEADERS, tablefmt="github"
         )
-    wiki_home_content += "\n"
+    LOGGER.info("Generated home wiki tables")
+    return tables
+
+
+def write_home_wiki_page(wiki_dir: Path, repository: str) -> None:
+    all_years = []
+    for year_dir in sorted((wiki_dir / "monthly-files").glob("*"), reverse=True):
+        files = sorted(year_dir.glob("*.md"), reverse=True)
+        all_years.append(
+            YearFiles(
+                int(year_dir.name),
+                [
+                    YearMonthFile(month=int(f.stem[5:]), content=f.read_text())
+                    for f in files
+                ],
+            )
+        )
+    wiki_home_tables = generate_home_wiki_tables(repository, all_years)
+
+    wiki_home_content = (THIS_DIR / "Home.md").read_text()
+    YEAR_MONTHLY_TABLES = "<!-- YEAR_MONTHLY_TABLES -->"
+
+    assert YEAR_MONTHLY_TABLES in wiki_home_content
+    wiki_home_content = wiki_home_content[
+        : wiki_home_content.find(YEAR_MONTHLY_TABLES) + len(YEAR_MONTHLY_TABLES)
+    ]
+    wiki_home_content = wiki_home_content.format(REPOSITORY=repository)
+    wiki_home_content += wiki_home_tables + "\n"
 
     (wiki_dir / "Home.md").write_text(wiki_home_content)
     LOGGER.info("Updated Home page")
 
 
-def update_monthly_wiki_page(
-    wiki_dir: Path, year_month: str, build_history_line: str
-) -> None:
+def update_monthly_wiki_page(wiki_dir: Path, build_history_line: str) -> None:
+    assert build_history_line.startswith("| `")
+    year_month = build_history_line[3:10]
+
     MONTHLY_PAGE_HEADER = textwrap.dedent(
         f"""\
         # Images built during {year_month}
@@ -133,23 +176,6 @@ def update_monthly_wiki_page(
     LOGGER.info(f"Updated monthly page: {monthly_page.relative_to(wiki_dir)}")
 
 
-def get_manifest_timestamp(manifest_file: Path) -> str:
-    file_content = manifest_file.read_text()
-    TIMESTAMP_PREFIX = "Build timestamp: "
-    TIMESTAMP_LENGTH = 20
-    timestamp = file_content[
-        file_content.find(TIMESTAMP_PREFIX) + len(TIMESTAMP_PREFIX) :
-    ][:TIMESTAMP_LENGTH]
-    # Should be good enough till year 2100
-    assert timestamp.startswith("20"), timestamp
-    assert timestamp.endswith("Z"), timestamp
-    return timestamp
-
-
-def get_manifest_year_month(manifest_file: Path) -> str:
-    return get_manifest_timestamp(manifest_file)[:7]
-
-
 def remove_old_manifests(wiki_dir: Path) -> None:
     MAX_NUMBER_OF_MANIFESTS = 4500
 
@@ -163,40 +189,37 @@ def remove_old_manifests(wiki_dir: Path) -> None:
         LOGGER.info(f"Removed manifest: {file.relative_to(wiki_dir)}")
 
 
-def update_wiki(
-    *,
-    wiki_dir: Path,
-    hist_lines_dir: Path,
-    manifests_dir: Path,
-    repository: str,
-    allow_no_files: bool,
-) -> None:
-    LOGGER.info("Updating wiki")
-
-    manifest_files = list(manifests_dir.rglob("*.md"))
-    if not allow_no_files:
+def copy_manifest_files(config: Config) -> None:
+    manifest_files = list(config.manifests_dir.rglob("*.md"))
+    if not config.allow_no_files:
         assert manifest_files, "expected to have some manifest files"
     for manifest_file in manifest_files:
         year_month = get_manifest_year_month(manifest_file)
         year = year_month[:4]
-        copy_to = wiki_dir / "manifests" / year / year_month / manifest_file.name
+        copy_to = config.wiki_dir / "manifests" / year / year_month / manifest_file.name
         copy_to.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(manifest_file, copy_to)
-        LOGGER.info(f"Added manifest file: {copy_to.relative_to(wiki_dir)}")
+        LOGGER.info(f"Added manifest file: {copy_to.relative_to(config.wiki_dir)}")
 
-    build_history_line_files = sorted(hist_lines_dir.rglob("*.txt"))
-    if not allow_no_files:
+
+def update_wiki(config: Config) -> None:
+    LOGGER.info("Updating wiki")
+
+    copy_manifest_files(config)
+
+    build_history_line_files = sorted(config.hist_lines_dir.rglob("*.txt"))
+    if not config.allow_no_files:
         assert (
             build_history_line_files
         ), "expected to have some build history line files"
     for build_history_line_file in build_history_line_files:
         build_history_line = build_history_line_file.read_text()
-        assert build_history_line.startswith("| `")
-        year_month = build_history_line[3:10]
-        update_monthly_wiki_page(wiki_dir, year_month, build_history_line)
+        update_monthly_wiki_page(config.wiki_dir, build_history_line)
 
-    generate_home_wiki_page(wiki_dir, repository)
-    remove_old_manifests(wiki_dir)
+    write_home_wiki_page(config.wiki_dir, config.repository)
+    remove_old_manifests(config.wiki_dir)
+
+    LOGGER.info("Wiki updated")
 
 
 if __name__ == "__main__":
@@ -233,4 +256,5 @@ if __name__ == "__main__":
     )
     args = arg_parser.parse_args()
 
-    update_wiki(**vars(args))
+    config = Config(**vars(args))
+    update_wiki(config)

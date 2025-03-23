@@ -18,25 +18,6 @@ This means that it does not check dependencies.
 This choice is a tradeoff to cover the main requirements while achieving a reasonable test duration.
 However, it could be easily changed (or completed) to cover dependencies as well.
 Use `package_helper.installed_packages()` instead of `package_helper.requested_packages()`.
-
-Example:
-
-    $ make test/docker-stacks-foundation
-
-    # [...]
-    # tests/docker-stacks-foundation/test_packages.py::test_python_packages
-    # -------------------------------- live log setup --------------------------------
-    # 2024-01-21 17:46:43 [    INFO] Starting container quay.io/jupyter/docker-stacks-foundation ... (package_helper.py:55)
-    # 2024-01-21 17:46:43 [    INFO] Running quay.io/jupyter/docker-stacks-foundation with args {'detach': True, 'tty': True, 'command': ['bash', '-c', 'sleep infinity']} ... (conftest.py:99)
-    # 2024-01-21 17:46:44 [    INFO] Grabbing the list of manually requested packages ... (package_helper.py:83)
-    # -------------------------------- live log call ---------------------------------
-    # 2024-01-21 17:46:44 [    INFO] Testing the import of packages ... (test_packages.py:151)
-    # 2024-01-21 17:46:44 [    INFO] Trying to import mamba (test_packages.py:153)
-    # 2024-01-21 17:46:44 [    INFO] Trying to import jupyter_core (test_packages.py:153)
-    PASSED                                                                   [ 17%]
-    # ------------------------------ live log teardown -------------------------------
-    # [...]
-
 """
 
 import logging
@@ -112,25 +93,16 @@ def get_package_import_name(package: str) -> str:
     return PACKAGE_MAPPING.get(package, package)
 
 
-def _check_import_package(
-    package_helper: CondaPackageHelper, command: list[str]
-) -> None:
-    """Generic function executing a command"""
-    LOGGER.debug(f"Trying to import a package with [{command}] ...")
-    exec_result = package_helper.running_container.exec_run(command)
-    assert exec_result.exit_code == 0, exec_result.output.decode()
-
-
 def check_import_python_package(
     package_helper: CondaPackageHelper, package: str
 ) -> None:
     """Try to import a Python package from the command line"""
-    _check_import_package(package_helper, ["python", "-c", f"import {package}"])
+    package_helper.container.exec_cmd(f'python -c "import {package}"')
 
 
 def check_import_r_package(package_helper: CondaPackageHelper, package: str) -> None:
     """Try to import an R package from the command line"""
-    _check_import_package(package_helper, ["R", "--slave", "-e", f"library({package})"])
+    package_helper.container.exec_cmd(f"R --slave -e library({package})")
 
 
 def _check_import_packages(

@@ -1,7 +1,8 @@
-# Tagging and manifest creation
+# Tags and manifests
 
-The main purpose of the source code in [the `tagging` folder](https://github.com/jupyter/docker-stacks/tree/main/tagging) is to properly write tag files and manifests for single-platform images,
-apply these tags, and merge single-platform images into one multi-arch image.
+The main purpose of the source code in [the `tagging` folder](https://github.com/jupyter/docker-stacks/tree/main/tagging) is to
+properly write tags file, build history line and manifest for a single-platform image,
+apply these tags, and then merge single-platform images into one multi-arch image.
 
 ## What is a tag and a manifest
 
@@ -16,9 +17,9 @@ For example, we dump all `conda` packages with their versions into the manifest.
 
 - All images are organized in a hierarchical tree.
   More info on [image relationships](../using/selecting.md#image-relationships).
-- Classes inherit from `TaggerInterface` and `ManifestInterface` to generate tags and manifest pieces by running commands in Docker containers.
+- `TaggerInterface` and `ManifestInterface` are interfaces for functions to generate tags and manifest pieces by running commands in Docker containers.
 - Tags and manifests are reevaluated for each image in the hierarchy since values may change between parent and child images.
-- To tag an image and create its manifest, run `make hook/<somestack>` (e.g., `make hook/base-notebook`).
+- To tag an image and create its manifest and build history line, run `make hook/<somestack>` (e.g., `make hook/base-notebook`).
 
 ## Utils
 
@@ -46,51 +47,53 @@ The prefix of commit hash (namely, 12 letters) is used as an image tag to make i
 
 ### Tagger
 
-`Tagger` is a class that can be run inside a docker container to calculate some tag for an image.
+`Tagger` is a function that runs commands inside a docker container to calculate a tag for an image.
 
-All the taggers are inherited from `TaggerInterface`:
+All the taggers follow `TaggerInterface`:
 
 ```{literalinclude} ../../tagging/taggers/tagger_interface.py
 :language: py
-:start-at: class TaggerInterface
+:start-at: TaggerInterface
 ```
 
-So, the `tag_value(container)` method gets a docker container as an input and returns a tag.
+So, the `tagger(container)` gets a docker container as an input and returns a tag.
 
-`SHATagger` example:
+For example:
 
 ```{literalinclude} ../../tagging/taggers/sha.py
 :language: py
-:start-at: class SHATagger
+:start-at: def
 ```
 
-- `taggers/` subdirectory contains all the taggers.
-- `apps/write_tags_file.py`, `apps/apply_tags.py`, and `apps/merge_tags.py` are Python executable used to write tags for an image, apply tags from a file, and create multi-arch images.
+- `taggers/` subdirectory contains all taggers.
+- `apps/write_tags_file.py`, `apps/apply_tags.py`, and `apps/merge_tags.py` are Python executables used to write tags for an image, apply tags from a file, and create multi-arch images.
 
 ### Manifest
 
-All manifest classes except `BuildInfo` are inherited from `ManifestInterface`
-and `markdown_piece(container)` method returns a piece of the build manifest.
+All manifest functions except `build_info_manifest` follow `ManifestInterface`
+and `manifest(container)` method returns a piece of the manifest.
 
 ```{literalinclude} ../../tagging/manifests/manifest_interface.py
 :language: py
-:start-at: class ManifestInterface
+:start-at: ManifestInterface
 ```
 
-`AptPackagesManifest` example:
+For example:
 
 ```{literalinclude} ../../tagging/manifests/apt_packages.py
 :language: py
-:start-at: class AptPackagesManifest
+:start-at: def
 ```
 
-- `quoted_output(container, cmd)` simply runs the command inside a container using `DockerRunner.run_simple_command` and wraps it to triple quotes to create a valid markdown piece.
+where:
+
+- `quoted_output(container, cmd)` simply runs the command inside a container using `DockerRunner.exec_cmd` and wraps it to triple quotes to create a valid markdown piece.
   It also adds the command which was run to the markdown piece.
 - `manifests/` subdirectory contains all the manifests.
 - `apps/write_manifest.py` is a Python executable to create the build manifest and history line for an image.
 
 ## Images Hierarchy
 
-All images' dependencies on each other and what taggers and manifest are applicable to them are defined in `hierarchy/images_hierarchy.py`.
+All images' dependencies on each other and what taggers and manifests are applicable to them are defined in `hierarchy/images_hierarchy.py`.
 
-`hierarchy/get_taggers_and_manifests.py` defines a function to get the taggers and manifests for a specific image.
+`hierarchy/get_taggers.py` and `hierarchy/get_manifests.py` define functions to get the taggers and manifests for a specific image.

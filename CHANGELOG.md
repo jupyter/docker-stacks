@@ -3,6 +3,35 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2025-03-22
+
+Affected: all images.
+
+- **Non-breaking:** Use tty for running docker commands by default ([#2260](https://github.com/jupyter/docker-stacks/pull/2260)).
+- **Non-breaking:** Improve logs around running docker ([#2261](https://github.com/jupyter/docker-stacks/pull/2261)).
+
+## 2025-03-21
+
+Affected: all images.
+
+- **Non-breaking:** Refactor TrackedContainer run_detached/exec_cmd functions ([#2256](https://github.com/jupyter/docker-stacks/pull/2256)).
+- **Non-breaking:** Do not allocate TTY in tests if not needed ([#2257](https://github.com/jupyter/docker-stacks/pull/2257)).
+- **Non-breaking:** `base-notebook`: Flush output in Python before running execvp ([#2258](https://github.com/jupyter/docker-stacks/pull/2258)).
+
+## 2025-03-20
+
+Affected: all images except `docker-stacks-foundation`.
+
+- **Non-breaking:** `base-notebook`: Refactor healthcheck tests to use one function ([#2254](https://github.com/jupyter/docker-stacks/pull/2254)).
+- **Non-breaking:** `base-notebook`: Test server listening on IPv4/IPv6 ([#2255](https://github.com/jupyter/docker-stacks/pull/2255)).
+
+## 2025-03-12
+
+Affected: all images.
+
+- **Non-breaking:** Add `conda` and `mamba` version taggers ([#2251](https://github.com/jupyter/docker-stacks/pull/2251)).
+- **Non-breaking:** Make taggers and manifests functions ([#2252](https://github.com/jupyter/docker-stacks/pull/2252)).
+
 ## 2025-02-21
 
 Affected: all images.

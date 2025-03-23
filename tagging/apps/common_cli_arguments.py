@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from tagging.utils.config import Config
+from tagging.apps.config import Config
 from tagging.utils.get_platform import unify_aarch64
 
 

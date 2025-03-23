@@ -1,4 +1,4 @@
-name: Download a parent image, build a new one, and test it; then upload the image, tags, and manifests to GitHub artifacts
+name: Download a parent image, build a new one, and test it; upload the image, tags, build history line and manifest to GitHub artifacts
 
 env:
   REGISTRY: quay.io
@@ -127,6 +127,7 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
           path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
           retention-days: 3
+          compression-level: 0
 
       - name: Run tests ✅
         run: >
