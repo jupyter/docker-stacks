@@ -54,6 +54,7 @@ EXCLUDED_PACKAGES = [
     "grpcio-status",
     "grpcio",
     "hdf5",
+    "jupyter-server-proxy",
     "jupyterhub-singleuser",
     "jupyterlab-git",
     "mamba",
