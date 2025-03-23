@@ -10,7 +10,7 @@ LOGGER = logging.getLogger(__name__)
 
 def test_units(container: TrackedContainer) -> None:
     """Various units tests
-    Add a py file in the `tests/<somestack>/units` dir, and it will be automatically tested
+    Add a py file in the `tests/by_image/<somestack>/units` dir, and it will be automatically tested
     """
     image = container.image_name[container.image_name.rfind("/") + 1 :]
     LOGGER.info(f"Running unit tests for: {image}")
@@ -33,6 +33,5 @@ def test_units(container: TrackedContainer) -> None:
             container.run_and_wait(
                 timeout=30,
                 volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-                tty=True,
                 command=["python", f"{cont_data_dir}/{test_file_name}"],
             )

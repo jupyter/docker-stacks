@@ -8,7 +8,8 @@ import sys
 # If we are in a JupyterHub, we pass on to `start-singleuser.py` instead so it does the right thing
 if "JUPYTERHUB_API_TOKEN" in os.environ:
     print(
-        "WARNING: using start-singleuser.py instead of start-notebook.py to start a server associated with JupyterHub."
+        "WARNING: using start-singleuser.py instead of start-notebook.py to start a server associated with JupyterHub.",
+        flush=True,
     )
     command = ["/usr/local/bin/start-singleuser.py"] + sys.argv[1:]
     os.execvp(command[0], command)
@@ -40,5 +41,5 @@ if "NOTEBOOK_ARGS" in os.environ:
 command += sys.argv[1:]
 
 # Execute the command!
-print("Executing: " + " ".join(command))
+print("Executing: " + " ".join(command), flush=True)
 os.execvp(command[0], command)

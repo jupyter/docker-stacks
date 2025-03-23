@@ -2,7 +2,7 @@
 
 ## How to persist user data
 
-There are 2 types of data, which you might want to persist.
+There are two types of data you might want to persist.
 
 1. If you want to persist your environment (i.e. packages installed by `mamba`, `conda`, `pip`, `apt-get`, and so on),
    then you should create an inherited image and install packages only once while building your Dockerfile.
@@ -12,7 +12,7 @@ There are 2 types of data, which you might want to persist.
    ```{note}
    If you install a package inside a running container (for example you run `pip install <package>` in a terminal),
    it won't be preserved when you next run your image.
-   To make it work, install this package in your inherited image and rerun `docker build` command.
+   To make it work, install this package in your inherited image and rerun the `docker build` command.
    ```
 
 2. If you want to persist user data (files created by you, like `Python` scripts, notebooks, text files, and so on),
@@ -22,11 +22,11 @@ There are 2 types of data, which you might want to persist.
    You can find [an example of using a bind mount here](./running.md#example-2).
    There is also [a mount troubleshooting section](./troubleshooting.md#permission-denied-when-mounting-volumes) if you experience any issues.
 
-## Why we do not add your favorite package
+## Why we don't add your favorite package
 
 We have lots of users with different packages they want to use.
 Adding them all is impossible, so we have several images to choose from.
-[Choose the image](selecting.md), that is closest to your needs, and feel free to [add your package on top of our images](recipes.md#using-mamba-install-recommended-or-pip-install-in-a-child-docker-image).
+[Choose the image](selecting.md) that is closest to your needs, and feel free to [add your package on top of our images](recipes.md#using-mamba-install-recommended-or-pip-install-in-a-child-docker-image).
 
 ## Who is `jovyan`
 

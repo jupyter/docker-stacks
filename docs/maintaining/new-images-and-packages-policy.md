@@ -1,4 +1,4 @@
-# Policy on adding new images and packages
+# New images / packages policy
 
 There are many things we consider while adding new images and packages.
 

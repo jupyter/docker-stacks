@@ -12,7 +12,6 @@ def test_spark_shell(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=60,
         no_warnings=False,
-        tty=True,
         command=["bash", "-c", 'spark-shell <<< "1+1"'],
     )
     warnings = TrackedContainer.get_warnings(logs)

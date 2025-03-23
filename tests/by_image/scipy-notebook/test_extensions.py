@@ -29,6 +29,5 @@ def test_check_extension(container: TrackedContainer, extension: str) -> None:
     LOGGER.info(f"Checking the extension: {extension} ...")
     container.run_and_wait(
         timeout=10,
-        tty=True,
         command=["jupyter", "labextension", "check", extension],
     )

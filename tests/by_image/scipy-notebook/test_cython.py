@@ -14,7 +14,6 @@ def test_cython(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=10,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-        tty=True,
         command=[
             "bash",
             "-c",

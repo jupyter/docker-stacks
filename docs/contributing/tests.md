@@ -4,7 +4,7 @@ We greatly appreciate Pull Requests that extend the automated tests that vet the
 
 ## How the Tests Work
 
-A [GitHub Action workflow](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml)
+A [GitHub Actions workflow](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml)
 runs tests against pull requests submitted to the `jupyter/docker-stacks` repository.
 
 We use the `pytest` module to run tests on the image.

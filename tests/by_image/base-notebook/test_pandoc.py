@@ -11,7 +11,6 @@ def test_pandoc(container: TrackedContainer) -> None:
     """Pandoc shall be able to convert MD to HTML."""
     logs = container.run_and_wait(
         timeout=10,
-        tty=True,
         command=["bash", "-c", 'echo "**BOLD**" | pandoc'],
     )
     assert "<p><strong>BOLD</strong></p>" in logs

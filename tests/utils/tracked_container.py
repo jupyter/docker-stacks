@@ -19,22 +19,18 @@ class TrackedContainer:
         Docker client instance
     image_name: str
         Name of the docker image to launch
-    **kwargs: dict, optional
-        Default keyword arguments to pass to docker.DockerClient.containers.run
     """
 
     def __init__(
         self,
         docker_client: docker.DockerClient,
         image_name: str,
-        **kwargs: Any,
     ):
         self.container: Container | None = None
         self.docker_client: docker.DockerClient = docker_client
         self.image_name: str = image_name
-        self.kwargs: Any = kwargs
 
-    def run_detached(self, **kwargs: Any) -> Container:
+    def run_detached(self, **kwargs: Any) -> None:
         """Runs a docker container using the pre-configured image name
         and a mix of the pre-configured container options and those passed
         to this method.
@@ -47,18 +43,41 @@ class TrackedContainer:
         **kwargs: dict, optional
             Keyword arguments to pass to docker.DockerClient.containers.run
             extending and/or overriding key/value pairs passed to the constructor
-
-        Returns
-        -------
-        docker.Container
         """
-        all_kwargs = self.kwargs | kwargs
-        LOGGER.info(f"Running {self.image_name} with args {all_kwargs} ...")
-        self.container = self.docker_client.containers.run(
-            self.image_name,
-            **all_kwargs,
+        LOGGER.info(
+            f"Creating a container for the image: {self.image_name} with args: {kwargs} ..."
         )
-        return self.container
+        default_kwargs = {"detach": True, "tty": True}
+        final_kwargs = default_kwargs | kwargs
+        self.container = self.docker_client.containers.run(
+            self.image_name, **final_kwargs
+        )
+        LOGGER.info(f"Container {self.container.name} created")
+
+    def get_logs(self) -> str:
+        assert self.container is not None
+        logs = self.container.logs().decode()
+        assert isinstance(logs, str)
+        return logs
+
+    def get_health(self) -> str:
+        assert self.container is not None
+        self.container.reload()
+        return self.container.health  # type: ignore
+
+    def exec_cmd(self, cmd: str, **kwargs: Any) -> str:
+        assert self.container is not None
+        container = self.container
+
+        LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
+        default_kwargs = {"tty": True}
+        final_kwargs = default_kwargs | kwargs
+        exec_result = container.exec_run(cmd, **final_kwargs)
+        output = exec_result.output.decode().rstrip()
+        assert isinstance(output, str)
+        LOGGER.debug(f"Command output: {output}")
+        assert exec_result.exit_code == 0, f"Command: `{cmd}` failed"
+        return output
 
     def run_and_wait(
         self,
@@ -68,14 +87,15 @@ class TrackedContainer:
         no_failure: bool = True,
         **kwargs: Any,
     ) -> str:
-        running_container = self.run_detached(**kwargs)
-        rv = running_container.wait(timeout=timeout)
-        logs = running_container.logs().decode()
-        assert isinstance(logs, str)
+        self.run_detached(**kwargs)
+        assert self.container is not None
+        rv = self.container.wait(timeout=timeout)
+        logs = self.get_logs()
         LOGGER.debug(logs)
         assert no_warnings == (not self.get_warnings(logs))
         assert no_errors == (not self.get_errors(logs))
         assert no_failure == (rv["StatusCode"] == 0)
+        self.remove()
         return logs
 
     @staticmethod
@@ -93,8 +113,9 @@ class TrackedContainer:
     def remove(self) -> None:
         """Kills and removes the tracked docker container."""
         if self.container is None:
-            LOGGER.info("No container to remove")
+            LOGGER.debug("No container to remove")
         else:
             LOGGER.info(f"Removing container {self.container.name} ...")
             self.container.remove(force=True)
             LOGGER.info(f"Container {self.container.name} removed")
+            self.container = None

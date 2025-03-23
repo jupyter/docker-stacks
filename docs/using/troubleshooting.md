@@ -77,7 +77,7 @@ The following sections cover a few of these scenarios and how to fix them.
       - If you are mounting your volume inside the `/home/` directory, you can use the `-e CHOWN_HOME=yes` and `CHOWN_HOME_OPTS="-R"` flags
       instead of the `-e CHOWN_EXTRA` and `-e CHOWN_EXTRA_OPTS` in the example above.
       - This solution should work in most cases where you have created a docker volume
-      (i.e. using the [`docker volume create --name <my-volume>`command](https://docs.docker.com/engine/storage/volumes/#create-and-manage-volumes)) and mounted it using the `-v` flag in `docker run`.
+      (i.e. using the [`docker volume create --name <my-volume>` command](https://docs.docker.com/engine/storage/volumes/#create-and-manage-volumes)) and mounted it using the `-v` flag in `docker run`.
    ```
 
 2. **Matching the container's UID/GID with the host's**
@@ -108,7 +108,7 @@ The following sections cover a few of these scenarios and how to fix them.
 
    where:
 
-   - `NB_IUD` and `NB_GID` should match the local user's UID and GID.
+   - `NB_UID` and `NB_GID` should match the local user's UID and GID.
    - You **must** use `--user root` to ensure that the `UID` and `GID` are updated at runtime.
 
 ````{admonition} Additional notes
@@ -273,7 +273,7 @@ conda config --show default_channels
 You can install packages from other conda channels (e.g. `bioconda`) by disabling the `channel_priority` setting:
 
 ```bash
-# install by disabling channel priority at еру command level
+# install by disabling channel priority at the command level
 conda install --no-channel-priority -c bioconda bioconductor-geoquery
 ```
 

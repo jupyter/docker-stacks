@@ -58,7 +58,7 @@ else
 fi
 
 # Setup environment
-# shellcheck disable=SC1091
+# shellcheck source=examples/docker-compose/notebook/env.sh
 source "${DIR}/env.sh"
 
 # Create a Docker volume to store notebooks

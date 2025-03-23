@@ -7,10 +7,10 @@ import logging
 from docker.models.containers import Container
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
+from tagging.apps.config import Config
 from tagging.hierarchy.get_manifests import get_manifests
 from tagging.hierarchy.get_taggers import get_taggers
-from tagging.manifests.build_info import BuildInfo
-from tagging.utils.config import Config
+from tagging.manifests.build_info import BuildInfoConfig, build_info_manifest
 from tagging.utils.docker_runner import DockerRunner
 from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
 from tagging.utils.git_helper import GitHelper
@@ -27,7 +27,7 @@ def get_build_history_line(config: Config, filename: str, container: Container) 
 
     taggers = get_taggers(config.image)
     tags_prefix = get_tag_prefix(config.variant)
-    all_tags = [tags_prefix + "-" + tagger.tag_value(container) for tagger in taggers]
+    all_tags = [tags_prefix + "-" + tagger(container) for tagger in taggers]
 
     date_column = f"`{BUILD_TIMESTAMP}`"
     image_column = MARKDOWN_LINE_BREAK.join(
@@ -64,13 +64,21 @@ def get_manifest(config: Config, commit_hash_tag: str, container: Container) -> 
     LOGGER.info(f"Calculating manifest file for image: {config.image}")
 
     manifests = get_manifests(config.image)
-    manifest_names = [manifest.__class__.__name__ for manifest in manifests]
+    manifest_names = [manifest.__name__ for manifest in manifests]
     LOGGER.info(f"Using manifests: {manifest_names}")
+
+    build_info_config = BuildInfoConfig(
+        registry=config.registry,
+        owner=config.owner,
+        image=config.image,
+        repository=config.repository,
+        build_timestamp=BUILD_TIMESTAMP,
+    )
 
     markdown_pieces = [
         f"# Build manifest for image: {config.image}:{commit_hash_tag}",
-        BuildInfo.markdown_piece(config, BUILD_TIMESTAMP).get_str(),
-        *(manifest.markdown_piece(container).get_str() for manifest in manifests),
+        build_info_manifest(build_info_config).get_str(),
+        *(manifest(container).get_str() for manifest in manifests),
     ]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 

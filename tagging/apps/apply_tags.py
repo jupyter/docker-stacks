@@ -6,7 +6,7 @@ import logging
 import plumbum
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
-from tagging.utils.config import Config
+from tagging.apps.config import Config
 from tagging.utils.get_prefix import get_file_prefix_for_platform
 
 docker = plumbum.local["docker"]

@@ -27,7 +27,6 @@ def test_nbconvert(
     logs = container.run_and_wait(
         timeout=30,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-        tty=True,
         command=["bash", "-c", command],
     )
     expected_file = f"{output_dir}/{test_file}.{output_format}"

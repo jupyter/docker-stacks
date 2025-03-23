@@ -4,8 +4,8 @@
 import logging
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
+from tagging.apps.config import Config
 from tagging.hierarchy.get_taggers import get_taggers
-from tagging.utils.config import Config
 from tagging.utils.docker_runner import DockerRunner
 from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
 
@@ -20,8 +20,8 @@ def get_tags(config: Config) -> list[str]:
     tags = [f"{config.full_image()}:{tags_prefix}-latest"]
     with DockerRunner(config.full_image()) as container:
         for tagger in taggers:
-            tagger_name = tagger.__class__.__name__
-            tag_value = tagger.tag_value(container)
+            tagger_name = tagger.__name__
+            tag_value = tagger(container)
             LOGGER.info(
                 f"Calculated tag, tagger_name: {tagger_name} tag_value: {tag_value}"
             )

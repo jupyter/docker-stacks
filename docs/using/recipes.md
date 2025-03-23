@@ -60,7 +60,7 @@ docker run -it --rm \
 The default version of `Python` that ships with the image may not be the version you want.
 The instructions below permit adding a conda environment with a different `Python` version and making it accessible to Jupyter.
 You may also use older images like `jupyter/base-notebook:python-3.10`.
-A list of all tags can be found [here](https://github.com/jupyter/docker-stacks/wiki)
+A list of all tags can be found [here](https://github.com/jupyter/docker-stacks/wiki).
 
 ```{literalinclude} recipe_code/custom_environment.dockerfile
 :language: docker
@@ -400,7 +400,7 @@ docker run -it --rm \
 ## Enable nbclassic-extension spellchecker for markdown (or any other nbclassic-extension)
 
 ```{note}
-This recipe only works for NBCassic with Jupyter Notebook < 7.
+This recipe only works for NBClassic with Jupyter Notebook < 7.
 It is recommended to use [jupyterlab-spellchecker](https://github.com/jupyterlab-contrib/spellchecker) in modern environments.
 ```
 
