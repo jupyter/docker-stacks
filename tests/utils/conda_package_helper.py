@@ -41,8 +41,6 @@ class CondaPackageHelper:
 
     def __init__(self, container: TrackedContainer):
         self.container = container
-
-        LOGGER.info(f"Starting container {self.container.image_name} ...")
         self.container.run_detached(command=["bash", "-c", "sleep infinity"])
 
         self.requested: dict[str, set[str]] | None = None
@@ -101,7 +99,7 @@ class CondaPackageHelper:
             )
             # Keeping command line output since `mamba search --outdated --json` is way too long ...
             self.available = CondaPackageHelper._extract_available(
-                self.container.exec_cmd("mamba search --outdated --quiet")
+                self.container.exec_cmd("conda search --outdated --quiet")
             )
         return self.available
 

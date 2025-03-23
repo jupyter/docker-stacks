@@ -44,12 +44,15 @@ class TrackedContainer:
             Keyword arguments to pass to docker.DockerClient.containers.run
             extending and/or overriding key/value pairs passed to the constructor
         """
-        LOGGER.info(f"Running {self.image_name} with args {kwargs} ...")
+        LOGGER.info(
+            f"Creating a container for the image: {self.image_name} with args: {kwargs} ..."
+        )
         default_kwargs = {"detach": True, "tty": True}
         final_kwargs = default_kwargs | kwargs
         self.container = self.docker_client.containers.run(
             self.image_name, **final_kwargs
         )
+        LOGGER.info(f"Container {self.container.name} created")
 
     def get_logs(self) -> str:
         assert self.container is not None
@@ -65,13 +68,14 @@ class TrackedContainer:
     def exec_cmd(self, cmd: str, **kwargs: Any) -> str:
         assert self.container is not None
         container = self.container
+
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
         default_kwargs = {"tty": True}
         final_kwargs = default_kwargs | kwargs
         exec_result = container.exec_run(cmd, **final_kwargs)
         output = exec_result.output.decode().rstrip()
         assert isinstance(output, str)
-        LOGGER.info(f"Command output: {output}")
+        LOGGER.debug(f"Command output: {output}")
         assert exec_result.exit_code == 0, f"Command: `{cmd}` failed"
         return output
 
@@ -109,7 +113,7 @@ class TrackedContainer:
     def remove(self) -> None:
         """Kills and removes the tracked docker container."""
         if self.container is None:
-            LOGGER.info("No container to remove")
+            LOGGER.debug("No container to remove")
         else:
             LOGGER.info(f"Removing container {self.container.name} ...")
             self.container.remove(force=True)

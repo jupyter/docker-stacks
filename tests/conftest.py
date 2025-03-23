@@ -29,7 +29,7 @@ def http_client() -> requests.Session:
 def docker_client() -> docker.DockerClient:
     """Docker client configured based on the host environment"""
     client = docker.from_env()
-    LOGGER.info(f"Docker client created: {client.version()}")
+    LOGGER.debug(f"Docker client created: {client.version()}")
     return client
 
 
