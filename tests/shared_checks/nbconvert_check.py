@@ -10,18 +10,18 @@ LOGGER = logging.getLogger(__name__)
 
 def check_nbconvert(
     container: TrackedContainer,
-    host_data_file: Path,
+    host_file: Path,
     output_format: str,
     *,
     execute: bool,
     no_warnings: bool = True,
 ) -> str:
     """Check if nbconvert is able to convert a notebook file"""
-    cont_data_file = "/home/jovyan/data/" + host_data_file.name
+    cont_data_file = "/home/jovyan/data/" + host_file.name
 
     output_dir = "/tmp"
     LOGGER.info(
-        f"Test that the example notebook {host_data_file.name} can be converted to {output_format} ..."
+        f"Test that the example notebook {host_file.name} can be converted to {output_format} ..."
     )
     command = [
         "jupyter",
@@ -40,12 +40,12 @@ def check_nbconvert(
         ]
     logs = container.run_and_wait(
         timeout=60,
-        volumes={str(host_data_file): {"bind": cont_data_file, "mode": "ro"}},
+        volumes={host_file: {"bind": cont_data_file, "mode": "ro"}},
         command=command,
         no_warnings=no_warnings,
     )
     output_ext = "md" if output_format == "markdown" else output_format
-    expected_file = f"{output_dir}/{host_data_file.stem}.{output_ext}"
+    expected_file = f"{output_dir}/{host_file.stem}.{output_ext}"
     assert expected_file in logs, f"Expected file {expected_file} not generated"
 
     return logs

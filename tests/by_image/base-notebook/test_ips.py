@@ -35,11 +35,12 @@ def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, Non
 
 def test_ipv46(container: TrackedContainer, ipv6_network: str) -> None:
     """Check server is listening on the expected IP families"""
-    host_data_dir = THIS_DIR / "data"
-    cont_data_dir = "/home/jovyan/data"
+    file_name = "check_listening.py"
+    host_file = THIS_DIR / "data" / file_name
+    cont_file = f"/home/jovyan/data/{file_name}"
     LOGGER.info("Testing that server is listening on IPv4 and IPv6 ...")
     container.run_detached(
         network=ipv6_network,
-        volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro,z"}},
+        volumes={host_file: {"bind": cont_file, "mode": "ro"}},
     )
-    container.exec_cmd(f"python {cont_data_dir}/check_listening.py")
+    container.exec_cmd(f"python {cont_file}")

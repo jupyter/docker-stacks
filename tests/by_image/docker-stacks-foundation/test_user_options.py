@@ -210,10 +210,10 @@ def test_container_not_delete_bind_mount(
     """Container should not delete host system files when using the (docker)
     -v bind mount flag and mapping to /home/jovyan.
     """
-    d = tmp_path / "data"
-    d.mkdir()
-    p = d / "foo.txt"
-    p.write_text("some-content")
+    host_data_dir = tmp_path / "data"
+    host_data_dir.mkdir()
+    host_file = host_data_dir / "foo.txt"
+    host_file.write_text("some-content")
 
     container.run_and_wait(
         timeout=5,
@@ -223,10 +223,10 @@ def test_container_not_delete_bind_mount(
             "NB_USER=user",
             "CHOWN_HOME=yes",
         ],
-        volumes={d: {"bind": "/home/jovyan/data", "mode": "rw"}},
+        volumes={host_data_dir: {"bind": "/home/jovyan/data", "mode": "rw"}},
         command=["ls"],
     )
-    assert p.read_text() == "some-content"
+    assert host_file.read_text() == "some-content"
     assert len(list(tmp_path.iterdir())) == 1
 
 
@@ -259,16 +259,16 @@ def test_secure_path(container: TrackedContainer, tmp_path: pathlib.Path) -> Non
     """Make sure that the sudo command has conda's python (not system's) on PATH.
     See <https://github.com/jupyter/docker-stacks/issues/1053>.
     """
-    d = tmp_path / "data"
-    d.mkdir()
-    p = d / "wrong_python.sh"
-    p.write_text('#!/bin/bash\necho "Wrong python executable invoked!"')
-    p.chmod(0o755)
+    host_data_dir = tmp_path / "data"
+    host_data_dir.mkdir()
+    host_file = host_data_dir / "wrong_python.sh"
+    host_file.write_text('#!/bin/bash\necho "Wrong python executable invoked!"')
+    host_file.chmod(0o755)
 
     logs = container.run_and_wait(
         timeout=5,
         user="root",
-        volumes={p: {"bind": "/usr/bin/python", "mode": "ro"}},
+        volumes={host_file: {"bind": "/usr/bin/python", "mode": "ro"}},
         command=["python", "--version"],
     )
     assert "Wrong python" not in logs
