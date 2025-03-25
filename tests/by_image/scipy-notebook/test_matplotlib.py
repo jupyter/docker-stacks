@@ -40,7 +40,7 @@ def test_matplotlib(
     LOGGER.info(description)
     container.run_detached(
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-        command=["bash", "-c", "sleep infinity"],
+        command=["sleep", "infinity"],
     )
 
     command = f"python {cont_data_dir}/{test_file}"

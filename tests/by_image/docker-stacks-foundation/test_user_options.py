@@ -40,7 +40,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     container.run_detached(
         user="root",
         environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
-        command=["bash", "-c", "sleep infinity"],
+        command=["sleep", "infinity"],
     )
 
     # Give the chown time to complete.
@@ -92,9 +92,11 @@ def test_chown_extra(container: TrackedContainer) -> None:
             "CHOWN_EXTRA_OPTS=-R",
         ],
         command=[
-            "bash",
+            "stat",
             "-c",
-            "stat -c '%n:%u:%g' /home/jovyan/.bashrc /opt/conda/bin/jupyter",
+            "%n:%u:%g",
+            "/home/jovyan/.bashrc",
+            "/opt/conda/bin/jupyter",
         ],
     )
     assert "/home/jovyan/.bashrc:1010:101" in logs
@@ -114,7 +116,7 @@ def test_chown_home(container: TrackedContainer) -> None:
             "NB_UID=1010",
             "NB_GID=101",
         ],
-        command=["bash", "-c", "stat -c '%n:%u:%g' /home/kitten/.bashrc"],
+        command=["stat", "-c", "%n:%u:%g", "/home/kitten/.bashrc"],
     )
     assert "/home/kitten/.bashrc:1010:101" in logs
 
