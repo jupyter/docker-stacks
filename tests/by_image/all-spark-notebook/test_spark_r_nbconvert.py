@@ -14,18 +14,29 @@ THIS_DIR = Path(__file__).parent.resolve()
 
 @pytest.mark.flaky(retries=3, delay=1)
 @pytest.mark.parametrize(
-    "test_file",
-    ["local_sparkR"],
+    "test_file,expected_warnings",
+    [
+        ("local_sparkR", ["WARNING: Using incubator modules: jdk.incubator.vector"]),
+        ("local_sparklyr", []),
+    ],
 )
 @pytest.mark.parametrize("output_format", ["pdf", "html", "markdown"])
 def test_spark_r_nbconvert(
-    container: TrackedContainer, test_file: str, output_format: str
+    container: TrackedContainer,
+    test_file: str,
+    output_format: str,
+    expected_warnings: list[str],
 ) -> None:
     host_data_file = THIS_DIR / "data" / f"{test_file}.ipynb"
     logs = check_nbconvert(
-        container, host_data_file, "markdown", execute=True, no_warnings=False
+        container,
+        host_data_file,
+        output_format,
+        execute=True,
+        no_warnings=(not expected_warnings),
     )
 
-    warnings = TrackedContainer.get_warnings(logs)
-    assert len(warnings) == 1
-    assert "Using incubator modules: jdk.incubator.vector" in warnings[0]
+    if expected_warnings:
+        warnings = TrackedContainer.get_warnings(logs)
+        assert len(warnings) == len(expected_warnings)
+        assert expected_warnings[0] == warnings[0]
