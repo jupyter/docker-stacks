@@ -75,8 +75,11 @@ class TrackedContainer:
         exec_result = container.exec_run(cmd, **final_kwargs)
         output = exec_result.output.decode().rstrip()
         assert isinstance(output, str)
-        LOGGER.debug(f"Command output: {output}")
-        assert exec_result.exit_code == 0, f"Command: `{cmd}` failed"
+        if exec_result.exit_code != 0:
+            LOGGER.error(f"Command output:\n{output}")
+            raise AssertionError(f"Command: `{cmd}` failed")
+        else:
+            LOGGER.debug(f"Command output:\n{output}")
         return output
 
     def run_and_wait(
@@ -91,10 +94,15 @@ class TrackedContainer:
         assert self.container is not None
         rv = self.container.wait(timeout=timeout)
         logs = self.get_logs()
-        LOGGER.debug(logs)
+        failed = rv["StatusCode"] != 0
+
+        if failed:
+            LOGGER.error(f"Command output:\n{logs}")
+        else:
+            LOGGER.debug(f"Command output:\n{logs}")
+        assert no_failure != failed
         assert no_warnings == (not self.get_warnings(logs))
         assert no_errors == (not self.get_errors(logs))
-        assert no_failure == (rv["StatusCode"] == 0)
         self.remove()
         return logs
 
