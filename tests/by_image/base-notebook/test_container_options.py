@@ -35,7 +35,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     container.run_detached(
         user="root",
         environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
-        command=["bash", "-c", "sleep infinity"],
+        command=["sleep", "infinity"],
     )
 
     # Give the chown time to complete.

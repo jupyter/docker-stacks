@@ -23,11 +23,19 @@ def test_nbconvert(
     LOGGER.info(
         f"Test that the example notebook {test_file} can be converted to {output_format} ..."
     )
-    command = f"jupyter nbconvert {cont_data_dir}/{test_file}.ipynb --output-dir {output_dir} --to {output_format}"
+    command = [
+        "jupyter",
+        "nbconvert",
+        f"{cont_data_dir}/{test_file}.ipynb",
+        "--output-dir",
+        output_dir,
+        "--to",
+        output_format,
+    ]
     logs = container.run_and_wait(
         timeout=30,
         volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-        command=["bash", "-c", command],
+        command=command,
     )
     expected_file = f"{output_dir}/{test_file}.{output_format}"
     assert expected_file in logs, f"Expected file {expected_file} not generated"

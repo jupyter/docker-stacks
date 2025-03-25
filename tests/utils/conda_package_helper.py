@@ -41,7 +41,7 @@ class CondaPackageHelper:
 
     def __init__(self, container: TrackedContainer):
         self.container = container
-        self.container.run_detached(command=["bash", "-c", "sleep infinity"])
+        self.container.run_detached(command=["sleep", "infinity"])
 
         self.requested: dict[str, set[str]] | None = None
         self.installed: dict[str, set[str]] | None = None
