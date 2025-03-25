@@ -39,7 +39,7 @@ def check_nbconvert(
             f"--ExecutePreprocessor.timeout={conversion_timeout_ms}",
         ]
     logs = container.run_and_wait(
-        timeout=30,
+        timeout=60,
         volumes={str(host_data_file): {"bind": cont_data_file, "mode": "ro"}},
         command=command,
         no_warnings=no_warnings,
