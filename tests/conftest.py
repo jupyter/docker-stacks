@@ -64,4 +64,4 @@ def free_host_port() -> Generator[int]:
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
         s.bind(("", 0))
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        yield s.getsockname()[1]  # type: ignore
+        yield s.getsockname()[1]
