@@ -47,6 +47,9 @@ class DockerRunner:
         exec_result = container.exec_run(cmd)
         output = exec_result.output.decode().rstrip()
         assert isinstance(output, str)
-        LOGGER.debug(f"Command output: {output}")
-        assert exec_result.exit_code == 0, f"Command: `{cmd}` failed"
+        if exec_result.exit_code != 0:
+            LOGGER.error(f"Command output:\n{output}")
+            raise AssertionError(f"Command: `{cmd}` failed")
+        else:
+            LOGGER.debug(f"Command output:\n{output}")
         return output
