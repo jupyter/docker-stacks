@@ -9,6 +9,12 @@ Affected: all images.
 
 - **Breaking:** `docker-stacks-foundation`: switch to Python 3.13 ([#2163](https://github.com/jupyter/docker-stacks/pull/2163)).
 
+## 2025-03-23
+
+Affected: `tensorflow-notebook`.
+
+- **Non-breaking:** `tensorflow-notebook`: Use mamba to install jupyter-server-proxy ([#2262](https://github.com/jupyter/docker-stacks/pull/2262)).
+
 ## 2025-03-22
 
 Affected: all images.
