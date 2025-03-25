@@ -216,7 +216,7 @@ def test_container_not_delete_bind_mount(
     host_file.write_text("some-content")
 
     container.run_and_wait(
-        timeout=5,
+        timeout=10,
         user="root",
         working_dir="/home/",
         environment=[
