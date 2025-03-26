@@ -26,12 +26,12 @@ def test_units(container: TrackedContainer) -> None:
         if not host_data_dir.exists():
             continue
 
-        for test_file in host_data_dir.iterdir():
-            test_file_name = test_file.name
-            LOGGER.info(f"Running unit test: {test_file_name}")
+        for host_file in host_data_dir.iterdir():
+            cont_file = f"{cont_data_dir}/{host_file.name}"
+            LOGGER.info(f"Running unit test: {host_file}")
 
             container.run_and_wait(
                 timeout=30,
-                volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-                command=["python", f"{cont_data_dir}/{test_file_name}"],
+                volumes={host_file: {"bind": cont_file, "mode": "ro"}},
+                command=["python", cont_file],
             )

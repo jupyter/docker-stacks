@@ -10,13 +10,14 @@ from tests.utils.tracked_container import TrackedContainer
 LOGGER = logging.getLogger(__name__)
 
 
+@pytest.mark.parametrize("requested_only", [True, False])
 @pytest.mark.info
-def test_outdated_packages(
-    container: TrackedContainer, requested_only: bool = True
-) -> None:
+def test_outdated_packages(container: TrackedContainer, requested_only: bool) -> None:
     """Getting the list of updatable packages"""
     LOGGER.info(f"Checking outdated packages in {container.image_name} ...")
     pkg_helper = CondaPackageHelper(container)
-    pkg_helper.check_updatable_packages(requested_only)
-    LOGGER.info(pkg_helper.get_outdated_summary(requested_only))
-    LOGGER.info(f"\n{pkg_helper.get_outdated_table()}\n")
+    updatable = pkg_helper.find_updatable_packages(requested_only)
+    LOGGER.info(pkg_helper.get_outdated_summary(updatable, requested_only))
+    LOGGER.info(
+        f"Outdated packages table:\n{pkg_helper.get_outdated_table(updatable)}\n"
+    )

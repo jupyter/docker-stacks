@@ -26,8 +26,8 @@ import json
 import logging
 import re
 from collections import defaultdict
+from functools import cached_property
 from itertools import chain
-from typing import Any
 
 from tabulate import tabulate
 
@@ -41,30 +41,23 @@ class CondaPackageHelper:
 
     def __init__(self, container: TrackedContainer):
         self.container = container
-        self.container.run_detached(command=["bash", "-c", "sleep infinity"])
+        self.container.run_detached(command=["sleep", "infinity"])
 
-        self.requested: dict[str, set[str]] | None = None
-        self.installed: dict[str, set[str]] | None = None
-        self.available: dict[str, set[str]] | None = None
-        self.comparison: list[dict[str, str]] = []
-
+    @cached_property
     def installed_packages(self) -> dict[str, set[str]]:
         """Return the installed packages"""
-        if self.installed is None:
-            LOGGER.info("Grabbing the list of installed packages ...")
-            env_export = self.container.exec_cmd("mamba env export --no-build --json")
-            self.installed = CondaPackageHelper._parse_package_versions(env_export)
-        return self.installed
+        LOGGER.info("Grabbing the list of installed packages ...")
+        env_export = self.container.exec_cmd("mamba env export --no-build --json")
+        return self._parse_package_versions(env_export)
 
+    @cached_property
     def requested_packages(self) -> dict[str, set[str]]:
         """Return the requested package (i.e. `mamba install <package>`)"""
-        if self.requested is None:
-            LOGGER.info("Grabbing the list of manually requested packages ...")
-            env_export = self.container.exec_cmd(
-                "mamba env export --no-build --json --from-history"
-            )
-            self.requested = CondaPackageHelper._parse_package_versions(env_export)
-        return self.requested
+        LOGGER.info("Grabbing the list of manually requested packages ...")
+        env_export = self.container.exec_cmd(
+            "mamba env export --no-build --json --from-history"
+        )
+        return self._parse_package_versions(env_export)
 
     @staticmethod
     def _parse_package_versions(env_export: str) -> dict[str, set[str]]:
@@ -91,20 +84,16 @@ class CondaPackageHelper:
             packages_dict[package] = version
         return packages_dict
 
+    @cached_property
     def available_packages(self) -> dict[str, set[str]]:
         """Return the available packages"""
-        if self.available is None:
-            LOGGER.info(
-                "Grabbing the list of available packages (can take a while) ..."
-            )
-            # Keeping command line output since `mamba search --outdated --json` is way too long ...
-            self.available = CondaPackageHelper._extract_available(
-                self.container.exec_cmd("conda search --outdated --quiet")
-            )
-        return self.available
+        LOGGER.info("Grabbing the list of available packages (can take a while) ...")
+        return self._extract_available(
+            self.container.exec_cmd("conda search --outdated --quiet")
+        )
 
     @staticmethod
-    def _extract_available(lines: str) -> dict[str, set[str]]:
+    def _extract_available(lines: str) -> defaultdict[str, set[str]]:
         """Extract packages and versions from the lines returned by the list of packages"""
         ddict = defaultdict(set)
         for line in lines.splitlines()[2:]:
@@ -114,39 +103,28 @@ class CondaPackageHelper:
             ddict[pkg].add(version)
         return ddict
 
-    def check_updatable_packages(
-        self, requested_only: bool = True
-    ) -> list[dict[str, str]]:
+    def find_updatable_packages(self, requested_only: bool) -> list[dict[str, str]]:
         """Check the updatable packages including or not dependencies"""
-        requested = self.requested_packages()
-        installed = self.installed_packages()
-        available = self.available_packages()
-        self.comparison = []
-        for pkg, inst_vs in installed.items():
-            if not requested_only or pkg in requested:
-                avail_vs = sorted(
-                    list(available[pkg]), key=CondaPackageHelper.semantic_cmp
-                )
-                if not avail_vs:
-                    continue
-                current = min(inst_vs, key=CondaPackageHelper.semantic_cmp)
-                newest = avail_vs[-1]
-                if (
-                    avail_vs
-                    and current != newest
-                    and CondaPackageHelper.semantic_cmp(current)
-                    < CondaPackageHelper.semantic_cmp(newest)
-                ):
-                    self.comparison.append(
-                        {"Package": pkg, "Current": current, "Newest": newest}
-                    )
-        return self.comparison
+        updatable = []
+        for pkg, inst_vs in self.installed_packages.items():
+            avail_vs = self.available_packages[pkg]
+            if (requested_only and pkg not in self.requested_packages) or (
+                not avail_vs
+            ):
+                continue
+            newest = sorted(avail_vs, key=CondaPackageHelper.semantic_cmp)[-1]
+            current = min(inst_vs, key=CondaPackageHelper.semantic_cmp)
+            if CondaPackageHelper.semantic_cmp(
+                current
+            ) < CondaPackageHelper.semantic_cmp(newest):
+                updatable.append({"Package": pkg, "Current": current, "Newest": newest})
+        return updatable
 
     @staticmethod
-    def semantic_cmp(version_string: str) -> Any:
+    def semantic_cmp(version_string: str) -> tuple[int, ...]:
         """Manage semantic versioning for comparison"""
 
-        def my_split(string: str) -> list[Any]:
+        def my_split(string: str) -> list[list[str]]:
             def version_substrs(x: str) -> list[str]:
                 return re.findall(r"([A-z]+|\d+)", x)
 
@@ -168,15 +146,18 @@ class CondaPackageHelper:
         mss = list(chain(*my_split(version_string)))
         return tuple(map(try_int, mss))
 
-    def get_outdated_summary(self, requested_only: bool = True) -> str:
+    def get_outdated_summary(
+        self, updatable: list[dict[str, str]], requested_only: bool
+    ) -> str:
         """Return a summary of outdated packages"""
-        packages = self.requested if requested_only else self.installed
-        assert packages is not None
+        packages = (
+            self.requested_packages if requested_only else self.installed_packages
+        )
         nb_packages = len(packages)
-        nb_updatable = len(self.comparison)
+        nb_updatable = len(updatable)
         updatable_ratio = nb_updatable / nb_packages
         return f"{nb_updatable}/{nb_packages} ({updatable_ratio:.0%}) packages could be updated"
 
-    def get_outdated_table(self) -> str:
+    def get_outdated_table(self, updatable: list[dict[str, str]]) -> str:
         """Return a table of outdated packages"""
-        return tabulate(self.comparison, headers="keys")
+        return tabulate(updatable, headers="keys")
