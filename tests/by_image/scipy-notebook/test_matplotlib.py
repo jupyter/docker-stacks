@@ -34,17 +34,15 @@ def test_matplotlib(
     - Test that matplotlib is able to plot a graph and write it as an image
     - Test matplotlib latex fonts, which depend on the cm-super package
     """
-    host_data_dir = THIS_DIR / "data/matplotlib"
-    cont_data_dir = "/home/jovyan/data"
+    host_file = THIS_DIR / "data/matplotlib" / test_file
+    cont_file = f"/home/jovyan/data/{test_file}"
     output_dir = "/tmp"
     LOGGER.info(description)
     container.run_detached(
-        volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
-        command=["bash", "-c", "sleep infinity"],
+        volumes={host_file: {"bind": cont_file, "mode": "ro"}},
+        command=["sleep", "infinity"],
     )
-
-    command = f"python {cont_data_dir}/{test_file}"
-    container.exec_cmd(command)
+    container.exec_cmd(f"python {cont_file}")
 
     # Checking if the file is generated
     # https://stackoverflow.com/a/15895594/4413446
