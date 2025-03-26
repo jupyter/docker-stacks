@@ -39,6 +39,8 @@ PACKAGE_MAPPING = {
     "pytables": "tables",
     "scikit-image": "skimage",
     "scikit-learn": "sklearn",
+    "tensorflow-cpu": "tensorflow",
+    "tensorflow-gpu": "tensorflow",
     # R
     "randomforest": "randomForest",
     "rcurl": "RCurl",
