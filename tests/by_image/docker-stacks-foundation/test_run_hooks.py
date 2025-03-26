@@ -85,7 +85,7 @@ def run_source_in_dir(
     )
     return container.run_and_wait(
         timeout=5,
-        volumes={str(host_data_dir): {"bind": cont_data_dir, "mode": "ro"}},
+        volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
         no_failure=no_failure,
         command=["bash", "-c", command],
     )

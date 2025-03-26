@@ -6,7 +6,6 @@ import time
 import pytest  # type: ignore
 import requests
 
-from tests.utils.find_free_port import find_free_port
 from tests.utils.tracked_container import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
@@ -32,6 +31,7 @@ LOGGER = logging.getLogger(__name__)
 def test_start_notebook(
     container: TrackedContainer,
     http_client: requests.Session,
+    free_host_port: int,
     env: list[str] | None,
     expected_command: str,
     expected_start: bool,
@@ -41,8 +41,7 @@ def test_start_notebook(
     LOGGER.info(
         f"Test that the start-notebook.py launches the {expected_command} server from the env {env} ..."
     )
-    host_port = find_free_port()
-    container.run_detached(environment=env, ports={"8888/tcp": host_port})
+    container.run_detached(environment=env, ports={"8888/tcp": free_host_port})
     # sleeping some time to let the server start
     time.sleep(2)
     logs = container.get_logs()
@@ -59,7 +58,7 @@ def test_start_notebook(
     assert len(expected_warnings) == len(warnings)
     # checking if the server is listening
     if expected_start:
-        resp = http_client.get(f"http://localhost:{host_port}")
+        resp = http_client.get(f"http://localhost:{free_host_port}")
         assert resp.status_code == 200, "Server is not listening"
 
 

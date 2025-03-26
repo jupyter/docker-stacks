@@ -6,20 +6,20 @@ import time
 import pytest  # type: ignore
 import requests
 
-from tests.utils.find_free_port import find_free_port
 from tests.utils.tracked_container import TrackedContainer
 
 LOGGER = logging.getLogger(__name__)
 
 
-def test_cli_args(container: TrackedContainer, http_client: requests.Session) -> None:
+def test_cli_args(
+    container: TrackedContainer, http_client: requests.Session, free_host_port: int
+) -> None:
     """Image should respect command line args (e.g., disabling token security)"""
-    host_port = find_free_port()
     container.run_detached(
         command=["start-notebook.py", "--IdentityProvider.token=''"],
-        ports={"8888/tcp": host_port},
+        ports={"8888/tcp": free_host_port},
     )
-    resp = http_client.get(f"http://localhost:{host_port}")
+    resp = http_client.get(f"http://localhost:{free_host_port}")
     resp.raise_for_status()
     logs = container.get_logs()
     LOGGER.debug(logs)
@@ -35,7 +35,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     container.run_detached(
         user="root",
         environment=[f"NB_USER={nb_user}", "CHOWN_HOME=yes"],
-        command=["bash", "-c", "sleep infinity"],
+        command=["sleep", "infinity"],
     )
 
     # Give the chown time to complete.
@@ -54,22 +54,21 @@ def test_nb_user_change(container: TrackedContainer) -> None:
 
 @pytest.mark.filterwarnings("ignore:Unverified HTTPS request")
 def test_unsigned_ssl(
-    container: TrackedContainer, http_client: requests.Session
+    container: TrackedContainer, http_client: requests.Session, free_host_port: int
 ) -> None:
     """Container should generate a self-signed SSL certificate
     and Jupyter Server should use it to enable HTTPS.
     """
-    host_port = find_free_port()
     container.run_detached(
         environment=["GEN_CERT=yes"],
-        ports={"8888/tcp": host_port},
+        ports={"8888/tcp": free_host_port},
     )
     # NOTE: The requests.Session backing the http_client fixture
     # does not retry properly while the server is booting up.
     # An SSL handshake error seems to abort the retry logic.
     # Forcing a long sleep for the moment until I have time to dig more.
     time.sleep(1)
-    resp = http_client.get(f"https://localhost:{host_port}", verify=False)
+    resp = http_client.get(f"https://localhost:{free_host_port}", verify=False)
     resp.raise_for_status()
     assert "login_submit" in resp.text
     logs = container.get_logs()
@@ -94,18 +93,18 @@ def test_unsigned_ssl(
 def test_custom_internal_port(
     container: TrackedContainer,
     http_client: requests.Session,
+    free_host_port: int,
     env: dict[str, str],
 ) -> None:
     """Container should be accessible from the host
     when using custom internal port"""
-    host_port = find_free_port()
     internal_port = env.get("JUPYTER_PORT", 8888)
     container.run_detached(
         command=["start-notebook.py", "--IdentityProvider.token=''"],
         environment=env,
-        ports={internal_port: host_port},
+        ports={internal_port: free_host_port},
     )
-    resp = http_client.get(f"http://localhost:{host_port}")
+    resp = http_client.get(f"http://localhost:{free_host_port}")
     resp.raise_for_status()
     logs = container.get_logs()
     LOGGER.debug(logs)

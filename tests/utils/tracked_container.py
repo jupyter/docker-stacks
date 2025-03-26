@@ -94,16 +94,24 @@ class TrackedContainer:
         assert self.container is not None
         rv = self.container.wait(timeout=timeout)
         logs = self.get_logs()
-        failed = rv["StatusCode"] != 0
+        rc_success = rv["StatusCode"] == 0
+        should_report = not (
+            no_failure == rc_success
+            and no_warnings == (not self.get_warnings(logs))
+            and no_errors == (not self.get_errors(logs))
+        )
 
-        if failed:
+        if not rc_success or should_report:
             LOGGER.error(f"Command output:\n{logs}")
         else:
             LOGGER.debug(f"Command output:\n{logs}")
-        assert no_failure != failed
+        self.remove()
+
+        # To see the reason, we run assert statements separately
+        assert no_failure == rc_success
         assert no_warnings == (not self.get_warnings(logs))
         assert no_errors == (not self.get_errors(logs))
-        self.remove()
+
         return logs
 
     @staticmethod
