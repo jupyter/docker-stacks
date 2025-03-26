@@ -48,15 +48,6 @@ jobs:
           path: /tmp/jupyter/tags/
         if: ${{ !contains(inputs.variant, 'cuda') }}
 
-      # Docker might be stuck when pulling images
-      # https://github.com/docker/for-mac/issues/2083
-      # https://stackoverflow.com/questions/38087027/docker-compose-stuck-downloading-or-pulling-fs-layer
-      - name: Reset docker state 🗑️
-        run: |
-          docker system prune --all --force
-          sudo systemctl restart docker
-        shell: bash
-
       - name: Login to Registry 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
