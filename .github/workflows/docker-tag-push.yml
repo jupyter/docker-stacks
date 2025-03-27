@@ -22,7 +22,7 @@ on:
         type: string
       timeout-minutes:
         description: Timeout in minutes
-        default: 25
+        default: 10
         type: number
     secrets:
       REGISTRY_USERNAME:
@@ -75,5 +75,7 @@ jobs:
 
       - name: Push Images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
-        run: docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
+        run: |
+          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
+          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
         shell: bash
