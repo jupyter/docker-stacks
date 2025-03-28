@@ -66,7 +66,6 @@ jobs:
           password: ${{ secrets.REGISTRY_TOKEN }}
 
       - name: Merge tags for the images 🔀
-        if: env.PUSH_TO_REGISTRY == 'true'
         run: |
           python3 -m tagging.apps.merge_tags \
             --image ${{ inputs.image }} \
