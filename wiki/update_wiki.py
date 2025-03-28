@@ -39,7 +39,7 @@ def calculate_monthly_stat(
     year_month_file: YearMonthFile, year_month_date: datetime.date
 ) -> Statistics:
     builds = sum(
-        "jupyter/base-notebook" in line and "aarch64" not in line
+        "/base-notebook" in line and "aarch64" not in line
         for line in year_month_file.content.split("\n")
     )
 
