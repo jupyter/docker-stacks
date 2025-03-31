@@ -22,6 +22,11 @@ runs:
         path: /tmp/jupyter/images/
     - name: Load downloaded image to docker 📥
       run: |
-        zstd --uncompress --stdout --rm /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst | docker load
+        zstd \
+          --uncompress \
+          --stdout \
+          --rm \
+          /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst \
+          | docker load
         docker image ls --all
       shell: bash
