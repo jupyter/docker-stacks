@@ -77,11 +77,13 @@ def merge_tags(
     except plumbum.ProcessExecutionError:
         pass
 
-    LOGGER.info(f"Creating manifest for tag: {merged_tag}")
-    docker["manifest", "create", merged_tag][existing_platform_tags] & plumbum.FG
-    LOGGER.info(f"Successfully created manifest for tag: {merged_tag}")
-
     if push_to_registry:
+        # Unforunately, `docker manifest create` requires images to have been already pushed to the registry
+        # which is not true for new tags in PRs
+        LOGGER.info(f"Creating manifest for tag: {merged_tag}")
+        docker["manifest", "create", merged_tag][existing_platform_tags] & plumbum.FG
+        LOGGER.info(f"Successfully created manifest for tag: {merged_tag}")
+
         LOGGER.info(f"Pushing manifest for tag: {merged_tag}")
         docker["manifest", "push", merged_tag] & plumbum.FG
         LOGGER.info(f"Successfully merged and pushed tag: {merged_tag}")
