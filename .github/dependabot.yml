@@ -10,6 +10,10 @@ updates:
     schedule:
       interval: weekly
   - package-ecosystem: github-actions
+    directory: .github/actions/apply-single-tags/
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
     directory: .github/actions/create-dev-env/
     schedule:
       interval: weekly
