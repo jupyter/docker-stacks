@@ -1,0 +1,49 @@
+name: Apply single platform tags
+description: Download the image tar, load it to Docker and apply tags to it
+
+inputs:
+  image:
+    description: Image name
+    required: true
+  platform:
+    description: Image platform
+    required: true
+  variant:
+    description: Variant tag prefix
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Load image to Docker 📥
+      uses: ./.github/actions/load-image
+      with:
+        image: ${{ inputs.image }}
+        platform: ${{ inputs.platform }}
+        variant: ${{ inputs.variant }}
+
+    - name: Download tags file 📥
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
+        path: /tmp/jupyter/tags/
+
+    - name: Apply tags to the loaded image 🏷
+      run: |
+        python3 -m tagging.apps.apply_tags \
+          --registry ${{ env.REGISTRY }} \
+          --owner ${{ env.OWNER }} \
+          --image ${{ inputs.image }} \
+          --variant ${{ inputs.variant }} \
+          --platform ${{ inputs.platform }} \
+          --tags-dir /tmp/jupyter/tags/
+      shell: bash
+
+    # This step is needed to prevent pushing non-multi-arch "latest" tag
+    - name: Remove the "latest" tag from the image 🗑️
+      run: docker image rmi ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest
+      shell: bash
+
+    - name: Show Docker images 📦
+      run: docker image ls --all
+      shell: bash

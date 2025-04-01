@@ -12,17 +12,13 @@ on:
         description: Image name
         required: true
         type: string
-      platform:
-        description: Image platform
-        required: true
-        type: string
       variant:
         description: Variant tag prefix
         required: true
         type: string
       timeout-minutes:
         description: Timeout in minutes
-        default: 25
+        default: 15
         type: number
     secrets:
       REGISTRY_USERNAME:
@@ -40,12 +36,21 @@ jobs:
         uses: actions/checkout@v4
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
-      - name: Load image to Docker 📥
-        uses: ./.github/actions/load-image
+
+      - name: Download aarch64 image tar and apply tags 🏷
+        uses: ./.github/actions/apply-single-tags
         with:
           image: ${{ inputs.image }}
-          platform: ${{ inputs.platform }}
           variant: ${{ inputs.variant }}
+          platform: aarch64
+        if: ${{ !contains(inputs.variant, 'cuda') }}
+
+      - name: Download x86_64 image tar and apply tags 🏷
+        uses: ./.github/actions/apply-single-tags
+        with:
+          image: ${{ inputs.image }}
+          variant: ${{ inputs.variant }}
+          platform: x86_64
 
       - name: Login to Registry 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
@@ -55,25 +60,17 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Download tags file 📥
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
-          path: /tmp/jupyter/tags/
-      - name: Apply tags to the loaded image 🏷
-        run: >
-          python3 -m tagging.apps.apply_tags
-          --registry ${{ env.REGISTRY }}
-          --owner ${{ env.OWNER }}
-          --image ${{ inputs.image }}
-          --variant ${{ inputs.variant }}
-          --platform ${{ inputs.platform }}
-          --tags-dir /tmp/jupyter/tags/
-      # This step is needed to prevent pushing non-multi-arch "latest" tag
-      - name: Remove the "latest" tag from the image 🗑️
-        run: docker image rmi ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest
-
-      - name: Push Images to Registry 📤
+      - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
-        run: docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
+        run: |
+          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
+          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
+        shell: bash
+
+      - name: Merge tags for the images 🔀
+        run: |
+          python3 -m tagging.apps.merge_tags \
+            --image ${{ inputs.image }} \
+            --variant ${{ inputs.variant }} \
+            --tags-dir /tmp/jupyter/tags/
         shell: bash

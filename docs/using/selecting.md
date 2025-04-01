@@ -113,7 +113,7 @@ It contains:
   [rodbc](https://cran.r-project.org/web/packages/RODBC/index.html),
   [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
   [shiny](https://shiny.posit.co),
-  [tidymodels](https://tidymodels.org/),
+  [tidymodels](https://www.tidymodels.org/),
   [unixodbc](https://www.unixodbc.org)
   packages from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
 
