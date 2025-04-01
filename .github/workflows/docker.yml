@@ -21,6 +21,7 @@ on:
 
       # We use local composite actions to combine multiple workflow steps within one action
       # https://docs.github.com/en/actions/sharing-automations/creating-actions/about-custom-actions#composite-actions
+      - ".github/actions/apply-single-tags/action.yml"
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
 
@@ -42,6 +43,7 @@ on:
       - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
+      - ".github/actions/apply-single-tags/action.yml"
       - ".github/actions/create-dev-env/action.yml"
       - ".github/actions/load-image/action.yml"
 
@@ -336,52 +338,9 @@ jobs:
     needs: [x86_64-pyspark]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
-  aarch64-images-tag-push:
+  images-tag-push-fast:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
-      platform: aarch64
-      image: ${{ matrix.image }}
-      variant: ${{ matrix.variant }}
-    secrets:
-      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
-    strategy:
-      matrix:
-        image:
-          [
-            docker-stacks-foundation,
-            base-notebook,
-            minimal-notebook,
-            scipy-notebook,
-            r-notebook,
-            julia-notebook,
-            tensorflow-notebook,
-            pytorch-notebook,
-            datascience-notebook,
-            pyspark-notebook,
-            all-spark-notebook,
-          ]
-        variant: [default]
-    needs:
-      [
-        aarch64-foundation,
-        aarch64-base,
-        aarch64-minimal,
-        aarch64-scipy,
-        aarch64-r,
-        aarch64-julia,
-        aarch64-tensorflow,
-        aarch64-pytorch,
-        aarch64-datascience,
-        aarch64-pyspark,
-        aarch64-all-spark,
-      ]
-    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
-
-  aarch64-images-tag-push-fast:
-    uses: ./.github/workflows/docker-tag-push.yml
-    with:
-      platform: aarch64
       image: ${{ matrix.image }}
       variant: ${{ matrix.variant }}
     secrets:
@@ -394,10 +353,9 @@ jobs:
     needs: [aarch64-foundation, aarch64-base]
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
-  x86_64-images-tag-push:
+  images-tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
-      platform: x86_64
       image: ${{ matrix.image }}
       variant: ${{ matrix.variant }}
     secrets:
@@ -446,82 +404,16 @@ jobs:
       ]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
-  x86_64-images-tag-push-fast:
-    uses: ./.github/workflows/docker-tag-push.yml
-    with:
-      platform: x86_64
-      image: ${{ matrix.image }}
-      variant: ${{ matrix.variant }}
-    secrets:
-      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
-    strategy:
-      matrix:
-        image: [docker-stacks-foundation, base-notebook]
-        variant: [default]
-    needs: [x86_64-foundation, x86_64-base]
-    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
-
-  merge-tags:
-    uses: ./.github/workflows/docker-merge-tags.yml
-    with:
-      image: ${{ matrix.image }}
-      variant: ${{ matrix.variant }}
-    secrets:
-      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
-    strategy:
-      matrix:
-        image:
-          [
-            docker-stacks-foundation,
-            base-notebook,
-            minimal-notebook,
-            scipy-notebook,
-            r-notebook,
-            julia-notebook,
-            tensorflow-notebook,
-            pytorch-notebook,
-            datascience-notebook,
-            pyspark-notebook,
-            all-spark-notebook,
-          ]
-        variant: [default]
-        include:
-          - image: tensorflow-notebook
-            variant: cuda
-          - image: pytorch-notebook
-            variant: cuda11
-          - image: pytorch-notebook
-            variant: cuda12
-    needs: [aarch64-images-tag-push, x86_64-images-tag-push]
-    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
-
-  merge-tags-fast:
-    uses: ./.github/workflows/docker-merge-tags.yml
-    with:
-      image: ${{ matrix.image }}
-      variant: ${{ matrix.variant }}
-    secrets:
-      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
-    strategy:
-      matrix:
-        image: [docker-stacks-foundation, base-notebook]
-        variant: [default]
-    needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
-    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
-
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
-    needs: [aarch64-images-tag-push, x86_64-images-tag-push]
+    needs: [images-tag-push]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
     permissions:
       contents: write
 
   wiki-update-fast:
     uses: ./.github/workflows/docker-wiki-update.yml
-    needs: [aarch64-images-tag-push-fast, x86_64-images-tag-push-fast]
+    needs: [images-tag-push-fast]
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   contributed-recipes:
