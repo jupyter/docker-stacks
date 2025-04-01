@@ -40,12 +40,11 @@ def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
     return all_local_tags, merged_local_tags
 
 
-def merge_tags(tag: str, all_local_tags: list[str], push_to_registry: bool) -> None:
-    LOGGER.info(f"Trying to merge tag: {tag}")
-
+def pull_missing_tags(merged_tag: str) -> list[str]:
     existing_platform_tags = []
+
     for platform in ALL_PLATFORMS:
-        platform_tag = tag.replace(":", f":{platform}-")
+        platform_tag = merged_tag.replace(":", f":{platform}-")
         if platform_tag in all_local_tags:
             LOGGER.info(
                 f"Tag {platform_tag} already exists locally, not pulling it from registry"
@@ -63,25 +62,33 @@ def merge_tags(tag: str, all_local_tags: list[str], push_to_registry: bool) -> N
                 "Pull failed, image with this tag and platform doesn't exist"
             )
 
-    LOGGER.info(f"Found images: {existing_platform_tags}")
+    return existing_platform_tags
+
+
+def merge_tags(
+    merged_tag: str, all_local_tags: list[str], push_to_registry: bool
+) -> None:
+    LOGGER.info(f"Trying to merge tag: {merged_tag}")
+
+    existing_platform_tags = pull_missing_tags(merged_tag)
 
     # This allows to rerun the script without having to remove the manifest manually
     try:
-        docker["manifest", "rm", tag] & plumbum.FG
-        LOGGER.info(f"Manifest {tag} already exists, removing it")
+        docker["manifest", "rm", merged_tag] & plumbum.FG
+        LOGGER.warning(f"Manifest {merged_tag} was present locally, removed it")
     except plumbum.ProcessExecutionError:
-        LOGGER.info(f"Manifest {tag} doesn't exist")
+        pass
 
-    LOGGER.info(f"Creating manifest for tag: {tag}")
-    docker["manifest", "create", tag][existing_platform_tags] & plumbum.FG
-    LOGGER.info(f"Successfully created manifest for tag: {tag}")
+    LOGGER.info(f"Creating manifest for tag: {merged_tag}")
+    docker["manifest", "create", merged_tag][existing_platform_tags] & plumbum.FG
+    LOGGER.info(f"Successfully created manifest for tag: {merged_tag}")
 
     if push_to_registry:
-        LOGGER.info(f"Pushing manifest for tag: {tag}")
-        docker["manifest", "push", tag] & plumbum.FG
-        LOGGER.info(f"Successfully merged and pushed tag: {tag}")
+        LOGGER.info(f"Pushing manifest for tag: {merged_tag}")
+        docker["manifest", "push", merged_tag] & plumbum.FG
+        LOGGER.info(f"Successfully merged and pushed tag: {merged_tag}")
     else:
-        LOGGER.info(f"Skipping push for tag: {tag}")
+        LOGGER.info(f"Skipping push for tag: {merged_tag}")
 
 
 if __name__ == "__main__":
