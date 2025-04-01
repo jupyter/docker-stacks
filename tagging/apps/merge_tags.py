@@ -4,6 +4,7 @@
 import logging
 import os
 import time
+from collections.abc import Callable
 
 import plumbum
 
@@ -41,6 +42,22 @@ def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
     return all_local_tags, merged_local_tags
 
 
+def run_with_retries(func: Callable[[], None]) -> None:
+    ATTEMPTS = 3
+    SLEEP_BACKOFF = 2
+
+    for attempt in range(ATTEMPTS):
+        try:
+            func()
+            break
+        except Exception as e:
+            LOGGER.warning(f"Attempt {attempt + 1} failed: {e}")
+            if attempt + 1 == ATTEMPTS:
+                LOGGER.error(f"Failed after {ATTEMPTS} attempts")
+                raise
+            time.sleep(SLEEP_BACKOFF * (attempt + 1))
+
+
 def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
     existing_platform_tags = []
 
@@ -55,7 +72,7 @@ def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
 
         LOGGER.warning(f"Trying to pull: {platform_tag} from registry")
         try:
-            docker["pull", platform_tag] & plumbum.FG
+            run_with_retries(lambda: docker["pull", platform_tag] & plumbum.FG)
             existing_platform_tags.append(platform_tag)
             LOGGER.info(f"Tag {platform_tag} pulled successfully")
         except plumbum.ProcessExecutionError:
@@ -64,22 +81,18 @@ def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
     return existing_platform_tags
 
 
-def push_manifest(merged_tag: str) -> None:
-    ATTEMPTS = 3
-    SLEEP_TIME = 5
+def push_manifest(merged_tag: str, existing_platform_tags: list[str]) -> None:
+    LOGGER.info(f"Creating manifest for tag: {merged_tag}")
+    # Unforunately, `docker manifest create` requires images to have been already pushed to the registry
+    # which is not true for new tags in PRs
+    run_with_retries(
+        lambda: docker["manifest", "create", merged_tag][existing_platform_tags]
+        & plumbum.FG
+    )
+    LOGGER.info(f"Successfully created manifest for tag: {merged_tag}")
 
     LOGGER.info(f"Pushing manifest for tag: {merged_tag}")
-    # Retry pushing the manifest up to ATTEMPTS times in case of failure
-    for attempt in range(ATTEMPTS):
-        try:
-            docker["manifest", "push", merged_tag] & plumbum.FG
-            break
-        except plumbum.ProcessExecutionError as e:
-            LOGGER.warning(f"Attempt {attempt + 1} to push manifest failed: {e}")
-            if attempt + 1 == ATTEMPTS:
-                LOGGER.error(f"Failed to push manifest after {ATTEMPTS} attempts")
-                raise
-            time.sleep(SLEEP_TIME)
+    run_with_retries(lambda: docker["manifest", "push", merged_tag] & plumbum.FG)
     LOGGER.info(f"Successfully pushed manifest for tag: {merged_tag}")
 
 
@@ -88,8 +101,6 @@ def merge_tags(
 ) -> None:
     LOGGER.info(f"Trying to merge tag: {merged_tag}")
 
-    existing_platform_tags = pull_missing_tags(merged_tag, all_local_tags)
-
     # This allows to rerun the script without having to remove the manifest manually
     try:
         docker["manifest", "rm", merged_tag] & plumbum.FG
@@ -97,14 +108,9 @@ def merge_tags(
     except plumbum.ProcessExecutionError:
         pass
 
+    existing_platform_tags = pull_missing_tags(merged_tag, all_local_tags)
     if push_to_registry:
-        # Unforunately, `docker manifest create` requires images to have been already pushed to the registry
-        # which is not true for new tags in PRs
-        LOGGER.info(f"Creating manifest for tag: {merged_tag}")
-        docker["manifest", "create", merged_tag][existing_platform_tags] & plumbum.FG
-        LOGGER.info(f"Successfully created manifest for tag: {merged_tag}")
-
-        push_manifest(merged_tag)
+        push_manifest(merged_tag, existing_platform_tags)
     else:
         LOGGER.info(f"Skipping push for tag: {merged_tag}")
 
