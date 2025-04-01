@@ -37,13 +37,6 @@ jobs:
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      - name: Download x86_64 image tar and apply tags 🏷
-        uses: ./.github/actions/apply-single-tags
-        with:
-          image: ${{ inputs.image }}
-          variant: ${{ inputs.variant }}
-          platform: x86_64
-
       - name: Download aarch64 image tar and apply tags 🏷
         uses: ./.github/actions/apply-single-tags
         with:
@@ -51,6 +44,13 @@ jobs:
           variant: ${{ inputs.variant }}
           platform: aarch64
         if: ${{ !contains(inputs.variant, 'cuda') }}
+
+      - name: Download x86_64 image tar and apply tags 🏷
+        uses: ./.github/actions/apply-single-tags
+        with:
+          image: ${{ inputs.image }}
+          variant: ${{ inputs.variant }}
+          platform: x86_64
 
       - name: Login to Registry 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
