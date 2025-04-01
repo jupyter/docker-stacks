@@ -40,7 +40,7 @@ def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
     return all_local_tags, merged_local_tags
 
 
-def pull_missing_tags(merged_tag: str) -> list[str]:
+def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
     existing_platform_tags = []
 
     for platform in ALL_PLATFORMS:
@@ -58,9 +58,7 @@ def pull_missing_tags(merged_tag: str) -> list[str]:
             existing_platform_tags.append(platform_tag)
             LOGGER.info(f"Tag {platform_tag} pulled successfully")
         except plumbum.ProcessExecutionError:
-            LOGGER.warning(
-                "Pull failed, image with this tag and platform doesn't exist"
-            )
+            LOGGER.warning(f"Pull failed, tag {platform_tag} doesn't exist")
 
     return existing_platform_tags
 
@@ -70,7 +68,7 @@ def merge_tags(
 ) -> None:
     LOGGER.info(f"Trying to merge tag: {merged_tag}")
 
-    existing_platform_tags = pull_missing_tags(merged_tag)
+    existing_platform_tags = pull_missing_tags(merged_tag, all_local_tags)
 
     # This allows to rerun the script without having to remove the manifest manually
     try:
