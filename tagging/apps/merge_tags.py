@@ -16,11 +16,11 @@ docker = plumbum.local["docker"]
 LOGGER = logging.getLogger(__name__)
 
 
-def read_tags_from_files(config: Config) -> tuple[set[str], set[str]]:
+def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
     LOGGER.info(f"Read tags from file(s) for image: {config.image}")
 
-    merged_tags: set[str] = set()
-    all_tags: set[str] = set()
+    all_local_tags = []
+    merged_local_tags = set()
     for platform in ALL_PLATFORMS:
         LOGGER.info(f"Reading tags for platform: {platform}")
 
@@ -32,30 +32,32 @@ def read_tags_from_files(config: Config) -> tuple[set[str], set[str]]:
             continue
 
         LOGGER.info(f"Tag file: {path} found")
-        lines = path.read_text().splitlines()
-        for tag in lines:
-            all_tags.add(tag)
-            merged_tags.add(tag.replace(platform + "-", ""))
+        for tag in path.read_text().splitlines():
+            all_local_tags.append(tag)
+            merged_local_tags.add(tag.replace(platform + "-", ""))
 
     LOGGER.info(f"Tags read for image: {config.image}")
-    return merged_tags, all_tags
+    return all_local_tags, merged_local_tags
 
 
-def merge_tags(tag: str, all_tags: set[str], push_to_registry: bool) -> None:
+def merge_tags(tag: str, all_local_tags: list[str], push_to_registry: bool) -> None:
     LOGGER.info(f"Trying to merge tag: {tag}")
 
     existing_platform_tags = []
     for platform in ALL_PLATFORMS:
         platform_tag = tag.replace(":", f":{platform}-")
-        if platform_tag in all_tags:
-            LOGGER.info(f"Tag {platform_tag} already exists, not pulling it")
+        if platform_tag in all_local_tags:
+            LOGGER.info(
+                f"Tag {platform_tag} already exists locally, not pulling it from registry"
+            )
             existing_platform_tags.append(platform_tag)
             continue
-        LOGGER.warning(f"Trying to pull: {platform_tag}")
+
+        LOGGER.warning(f"Trying to pull: {platform_tag} from registry")
         try:
             docker["pull", platform_tag] & plumbum.FG
             existing_platform_tags.append(platform_tag)
-            LOGGER.info("Pull success")
+            LOGGER.info(f"Tag {platform_tag} pulled successfully")
         except plumbum.ProcessExecutionError:
             LOGGER.warning(
                 "Pull failed, image with this tag and platform doesn't exist"
@@ -89,7 +91,9 @@ if __name__ == "__main__":
     push_to_registry = os.environ.get("PUSH_TO_REGISTRY", "false").lower() == "true"
 
     LOGGER.info(f"Merging tags for image: {config.image}")
-    merged_tags, all_tags = read_tags_from_files(config)
-    for tag in merged_tags:
-        merge_tags(tag, all_tags, push_to_registry)
+
+    all_local_tags, merged_local_tags = read_local_tags_from_files(config)
+    for tag in merged_local_tags:
+        merge_tags(tag, all_local_tags, push_to_registry)
+
     LOGGER.info(f"Successfully merged tags for image: {config.image}")

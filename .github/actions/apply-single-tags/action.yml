@@ -1,9 +1,5 @@
-name: Push single platform tags
+name: Apply single platform tags
 description: Download the image tar, load it to Docker and apply tags to it
-
-env:
-  REGISTRY: quay.io
-  OWNER: ${{ github.repository_owner }}
 
 inputs:
   image:
@@ -41,7 +37,9 @@ runs:
           --variant ${{ inputs.variant }} \
           --platform ${{ inputs.platform }} \
           --tags-dir /tmp/jupyter/tags/
+      shell: bash
 
     # This step is needed to prevent pushing non-multi-arch "latest" tag
     - name: Remove the "latest" tag from the image 🗑️
       run: docker image rmi ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest
+      shell: bash

@@ -338,21 +338,6 @@ jobs:
     needs: [x86_64-pyspark]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
-  images-tag-push-fast:
-    uses: ./.github/workflows/docker-tag-push.yml
-    with:
-      image: ${{ matrix.image }}
-      variant: ${{ matrix.variant }}
-    secrets:
-      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
-      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
-    strategy:
-      matrix:
-        image: [docker-stacks-foundation, base-notebook]
-        variant: [default]
-    needs: [aarch64-foundation, aarch64-base]
-    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
-
   images-tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
@@ -387,6 +372,18 @@ jobs:
             variant: cuda12
     needs:
       [
+        aarch64-foundation,
+        aarch64-base,
+        aarch64-minimal,
+        aarch64-scipy,
+        aarch64-r,
+        aarch64-julia,
+        aarch64-tensorflow,
+        aarch64-pytorch,
+        aarch64-datascience,
+        aarch64-pyspark,
+        aarch64-all-spark,
+
         x86_64-foundation,
         x86_64-base,
         x86_64-minimal,
@@ -403,6 +400,21 @@ jobs:
         x86_64-all-spark,
       ]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  images-tag-push-fast:
+    uses: ./.github/workflows/docker-tag-push.yml
+    with:
+      image: ${{ matrix.image }}
+      variant: ${{ matrix.variant }}
+    secrets:
+      REGISTRY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
+    strategy:
+      matrix:
+        image: [docker-stacks-foundation, base-notebook]
+        variant: [default]
+    needs: [aarch64-foundation, aarch64-base, x86_64-foundation, x86_64-base]
+    if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml

@@ -60,7 +60,7 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
-      - name: Push Images to Registry 📤
+      - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
