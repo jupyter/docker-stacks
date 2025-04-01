@@ -108,11 +108,9 @@ class CondaPackageHelper:
         updatable = []
         for pkg, inst_vs in self.installed_packages.items():
             avail_vs = self.available_packages[pkg]
-            if (requested_only and pkg not in self.requested_packages) or (
-                not avail_vs
-            ):
+            if not avail_vs or (requested_only and pkg not in self.requested_packages):
                 continue
-            newest = sorted(avail_vs, key=CondaPackageHelper.semantic_cmp)[-1]
+            newest = max(avail_vs, key=CondaPackageHelper.semantic_cmp)
             current = min(inst_vs, key=CondaPackageHelper.semantic_cmp)
             if CondaPackageHelper.semantic_cmp(
                 current

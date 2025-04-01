@@ -9,6 +9,12 @@ Affected: all images.
 
 - **Breaking:** `docker-stacks-foundation`: switch to Python 3.13 ([#2163](https://github.com/jupyter/docker-stacks/pull/2163)).
 
+## 2025-04-01
+
+Affected: all images.
+
+- **Non-breaking:** Apply and merge tags in the same place ([#2274](https://github.com/jupyter/docker-stacks/pull/2274)).
+
 ## 2025-03-23
 
 Affected: `tensorflow-notebook`.

@@ -40,12 +40,12 @@ jobs:
           path: wiki_src/
 
       - name: Update wiki 🏷
-        run: >
-          python3 -m wiki.update_wiki
-          --wiki-dir wiki_src/
-          --hist-lines-dir /tmp/jupyter/hist_lines/
-          --manifests-dir /tmp/jupyter/manifests/
-          --repository ${{ github.repository }}
+        run: |
+          python3 -m wiki.update_wiki \
+            --wiki-dir wiki_src/ \
+            --hist-lines-dir /tmp/jupyter/hist_lines/ \
+            --manifests-dir /tmp/jupyter/manifests/ \
+            --repository ${{ github.repository }}
         shell: bash
 
       - name: Push Wiki to GitHub 📤

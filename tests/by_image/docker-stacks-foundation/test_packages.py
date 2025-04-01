@@ -48,18 +48,14 @@ PACKAGE_MAPPING = {
 
 # List of packages that cannot be tested in a standard way
 EXCLUDED_PACKAGES = [
-    "bzip2",
-    "ca-certificates",
     "conda-forge::blas=*",
     "grpcio-status",
     "grpcio",
-    "hdf5",
     "jupyter-server-proxy",
     "jupyterhub-singleuser",
     "jupyterlab-git",
     "mamba",
     "notebook>",
-    "openssl",
     "protobuf",
     "python",
     "r-irkernel",
