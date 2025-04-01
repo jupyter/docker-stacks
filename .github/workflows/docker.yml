@@ -338,7 +338,7 @@ jobs:
     needs: [x86_64-pyspark]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
-  images-tag-push:
+  tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
       image: ${{ matrix.image }}
@@ -401,7 +401,7 @@ jobs:
       ]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
-  images-tag-push-fast:
+  tag-push-fast:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
       image: ${{ matrix.image }}
@@ -418,14 +418,14 @@ jobs:
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
-    needs: [images-tag-push]
+    needs: [tag-push]
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
     permissions:
       contents: write
 
   wiki-update-fast:
     uses: ./.github/workflows/docker-wiki-update.yml
-    needs: [images-tag-push-fast]
+    needs: [tag-push-fast]
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   contributed-recipes:
