@@ -20,6 +20,7 @@ runs:
       with:
         name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
         path: /tmp/jupyter/images/
+
     - name: Load downloaded image to docker 📥
       run: |
         zstd \
@@ -28,5 +29,8 @@ runs:
           --rm \
           /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst \
           | docker load
-        docker image ls --all
+      shell: bash
+
+    - name: Show Docker images 📦
+      run: docker image ls --all
       shell: bash
