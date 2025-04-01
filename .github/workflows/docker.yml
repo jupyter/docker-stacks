@@ -90,7 +90,7 @@ jobs:
       platform: aarch64
       runs-on: ubuntu-24.04-arm
       timeout-minutes: 15
-    needs: [aarch64-foundation]
+    needs: aarch64-foundation
 
   x86_64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -100,7 +100,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 15
-    needs: [x86_64-foundation]
+    needs: x86_64-foundation
 
   aarch64-minimal:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -110,7 +110,7 @@ jobs:
       platform: aarch64
       runs-on: ubuntu-24.04-arm
       timeout-minutes: 15
-    needs: [aarch64-base]
+    needs: aarch64-base
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-minimal:
@@ -121,7 +121,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 15
-    needs: [x86_64-base]
+    needs: x86_64-base
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-scipy:
@@ -132,7 +132,7 @@ jobs:
       platform: aarch64
       runs-on: ubuntu-24.04-arm
       timeout-minutes: 15
-    needs: [aarch64-minimal]
+    needs: aarch64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-scipy:
@@ -143,7 +143,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 15
-    needs: [x86_64-minimal]
+    needs: x86_64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-r:
@@ -154,7 +154,7 @@ jobs:
       platform: aarch64
       runs-on: ubuntu-24.04-arm
       timeout-minutes: 15
-    needs: [aarch64-minimal]
+    needs: aarch64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-r:
@@ -165,7 +165,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 15
-    needs: [x86_64-minimal]
+    needs: x86_64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-julia:
@@ -177,7 +177,7 @@ jobs:
       runs-on: ubuntu-24.04-arm
       # This workflow sometimes takes quite long to build
       timeout-minutes: 30
-    needs: [aarch64-minimal]
+    needs: aarch64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-julia:
@@ -188,7 +188,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 20
-    needs: [x86_64-minimal]
+    needs: x86_64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-tensorflow:
@@ -199,7 +199,7 @@ jobs:
       platform: aarch64
       runs-on: ubuntu-24.04-arm
       timeout-minutes: 15
-    needs: [aarch64-scipy]
+    needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-tensorflow:
@@ -210,7 +210,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 15
-    needs: [x86_64-scipy]
+    needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-tensorflow-cuda:
@@ -222,7 +222,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 20
-    needs: [x86_64-scipy]
+    needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-pytorch:
@@ -233,7 +233,7 @@ jobs:
       platform: aarch64
       runs-on: ubuntu-24.04-arm
       timeout-minutes: 20
-    needs: [aarch64-scipy]
+    needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-pytorch:
@@ -244,7 +244,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 20
-    needs: [x86_64-scipy]
+    needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-pytorch-cuda11:
@@ -256,7 +256,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 20
-    needs: [x86_64-scipy]
+    needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-pytorch-cuda12:
@@ -268,7 +268,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 20
-    needs: [x86_64-scipy]
+    needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-datascience:
@@ -280,7 +280,7 @@ jobs:
       runs-on: ubuntu-24.04-arm
       # This workflow sometimes takes quite long to build
       timeout-minutes: 30
-    needs: [aarch64-scipy]
+    needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-datascience:
@@ -291,7 +291,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 25
-    needs: [x86_64-scipy]
+    needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-pyspark:
@@ -302,7 +302,7 @@ jobs:
       platform: aarch64
       runs-on: ubuntu-24.04-arm
       timeout-minutes: 20
-    needs: [aarch64-scipy]
+    needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-pyspark:
@@ -313,7 +313,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 15
-    needs: [x86_64-scipy]
+    needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   aarch64-all-spark:
@@ -324,7 +324,7 @@ jobs:
       platform: aarch64
       runs-on: ubuntu-24.04-arm
       timeout-minutes: 20
-    needs: [aarch64-pyspark]
+    needs: aarch64-pyspark
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-all-spark:
@@ -335,7 +335,7 @@ jobs:
       platform: x86_64
       runs-on: ubuntu-24.04
       timeout-minutes: 15
-    needs: [x86_64-pyspark]
+    needs: x86_64-pyspark
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   tag-push:
@@ -418,14 +418,14 @@ jobs:
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
-    needs: [tag-push]
+    needs: tag-push
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
     permissions:
       contents: write
 
   wiki-update-fast:
     uses: ./.github/workflows/docker-wiki-update.yml
-    needs: [tag-push-fast]
+    needs: tag-push-fast
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
 
   contributed-recipes:
