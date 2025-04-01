@@ -18,7 +18,7 @@ on:
         type: string
       timeout-minutes:
         description: Timeout in minutes
-        default: 10
+        default: 15
         type: number
     secrets:
       REGISTRY_USERNAME:
@@ -69,10 +69,6 @@ jobs:
 
       - name: Merge tags for the images 🔀
         run: |
-          python3 -m tagging.apps.merge_tags \
-            --image ${{ inputs.image }} \
-            --variant ${{ inputs.variant }} \
-            --tags-dir /tmp/jupyter/tags/ || \
           python3 -m tagging.apps.merge_tags \
             --image ${{ inputs.image }} \
             --variant ${{ inputs.variant }} \

@@ -3,6 +3,7 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 import os
+import time
 
 import plumbum
 
@@ -63,6 +64,25 @@ def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
     return existing_platform_tags
 
 
+def push_manifest(merged_tag: str) -> None:
+    ATTEMPTS = 3
+    SLEEP_TIME = 5
+
+    LOGGER.info(f"Pushing manifest for tag: {merged_tag}")
+    # Retry pushing the manifest up to ATTEMPTS times in case of failure
+    for attempt in range(ATTEMPTS):
+        try:
+            docker["manifest", "push", merged_tag] & plumbum.FG
+            break
+        except plumbum.ProcessExecutionError as e:
+            LOGGER.warning(f"Attempt {attempt + 1} to push manifest failed: {e}")
+            if attempt + 1 == ATTEMPTS:
+                LOGGER.error(f"Failed to push manifest after {ATTEMPTS} attempts")
+                raise
+            time.sleep(SLEEP_TIME)
+    LOGGER.info(f"Successfully pushed manifest for tag: {merged_tag}")
+
+
 def merge_tags(
     merged_tag: str, all_local_tags: list[str], push_to_registry: bool
 ) -> None:
@@ -84,9 +104,7 @@ def merge_tags(
         docker["manifest", "create", merged_tag][existing_platform_tags] & plumbum.FG
         LOGGER.info(f"Successfully created manifest for tag: {merged_tag}")
 
-        LOGGER.info(f"Pushing manifest for tag: {merged_tag}")
-        docker["manifest", "push", merged_tag] & plumbum.FG
-        LOGGER.info(f"Successfully merged and pushed tag: {merged_tag}")
+        push_manifest(merged_tag)
     else:
         LOGGER.info(f"Skipping push for tag: {merged_tag}")
 
