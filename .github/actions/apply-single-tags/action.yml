@@ -43,3 +43,7 @@ runs:
     - name: Remove the "latest" tag from the image 🗑️
       run: docker image rmi ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest
       shell: bash
+
+    - name: Show Docker images 📦
+      run: docker image ls --all
+      shell: bash
