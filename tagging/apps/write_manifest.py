@@ -22,7 +22,7 @@ BUILD_TIMESTAMP = datetime.datetime.now(datetime.UTC).isoformat()[:-13] + "Z"
 MARKDOWN_LINE_BREAK = "<br />"
 
 
-def get_build_history_line(config: Config, filename: str, container: Container) -> str:
+def get_build_history_line(config: Config, container: Container, filename: str) -> str:
     LOGGER.info(f"Calculating build history line for image: {config.image}")
 
     taggers = get_taggers(config.image)
@@ -48,19 +48,19 @@ def get_build_history_line(config: Config, filename: str, container: Container) 
 
 
 def write_build_history_line(
-    config: Config, filename: str, container: Container
+    config: Config, container: Container, filename: str
 ) -> None:
     LOGGER.info(f"Writing tags for image: {config.image}")
 
     path = config.hist_lines_dir / f"{filename}.txt"
     path.parent.mkdir(parents=True, exist_ok=True)
-    build_history_line = get_build_history_line(config, filename, container)
+    build_history_line = get_build_history_line(config, container, filename)
     path.write_text(build_history_line)
 
     LOGGER.info(f"Build history line written to: {path}")
 
 
-def get_manifest(config: Config, commit_hash_tag: str, container: Container) -> str:
+def get_manifest(config: Config, container: Container, commit_hash_tag: str) -> str:
     LOGGER.info(f"Calculating manifest file for image: {config.image}")
 
     manifests = get_manifests(config.image)
@@ -87,13 +87,13 @@ def get_manifest(config: Config, commit_hash_tag: str, container: Container) -> 
 
 
 def write_manifest(
-    config: Config, filename: str, commit_hash_tag: str, container: Container
+    config: Config, container: Container, *, filename: str, commit_hash_tag: str
 ) -> None:
     LOGGER.info(f"Writing manifest file for image: {config.image}")
 
     path = config.manifests_dir / f"{filename}.md"
     path.parent.mkdir(parents=True, exist_ok=True)
-    manifest = get_manifest(config, commit_hash_tag, container)
+    manifest = get_manifest(config, container, commit_hash_tag)
     path.write_text(manifest)
 
     LOGGER.info(f"Manifest file wrtitten to: {path}")
@@ -107,8 +107,10 @@ def write_all(config: Config) -> None:
     filename = f"{file_prefix}-{config.image}-{commit_hash_tag}"
 
     with DockerRunner(config.full_image()) as container:
-        write_build_history_line(config, filename, container)
-        write_manifest(config, filename, commit_hash_tag, container)
+        write_build_history_line(config, container, filename)
+        write_manifest(
+            config, container, filename=filename, commit_hash_tag=commit_hash_tag
+        )
 
     LOGGER.info(f"All files written for image: {config.image}")
 
