@@ -15,7 +15,6 @@ on:
       # We use local reusable workflows to make architecture clean and simple
       # https://docs.github.com/en/actions/sharing-automations/reusing-workflows
       - ".github/workflows/docker-build-test-upload.yml"
-      - ".github/workflows/docker-merge-tags.yml"
       - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
@@ -39,7 +38,6 @@ on:
     paths:
       - ".github/workflows/docker.yml"
       - ".github/workflows/docker-build-test-upload.yml"
-      - ".github/workflows/docker-merge-tags.yml"
       - ".github/workflows/docker-tag-push.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
