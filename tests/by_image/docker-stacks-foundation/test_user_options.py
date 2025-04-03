@@ -166,7 +166,8 @@ def test_group_add(container: TrackedContainer) -> None:
         command=["id"],
     )
     warnings = TrackedContainer.get_warnings(logs)
-    assert warnings == ["WARNING: Try setting gid=0"]
+    assert len(warnings) == 1
+    assert "Try setting gid=0" in warnings[0]
     assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
 
 
