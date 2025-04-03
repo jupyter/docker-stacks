@@ -70,6 +70,7 @@ def test_run_hooks_empty_dir(container: TrackedContainer) -> None:
 
 def run_source_in_dir(
     container: TrackedContainer,
+    *,
     subdir: str,
     command_suffix: str = "",
     no_failure: bool = True,

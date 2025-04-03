@@ -26,7 +26,9 @@ def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
     for platform in ALL_PLATFORMS:
         LOGGER.info(f"Reading tags for platform: {platform}")
 
-        file_prefix = get_file_prefix_for_platform(platform, config.variant)
+        file_prefix = get_file_prefix_for_platform(
+            platform=platform, variant=config.variant
+        )
         filename = f"{file_prefix}-{config.image}.txt"
         path = config.tags_dir / filename
         if not path.exists():
