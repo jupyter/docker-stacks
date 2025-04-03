@@ -57,7 +57,7 @@ FROM $BASE_IMAGE
 
 Include the file below in your project:
 
-```{literalinclude} recipe_code/docker-bake.python312.hcl
+```{literalinclude} recipe_code/docker-bake.custom-python.hcl
 :force:
 :language: hcl
 :caption: docker-bake.hcl
