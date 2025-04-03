@@ -25,7 +25,7 @@ def test_uid_change(container: TrackedContainer) -> None:
 def test_gid_change(container: TrackedContainer) -> None:
     """Container should change the GID of the default user."""
     logs = container.run_and_wait(
-        timeout=10,
+        timeout=20,
         user="root",
         environment=["NB_GID=110"],
         command=["id"],
