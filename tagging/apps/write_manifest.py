@@ -93,7 +93,7 @@ def write_manifest(
 
     path = config.manifests_dir / f"{filename}.md"
     path.parent.mkdir(parents=True, exist_ok=True)
-    manifest = get_manifest(config, commit_hash_tag, container)
+    manifest = get_manifest(config, container, commit_hash_tag)
     path.write_text(manifest)
 
     LOGGER.info(f"Manifest file wrtitten to: {path}")
