@@ -35,7 +35,5 @@ def test_spark_r_nbconvert(
         no_warnings=(not expected_warnings),
     )
 
-    if expected_warnings:
-        warnings = TrackedContainer.get_warnings(logs)
-        assert len(warnings) == len(expected_warnings)
-        assert expected_warnings[0] == warnings[0]
+    warnings = TrackedContainer.get_warnings(logs)
+    assert warnings == expected_warnings

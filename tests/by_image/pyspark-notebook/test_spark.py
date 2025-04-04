@@ -15,7 +15,5 @@ def test_spark_shell(container: TrackedContainer) -> None:
         command=["bash", "-c", 'spark-shell <<< "1+1"'],
     )
     warnings = TrackedContainer.get_warnings(logs)
-    assert len(warnings) == 1
-    assert "Using incubator modules: jdk.incubator.vector" in warnings[0]
-
+    assert warnings == ["WARNING: Using incubator modules: jdk.incubator.vector"]
     assert "res0: Int = 2" in logs, "spark-shell does not work"
