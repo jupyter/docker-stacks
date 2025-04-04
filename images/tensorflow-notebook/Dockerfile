@@ -17,10 +17,16 @@ RUN mamba install --yes \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Install tensorflow with pip, on x86_64 tensorflow-cpu
-RUN [[ $(uname -m) = x86_64 ]] && TF_POSTFIX="-cpu" || TF_POSTFIX="" && \
-    pip install --no-cache-dir \
-    "tensorflow${TF_POSTFIX}" && \
+# Can't use `conda-forge` for aarch64 tensorflow:
+# https://github.com/conda-forge/tensorflow-feedstock/issues/136
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        mamba install --yes \
+            'tensorflow-cpu' && \
+            mamba clean --all -f -y ; \
+    else \
+        pip install --no-cache-dir \
+            'tensorflow'; \
+    fi && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
