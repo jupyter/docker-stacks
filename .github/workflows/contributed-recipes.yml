@@ -42,7 +42,7 @@ jobs:
         env:
           REPOSITORY_OWNER: ${{ github.repository_owner }}
 
-  test-recipes:
+  build:
     runs-on: ${{ matrix.runs-on }}
     timeout-minutes: 5
     needs: generate-matrix

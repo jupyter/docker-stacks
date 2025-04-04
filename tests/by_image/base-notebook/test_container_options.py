@@ -40,7 +40,7 @@ def test_nb_user_change(container: TrackedContainer) -> None:
 
     # Give the chown time to complete.
     # Use sleep, not wait, because the container sleeps forever.
-    time.sleep(1)
+    time.sleep(5)
     LOGGER.info(
         f"Checking if a home folder of {nb_user} contains the hidden '.jupyter' folder with appropriate permissions ..."
     )
