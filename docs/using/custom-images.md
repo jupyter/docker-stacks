@@ -19,9 +19,8 @@ Our repository provides several customization points:
 - `PYTHON_VERSION` (docker argument) - the Python version to install in `docker-stacks-foundation` image
 - `REGISTRY`, `OWNER`, `BASE_IMAGE` (docker arguments) - they allow to specify parent image for all the other images
 - `REGISTRY`, `OWNER` (part of `env` in some GitHub workflows) - these allow to properly tag and refer to images during following steps:
-  [`build-test-upload`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml),
-  [`tag-push`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-tag-push.yml) and
-  [`merge-tags`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-merge-tags.yml)
+  - [`build-test-upload`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml)
+  - [`tag-push`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-tag-push.yml)
 
 These customization points can't be changed during runtime.
 Read more about [Docker build arguments](https://docs.docker.com/build/building/variables/#arg-usage-example) and [GitHub environment variables for a single workflow](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#defining-environment-variables-for-a-single-workflow).
@@ -57,7 +56,7 @@ FROM $BASE_IMAGE
 
 Include the file below in your project:
 
-```{literalinclude} recipe_code/docker-bake.python312.hcl
+```{literalinclude} recipe_code/docker-bake.custom-python.hcl
 :force:
 :language: hcl
 :caption: docker-bake.hcl

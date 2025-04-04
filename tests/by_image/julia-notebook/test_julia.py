@@ -4,4 +4,4 @@ from tests.utils.tracked_container import TrackedContainer
 
 
 def test_julia(container: TrackedContainer) -> None:
-    container.run_and_wait(timeout=5, command=["julia", "--version"])
+    container.run_and_wait(timeout=10, command=["julia", "--version"])

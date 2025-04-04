@@ -11,7 +11,7 @@ on:
 
       - "docs/**"
 
-      # Thse files are also rendered as docs pages
+      # These files are also rendered as docs pages
       - "README.md"
       - "CHANGELOG.md"
 
