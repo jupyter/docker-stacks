@@ -85,7 +85,7 @@ def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
 
 def push_manifest(merged_tag: str, existing_platform_tags: list[str]) -> None:
     LOGGER.info(f"Creating manifest for tag: {merged_tag}")
-    # Unforunately, `docker manifest create` requires images to have been already pushed to the registry
+    # Unfortunately, `docker manifest create` requires images to have been already pushed to the registry
     # which is not true for new tags in PRs
     run_with_retries(
         lambda: docker["manifest", "create", merged_tag][existing_platform_tags]
