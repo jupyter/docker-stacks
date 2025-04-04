@@ -17,7 +17,9 @@ LOGGER = logging.getLogger(__name__)
 def apply_tags(config: Config) -> None:
     LOGGER.info(f"Tagging image: {config.image}")
 
-    file_prefix = get_file_prefix_for_platform(config.platform, config.variant)
+    file_prefix = get_file_prefix_for_platform(
+        platform=config.platform, variant=config.variant
+    )
     filename = f"{file_prefix}-{config.image}.txt"
     tags = (config.tags_dir / filename).read_text().splitlines()
 

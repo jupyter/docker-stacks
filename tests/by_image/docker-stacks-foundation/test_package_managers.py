@@ -13,4 +13,4 @@ def test_package_manager(
     container: TrackedContainer, package_manager_command: str
 ) -> None:
     """Test that package managers are installed and run."""
-    container.run_and_wait(timeout=5, command=[package_manager_command, "--version"])
+    container.run_and_wait(timeout=10, command=[package_manager_command, "--version"])

@@ -5,7 +5,7 @@ group "default" {
 target "foundation" {
     context = "https://github.com/jupyter/docker-stacks.git#main:images/docker-stacks-foundation"
     args = {
-        PYTHON_VERSION = "3.12"
+        PYTHON_VERSION = "3.13"
     }
     tags = ["docker-stacks-foundation"]
 }

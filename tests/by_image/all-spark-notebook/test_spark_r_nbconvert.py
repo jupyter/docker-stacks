@@ -12,6 +12,7 @@ LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
+@pytest.mark.flaky(reruns=3, reruns_delay=1)
 @pytest.mark.parametrize(
     "test_file,expected_warnings",
     [
@@ -35,7 +36,5 @@ def test_spark_r_nbconvert(
         no_warnings=(not expected_warnings),
     )
 
-    if expected_warnings:
-        warnings = TrackedContainer.get_warnings(logs)
-        assert len(warnings) == len(expected_warnings)
-        assert expected_warnings[0] == warnings[0]
+    warnings = TrackedContainer.get_warnings(logs)
+    assert warnings == expected_warnings

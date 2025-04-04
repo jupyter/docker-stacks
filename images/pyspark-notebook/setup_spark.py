@@ -55,6 +55,7 @@ def get_latest_spark_version() -> str:
 
 
 def download_spark(
+    *,
     spark_version: str,
     hadoop_version: str,
     scala_version: str,

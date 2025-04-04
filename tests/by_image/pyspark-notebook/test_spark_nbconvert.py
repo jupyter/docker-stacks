@@ -12,19 +12,15 @@ LOGGER = logging.getLogger(__name__)
 THIS_DIR = Path(__file__).parent.resolve()
 
 
-@pytest.mark.parametrize(
-    "test_file",
-    ["issue_1168", "local_pyspark"],
-)
+@pytest.mark.parametrize("test_file", ["issue_1168", "local_pyspark"])
 @pytest.mark.parametrize("output_format", ["pdf", "html", "markdown"])
 def test_spark_nbconvert(
     container: TrackedContainer, test_file: str, output_format: str
 ) -> None:
     host_data_file = THIS_DIR / "data" / f"{test_file}.ipynb"
     logs = check_nbconvert(
-        container, host_data_file, "markdown", execute=True, no_warnings=False
+        container, host_data_file, output_format, execute=True, no_warnings=False
     )
 
     warnings = TrackedContainer.get_warnings(logs)
-    assert len(warnings) == 1
-    assert "Using incubator modules: jdk.incubator.vector" in warnings[0]
+    assert warnings == ["WARNING: Using incubator modules: jdk.incubator.vector"]

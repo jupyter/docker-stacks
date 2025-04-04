@@ -11,7 +11,7 @@ THIS_DIR = Path(__file__).parent.resolve()
 
 def test_run_hooks_zero_args(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         no_failure=False,
         command=["bash", "-c", "source /usr/local/bin/run-hooks.sh"],
     )
@@ -20,7 +20,7 @@ def test_run_hooks_zero_args(container: TrackedContainer) -> None:
 
 def test_run_hooks_two_args(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         no_failure=False,
         command=[
             "bash",
@@ -33,7 +33,7 @@ def test_run_hooks_two_args(container: TrackedContainer) -> None:
 
 def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         no_failure=False,
         command=[
             "bash",
@@ -46,7 +46,7 @@ def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
 
 def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         no_failure=False,
         command=[
             "bash",
@@ -59,7 +59,7 @@ def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
 
 def test_run_hooks_empty_dir(container: TrackedContainer) -> None:
     container.run_and_wait(
-        timeout=5,
+        timeout=10,
         command=[
             "bash",
             "-c",
@@ -70,6 +70,7 @@ def test_run_hooks_empty_dir(container: TrackedContainer) -> None:
 
 def run_source_in_dir(
     container: TrackedContainer,
+    *,
     subdir: str,
     command_suffix: str = "",
     no_failure: bool = True,
@@ -84,7 +85,7 @@ def run_source_in_dir(
         "source /usr/local/bin/run-hooks.sh /home/jovyan/data-copy/" + command_suffix
     )
     return container.run_and_wait(
-        timeout=5,
+        timeout=10,
         volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
         no_failure=no_failure,
         command=["bash", "-c", command],

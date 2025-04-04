@@ -12,6 +12,7 @@ LOGGER = logging.getLogger(__name__)
 
 def get_healthy_status(
     container: TrackedContainer,
+    *,
     env: list[str] | None,
     cmd: list[str] | None,
     user: str | None,
@@ -84,7 +85,7 @@ def test_healthy(
     cmd: list[str] | None,
     user: str | None,
 ) -> None:
-    assert get_healthy_status(container, env, cmd, user) == "healthy"
+    assert get_healthy_status(container, env=env, cmd=cmd, user=user) == "healthy"
 
 
 @pytest.mark.parametrize(
@@ -117,7 +118,7 @@ def test_healthy_with_proxy(
     cmd: list[str] | None,
     user: str | None,
 ) -> None:
-    assert get_healthy_status(container, env, cmd, user) == "healthy"
+    assert get_healthy_status(container, env=env, cmd=cmd, user=user) == "healthy"
 
 
 @pytest.mark.parametrize(
@@ -140,5 +141,5 @@ def test_not_healthy(
     cmd: list[str] | None,
 ) -> None:
     assert (
-        get_healthy_status(container, env, cmd, user=None) != "healthy"
+        get_healthy_status(container, env=env, cmd=cmd, user=None) != "healthy"
     ), "Container should not be healthy for this testcase"

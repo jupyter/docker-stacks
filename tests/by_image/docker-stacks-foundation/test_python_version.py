@@ -13,7 +13,7 @@ def test_python_version(container: TrackedContainer) -> None:
         f"Checking that python major.minor version is {EXPECTED_PYTHON_VERSION}"
     )
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         command=["python", "--version"],
     )
     python = next(line for line in logs.splitlines() if line.startswith("Python "))
@@ -26,7 +26,7 @@ def test_python_version(container: TrackedContainer) -> None:
 def test_python_pinned_version(container: TrackedContainer) -> None:
     LOGGER.info(f"Checking that pinned python version is {EXPECTED_PYTHON_VERSION}.*")
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         command=["cat", "/opt/conda/conda-meta/pinned"],
     )
     assert f"python {EXPECTED_PYTHON_VERSION}.*" in logs

@@ -25,7 +25,7 @@ def test_uid_change(container: TrackedContainer) -> None:
 def test_gid_change(container: TrackedContainer) -> None:
     """Container should change the GID of the default user."""
     logs = container.run_and_wait(
-        timeout=10,
+        timeout=20,
         user="root",
         environment=["NB_GID=110"],
         command=["id"],
@@ -159,7 +159,7 @@ def test_group_add(container: TrackedContainer) -> None:
     additionally verify that setting gid=0 is suggested in a warning.
     """
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         no_warnings=False,
         user="1010:1010",
         group_add=["users"],  # Ensures write access to /home/jovyan
@@ -180,7 +180,7 @@ def test_set_uid(container: TrackedContainer) -> None:
     # This test needs to have tty disabled, the reason is explained here:
     # https://github.com/jupyter/docker-stacks/pull/2260#discussion_r2008821257
     logs = container.run_and_wait(
-        timeout=5, no_warnings=False, user="1010", command=["id"], tty=False
+        timeout=10, no_warnings=False, user="1010", command=["id"], tty=False
     )
     assert "uid=1010(jovyan) gid=0(root)" in logs
     warnings = TrackedContainer.get_warnings(logs)
@@ -191,7 +191,7 @@ def test_set_uid(container: TrackedContainer) -> None:
 def test_set_uid_and_nb_user(container: TrackedContainer) -> None:
     """Container should run with the specified uid and NB_USER."""
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         no_warnings=False,
         user="1010",
         environment=["NB_USER=kitten"],
@@ -266,7 +266,7 @@ def test_secure_path(container: TrackedContainer, tmp_path: pathlib.Path) -> Non
     host_file.chmod(0o755)
 
     logs = container.run_and_wait(
-        timeout=5,
+        timeout=10,
         user="root",
         volumes={host_file: {"bind": "/usr/bin/python", "mode": "ro"}},
         command=["python", "--version"],

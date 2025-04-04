@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
-from typing import Any
+from typing import Any, LiteralString
 
 import docker
 from docker.models.containers import Container
@@ -85,6 +85,7 @@ class TrackedContainer:
     def run_and_wait(
         self,
         timeout: int,
+        *,
         no_warnings: bool = True,
         no_errors: bool = True,
         no_failure: bool = True,
@@ -123,7 +124,7 @@ class TrackedContainer:
         return TrackedContainer._lines_starting_with(logs, "WARNING")
 
     @staticmethod
-    def _lines_starting_with(logs: str, pattern: str) -> list[str]:
+    def _lines_starting_with(logs: str, pattern: LiteralString) -> list[str]:
         return [line for line in logs.splitlines() if line.startswith(pattern)]
 
     def remove(self) -> None:
