@@ -8,11 +8,6 @@ from tests.utils.tracked_container import TrackedContainer
 LOGGER = logging.getLogger(__name__)
 
 
-WARNING_TESTS = {
-    "unit_tensorflow.py",
-}
-
-
 def test_units(container: TrackedContainer) -> None:
     """Various units tests
     Add a py file in the `tests/by_image/<somestack>/units` dir, and it will be automatically tested
@@ -35,11 +30,8 @@ def test_units(container: TrackedContainer) -> None:
             cont_file = f"{cont_data_dir}/{host_file.name}"
             LOGGER.info(f"Running unit test: {host_file}")
 
-            no_warnings = host_file.name not in WARNING_TESTS
-
             container.run_and_wait(
                 timeout=30,
                 volumes={host_file: {"bind": cont_file, "mode": "ro"}},
                 command=["python", cont_file],
-                no_warnings=no_warnings,
             )
