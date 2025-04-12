@@ -131,6 +131,9 @@ RUN set -x && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
     mamba list --full-name 'python' | awk 'END{sub("[^.]*$", "*", $2); print $1 " " $2}' >> "${CONDA_DIR}/conda-meta/pinned" && \
+    # Temporarily pin libxml2 to avoid ABI breakage
+    # https://github.com/conda-forge/libxml2-feedstock/issues/145
+    echo 'libxml2<2.14.0' >> /opt/conda/conda-meta/pinned && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
