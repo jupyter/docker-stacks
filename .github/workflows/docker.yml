@@ -336,6 +336,16 @@ jobs:
     needs: x86_64-pyspark
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
+  contributed-recipes:
+    uses: ./.github/workflows/contributed-recipes.yml
+    with:
+      called-using-workflow-call: true
+    # Contributed recipes only use these images
+    # If recipes using other images will be added, they should be added here as well
+    #
+    # contributed-recipes will give an error if the image is not yet built and uploaded
+    needs: [aarch64-base, x86_64-base, aarch64-minimal, x86_64-minimal]
+
   tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
     with:
@@ -370,6 +380,8 @@ jobs:
             variant: cuda12
     needs:
       [
+        contributed-recipes,
+
         aarch64-foundation,
         aarch64-base,
         aarch64-minimal,
@@ -425,13 +437,3 @@ jobs:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: tag-push-fast
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
-
-  contributed-recipes:
-    uses: ./.github/workflows/contributed-recipes.yml
-    with:
-      called-using-workflow-call: true
-    # Contributed recipes only use these images
-    # If recipes using other images will be added, they should be added here as well
-    #
-    # contributed-recipes will give an error if the image is not yet built and uploaded
-    needs: [aarch64-base, x86_64-base, aarch64-minimal, x86_64-minimal]
