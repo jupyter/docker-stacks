@@ -5,7 +5,7 @@ import logging
 import os
 
 import plumbum
-from tenacity import retry, stop_after_attempt, wait_exponential
+from tenacity import retry, stop_after_attempt, wait_exponential  # type: ignore
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
 from tagging.apps.config import Config
