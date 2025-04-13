@@ -54,11 +54,14 @@ jobs:
 
       - name: Login to Registry 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
-        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
-        with:
-          registry: quay.io
-          username: ${{ secrets.REGISTRY_USERNAME }}
-          password: ${{ secrets.REGISTRY_TOKEN }}
+        run: |
+          docker login ${{ env.REGISTRY }} \
+            --username ${{ secrets.REGISTRY_USERNAME }} \
+            --password ${{ secrets.REGISTRY_TOKEN }} || \
+          docker login ${{ env.REGISTRY }} \
+            --username ${{ secrets.REGISTRY_USERNAME }} \
+            --password ${{ secrets.REGISTRY_TOKEN }}
+        shell: bash
 
       - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
