@@ -1,5 +1,9 @@
 name: Test the contributed recipes
 
+env:
+  REGISTRY: quay.io
+  OWNER: ${{ github.repository_owner }}
+
 on:
   schedule:
     # Images are rebuilt at 03:00 on Monday UTC
@@ -61,8 +65,31 @@ jobs:
           variant: default
 
       # Not pulling the image, because it might be loaded from previous step or will be downloaded automatically
-      - name: Build recipe 🛠
-        run: docker build --rm --force-rm --tag my-custom-image -f ./${{ matrix.dockerfile }} ./
+      - name: Build recipe with parent image 🛠
+        if: ${{ matrix.parent-image != '' }}
+        run: |
+          docker build \
+            --rm --force-rm \
+            --tag my-custom-image \
+            -f ./${{ matrix.dockerfile }} \
+            --build-arg BASE_IMAGE=${{ env.REGISTRY }}/${{ env.OWNER }}/${{ matrix.parent-image }} \
+            ./
+        env:
+          DOCKER_BUILDKIT: 1
+          # Full logs for CI build
+          BUILDKIT_PROGRESS: plain
+        working-directory: docs/using/recipe_code
+        shell: bash
+
+      # Not pulling the image, because it might be loaded from previous step or will be downloaded automatically
+      - name: Build recipe without parent image 🛠
+        if: ${{ matrix.parent-image == '' }}
+        run: |
+          docker build \
+            --rm --force-rm \
+            --tag my-custom-image \
+            -f ./${{ matrix.dockerfile }} \
+            ./
         env:
           DOCKER_BUILDKIT: 1
           # Full logs for CI build
