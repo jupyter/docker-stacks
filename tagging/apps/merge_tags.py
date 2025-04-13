@@ -3,10 +3,14 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 import os
-import time
-from collections.abc import Callable
 
 import plumbum
+from tenacity import (  # type: ignore
+    RetryError,
+    retry,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
 from tagging.apps.config import Config
@@ -44,20 +48,11 @@ def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
     return all_local_tags, merged_local_tags
 
 
-def run_with_retries(func: Callable[[], None]) -> None:
-    ATTEMPTS = 3
-    SLEEP_BACKOFF = 2
-
-    for attempt in range(ATTEMPTS):
-        try:
-            func()
-            break
-        except Exception as e:
-            LOGGER.warning(f"Attempt {attempt + 1} failed: {e}")
-            if attempt + 1 == ATTEMPTS:
-                LOGGER.error(f"Failed after {ATTEMPTS} attempts")
-                raise
-            time.sleep(SLEEP_BACKOFF * (attempt + 1))
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4))
+def pull_tag(tag: str) -> None:
+    LOGGER.info(f"Pulling tag: {tag}")
+    docker["pull", tag] & plumbum.FG
+    LOGGER.info(f"Tag {tag} pulled successfully")
 
 
 def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
@@ -74,27 +69,35 @@ def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
 
         LOGGER.warning(f"Trying to pull: {platform_tag} from registry")
         try:
-            run_with_retries(lambda: docker["pull", platform_tag] & plumbum.FG)
+            pull_tag(platform_tag)
             existing_platform_tags.append(platform_tag)
             LOGGER.info(f"Tag {platform_tag} pulled successfully")
-        except plumbum.ProcessExecutionError:
+        except RetryError:
             LOGGER.warning(f"Pull failed, tag {platform_tag} doesn't exist")
 
     return existing_platform_tags
 
 
-def push_manifest(merged_tag: str, existing_platform_tags: list[str]) -> None:
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4))
+def create_manifest(merged_tag: str, existing_platform_tags: list[str]) -> None:
+    # This allows to rerun the script without having to remove the manifest manually
+    try:
+        docker["manifest", "rm", merged_tag] & plumbum.FG
+        LOGGER.warning(f"Manifest {merged_tag} was present locally, removed it")
+    except plumbum.ProcessExecutionError:
+        pass
+
     LOGGER.info(f"Creating manifest for tag: {merged_tag}")
     # Unfortunately, `docker manifest create` requires images to have been already pushed to the registry
     # which is not true for new tags in PRs
-    run_with_retries(
-        lambda: docker["manifest", "create", merged_tag][existing_platform_tags]
-        & plumbum.FG
-    )
+    docker["manifest", "create", merged_tag][existing_platform_tags] & plumbum.FG
     LOGGER.info(f"Successfully created manifest for tag: {merged_tag}")
 
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4))
+def push_manifest(merged_tag: str) -> None:
     LOGGER.info(f"Pushing manifest for tag: {merged_tag}")
-    run_with_retries(lambda: docker["manifest", "push", merged_tag] & plumbum.FG)
+    docker["manifest", "push", merged_tag] & plumbum.FG
     LOGGER.info(f"Successfully pushed manifest for tag: {merged_tag}")
 
 
@@ -103,16 +106,10 @@ def merge_tags(
 ) -> None:
     LOGGER.info(f"Trying to merge tag: {merged_tag}")
 
-    # This allows to rerun the script without having to remove the manifest manually
-    try:
-        docker["manifest", "rm", merged_tag] & plumbum.FG
-        LOGGER.warning(f"Manifest {merged_tag} was present locally, removed it")
-    except plumbum.ProcessExecutionError:
-        pass
-
     existing_platform_tags = pull_missing_tags(merged_tag, all_local_tags)
     if push_to_registry:
-        push_manifest(merged_tag, existing_platform_tags)
+        create_manifest(merged_tag, existing_platform_tags)
+        push_manifest(merged_tag)
     else:
         LOGGER.info(f"Skipping push for tag: {merged_tag}")
 
