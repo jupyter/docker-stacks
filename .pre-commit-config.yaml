@@ -45,6 +45,7 @@ repos:
             "numpy",
             "pytest",
             "requests",
+            "tenacity",
             "urllib3",
             "types-beautifulsoup4",
             "types-python-dateutil",
