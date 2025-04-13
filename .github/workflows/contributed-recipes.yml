@@ -71,7 +71,7 @@ jobs:
             --rm --force-rm \
             --tag my-custom-image \
             -f ./${{ matrix.dockerfile }} \
-            --build-arg BASE_IMAGE=${{ env.REGISTRY }}/${{ env.OWNER }}/${{ matrix.parent-image }} \
+            ${{ matrix.parent-image != '' && '--build-arg BASE_IMAGE=env.REGISTRY/env.OWNER/matrix.parent-image' || '' }}/ \
             ./
         env:
           DOCKER_BUILDKIT: 1
