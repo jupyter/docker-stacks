@@ -20,6 +20,7 @@ Our repository provides several customization points:
 - `REGISTRY`, `OWNER`, `BASE_IMAGE` (docker arguments) - they allow to specify parent image for all the other images
 - `REGISTRY`, `OWNER` (part of `env` in some GitHub workflows) - these allow to properly tag and refer to images during following steps:
   - [`build-test-upload`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml)
+  - [`contributed-recipes`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/contributed-recipes.yml)
   - [`tag-push`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-tag-push.yml)
 
 These customization points can't be changed during runtime.
