@@ -65,7 +65,7 @@ jobs:
           variant: default
 
       # Not pulling the image, because it might be loaded from previous step or will be downloaded automatically
-      - name: Build recipe 🛠
+      - name: Build recipe with parent image 🛠
         if: ${{ matrix.parent-image != '' }}
         run: |
           docker build \
@@ -82,7 +82,7 @@ jobs:
         shell: bash
 
       # Not pulling the image, because it might be loaded from previous step or will be downloaded automatically
-      - name: Build recipe 🛠
+      - name: Build recipe without parent image 🛠
         if: ${{ matrix.parent-image == '' }}
         run: |
           docker build \
