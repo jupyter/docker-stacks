@@ -66,12 +66,29 @@ jobs:
 
       # Not pulling the image, because it might be loaded from previous step or will be downloaded automatically
       - name: Build recipe 🛠
+        if: ${{ matrix.parent-image != '' }}
         run: |
           docker build \
             --rm --force-rm \
             --tag my-custom-image \
             -f ./${{ matrix.dockerfile }} \
-            ${{ matrix.parent-image != '' && '--build-arg BASE_IMAGE=${{ env.REGISTRY }}/env.OWNER/matrix.parent-image' || '' }}/ \
+            --build-arg BASE_IMAGE=${{ env.REGISTRY }}/${{ env.OWNER }}/${{ matrix.parent-image }} \
+            ./
+        env:
+          DOCKER_BUILDKIT: 1
+          # Full logs for CI build
+          BUILDKIT_PROGRESS: plain
+        working-directory: docs/using/recipe_code
+        shell: bash
+
+      # Not pulling the image, because it might be loaded from previous step or will be downloaded automatically
+      - name: Build recipe 🛠
+        if: ${{ matrix.parent-image == '' }}
+        run: |
+          docker build \
+            --rm --force-rm \
+            --tag my-custom-image \
+            -f ./${{ matrix.dockerfile }} \
             ./
         env:
           DOCKER_BUILDKIT: 1
