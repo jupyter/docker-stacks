@@ -5,7 +5,12 @@ import logging
 import os
 
 import plumbum
-from tenacity import retry, stop_after_attempt, wait_exponential  # type: ignore
+from tenacity import (  # type: ignore
+    RetryError,
+    retry,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
 from tagging.apps.config import Config
@@ -67,7 +72,7 @@ def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
             pull_tag(platform_tag)
             existing_platform_tags.append(platform_tag)
             LOGGER.info(f"Tag {platform_tag} pulled successfully")
-        except plumbum.ProcessExecutionError:
+        except RetryError:
             LOGGER.warning(f"Pull failed, tag {platform_tag} doesn't exist")
 
     return existing_platform_tags
