@@ -62,6 +62,7 @@ jobs:
             --username ${{ secrets.REGISTRY_USERNAME }} \
             --password ${{ secrets.REGISTRY_TOKEN }}
         shell: bash
+        id: login
 
       - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
@@ -76,4 +77,10 @@ jobs:
             --image ${{ inputs.image }} \
             --variant ${{ inputs.variant }} \
             --tags-dir /tmp/jupyter/tags/
+        shell: bash
+
+      - name: Logout from Registry 🔐
+        if: always() && env.PUSH_TO_REGISTRY == 'true' && steps.login.outcome == 'success'
+        run: |
+          docker logout ${{ env.REGISTRY }}
         shell: bash
