@@ -238,7 +238,7 @@ sdf_len(sc, 100, repartition = 1) %>%
 ### Define Spark Dependencies
 
 ```{note}
-This example is given for [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/hadoop/current/install.html).
+This example is given for [Elasticsearch](https://www.elastic.co/docs/reference/elasticsearch-hadoop/installation).
 ```
 
 Spark dependencies can be declared thanks to the `spark.jars.packages` property
