@@ -9,7 +9,7 @@ set -e
 # by setting the JUPYTER_DOCKER_STACKS_QUIET environment variable.
 _log () {
     if [[ "$*" == "ERROR:"* ]] || [[ "$*" == "WARNING:"* ]] || [[ "${JUPYTER_DOCKER_STACKS_QUIET}" == "" ]]; then
-        echo "$@"
+        echo "$@" >&2
     fi
 }
 _log "Entered start.sh with args:" "$@"

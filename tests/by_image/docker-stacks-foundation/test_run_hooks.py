@@ -12,6 +12,7 @@ THIS_DIR = Path(__file__).parent.resolve()
 def test_run_hooks_zero_args(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=10,
+        no_errors=False,
         no_failure=False,
         command=["bash", "-c", "source /usr/local/bin/run-hooks.sh"],
     )
@@ -21,6 +22,7 @@ def test_run_hooks_zero_args(container: TrackedContainer) -> None:
 def test_run_hooks_two_args(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=10,
+        no_errors=False,
         no_failure=False,
         command=[
             "bash",
@@ -34,6 +36,7 @@ def test_run_hooks_two_args(container: TrackedContainer) -> None:
 def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=10,
+        no_errors=False,
         no_failure=False,
         command=[
             "bash",
@@ -47,6 +50,7 @@ def test_run_hooks_missing_dir(container: TrackedContainer) -> None:
 def test_run_hooks_dir_is_file(container: TrackedContainer) -> None:
     logs = container.run_and_wait(
         timeout=10,
+        no_errors=False,
         no_failure=False,
         command=[
             "bash",
@@ -73,6 +77,7 @@ def run_source_in_dir(
     *,
     subdir: str,
     command_suffix: str = "",
+    no_errors: bool = True,
     no_failure: bool = True,
 ) -> str:
     host_data_dir = THIS_DIR / subdir
@@ -87,6 +92,7 @@ def run_source_in_dir(
     return container.run_and_wait(
         timeout=10,
         volumes={host_data_dir: {"bind": cont_data_dir, "mode": "ro"}},
+        no_errors=no_errors,
         no_failure=no_failure,
         command=["bash", "-c", command],
     )
@@ -116,7 +122,10 @@ def test_run_hooks_executables(container: TrackedContainer) -> None:
 
 def test_run_hooks_failures(container: TrackedContainer) -> None:
     logs = run_source_in_dir(
-        container, subdir="data/run-hooks/failures", no_failure=False
+        container,
+        subdir="data/run-hooks/failures",
+        no_errors=False,
+        no_failure=False,
     )
 
     for file in ["a.sh", "b.py", "c.sh", "d.sh"]:
