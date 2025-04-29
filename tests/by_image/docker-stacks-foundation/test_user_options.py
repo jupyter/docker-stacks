@@ -327,3 +327,19 @@ def test_rootless_triplet_sudo(container: TrackedContainer) -> None:
         command=["env"],
     )
     assert "SUDO" not in logs
+
+
+def test_log_stderr(container: TrackedContainer) -> None:
+    """Logs should go to stderr, not stdout"""
+    stdout, stderr = container.run_and_wait(
+        timeout=10,
+        user="root",
+        environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
+        command=["echo", "stdout"],
+        split_stderr=True,
+    )
+    # no logs should be on stdout
+    assert stdout.strip() == "stdout"
+    # check that logs were captured
+    assert "Entered start.sh" in stderr
+    assert "Running as root" in stderr
