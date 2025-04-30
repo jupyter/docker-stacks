@@ -54,9 +54,9 @@ class TrackedContainer:
         )
         LOGGER.info(f"Container {self.container.name} created")
 
-    def get_logs(self, **kwargs: Any) -> str:
+    def get_logs(self, *, stdout: bool = True, stderr: bool = True) -> str:
         assert self.container is not None
-        logs = self.container.logs(**kwargs).decode()
+        logs = self.container.logs(stdout=stdout, stderr=stderr).decode()
         assert isinstance(logs, str)
         return logs
 
