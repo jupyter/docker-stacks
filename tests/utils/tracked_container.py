@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
-from typing import Any, LiteralString
+from typing import Any, Literal, LiteralString, overload
 
 import docker
 from docker.models.containers import Container
@@ -54,9 +54,9 @@ class TrackedContainer:
         )
         LOGGER.info(f"Container {self.container.name} created")
 
-    def get_logs(self) -> str:
+    def get_logs(self, *, stdout: bool = True, stderr: bool = True) -> str:
         assert self.container is not None
-        logs = self.container.logs().decode()
+        logs = self.container.logs(stdout=stdout, stderr=stderr).decode()
         assert isinstance(logs, str)
         return logs
 
@@ -82,6 +82,7 @@ class TrackedContainer:
             LOGGER.debug(f"Command output:\n{output}")
         return output
 
+    @overload
     def run_and_wait(
         self,
         timeout: int,
@@ -89,12 +90,45 @@ class TrackedContainer:
         no_warnings: bool = True,
         no_errors: bool = True,
         no_failure: bool = True,
+        split_stderr: Literal[True],
         **kwargs: Any,
-    ) -> str:
+    ) -> tuple[str, str]: ...
+
+    @overload
+    def run_and_wait(
+        self,
+        timeout: int,
+        *,
+        no_warnings: bool = True,
+        no_errors: bool = True,
+        no_failure: bool = True,
+        split_stderr: Literal[False] = False,
+        **kwargs: Any,
+    ) -> str: ...
+
+    def run_and_wait(
+        self,
+        timeout: int,
+        *,
+        no_warnings: bool = True,
+        no_errors: bool = True,
+        no_failure: bool = True,
+        split_stderr: bool = False,
+        **kwargs: Any,
+    ) -> str | tuple[str, str]:
+        if split_stderr:
+            kwargs.setdefault("tty", False)
+            assert kwargs["tty"] is False, "split_stderr only works with tty=False"
         self.run_detached(**kwargs)
         assert self.container is not None
         rv = self.container.wait(timeout=timeout)
-        logs = self.get_logs()
+        stdout: str
+        stderr: str
+        if split_stderr:
+            stdout = self.get_logs(stdout=True, stderr=False)
+            stderr = logs = self.get_logs(stdout=False, stderr=True)
+        else:
+            logs = self.get_logs()
         rc_success = rv["StatusCode"] == 0
         should_report = not (
             no_failure == rc_success
@@ -113,7 +147,10 @@ class TrackedContainer:
         assert no_warnings == (not self.get_warnings(logs))
         assert no_errors == (not self.get_errors(logs))
 
-        return logs
+        if split_stderr:
+            return (stdout, stderr)
+        else:
+            return logs
 
     @staticmethod
     def get_errors(logs: str) -> list[str]:
