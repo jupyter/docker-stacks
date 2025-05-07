@@ -57,5 +57,6 @@ WORKDIR "${HOME}"
 # Install `oracledb` Python library to use Oracle SQL Instant Client
 RUN mamba install --yes 'oracledb' && \
     mamba clean --all -f -y && \
+    (rm -r /home/${NB_USER}/.cache/rosetta || true) && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"

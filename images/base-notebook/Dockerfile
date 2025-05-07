@@ -50,6 +50,7 @@ RUN mamba install --yes \
     jupyter server --generate-config && \
     mamba clean --all -f -y && \
     jupyter lab clean && \
+    (rm -r /home/${NB_USER}/.cache/rosetta || true) && \
     rm -rf "/home/${NB_USER}/.cache/yarn" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"

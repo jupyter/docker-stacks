@@ -256,6 +256,7 @@ You can use either `mamba`, `pip`, or `conda` (`mamba` is recommended) to instal
 # the installation
 mamba install --yes some-package && \
     mamba clean --all -f -y && \
+    (rm -r /home/${NB_USER}/.cache/rosetta || true) && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
@@ -285,6 +286,7 @@ conda config --system --prepend channels defaults
 # install a package
 mamba install --yes humanize && \
     mamba clean --all -f -y && \
+    (rm -r /home/${NB_USER}/.cache/rosetta || true) && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 ```

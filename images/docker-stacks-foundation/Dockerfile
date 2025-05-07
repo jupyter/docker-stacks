@@ -135,6 +135,7 @@ RUN set -x && \
     # https://github.com/conda-forge/libxml2-feedstock/issues/145
     echo 'libxml2<2.14.0' >> /opt/conda/conda-meta/pinned && \
     mamba clean --all -f -y && \
+    (rm -r /home/${NB_USER}/.cache/rosetta || true) && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
