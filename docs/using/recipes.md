@@ -422,7 +422,7 @@ FROM quay.io/jupyter/pyspark-notebook
 
 RUN mamba install --yes 'delta-spark' && \
     mamba clean --all -f -y && \
-    (rm -r /home/${NB_USER}/.cache/rosetta || true) && \
+    (rm -r /home/"${NB_USER}"/.cache/rosetta || true) && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
