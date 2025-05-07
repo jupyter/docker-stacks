@@ -20,6 +20,7 @@ for d in "$@"; do
         ! \( \
             -group "${NB_GID}" \
             -a -perm -g+rwX \
+            -path "/home/jovyan/.cache" -prune \
         \) \
         -exec chgrp "${NB_GID}" -- {} \+ \
         -exec chmod g+rwX -- {} \+
@@ -28,6 +29,7 @@ for d in "$@"; do
         \( \
             -type d \
             -a ! -perm -6000 \
+            -path "/home/jovyan/.cache" -prune \
         \) \
         -exec chmod +6000 -- {} \+
 done
