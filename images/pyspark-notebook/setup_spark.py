@@ -9,6 +9,7 @@
 import argparse
 import logging
 import os
+import re
 import subprocess
 from pathlib import Path
 
@@ -33,11 +34,13 @@ def get_latest_spark_version() -> str:
     """
     LOGGER.info("Downloading Spark versions information")
     all_refs = get_all_refs("https://archive.apache.org/dist/spark/")
+    LOGGER.info(f"All refs: {all_refs}")
     versions = [
         ref.removeprefix("spark-").removesuffix("/")
         for ref in all_refs
-        if ref.startswith("spark-") and "incubating" not in ref
+        if re.match(r"^spark-\d", ref) is not None and "incubating" not in ref
     ]
+    LOGGER.info(f"Available versions: {versions}")
 
     # Compare versions semantically
     def version_array(ver: str) -> tuple[int, int, int, str]:
