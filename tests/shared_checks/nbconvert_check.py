@@ -17,7 +17,7 @@ def check_nbconvert(
     no_warnings: bool = True,
 ) -> str:
     """Check if nbconvert is able to convert a notebook file"""
-    cont_data_file = "/home/jovyan/data/" + host_file.name
+    cont_data_file = "/home/jovyan/" + host_file.name
 
     output_dir = "/tmp"
     LOGGER.info(

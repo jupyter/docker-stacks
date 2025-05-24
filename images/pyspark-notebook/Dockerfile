@@ -64,13 +64,12 @@ USER ${NB_UID}
 # NOTE: It's important to ensure compatibility between Pandas versions.
 # The pandas version in this Dockerfile should match the version
 # on which the Pandas API for Spark is built.
-# To find the right version:
-# 1. Check out the Spark branch you are on: <https://github.com/apache/spark>
-# 2. Find the pandas version in the file `dev/infra/Dockerfile`.
+# To find the right version, check the pandas version being installed here:
+# https://github.com/apache/spark/blob/<SPARK_VERSION>/dev/infra/Dockerfile
 RUN mamba install --yes \
     'grpcio-status' \
     'grpcio' \
-    'pandas=2.2.2' \
+    'pandas=2.2.3' \
     'pyarrow' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \

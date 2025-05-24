@@ -35,11 +35,8 @@ def get_latest_spark_version() -> str:
     LOGGER.info("Downloading Spark versions information")
     all_refs = get_all_refs("https://archive.apache.org/dist/spark/")
     LOGGER.info(f"All refs: {all_refs}")
-    versions = [
-        ref.removeprefix("spark-").removesuffix("/")
-        for ref in all_refs
-        if re.match(r"^spark-\d", ref) is not None and "incubating" not in ref
-    ]
+    pattern = re.compile(r"^spark-(\d+\.\d+\.\d+)/$")
+    versions = [match.group(1) for ref in all_refs if (match := pattern.match(ref))]
     LOGGER.info(f"Available versions: {versions}")
 
     # Compare versions semantically
@@ -74,6 +71,7 @@ def download_spark(
         spark_dir_name += f"-scala{scala_version}"
     LOGGER.info(f"Spark directory name: {spark_dir_name}")
     spark_url = spark_download_url / f"spark-{spark_version}" / f"{spark_dir_name}.tgz"
+    LOGGER.info(f"Spark download URL: {spark_url}")
 
     tmp_file = Path("/tmp/spark.tar.gz")
     subprocess.check_call(
