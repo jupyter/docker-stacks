@@ -2,4 +2,4 @@
 # Distributed under the terms of the Modified BSD License.
 import pandas
 
-assert pandas.__version__ == "2.2.2"
+assert pandas.__version__ == "2.2.3"
