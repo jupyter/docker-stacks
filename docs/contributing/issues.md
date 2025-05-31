@@ -3,9 +3,9 @@
 We appreciate you taking the time to report an issue you encountered while using the Jupyter Docker Stacks.
 Please review the following guidelines when reporting your problem.
 
-- If you believe you've found a security vulnerability in any of the Jupyter projects included in Jupyter Docker Stacks images,
-  please report it to [security@ipython.org](mailto:security@ipython.org), **not in the issue trackers on GitHub**.
-  If you prefer to encrypt your security reports, you can use [this PGP public key](https://github.com/jupyter/jupyter.github.io/blob/HEAD/assets/ipython_security.asc).
+- Please use GitHub's "Report a Vulnerability" button under Security > Advisories on the appropriate repo,
+  e.g. [report here for Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks/security/advisories).
+  You may also send an email to <mailto:security@ipython.org>, but the GitHub reporting system is preferred.
 - If you think your problem is unique to the Jupyter Docker Stacks images,
   please search the [jupyter/docker-stacks issue tracker](https://github.com/jupyter/docker-stacks/issues?q=is%3Aissue%20)
   to see if someone else has already reported the same problem.
