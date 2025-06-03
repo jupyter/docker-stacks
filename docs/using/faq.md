@@ -6,8 +6,7 @@ There are two types of data you might want to persist.
 
 1. If you want to persist your environment (i.e. packages installed by `mamba`, `conda`, `pip`, `apt-get`, and so on),
    then you should create an inherited image and install packages only once while building your Dockerfile.
-   An example of using `mamba` and `pip` in a child image is available
-   [here](./recipes.md#using-mamba-install-recommended-or-pip-install-in-a-child-docker-image).
+   Take a look at [an example of using `mamba` and `pip`](./recipes.md#using-mamba-install-recommended-or-pip-install-in-a-child-docker-image) in a child image.
 
    ```{note}
    If you install a package inside a running container (for example you run `pip install <package>` in a terminal),
@@ -30,7 +29,7 @@ Adding them all is impossible, so we have several images to choose from.
 
 ## Who is `jovyan`
 
-As described [here](https://github.com/jupyter/docker-stacks/issues/358#issuecomment-288844834):
+As described [in this issue comment](https://github.com/jupyter/docker-stacks/issues/358#issuecomment-288844834):
 
 ```text
 Jo·vy·an
@@ -40,7 +39,7 @@ noun – an inhabitant of Jupyter
 
 `Jovyan` is often a special term used to describe members of the Jupyter community.
 It is also used as the user ID in the Jupyter Docker stacks or referenced in conversations.
-You can find more information [here](https://docs.jupyter.org/en/latest/community/content-community.html#what-is-a-jovyan).
+You can find more information on [the Jupyter Community documentation](https://docs.jupyter.org/en/latest/community/content-community.html#what-is-a-jovyan).
 
 ## How to give root permissions to the user
 

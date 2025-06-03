@@ -45,7 +45,7 @@ create a [recipe](../using/recipes.md) or [community stack](../contributing/stac
 We have a [policy](./new-images-and-packages-policy.md), which we consider when adding new images or new packages to existing images.
 ```
 
-You can see an example of adding a new image [here](https://github.com/jupyter/docker-stacks/pull/1936/files).
+[Take a look at an example](https://github.com/jupyter/docker-stacks/pull/1936/files) of adding a new image.
 
 When there's a new stack definition, check before merging the PR:
 

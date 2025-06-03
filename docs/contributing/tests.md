@@ -9,7 +9,7 @@ runs tests against pull requests submitted to the `jupyter/docker-stacks` reposi
 
 We use the `pytest` module to run tests on the image.
 `conftest.py` and `pytest.ini` in the `tests` folder define the environment in which tests are run.
-More info on `pytest` can be found [here](https://docs.pytest.org/en/latest/contents.html).
+[Read `pytest` documentation](https://docs.pytest.org/en/latest/contents.html).
 
 The actual image-specific test files are located in folders like `tests/by_image/<somestack>/` (e.g., `tests/by_image/docker-stacks-foundation/`, etc.).
 

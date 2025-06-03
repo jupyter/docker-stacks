@@ -14,7 +14,7 @@
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: ce40a160603ab0e7d9c627ae33d7ef3906e2d2b2 # frozen: v3.19.1
+    rev: 37bfa06d791fd38fb4e54910b36a2ff57641b074 # frozen: v3.20.0
     hooks:
       - id: pyupgrade
         args: [--py312-plus]
@@ -35,7 +35,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: f40886d54c729f533f864ed6ce584e920feb0af7 # frozen: v1.15.0
+    rev: 7010b10a09f65cd60a23c207349b539aa36dbec1 # frozen: v1.16.0
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -126,7 +126,7 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: d174eb7a8f35e05d4065c82d375ad84aa0b32352 # frozen: v0.17.2
+    rev: d7a4f7cf4914d3bffb9b83bdbc45fd2a00c91ff9 # frozen: v0.18.1
     hooks:
       - id: markdownlint-cli2
         args: [--fix]

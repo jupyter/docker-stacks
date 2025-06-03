@@ -60,7 +60,7 @@ docker run -it --rm \
 The default version of `Python` that ships with the image may not be the version you want.
 The instructions below permit adding a conda environment with a different `Python` version and making it accessible to Jupyter.
 You may also use older images like `jupyter/base-notebook:python-3.10`.
-A list of all tags can be found [here](https://github.com/jupyter/docker-stacks/wiki).
+We also maintain a [full build history](https://github.com/jupyter/docker-stacks/wiki).
 
 ```{literalinclude} recipe_code/custom_environment.dockerfile
 :language: docker
@@ -176,7 +176,7 @@ We also have contributed recipes for using JupyterHub.
 
 ### Use JupyterHub's DockerSpawner
 
-You can find an example of using DockerSpawner [here](https://github.com/jupyterhub/jupyterhub-deploy-docker/tree/main/basic-example).
+You can find [an example of using DockerSpawner](https://github.com/jupyterhub/jupyterhub-deploy-docker/tree/main/basic-example).
 
 ### Containers with a specific version of JupyterHub
 
