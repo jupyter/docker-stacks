@@ -44,7 +44,6 @@ You can build a `pyspark-notebook` image with a different `Spark` version by ove
 
 - Spark distribution is defined by the combination of Spark, Hadoop, and Scala versions,
   see [Download Apache Spark](https://spark.apache.org/downloads.html) and the [archive repo](https://archive.apache.org/dist/spark/) for more information.
-
   - `openjdk_version`: The version of the OpenJDK (JRE headless) distribution (`17` by default).
     - This version needs to match the version supported by the Spark distribution used above.
     - See [Spark Overview](https://spark.apache.org/docs/latest/#downloading) and [Ubuntu packages](https://packages.ubuntu.com/search?keywords=openjdk).
