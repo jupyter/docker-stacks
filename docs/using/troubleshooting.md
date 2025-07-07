@@ -54,7 +54,6 @@ The following sections cover a few of these scenarios and how to fix them.
    ```
 
    where:
-
    - `CHOWN_EXTRA=<some-dir>,<some-other-dir>`: will change the ownership and group of the specified container directory (non-recursive by default).
      You need to provide full paths starting with `/`.
    - `CHOWN_EXTRA_OPTS="-R"`: will recursively change the ownership and group of the directory specified in `CHOWN_EXTRA`.
@@ -107,7 +106,6 @@ The following sections cover a few of these scenarios and how to fix them.
    ```
 
    where:
-
    - `NB_UID` and `NB_GID` should match the local user's UID and GID.
    - You **must** use `--user root` to ensure that the `UID` and `GID` are updated at runtime.
 
@@ -163,7 +161,6 @@ If you have also **created a new user**, you might be experiencing any of the fo
    ```
 
    where:
-
    - `-e NB_USER=callisto`: will create a new user `callisto` and automatically add it to the `users` group (does not delete jovyan)
    - `-e NB_UID=1234` and `-e NB_GID=1234`: will set the `UID` and `GID` of the new user (`callisto`) to `1234`
    - `-e CHOWN_HOME_OPTS="-R"` and `-e CHOWN_HOME=yes`: ensure that the new user is the owner of the `/home` directory and subdirectories
@@ -199,7 +196,6 @@ If you have also **created a new user**, you might be experiencing any of the fo
    ```
 
    where:
-
    - `"$(id -u)"` and `"$(id -g)"` will dynamically assign the `UID` and `GID` of the user executing the `docker run` command to the new user (`callisto`)
 
 ## Additional tips and troubleshooting commands for permission-related errors
