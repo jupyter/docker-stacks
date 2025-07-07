@@ -35,7 +35,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 7010b10a09f65cd60a23c207349b539aa36dbec1 # frozen: v1.16.0
+    rev: 0f86793af5ef5f6dc63c8d04a3cabfa3ea8f9c6a  # frozen: v1.16.1
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -64,7 +64,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 787fb9f542b140ba0b2aced38e6a3e68021647a3 # frozen: v3.5.3
+    rev: 5ba47274f9b181bce26a5150a725577f3c336011  # frozen: v3.6.2
     hooks:
       - id: prettier
 
@@ -120,7 +120,7 @@ repos:
 
   # Lint: Python
   - repo: https://github.com/PyCQA/flake8
-    rev: 4b5e89b4b108a6c1a000c591d334a99a80d34c7b # frozen: 7.2.0
+    rev: d93590f5be797aabb60e3b09f2f52dddb02f349f  # frozen: 7.3.0
     hooks:
       - id: flake8
 
