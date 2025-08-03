@@ -300,6 +300,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [transformers] | [![bb]][transformers_b] | [**Transformers**][transformers_lib] and NLP libraries such as `Tensorflow`, `Keras`, `Jax` and `PyTorch` |
 | [scraper]      | [![bb]][scraper_b]      | **Scraper** tools (`selenium`, `chromedriver`, `beatifulsoup4`, `requests`) on `minimal-notebook` image   |
 | [almond]       | [![bb]][almond_b]       | Scala kernel for Jupyter using **Almond** on top of the `base-notebook` image                             |
+| [lisp-stat]    | [![bb]][lisp-stat_b]    | Common Lisp statistical computing environment on top of the `minimal-notebook` image                      |
 
 [bb]: https://static.mybinder.org/badge_logo.svg
 [csharp]: https://github.com/tlinnet/csharp-notebook
@@ -327,6 +328,8 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [scraper_b]: https://mybinder.org/v2/gh/rgriffogoes/scraper-notebook/main
 [almond]: https://almond.sh
 [almond_b]: https://mybinder.org/v2/gh/almond-sh/examples/master?urlpath=lab%2Ftree%2Fnotebooks%2Findex.ipynb
+[lisp-stat]: https://lisp-stat.dev
+[lisp-stat_b]: https://mybinder.org/v2/gh/Lisp-Stat/IPS9/HEAD?urlpath=%2Fdoc%2Ftree%2Findex.ipynb
 
 ### Other GPU-accelerated notebooks
 
