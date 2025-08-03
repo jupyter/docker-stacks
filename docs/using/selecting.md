@@ -329,7 +329,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [almond]: https://almond.sh
 [almond_b]: https://mybinder.org/v2/gh/almond-sh/examples/master?urlpath=lab%2Ftree%2Fnotebooks%2Findex.ipynb
 [lisp-stat]: https://lisp-stat.dev
-[lisp-stat_b]: https://github.com/Lisp-Stat/cl-jupyter-image
+[lisp-stat_b]: https://mybinder.org/v2/gh/Lisp-Stat/IPS9/HEAD?urlpath=%2Fdoc%2Ftree%2Findex.ipynb
 
 ### Other GPU-accelerated notebooks
 
