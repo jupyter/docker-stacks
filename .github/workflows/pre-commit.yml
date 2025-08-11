@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set Up Python 🐍
         uses: actions/setup-python@v5

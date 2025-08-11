@@ -38,7 +38,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Calculate recipes matrix 🛠
         id: set-matrix
@@ -54,7 +54,7 @@ jobs:
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Load image to Docker 📥
         if: ${{ inputs.called-using-workflow-call && matrix.parent-image != '' }}
