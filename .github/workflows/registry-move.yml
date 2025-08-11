@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-overview:
+  registry-move:
     # To be able to use the latest skopeo
     runs-on: macos-latest
     timeout-minutes: 5
