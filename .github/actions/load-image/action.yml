@@ -16,7 +16,7 @@ runs:
   using: composite
   steps:
     - name: Download built image 📥
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
         path: /tmp/jupyter/images/
