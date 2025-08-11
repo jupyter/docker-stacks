@@ -23,7 +23,7 @@ runs:
         variant: ${{ inputs.variant }}
 
     - name: Download tags file 📥
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v5
       with:
         name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
         path: /tmp/jupyter/tags/
