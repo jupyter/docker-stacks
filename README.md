@@ -123,7 +123,8 @@ If you want to use the older `Ubuntu` and/or `Python` version, you can use the f
 | 2023-05-30   | 22.04  | 3.10   | `4d70cf8da953` |
 | 2024-08-26   | 22.04  | 3.11   | `00987883e58d` |
 | 2024-10-22   | 24.04  | 3.11   | `b74418220768` |
-| weekly build | 24.04  | 3.12   | `latest`       |
+| 2025-08-11   | 24.04  | 3.12   | `82d322f00937` |
+| weekly build | 24.04  | 3.13   | `latest`       |
 
 ## Contributing
 
