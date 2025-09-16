@@ -79,15 +79,15 @@ jobs:
 
       - name: Generate SBOM for the image 🧾
         uses: anchore/sbom-action@f8bdd1d8ac5e901a77a92f111440fdb1b593736b # v0.20.6
-        id: sbom
         with:
           image: ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
+          output-file: /tmp/sbom.txt
 
       - name: Upload SBOM 💾
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.image }}-sbom
-          path: ${{ steps.sbom.outputs.output-file }}
+          path: /tmp/sbom.txt
           retention-days: 3
 
       - name: Push single platform images to Registry 📤
