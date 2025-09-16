@@ -88,7 +88,7 @@ jobs:
         with:
           name: ${{ inputs.image }}-sbom
           path: /tmp/sbom.txt
-          retention-days: 3
+          retention-days: 40
 
       - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
