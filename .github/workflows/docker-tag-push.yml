@@ -32,9 +32,7 @@ jobs:
     timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:
-      # Image with CUDA needs extra disk space
       - name: Free disk space 🧹
-        if: contains(inputs.variant, 'cuda')
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
         with:
           tool-cache: false
