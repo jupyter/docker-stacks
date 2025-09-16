@@ -39,6 +39,13 @@ runs:
           --tags-dir /tmp/jupyter/tags/
       shell: bash
 
+    - name: Upload SBOM for the image 🧾
+      uses: anchore/sbom-action@f8bdd1d8ac5e901a77a92f111440fdb1b593736b # v0.20.6
+      with:
+        image: ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
+        artifact-name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-sbom.spdx.json
+        upload-artifact-retention: 40
+
     # This step is needed to prevent pushing non-multi-arch "latest" tag
     - name: Remove the "latest" tag from the image 🗑️
       run: docker image rmi ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:latest
