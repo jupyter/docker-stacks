@@ -44,6 +44,7 @@ runs:
       with:
         image: ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
         output-file: /tmp/sbom.txt
+        upload-artifact: false
 
     - name: Upload SBOM 💾
       uses: actions/upload-artifact@v4
