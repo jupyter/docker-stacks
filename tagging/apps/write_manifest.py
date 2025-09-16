@@ -11,6 +11,7 @@ from tagging.apps.config import Config
 from tagging.hierarchy.get_manifests import get_manifests
 from tagging.hierarchy.get_taggers import get_taggers
 from tagging.manifests.build_info import BuildInfoConfig, build_info_manifest
+from tagging.manifests.sbom import SbomConfig, build_sbom
 from tagging.utils.docker_runner import DockerRunner
 from tagging.utils.get_prefix import get_file_prefix, get_tag_prefix
 from tagging.utils.git_helper import GitHelper
@@ -75,10 +76,17 @@ def get_manifest(config: Config, container: Container, commit_hash_tag: str) -> 
         build_timestamp=BUILD_TIMESTAMP,
     )
 
+    sbom_config = SbomConfig(
+        registry=config.registry,
+        owner=config.owner,
+        image=config.image,
+    )
+
     markdown_pieces = [
         f"# Build manifest for image: {config.image}:{commit_hash_tag}",
         build_info_manifest(build_info_config).get_str(),
         *(manifest(container).get_str() for manifest in manifests),
+        build_sbom(sbom_config).get_str(),
     ]
     markdown_content = "\n\n".join(markdown_pieces) + "\n"
 
