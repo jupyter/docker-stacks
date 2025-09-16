@@ -77,16 +77,18 @@ jobs:
         shell: bash
         id: login
 
-      - name: Login to Docker Hub 🔐
-        if: env.PUSH_TO_REGISTRY == 'true' && github.repository_owner == 'jupyter'
-        run: |
-          docker login docker.io \
-            --username ${{ secrets.DOCKERHUB_USERNAME }} \
-            --password ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Generate SBOM for the image 🧾
         uses: anchore/sbom-action@f8bdd1d8ac5e901a77a92f111440fdb1b593736b # v0.20.6
+        id: sbom
         with:
           image: ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
+
+      - name: Upload SBOM 💾
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.image }}-sbom
+          path: ${{ steps.sbom.outputs.output-file }}
+          retention-days: 3
 
       - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
