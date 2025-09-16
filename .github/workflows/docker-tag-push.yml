@@ -86,7 +86,7 @@ jobs:
       - name: Generate SBOM for the image 🧾
         uses: anchore/sbom-action@f8bdd1d8ac5e901a77a92f111440fdb1b593736b # v0.20.6
         with:
-          image: ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}:${{ inputs.variant }}-x86_64
+          image: ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
 
       - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
