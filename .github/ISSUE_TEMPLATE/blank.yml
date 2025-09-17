@@ -13,5 +13,5 @@ body:
       label: Are you a maintainer?
       description: Please confirm you are a maintainer before proceeding.
       options:
-        label: Yes, I am a maintainer
-        required: true
+        - label: Yes, I am a maintainer
+          required: true
