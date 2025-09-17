@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Jupyter Docker Stacks only provides security updates for the latest version of each stack.
+Jupyter Docker Stacks only provides security updates for the latest version of each image.
 
 ## Reporting a Vulnerability
 
