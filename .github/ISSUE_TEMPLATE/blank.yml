@@ -7,3 +7,11 @@ body:
     attributes:
       value: |
         This is a blank issue template for maintainers to use as needed.
+
+  - type: checkboxes
+    attributes:
+      label: Are you a maintainer?
+      description: Please confirm you are a maintainer before proceeding.
+      options:
+        label: Yes, I am a maintainer
+        required: true
