@@ -1,3 +1,9 @@
-name: (maintainers only) Blank issue
+name: "(maintainers only) Blank issue"
 description: For maintainers only
 labels: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is a blank issue template for maintainers to use as needed.
