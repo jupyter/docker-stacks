@@ -15,6 +15,9 @@ on:
       - ".github/workflows/registry-move.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   registry-move:
     # To be able to use the latest skopeo

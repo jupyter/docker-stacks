@@ -61,6 +61,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   aarch64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
@@ -437,3 +440,5 @@ jobs:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: tag-push-fast
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
+    permissions:
+      contents: write
