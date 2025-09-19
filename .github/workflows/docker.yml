@@ -440,3 +440,5 @@ jobs:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: tag-push-fast
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
+    permissions:
+      contents: write
