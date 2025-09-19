@@ -124,7 +124,7 @@ class CondaPackageHelper:
 
         def my_split(string: str) -> list[list[str]]:
             def version_substrs(x: str) -> list[str]:
-                return re.findall(r"([A-z]+|\d+)", x)
+                return re.findall(r"([A-Za-z]+|\d+)", x)
 
             return list(chain(map(version_substrs, string.split("."))))
 
