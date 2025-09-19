@@ -13,6 +13,9 @@ on:
       - "images/*/README.md"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   update-overview:
     runs-on: ubuntu-24.04

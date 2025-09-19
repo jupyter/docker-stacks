@@ -38,6 +38,9 @@ on:
         required: true
         type: number
 
+permissions:
+  contents: read
+
 jobs:
   build-test-upload:
     runs-on: ${{ inputs.runs-on }}
