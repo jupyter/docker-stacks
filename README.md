@@ -165,6 +165,14 @@ to indicate the copyright and license terms:
 
 ## Alternatives
 
+- [b-data](https://github.com/b-data)'s JupyterLab docker stacks - For
+  [R](https://github.com/b-data/jupyterlab-r-docker-stack),
+  [Python](https://github.com/b-data/jupyterlab-python-docker-stack),
+  [MAX/Mojo](https://github.com/b-data/jupyterlab-mojo-docker-stack) and
+  [Julia](https://github.com/b-data/jupyterlab-julia-docker-stack).
+  With [code-server](https://github.com/coder/code-server) next to JupyterLab.
+  Just Python – no [Conda](https://github.com/conda/conda) /
+  [Mamba](https://github.com/mamba-org/mamba).
 - [rocker/binder](https://rocker-project.org/images/versioned/binder.html) -
   From the R focused [rocker-project](https://rocker-project.org),
   lets you run both RStudio and Jupyter either standalone or in a JupyterHub
