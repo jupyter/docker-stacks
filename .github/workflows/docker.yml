@@ -222,7 +222,7 @@ jobs:
       variant: cuda
       platform: x86_64
       runs-on: ubuntu-24.04
-      timeout-minutes: 20
+      timeout-minutes: 25
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -256,7 +256,7 @@ jobs:
       variant: cuda11
       platform: x86_64
       runs-on: ubuntu-24.04
-      timeout-minutes: 20
+      timeout-minutes: 25
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
@@ -268,7 +268,7 @@ jobs:
       variant: cuda12
       platform: x86_64
       runs-on: ubuntu-24.04
-      timeout-minutes: 20
+      timeout-minutes: 25
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
