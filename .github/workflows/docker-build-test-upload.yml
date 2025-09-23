@@ -61,7 +61,7 @@ jobs:
           swap-storage: false
 
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
@@ -102,7 +102,7 @@ jobs:
             --tags-dir /tmp/jupyter/tags/
         shell: bash
       - name: Upload tags file 💾
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}.txt
@@ -120,13 +120,13 @@ jobs:
             --repository ${{ github.repository }}
         shell: bash
       - name: Upload manifest file 💾
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-manifest
           path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.md
           retention-days: 3
       - name: Upload build history line 💾
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-history_line
           path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.txt
@@ -140,7 +140,7 @@ jobs:
             | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
         shell: bash
       - name: Upload image as artifact 💾
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
           path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
