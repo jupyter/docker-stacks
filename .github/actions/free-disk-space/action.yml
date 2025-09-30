@@ -1,0 +1,19 @@
+name: "Free Disk Space (Ubuntu)"
+description: "A GitHub Action to free up disk space on an Ubuntu GitHub Actions runner."
+
+runs:
+  using: "composite"
+  steps:
+    - name: Installing rmz
+      shell: bash
+      run: |
+        curl -fsSL --tlsv1.2 --proto '=https' https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash > /dev/null 2>&1
+        cargo binstall -qy rmz
+        ln -s ~/.cargo/bin/rmz /usr/local/bin/rmz
+
+    - name: Freeing up disk space
+      shell: bash
+      run: |
+        sudo rmz -f /usr/local/lib/android || true
+        sudo rmz -f /usr/share/dotnet || true
+        sudo rmz -f /opt/ghc /usr/local/.ghcup || true

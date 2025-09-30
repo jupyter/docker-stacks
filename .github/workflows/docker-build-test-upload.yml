@@ -47,21 +47,10 @@ jobs:
     timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:
-      # Image with CUDA needs extra disk space
-      - name: Free disk space 🧹
-        if: contains(inputs.variant, 'cuda')
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
-        with:
-          tool-cache: false
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: false
-          docker-images: false
-          swap-storage: false
-
       - name: Checkout Repo ⚡️
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Free disk space 🧹
+        uses: ./.github/actions/free-disk-space
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 

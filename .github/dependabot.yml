@@ -18,6 +18,10 @@ updates:
     schedule:
       interval: weekly
   - package-ecosystem: github-actions
+    directory: .github/actions/free-disk-space/
+    schedule:
+      interval: weekly
+  - package-ecosystem: github-actions
     directory: .github/actions/load-image/
     schedule:
       interval: weekly
