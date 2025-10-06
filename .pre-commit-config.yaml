@@ -24,14 +24,14 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: c8ab4a5b21bac924d106e3103dd7c979fdd0f9bc # frozen: 6.0.1
+    rev: ec0efaee4acfce198521e43caa3029b06cedd64a # frozen: 6.1.0
     hooks:
       - id: isort
         args: [--profile, black]
 
   # Autoformat: Python code
-  - repo: https://github.com/psf/black
-    rev: af0ba72a73598c76189d6dd1b21d8532255d5942 # frozen: 25.9.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: fe95161893684893d68b1225356702ca71f8d388 # frozen: 25.9.0
     hooks:
       - id: black
         args: [--target-version=py312]
