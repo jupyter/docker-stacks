@@ -20,6 +20,6 @@ runs:
     # Can be removed after Docker Engine is updated
     # https://github.com/actions/runner-images/issues/11766
     - name: Set Up Docker 🐳
-      uses: docker/setup-docker-action@b60f85385d03ac8acfca6d9996982511d8620a19 # v4.3.0
+      uses: docker/setup-docker-action@3fb92d6d9c634363128c8cce4bc3b2826526370a # v4.4.0
       with:
         set-host: true
