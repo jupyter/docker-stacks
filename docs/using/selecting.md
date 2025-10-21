@@ -97,7 +97,7 @@ It contains:
 - Everything in `jupyter/minimal-notebook` and its ancestor images
 - The [R](https://www.r-project.org/) interpreter and base environment
 - [IRKernel](https://irkernel.github.io/) to support R code in Jupyter notebooks
-- [tidyverse](https://www.tidyverse.org/)
+- [tidyverse](https://tidyverse.org/)
   packages from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
 - [caret](https://topepo.github.io/caret/index.html),
   [crayon](https://cran.r-project.org/web/packages/crayon/index.html),
