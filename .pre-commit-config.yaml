@@ -17,14 +17,14 @@ exclude: ^LICENSE.md$
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: 37bfa06d791fd38fb4e54910b36a2ff57641b074 # frozen: v3.20.0
+    rev: f90119b1b8bd9e46949d9592972b2c4c27d62a97  # frozen: v3.21.0
     hooks:
       - id: pyupgrade
         args: [--py312-plus]
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: ec0efaee4acfce198521e43caa3029b06cedd64a # frozen: 6.1.0
+    rev: 0a09c783808cfe77bb3269250f663ff733d23302  # frozen: 7.0.0
     hooks:
       - id: isort
         args: [--profile, black]
