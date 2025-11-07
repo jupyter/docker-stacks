@@ -172,8 +172,6 @@ It contains:
 - [ipympl](https://github.com/matplotlib/ipympl) and
   [ipywidgets](https://ipywidgets.readthedocs.io/en/stable/)
   for interactive visualizations and plots in Python notebooks
-- [Facets](https://github.com/PAIR-code/facets)
-  for visualizing machine learning datasets
 
 ### jupyter/tensorflow-notebook
 
