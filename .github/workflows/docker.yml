@@ -214,6 +214,18 @@ jobs:
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
+  aarch64-tensorflow-cuda:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: tensorflow-notebook
+      variant: cuda
+      platform: aarch64
+      runs-on: ubuntu-24.04-arm
+      timeout-minutes: 25
+    needs: aarch64-scipy
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
   x86_64-tensorflow-cuda:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -246,6 +258,18 @@ jobs:
       runs-on: ubuntu-24.04
       timeout-minutes: 20
     needs: x86_64-scipy
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  aarch64-pytorch-cuda12:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: pytorch-notebook
+      variant: cuda12
+      platform: aarch64
+      runs-on: ubuntu-24.04
+      timeout-minutes: 25
+    needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-pytorch-cuda11:
@@ -392,7 +416,9 @@ jobs:
         aarch64-r,
         aarch64-julia,
         aarch64-tensorflow,
+        aarch64-tensorflow-cuda,
         aarch64-pytorch,
+        aarch64-pytorch-cuda12,
         aarch64-datascience,
         aarch64-pyspark,
         aarch64-all-spark,
