@@ -260,18 +260,6 @@ jobs:
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
-  aarch64-pytorch-cuda12:
-    uses: ./.github/workflows/docker-build-test-upload.yml
-    with:
-      parent-image: scipy-notebook
-      image: pytorch-notebook
-      variant: cuda12
-      platform: aarch64
-      runs-on: ubuntu-24.04-arm
-      timeout-minutes: 25
-    needs: aarch64-scipy
-    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
-
   x86_64-pytorch-cuda11:
     uses: ./.github/workflows/docker-build-test-upload.yml
     with:
@@ -282,6 +270,18 @@ jobs:
       runs-on: ubuntu-24.04
       timeout-minutes: 25
     needs: x86_64-scipy
+    if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
+
+  aarch64-pytorch-cuda12:
+    uses: ./.github/workflows/docker-build-test-upload.yml
+    with:
+      parent-image: scipy-notebook
+      image: pytorch-notebook
+      variant: cuda12
+      platform: aarch64
+      runs-on: ubuntu-24.04-arm
+      timeout-minutes: 25
+    needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   x86_64-pytorch-cuda12:
