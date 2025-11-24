@@ -520,3 +520,15 @@ they may be explained in the "Installation instructions" section of the Download
 ```{literalinclude} recipe_code/oracledb.dockerfile
 :language: docker
 ```
+
+## Running Jupyter Docker Stacks with Singularity
+
+You can also start Jupyter Docker Stacks containers using **Singularity** instead of Docker. For example:
+
+```bash
+singularity run -B "${PWD}":/home/jovyan/work docker://quay.io/jupyter/datascience-notebook:2025-11-06
+```
+
+- -B "${PWD}":/home/jovyan/work binds your current directory into the container at /home/jovyan/work.
+- Replace quay.io/jupyter/datascience-notebook:2025-11-06 with the desired stack and tag.
+- Once running, you can access your notebooks just as you would in Docker.
