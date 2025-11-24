@@ -1,5 +1,5 @@
 {
-  "name": "Sequencing Docker Stacks",
+  "name": "Jupyter Docker Stacks",
   "build": {
     "context": "..",
     "dockerfile": "Dockerfile"
@@ -11,16 +11,14 @@
     }
   },
 
-  "postCreateCommand": "pre-commit install --install-hooks",
+  "postCreateCommand": "pre-commit install",
 
   "customizations": {
     "vscode": {
       "extensions": [
-        "eamodio.gitlens",
         "github.copilot-chat",
         "github.copilot",
         "github.vscode-github-actions",
-        "github.vscode-pull-request-github",
         "github.vscode-pull-request-github",
         "ms-azuretools.vscode-containers",
         "ms-azuretools.vscode-docker",
