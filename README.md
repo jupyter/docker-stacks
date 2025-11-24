@@ -128,7 +128,7 @@ If you want to use the older `Ubuntu` and/or `Python` version, you can use the f
 
 ## Contributing
 
-Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/)
+Please see the [Contributor Guide on ReadTheDocs](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/issues.html)
 for information about how to contribute recipes, features, tests, and community-maintained stacks.
 
 ## LICENSE
