@@ -526,9 +526,10 @@ they may be explained in the "Installation instructions" section of the Download
 You can also start Jupyter Docker Stacks containers using **Singularity** instead of Docker. For example:
 
 ```bash
-singularity run -B "${PWD}":/home/jovyan/work docker://quay.io/jupyter/datascience-notebook:2025-11-06
+singularity run --bind "${PWD}:/home/${USER}/work" --containall docker://quay.io/jupyter/datascience-notebook:2025-03-14
 ```
 
-- -B "${PWD}":/home/jovyan/work binds your current directory into the container at /home/jovyan/work.
-- Replace quay.io/jupyter/datascience-notebook:2025-11-06 with the desired stack and tag.
+- `--bind "${PWD}:/home/${USER}/work` binds your current directory into the container at `/home/$USER/work`. Here, $USER is your username. 
+- `--containall` runs the container in a fully isolated environment, ignoring most of the host’s environment and filesystem except explicitly bound paths, ensuring that Python libraries in the user’s home directory do not interfere with the container’s libraries.
+- Replace `quay.io/jupyter/datascience-notebook:2025-03-14` with the desired stack and tag.
 - Once running, you can access your notebooks just as you would in Docker.
