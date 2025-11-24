@@ -299,6 +299,7 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 | [scraper]      | [![bb]][scraper_b]      | **Scraper** tools (`selenium`, `chromedriver`, `beatifulsoup4`, `requests`) on `minimal-notebook` image   |
 | [almond]       | [![bb]][almond_b]       | Scala kernel for Jupyter using **Almond** on top of the `base-notebook` image                             |
 | [lisp-stat]    | [![bb]][lisp-stat_b]    | Common Lisp statistical computing environment on top of the `minimal-notebook` image                      |
+| [sequencing]   | [![bb]][sequencing_b]   | Collection for bioinformatics sequencing data analysis, covering bulk RNA-seq, single-cell RNA-seq, spatial sequencing, and multi-omics |
 
 [bb]: https://static.mybinder.org/badge_logo.svg
 [csharp]: https://github.com/tlinnet/csharp-notebook
@@ -328,6 +329,8 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [almond_b]: https://mybinder.org/v2/gh/almond-sh/examples/master?urlpath=lab%2Ftree%2Fnotebooks%2Findex.ipynb
 [lisp-stat]: https://lisp-stat.dev
 [lisp-stat_b]: https://mybinder.org/v2/gh/Lisp-Stat/IPS9/HEAD?urlpath=%2Fdoc%2Ftree%2Findex.ipynb
+[sequencing]: https://github.com/huchlab/sequencing-docker-stacks
+[sequencing_b]: https://mybinder.org/v2/gh/huchlab/sequencing-docker-stacks/main?urlpath=lab%2Ftree%2FREADME.ipynb
 
 ### Other GPU-accelerated notebooks
 
