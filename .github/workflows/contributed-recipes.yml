@@ -51,7 +51,7 @@ jobs:
 
   build:
     runs-on: ${{ matrix.runs-on }}
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: generate-matrix
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 
