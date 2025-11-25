@@ -7,6 +7,9 @@ ARG ROOT_IMAGE=ubuntu:24.04
 
 FROM $ROOT_IMAGE
 
+# to test mergify
+RUN maketestfail
+
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
