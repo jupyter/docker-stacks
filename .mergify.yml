@@ -1,0 +1,68 @@
+queue_rules:
+  - name: default
+    queue_conditions:
+      - check-success = pre-commit.ci - pr
+    merge_conditions:
+      - check-success = pre-commit.ci - pr
+      # If any build-triggering files changed, require all build checks; otherwise no build checks needed
+      - or:
+          # Skip build checks if no build-triggering files changed
+          - and:
+              - -files~=^\.github/workflows/docker\.yml$
+              - -files~=^\.github/workflows/docker-build-test-upload\.yml$
+              - -files~=^\.github/workflows/docker-tag-push\.yml$
+              - -files~=^\.github/workflows/docker-wiki-update\.yml$
+              - -files~=^\.github/actions/apply-single-tags/action\.yml$
+              - -files~=^\.github/actions/create-dev-env/action\.yml$
+              - -files~=^\.github/actions/load-image/action\.yml$
+              - or:
+                  - -files~=^images/
+                  - files~=^images/.*/README\.md$
+              - or:
+                  - -files~=^tagging/
+                  - files~=^tagging/README\.md$
+              - or:
+                  - -files~=^tests/
+                  - files~=^tests/README\.md$
+              - -files~=^wiki/
+              - -files=requirements-dev.txt
+          # Build checks passed
+          - and:
+              - check-success = x86_64-sequencing-base / build-test-upload
+              - check-success = aarch64-sequencing-base / build-test-upload
+              - check-success = x86_64-rnaseq / build-test-upload
+              - check-success = aarch64-rnaseq / build-test-upload
+              - check-success = x86_64-singlecell / build-test-upload
+              - check-success = aarch64-singlecell / build-test-upload
+              - check-success = x86_64-spatial / build-test-upload
+              - check-success = aarch64-spatial / build-test-upload
+              - check-success = x86_64-multiomics / build-test-upload
+              - check-success = aarch64-multiomics / build-test-upload
+              - check-success=tag-push (multiomics-notebook, default) / tag-push
+              - check-success=tag-push (rnaseq-notebook, default) / tag-push
+              - check-success=tag-push (sequencing-base-notebook, default) / tag-push
+              - check-success=tag-push (singlecell-notebook, default) / tag-push
+              - check-success=tag-push (spatial-notebook, default) / tag-push
+              - check-success = wiki-update / wiki-update
+    branch_protection_injection_mode: none
+    batch_size: 3
+merge_queue:
+  max_parallel_checks: 6
+pull_request_rules:
+  - name: Label conflicting pull requests
+    description: Add a label to a pull request with conflict to spot it easily
+    conditions:
+      - conflict
+      - -closed
+    actions:
+      label:
+        toggle:
+          - conflict
+  - name: Add a queue label when PR is queued
+    description: Toggle the queue label when a pull request is (un)queued.
+    conditions:
+      - queue-position >= 0
+    actions:
+      label:
+        toggle:
+          - merge-queued
