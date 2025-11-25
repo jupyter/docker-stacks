@@ -286,19 +286,20 @@ The core stacks are but a tiny sample of what's possible when combining Jupyter 
 We encourage members of the Jupyter community to create their own stacks based on the core images and link them below.
 See the [contributing guide](../contributing/stacks.md) for information about how to create your own Jupyter Docker Stack.
 
-| Flavor         | Binder                  | Description                                                                                               |
-| -------------- | ----------------------- | --------------------------------------------------------------------------------------------------------- |
-| [csharp]       | [![bb]][csharp_b]       | More than 200 Jupyter Notebooks with example **C#** code                                                  |
-| [education]    | [![bb]][education_b]    | **`nbgrader`** and `RISE` on top of the `datascience-notebook` image                                      |
-| [ihaskell]     | [![bb]][ihaskell_b]     | Based on [**IHaskell**][ihaskell_project]. Includes popular packages and example notebooks                |
-| [java]         | [![bb]][java_b]         | [**IJava**][ijava] kernel on top of the `minimal-notebook` image                                          |
-| [sage]         | [![bb]][sage_b]         | [**sagemath**][sagemath] kernel on top of the `minimal-notebook` image                                    |
-| [cgspatial]    | [![bb]][cgspatial_b]    | Major **geospatial** Python & R libraries on top of the `datascience-notebook` image                      |
-| [kotlin]       | [![bb]][kotlin_b]       | [**Kotlin** kernel for Jupyter/IPython][kotlin_kernel] on top of the `base-notebook` image                |
-| [transformers] | [![bb]][transformers_b] | [**Transformers**][transformers_lib] and NLP libraries such as `Tensorflow`, `Keras`, `Jax` and `PyTorch` |
-| [scraper]      | [![bb]][scraper_b]      | **Scraper** tools (`selenium`, `chromedriver`, `beatifulsoup4`, `requests`) on `minimal-notebook` image   |
-| [almond]       | [![bb]][almond_b]       | Scala kernel for Jupyter using **Almond** on top of the `base-notebook` image                             |
-| [lisp-stat]    | [![bb]][lisp-stat_b]    | Common Lisp statistical computing environment on top of the `minimal-notebook` image                      |
+| Flavor         | Binder                  | Description                                                                                                                             |
+| -------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| [csharp]       | [![bb]][csharp_b]       | More than 200 Jupyter Notebooks with example **C#** code                                                                                |
+| [education]    | [![bb]][education_b]    | **`nbgrader`** and `RISE` on top of the `datascience-notebook` image                                                                    |
+| [ihaskell]     | [![bb]][ihaskell_b]     | Based on [**IHaskell**][ihaskell_project]. Includes popular packages and example notebooks                                              |
+| [java]         | [![bb]][java_b]         | [**IJava**][ijava] kernel on top of the `minimal-notebook` image                                                                        |
+| [sage]         | [![bb]][sage_b]         | [**sagemath**][sagemath] kernel on top of the `minimal-notebook` image                                                                  |
+| [cgspatial]    | [![bb]][cgspatial_b]    | Major **geospatial** Python & R libraries on top of the `datascience-notebook` image                                                    |
+| [kotlin]       | [![bb]][kotlin_b]       | [**Kotlin** kernel for Jupyter/IPython][kotlin_kernel] on top of the `base-notebook` image                                              |
+| [transformers] | [![bb]][transformers_b] | [**Transformers**][transformers_lib] and NLP libraries such as `Tensorflow`, `Keras`, `Jax` and `PyTorch`                               |
+| [scraper]      | [![bb]][scraper_b]      | **Scraper** tools (`selenium`, `chromedriver`, `beatifulsoup4`, `requests`) on `minimal-notebook` image                                 |
+| [almond]       | [![bb]][almond_b]       | Scala kernel for Jupyter using **Almond** on top of the `base-notebook` image                                                           |
+| [lisp-stat]    | [![bb]][lisp-stat_b]    | Common Lisp statistical computing environment on top of the `minimal-notebook` image                                                    |
+| [sequencing]   | [![bb]][sequencing_b]   | Collection for bioinformatics sequencing data analysis, covering bulk RNA-seq, single-cell RNA-seq, spatial sequencing, and multi-omics |
 
 [bb]: https://static.mybinder.org/badge_logo.svg
 [csharp]: https://github.com/tlinnet/csharp-notebook
@@ -328,6 +329,8 @@ See the [contributing guide](../contributing/stacks.md) for information about ho
 [almond_b]: https://mybinder.org/v2/gh/almond-sh/examples/master?urlpath=lab%2Ftree%2Fnotebooks%2Findex.ipynb
 [lisp-stat]: https://lisp-stat.dev
 [lisp-stat_b]: https://mybinder.org/v2/gh/Lisp-Stat/IPS9/HEAD?urlpath=%2Fdoc%2Ftree%2Findex.ipynb
+[sequencing]: https://github.com/huchlab/sequencing-docker-stacks
+[sequencing_b]: https://mybinder.org/v2/gh/huchlab/sequencing-docker-stacks/main?urlpath=lab%2Ftree%2FREADME.ipynb
 
 ### Other GPU-accelerated notebooks
 

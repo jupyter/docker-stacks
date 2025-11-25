@@ -1,0 +1,30 @@
+{
+  "name": "Jupyter Docker Stacks",
+  "build": {
+    "context": "..",
+    "dockerfile": "Dockerfile"
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false
+    }
+  },
+
+  "postCreateCommand": "pre-commit install --install-hooks",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot-chat",
+        "github.copilot",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "ms-azuretools.vscode-containers",
+        "ms-azuretools.vscode-docker",
+        "ms-python.autopep8",
+        "ms-vscode.makefile-tools"
+      ]
+    }
+  }
+}
