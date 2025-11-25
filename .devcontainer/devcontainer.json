@@ -11,7 +11,7 @@
     }
   },
 
-  "postCreateCommand": "pre-commit install",
+  "postCreateCommand": "pre-commit install --install-hooks",
 
   "customizations": {
     "vscode": {

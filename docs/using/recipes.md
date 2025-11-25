@@ -520,3 +520,20 @@ they may be explained in the "Installation instructions" section of the Download
 ```{literalinclude} recipe_code/oracledb.dockerfile
 :language: docker
 ```
+
+## Running Jupyter Docker Stacks with Singularity
+
+You can also start Jupyter Docker Stacks containers using **Singularity** instead of Docker. For example:
+
+```bash
+singularity run --bind "${PWD}:/home/${USER}/work" --containall docker://quay.io/jupyter/datascience-notebook:2025-03-14
+```
+
+- `--bind "${PWD}:/home/${USER}/work"` mounts your current working directory into the container at `/home/$USER/work`.
+  When running the image with Singularity, the container uses your host username inside the container.
+  Therefore, the bind target is `/home/${USER}/work` instead of the usual `/home/jovyan/work`.
+
+- `--containall` starts the container in a fully isolated environment, ignoring most of the host’s filesystem and environment except for explicitly bound paths.
+  By default, Singularity would bind your home directory automatically.
+  If you have Python packages installed there, this may cause conflicts with packages inside the container.
+  Using `--containall` avoids such interference.
