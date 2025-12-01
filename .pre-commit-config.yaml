@@ -17,7 +17,7 @@ exclude: ^LICENSE.md$
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: 75992aaa40730136014f34227e0135f63fc951b4  # frozen: v3.21.2
+    rev: 75992aaa40730136014f34227e0135f63fc951b4 # frozen: v3.21.2
     hooks:
       - id: pyupgrade
         args: [--py312-plus]
@@ -31,14 +31,14 @@ repos:
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 2892f1f81088477370d4fbc56545c05d33d2493f  # frozen: 25.11.0
+    rev: 2892f1f81088477370d4fbc56545c05d33d2493f # frozen: 25.11.0
     hooks:
       - id: black
         args: [--target-version=py312]
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: c2738302f5cf2bfb559c1f210950badb133613ea  # frozen: v1.19.0
+    rev: c2738302f5cf2bfb559c1f210950badb133613ea # frozen: v1.19.0
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -67,7 +67,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 3c603eae8faac85303ae675fd33325cff699a797  # frozen: v3.7.3
+    rev: 3c603eae8faac85303ae675fd33325cff699a797 # frozen: v3.7.3
     hooks:
       - id: prettier
 
@@ -129,14 +129,14 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: a95dde803518e8b723480f182c87bfb1d243d742  # frozen: v0.19.1
+    rev: a95dde803518e8b723480f182c87bfb1d243d742 # frozen: v0.19.1
     hooks:
       - id: markdownlint-cli2
         args: [--fix]
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
-    rev: 5023e06554eb1dd9a6dadfd061c36c13b8b11063  # frozen: 0.8.2
+    rev: 5023e06554eb1dd9a6dadfd061c36c13b8b11063 # frozen: 0.8.2
     hooks:
       - id: nbstripout
 
