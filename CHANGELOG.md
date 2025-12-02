@@ -13,7 +13,7 @@ Affected: `tensorflow-notebook`, `pytorch-notebook`.
 
 Affected: all images.
 
-- **Breaking:** Use Docker v29 and `docker buildx imagetools create` ([#2368](https://https://github.com/jupyter/docker-stacks/pull/2368)).
+- **Breaking:** Use Docker v29 and `docker buildx imagetools create` ([#2368](https://github.com/jupyter/docker-stacks/pull/2368)).
 
 ## 2025-11-24
 
