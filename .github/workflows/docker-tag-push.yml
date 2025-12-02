@@ -48,6 +48,7 @@ jobs:
           image: ${{ inputs.image }}
           variant: ${{ inputs.variant }}
           platform: aarch64
+        if: ${{ !contains(inputs.variant, 'cuda11') }}
 
       - name: Download x86_64 image tar and apply tags 🏷
         uses: ./.github/actions/apply-single-tags
