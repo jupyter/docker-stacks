@@ -3,6 +3,37 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2025-12-02
+
+Affected: `tensorflow-notebook`, `pytorch-notebook`.
+
+- **Non-breaking:** Enable CUDA build for ARM64 ([#2352](https://github.com/jupyter/docker-stacks/pull/2352)).
+
+## 2025-11-29
+
+Affected: all images.
+
+- **Breaking:** Use Docker v29 and `docker buildx imagetools create` ([#2368](https://https://github.com/jupyter/docker-stacks/pull/2368)).
+
+## 2025-11-24
+
+Affected: all images.
+
+- **Non-breaking:** Add Dev Container support ([#2358](https://github.com/jupyter/docker-stacks/pull/2358)).
+- **Non-breaking:** Add recipe on running Jupyter Docker Stacks with Singularity ([#2357](https://github.com/jupyter/docker-stacks/pull/2357)).
+
+## 2025-11-06
+
+Affected: `scipy-notebook`.
+
+- **Breaking:** `scipy-notebook`: Remove facets package installation ([#2347](https://github.com/jupyter/docker-stacks/pull/2347)).
+
+## 2025-09-16
+
+Affected: all images.
+
+- **Non-breaking:** Publish SBOM using anchore/sbom-action ([#2317](https://github.com/jupyter/docker-stacks/pull/2317)).
+
 ## 2025-08-15
 
 Affected: all images.
