@@ -78,38 +78,27 @@ def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
     return existing_platform_tags
 
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4))
-def create_manifest(merged_tag: str, existing_platform_tags: list[str]) -> None:
-    # This allows to rerun the script without having to remove the manifest manually
-    try:
-        docker["manifest", "rm", merged_tag] & plumbum.FG
-        LOGGER.warning(f"Manifest {merged_tag} was present locally, removed it")
-    except plumbum.ProcessExecutionError:
-        pass
-
-    LOGGER.info(f"Creating manifest for tag: {merged_tag}")
-    # Unfortunately, `docker manifest create` requires images to have been already pushed to the registry
-    # which is not true for new tags in PRs
-    docker["manifest", "create", merged_tag][existing_platform_tags] & plumbum.FG
-    LOGGER.info(f"Successfully created manifest for tag: {merged_tag}")
-
-
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4))
-def push_manifest(merged_tag: str) -> None:
-    LOGGER.info(f"Pushing manifest for tag: {merged_tag}")
-    docker["manifest", "push", merged_tag] & plumbum.FG
-    LOGGER.info(f"Successfully pushed manifest for tag: {merged_tag}")
-
-
 def merge_tags(
     merged_tag: str, all_local_tags: list[str], push_to_registry: bool
 ) -> None:
     LOGGER.info(f"Trying to merge tag: {merged_tag}")
 
     existing_platform_tags = pull_missing_tags(merged_tag, all_local_tags)
+    args = [
+        "buildx",
+        "imagetools",
+        "create",
+        *existing_platform_tags,
+        "--tag",
+        merged_tag,
+    ]
+    if not push_to_registry:
+        args.append("--dry-run")
+
+    LOGGER.info(f"Running command: {' '.join(args)}")
+    docker[args] & plumbum.FG
     if push_to_registry:
-        create_manifest(merged_tag, existing_platform_tags)
-        push_manifest(merged_tag)
+        LOGGER.info(f"Pushed merged tag: {merged_tag} to registry")
     else:
         LOGGER.info(f"Skipping push for tag: {merged_tag}")
 
