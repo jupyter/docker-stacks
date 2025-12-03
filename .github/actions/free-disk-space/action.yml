@@ -17,3 +17,6 @@ runs:
         sudo rmz -f /usr/local/lib/android || true
         sudo rmz -f /usr/share/dotnet || true
         sudo rmz -f /opt/ghc /usr/local/.ghcup || true
+        sudo rmz -f /usr/share/swift || true
+        sudo rmz -f /usr/share/miniconda || true
+        sudo rmz -f "${AGENT_TOOLSDIRECTORY}" || true
