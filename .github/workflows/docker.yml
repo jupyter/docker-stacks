@@ -22,6 +22,7 @@ on:
       # https://docs.github.com/en/actions/sharing-automations/creating-actions/about-custom-actions#composite-actions
       - ".github/actions/apply-single-tags/action.yml"
       - ".github/actions/create-dev-env/action.yml"
+      - ".github/actions/free-disk-space/action.yml"
       - ".github/actions/load-image/action.yml"
 
       - "images/**"
@@ -43,6 +44,7 @@ on:
 
       - ".github/actions/apply-single-tags/action.yml"
       - ".github/actions/create-dev-env/action.yml"
+      - ".github/actions/free-disk-space/action.yml"
       - ".github/actions/load-image/action.yml"
 
       - "images/**"
