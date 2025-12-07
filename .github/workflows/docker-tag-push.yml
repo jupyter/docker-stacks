@@ -33,29 +33,23 @@ jobs:
   tag-push:
     runs-on: ubuntu-24.04
     timeout-minutes: ${{ inputs.timeout-minutes }}
+    strategy:
+      matrix:
+        platform: [aarch64, x86_64]
+    if: ${{ !(matrix.platform == 'aarch64' && contains(inputs.variant, 'cuda11')) }}
 
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-      - name: Free disk space 🧹
-        uses: ./.github/actions/free-disk-space
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
-      - name: Download aarch64 image tar and apply tags 🏷
+      - name: Download image tar and apply tags 🏷
         uses: ./.github/actions/apply-single-tags
         with:
           image: ${{ inputs.image }}
           variant: ${{ inputs.variant }}
-          platform: aarch64
-        if: ${{ !contains(inputs.variant, 'cuda11') }}
-
-      - name: Download x86_64 image tar and apply tags 🏷
-        uses: ./.github/actions/apply-single-tags
-        with:
-          image: ${{ inputs.image }}
-          variant: ${{ inputs.variant }}
-          platform: x86_64
+          platform: ${{ matrix.platform }}
 
       - name: Login to Registry 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
@@ -75,6 +69,43 @@ jobs:
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
         shell: bash
+
+      - name: Merge tags for the images 🔀
+        run: |
+          python3 -m tagging.apps.merge_tags \
+            --image ${{ inputs.image }} \
+            --variant ${{ inputs.variant }} \
+            --tags-dir /tmp/jupyter/tags/
+        shell: bash
+
+      - name: Logout from Registry 🔐
+        if: always() && env.PUSH_TO_REGISTRY == 'true' && steps.login.outcome == 'success'
+        run: |
+          docker logout ${{ env.REGISTRY }}
+        shell: bash
+
+  merge-tags:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repo ⚡️
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+
+      - name: Create dev environment 📦
+        uses: ./.github/actions/create-dev-env
+
+      - name: Login to Registry 🔐
+        if: env.PUSH_TO_REGISTRY == 'true'
+        run: |
+          docker login ${{ env.REGISTRY }} \
+            --username ${{ secrets.REGISTRY_USERNAME }} \
+            --password ${{ secrets.REGISTRY_TOKEN }} || \
+          docker login ${{ env.REGISTRY }} \
+            --username ${{ secrets.REGISTRY_USERNAME }} \
+            --password ${{ secrets.REGISTRY_TOKEN }}
+        shell: bash
+        id: login
 
       - name: Merge tags for the images 🔀
         run: |
