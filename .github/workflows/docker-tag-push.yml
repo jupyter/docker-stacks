@@ -36,7 +36,6 @@ jobs:
     strategy:
       matrix:
         platform: [aarch64, x86_64]
-    if: ${{ !(matrix.platform == 'aarch64' && contains(inputs.variant, 'cuda11')) }}
 
     steps:
       - name: Checkout Repo ⚡️
