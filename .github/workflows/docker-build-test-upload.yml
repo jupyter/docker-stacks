@@ -72,6 +72,7 @@ jobs:
         run: |
           docker build \
             --rm --force-rm \
+            --sbom true \
             --tag ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} \
             images/${{ inputs.image }}/${{ inputs.variant != 'default' && inputs.variant || '.' }}/ \
             --build-arg REGISTRY=${{ env.REGISTRY }} \
