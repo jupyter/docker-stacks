@@ -15,7 +15,7 @@ on:
       # We use local reusable workflows to make architecture clean and simple
       # https://docs.github.com/en/actions/sharing-automations/reusing-workflows
       - ".github/workflows/docker-build-test-upload.yml"
-      - ".github/workflows/docker-tag-push.yml"
+      - ".github/workflows/docker-tag-push-merge.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
       # We use local composite actions to combine multiple workflow steps within one action
@@ -39,7 +39,7 @@ on:
     paths:
       - ".github/workflows/docker.yml"
       - ".github/workflows/docker-build-test-upload.yml"
-      - ".github/workflows/docker-tag-push.yml"
+      - ".github/workflows/docker-tag-push-merge.yml"
       - ".github/workflows/docker-wiki-update.yml"
 
       - ".github/actions/apply-single-tags/action.yml"
@@ -376,7 +376,7 @@ jobs:
     needs: [aarch64-base, x86_64-base, aarch64-minimal, x86_64-minimal]
 
   tag-push:
-    uses: ./.github/workflows/docker-tag-push.yml
+    uses: ./.github/workflows/docker-tag-push-merge.yml
     with:
       image: ${{ matrix.image }}
       variant: ${{ matrix.variant }}
@@ -443,7 +443,7 @@ jobs:
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   tag-push-fast:
-    uses: ./.github/workflows/docker-tag-push.yml
+    uses: ./.github/workflows/docker-tag-push-merge.yml
     with:
       image: ${{ matrix.image }}
       variant: ${{ matrix.variant }}

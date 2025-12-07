@@ -21,7 +21,7 @@ Our repository provides several customization points:
 - `REGISTRY`, `OWNER` (part of `env` in some GitHub workflows) - these allow to properly tag and refer to images during following steps:
   - [`build-test-upload`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml)
   - [`contributed-recipes`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/contributed-recipes.yml)
-  - [`tag-push`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-tag-push.yml)
+  - [`tag-push-merge`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-tag-push-merge.yml)
 
 These customization points can't be changed during runtime.
 Read more about [Docker build arguments](https://docs.docker.com/build/building/variables/#arg-usage-example) and [GitHub environment variables for a single workflow](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#defining-environment-variables-for-a-single-workflow).
