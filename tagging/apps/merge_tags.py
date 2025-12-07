@@ -49,13 +49,13 @@ def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4))
-def pull_tag(tag: str) -> None:
-    LOGGER.info(f"Pulling tag: {tag}")
-    docker["pull", tag] & plumbum.FG
-    LOGGER.info(f"Tag {tag} pulled successfully")
+def inspect_manifest(tag: str) -> None:
+    LOGGER.info(f"Inspecting manifest for tag: {tag}")
+    docker["buildx", "imagetools", "inspect", tag] & plumbum.FG
+    LOGGER.info(f"Manifest {tag} exists")
 
 
-def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
+def find_platform_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
     existing_platform_tags = []
 
     for platform in ALL_PLATFORMS:
@@ -69,7 +69,7 @@ def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
 
         LOGGER.warning(f"Trying to pull: {platform_tag} from registry")
         try:
-            pull_tag(platform_tag)
+            inspect_manifest(platform_tag)
             existing_platform_tags.append(platform_tag)
             LOGGER.info(f"Tag {platform_tag} pulled successfully")
         except RetryError:
@@ -83,7 +83,7 @@ def merge_tags(
 ) -> None:
     LOGGER.info(f"Trying to merge tag: {merged_tag}")
 
-    existing_platform_tags = pull_missing_tags(merged_tag, all_local_tags)
+    existing_platform_tags = find_platform_tags(merged_tag, all_local_tags)
     args = [
         "buildx",
         "imagetools",
