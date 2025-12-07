@@ -16,6 +16,7 @@ from tagging.apps.common_cli_arguments import common_arguments_parser
 from tagging.apps.config import Config
 from tagging.utils.get_platform import ALL_PLATFORMS
 from tagging.utils.get_prefix import get_file_prefix_for_platform
+from tagging.utils.git_helper import GitHelper
 
 docker = plumbum.local["docker"]
 
@@ -94,6 +95,13 @@ def merge_tags(
     ]
     if not push_to_registry:
         args.append("--dry-run")
+
+    commit_hash_tag = GitHelper.commit_hash_tag()
+    if not push_to_registry and merged_tag.endswith(commit_hash_tag):
+        LOGGER.info(
+            f"Not running merge for tag: {merged_tag} as it's a commit SHA tag and it wasn't pushed to registry"
+        )
+        return
 
     LOGGER.info(f"Running command: {' '.join(args)}")
     docker[args] & plumbum.FG
