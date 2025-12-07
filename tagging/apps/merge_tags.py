@@ -62,9 +62,9 @@ def find_platform_tags(merged_tag: str) -> list[str]:
         try:
             inspect_manifest(platform_tag)
             platform_tags.append(platform_tag)
-            LOGGER.info(f"Tag {platform_tag} pulled successfully")
+            LOGGER.info(f"Tag {platform_tag} found successfully")
         except RetryError:
-            LOGGER.warning(f"Pull failed, tag {platform_tag} doesn't exist")
+            LOGGER.warning(f"Manifest for tag {platform_tag} doesn't exist")
 
     return platform_tags
 
@@ -98,9 +98,9 @@ def merge_tags(merged_tag: str, push_to_registry: bool) -> None:
     LOGGER.info(f"Running command: {' '.join(args)}")
     docker[args] & plumbum.FG
     if push_to_registry:
-        LOGGER.info(f"Pushed merged tag: {merged_tag} to registry")
+        LOGGER.info(f"Pushed merged tag: {merged_tag}")
     else:
-        LOGGER.info(f"Skipping push for tag: {merged_tag}")
+        LOGGER.info(f"Skipped push for tag: {merged_tag}")
 
 
 if __name__ == "__main__":
