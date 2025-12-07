@@ -1,0 +1,41 @@
+name: Download a Docker image and its tags from GitHub artifacts, apply them, and push the image to the Registry; then merge them
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        description: Image name
+        required: true
+        type: string
+      variant:
+        description: Variant tag prefix
+        required: true
+        type: string
+    secrets:
+      REGISTRY_USERNAME:
+        required: true
+      REGISTRY_TOKEN:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  tag-push:
+    uses: ./.github/workflows/docker-tag-push.yml
+    with:
+      image: ${{ inputs.image }}
+      variant: ${{ inputs.variant }}
+    secrets:
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+
+  tag-merge:
+    uses: ./.github/workflows/docker-tag-merge.yml
+    needs: tag-push
+    with:
+      image: ${{ inputs.image }}
+      variant: ${{ inputs.variant }}
+    secrets:
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}

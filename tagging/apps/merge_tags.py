@@ -16,17 +16,15 @@ from tagging.apps.common_cli_arguments import common_arguments_parser
 from tagging.apps.config import Config
 from tagging.utils.get_platform import ALL_PLATFORMS
 from tagging.utils.get_prefix import get_file_prefix_for_platform
-from tagging.utils.git_helper import GitHelper
 
 docker = plumbum.local["docker"]
 
 LOGGER = logging.getLogger(__name__)
 
 
-def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
+def read_local_tags_from_files(config: Config) -> set[str]:
     LOGGER.info(f"Read tags from file(s) for image: {config.image}")
 
-    all_local_tags = []
     merged_local_tags = set()
     for platform in ALL_PLATFORMS:
         LOGGER.info(f"Reading tags for platform: {platform}")
@@ -42,73 +40,67 @@ def read_local_tags_from_files(config: Config) -> tuple[list[str], set[str]]:
 
         LOGGER.info(f"Tag file: {path} found")
         for tag in path.read_text().splitlines():
-            all_local_tags.append(tag)
             merged_local_tags.add(tag.replace(platform + "-", ""))
 
     LOGGER.info(f"Tags read for image: {config.image}")
-    return all_local_tags, merged_local_tags
+    return merged_local_tags
 
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4))
-def pull_tag(tag: str) -> None:
-    LOGGER.info(f"Pulling tag: {tag}")
-    docker["pull", tag] & plumbum.FG
-    LOGGER.info(f"Tag {tag} pulled successfully")
+def inspect_manifest(tag: str) -> None:
+    LOGGER.info(f"Inspecting manifest for tag: {tag}")
+    docker["buildx", "imagetools", "inspect", tag] & plumbum.FG
+    LOGGER.info(f"Manifest {tag} exists")
 
 
-def pull_missing_tags(merged_tag: str, all_local_tags: list[str]) -> list[str]:
-    existing_platform_tags = []
+def find_platform_tags(merged_tag: str) -> list[str]:
+    platform_tags = []
 
     for platform in ALL_PLATFORMS:
         platform_tag = merged_tag.replace(":", f":{platform}-")
-        if platform_tag in all_local_tags:
-            LOGGER.info(
-                f"Tag {platform_tag} already exists locally, not pulling it from registry"
-            )
-            existing_platform_tags.append(platform_tag)
-            continue
-
-        LOGGER.warning(f"Trying to pull: {platform_tag} from registry")
+        LOGGER.warning(f"Trying to inspect: {platform_tag} in the registry")
         try:
-            pull_tag(platform_tag)
-            existing_platform_tags.append(platform_tag)
-            LOGGER.info(f"Tag {platform_tag} pulled successfully")
+            inspect_manifest(platform_tag)
+            platform_tags.append(platform_tag)
+            LOGGER.info(f"Tag {platform_tag} found successfully")
         except RetryError:
-            LOGGER.warning(f"Pull failed, tag {platform_tag} doesn't exist")
+            LOGGER.warning(f"Manifest for tag {platform_tag} doesn't exist")
 
-    return existing_platform_tags
+    return platform_tags
 
 
-def merge_tags(
-    merged_tag: str, all_local_tags: list[str], push_to_registry: bool
-) -> None:
+def merge_tags(merged_tag: str, push_to_registry: bool) -> None:
     LOGGER.info(f"Trying to merge tag: {merged_tag}")
 
-    existing_platform_tags = pull_missing_tags(merged_tag, all_local_tags)
+    platform_tags = find_platform_tags(merged_tag)
+    if not platform_tags:
+        assert not push_to_registry, (
+            f"No platform tags found for merged tag: {merged_tag}, "
+            "and push to registry is enabled. "
+            "Cannot create a manifest for a non-existing image."
+        )
+        LOGGER.info(
+            f"Not running merge for tag: {merged_tag} as no platform tags found"
+        )
+        return
+
     args = [
         "buildx",
         "imagetools",
         "create",
-        *existing_platform_tags,
+        *platform_tags,
         "--tag",
         merged_tag,
     ]
     if not push_to_registry:
         args.append("--dry-run")
 
-    commit_hash_tag = GitHelper.commit_hash_tag()
-    if not push_to_registry and merged_tag.endswith(commit_hash_tag):
-        LOGGER.info(
-            f"Not running merge for tag: {merged_tag} as it's a commit SHA tag and it wasn't pushed to registry"
-        )
-        return
-
     LOGGER.info(f"Running command: {' '.join(args)}")
     docker[args] & plumbum.FG
     if push_to_registry:
-        LOGGER.info(f"Pushed merged tag: {merged_tag} to registry")
+        LOGGER.info(f"Pushed merged tag: {merged_tag}")
     else:
-        LOGGER.info(f"Skipping push for tag: {merged_tag}")
+        LOGGER.info(f"Skipped push for tag: {merged_tag}")
 
 
 if __name__ == "__main__":
@@ -119,8 +111,8 @@ if __name__ == "__main__":
 
     LOGGER.info(f"Merging tags for image: {config.image}")
 
-    all_local_tags, merged_local_tags = read_local_tags_from_files(config)
+    merged_local_tags = read_local_tags_from_files(config)
     for tag in merged_local_tags:
-        merge_tags(tag, all_local_tags, push_to_registry)
+        merge_tags(tag, push_to_registry)
 
     LOGGER.info(f"Successfully merged tags for image: {config.image}")
