@@ -36,7 +36,6 @@ jobs:
     strategy:
       matrix:
         platform: [aarch64, x86_64]
-    if: ${{ !(contains(inputs.variant, 'cuda11') && matrix.platform == 'aarch64') }}
 
     steps:
       - name: Checkout Repo ⚡️
@@ -46,6 +45,7 @@ jobs:
 
       - name: Download image tar and apply tags 🏷
         uses: ./.github/actions/apply-single-tags
+        if: ${{ !(contains(inputs.variant, 'cuda11') && matrix.platform == 'aarch64') }}
         with:
           image: ${{ inputs.image }}
           variant: ${{ inputs.variant }}
@@ -64,7 +64,7 @@ jobs:
         id: login
 
       - name: Push single platform images to Registry 📤
-        if: env.PUSH_TO_REGISTRY == 'true'
+        if: env.PUSH_TO_REGISTRY == 'true' && !(contains(inputs.variant, 'cuda11') && matrix.platform == 'aarch64')
         run: |
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
