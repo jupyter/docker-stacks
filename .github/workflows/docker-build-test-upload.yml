@@ -51,6 +51,7 @@ jobs:
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
       - name: Free disk space 🧹
         uses: ./.github/actions/free-disk-space
+        if: contains(inputs.variant, 'cuda') || inputs.image == 'datascience-notebook' || inputs.image == 'all-spark-notebook'
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 

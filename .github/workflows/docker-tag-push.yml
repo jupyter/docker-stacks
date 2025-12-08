@@ -40,11 +40,15 @@ jobs:
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - name: Free disk space 🧹
+        uses: ./.github/actions/free-disk-space
+        if: contains(inputs.variant, 'cuda') || inputs.image == 'datascience-notebook' || inputs.image == 'all-spark-notebook'
       - name: Create dev environment 📦
         uses: ./.github/actions/create-dev-env
 
       - name: Download image tar and apply tags 🏷
         uses: ./.github/actions/apply-single-tags
+        if: ${{ !(contains(inputs.variant, 'cuda11') && matrix.platform == 'aarch64') }}
         with:
           image: ${{ inputs.image }}
           variant: ${{ inputs.variant }}
@@ -63,7 +67,7 @@ jobs:
         id: login
 
       - name: Push single platform images to Registry 📤
-        if: env.PUSH_TO_REGISTRY == 'true'
+        if: env.PUSH_TO_REGISTRY == 'true' && !(contains(inputs.variant, 'cuda11') && matrix.platform == 'aarch64')
         run: |
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
