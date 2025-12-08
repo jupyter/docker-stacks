@@ -42,7 +42,7 @@ jobs:
             --password ${{ secrets.QUAY_ROBOT_TOKEN }}
 
       - name: Move image from Docker Hub to Quay.io 🐳
-        if: env.PUSH_TO_REGISTRY == 'true'
+        if: env.PUSH_TO_REGISTRY == 'true' && matrix.tag != 'tag-for-testing'
         run: |
           skopeo copy \
             --multi-arch all \
@@ -66,4 +66,4 @@ jobs:
             pyspark-notebook,
             all-spark-notebook,
           ]
-        tag: [missing-tag-expected-to-fail]
+        tag: [tag-for-testing]
