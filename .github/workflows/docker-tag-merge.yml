@@ -41,14 +41,14 @@ jobs:
         uses: ./.github/actions/create-dev-env
 
       - name: Download aarch64 tags file 🏷
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: ${{ inputs.image }}-aarch64-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/
         if: ${{ !contains(inputs.variant, 'cuda11') }}
 
       - name: Download x86_64 tags file 🏷
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
         with:
           name: ${{ inputs.image }}-x86_64-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/
