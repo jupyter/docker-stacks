@@ -1,7 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
-import os
 import socket
 from collections.abc import Generator
 from contextlib import closing
@@ -35,10 +34,36 @@ def docker_client() -> docker.DockerClient:
     return client
 
 
+def pytest_addoption(parser: pytest.Parser) -> None:
+    """Add custom command-line options to pytest."""
+    parser.addoption(
+        "--registry",
+        required=True,
+        choices=["docker.io", "quay.io"],
+        help="Image registry",
+    )
+    parser.addoption(
+        "--owner",
+        required=True,
+        help="Owner of the image",
+    )
+    parser.addoption(
+        "--image",
+        required=True,
+        help="Short image name",
+    )
+
+
 @pytest.fixture(scope="session")
-def image_name() -> str:
+def image_name(request: pytest.FixtureRequest) -> str:
     """Image name to test"""
-    return os.environ["TEST_IMAGE"]
+
+    def option(name: str) -> str:
+        value = request.config.getoption(name)
+        assert isinstance(value, str)
+        return value
+
+    return f"{option('--registry')}/{option('--owner')}/{option('--image')}"
 
 
 @pytest.fixture(scope="function")
