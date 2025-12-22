@@ -17,19 +17,24 @@ def test_image(*, registry: str, owner: str, image: str) -> None:
     LOGGER.info(f"Testing image: {image}")
     test_dirs = get_test_dirs(image)
     LOGGER.info(f"Test dirs to be run: {test_dirs}")
-    with plumbum.local.env(TEST_IMAGE=f"{registry}/{owner}/{image}"):
-        (
-            python3[
-                "-m",
-                "pytest",
-                "--numprocesses",
-                "auto",
-                "-m",
-                "not info",
-                test_dirs,
-            ]
-            & plumbum.FG
-        )
+    (
+        python3[
+            "-m",
+            "pytest",
+            "--numprocesses",
+            "auto",
+            "-m",
+            "not info",
+            test_dirs,
+            "--registry",
+            registry,
+            "--owner",
+            owner,
+            "--image",
+            image,
+        ]
+        & plumbum.FG
+    )
 
 
 if __name__ == "__main__":
