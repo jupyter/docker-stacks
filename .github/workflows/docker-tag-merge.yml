@@ -45,7 +45,6 @@ jobs:
         with:
           name: ${{ inputs.image }}-aarch64-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/
-        if: ${{ !contains(inputs.variant, 'cuda11') }}
 
       - name: Download x86_64 tags file 🏷
         uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
