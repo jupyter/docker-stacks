@@ -3,20 +3,30 @@
 # Please see the documentation for all configuration options:
 # https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 
+# We're adding `[FAST_BUILD]` prefix to commit messages (this adds it to PR title)
+# This triggers a faster build, see more info in `.github/workflows/docker.yml`
+
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    commit-message:
+      prefix: "[FAST_BUILD] "
   - package-ecosystem: github-actions
     directory: .github/actions/apply-single-tags/
     schedule:
       interval: weekly
+    commit-message:
+      prefix: "[FAST_BUILD] "
   - package-ecosystem: github-actions
     directory: .github/actions/create-dev-env/
     schedule:
       interval: weekly
+    commit-message:
+      prefix: "[FAST_BUILD] "
+  # This action is only used for some images, so full build is required
   - package-ecosystem: github-actions
     directory: .github/actions/free-disk-space/
     schedule:
@@ -25,3 +35,5 @@ updates:
     directory: .github/actions/load-image/
     schedule:
       interval: weekly
+    commit-message:
+      prefix: "[FAST_BUILD] "
