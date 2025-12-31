@@ -40,7 +40,7 @@
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="65" x="128" y="470">+cuda variant</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="256" y="440" />
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="80" x="320" y="459">pytorch-notebook</text>
-  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="114" x="320" y="470">+cuda11/cuda12 variants</text>
+  <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="114" x="320" y="470">+cuda12/cuda13 variants</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="448" y="440" />
   <text fill="rgb(0,0,0)" font-family="sans-serif" font-size="9" font-style="normal" font-weight="normal" text-anchor="middle" textLength="100" x="512" y="465">datascience-notebook</text>
   <rect fill="rgb(255,255,255)" height="40" stroke="rgb(0,0,0)" width="128" x="640" y="440" />
