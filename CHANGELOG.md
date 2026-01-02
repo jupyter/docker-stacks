@@ -3,6 +3,12 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2025-12-31
+
+Affected: `pytorch-notebook`.
+
+- **Non-breaking:** `pytorch-notebook`: Build pytorch cuda13 image instead of cuda11 ([#2391](https://github.com/jupyter/docker-stacks/pull/2391))
+
 ## 2025-12-02
 
 Affected: `tensorflow-notebook`, `pytorch-notebook`.
