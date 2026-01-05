@@ -31,14 +31,14 @@ repos:
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 2892f1f81088477370d4fbc56545c05d33d2493f # frozen: 25.11.0
+    rev: 831207fd435b47aeffdf6af853097e64322b4d44  # frozen: 25.12.0
     hooks:
       - id: black
         args: [--target-version=py312]
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: c2738302f5cf2bfb559c1f210950badb133613ea # frozen: v1.19.0
+    rev: a66e98df7b4aeeb3724184b332785976d062b92e  # frozen: v1.19.1
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -67,7 +67,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 3c603eae8faac85303ae675fd33325cff699a797 # frozen: v3.7.3
+    rev: 14abee445aea04b39069c19b4bd54efff6775819  # frozen: v3.7.4
     hooks:
       - id: prettier
 
@@ -129,7 +129,7 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: a95dde803518e8b723480f182c87bfb1d243d742 # frozen: v0.19.1
+    rev: 7339935a3036f096ee0d7f1f047a9ec41707d4c1  # frozen: v0.20.0
     hooks:
       - id: markdownlint-cli2
         args: [--fix]
