@@ -20,6 +20,7 @@ RUN mamba install --yes \
 # Install tensorflow with pip, on x86_64 tensorflow-cpu
 RUN [[ $(uname -m) = x86_64 ]] && TF_POSTFIX="-cpu" || TF_POSTFIX="" && \
     pip install --no-cache-dir \
+    "protobuf>=5.28.3,<6"  \
     "tensorflow${TF_POSTFIX}" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
