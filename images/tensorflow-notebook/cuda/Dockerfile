@@ -19,6 +19,7 @@ RUN mamba install --yes \
 
 # Install TensorFlow, CUDA and cuDNN with pip
 RUN pip install --no-cache-dir \
+    "protobuf>=5.28.3,<6"  \
     'tensorflow[and-cuda]' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
