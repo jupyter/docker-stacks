@@ -18,6 +18,9 @@ RUN mamba install --yes \
     fix-permissions "/home/${NB_USER}"
 
 # Install TensorFlow, CUDA and cuDNN with pip
+# Pin protobuf version for tensorflow 2.20 to avoid user warning.
+# The fix can be removed once tensorflow is built with newer version of protobuf:
+# https://github.com/tensorflow/tensorflow/issues/98980
 RUN pip install --no-cache-dir \
     "protobuf>=5.28.3,<6"  \
     'tensorflow[and-cuda]' && \
