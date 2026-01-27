@@ -4,6 +4,19 @@
 - [Image Relationships](#image-relationships)
 - [Community Stacks](#community-stacks)
 
+> **Pull vs Build: Quick Guidance**
+>
+> Images are published on **Quay.io** registry and most users should start by pulling an existing image that closely matches their needs.
+> Pulling a pre-built image is fast and suitable for common use cases such as running notebooks, teaching, or standard data science workflows.
+>
+> Building images locally is recommended only when additional customization is required, for example:
+>
+> - adding system-level packages that cannot be installed at runtime,
+> - preinstalling large or complex language-specific libraries,
+> - creating organization-specific images or heavy customization for CI.
+>
+> If unsure, try an existing Quay.io image first; if it falls short, follow the custom images guide to build a tailored image.
+
 Using one of the Jupyter Docker Stacks requires two choices:
 
 1. Which Docker image you wish to use
