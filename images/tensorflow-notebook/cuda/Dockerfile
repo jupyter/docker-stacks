@@ -11,18 +11,18 @@ LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Pin protobuf version for tensorflow 2.20 to avoid user warning.
+# The fix can be removed once tensorflow is built with newer version of protobuf:
+# https://github.com/tensorflow/tensorflow/issues/98980
 RUN mamba install --yes \
-    'jupyter-server-proxy' && \
+    'jupyter-server-proxy' \
+    "protobuf>=5.28.3,<6" && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
 # Install TensorFlow, CUDA and cuDNN with pip
-# Pin protobuf version for tensorflow 2.20 to avoid user warning.
-# The fix can be removed once tensorflow is built with newer version of protobuf:
-# https://github.com/tensorflow/tensorflow/issues/98980
 RUN pip install --no-cache-dir \
-    "protobuf>=5.28.3,<6"  \
     'tensorflow[and-cuda]' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
