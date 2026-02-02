@@ -31,7 +31,7 @@ repos:
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 831207fd435b47aeffdf6af853097e64322b4d44 # frozen: 25.12.0
+    rev: ea488cebbfd88a5f50b8bd95d5c829d0bb76feb8  # frozen: 26.1.0
     hooks:
       - id: black
         args: [--target-version=py312]
@@ -67,7 +67,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 14abee445aea04b39069c19b4bd54efff6775819 # frozen: v3.7.4
+    rev: c2bc67fe8f8f549cc489e00ba8b45aa18ee713b1  # frozen: v3.8.1
     hooks:
       - id: prettier
 
@@ -102,7 +102,7 @@ repos:
 
   # Lint: YAML
   - repo: https://github.com/adrienverge/yamllint
-    rev: 79a6b2b1392eaf49cdd32ac4f14be1a809bbd8f7 # frozen: v1.37.1
+    rev: cba56bcde1fdd01c1deb3f945e69764c291a6530  # frozen: v1.38.0
     hooks:
       - id: yamllint
         args: ["-d {extends: relaxed, rules: {line-length: disable}}", "-s"]
@@ -136,7 +136,7 @@ repos:
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
-    rev: 5023e06554eb1dd9a6dadfd061c36c13b8b11063 # frozen: 0.8.2
+    rev: 2324c023b7f62a12a1a4c44f5f01702793626dea  # frozen: 0.9.0
     hooks:
       - id: nbstripout
 
