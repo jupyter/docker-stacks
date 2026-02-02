@@ -16,11 +16,9 @@ def quoted_output(container: Container, cmd: str) -> str:
 
     assert cmd_output, f"Command `{cmd}` returned empty output"
 
-    return textwrap.dedent(
-        f"""\
+    return textwrap.dedent(f"""\
         `{cmd}`:
 
         ```text
         {{output}}
-        ```"""
-    ).format(output=cmd_output)
+        ```""").format(output=cmd_output)

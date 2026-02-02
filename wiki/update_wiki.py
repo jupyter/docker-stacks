@@ -152,14 +152,12 @@ def update_monthly_wiki_page(wiki_dir: Path, build_history_line: str) -> None:
     assert build_history_line.startswith("| `")
     year_month = build_history_line[3:10]
 
-    MONTHLY_PAGE_HEADER = textwrap.dedent(
-        f"""\
+    MONTHLY_PAGE_HEADER = textwrap.dedent(f"""\
         # Images built during {year_month}
 
         | Date | Image | Links |
         | - | - | - |
-        """
-    )
+        """)
     year = year_month[:4]
     monthly_page = wiki_dir / "monthly-files" / year / (year_month + ".md")
     if not monthly_page.exists():
