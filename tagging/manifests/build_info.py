@@ -41,8 +41,7 @@ def build_info_manifest(config: BuildInfoConfig) -> MarkdownPiece:
         "{{.Size}}",
     ]().rstrip()
 
-    build_info = textwrap.dedent(
-        f"""\
+    build_info = textwrap.dedent(f"""\
         - Build timestamp: {config.build_timestamp}
         - Docker image: `{config.full_image()}:{commit_hash_tag}`
         - Docker image size: {image_size}
@@ -51,7 +50,6 @@ def build_info_manifest(config: BuildInfoConfig) -> MarkdownPiece:
 
         ```text
         {{message}}
-        ```"""
-    ).format(message=commit_message)
+        ```""").format(message=commit_message)
 
     return MarkdownPiece(title="## Build Info", sections=[build_info])
