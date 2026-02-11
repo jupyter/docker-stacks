@@ -57,7 +57,7 @@ EXCLUDED_PACKAGES = [
     "mamba",
     "notebook>",
     "protobuf>=5.28.3<6",
-    ”protobuf”,
+    "protobuf",
     "python",
     "r-irkernel",
     "unixodbc",
