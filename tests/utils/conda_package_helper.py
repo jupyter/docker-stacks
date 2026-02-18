@@ -62,13 +62,26 @@ class CondaPackageHelper:
     @staticmethod
     def _parse_package_versions(env_export: str) -> dict[str, set[str]]:
         """Extract packages and versions from the lines returned by the list of specifications"""
-        dependencies = json.loads(env_export).get("dependencies")
+        try:
+            dependencies = json.loads(env_export).get("dependencies")
+        except json.JSONDecodeError:
+            # Try to fix the invalid JSON from mamba (bug in mamba 2.x)
+            # which doesn't escape double quotes in version specs
+            # e.g. "protobuf[version=">=5.28.3,<6"]"
+            fixed_export = re.sub(r'(\[[^\]]*=)"([^"]+)"(\])', r"\1'\2'\3", env_export)
+            dependencies = json.loads(fixed_export).get("dependencies")
+
         # Filtering packages installed through pip
         # since we only manage packages installed through mamba here
         # They are represented by a dict with a key 'pip'
         dependencies = filter(lambda x: isinstance(x, str), dependencies)
         packages_dict: dict[str, set[str]] = {}
-        for split in map(lambda x: re.split("=?=", x), dependencies):
+        for dependency in dependencies:
+            # If it's a package with [] notation, we strip the [] part for the package name
+            # but we keep it if we want to try to extract version (not needed for these tests)
+            package_with_name = dependency.split("[")[0]
+            split = re.split("=?=", package_with_name)
+
             # default values
             package = split[0]
             version = set()
