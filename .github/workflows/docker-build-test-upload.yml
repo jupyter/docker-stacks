@@ -97,6 +97,7 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}.txt
           retention-days: 3
+          archive: false
 
       - name: Write manifest and build history file 🏷
         run: |
@@ -115,12 +116,14 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-manifest
           path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.md
           retention-days: 3
+          archive: false
       - name: Upload build history line 💾
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-history_line
           path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.txt
           retention-days: 3
+          archive: false
 
       - name: Save image as a tar for later use 💾
         run: |
@@ -135,7 +138,7 @@ jobs:
           name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
           path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
           retention-days: 3
-          compression-level: 0
+          archive: false
 
       - name: Run tests ✅
         run: |
