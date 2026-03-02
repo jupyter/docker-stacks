@@ -24,7 +24,7 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: 0a09c783808cfe77bb3269250f663ff733d23302 # frozen: 7.0.0
+    rev: a333737ed43df02b18e6c95477ea1b285b3de15a  # frozen: 8.0.1
     hooks:
       - id: isort
         args: [--profile, black]
@@ -129,14 +129,14 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: 7339935a3036f096ee0d7f1f047a9ec41707d4c1 # frozen: v0.20.0
+    rev: 5387279b3b4c24822c0f86d4df4f28b37e3e8992  # frozen: v0.21.0
     hooks:
       - id: markdownlint-cli2
         args: [--fix]
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
-    rev: 2324c023b7f62a12a1a4c44f5f01702793626dea # frozen: 0.9.0
+    rev: f5da19ce3b7b40e97c12ee9cd8ce97f48f97ddf7  # frozen: 0.9.1
     hooks:
       - id: nbstripout
 
