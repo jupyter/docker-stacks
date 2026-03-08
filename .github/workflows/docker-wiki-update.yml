@@ -34,12 +34,14 @@ jobs:
         with:
           pattern: "*-${{ steps.hash.outputs.tag }}.txt"
           path: /tmp/jupyter/hist_lines/
+          merge-multiple: true
 
       - name: Download all manifests 📥
         uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
         with:
           pattern: "*-${{ steps.hash.outputs.tag }}.md"
           path: /tmp/jupyter/manifests/
+          merge-multiple: true
 
       - name: Checkout Wiki Repo 📃
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
