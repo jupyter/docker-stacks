@@ -43,13 +43,13 @@ jobs:
       - name: Download aarch64 tags file 🏷
         uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
         with:
-          name: ${{ inputs.image }}-aarch64-${{ inputs.variant }}-tags
+          name: aarch64-${{ inputs.variant }}-${{ inputs.image }}.txt
           path: /tmp/jupyter/tags/
 
       - name: Download x86_64 tags file 🏷
         uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
         with:
-          name: ${{ inputs.image }}-x86_64-${{ inputs.variant }}-tags
+          name: x86_64-${{ inputs.variant }}-${{ inputs.image }}.txt
           path: /tmp/jupyter/tags/
 
       - name: Login to Registry 🔐

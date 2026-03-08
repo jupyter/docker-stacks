@@ -49,6 +49,10 @@ jobs:
     steps:
       - name: Checkout Repo ⚡️
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Compute commit hash tag 🏷
+        id: hash
+        run: echo "tag=${GITHUB_SHA::12}" >> "$GITHUB_OUTPUT"
+        shell: bash
       - name: Free disk space 🧹
         uses: ./.github/actions/free-disk-space
         if: contains(inputs.variant, 'cuda') || inputs.image == 'datascience-notebook' || inputs.image == 'all-spark-notebook'
@@ -94,9 +98,9 @@ jobs:
       - name: Upload tags file 💾
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-tags
           path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}.txt
           retention-days: 3
+          archive: false
 
       - name: Write manifest and build history file 🏷
         run: |
@@ -112,15 +116,15 @@ jobs:
       - name: Upload manifest file 💾
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-manifest
-          path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.md
+          path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-${{ steps.hash.outputs.tag }}.md
           retention-days: 3
+          archive: false
       - name: Upload build history line 💾
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-history_line
-          path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-*.txt
+          path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-${{ steps.hash.outputs.tag }}.txt
           retention-days: 3
+          archive: false
 
       - name: Save image as a tar for later use 💾
         run: |
@@ -132,10 +136,9 @@ jobs:
       - name: Upload image as artifact 💾
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}
           path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
           retention-days: 3
-          compression-level: 0
+          archive: false
 
       - name: Run tests ✅
         run: |
