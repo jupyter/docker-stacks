@@ -143,9 +143,13 @@ class TrackedContainer:
         self.remove()
 
         # To see the reason, we run assert statements separately
-        assert no_failure == rc_success
-        assert no_warnings == (not self.get_warnings(logs))
-        assert no_errors == (not self.get_errors(logs))
+        assert (
+            no_failure == rc_success
+        ), f"Container exited with code {rv['StatusCode']}"
+        warnings = self.get_warnings(logs)
+        assert no_warnings == (not warnings), f"Warnings found: {warnings}"
+        errors = self.get_errors(logs)
+        assert no_errors == (not errors), f"Errors found: {errors}"
 
         if split_stderr:
             return (stdout, stderr)
@@ -158,7 +162,14 @@ class TrackedContainer:
 
     @staticmethod
     def get_warnings(logs: str) -> list[str]:
-        return TrackedContainer._lines_starting_with(logs, "WARNING")
+        warnings = TrackedContainer._lines_starting_with(logs, "WARNING")
+        warnings = [
+            line
+            for line in warnings
+            if "WARNING: All log messages before absl::InitializeLog() is called are written to STDERR"
+            not in line
+        ]
+        return warnings
 
     @staticmethod
     def _lines_starting_with(logs: str, pattern: LiteralString) -> list[str]:
