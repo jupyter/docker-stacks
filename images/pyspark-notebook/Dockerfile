@@ -50,7 +50,7 @@ RUN /opt/setup-scripts/setup_spark.py \
 
 # Spark bundles Derby 10.16.1.1 by default; replace it with a fixed release.
 RUN set -eux; \
-    derby_jar="$(find /usr/local -type f -path '*/spark-*-bin-hadoop*/jars/derby-*.jar' | head -n 1)"; \
+    derby_jar="$(find "${SPARK_HOME}/jars" -maxdepth 1 -type f -name 'derby-*.jar' | head -n 1)"; \
     test -n "${derby_jar}"; \
     derby_dir="$(dirname "${derby_jar}")"; \
     curl -fsSL -o "/tmp/derby-${derby_version}.jar" \
