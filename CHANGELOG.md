@@ -3,6 +3,12 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2026-04-02
+
+Affected: `pyspark-notebook`, `all-spark-notebook`.
+
+- **Breaking:** `pyspark-notebook`: Update pyspark-notebook to java 21 and derby 10.17.1.0 ([#2424](https://github.com/jupyter/docker-stacks/pull/2424))
+
 ## 2025-12-31
 
 Affected: `pytorch-notebook`.
