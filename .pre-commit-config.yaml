@@ -31,14 +31,14 @@ repos:
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: fa505ab9c3e0fedafe1709fd7ac2b5f8996c670d  # frozen: 26.3.1
+    rev: fa505ab9c3e0fedafe1709fd7ac2b5f8996c670d # frozen: 26.3.1
     hooks:
       - id: black
         args: [--target-version=py312]
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 8e5c80792e2ec0c87804d8ef915bf35e2caea6da  # frozen: v1.20.0
+    rev: 8e5c80792e2ec0c87804d8ef915bf35e2caea6da # frozen: v1.20.0
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -129,7 +129,7 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: 3766ad839ad3a74558031510b3bc9872bb1d9980  # frozen: v0.22.0
+    rev: 3766ad839ad3a74558031510b3bc9872bb1d9980 # frozen: v0.22.0
     hooks:
       - id: markdownlint-cli2
         args: [--fix]
