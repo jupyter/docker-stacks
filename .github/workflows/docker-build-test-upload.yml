@@ -96,7 +96,7 @@ jobs:
             --tags-dir /tmp/jupyter/tags/
         shell: bash
       - name: Upload tags file 💾
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           path: /tmp/jupyter/tags/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}.txt
           retention-days: 3
@@ -114,13 +114,13 @@ jobs:
             --repository ${{ github.repository }}
         shell: bash
       - name: Upload manifest file 💾
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-${{ steps.hash.outputs.tag }}.md
           retention-days: 3
           archive: false
       - name: Upload build history line 💾
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-${{ steps.hash.outputs.tag }}.txt
           retention-days: 3
@@ -134,7 +134,7 @@ jobs:
             | zstd > /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
         shell: bash
       - name: Upload image as artifact 💾
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           path: /tmp/jupyter/images/${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}.tar.zst
           retention-days: 3
