@@ -537,12 +537,8 @@ jobs:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: tag-push-merge
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
-    permissions:
-      contents: write
 
   wiki-update-fast:
     uses: ./.github/workflows/docker-wiki-update.yml
     needs: tag-push-merge-fast
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
-    permissions:
-      contents: write
