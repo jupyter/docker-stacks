@@ -67,12 +67,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
   aarch64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: ""
       image: docker-stacks-foundation
@@ -82,6 +81,8 @@ jobs:
 
   x86_64-foundation:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: ""
       image: docker-stacks-foundation
@@ -91,6 +92,8 @@ jobs:
 
   aarch64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: docker-stacks-foundation
       image: base-notebook
@@ -101,6 +104,8 @@ jobs:
 
   x86_64-base:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: docker-stacks-foundation
       image: base-notebook
@@ -111,6 +116,8 @@ jobs:
 
   aarch64-minimal:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: base-notebook
       image: minimal-notebook
@@ -122,6 +129,8 @@ jobs:
 
   x86_64-minimal:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: base-notebook
       image: minimal-notebook
@@ -133,6 +142,8 @@ jobs:
 
   aarch64-scipy:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: minimal-notebook
       image: scipy-notebook
@@ -144,6 +155,8 @@ jobs:
 
   x86_64-scipy:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: minimal-notebook
       image: scipy-notebook
@@ -155,6 +168,8 @@ jobs:
 
   aarch64-r:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: minimal-notebook
       image: r-notebook
@@ -166,6 +181,8 @@ jobs:
 
   x86_64-r:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: minimal-notebook
       image: r-notebook
@@ -177,6 +194,8 @@ jobs:
 
   aarch64-julia:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: minimal-notebook
       image: julia-notebook
@@ -189,6 +208,8 @@ jobs:
 
   x86_64-julia:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: minimal-notebook
       image: julia-notebook
@@ -200,6 +221,8 @@ jobs:
 
   aarch64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: tensorflow-notebook
@@ -211,6 +234,8 @@ jobs:
 
   x86_64-tensorflow:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: tensorflow-notebook
@@ -222,6 +247,8 @@ jobs:
 
   aarch64-tensorflow-cuda:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: tensorflow-notebook
@@ -234,6 +261,8 @@ jobs:
 
   x86_64-tensorflow-cuda:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: tensorflow-notebook
@@ -246,6 +275,8 @@ jobs:
 
   aarch64-pytorch:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: pytorch-notebook
@@ -257,6 +288,8 @@ jobs:
 
   x86_64-pytorch:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: pytorch-notebook
@@ -268,6 +301,8 @@ jobs:
 
   aarch64-pytorch-cuda12:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: pytorch-notebook
@@ -280,6 +315,8 @@ jobs:
 
   x86_64-pytorch-cuda12:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: pytorch-notebook
@@ -292,6 +329,8 @@ jobs:
 
   aarch64-pytorch-cuda13:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: pytorch-notebook
@@ -304,6 +343,8 @@ jobs:
 
   x86_64-pytorch-cuda13:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: pytorch-notebook
@@ -316,6 +357,8 @@ jobs:
 
   aarch64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: datascience-notebook
@@ -328,6 +371,8 @@ jobs:
 
   x86_64-datascience:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: datascience-notebook
@@ -339,6 +384,8 @@ jobs:
 
   aarch64-pyspark:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: pyspark-notebook
@@ -350,6 +397,8 @@ jobs:
 
   x86_64-pyspark:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: scipy-notebook
       image: pyspark-notebook
@@ -361,6 +410,8 @@ jobs:
 
   aarch64-all-spark:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: pyspark-notebook
       image: all-spark-notebook
@@ -372,6 +423,8 @@ jobs:
 
   x86_64-all-spark:
     uses: ./.github/workflows/docker-build-test-upload.yml
+    permissions:
+      contents: read
     with:
       parent-image: pyspark-notebook
       image: all-spark-notebook
@@ -383,6 +436,8 @@ jobs:
 
   contributed-recipes:
     uses: ./.github/workflows/contributed-recipes.yml
+    permissions:
+      contents: read
     with:
       called-using-workflow-call: true
     # Contributed recipes only use these images
@@ -393,6 +448,8 @@ jobs:
 
   tag-push-merge:
     uses: ./.github/workflows/docker-tag-push-merge.yml
+    permissions:
+      contents: read
     with:
       image: ${{ matrix.image }}
       variant: ${{ matrix.variant }}
@@ -461,6 +518,8 @@ jobs:
 
   tag-push-merge-fast:
     uses: ./.github/workflows/docker-tag-push-merge.yml
+    permissions:
+      contents: read
     with:
       image: ${{ matrix.image }}
       variant: ${{ matrix.variant }}

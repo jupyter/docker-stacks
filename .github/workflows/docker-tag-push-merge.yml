@@ -17,12 +17,11 @@ on:
       REGISTRY_TOKEN:
         required: true
 
-permissions:
-  contents: read
-
 jobs:
   tag-push:
     uses: ./.github/workflows/docker-tag-push.yml
+    permissions:
+      contents: read
     with:
       image: ${{ inputs.image }}
       variant: ${{ inputs.variant }}
@@ -32,6 +31,8 @@ jobs:
 
   tag-merge:
     uses: ./.github/workflows/docker-tag-merge.yml
+    permissions:
+      contents: read
     needs: tag-push
     with:
       image: ${{ inputs.image }}
