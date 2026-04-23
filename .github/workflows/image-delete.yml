@@ -30,7 +30,7 @@ on:
         description: Registry to delete from
         required: true
         type: choice
-        default: both
+        default: quay
         options:
           - dockerhub
           - quay
