@@ -38,12 +38,11 @@ on:
       - "tagging/taggers/tagger_interface.py"
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   build-docs:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     timeout-minutes: 10
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru' || github.event_name != 'schedule'
 

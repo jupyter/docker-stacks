@@ -25,12 +25,11 @@ on:
       REGISTRY_TOKEN:
         required: true
 
-permissions:
-  contents: read
-
 jobs:
   tag-merge:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:

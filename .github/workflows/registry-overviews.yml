@@ -13,12 +13,11 @@ on:
       - "images/*/README.md"
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
   update-overview:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     timeout-minutes: 1
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'
 

@@ -30,12 +30,11 @@ on:
         required: true
         type: boolean
 
-permissions:
-  contents: read
-
 jobs:
   generate-matrix:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     timeout-minutes: 1
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -51,6 +50,8 @@ jobs:
 
   build:
     runs-on: ${{ matrix.runs-on }}
+    permissions:
+      contents: read
     timeout-minutes: 10
     needs: generate-matrix
     if: github.repository_owner == 'jupyter' || github.repository_owner == 'mathbunnyru'

@@ -8,12 +8,11 @@ env:
 on:
   workflow_call:
 
-permissions:
-  contents: write
-
 jobs:
   wiki-update:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     timeout-minutes: 1
 
     steps:
