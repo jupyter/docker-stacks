@@ -535,10 +535,14 @@ jobs:
 
   wiki-update:
     uses: ./.github/workflows/docker-wiki-update.yml
+    permissions:
+      contents: write
     needs: tag-push-merge
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
 
   wiki-update-fast:
     uses: ./.github/workflows/docker-wiki-update.yml
+    permissions:
+      contents: write
     needs: tag-push-merge-fast
     if: contains(github.event.pull_request.title, '[FAST_BUILD]')
