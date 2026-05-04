@@ -24,7 +24,7 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: a333737ed43df02b18e6c95477ea1b285b3de15a # frozen: 8.0.1
+    rev: dac090ce4d9ee313d086e2e89ab1acb8c2664fa1  # frozen: 9.0.0a3
     hooks:
       - id: isort
         args: [--profile, black]
@@ -38,7 +38,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 8e5c80792e2ec0c87804d8ef915bf35e2caea6da # frozen: v1.20.0
+    rev: fc0f09a29bb495f4a91f00266155d6282d52485d  # frozen: v1.20.2
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -67,7 +67,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: c2bc67fe8f8f549cc489e00ba8b45aa18ee713b1 # frozen: v3.8.1
+    rev: 515f543f5718ebfd6ce22e16708bb32c68ff96e1  # frozen: v3.8.3
     hooks:
       - id: prettier
 
@@ -129,7 +129,7 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: 3766ad839ad3a74558031510b3bc9872bb1d9980 # frozen: v0.22.0
+    rev: 996abf60411a8d954288ac9856aae7602b80cbda  # frozen: v0.22.1
     hooks:
       - id: markdownlint-cli2
         args: [--fix]
