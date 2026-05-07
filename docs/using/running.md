@@ -143,7 +143,7 @@ podman run -it --rm -p 10000:8888 \
 ```
 
 This works with podman 4.3.0 and later. If you have an older podman version, the command will fail with
- `Error: unrecognized namespace mode keep-id:uid=1000,gid=100 passed`. Luckily there is
+`Error: unrecognized namespace mode keep-id:uid=1000,gid=100 passed`. Luckily there is
 a [workaround](https://github.com/containers/podman/blob/main/troubleshooting.md#39-podman-run-fails-with-error-unrecognized-namespace-mode-keep-iduid1000gid1000-passed).
 
 ```{note}
