@@ -131,13 +131,6 @@ uid=1000
 gid=100
 ```
 
-Set the shell variables _subuidSize_ and _subgidSize_ to the number of subordinate UIDs and GIDs, respectively.
-
-```bash
-subuidSize=$(( $(podman info --format "{{ range .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
-subgidSize=$(( $(podman info --format "{{ range .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
-```
-
 This command pulls the `quay.io/jupyter/r-notebook` image tagged `2025-12-31` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the server but with the internal container port (8888) instead of the correct host port (10000).
@@ -145,23 +138,20 @@ The server logs appear in the terminal and include a URL to the server but with 
 ```bash
 podman run -it --rm -p 10000:8888 \
     -v "${PWD}":/home/jovyan/work --user $uid:$gid \
-    --uidmap $uid:0:1 --uidmap 0:1:$uid --uidmap $(($uid+1)):$(($uid+1)):$(($subuidSize-$uid)) \
-    --gidmap $gid:0:1 --gidmap 0:1:$gid --gidmap $(($gid+1)):$(($gid+1)):$(($subgidSize-$gid)) \
+    --userns keep-id:uid=${uid},gid=${gid} \
     quay.io/jupyter/r-notebook:2025-12-31
 ```
 
-```{warning}
-The `podman run` options `--uidmap` and `--gidmap` can be used to map the container user _jovyan_ to the regular user on the host when running rootless Podman.
-The same Podman command should not be run with sudo (i.e. running rootful Podman)
-because then the mapping would map the container user _jovyan_ to the root user on the host.
-It's a good security practice to run programs with as few privileges as possible.
-```
+This works with podman 4.3.0 and later. If you have an older podman version, the command will fail with
+ `Error: unrecognized namespace mode keep-id:uid=1000,gid=100 passed`. Luckily there is
+a [workaround](https://github.com/containers/podman/blob/main/troubleshooting.md#39-podman-run-fails-with-error-unrecognized-namespace-mode-keep-iduid1000gid1000-passed).
 
 ```{note}
 The `podman run` command in the example above maps all subuids and subgids of the user into the container.
 That works fine but is actually more than needed.
 The `podman run` option `--userns=auto` will, for instance, not be possible to use as long as there are no unused subuids and subgids available.
-The example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them.
+The example could be improved by investigating more in detail which UIDs and GIDs need to be available in the container and then only map them,
+for example by setting the size option (`--userns keep-id:uid=${uid},gid=${gid},size=$size`).
 ```
 
 Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
