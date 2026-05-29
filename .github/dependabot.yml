@@ -37,3 +37,9 @@ updates:
       interval: weekly
     commit-message:
       prefix: "[FAST_BUILD] "
+  - package-ecosystem: docker
+    directory: .devcontainer/
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: "[FAST_BUILD] "
