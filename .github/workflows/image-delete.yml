@@ -36,6 +36,8 @@ on:
           - quay
           - both
 
+permissions: {}
+
 jobs:
   image-delete:
     runs-on: ubuntu-24.04

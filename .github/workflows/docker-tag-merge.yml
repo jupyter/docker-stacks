@@ -25,6 +25,8 @@ on:
       REGISTRY_TOKEN:
         required: true
 
+permissions: {}
+
 jobs:
   tag-merge:
     runs-on: ubuntu-24.04
