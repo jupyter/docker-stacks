@@ -4,7 +4,7 @@
 # https://quay.io/repository/jupyter/base-notebook?tab=tags
 ARG REGISTRY=quay.io
 ARG OWNER=jupyter
-ARG BASE_IMAGE=$REGISTRY/$OWNER/base-notebook:2025-12-31
+ARG BASE_IMAGE=$REGISTRY/$OWNER/base-notebook:2025-12-31@sha256:4ed6681f1bfe736ac7dff06a9d558acb69b5b1fdbf4fc9904bbf89e4853626cc
 FROM $BASE_IMAGE
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
