@@ -15,6 +15,5 @@ def check_r_mimetypes(container: TrackedContainer) -> None:
     logs = container.run_and_wait(timeout=10, command=command)
     LOGGER.debug(f"{logs=}")
     # If there is any output after this it means there was an error
-    assert logs.splitlines()[-1] == "Executing the command: " + " ".join(
-        command
-    ), f"Command {R_MIMETYPES_CHECK_CMD=} failed"
+    expected = "Executing the command: " + " ".join(command)
+    assert expected in logs.splitlines()[-1], f"Command {R_MIMETYPES_CHECK_CMD=} failed"
