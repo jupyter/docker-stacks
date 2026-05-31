@@ -8,6 +8,8 @@ env:
 on:
   workflow_call:
 
+permissions: {}
+
 jobs:
   wiki-update:
     runs-on: ubuntu-24.04

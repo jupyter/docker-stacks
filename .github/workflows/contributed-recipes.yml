@@ -30,6 +30,8 @@ on:
         required: true
         type: boolean
 
+permissions: {}
+
 jobs:
   generate-matrix:
     runs-on: ubuntu-24.04

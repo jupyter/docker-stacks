@@ -38,6 +38,8 @@ on:
       - "tagging/taggers/tagger_interface.py"
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   build-docs:
     runs-on: ubuntu-24.04

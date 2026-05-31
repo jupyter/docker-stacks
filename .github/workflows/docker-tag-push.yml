@@ -26,6 +26,8 @@ on:
       REGISTRY_TOKEN:
         required: true
 
+permissions: {}
+
 jobs:
   tag-push:
     runs-on: ubuntu-24.04
