@@ -14,7 +14,9 @@ def test_log_format_includes_timestamp(container: TrackedContainer) -> None:
         command=["echo", "done"],
         split_stderr=True,
     )
-    assert re.search(r"INFO\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\]", stderr)
+    assert re.search(
+        r"INFO\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] Entered start\.sh", stderr
+    )
 
 
 def test_quiet_mode_suppresses_info(container: TrackedContainer) -> None:
