@@ -43,3 +43,7 @@ updates:
       interval: weekly
     commit-message:
       prefix: "[FAST_BUILD] "
+  - package-ecosystem: docker
+    directory: images/docker-stacks-foundation/
+    schedule:
+      interval: weekly
