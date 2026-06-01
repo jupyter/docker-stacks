@@ -13,6 +13,8 @@ on:
     - cron: "34 3 * * 3"
   push:
     branches: ["main"]
+  pull_request:
+  workflow_dispatch:
 
 permissions: {}
 
