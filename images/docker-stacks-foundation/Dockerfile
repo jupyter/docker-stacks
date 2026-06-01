@@ -142,7 +142,7 @@ RUN set -x && \
     fix-permissions "/home/${NB_USER}"
 
 # Copy local files as late as possible to avoid cache busting
-COPY run-hooks.sh start.sh /usr/local/bin/
+COPY _docker_stacks_log.sh run-hooks.sh start.sh /usr/local/bin/
 
 # Configure container entrypoint
 ENTRYPOINT ["tini", "-g", "--", "start.sh"]
