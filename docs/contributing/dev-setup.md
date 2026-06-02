@@ -4,7 +4,7 @@ This page covers everything you need to run the full CI-equivalent checks locall
 
 ## Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/) (with BuildKit enabled, which is the default in modern Docker)
+- [Docker](https://docs.docker.com/get-docker/)
 - Python 3.12+
 - [GNU Make](https://www.gnu.org/software/make/)
 - Git
@@ -12,8 +12,11 @@ This page covers everything you need to run the full CI-equivalent checks locall
 ## One-time setup
 
 ```bash
-# Clone the repository
+# Clone the repository (HTTPS)
 git clone https://github.com/jupyter/docker-stacks.git
+# or via SSH
+git clone git@github.com:jupyter/docker-stacks.git
+
 cd docker-stacks
 
 # Install Python development dependencies
@@ -25,7 +28,7 @@ pre-commit install --install-hooks
 
 ## Pre-PR checklist
 
-Run these steps locally before pushing. They mirror what CI does and take under a minute (after the initial image build).
+Run these steps locally before pushing. They mirror what CI does.
 
 ```bash
 # 1. Run all linters including mypy
@@ -60,9 +63,3 @@ make build/docker-stacks-foundation
 make build/base-notebook
 make test/base-notebook
 ```
-
-## Troubleshooting
-
-- **Hadolint fails in pre-commit**: Hadolint runs via Docker, so make sure Docker is running.
-- **Tests are slow the first time**: The initial `make build` pulls base images and installs packages. Subsequent builds use Docker layer caching and are much faster.
-- **shellcheck not found**: The pre-commit hook installs shellcheck automatically; no system install needed.
