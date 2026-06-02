@@ -4,9 +4,9 @@ This page covers everything you need to run the full CI-equivalent checks locall
 
 ## Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/)
+- [Docker](https://docs.docker.com/get-started/get-docker/)
 - Python 3.12+
-- [GNU Make](https://www.gnu.org/software/make/)
+- GNU Make
 - Git
 
 ## One-time setup
