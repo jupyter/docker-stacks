@@ -1,6 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
+import re
 from typing import Any, Literal, LiteralString, overload
 
 import docker
@@ -172,8 +173,16 @@ class TrackedContainer:
         return warnings
 
     @staticmethod
+    def _strip_ansi(text: str) -> str:
+        return re.sub(r"\x1b\[[0-9;]*m", "", text)
+
+    @staticmethod
     def _lines_starting_with(logs: str, pattern: LiteralString) -> list[str]:
-        return [line for line in logs.splitlines() if line.startswith(pattern)]
+        return [
+            line
+            for line in logs.splitlines()
+            if TrackedContainer._strip_ansi(line).startswith(pattern)
+        ]
 
     def remove(self) -> None:
         """Kills and removes the tracked docker container."""

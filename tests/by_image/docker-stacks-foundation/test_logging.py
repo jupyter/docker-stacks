@@ -66,3 +66,58 @@ def test_log_without_level_defaults_to_info(container: TrackedContainer) -> None
     )
     assert "INFO[" in stderr
     assert "no level here" in stderr
+
+
+def test_log_color_on_tty(container: TrackedContainer) -> None:
+    """When stderr is a tty, ERROR messages should be colorized."""
+    logs = container.run_and_wait(
+        timeout=10,
+        no_errors=False,
+        user="root",
+        environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
+        command=[
+            "bash",
+            "-c",
+            'source /usr/local/bin/_docker_stacks_log.sh && _log_error "test error"',
+        ],
+    )
+    assert "\x1b[0;31m" in logs
+    assert "ERROR[" in logs
+    assert "test error" in logs
+    assert "\x1b[0m" in logs
+
+
+def test_log_no_color_without_tty(container: TrackedContainer) -> None:
+    """When stderr is not a tty (split_stderr uses pipes), no ANSI codes should appear."""
+    _, stderr = container.run_and_wait(
+        timeout=10,
+        no_errors=False,
+        user="root",
+        environment=["NB_USER=root", "NB_UID=0", "NB_GID=0"],
+        command=[
+            "bash",
+            "-c",
+            'source /usr/local/bin/_docker_stacks_log.sh && _log_error "test error"',
+        ],
+        split_stderr=True,
+    )
+    assert "\x1b[" not in stderr
+    assert "ERROR[" in stderr
+    assert "test error" in stderr
+
+
+def test_log_no_color_env_override(container: TrackedContainer) -> None:
+    """NO_COLOR should suppress ANSI colors even when stderr is a tty."""
+    logs = container.run_and_wait(
+        timeout=10,
+        no_errors=False,
+        user="root",
+        environment=["NB_USER=root", "NB_UID=0", "NB_GID=0", "NO_COLOR=1"],
+        command=[
+            "bash",
+            "-c",
+            'source /usr/local/bin/_docker_stacks_log.sh && _log_error "test error"',
+        ],
+    )
+    assert "\x1b[" not in logs
+    assert "ERROR[" in logs
