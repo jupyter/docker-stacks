@@ -5,8 +5,7 @@
 # The _log function is used for everything these scripts want to log.
 # It will always log errors and warnings but can be silenced for other messages
 # by setting the JUPYTER_DOCKER_STACKS_QUIET environment variable.
-# Colorizes WARNING and ERROR output when stderr is a terminal.
-# Respects NO_COLOR (https://no-color.org/).
+# Colorizes ERROR, WARNING, and DEBUG output when stderr is a terminal.
 _log () {
     local level="${1}"
     case "${level}" in
