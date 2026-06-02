@@ -5,7 +5,7 @@
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/jupyter/docker-stacks/main.svg)](https://results.pre-commit.ci/latest/github/jupyter/docker-stacks/main "pre-commit.ci build status")
 [![Discourse badge](https://img.shields.io/discourse/users.svg?color=%23f37626&server=https%3A%2F%2Fdiscourse.jupyter.org)](https://discourse.jupyter.org/ "Jupyter Discourse Forum")
 [![Binder badge](https://static.mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyter/docker-stacks/main?urlpath=lab/tree/README.ipynb "Launch a quay.io/jupyter/base-notebook container on mybinder.org")
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/jupyter/docker-stacks/badge)](https://scorecard.dev/viewer/?uri=github.com/jupyter/docker-stacks "OpenSSF Scorecard")
+[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/jupyter/docker-stacks?label=openssf+scorecard)](https://github.com/jupyter/docker-stacks/security "OpenSSF Scorecard")
 
 Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://quay.io/organization/jupyter) containing Jupyter applications and interactive computing tools.
 You can use a stack image to do any of the following (and more):
