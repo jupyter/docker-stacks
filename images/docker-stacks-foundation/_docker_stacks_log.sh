@@ -18,7 +18,8 @@ _log () {
             ;;
     esac
     if [[ "${level}" == "ERROR" ]] || [[ "${level}" == "WARNING" ]] || [[ "${JUPYTER_DOCKER_STACKS_QUIET}" == "" ]]; then
-        local msg="${level}[$(date '+%Y-%m-%d %H:%M:%S')] $*"
+        local msg
+        msg="${level}[$(date '+%Y-%m-%d %H:%M:%S')] $*"
         if [[ -t 2 ]] && [[ "${NO_COLOR:-}" == "" ]]; then
             local color=""
             case "${level}" in
