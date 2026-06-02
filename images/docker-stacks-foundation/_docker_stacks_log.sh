@@ -23,9 +23,9 @@ _log () {
         if [[ -t 2 ]] && [[ "${NO_COLOR:-}" == "" ]]; then
             local color=""
             case "${level}" in
-                ERROR)   color='31' ;;
-                WARNING) color='33' ;;
-                DEBUG)   color='36' ;;
+                ERROR)   color='31' ;; # red
+                WARNING) color='33' ;; # yellow
+                DEBUG)   color='36' ;; # cyan
             esac
             if [[ -n "${color}" ]]; then
                 msg=$'\033[0;'"${color}m${msg}"$'\033[0m'
