@@ -9,6 +9,9 @@ and [community-maintained stacks](https://jupyter-docker-stacks.readthedocs.io/e
 
 ## Before Submitting
 
+For a complete guide to running all checks locally (linters, build, tests), see the
+[Development Setup](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/dev-setup.html) page.
+
 Please run the [linters](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/lint.html)
 locally before opening a pull request.
 
