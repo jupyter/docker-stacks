@@ -49,10 +49,12 @@ This means changes to a parent image won't be reflected unless you also rebuild 
 Replace `<image-name>` with the image you modified (e.g., `docker-stacks-foundation`, `base-notebook`, `scipy-notebook`).
 
 ```{note}
-`make test/<image-name>` runs the tests defined under `tests/by_image/<image-name>/`
-against the named image only. CI additionally re-runs that same test set against every
-downstream image, so a change in `docker-stacks-foundation` is verified across all images
-in CI even though locally you'd only run `make test/docker-stacks-foundation`.
+`make test/<image-name>` runs the tests for that image plus every parent image's
+tests against it (e.g., testing `scipy-notebook` also runs `base-notebook` and
+`docker-stacks-foundation` test files against the `scipy-notebook` image). CI
+additionally runs the same test set against every downstream image, so a change
+in `docker-stacks-foundation` is verified across all images in CI even though
+locally you'd only run `make test/docker-stacks-foundation`.
 ```
 
 ## Common examples

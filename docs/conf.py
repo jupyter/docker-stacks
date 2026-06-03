@@ -68,6 +68,7 @@ linkcheck_ignore = [
     r"https://packages\.ubuntu\.com/search\?keywords=openjdk",  # frequent read timeouts
     r"https://anaconda\.org\/conda-forge",  # frequent read timeouts
     r"https://www\.unixodbc\.org/?",  # frequently down
+    r"https://www\.python-excel\.org/?",  # may fail intermittently
 ]
 
 linkcheck_allowed_redirects = {
