@@ -69,7 +69,7 @@ def image_name(request: pytest.FixtureRequest) -> str:
 @pytest.fixture(scope="function")
 def container(
     docker_client: docker.DockerClient, image_name: str
-) -> Generator[TrackedContainer]:
+) -> Generator[TrackedContainer, None, None]:
     """Notebook container with initial configuration appropriate for testing
     (e.g., HTTP port exposed to the host for HTTP calls).
 
@@ -84,9 +84,11 @@ def container(
 
 
 @pytest.fixture(scope="function")
-def free_host_port() -> Generator[int]:
+def free_host_port() -> Generator[int, None, None]:
     """Finds a free port on the host machine"""
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
         s.bind(("", 0))
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        yield s.getsockname()[1]
+        port = s.getsockname()[1]
+        assert isinstance(port, int) and 0 < port <= 65535
+        yield port
