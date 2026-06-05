@@ -9,19 +9,11 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: weekly
-    commit-message:
-      prefix: "[FAST_BUILD] "
-  - package-ecosystem: github-actions
-    directory: .github/actions/apply-single-tags/
-    schedule:
-      interval: weekly
-    commit-message:
-      prefix: "[FAST_BUILD] "
-  - package-ecosystem: github-actions
-    directory: .github/actions/create-dev-env/
+    directories:
+      - /
+      - /.github/actions/apply-single-tags/
+      - /.github/actions/create-dev-env/
+      - /.github/actions/load-image/
     schedule:
       interval: weekly
     commit-message:
@@ -31,12 +23,6 @@ updates:
     directory: .github/actions/free-disk-space/
     schedule:
       interval: weekly
-  - package-ecosystem: github-actions
-    directory: .github/actions/load-image/
-    schedule:
-      interval: weekly
-    commit-message:
-      prefix: "[FAST_BUILD] "
   - package-ecosystem: docker
     directory: .devcontainer/
     schedule:
