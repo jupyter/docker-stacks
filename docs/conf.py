@@ -69,6 +69,7 @@ linkcheck_ignore = [
     r"https://anaconda\.org\/conda-forge",  # frequent read timeouts
     r"https://www\.unixodbc\.org/?",  # frequently down
     r"https://www\.python-excel\.org/?",  # may fail intermittently
+    r"https://huggingface\.co/.*",  # frequently rate-limited
 ]
 
 linkcheck_allowed_redirects = {
