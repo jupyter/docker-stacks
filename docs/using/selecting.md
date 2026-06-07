@@ -127,7 +127,7 @@ It contains:
   [rsqlite](https://cran.r-project.org/web/packages/RSQLite/index.html),
   [shiny](https://shiny.posit.co),
   [tidymodels](https://www.tidymodels.org/),
-  [unixodbc](https://www.unixodbc.org)
+  [unixODBC](https://www.unixodbc.org/)
   packages from [conda-forge](https://conda-forge.org/feedstock-outputs/index.html)
 
 ### jupyter/julia-notebook

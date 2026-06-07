@@ -3,7 +3,7 @@
 
 # Ubuntu 24.04 (noble)
 # https://hub.docker.com/_/ubuntu/tags?page=1&name=noble
-ARG ROOT_IMAGE=ubuntu:24.04
+ARG ROOT_IMAGE=ubuntu:24.04@sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebcc41c7b
 
 FROM $ROOT_IMAGE
 
@@ -142,7 +142,7 @@ RUN set -x && \
     fix-permissions "/home/${NB_USER}"
 
 # Copy local files as late as possible to avoid cache busting
-COPY run-hooks.sh start.sh /usr/local/bin/
+COPY _docker_stacks_log.sh run-hooks.sh start.sh /usr/local/bin/
 
 # Configure container entrypoint
 ENTRYPOINT ["tini", "-g", "--", "start.sh"]

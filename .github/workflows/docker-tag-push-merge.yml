@@ -17,6 +17,8 @@ on:
       REGISTRY_TOKEN:
         required: true
 
+permissions: {}
+
 jobs:
   tag-push:
     uses: ./.github/workflows/docker-tag-push.yml

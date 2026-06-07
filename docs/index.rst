@@ -22,6 +22,7 @@ Table of Contents
    :maxdepth: 2
    :caption: Contributor Guide
 
+   contributing/dev-setup
    contributing/issues
    contributing/features
    contributing/tests

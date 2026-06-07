@@ -26,6 +26,8 @@ on:
       REGISTRY_TOKEN:
         required: true
 
+permissions: {}
+
 jobs:
   tag-push:
     runs-on: ubuntu-24.04
@@ -38,7 +40,7 @@ jobs:
 
     steps:
       - name: Checkout Repo ⚡️
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
       - name: Free disk space 🧹
         uses: ./.github/actions/free-disk-space
         if: contains(inputs.variant, 'cuda') || inputs.image == 'datascience-notebook' || inputs.image == 'all-spark-notebook'

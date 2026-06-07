@@ -13,13 +13,15 @@ on:
     - cron: "34 3 * * 3"
   push:
     branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
 
 jobs:
   analysis:
     name: Scorecard analysis
     runs-on: ubuntu-24.04
-    # `publish_results: true` only works when run from the default branch. conditional can be removed if disabled.
-    if: github.event.repository.default_branch == github.ref_name
     permissions:
       # Needed by actions/checkout and Scorecard to read the repository contents.
       contents: read
@@ -32,7 +34,7 @@ jobs:
 
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
 
@@ -54,7 +56,9 @@ jobs:
           # For private repositories:
           #   - `publish_results` will always be set to `false`, regardless
           #     of the value entered here.
-          publish_results: true
+          #
+          # publish_results: true` only works when run from the default branch. conditional can be removed if disabled.
+          publish_results: ${{ github.event.repository.default_branch == github.ref_name }}
 
           # (Optional) Uncomment file_mode if you have a .gitattributes with files marked export-ignore
           # file_mode: git
@@ -71,6 +75,6 @@ jobs:
       # Upload the results to GitHub's code scanning dashboard (optional).
       # Commenting out will disable upload of results to your repo's Code Scanning dashboard
       - name: "Upload to code-scanning"
-        uses: github/codeql-action/upload-sarif@e46ed2cbd01164d986452f91f178727624ae40d7 # v4.35.3
+        uses: github/codeql-action/upload-sarif@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4.36.1
         with:
           sarif_file: results.sarif

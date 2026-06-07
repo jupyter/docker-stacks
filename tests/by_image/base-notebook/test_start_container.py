@@ -42,24 +42,23 @@ def test_start_notebook(
         f"Test that the start-notebook.py launches the {expected_command} server from the env {env} ..."
     )
     container.run_detached(environment=env, ports={"8888/tcp": free_host_port})
-    # sleeping some time to let the server start
-    time.sleep(2)
+    # Wait for the server to be reachable (proves start-notebook.py finished launching)
+    if expected_start:
+        resp = http_client.get(f"http://localhost:{free_host_port}")
+        assert resp.status_code == 200, "Server is not listening"
+    else:
+        # For non-listening cases (e.g. jupyterhub-singleuser), give the script time to print
+        time.sleep(5)
     logs = container.get_logs()
     LOGGER.debug(logs)
-    # checking that the expected command is launched
     assert (
         f"Executing: {expected_command}" in logs
     ), f"Not the expected command ({expected_command}) was launched"
-    # checking errors and warnings in logs
     assert "ERROR" not in logs, "ERROR(s) found in logs"
     for exp_warning in expected_warnings:
         assert exp_warning in logs, f"Expected warning {exp_warning} not found in logs"
     warnings = TrackedContainer.get_warnings(logs)
     assert len(expected_warnings) == len(warnings)
-    # checking if the server is listening
-    if expected_start:
-        resp = http_client.get(f"http://localhost:{free_host_port}")
-        assert resp.status_code == 200, "Server is not listening"
 
 
 def test_tini_entrypoint(
