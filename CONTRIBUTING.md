@@ -7,6 +7,14 @@ for information about how to contribute
 [tests](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/tests.html),
 and [community-maintained stacks](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/stacks.html).
 
+## Before Submitting
+
+For a complete guide to running all checks locally (linters, build, tests), see the
+[Development Setup](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/dev-setup.html) page.
+
+Please run the [linters](https://jupyter-docker-stacks.readthedocs.io/en/latest/contributing/lint.html)
+locally before opening a pull request.
+
 ## Our Copyright Policy
 
 Jupyter uses a shared copyright model. Each contributor maintains copyright

@@ -67,6 +67,9 @@ linkcheck_ignore = [
     r"https://mybinder\.org/v2/gh/.*",  # lots of 500 errors
     r"https://packages\.ubuntu\.com/search\?keywords=openjdk",  # frequent read timeouts
     r"https://anaconda\.org\/conda-forge",  # frequent read timeouts
+    r"https://www\.unixodbc\.org/?",  # frequently down
+    r"https://www\.python-excel\.org/?",  # may fail intermittently
+    r"https://huggingface\.co/.*",  # frequently rate-limited
 ]
 
 linkcheck_allowed_redirects = {
