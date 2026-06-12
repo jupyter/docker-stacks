@@ -112,6 +112,21 @@ def test_log_no_color_without_tty(container: TrackedContainer) -> None:
     assert TEST_ERROR_MSG in stderr
 
 
+def test_log_fatal_exits_nonzero(container: TrackedContainer) -> None:
+    """_log_fatal should emit an ERROR message and exit with a non-zero status."""
+    _, stderr = container.run_and_wait(
+        timeout=10,
+        no_failure=False,
+        no_errors=False,
+        user="root",
+        environment=ROOT_ENV,
+        command=["bash", "-c", f'{SOURCE_LOG} && _log_fatal "{TEST_ERROR_MSG}"'],
+        split_stderr=True,
+    )
+    assert ERROR_PREFIX in stderr
+    assert TEST_ERROR_MSG in stderr
+
+
 def test_log_no_color_env_override(container: TrackedContainer) -> None:
     """NO_COLOR should suppress ANSI colors even when stderr is a tty."""
     logs = container.run_and_wait(

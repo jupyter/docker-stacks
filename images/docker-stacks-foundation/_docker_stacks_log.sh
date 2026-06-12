@@ -36,3 +36,4 @@ _log () {
 _log_info () { _log "INFO" "$@"; }
 _log_warn () { _log "WARNING" "$@"; }
 _log_error () { _log "ERROR" "$@"; }
+_log_fatal () { _log "ERROR" "$@"; exit 1; }
