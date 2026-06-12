@@ -17,9 +17,11 @@ SOURCE_LOG = "source /usr/local/bin/_docker_stacks_log.sh"
 INFO_PREFIX = "INFO["
 WARNING_PREFIX = "WARNING["
 ERROR_PREFIX = "ERROR["
+FATAL_PREFIX = "FATAL["
 
 # ANSI color sequences
 ANSI_RED = "\x1b[0;31m"
+ANSI_BOLD_RED = "\x1b[0;1;31m"
 ANSI_RESET = "\x1b[0m"
 ANSI_PREFIX = "\x1b["
 
@@ -113,18 +115,33 @@ def test_log_no_color_without_tty(container: TrackedContainer) -> None:
 
 
 def test_log_fatal_exits_nonzero(container: TrackedContainer) -> None:
-    """_log_fatal should emit an ERROR message and exit with a non-zero status."""
+    """_log_fatal should emit a FATAL message and exit with a non-zero status."""
     _, stderr = container.run_and_wait(
         timeout=10,
         no_failure=False,
-        no_errors=False,
         user="root",
         environment=ROOT_ENV,
         command=["bash", "-c", f'{SOURCE_LOG} && _log_fatal "{TEST_ERROR_MSG}"'],
         split_stderr=True,
     )
-    assert ERROR_PREFIX in stderr
+    assert FATAL_PREFIX in stderr
+    assert ERROR_PREFIX not in stderr
     assert TEST_ERROR_MSG in stderr
+
+
+def test_log_fatal_color_on_tty(container: TrackedContainer) -> None:
+    """When stderr is a tty, FATAL messages should be colorized in bold red."""
+    logs = container.run_and_wait(
+        timeout=10,
+        no_failure=False,
+        user="root",
+        environment=ROOT_ENV,
+        command=["bash", "-c", f'{SOURCE_LOG} && _log_fatal "{TEST_ERROR_MSG}"'],
+    )
+    assert ANSI_BOLD_RED in logs
+    assert FATAL_PREFIX in logs
+    assert TEST_ERROR_MSG in logs
+    assert ANSI_RESET in logs
 
 
 def test_log_no_color_env_override(container: TrackedContainer) -> None:
