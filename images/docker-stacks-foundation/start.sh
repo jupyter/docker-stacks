@@ -67,8 +67,7 @@ if [ "$(id -u)" == 0 ]; then
             _log_info "- home dir: /home/jovyan -> /home/${NB_USER}"
         fi
     elif ! id -u "${NB_USER}" &> /dev/null; then
-        _log_error "Neither the jovyan user nor '${NB_USER}' exists. This could be the result of stopping and starting, the container with a different NB_USER environment variable."
-        exit 1
+        _log_fatal "Neither the jovyan user nor '${NB_USER}' exists. This could be the result of stopping and starting, the container with a different NB_USER environment variable."
     fi
     # Ensure the desired user (NB_USER) gets its desired user id (NB_UID) and is
     # a member of the desired group (NB_GROUP, NB_GID)
@@ -106,8 +105,7 @@ if [ "$(id -u)" == 0 ]; then
                 if ln -s /home/jovyan "/home/${NB_USER}"; then
                     _log_info "Success creating symlink!"
                 else
-                    _log_error "Failed copy data from /home/jovyan to /home/${NB_USER} or to create symlink!"
-                    exit 1
+                    _log_fatal "Failed copy data from /home/jovyan to /home/${NB_USER} or to create symlink!"
                 fi
             fi
         fi
