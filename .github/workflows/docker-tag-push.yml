@@ -60,9 +60,10 @@ jobs:
           docker login ${{ env.REGISTRY }} \
             --username ${{ secrets.REGISTRY_USERNAME }} \
             --password ${{ secrets.REGISTRY_TOKEN }} || \
+          (sleep 10 && \
           docker login ${{ env.REGISTRY }} \
             --username ${{ secrets.REGISTRY_USERNAME }} \
-            --password ${{ secrets.REGISTRY_TOKEN }}
+            --password ${{ secrets.REGISTRY_TOKEN }})
         shell: bash
         id: login
 
