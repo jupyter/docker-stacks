@@ -32,6 +32,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+      id-token: write
     timeout-minutes: ${{ inputs.timeout-minutes }}
 
     steps:
@@ -67,11 +68,28 @@ jobs:
         id: login
 
       - name: Merge tags for the images 🔀
+        if: env.PUSH_TO_REGISTRY == 'true'
+        id: merge
         run: |
           python3 -m tagging.apps.merge_tags \
             --image ${{ inputs.image }} \
             --variant ${{ inputs.variant }} \
             --tags-dir /tmp/jupyter/tags/
+          IMAGE_DIGEST=$(docker manifest inspect ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} --verbose | python3 -c "import sys,json; data=json.load(sys.stdin); print(data[0]['Descriptor']['digest']) if isinstance(data, list) else print(data['Descriptor']['digest'])")
+          echo "digest=${IMAGE_DIGEST}" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Install Cosign 🔏
+        if: env.PUSH_TO_REGISTRY == 'true'
+        uses: sigstore/cosign-installer@3454372f43399081ed03b604cb2d021dabca52bb # v3.8.2
+
+      - name: Sign image with Cosign 🔏
+        if: env.PUSH_TO_REGISTRY == 'true'
+        env:
+          DIGEST: ${{ steps.merge.outputs.digest }}
+        run: |
+          cosign sign --yes \
+            ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}@${DIGEST}
         shell: bash
 
       - name: Logout from Registry 🔐
