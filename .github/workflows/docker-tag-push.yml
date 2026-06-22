@@ -70,25 +70,20 @@ jobs:
 
       - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
-        id: push
         run: |
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
-          IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | cut -d'@' -f2)
-          echo "digest=${IMAGE_DIGEST}" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Install Cosign 🔏
-        if: env.PUSH_TO_REGISTRY == 'true'
-        uses: sigstore/cosign-installer@3454372f43399081ed03b604cb2d021dabca52bb # v3.8.2
+        uses: sigstore/cosign-installer@v4.1.0
 
       - name: Sign image with Cosign 🔏
         if: env.PUSH_TO_REGISTRY == 'true'
-        env:
-          DIGEST: ${{ steps.push.outputs.digest }}
         run: |
+          IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | cut -d'@' -f2)
           cosign sign --yes \
-            ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}@${DIGEST}
+            ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}@${IMAGE_DIGEST}
         shell: bash
 
       - name: Logout from Registry 🔐
