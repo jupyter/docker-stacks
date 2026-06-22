@@ -72,7 +72,8 @@ jobs:
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
-          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
+          (sleep 10 && \
+          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }})
         shell: bash
 
       - name: Install Cosign 🔏
