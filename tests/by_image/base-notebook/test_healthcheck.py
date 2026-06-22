@@ -1,11 +1,11 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
-import time
 
 import pytest  # type: ignore
 
 from tests.utils.tracked_container import TrackedContainer
+from tests.utils.wait import wait_until
 
 LOGGER = logging.getLogger(__name__)
 
@@ -24,16 +24,8 @@ def get_healthy_status(
     )
 
     # giving some time to let the server start
-    finish_time = time.time() + 10
-    sleep_time = 1
-    while time.time() < finish_time:
-        time.sleep(sleep_time)
-
-        status = container.get_health()
-        if status == "healthy":
-            return status
-
-    return status
+    wait_until(lambda: container.get_health() == "healthy")
+    return container.get_health()
 
 
 @pytest.mark.parametrize(
