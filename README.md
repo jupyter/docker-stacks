@@ -6,7 +6,7 @@
 [![Discourse badge](https://img.shields.io/discourse/users.svg?color=%23f37626&server=https%3A%2F%2Fdiscourse.jupyter.org)](https://discourse.jupyter.org/ "Jupyter Discourse Forum")
 [![Binder badge](https://static.mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/jupyter/docker-stacks/main?urlpath=lab/tree/README.ipynb "Launch a quay.io/jupyter/base-notebook container on mybinder.org")
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black "Black code formatter")
-[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/jupyter/docker-stacks?label=openssf+scorecard)](https://github.com/jupyter/docker-stacks/security "OpenSSF Scorecard")
+[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/jupyter/docker-stacks?label=openssf+scorecard)](https://scorecard.dev/viewer/?uri=github.com/jupyter/docker-stacks "OpenSSF Scorecard")
 [![License badge](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/license/BSD-3-Clause "Modified BSD License")
 
 Jupyter Docker Stacks are a set of ready-to-run [Docker images](https://quay.io/organization/jupyter) containing Jupyter applications and interactive computing tools.
