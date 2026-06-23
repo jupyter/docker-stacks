@@ -71,10 +71,9 @@ jobs:
       - name: Push single platform images to Registry 📤
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
-          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | tee /tmp/push.log || \
+          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
           (sleep 10 && \
-          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | tee /tmp/push.log)
-          echo "IMAGE_DIGEST=$(grep -o 'digest: sha256:[a-f0-9]\{64\}' /tmp/push.log | head -1 | cut -d' ' -f2)" >> "$GITHUB_ENV"
+          docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }})
         shell: bash
 
       - name: Install Cosign 🔏
@@ -83,6 +82,10 @@ jobs:
       - name: Sign image with Cosign 🔏
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
+          # The :latest tag was removed earlier, so inspect by image ID to read
+          # the push-populated digest from .RepoDigests.
+          IMAGE_ID=$(docker image ls --quiet --no-trunc ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | head -1)
+          IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "${IMAGE_ID}" | cut -d'@' -f2)
           cosign sign --yes \
             ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}@${IMAGE_DIGEST}
         shell: bash
