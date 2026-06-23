@@ -82,10 +82,7 @@ jobs:
       - name: Sign image with Cosign 🔏
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
-          # The :latest tag was removed earlier, so inspect by image ID to read
-          # the push-populated digest from .RepoDigests.
-          IMAGE_ID=$(docker image ls --quiet --no-trunc ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | head -1)
-          IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "${IMAGE_ID}" | cut -d'@' -f2)
+          IMAGE_DIGEST=$(docker images --no-trunc --format '{{.Digest}}' ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | head -1)
           cosign sign --yes \
             ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}@${IMAGE_DIGEST}
         shell: bash
