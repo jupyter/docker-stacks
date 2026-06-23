@@ -82,7 +82,7 @@ jobs:
       - name: Sign image with Cosign 🔏
         if: env.PUSH_TO_REGISTRY == 'true'
         run: |
-          IMAGE_DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | cut -d'@' -f2)
+          IMAGE_DIGEST=$(docker images --no-trunc --format '{{.Digest}}' ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} | head -1)
           cosign sign --yes \
             ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}@${IMAGE_DIGEST}
         shell: bash
