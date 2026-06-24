@@ -452,7 +452,6 @@ jobs:
     uses: ./.github/workflows/docker-tag-push-merge.yml
     permissions:
       contents: read
-      id-token: write
     with:
       image: ${{ matrix.image }}
       variant: ${{ matrix.variant }}
@@ -523,7 +522,6 @@ jobs:
     uses: ./.github/workflows/docker-tag-push-merge.yml
     permissions:
       contents: read
-      id-token: write
     with:
       image: ${{ matrix.image }}
       variant: ${{ matrix.variant }}

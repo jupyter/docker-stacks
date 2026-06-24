@@ -24,7 +24,6 @@ jobs:
     uses: ./.github/workflows/docker-tag-push.yml
     permissions:
       contents: read
-      id-token: write
     with:
       image: ${{ inputs.image }}
       variant: ${{ inputs.variant }}
@@ -36,7 +35,6 @@ jobs:
     uses: ./.github/workflows/docker-tag-merge.yml
     permissions:
       contents: read
-      id-token: write
     needs: tag-push
     with:
       image: ${{ inputs.image }}
