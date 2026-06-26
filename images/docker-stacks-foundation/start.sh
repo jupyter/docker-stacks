@@ -10,7 +10,7 @@ _log_info "Entered start.sh with args:" "$@"
 
 # A helper function to unset env vars listed in the value of the env var
 # JUPYTER_ENV_VARS_TO_UNSET.
-unset_explicit_env_vars () {
+unset_explicit_env_vars() {
     if [ -n "${JUPYTER_ENV_VARS_TO_UNSET}" ]; then
         for env_var_to_unset in $(echo "${JUPYTER_ENV_VARS_TO_UNSET}" | tr ',' ' '); do
             _log_info "Unset ${env_var_to_unset} due to JUPYTER_ENV_VARS_TO_UNSET"
@@ -20,12 +20,11 @@ unset_explicit_env_vars () {
     fi
 }
 
-
 # Default to starting bash if no command was specified
 if [ $# -eq 0 ]; then
-    cmd=( "bash" )
+    cmd=("bash")
 else
-    cmd=( "$@" )
+    cmd=("$@")
 fi
 
 # Backwards compatibility: `start.sh` is executed by default in ENTRYPOINT
@@ -37,7 +36,6 @@ if [ "${_START_SH_EXECUTED}" = "1" ]; then
 else
     export _START_SH_EXECUTED=1
 fi
-
 
 # NOTE: This hook will run as the user the container was started with!
 # shellcheck source=images/docker-stacks-foundation/run-hooks.sh
@@ -60,13 +58,13 @@ if [ "$(id -u)" == 0 ]; then
     # - CHOWN_HOME_OPTS / CHOWN_EXTRA_OPTS: arguments to the chown commands
 
     # Refit the jovyan user to the desired user (NB_USER)
-    if id jovyan &> /dev/null; then
-        if ! usermod --home "/home/${NB_USER}" --login "${NB_USER}" jovyan 2>&1 | grep "no changes" > /dev/null; then
+    if id jovyan &>/dev/null; then
+        if ! usermod --home "/home/${NB_USER}" --login "${NB_USER}" jovyan 2>&1 | grep "no changes" >/dev/null; then
             _log_info "Updated the jovyan user:"
             _log_info "- username: jovyan       -> ${NB_USER}"
             _log_info "- home dir: /home/jovyan -> /home/${NB_USER}"
         fi
-    elif ! id -u "${NB_USER}" &> /dev/null; then
+    elif ! id -u "${NB_USER}" &>/dev/null; then
         _log_fatal "Neither the jovyan user nor '${NB_USER}' exists. This could be the result of stopping and starting, the container with a different NB_USER environment variable."
     fi
     # Ensure the desired user (NB_USER) gets its desired user id (NB_UID) and is
@@ -133,12 +131,12 @@ if [ "$(id -u)" == 0 ]; then
     fi
 
     # Prepend ${CONDA_DIR}/bin to sudo secure_path
-    sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"${CONDA_DIR}/bin:\1\"#" /etc/sudoers | grep secure_path > /etc/sudoers.d/path
+    sed -r "s#Defaults\s+secure_path\s*=\s*\"?([^\"]+)\"?#Defaults secure_path=\"${CONDA_DIR}/bin:\1\"#" /etc/sudoers | grep secure_path >/etc/sudoers.d/path
 
     # Optionally grant passwordless sudo rights for the desired user
     if [[ "${GRANT_SUDO}" == "1" || "${GRANT_SUDO}" == "yes" ]]; then
         _log_info "Granting ${NB_USER} passwordless sudo rights!"
-        echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/added-by-start-script
+        echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/added-by-start-script
     fi
 
     # NOTE: This hook is run as the root user!
@@ -192,8 +190,8 @@ else
         _log_warn "container must be started as root to grant sudo permissions!"
     fi
 
-    JOVYAN_UID="$(id -u jovyan 2>/dev/null)"  # The default UID for the jovyan user
-    JOVYAN_GID="$(id -g jovyan 2>/dev/null)"  # The default GID for the jovyan user
+    JOVYAN_UID="$(id -u jovyan 2>/dev/null)" # The default UID for the jovyan user
+    JOVYAN_GID="$(id -g jovyan 2>/dev/null)" # The default GID for the jovyan user
 
     # Attempt to ensure the user uid we currently run as has a named entry in
     # the /etc/passwd file, as it avoids software crashing on hard assumptions
@@ -201,16 +199,16 @@ else
     # from the Dockerfile during the build.
     #
     # ref: https://github.com/jupyter/docker-stacks/issues/552
-    if ! whoami &> /dev/null; then
+    if ! whoami &>/dev/null; then
         _log_info "There is no entry in /etc/passwd for our UID=$(id -u). Attempting to fix..."
         if [[ -w /etc/passwd ]]; then
             _log_info "Renaming old jovyan user to nayvoj ($(id -u jovyan):$(id -g jovyan))"
 
             # We cannot use "sed --in-place" since sed tries to create a temp file in
             # /etc/ and we may not have write access. Apply sed on our own temp file:
-            sed --expression="s/^jovyan:/nayvoj:/" /etc/passwd > /tmp/passwd
-            echo "${NB_USER}:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >> /tmp/passwd
-            cat /tmp/passwd > /etc/passwd
+            sed --expression="s/^jovyan:/nayvoj:/" /etc/passwd >/tmp/passwd
+            echo "${NB_USER}:x:$(id -u):$(id -g):,,,:/home/jovyan:/bin/bash" >>/tmp/passwd
+            cat /tmp/passwd >/etc/passwd
             rm /tmp/passwd
 
             _log_info "Added new ${NB_USER} user ($(id -u):$(id -g)). Fixed UID!"
