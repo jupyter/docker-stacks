@@ -67,7 +67,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 39e2973981e6d2f9b6c543b0086a2d2393abdc89  # frozen: v3.9.4
+    rev: 39e2973981e6d2f9b6c543b0086a2d2393abdc89 # frozen: v3.9.4
     hooks:
       - id: prettier
 
@@ -84,7 +84,7 @@ repos:
 
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint
-    rev: 4e697ba704fd23b2409b947a319c19c3ee54d24f  # frozen: v2.14.0
+    rev: 4e697ba704fd23b2409b947a319c19c3ee54d24f # frozen: v2.14.0
     hooks:
       - id: hadolint-docker
         entry: hadolint/hadolint:v2.14.0 hadolint
@@ -92,7 +92,7 @@ repos:
   # Lint: Dockerfile
   # We're linting .dockerfile files as well
   - repo: https://github.com/hadolint/hadolint
-    rev: 4e697ba704fd23b2409b947a319c19c3ee54d24f  # frozen: v2.14.0
+    rev: 4e697ba704fd23b2409b947a319c19c3ee54d24f # frozen: v2.14.0
     hooks:
       - id: hadolint-docker
         name: Lint *.dockerfile Dockerfiles
@@ -123,27 +123,27 @@ repos:
 
   # Lint: Python
   - repo: https://github.com/PyCQA/flake8
-    rev: d93590f5be797aabb60e3b09f2f52dddb02f349f  # frozen: 7.3.0
+    rev: d93590f5be797aabb60e3b09f2f52dddb02f349f # frozen: 7.3.0
     hooks:
       - id: flake8
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: 534166213006ec869b773b7ed8c6ebeaad1165d0  # frozen: v0.23.0
+    rev: 534166213006ec869b773b7ed8c6ebeaad1165d0 # frozen: v0.23.0
     hooks:
       - id: markdownlint-cli2
         args: [--fix]
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
-    rev: f5da19ce3b7b40e97c12ee9cd8ce97f48f97ddf7  # frozen: 0.9.1
+    rev: f5da19ce3b7b40e97c12ee9cd8ce97f48f97ddf7 # frozen: 0.9.1
     hooks:
       - id: nbstripout
 
   # nbQA provides tools from the Python ecosystem like
   # pyupgrade, isort, black, and flake8, adjusted for notebooks.
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: f96ec7f3b26a32619435686eb5813235f7e3327e  # frozen: 1.9.1
+    rev: f96ec7f3b26a32619435686eb5813235f7e3327e # frozen: 1.9.1
     hooks:
       - id: nbqa-pyupgrade
         args: [--py312-plus]
@@ -154,7 +154,7 @@ repos:
 
   # Run black on python code blocks in documentation files.
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: dda8db18cfc68df532abf33b185ecd12d5b7b326  # frozen: 1.20.0
+    rev: dda8db18cfc68df532abf33b185ecd12d5b7b326 # frozen: 1.20.0
     hooks:
       - id: blacken-docs
         # --skip-errors is added to allow us to have python syntax highlighting even if
