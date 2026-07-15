@@ -3,7 +3,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 # Source logging functions if not already available
-if ! declare -F _log > /dev/null; then
+if ! declare -F _log >/dev/null; then
     # shellcheck source=images/docker-stacks-foundation/_docker_stacks_log.sh
     source /usr/local/bin/_docker_stacks_log.sh
 fi

@@ -67,7 +67,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 515f543f5718ebfd6ce22e16708bb32c68ff96e1 # frozen: v3.8.3
+    rev: 39e2973981e6d2f9b6c543b0086a2d2393abdc89 # frozen: v3.9.4
     hooks:
       - id: prettier
 
@@ -108,11 +108,11 @@ repos:
         args: ["-d {extends: relaxed, rules: {line-length: disable}}", "-s"]
 
   # Lint: Bash scripts
-  - repo: https://github.com/openstack/bashate
-    rev: 5798d24d571676fc407e81df574c1ef57b520f23 # frozen: 2.1.1
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: 05c1426671b9237fb5e1444dd63aa5731bec0dfb # frozen: v3.13.1-1
     hooks:
-      - id: bashate
-        args: ["--ignore=E006"]
+      - id: shfmt
+        args: [--write, --indent=4, --case-indent=true]
 
   # Lint: Shell scripts
   - repo: https://github.com/shellcheck-py/shellcheck-py
@@ -129,7 +129,7 @@ repos:
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: 996abf60411a8d954288ac9856aae7602b80cbda # frozen: v0.22.1
+    rev: 534166213006ec869b773b7ed8c6ebeaad1165d0 # frozen: v0.23.0
     hooks:
       - id: markdownlint-cli2
         args: [--fix]

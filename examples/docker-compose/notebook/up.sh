@@ -4,7 +4,7 @@
 
 set -e
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 USAGE="Usage: $(basename "${0}") [--secure | --letsencrypt] [--password PASSWORD] [--secrets SECRETS_VOLUME]"
 
@@ -12,27 +12,27 @@ USAGE="Usage: $(basename "${0}") [--secure | --letsencrypt] [--password PASSWORD
 SECURE=${SECURE:=no}
 LETSENCRYPT=${LETSENCRYPT:=no}
 while [[ $# -gt 0 ]]; do
-key="${1}"
-case "${key}" in
-    --secure)
-    SECURE=yes
-    ;;
-    --letsencrypt)
-    LETSENCRYPT=yes
-    ;;
-    --secrets)
-    SECRETS_VOLUME="${2}"
-    shift # past argument
-    ;;
-    --password)
-    PASSWORD="${2}"
-    export PASSWORD
-    shift # past argument
-    ;;
-    *) # unknown option
-    ;;
-esac
-shift # past argument or value
+    key="${1}"
+    case "${key}" in
+        --secure)
+            SECURE=yes
+            ;;
+        --letsencrypt)
+            LETSENCRYPT=yes
+            ;;
+        --secrets)
+            SECRETS_VOLUME="${2}"
+            shift # past argument
+            ;;
+        --password)
+            PASSWORD="${2}"
+            export PASSWORD
+            shift # past argument
+            ;;
+        *) # unknown option
+            ;;
+    esac
+    shift # past argument or value
 done
 
 if [[ "${LETSENCRYPT}" == yes || "${SECURE}" == yes ]]; then

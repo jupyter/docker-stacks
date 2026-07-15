@@ -10,7 +10,7 @@ If you would like to build a custom set of images, [take a look at the docs](cus
 ## Using `sudo` within a container
 
 Password authentication is disabled for the `NB_USER` (e.g., `jovyan`).
-We made this choice to avoid distributing images with a weak default password that users ~might~ will forget to change before running a container on a publicly accessible host.
+We made this choice to avoid distributing images with a weak default password that users ~~might~~ will forget to change before running a container on a publicly accessible host.
 
 You can grant the within-container `NB_USER` passwordless `sudo` access by adding `--user root` and `-e GRANT_SUDO=yes` to your Docker command line or appropriate container orchestrator config.
 

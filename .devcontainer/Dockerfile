@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/python:3.14@sha256:66af9ee0a89e76f83b5c54a0cfdc19966ec8e443e294707f8f9b45f465b42cf1
+FROM mcr.microsoft.com/devcontainers/python:3.14@sha256:1c3a6304ca90d6843915738d1adfbc4db1a660a65fa96948b88048357cc3811a
 
 COPY requirements-dev.txt /tmp/requirements-dev.txt
 COPY docs/requirements.txt /tmp/requirements-docs.txt

@@ -6,10 +6,10 @@
 # It will always log fatals, errors and warnings but can be silenced for other
 # messages by setting the JUPYTER_DOCKER_STACKS_QUIET environment variable.
 # Colorizes FATAL, ERROR, WARNING, and DEBUG output when stderr is a terminal.
-_log () {
+_log() {
     local level="${1}"
     case "${level}" in
-        INFO|WARNING|ERROR|FATAL|DEBUG)
+        INFO | WARNING | ERROR | FATAL | DEBUG)
             shift
             ;;
         *)
@@ -22,10 +22,10 @@ _log () {
         if [[ -t 2 ]] && [[ "${NO_COLOR:-}" == "" ]]; then
             local color=""
             case "${level}" in
-                FATAL)   color='1;31' ;; # bold red
-                ERROR)   color='31' ;;   # red
-                WARNING) color='33' ;;   # yellow
-                DEBUG)   color='36' ;;   # cyan
+                FATAL) color='1;31' ;; # bold red
+                ERROR) color='31' ;;   # red
+                WARNING) color='33' ;; # yellow
+                DEBUG) color='36' ;;   # cyan
             esac
             if [[ -n "${color}" ]]; then
                 msg=$'\033[0;'"${color}m${msg}"$'\033[0m'
@@ -34,7 +34,10 @@ _log () {
         echo "${msg}" >&2
     fi
 }
-_log_info () { _log "INFO" "$@"; }
-_log_warn () { _log "WARNING" "$@"; }
-_log_error () { _log "ERROR" "$@"; }
-_log_fatal () { _log "FATAL" "$@"; exit 1; }
+_log_info() { _log "INFO" "$@"; }
+_log_warn() { _log "WARNING" "$@"; }
+_log_error() { _log "ERROR" "$@"; }
+_log_fatal() {
+    _log "FATAL" "$@"
+    exit 1
+}

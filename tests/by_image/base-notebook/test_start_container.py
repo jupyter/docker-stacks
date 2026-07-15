@@ -7,6 +7,7 @@ import pytest  # type: ignore
 import requests
 
 from tests.utils.tracked_container import TrackedContainer
+from tests.utils.wait import wait_until
 
 LOGGER = logging.getLogger(__name__)
 
@@ -49,10 +50,13 @@ def test_start_notebook(
     else:
         # For non-listening cases (e.g. jupyterhub-singleuser), give the script time to print
         time.sleep(5)
+    # Buffered container stdout can lag the server being reachable, so poll the logs.
+    expected_log = f"Executing: {expected_command}"
+    wait_until(lambda: expected_log in container.get_logs())
     logs = container.get_logs()
     LOGGER.debug(logs)
     assert (
-        f"Executing: {expected_command}" in logs
+        expected_log in logs
     ), f"Not the expected command ({expected_command}) was launched"
     assert "ERROR" not in logs, "ERROR(s) found in logs"
     for exp_warning in expected_warnings:
