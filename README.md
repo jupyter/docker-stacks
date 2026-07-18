@@ -41,7 +41,7 @@ docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2025-12-31
 
 You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/containers/run/#exposed-ports) to `-p 8888:8888`.
 
-Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
+Visiting `https://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
 where:
 
 - The `hostname` is the name of the computer running Docker
@@ -61,7 +61,7 @@ docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/
 The use of the `-v` flag in the command mounts the current working directory on the host (`${PWD}` in the example command) as `/home/jovyan/work` in the container.
 The server logs appear in the terminal.
 
-Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
+Visiting `https://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
 
 Due to the usage of [the `--rm` flag](https://docs.docker.com/reference/cli/docker/container/run/#rm)
 Docker automatically cleans up the container and removes the file system when the container exits,
