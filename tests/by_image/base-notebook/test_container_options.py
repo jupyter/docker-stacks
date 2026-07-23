@@ -1,7 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 import logging
-import time
 
 import pytest  # type: ignore
 import requests
@@ -67,12 +66,20 @@ def test_unsigned_ssl(
         environment=["GEN_CERT=yes"],
         ports={"8888/tcp": free_host_port},
     )
+    url = f"https://localhost:{free_host_port}"
+
+    def server_answers() -> bool:
+        try:
+            return http_client.get(url, verify=False, timeout=10).status_code == 200
+        except requests.RequestException:
+            return False
+
     # NOTE: The requests.Session backing the http_client fixture
     # does not retry properly while the server is booting up.
-    # An SSL handshake error seems to abort the retry logic.
-    # Forcing a long sleep for the moment until I have time to dig more.
-    time.sleep(1)
-    resp = http_client.get(f"https://localhost:{free_host_port}", verify=False)
+    # An SSL handshake error seems to abort the retry logic,
+    # so tolerate SSL/connection errors here until the server answers.
+    assert wait_until(server_answers, timeout=60), "Server did not start"
+    resp = http_client.get(url, verify=False, timeout=10)
     resp.raise_for_status()
     assert "login_submit" in resp.text
     logs = container.get_logs()
