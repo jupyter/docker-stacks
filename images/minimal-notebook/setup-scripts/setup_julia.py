@@ -33,7 +33,7 @@ def get_latest_julia_url() -> tuple[str, str, str]:
     """
     LOGGER.info("Downloading Julia versions information")
     versions = requests.get(
-        "https://julialang-s3.julialang.org/bin/versions.json"
+        "https://julialang-s3.julialang.org/bin/versions.json", timeout=60
     ).json()
     stable_versions = {k: v for k, v in versions.items() if v["stable"]}
     # Compare versions semantically
