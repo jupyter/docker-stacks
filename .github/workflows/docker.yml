@@ -486,8 +486,6 @@ jobs:
             variant: cuda13
     needs:
       [
-        contributed-recipes,
-
         aarch64-foundation,
         aarch64-base,
         aarch64-minimal,
