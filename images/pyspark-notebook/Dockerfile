@@ -34,6 +34,9 @@ ARG scala_version
 # But it seems to be slower, that's why we use the recommended site for download
 ARG spark_download_url="https://dlcdn.apache.org/spark/"
 ARG derby_version="10.17.1.0"
+# The sha256 checksum of the derby jar from Maven Central
+# It must be updated together with derby_version
+ARG derby_sha256="764e4c133f860a8876e835ef2306efecad27a742d27f05bc4bce669432c6b397"
 
 ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
@@ -55,6 +58,7 @@ RUN set -eux; \
     derby_dir="$(dirname "${derby_jar}")"; \
     curl -fsSL -o "/tmp/derby-${derby_version}.jar" \
       "https://repo1.maven.org/maven2/org/apache/derby/derby/${derby_version}/derby-${derby_version}.jar"; \
+    echo "${derby_sha256} */tmp/derby-${derby_version}.jar" | sha256sum -c -; \
     rm -f "${derby_jar}"; \
     mv "/tmp/derby-${derby_version}.jar" "${derby_dir}/"
 
