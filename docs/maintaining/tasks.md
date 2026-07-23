@@ -14,8 +14,11 @@ To build new images and publish them to the Registry, do the following:
    The only difference is that single-platform images are pushed to Registry and then tags are merged for `x86_64` and `aarch64`.
    ```
 
-4. Avoid merging another PR to the main branch until all pending builds in the main branch are complete.
-   This way, you will know which commit might have broken the build
+4. Merging another PR while builds in the main branch are still running does not cancel them -
+   runs in the main branch (and scheduled runs) are queued instead
+   (GitHub keeps the latest pending run, replacing any previously queued one).
+   Still, it is tidier to let the pending builds finish before merging another PR:
+   this way, you will know which commit might have broken the build
    and also have the correct tags for moving tags (like the `Python` version).
 
 ### `[FAST_BUILD]` pull requests
