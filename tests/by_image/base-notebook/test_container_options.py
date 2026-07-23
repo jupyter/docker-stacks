@@ -7,6 +7,7 @@ import pytest  # type: ignore
 import requests
 
 from tests.utils.tracked_container import TrackedContainer
+from tests.utils.wait import wait_until
 
 LOGGER = logging.getLogger(__name__)
 
@@ -38,9 +39,12 @@ def test_nb_user_change(container: TrackedContainer) -> None:
         command=["sleep", "infinity"],
     )
 
-    # Give the chown time to complete.
-    # Use sleep, not wait, because the container sleeps forever.
-    time.sleep(5)
+    # Wait until the start script has finished preparing the user:
+    # the rename, home copy, and chown all happen before this line is logged.
+    # We can't wait for the container itself, because it sleeps forever.
+    assert wait_until(
+        lambda: f"Running as {nb_user}:" in container.get_logs(), timeout=30
+    ), "start.sh didn't finish preparing the user"
     LOGGER.info(
         f"Checking if a home folder of {nb_user} contains the hidden '.jupyter' folder with appropriate permissions ..."
     )
