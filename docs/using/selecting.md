@@ -217,8 +217,9 @@ It contains:
 
 `jupyter/datascience-notebook` includes libraries for data analysis from the Python, R, and Julia communities.
 
-- Everything in the `jupyter/scipy-notebook`, `jupyter/r-notebook`, and `jupyter/julia-notebook` images and their ancestor
-  images
+- Everything in `jupyter/scipy-notebook` and its ancestor images
+- The R and Julia packages from the `jupyter/r-notebook` and `jupyter/julia-notebook` images
+  (but not the additional system packages installed via `apt` in `jupyter/r-notebook`, such as `unixodbc-dev`)
 - [rpy2](https://rpy2.github.io/doc/latest/html/index.html) package
 
 ### jupyter/pyspark-notebook
