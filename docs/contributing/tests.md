@@ -40,7 +40,7 @@ Please follow the process below to add new tests:
    make test/<somestack>
    ```
 
-3. [Submit a pull request](https://github.com/PointCloudLibrary/pcl/wiki/A-step-by-step-guide-on-preparing-and-submitting-a-pull-request)
+3. [Submit a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
    (PR) with your changes.
 4. Watch for GitHub to report a build success or failure for your PR on GitHub.
 5. Discuss changes with the maintainers and address any issues running the tests on GitHub.
