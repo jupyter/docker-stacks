@@ -18,7 +18,11 @@ from tagging.utils.git_helper import GitHelper
 LOGGER = logging.getLogger(__name__)
 
 # We use a manifest creation timestamp, which happens right after a build
-BUILD_TIMESTAMP = datetime.datetime.now(datetime.UTC).isoformat()[:-13] + "Z"
+BUILD_TIMESTAMP = (
+    datetime.datetime.now(datetime.UTC)
+    .isoformat(timespec="seconds")
+    .replace("+00:00", "Z")
+)
 MARKDOWN_LINE_BREAK = "<br />"
 
 
