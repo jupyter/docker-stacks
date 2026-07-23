@@ -18,7 +18,7 @@
     },
     {
       "name": "NOTEBOOK_IMAGE",
-      "value": "docker.io/jupyter/minimal-notebook:latest",
+      "value": "quay.io/jupyter/minimal-notebook:latest",
       "required": true
     },
     {
