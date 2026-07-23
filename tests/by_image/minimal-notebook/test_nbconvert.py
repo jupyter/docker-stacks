@@ -19,3 +19,9 @@ def test_nbconvert(
 ) -> None:
     host_data_file = THIS_DIR / "data" / f"{test_file}.ipynb"
     check_nbconvert(container, host_data_file, output_format, execute=False)
+
+
+def test_nbconvert_execute(container: TrackedContainer) -> None:
+    """A trivial notebook should be executed through the python3 kernel"""
+    host_data_file = THIS_DIR / "data" / "execute_python.ipynb"
+    check_nbconvert(container, host_data_file, "markdown", execute=True)
