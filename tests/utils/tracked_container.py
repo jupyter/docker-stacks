@@ -132,9 +132,10 @@ class TrackedContainer:
         stderr: str
         if split_stderr:
             stdout = self.get_logs(stdout=True, stderr=False)
-            stderr = logs = self.get_logs(stdout=False, stderr=True)
-        else:
-            logs = self.get_logs()
+            stderr = self.get_logs(stdout=False, stderr=True)
+        # Warning/error scanning and the failure diagnostics below always
+        # cover both streams, regardless of the split_stderr mode
+        logs = self.get_logs()
         rc_success = rv["StatusCode"] == 0
         should_report = not (
             no_failure == rc_success
