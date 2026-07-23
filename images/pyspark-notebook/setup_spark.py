@@ -7,6 +7,7 @@
 # - Required env variable: SPARK_HOME
 
 import argparse
+import hashlib
 import logging
 import os
 import re
@@ -54,6 +55,43 @@ def get_latest_spark_version() -> str:
     return latest_version
 
 
+def get_expected_checksum(spark_version: str, filename: str) -> str:
+    """
+    Fetches the expected SHA-512 checksum of the Spark tarball
+    Current releases live on the download server, old ones only in the archive
+    The checksum file contains a line like: `<sha512>  <filename>`
+    """
+    checksum_urls = [
+        f"https://downloads.apache.org/spark/spark-{spark_version}/{filename}.sha512",
+        f"https://archive.apache.org/dist/spark/spark-{spark_version}/{filename}.sha512",
+    ]
+    for checksum_url in checksum_urls:
+        LOGGER.info(f"Downloading Spark checksum from: {checksum_url}")
+        resp = requests.get(checksum_url, timeout=60)
+        if resp.status_code == 404:
+            continue
+        resp.raise_for_status()
+        for token in resp.text.split():
+            if re.fullmatch(r"[0-9a-fA-F]{128}", token):
+                return token.lower()
+        raise RuntimeError(f"No SHA-512 checksum found at: {checksum_url}")
+    raise RuntimeError(f"No SHA-512 checksum file found for spark-{spark_version}")
+
+
+def verify_checksum(tmp_file: Path, expected_checksum: str) -> None:
+    """
+    Verifies the SHA-512 checksum of the downloaded Spark tarball
+    """
+    with tmp_file.open("rb") as file:
+        actual_checksum = hashlib.file_digest(file, "sha512").hexdigest()
+    if actual_checksum != expected_checksum:
+        raise RuntimeError(
+            f"Spark tarball checksum mismatch: "
+            f"expected {expected_checksum}, got {actual_checksum}"
+        )
+    LOGGER.info("Spark tarball checksum is valid")
+
+
 def download_spark(
     *,
     spark_version: str,
@@ -62,7 +100,7 @@ def download_spark(
     spark_download_url: Path,
 ) -> str:
     """
-    Downloads and unpacks spark
+    Downloads, verifies, and unpacks spark
     The resulting spark directory name is returned
     """
     LOGGER.info("Downloading and unpacking Spark")
@@ -75,8 +113,18 @@ def download_spark(
 
     tmp_file = Path("/tmp/spark.tar.gz")
     subprocess.check_call(
-        ["curl", "--progress-bar", "--location", "--output", tmp_file, spark_url]
+        [
+            "curl",
+            "--progress-bar",
+            "--fail",
+            "--location",
+            "--output",
+            tmp_file,
+            spark_url,
+        ]
     )
+    expected_checksum = get_expected_checksum(spark_version, f"{spark_dir_name}.tgz")
+    verify_checksum(tmp_file, expected_checksum)
     subprocess.check_call(
         [
             "tar",
