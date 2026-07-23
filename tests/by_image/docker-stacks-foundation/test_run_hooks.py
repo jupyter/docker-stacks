@@ -112,6 +112,26 @@ def run_source_in_dir(
     )
 
 
+def test_start_sh_runs_before_notebook_hooks(container: TrackedContainer) -> None:
+    """A hook mounted as a single file into /usr/local/bin/before-notebook.d/
+    should be sourced by start.sh during container startup, as the root user
+    when the container starts as root.
+
+    We deliberately mount a single file: the directory already contains
+    built-in hooks, which must keep running.
+    """
+    host_hook_file = THIS_DIR / "data" / "99-test-hook.sh"
+    cont_hook_file = "/usr/local/bin/before-notebook.d/99-test-hook.sh"
+    logs = container.run_and_wait(
+        timeout=20,
+        user="root",
+        volumes={host_hook_file: {"bind": cont_hook_file, "mode": "ro"}},
+        command=["id", "-un"],
+    )
+    assert f"Sourcing shell script: {cont_hook_file}" in logs
+    assert "Test hook executed as: root" in logs
+
+
 def test_run_hooks_change(container: TrackedContainer) -> None:
     stdout, logs = run_source_in_dir(container, subdir="data/run-hooks/change")
 
