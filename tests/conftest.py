@@ -20,7 +20,14 @@ LOGGER = logging.getLogger(__name__)
 def http_client() -> requests.Session:
     """Requests session with retries and backoff."""
     s = requests.Session()
-    retries = Retry(total=5, backoff_factor=1)
+    retries = Retry(
+        total=5,
+        backoff_factor=1,
+        # Retry on gateway errors as well: jupyter-server-proxy answers
+        # 502/503 while the proxied server is still spawning
+        status_forcelist=[502, 503, 504],
+        allowed_methods=["GET", "HEAD"],
+    )
     s.mount("http://", HTTPAdapter(max_retries=retries))
     s.mount("https://", HTTPAdapter(max_retries=retries))
     return s
