@@ -143,7 +143,7 @@ class TrackedContainer:
             and no_errors == (not self.get_errors(logs))
         )
 
-        if not rc_success or should_report:
+        if should_report:
             LOGGER.error(f"Command output:\n{logs}")
         else:
             LOGGER.debug(f"Command output:\n{logs}")
