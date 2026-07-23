@@ -8,17 +8,20 @@ import requests
 
 
 def make_get_request() -> None:
-    # Give some time for server to start
-    finish_time = time.time() + 10
-    sleep_time = 1
-    while time.time() < finish_time:
-        time.sleep(sleep_time)
+    """Wait for the server to start answering GET requests."""
+    deadline = time.monotonic() + 30
+    last_error: requests.RequestException | None = None
+    while time.monotonic() < deadline:
         try:
-            resp = requests.get("http://localhost:8888/api")
+            resp = requests.get("http://localhost:8888/api", timeout=10)
             resp.raise_for_status()
-        except requests.RequestException:
-            pass
-    resp.raise_for_status()
+            return
+        except requests.RequestException as e:
+            last_error = e
+            time.sleep(1)
+    if last_error is not None:
+        raise last_error
+    raise RuntimeError("Server did not respond within the deadline")
 
 
 def check_addrs(family: socket.AddressFamily) -> None:
