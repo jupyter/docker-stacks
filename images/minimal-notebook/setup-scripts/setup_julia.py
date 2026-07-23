@@ -6,6 +6,7 @@
 # - Run as the root user
 # - The JULIA_PKGDIR environment variable is set
 
+import hashlib
 import logging
 import os
 import platform
@@ -25,7 +26,7 @@ def unify_aarch64(platform: str) -> str:
     return {"arm64": "aarch64"}.get(platform, platform)
 
 
-def get_latest_julia_url() -> tuple[str, str]:
+def get_latest_julia_url() -> tuple[str, str, str]:
     """
     Get the last stable version of Julia
     Based on: https://github.com/JuliaLang/www.julialang.org/issues/878#issuecomment-749234813
@@ -43,19 +44,35 @@ def get_latest_julia_url() -> tuple[str, str]:
     triplet = unify_aarch64(platform.machine()) + "-linux-gnu"
     file_info = [vf for vf in latest_version_files if vf["triplet"] == triplet][0]
     LOGGER.info(f"Latest version: {file_info['version']} url: {file_info['url']}")
-    return file_info["url"], file_info["version"]
+    return file_info["url"], file_info["version"], file_info["sha256"]
 
 
-def download_julia(julia_url: str) -> None:
+def download_julia(julia_url: str, julia_sha256: str) -> None:
     """
-    Downloads and unpacks julia
+    Downloads julia, verifies the tarball checksum, and unpacks it
     The resulting julia directory is "/opt/julia-VERSION/"
     """
     LOGGER.info("Downloading and unpacking Julia")
     tmp_file = Path("/tmp/julia.tar.gz")
     subprocess.check_call(
-        ["curl", "--progress-bar", "--location", "--output", tmp_file, julia_url]
+        [
+            "curl",
+            "--progress-bar",
+            "--fail",
+            "--location",
+            "--output",
+            tmp_file,
+            julia_url,
+        ]
     )
+    with tmp_file.open("rb") as file:
+        actual_sha256 = hashlib.file_digest(file, "sha256").hexdigest()
+    if actual_sha256 != julia_sha256:
+        raise RuntimeError(
+            f"Julia tarball checksum mismatch: "
+            f"expected {julia_sha256}, got {actual_sha256}"
+        )
+    LOGGER.info("Julia tarball checksum is valid")
     shutil.unpack_archive(tmp_file, "/opt/")
     tmp_file.unlink()
 
@@ -88,6 +105,6 @@ def configure_julia(julia_version: str) -> None:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    julia_url, julia_version = get_latest_julia_url()
-    download_julia(julia_url=julia_url)
+    julia_url, julia_version, julia_sha256 = get_latest_julia_url()
+    download_julia(julia_url=julia_url, julia_sha256=julia_sha256)
     configure_julia(julia_version=julia_version)
