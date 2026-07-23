@@ -82,7 +82,7 @@ if [ "$(id -u)" == 0 ]; then
     # Update the home directory if the desired user (NB_USER) is root and the
     # desired user id (NB_UID) is 0 and the desired group id (NB_GID) is 0.
     if [ "${NB_USER}" = "root" ] && [ "${NB_UID}" = "$(id -u "${NB_USER}")" ] && [ "${NB_GID}" = "$(id -g "${NB_USER}")" ]; then
-        sed -i "s|/root|/home/root|g" /etc/passwd
+        sed -i "s|:/root:|:/home/root:|" /etc/passwd
         # Do not preserve ownership in rootless mode
         CP_OPTS="-a --no-preserve=ownership"
     fi
