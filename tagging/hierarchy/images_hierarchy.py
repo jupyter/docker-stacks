@@ -60,7 +60,7 @@ ALL_IMAGES = {
         parent_image="scipy-notebook", taggers=[versions.tensorflow_tagger]
     ),
     "pytorch-notebook": ImageDescription(
-        parent_image="scipy-notebook", taggers=[versions.python_tagger]
+        parent_image="scipy-notebook", taggers=[versions.pytorch_tagger]
     ),
     "datascience-notebook": ImageDescription(
         parent_image="scipy-notebook",
