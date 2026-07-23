@@ -9,7 +9,7 @@ git = plumbum.local["git"]
 class GitHelper:
     @staticmethod
     def commit_hash() -> str:
-        return git["rev-parse", "HEAD"]().strip()  # type: ignore
+        return str(git["rev-parse", "HEAD"]()).strip()
 
     @staticmethod
     def commit_hash_tag() -> str:
@@ -17,7 +17,7 @@ class GitHelper:
 
     @staticmethod
     def commit_message() -> str:
-        return git["log", -1, "--pretty=%B"]().strip()  # type: ignore
+        return str(git["log", -1, "--pretty=%B"]()).strip()
 
 
 if __name__ == "__main__":
