@@ -71,6 +71,19 @@ def test_nb_umask(container: TrackedContainer) -> None:
     assert umask_line.split() == ["Umask:", "0002"], f"Wrong umask: {umask_line}"
 
 
+def test_notebook_args(container: TrackedContainer) -> None:
+    """Container should pass `NOTEBOOK_ARGS` on to the server:
+    the custom base url should appear in the URL the started server prints."""
+    base_url = "/tests-base-url"
+    container.run_detached(
+        environment=[f"NOTEBOOK_ARGS=--ServerApp.base_url={base_url}"],
+    )
+    expected_url = f"http://127.0.0.1:8888{base_url}/lab"
+    assert wait_until(
+        lambda: expected_url in container.get_logs(), timeout=60
+    ), f"{expected_url} not found in server logs"
+
+
 @pytest.mark.filterwarnings("ignore:Unverified HTTPS request")
 def test_unsigned_ssl(
     container: TrackedContainer, http_client: requests.Session, free_host_port: int
