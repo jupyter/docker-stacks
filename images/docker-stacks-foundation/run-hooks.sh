@@ -21,32 +21,54 @@ if [[ ! -d "${1}" ]]; then
     return 1
 fi
 
+# This script might be sourced with errexit enabled (start.sh runs with `set -e`),
+# but a failed hook should be logged, not abort the sourcing shell,
+# so disable errexit while running hooks and restore it afterwards.
+# We intentionally don't run hooks in an errexit-ignoring context (like `if ! source ...`),
+# because it would also disable a `set -e` used inside a hook itself,
+# and such hooks are expected to fail loudly.
+if [[ "$-" == *e* ]]; then
+    errexit_was_set="yes"
+else
+    errexit_was_set="no"
+fi
+set +e
+
 _log_info "Running hooks in: ${1} as uid: $(id -u) gid: $(id -g)"
-for f in "${1}/"*; do
+for hook_file in "${1}/"*; do
     # Handling a case when the directory is empty
-    [ -e "${f}" ] || continue
-    case "${f}" in
+    [ -e "${hook_file}" ] || continue
+    case "${hook_file}" in
         *.sh)
-            _log_info "Sourcing shell script: ${f}"
+            _log_info "Sourcing shell script: ${hook_file}"
             # shellcheck disable=SC1090
-            source "${f}"
-            # shellcheck disable=SC2181
-            if [ $? -ne 0 ]; then
-                _log_error "${f} has failed, continuing execution"
+            source "${hook_file}"
+            hook_rc=$?
+            # A sourced hook might have enabled errexit and left it on,
+            # so disable it again before running the next hook
+            set +e
+            if [ "${hook_rc}" -ne 0 ]; then
+                _log_error "${hook_file} has failed, continuing execution"
             fi
             ;;
         *)
-            if [ -x "${f}" ]; then
-                _log_info "Running executable: ${f}"
-                "${f}"
-                # shellcheck disable=SC2181
-                if [ $? -ne 0 ]; then
-                    _log_error "${f} has failed, continuing execution"
+            if [ -x "${hook_file}" ]; then
+                _log_info "Running executable: ${hook_file}"
+                "${hook_file}"
+                hook_rc=$?
+                if [ "${hook_rc}" -ne 0 ]; then
+                    _log_error "${hook_file} has failed, continuing execution"
                 fi
             else
-                _log_info "Ignoring non-executable: ${f}"
+                _log_info "Ignoring non-executable: ${hook_file}"
             fi
             ;;
     esac
 done
 _log_info "Done running hooks in: ${1}"
+
+if [[ "${errexit_was_set}" == "yes" ]]; then
+    set -e
+fi
+# This script is sourced, so don't leave the helper variables in the caller's environment
+unset errexit_was_set hook_rc hook_file
