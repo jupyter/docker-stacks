@@ -278,28 +278,24 @@ The `jupyter/tensorflow-notebook` image supports the use of
 ```python
 import tensorflow as tf
 
-hello = tf.Variable("Hello World!")
-
-sess = tf.Session()
-init = tf.global_variables_initializer()
-
-sess.run(init)
-sess.run(hello)
+print(tf.constant("Hello, TensorFlow"))
+print(tf.reduce_sum(tf.random.normal([1000, 1000])))
 ```
 
 ### Distributed Mode
 
+TensorFlow 2 uses [distribution strategies](https://www.tensorflow.org/guide/distributed_training) for distributed computations.
+For example, `tf.distribute.MirroredStrategy` performs synchronous training across multiple devices on a single machine
+(it also works on a machine without GPUs).
+
 ```python
 import tensorflow as tf
 
-hello = tf.Variable("Hello Distributed World!")
+strategy = tf.distribute.MirroredStrategy()
 
-server = tf.train.Server.create_local_server()
-sess = tf.Session(server.target)
-init = tf.global_variables_initializer()
-
-sess.run(init)
-sess.run(hello)
+with strategy.scope():
+    model = tf.keras.Sequential([tf.keras.Input(shape=(1,)), tf.keras.layers.Dense(1)])
+    model.compile(loss="mse", optimizer="sgd")
 ```
 
 [sparkr]: https://spark.apache.org/docs/latest/sparkr.html
