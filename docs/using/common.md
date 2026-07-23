@@ -60,7 +60,7 @@ You do so by passing arguments to the `docker run` command.
   The default value is `1000`.
   This feature is useful when mounting host volumes with specific owner permissions.
   You **must** run the container with `--user root` for this option to take effect.
-  (The startup script will `su ${NB_USER}` after adjusting the user ID.)
+  (The `start.sh` script will run the container command as `${NB_USER}` via `sudo` after adjusting the user ID.)
   Instead, you might consider using the modern Docker-native options [`--user`](https://docs.docker.com/engine/containers/run/#user) and
   [`--group-add`](https://docs.docker.com/engine/containers/run/#additional-groups) - see the last bullet in this section for more details.
   See bullet points regarding `--user` and `--group-add`.
@@ -69,7 +69,7 @@ You do so by passing arguments to the `docker run` command.
   (the new group is added with a name of `${NB_GROUP}` if it is defined. Otherwise, the group is named `${NB_USER}`).
   This feature is useful when mounting host volumes with specific group permissions.
   You **must** run the container with `--user root` for this option to take effect.
-  (The startup script will `su ${NB_USER}` after adjusting the group ID.)
+  (The `start.sh` script will run the container command as `${NB_USER}` via `sudo` after adjusting the group ID.)
   Instead, you might consider using modern Docker options `--user` and `--group-add`.
   See bullet points regarding `--user` and `--group-add`.
   The user is added to the supplemental group `users` (gid 100) to grant write access to the home directory and `/opt/conda`.
@@ -108,7 +108,7 @@ You do so by passing arguments to the `docker run` command.
   You do **not** need this option to allow the user to `conda` or `pip` install additional packages.
   This option is helpful for cases when you wish to give `${NB_USER}` the ability to install OS packages with `apt` or modify other root-owned files in the container.
   You **must** run the container with `--user root` for this option to take effect.
-  (The `start-notebook.py` script will `su ${NB_USER}` after adding `${NB_USER}` to sudoers.)
+  (The `start.sh` script will run the container command as `${NB_USER}` via `sudo` after adding `${NB_USER}` to sudoers.)
   **You should only enable `sudo` if you trust the user or if the container runs on an isolated host.**
 
 ### Additional runtime configurations
