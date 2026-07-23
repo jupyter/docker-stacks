@@ -167,6 +167,11 @@ def update_monthly_wiki_page(wiki_dir: Path, build_history_line: str) -> None:
 
     monthly_page_content = monthly_page.read_text()
     assert MONTHLY_PAGE_HEADER in monthly_page_content
+    if build_history_line in monthly_page_content:
+        LOGGER.info(
+            f"Build history line already present in: {monthly_page.relative_to(wiki_dir)}"
+        )
+        return
     monthly_page_content = monthly_page_content.replace(
         MONTHLY_PAGE_HEADER, MONTHLY_PAGE_HEADER + build_history_line + "\n"
     )
