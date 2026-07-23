@@ -34,6 +34,18 @@ def test_gid_change(container: TrackedContainer) -> None:
     assert "groups=110(jovyan),100(users)" in logs
 
 
+def test_nb_group_change(container: TrackedContainer) -> None:
+    """Container should create the group specified in `NB_GROUP` with the
+    `NB_GID` id and make it the primary group of the default user."""
+    logs = container.run_and_wait(
+        timeout=120,  # group/user modification is slow so give it some time
+        user="root",
+        environment=["NB_GID=2000", "NB_GROUP=custom-group"],
+        command=["id", "-gn"],
+    )
+    assert "custom-group" in logs
+
+
 def test_nb_user_change(container: TrackedContainer) -> None:
     """Container should change the username (`NB_USER`) of the default user."""
     nb_user = "nayvoj"
