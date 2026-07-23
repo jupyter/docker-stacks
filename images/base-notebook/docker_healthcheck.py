@@ -4,6 +4,7 @@
 import json
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 import requests
@@ -27,6 +28,14 @@ runtime_dir = Path(result.stdout.rstrip())
 json_file = next(runtime_dir.glob("*server-*.json"))
 
 url = json.loads(json_file.read_bytes())["url"]
+
+# The server might not be listening on HTTP(S), for example,
+# when it only listens on a UNIX socket (`c.ServerApp.sock` is configured).
+# In this case, there is no TCP URL we can check, so report a healthy state.
+if not url.startswith(("http://", "https://")):
+    print(f"Skipping the check for the non-HTTP(S) server URL: {url}")
+    sys.exit(0)
+
 url = url + "api"
 
 proxies = {
