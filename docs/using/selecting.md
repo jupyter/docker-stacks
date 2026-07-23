@@ -258,7 +258,7 @@ to allow PyTorch or TensorFlow operations to use compatible NVIDIA GPUs for acce
 We only build `pytorch-notebook` for the last two major versions of CUDA.
 The `tensorflow-notebook` image only supports the latest CUDA version listed in the [officially tested build configurations](https://www.tensorflow.org/install/source#gpu).
 
-For example, you could use the image `quay.io/jupyter/pytorch-notebook:cuda12-python-3.11.8` or `quay.io/jupyter/tensorflow-notebook:cuda-latest`.
+For example, you could use the image `quay.io/jupyter/pytorch-notebook:cuda12-python-3.13.14` or `quay.io/jupyter/tensorflow-notebook:cuda-latest`.
 
 ### Image Relationships
 
@@ -279,13 +279,13 @@ Whenever a docker image is pushed to the container registry, it is tagged with:
 - the `latest` tag
 - a 12-character git commit SHA like `1ffe43816ba9`
 - a date formatted like `2023-01-30`
-- OS version like `ubuntu-22.04`
-- a set of software version tags like `python-3.10.8` and `lab-3.5.3`
+- OS version like `ubuntu-24.04`
+- a set of software version tags like `python-3.13.14` and `lab-4.6.1` (exact versions vary with each build)
 
 ```{warning}
 - Tags before `2022-07-05` were sometimes incorrect.
   Please, do not rely on them.
-- Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `quay.io/jupyter/base-notebook:aarch64-python-3.11.6`
+- Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `quay.io/jupyter/base-notebook:aarch64-python-3.13.14`
 ```
 
 For stability and reproducibility, you should either reference a date formatted
