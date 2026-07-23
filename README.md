@@ -106,6 +106,7 @@ more information is available in the [documentation](https://jupyter-docker-stac
 - Starting from `2023-06-01`, we create a multi-platform `tensorflow-notebook` image as well
 - Starting from `2024-02-24`, we create CUDA enabled variants of `pytorch-notebook` image for `x86_64` platform
 - Starting from `2024-03-26`, we create CUDA enabled variant of `tensorflow-notebook` image for `x86_64` platform
+- Starting from `2025-12-02`, we create CUDA enabled variants of `pytorch-notebook` and `tensorflow-notebook` images for `aarch64` platform as well
 
 ## Using old images
 
