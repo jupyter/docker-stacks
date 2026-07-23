@@ -33,10 +33,10 @@ def check_nbconvert(
         output_format,
     ]
     if execute:
-        conversion_timeout_ms = 5000
+        cell_timeout_seconds = 30
         command += [
             "--execute",
-            f"--ExecutePreprocessor.timeout={conversion_timeout_ms}",
+            f"--ExecutePreprocessor.timeout={cell_timeout_seconds}",
         ]
     logs = container.run_and_wait(
         timeout=60,
