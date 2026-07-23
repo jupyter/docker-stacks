@@ -56,3 +56,8 @@ If there's agreement that the feature belongs in one or more of the core stacks:
 3. [Submit a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) (PR) with your changes.
 4. Watch for GitHub to report a build success or failure for your PR on GitHub.
 5. Discuss changes with the maintainers and address any build issues.
+
+```{note}
+If your changes can not affect any image beyond `docker-stacks-foundation` and `base-notebook`,
+you can add `[FAST_BUILD]` to the PR title to skip building the rest of the images and speed up CI.
+```
