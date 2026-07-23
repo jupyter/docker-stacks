@@ -13,13 +13,13 @@ class DockerRunner:
     def __init__(
         self,
         image_name: str,
-        docker_client: docker.DockerClient = docker.from_env(),
+        docker_client: docker.DockerClient | None = None,
         command: str = "sleep infinity",
     ):
         self.container: Container | None = None
         self.image_name: str = image_name
         self.command: str = command
-        self.docker_client: docker.DockerClient = docker_client
+        self.docker_client: docker.DockerClient = docker_client or docker.from_env()
 
     def __enter__(self) -> Container:
         LOGGER.info(f"Creating a container for the image: {self.image_name} ...")
