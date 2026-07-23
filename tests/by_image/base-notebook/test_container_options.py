@@ -54,6 +54,23 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     ), f"Hidden folder .jupyter was not copied properly to {nb_user} home folder. stat: {output}, expected {expected_output}"
 
 
+def test_nb_umask(container: TrackedContainer) -> None:
+    """Container should apply `NB_UMASK` to the Jupyter Server process."""
+    container.run_detached(environment=["NB_UMASK=002"])
+    assert wait_until(
+        lambda: container.get_health() == "healthy", timeout=60
+    ), "Server did not become healthy"
+    # Find the server PID without relying on procps being installed.
+    # The [b] trick prevents this probe's own /proc entry from matching.
+    umask_line = container.exec_cmd(
+        "bash -c '"
+        'pid=$(grep -al "jupyter-la[b]" /proc/[0-9]*/cmdline | head -n 1 | cut -d/ -f3)'
+        ' && grep Umask "/proc/${pid}/status"'
+        "'"
+    )
+    assert umask_line.split() == ["Umask:", "0002"], f"Wrong umask: {umask_line}"
+
+
 @pytest.mark.filterwarnings("ignore:Unverified HTTPS request")
 def test_unsigned_ssl(
     container: TrackedContainer, http_client: requests.Session, free_host_port: int
