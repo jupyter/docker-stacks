@@ -136,7 +136,7 @@ if [ "$(id -u)" == 0 ]; then
     # Optionally grant passwordless sudo rights for the desired user
     if [[ "${GRANT_SUDO}" == "1" || "${GRANT_SUDO}" == "yes" ]]; then
         _log_info "Granting ${NB_USER} passwordless sudo rights!"
-        echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/added-by-start-script
+        echo "${NB_USER} ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/added-by-start-script
     fi
 
     # NOTE: This hook is run as the root user!
