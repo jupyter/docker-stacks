@@ -66,16 +66,21 @@ class TrackedContainer:
         self.container.reload()
         return self.container.health  # type: ignore
 
-    def exec_cmd(self, cmd: str, **kwargs: Any) -> str:
+    def exec_cmd(self, cmd: str, *, timeout: int = 300, **kwargs: Any) -> str:
         assert self.container is not None
         container = self.container
 
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
+        # docker-py reads the exec output without any read timeout,
+        # so enforce the timeout inside the container using GNU `timeout`
         default_kwargs = {"tty": True}
         final_kwargs = default_kwargs | kwargs
-        exec_result = container.exec_run(cmd, **final_kwargs)
+        exec_result = container.exec_run(f"timeout -- {timeout} {cmd}", **final_kwargs)
         output = exec_result.output.decode().rstrip()
         assert isinstance(output, str)
+        if exec_result.exit_code == 124:
+            LOGGER.error(f"Command output:\n{output}")
+            raise TimeoutError(f"Command: `{cmd}` timed out after {timeout} seconds")
         if exec_result.exit_code != 0:
             LOGGER.error(f"Command output:\n{output}")
             raise AssertionError(f"Command: `{cmd}` failed")
