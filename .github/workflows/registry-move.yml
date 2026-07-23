@@ -37,10 +37,13 @@ jobs:
 
       - name: Login to Quay.io 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
+        env:
+          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+          QUAY_TOKEN: ${{ secrets.QUAY_ROBOT_TOKEN }}
         run: |
-          skopeo login quay.io \
-            --username ${{ secrets.QUAY_USERNAME }} \
-            --password ${{ secrets.QUAY_ROBOT_TOKEN }}
+          echo "${QUAY_TOKEN}" | skopeo login quay.io \
+            --username "${QUAY_USERNAME}" \
+            --password-stdin
 
       - name: Move image from Docker Hub to Quay.io 🐳
         if: env.PUSH_TO_REGISTRY == 'true' && matrix.tag != 'tag-for-testing'

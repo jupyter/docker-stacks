@@ -56,14 +56,17 @@ jobs:
 
       - name: Login to Registry 🔐
         if: env.PUSH_TO_REGISTRY == 'true'
+        env:
+          REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
         run: |
-          docker login ${{ env.REGISTRY }} \
-            --username ${{ secrets.REGISTRY_USERNAME }} \
-            --password ${{ secrets.REGISTRY_TOKEN }} || \
+          echo "${REGISTRY_TOKEN}" | docker login ${{ env.REGISTRY }} \
+            --username "${REGISTRY_USERNAME}" \
+            --password-stdin || \
           (sleep 10 && \
-          docker login ${{ env.REGISTRY }} \
-            --username ${{ secrets.REGISTRY_USERNAME }} \
-            --password ${{ secrets.REGISTRY_TOKEN }})
+          echo "${REGISTRY_TOKEN}" | docker login ${{ env.REGISTRY }} \
+            --username "${REGISTRY_USERNAME}" \
+            --password-stdin)
         shell: bash
         id: login
 
