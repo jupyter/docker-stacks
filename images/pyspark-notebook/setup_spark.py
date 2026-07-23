@@ -98,7 +98,7 @@ def download_spark(
     spark_version: str,
     hadoop_version: str,
     scala_version: str,
-    spark_download_url: Path,
+    spark_download_url: str,
 ) -> str:
     """
     Downloads, verifies, and unpacks spark
@@ -109,7 +109,9 @@ def download_spark(
     if scala_version:
         spark_dir_name += f"-scala{scala_version}"
     LOGGER.info(f"Spark directory name: {spark_dir_name}")
-    spark_url = spark_download_url / f"spark-{spark_version}" / f"{spark_dir_name}.tgz"
+    spark_url = (
+        f"{spark_download_url.rstrip('/')}/spark-{spark_version}/{spark_dir_name}.tgz"
+    )
     LOGGER.info(f"Spark download URL: {spark_url}")
 
     tmp_file = Path("/tmp/spark.tar.gz")
@@ -166,7 +168,7 @@ if __name__ == "__main__":
     arg_parser.add_argument("--spark-version", required=True)
     arg_parser.add_argument("--hadoop-version", required=True)
     arg_parser.add_argument("--scala-version", required=True)
-    arg_parser.add_argument("--spark-download-url", type=Path, required=True)
+    arg_parser.add_argument("--spark-download-url", required=True)
     args = arg_parser.parse_args()
 
     args.spark_version = args.spark_version or get_latest_spark_version()
