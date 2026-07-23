@@ -77,6 +77,4 @@ def test_tini_entrypoint(
     container.run_detached()
     # Select the PID 1 and get the corresponding command
     output = container.exec_cmd(f"ps -p {pid} -o comm=")
-    assert "ERROR" not in output
-    assert "WARNING" not in output
     assert output == command, f"{command} shall be launched as pid {pid}, got {output}"

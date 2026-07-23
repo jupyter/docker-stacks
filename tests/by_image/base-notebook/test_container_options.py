@@ -23,9 +23,8 @@ def test_cli_args(
     resp.raise_for_status()
     logs = container.get_logs()
     LOGGER.debug(logs)
-    assert "ERROR" not in logs
-    warnings = TrackedContainer.get_warnings(logs)
-    assert not warnings
+    assert not TrackedContainer.get_errors(logs)
+    assert not TrackedContainer.get_warnings(logs)
     assert "login_submit" not in resp.text
 
 
@@ -83,9 +82,8 @@ def test_unsigned_ssl(
     resp.raise_for_status()
     assert "login_submit" in resp.text
     logs = container.get_logs()
-    assert "ERROR" not in logs
-    warnings = TrackedContainer.get_warnings(logs)
-    assert not warnings
+    assert not TrackedContainer.get_errors(logs)
+    assert not TrackedContainer.get_warnings(logs)
 
 
 @pytest.mark.parametrize(
@@ -119,6 +117,5 @@ def test_custom_internal_port(
     resp.raise_for_status()
     logs = container.get_logs()
     LOGGER.debug(logs)
-    assert "ERROR" not in logs
-    warnings = TrackedContainer.get_warnings(logs)
-    assert not warnings
+    assert not TrackedContainer.get_errors(logs)
+    assert not TrackedContainer.get_warnings(logs)
