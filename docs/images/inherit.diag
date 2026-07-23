@@ -1,0 +1,16 @@
+blockdiag {
+  default_fontsize = 9;
+  orientation = portrait;
+
+  "ubuntu\n(LTS with point release)" -> docker-stacks-foundation;
+  docker-stacks-foundation -> base-notebook;
+  base-notebook -> minimal-notebook;
+  minimal-notebook -> scipy-notebook;
+  scipy-notebook -> "tensorflow-notebook\n+cuda variant";
+  scipy-notebook -> "pytorch-notebook\n+cuda12/cuda13 variants";
+  scipy-notebook -> datascience-notebook;
+  minimal-notebook -> r-notebook;
+  minimal-notebook -> julia-notebook;
+  scipy-notebook -> pyspark-notebook;
+  pyspark-notebook -> all-spark-notebook;
+}

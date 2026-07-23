@@ -266,8 +266,11 @@ For example, you could use the image `quay.io/jupyter/pytorch-notebook:cuda12-py
 The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles).
 Any given image inherits the complete content of all ancestor images pointing to it.
 
-[![Image inheritance
-diagram](../images/inherit.svg)](http://interactive.blockdiag.com/?compression=deflate&src=eJyFj8FKxDAQhu_7FKEnRYKsnmTRJ9ibe1yQaTp1x2ZnSjJxqeK7mywopFB6Cnzz_X_4Wy9u6AjezffGmA57SF7femGN9IXm2TztMpdAyApKwhmNEjQA6W6TT01qE2s68s3-8GoupKd8J1YT0CNEvG2MfTFd_gWDjQpuiLaXxN21rZQv3UquzQ2WRbEVGYpcgWKciekMvpLmrHjR0ThVVk2K0yhylNB7ufzzI9-51IH5hEDA2iwkx0kluNM8tn24vz6Pf_m4UJAnQ6bIDlenhFXjI3mClbHjFEcIQ2XNWfHAezs3f34BzoTGIw)
+![Image inheritance diagram](../images/inherit.svg)
+
+The diagram is generated from the [`docs/images/inherit.diag`](https://github.com/jupyter/docker-stacks/blob/main/docs/images/inherit.diag) source file
+using [blockdiag](https://pypi.org/project/blockdiag/).
+To regenerate it after changing the source, run `pip install blockdiag && blockdiag docs/images/inherit.diag -T svg -o docs/images/inherit.svg` from the repository root.
 
 ### Builds
 
