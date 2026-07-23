@@ -87,6 +87,7 @@ repos:
     rev: 4e697ba704fd23b2409b947a319c19c3ee54d24f # frozen: v2.14.0
     hooks:
       - id: hadolint-docker
+        # The image tag in `entry` must be bumped together with `rev` (autoupdate does not touch it)
         entry: hadolint/hadolint:v2.14.0 hadolint
 
   # Lint: Dockerfile
@@ -96,7 +97,8 @@ repos:
     hooks:
       - id: hadolint-docker
         name: Lint *.dockerfile Dockerfiles
-        entry: hadolint/hadolint:v2.12.1-beta hadolint
+        # The image tag in `entry` must be bumped together with `rev` (autoupdate does not touch it)
+        entry: hadolint/hadolint:v2.14.0 hadolint
         types: [file]
         files: \.dockerfile$
 
