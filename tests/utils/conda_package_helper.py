@@ -102,7 +102,7 @@ class CondaPackageHelper:
         """Return the available packages"""
         LOGGER.info("Grabbing the list of available packages (can take a while) ...")
         return self._extract_available(
-            self.container.exec_cmd("conda search --outdated --quiet")
+            self.container.exec_cmd("conda search --outdated --quiet", timeout=600)
         )
 
     @staticmethod
