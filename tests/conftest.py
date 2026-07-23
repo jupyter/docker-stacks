@@ -92,8 +92,16 @@ def container(
 
 @pytest.fixture(scope="function")
 def free_host_port() -> Generator[int]:
-    """Finds a free port on the host machine"""
+    """Reserves a free port on the host machine for the duration of the test.
+
+    We keep the socket bound (but not listening) while the test runs:
+    the kernel then never hands the same port out to other test workers
+    asking for an ephemeral port, while docker-proxy, which sets
+    SO_REUSEADDR just like we do here, can still bind the same port to
+    publish the container's port.
+    """
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
-        s.bind(("", 0))
+        # Must be set before bind() for the reservation mechanism to work
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.bind(("", 0))
         yield s.getsockname()[1]
