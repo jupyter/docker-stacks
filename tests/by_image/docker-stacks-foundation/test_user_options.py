@@ -51,8 +51,8 @@ def test_nb_user_change(container: TrackedContainer) -> None:
     ), "start.sh didn't finish preparing the user"
     LOGGER.info(f"Checking if the user is changed to {nb_user} by the start script ...")
     output = container.get_logs()
-    assert "ERROR" not in output
-    assert "WARNING" not in output
+    assert not TrackedContainer.get_errors(output)
+    assert not TrackedContainer.get_warnings(output)
     assert (
         f"username: jovyan       -> {nb_user}" in output
     ), f"User is not changed to {nb_user}"
