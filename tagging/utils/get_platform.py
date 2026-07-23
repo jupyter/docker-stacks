@@ -2,7 +2,8 @@
 # Distributed under the terms of the Modified BSD License.
 import platform
 
-ALL_PLATFORMS = {"x86_64", "aarch64"}
+# Tuple (and not set) to guarantee a deterministic iteration order
+ALL_PLATFORMS = ("aarch64", "x86_64")
 
 
 def unify_aarch64(platform: str) -> str:
