@@ -73,14 +73,20 @@ jobs:
 
       - name: Delete tag from Docker Hub 🗑️
         if: inputs.registry == 'dockerhub' || inputs.registry == 'both'
+        env:
+          IMAGE: ${{ inputs.image }}
+          TAG: ${{ inputs.tag }}
         run: |
           skopeo delete \
-            docker://docker.io/${{ env.OWNER }}/${{ inputs.image }}:${{ inputs.tag }}
-          echo "Successfully deleted ${{ env.OWNER }}/${{ inputs.image }}:${{ inputs.tag }} from Docker Hub"
+            "docker://docker.io/${OWNER}/${IMAGE}:${TAG}"
+          echo "Successfully deleted ${OWNER}/${IMAGE}:${TAG} from Docker Hub"
 
       - name: Delete tag from Quay.io 🗑️
         if: inputs.registry == 'quay' || inputs.registry == 'both'
+        env:
+          IMAGE: ${{ inputs.image }}
+          TAG: ${{ inputs.tag }}
         run: |
           skopeo delete \
-            docker://quay.io/${{ env.OWNER }}/${{ inputs.image }}:${{ inputs.tag }}
-          echo "Successfully deleted ${{ env.OWNER }}/${{ inputs.image }}:${{ inputs.tag }} from Quay.io"
+            "docker://quay.io/${OWNER}/${IMAGE}:${TAG}"
+          echo "Successfully deleted ${OWNER}/${IMAGE}:${TAG} from Quay.io"
