@@ -69,9 +69,8 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
     echo 'eval "$(conda shell.bash hook)"' >> /etc/skel/.bashrc
 
 # Delete existing user with UID="${NB_UID}" if it exists
-# hadolint ignore=SC2046
-RUN if grep -q "${NB_UID}" /etc/passwd; then \
-        userdel --remove $(id -un "${NB_UID}"); \
+RUN if id -un "${NB_UID}" &>/dev/null; then \
+        userdel --remove "$(id -un "${NB_UID}")"; \
     fi
 
 # Create "${NB_USER}" user (`jovyan` by default) with UID="${NB_UID}" (`1000` by default) and in the 'users' group
