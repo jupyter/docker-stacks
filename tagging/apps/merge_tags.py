@@ -5,7 +5,7 @@ import logging
 import os
 
 import plumbum
-from tenacity import (  # type: ignore
+from tenacity import (
     RetryError,
     retry,
     retry_if_not_exception_type,
