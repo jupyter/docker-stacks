@@ -38,11 +38,19 @@ class Statistics:
 def calculate_monthly_stat(
     year_month_file: YearMonthFile, year_month_date: datetime.date
 ) -> Statistics:
+    # Home.md defines `Builds` as "# of times build workflow finished"
+    # Every workflow run adds one line per image per platform to the monthly page,
+    # so we count the lines with the x86_64 base-notebook image
+    # (an image built exactly once per platform in every run)
+    # and skip the aarch64 lines to count each workflow run exactly once
     builds = sum(
         "/base-notebook" in line and "aarch64" not in line
         for line in year_month_file.content.split("\n")
     )
 
+    # Home.md defines `Images` as "# of single platform images pushed"
+    # Every single platform image pushed adds exactly one line
+    # with a "Build manifest" link to the monthly page
     images = year_month_file.content.count("Build manifest")
 
     with plumbum.local.env(TZ="UTC"):
