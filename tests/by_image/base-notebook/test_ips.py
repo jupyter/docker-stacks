@@ -3,7 +3,7 @@
 import logging
 from collections.abc import Generator
 from pathlib import Path
-from random import randint
+from random import getrandbits
 
 import docker
 import pytest  # type: ignore
@@ -18,7 +18,7 @@ THIS_DIR = Path(__file__).parent.resolve()
 def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, None]:
     """Create a dual-stack IPv6 docker network"""
     # Doesn't have to be routable since we're testing inside the container
-    subnet64 = "fc00:" + ":".join(hex(randint(0, 2**16))[2:] for _ in range(3))
+    subnet64 = "fc00:" + ":".join(f"{getrandbits(16):x}" for _ in range(3))
     name = subnet64.replace(":", "-")
     docker_client.networks.create(
         name,
