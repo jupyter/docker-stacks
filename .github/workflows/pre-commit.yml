@@ -7,6 +7,11 @@ on:
       - main
   workflow_dispatch:
 
+concurrency:
+  # Only cancel in-progress jobs or runs for the current workflow - matches against branch & tags
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions: {}
 
 jobs:
@@ -24,6 +29,10 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: 3.12
+          cache: pip
+          # There is no requirements file for `pre-commit`,
+          # so use the hooks config as the cache key
+          cache-dependency-path: .pre-commit-config.yaml
 
       - name: Install pre-commit 📦
         run: |

@@ -38,6 +38,11 @@ on:
       - "tagging/taggers/tagger_interface.py"
   workflow_dispatch:
 
+concurrency:
+  # Only cancel in-progress jobs or runs for the current workflow - matches against branch & tags
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions: {}
 
 jobs:
@@ -58,6 +63,8 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: 3.12
+          cache: pip
+          cache-dependency-path: docs/requirements.txt
 
       - name: Install Doc Dependencies 📦
         run: |
