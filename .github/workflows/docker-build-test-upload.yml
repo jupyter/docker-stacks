@@ -118,13 +118,16 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           path: /tmp/jupyter/manifests/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-${{ steps.hash.outputs.tag }}.md
-          retention-days: 3
+          # Manifests and build history lines are tiny text files,
+          # and they are the only durable record of what was published,
+          # so keep them much longer than the image tars
+          retention-days: 30
           archive: false
       - name: Upload build history line 💾
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           path: /tmp/jupyter/hist_lines/${{ inputs.platform }}-${{ inputs.variant }}-${{ inputs.image }}-${{ steps.hash.outputs.tag }}.txt
-          retention-days: 3
+          retention-days: 30
           archive: false
 
       - name: Save image as a tar for later use 💾
