@@ -18,6 +18,20 @@ To build new images and publish them to the Registry, do the following:
    This way, you will know which commit might have broken the build
    and also have the correct tags for moving tags (like the `Python` version).
 
+### `[FAST_BUILD]` pull requests
+
+If a PR title contains `[FAST_BUILD]`, the [docker.yml](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker.yml) workflow
+only builds and tests the `docker-stacks-foundation` and `base-notebook` images and skips all the other image jobs.
+This only affects `pull_request` events - pushes to the `main` branch and weekly scheduled builds always build all the images.
+
+Keep in mind:
+
+- Skipped jobs still satisfy the required status checks.
+  So, before merging such a PR, **make sure** the `[FAST_BUILD]` title is appropriate for the changes made
+  (i.e. the changes can not affect the skipped images).
+- Changing a PR title does **not** re-trigger the checks (the workflow does not run on the `edited` activity type).
+  Push a new commit or re-run the workflow jobs to refresh the checks after retitling a PR.
+
 ## Updating Python version
 
 When a new `Python` version is released, we wait for:
