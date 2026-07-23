@@ -8,7 +8,7 @@ Following these steps will:
 
 1. Set up a project on GitHub containing a Dockerfile based on any image we provide.
 2. Configure GitHub Actions to build and test your image when users submit pull requests to your repository.
-3. Configure Quay.io to host your images for others to use.
+3. Configure a container registry (Docker Hub in this example) to host your images for others to use.
 4. Update the [list of community stacks](../using/selecting.md#community-stacks) in this documentation to include your image.
 
 This approach mirrors how we build and share the core stack images.
