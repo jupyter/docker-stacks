@@ -5,6 +5,11 @@
 # https://hub.docker.com/_/ubuntu/tags?page=1&name=noble
 ARG ROOT_IMAGE=ubuntu:24.04@sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebcc41c7b
 
+# Micromamba is taken from the official image, pinned by digest for integrity
+# Dependabot keeps this version and digest up to date (`docker` ecosystem covers this directory)
+# The binary is bind-mounted into the install RUN below, so it is not added to any image layer
+FROM mambaorg/micromamba:2.8.1@sha256:fb18405d6004af757a38ec498a078240b4fd5549146990a484c28bb7e78aace4 AS micromamba
+
 FROM $ROOT_IMAGE
 
 LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
@@ -26,8 +31,6 @@ RUN apt-get update --yes && \
     #   as the Ubuntu base image is rebuilt too seldom sometimes (less than once a month)
     apt-get upgrade --yes && \
     apt-get install --yes --no-install-recommends \
-    # - bzip2 is necessary to extract the micromamba executable.
-    bzip2 \
     ca-certificates \
     locales \
     # - `netbase` provides /etc/{protocols,rpc,services}, part of POSIX
@@ -100,26 +103,24 @@ ARG PYTHON_VERSION=3.13
 RUN mkdir "/home/${NB_USER}/work" && \
     fix-permissions "/home/${NB_USER}"
 
-# Download and install Micromamba, and initialize the Conda prefix.
+# Install the Conda prefix using Micromamba from the digest-pinned official image (see top of this file).
 #   <https://github.com/mamba-org/mamba#micromamba>
 #   Similar projects using Micromamba:
 #     - Micromamba-Docker: <https://github.com/mamba-org/micromamba-docker>
 #     - repo2docker: <https://github.com/jupyterhub/repo2docker>
 # Install Python, Mamba, and jupyter_core
-# Cleanup temporary files and remove Micromamba
+# Cleanup temporary files
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 COPY --chown="${NB_UID}:${NB_GID}" initial-condarc "${CONDA_DIR}/.condarc"
 WORKDIR /tmp
-RUN set -x && \
-    # https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html#linux-and-macos
-    wget --progress=dot:giga -O - \
-        "https://micro.mamba.pm/api/micromamba/$(uname)-$(uname -m)/latest" | tar -xvj bin/micromamba && \
+RUN --mount=type=bind,from=micromamba,source=/bin/micromamba,target=/usr/local/bin/micromamba \
+    set -x && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
     if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
     # Install the packages
-    ./bin/micromamba install \
+    micromamba install \
         --root-prefix="${CONDA_DIR}" \
         --prefix="${CONDA_DIR}" \
         --yes \
@@ -127,7 +128,6 @@ RUN set -x && \
         'conda' \
         'mamba' \
         "${PYTHON_SPECIFIER}" && \
-    rm -rf /tmp/bin/ && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
     mamba list --full-name 'python' | awk 'END{sub("[^.]*$", "*", $2); print $1 " " $2}' >> "${CONDA_DIR}/conda-meta/pinned" && \
