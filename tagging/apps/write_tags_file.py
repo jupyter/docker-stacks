@@ -41,7 +41,7 @@ def write_tags_file(config: Config) -> None:
     tags = get_tags(config)
     path.write_text("\n".join(tags))
 
-    LOGGER.info(f"Tags wrtitten to: {path}")
+    LOGGER.info(f"Tags written to: {path}")
 
 
 if __name__ == "__main__":

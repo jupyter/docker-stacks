@@ -19,7 +19,7 @@ def common_arguments_parser(
     manifests_dir: bool = False,
     repository: bool = False,
 ) -> Config:
-    """Add common CLI arguments to parser"""
+    """Parse the requested common CLI arguments and return the corresponding Config"""
 
     parser = argparse.ArgumentParser()
     if registry:
