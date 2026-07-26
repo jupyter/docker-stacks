@@ -18,6 +18,10 @@ updates:
       interval: weekly
     commit-message:
       prefix: "[FAST_BUILD] "
+    groups:
+      github-actions:
+        patterns:
+          - "*"
   # This action is only used for some images, so full build is required
   - package-ecosystem: github-actions
     directory: .github/actions/free-disk-space/
