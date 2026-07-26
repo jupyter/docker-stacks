@@ -100,7 +100,7 @@ def write_manifest(
     manifest = get_manifest(config, container, commit_hash_tag)
     path.write_text(manifest)
 
-    LOGGER.info(f"Manifest file wrtitten to: {path}")
+    LOGGER.info(f"Manifest file written to: {path}")
 
 
 def write_all(config: Config) -> None:

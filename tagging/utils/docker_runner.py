@@ -45,8 +45,8 @@ class DockerRunner:
     def exec_cmd(container: Container, cmd: str) -> str:
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
         exec_result = container.exec_run(cmd)
-        output = exec_result.output.decode().rstrip()
-        assert isinstance(output, str)
+        # The annotation is needed because the docker package is not typed
+        output: str = exec_result.output.decode().rstrip()
         if exec_result.exit_code != 0:
             LOGGER.error(f"Command output:\n{output}")
             raise AssertionError(f"Command: `{cmd}` failed")
