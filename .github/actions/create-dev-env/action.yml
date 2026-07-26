@@ -5,7 +5,7 @@ runs:
   using: composite
   steps:
     - name: Set Up Python 🐍
-      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
       with:
         python-version: 3.12
 
@@ -20,6 +20,6 @@ runs:
     # Can be removed after Docker Engine is updated
     # https://github.com/actions/runner-images/issues/11766
     - name: Set Up Docker 🐳
-      uses: docker/setup-docker-action@6d7cfa65f60a9dda7b46e5513fa982536f3c9877 # v5.3.0
+      uses: docker/setup-docker-action@77e84dbf09b47d1e29270283c22f16145aa85ca1 # v5.4.0
       with:
         set-host: true
