@@ -4,10 +4,12 @@ description: "A GitHub Action to free up disk space on an Ubuntu GitHub Actions 
 runs:
   using: "composite"
   steps:
+    - name: Install cargo-binstall 📦
+      uses: cargo-bins/cargo-binstall@e00d2c94cc0067b77737821097a62d91c0301baa # v1.21.1
+
     - name: Installing rmz
       shell: bash
       run: |
-        curl -fsSL --tlsv1.2 --proto '=https' https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash > /dev/null 2>&1
         cargo binstall -qy rmz
         ln -s ~/.cargo/bin/rmz /usr/local/bin/rmz
 
