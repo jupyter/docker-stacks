@@ -31,10 +31,10 @@ def get_all_refs(url: str) -> list[str]:
 
 def get_latest_spark_version() -> str:
     """
-    Returns the last version of Spark using spark archive
+    Returns the last version of Spark using the Apache download server
     """
     LOGGER.info("Downloading Spark versions information")
-    all_refs = get_all_refs("https://archive.apache.org/dist/spark/")
+    all_refs = get_all_refs("https://downloads.apache.org/spark/")
     LOGGER.info(f"All refs: {all_refs}")
     pattern = re.compile(r"^spark-(\d+\.\d+\.\d+)/$")
     versions = [match.group(1) for ref in all_refs if (match := pattern.match(ref))]
