@@ -10,6 +10,6 @@ def test_secured_server(
 ) -> None:
     """Jupyter Server should eventually request user login."""
     container.run_detached(ports={"8888/tcp": free_host_port})
-    resp = http_client.get(f"http://localhost:{free_host_port}")
+    resp = http_client.get(f"http://localhost:{free_host_port}", timeout=10)
     resp.raise_for_status()
     assert "login_submit" in resp.text, "User login not requested"

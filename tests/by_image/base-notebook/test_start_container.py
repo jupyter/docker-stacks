@@ -45,7 +45,7 @@ def test_start_notebook(
     container.run_detached(environment=env, ports={"8888/tcp": free_host_port})
     # Wait for the server to be reachable (proves start-notebook.py finished launching)
     if expected_start:
-        resp = http_client.get(f"http://localhost:{free_host_port}")
+        resp = http_client.get(f"http://localhost:{free_host_port}", timeout=10)
         assert resp.status_code == 200, "Server is not listening"
     else:
         # For non-listening cases (e.g. jupyterhub-singleuser), give the script time to print
