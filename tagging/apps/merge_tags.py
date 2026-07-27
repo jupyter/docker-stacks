@@ -84,7 +84,8 @@ def find_platform_tags(
     platform_tags = []
 
     for platform in sorted(local_platforms):
-        platform_tag = merged_tag.replace(":", f":{platform}-")
+        image, _, tag = merged_tag.rpartition(":")
+        platform_tag = f"{image}:{platform}-{tag}"
         LOGGER.info(f"Trying to inspect: {platform_tag} in the registry")
         try:
             inspect_manifest(platform_tag)
