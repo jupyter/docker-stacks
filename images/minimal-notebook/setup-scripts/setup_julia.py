@@ -32,9 +32,11 @@ def get_latest_julia_url() -> tuple[str, str, str]:
     Based on: https://github.com/JuliaLang/www.julialang.org/issues/878#issuecomment-749234813
     """
     LOGGER.info("Downloading Julia versions information")
-    versions = requests.get(
+    resp = requests.get(
         "https://julialang-s3.julialang.org/bin/versions.json", timeout=60
-    ).json()
+    )
+    resp.raise_for_status()
+    versions = resp.json()
     stable_versions = {k: v for k, v in versions.items() if v["stable"]}
     # Compare versions semantically
     latest_stable_version = max(
