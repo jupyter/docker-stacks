@@ -1,12 +1,12 @@
 docker==7.2.0
 plumbum==2.0.2
 pre-commit==4.6.1
-pytest==9.1.1  # >=9.0.3 for GHSA-6w46-j5rx-g56g (tmpdir handling)
+pytest==9.1.1
 pytest-rerunfailures==16.4
 # `pytest-xdist` is a plugin that provides the `--numprocesses` flag,
 # allowing us to run `pytest` tests in parallel
 pytest-xdist==3.8.0
 python-dateutil==2.9.0.post0
-requests==2.34.2  # >=2.33.0 for GHSA-gc5v-m9x4-r6x2 (credentials leak)
+requests==2.34.2
 tabulate==0.10.0
 tenacity==9.1.4
