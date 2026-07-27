@@ -42,3 +42,7 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    groups:
+      pip:
+        patterns:
+          - "*"
