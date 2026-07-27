@@ -19,7 +19,7 @@ def test_cli_args(
         command=["start-notebook.py", "--IdentityProvider.token=''"],
         ports={"8888/tcp": free_host_port},
     )
-    resp = http_client.get(f"http://localhost:{free_host_port}")
+    resp = http_client.get(f"http://localhost:{free_host_port}", timeout=10)
     resp.raise_for_status()
     logs = container.get_logs()
     LOGGER.debug(logs)
@@ -115,7 +115,7 @@ def test_custom_internal_port(
         environment=env,
         ports={internal_port: free_host_port},
     )
-    resp = http_client.get(f"http://localhost:{free_host_port}")
+    resp = http_client.get(f"http://localhost:{free_host_port}", timeout=10)
     resp.raise_for_status()
     logs = container.get_logs()
     LOGGER.debug(logs)

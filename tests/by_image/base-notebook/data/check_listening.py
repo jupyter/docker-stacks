@@ -43,7 +43,7 @@ def check_addrs(family: socket.AddressFamily) -> None:
             if family == socket.AF_INET
             else f"http://[{addr}]:8888/api"
         )
-        r = requests.get(url)
+        r = requests.get(url, timeout=10)
         r.raise_for_status()
         assert "version" in r.json()
         print(f"Successfully connected to: {url}")
