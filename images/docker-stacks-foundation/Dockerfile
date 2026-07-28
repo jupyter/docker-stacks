@@ -88,11 +88,12 @@ RUN echo "auth requisite pam_deny.so" >> /etc/pam.d/su && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# macOS Rosetta virtualization creates junk directory which gets owned by root further up.
-# It'll get re-created, but as USER runner after the next directive so hopefully should not cause permission issues.
-#
-# More info: https://github.com/jupyter/docker-stacks/issues/2296
-RUN rm -rf "/home/${NB_USER}/.cache/"
+# Pre-create the cache dir owned by the user, macOS Rosetta junk can then only appear inside it
+RUN rm -rf "/home/${NB_USER}/.cache/" && \
+    mkdir -p "/home/${NB_USER}/.cache" && \
+    chown "${NB_USER}:${NB_GID}" "/home/${NB_USER}/.cache"
+
+RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
 
 USER ${NB_UID}
 
@@ -149,11 +150,7 @@ RUN mkdir /usr/local/bin/start-notebook.d && \
 
 COPY 10activate-conda-env.sh /usr/local/bin/before-notebook.d/
 
-# macOS Rosetta virtualization creates junk directory which gets owned by root further up.
-# It'll get re-created, but as USER runner after the next directive so hopefully should not cause permission issues.
-#
-# More info: https://github.com/jupyter/docker-stacks/issues/2296
-RUN rm -rf "/home/${NB_USER}/.cache/"
+RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}

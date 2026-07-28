@@ -19,3 +19,5 @@ RUN pip install -v --no-cache-dir --index-url 'https://download.pytorch.org/whl/
     'torchvision' && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
