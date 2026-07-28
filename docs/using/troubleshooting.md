@@ -127,7 +127,7 @@ The following sections cover a few of these scenarios and how to fix them.
 If you have also **created a new user**, you might be experiencing any of the following issues:
 
 - the `root` user is the owner of `/home` or a mounted volume
-- when starting the container, you get an error such as `Failed to change ownership of the home directory.`
+- when starting the container, you get an error such as `Failed copy data from /home/jovyan to /home/<username> or to create symlink!`
 - getting permission denied when trying to `conda install` packages
 
 **Some things to try:**
