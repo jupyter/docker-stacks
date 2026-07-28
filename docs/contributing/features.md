@@ -53,7 +53,7 @@ If there's agreement that the feature belongs in one or more of the core stacks:
    make build/<somestack>
    ```
 
-3. [Submit a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) (PR) with your changes.
+3. [Submit a pull request](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request) (PR) with your changes.
 4. Watch for GitHub to report a build success or failure for your PR on GitHub.
 5. Discuss changes with the maintainers and address any build issues.
 
