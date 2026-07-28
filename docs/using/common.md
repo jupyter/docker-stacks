@@ -139,7 +139,7 @@ or executables (`chmod +x`) to be run to the paths below:
 - `/usr/local/bin/before-notebook.d/` - handled **after** all the standard options noted above are applied
   and ran right before the Server launches
 
-[Open the `run-hooks.sh` script](https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/run-hooks.sh) and how it's used in the [`start.sh`](https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/start.sh)
+Look at the [`run-hooks.sh` script](https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/run-hooks.sh) and how it's used in the [`start.sh`](https://github.com/jupyter/docker-stacks/blob/main/images/docker-stacks-foundation/start.sh)
 script for execution details.
 
 ## SSL Certificates
