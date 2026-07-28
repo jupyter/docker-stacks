@@ -4,7 +4,7 @@ This section describes how to build a custom set of images.
 It may be helpful if you need to change the Ubuntu or Python version, or to make a significant change to the build process itself.
 
 This project only builds one set of images at a time.
-If you want to use older images, [take a look here](../index.rst/#using-old-images).
+If you want to use older images, [take a look here](../index.rst#using-old-images).
 
 ## Automating your build using template cookiecutter project
 
@@ -31,7 +31,7 @@ Read more about [Docker build arguments](https://docs.docker.com/build/building/
 A selection of prebuilt images are available from [Quay.io](https://quay.io/organization/jupyter),
 however, it's impossible to cater to everybody's needs.
 For extensive customization with an automated build pipeline,
-you may wish to create a [community-maintained stack](../contributing/stacks),
+you may wish to create a [community-maintained stack](../contributing/stacks.md),
 however, for minor customizations, this may be overkill.
 For example, you may wish to use the same Jupyter stacks but built on a different base image,
 or built with a different Python version.
