@@ -138,7 +138,7 @@ Make edits to the Dockerfile in your project to add third-party libraries and co
 Refer to the Dockerfiles for the core stacks (e.g., [jupyter/datascience-notebook](https://github.com/jupyter/docker-stacks/blob/main/images/datascience-notebook/Dockerfile))
 to get a feel for what's possible and the best practices.
 
-[Submit pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request)
+[Submit pull requests](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request)
 to your project repository on GitHub.
 Ensure your image builds correctly on GitHub Actions before merging to the main branch.
 After merging to the main branch, your image will be built and pushed to the Docker Hub automatically.
@@ -150,5 +150,5 @@ Finally, if you'd like to add a link to your project to this documentation site,
 1. Fork the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) GitHub repository.
 2. Open the `docs/using/selecting.md` source file and locate the **Community Stacks** section in your fork.
 3. Add a table entry with a link to your project, a binder link, and a short description of what your Docker image contains.
-4. [Submit a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) (PR) with your changes.
+4. [Submit a pull request](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request) (PR) with your changes.
    Maintainers will respond and work with you to address any formatting or content issues.
