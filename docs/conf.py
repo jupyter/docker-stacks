@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "docker-stacks"
-copyright = "2025, Project Jupyter"
+copyright = "2026, Project Jupyter"
 author = "Project Jupyter"
 
 version = "latest"

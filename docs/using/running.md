@@ -39,7 +39,7 @@ Pressing `Ctrl-C` twice shuts down the Server but leaves the container intact on
 # list containers
 docker ps --all
 # CONTAINER ID   IMAGE                                       COMMAND                  CREATED              STATUS                     PORTS     NAMES
-# eca4aa01751c   quay.io/jupyter/scipy-notebook:2025-12-31   "tini -g -- start-no…"   About a minute ago   Exited (0) 5 seconds ago             silly_panini
+# eca4aa01751c   quay.io/jupyter/scipy-notebook:2025-12-31   "tini -g -- start.sh…"   About a minute ago   Exited (0) 5 seconds ago             silly_panini
 
 # start the stopped container
 docker start --attach -i eca4aa01751c

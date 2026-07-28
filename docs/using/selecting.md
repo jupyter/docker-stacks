@@ -50,7 +50,7 @@ It contains:
 - `tini` and a `start.sh` script as the container entry point - useful for running alternative commands in the container as applications are added (e.g. `ipython`, `jupyter kernelgateway`, `jupyter lab`)
 - A `run-hooks.sh` script, which can source/run files in a given directory
 - Options for a passwordless sudo
-- Common system libraries like `bzip2`, `ca-certificates`, `locales`
+- Common system libraries like `ca-certificates`, `locales`
 - `wget` to download external files
 - No preinstalled scientific computing packages
 
@@ -177,7 +177,7 @@ It contains:
   [scipy](https://scipy.org/),
   [seaborn](https://seaborn.pydata.org/),
   [sqlalchemy](https://www.sqlalchemy.org/),
-  [statsmodel](https://www.statsmodels.org/stable/index.html),
+  [statsmodels](https://www.statsmodels.org/stable/index.html),
   [sympy](https://www.sympy.org/en/index.html),
   [widgetsnbextension](https://ipywidgets.readthedocs.io/en/latest/user_install.html#installing-in-classic-jupyter-notebook),
   [xlrd](https://www.python-excel.org)
