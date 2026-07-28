@@ -52,15 +52,13 @@ RUN /opt/setup-scripts/setup_spark.py \
     --spark-download-url="${spark_download_url}"
 
 # Spark bundles Derby 10.16.1.1 by default; replace it with a fixed release.
+# The exact filename makes the build fail loudly once Spark bumps the bundled version.
 RUN set -eux; \
-    derby_jar="$(find "${SPARK_HOME}/jars" -maxdepth 1 -type f -name 'derby-*.jar' | head -n 1)"; \
-    test -n "${derby_jar}"; \
-    derby_dir="$(dirname "${derby_jar}")"; \
+    rm "${SPARK_HOME}/jars/derby-10.16.1.1.jar"; \
     curl -fsSL -o "/tmp/derby-${derby_version}.jar" \
       "https://repo1.maven.org/maven2/org/apache/derby/derby/${derby_version}/derby-${derby_version}.jar"; \
     echo "${derby_sha256} */tmp/derby-${derby_version}.jar" | sha256sum -c -; \
-    rm -f "${derby_jar}"; \
-    mv "/tmp/derby-${derby_version}.jar" "${derby_dir}/"
+    mv "/tmp/derby-${derby_version}.jar" "${SPARK_HOME}/jars/"
 
 # Configure IPython system-wide
 COPY ipython_kernel_config.py "/etc/ipython/"
