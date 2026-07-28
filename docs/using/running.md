@@ -15,12 +15,12 @@ The following are some common patterns.
 
 ### Example 1
 
-This command pulls the `jupyter/scipy-notebook` image tagged `2025-12-31` from Quay.io if it is not already present on the local host.
+This command pulls the `jupyter/scipy-notebook` image tagged `2026-07-28` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 8888.
 The server logs appear in the terminal and include a URL to the server.
 
 ```bash
-docker run -it -p 8888:8888 quay.io/jupyter/scipy-notebook:2025-12-31
+docker run -it -p 8888:8888 quay.io/jupyter/scipy-notebook:2026-07-28
 
 # Entered start.sh with args: jupyter lab
 
@@ -39,7 +39,7 @@ Pressing `Ctrl-C` twice shuts down the Server but leaves the container intact on
 # list containers
 docker ps --all
 # CONTAINER ID   IMAGE                                       COMMAND                  CREATED              STATUS                     PORTS     NAMES
-# eca4aa01751c   quay.io/jupyter/scipy-notebook:2025-12-31   "tini -g -- start.sh…"   About a minute ago   Exited (0) 5 seconds ago             silly_panini
+# eca4aa01751c   quay.io/jupyter/scipy-notebook:2026-07-28   "tini -g -- start.sh…"   About a minute ago   Exited (0) 5 seconds ago             silly_panini
 
 # start the stopped container
 docker start --attach -i eca4aa01751c
@@ -53,12 +53,12 @@ docker rm eca4aa01751c
 
 ### Example 2
 
-This command pulls the `jupyter/r-notebook` image tagged `2025-12-31` from Quay.io if it is not already present on the local host.
+This command pulls the `jupyter/r-notebook` image tagged `2026-07-28` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the Server but with the internal container port (8888) instead of the correct host port (10000).
 
 ```bash
-docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/r-notebook:2025-12-31
+docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/r-notebook:2026-07-28
 ```
 
 Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
@@ -131,7 +131,7 @@ uid=1000
 gid=100
 ```
 
-This command pulls the `quay.io/jupyter/r-notebook` image tagged `2025-12-31` from Quay.io if it is not already present on the local host.
+This command pulls the `quay.io/jupyter/r-notebook` image tagged `2026-07-28` from Quay.io if it is not already present on the local host.
 It then starts a container running a Jupyter Server with the JupyterLab frontend and exposes the server on host port 10000.
 The server logs appear in the terminal and include a URL to the server but with the internal container port (8888) instead of the correct host port (10000).
 
@@ -139,7 +139,7 @@ The server logs appear in the terminal and include a URL to the server but with 
 podman run -it --rm -p 10000:8888 \
     -v "${PWD}":/home/jovyan/work --user $uid:$gid \
     --userns keep-id:uid=${uid},gid=${gid} \
-    quay.io/jupyter/r-notebook:2025-12-31
+    quay.io/jupyter/r-notebook:2026-07-28
 ```
 
 If the commands fail with the error message:

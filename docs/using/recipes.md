@@ -536,7 +536,7 @@ they may be explained in the "Installation instructions" section of the Download
 You can also start Jupyter Docker Stacks containers using **Singularity** instead of Docker. For example:
 
 ```bash
-singularity run --bind "${PWD}:/home/${USER}/work" --containall docker://quay.io/jupyter/datascience-notebook:2025-12-31
+singularity run --bind "${PWD}:/home/${USER}/work" --containall docker://quay.io/jupyter/datascience-notebook:2026-07-28
 ```
 
 - `--bind "${PWD}:/home/${USER}/work"` mounts your current working directory into the container at `/home/$USER/work`.
