@@ -16,7 +16,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # https://github.com/tensorflow/tensorflow/issues/98980
 RUN mamba install --yes \
     'jupyter-server-proxy' \
-    "protobuf>=5.28.3,<6" && \
+    'protobuf>=5.28.3,<6' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
