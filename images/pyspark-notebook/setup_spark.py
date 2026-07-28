@@ -42,16 +42,12 @@ def get_latest_spark_version() -> str:
     LOGGER.info(f"Available versions: {versions}")
 
     # Compare versions semantically
-    def version_array(ver: str) -> tuple[int, int, int, str]:
-        # 3.5.3 -> [3, 5, 3, ""]
-        # 4.0.0-preview2 -> [4, 0, 0, "preview2"]
+    def version_array(ver: str) -> tuple[int, int, int]:
         arr = ver.split(".")
         assert len(arr) == 3, arr
-        major, minor = int(arr[0]), int(arr[1])
-        patch, _, preview = arr[2].partition("-")
-        return (major, minor, int(patch), preview)
+        return (int(arr[0]), int(arr[1]), int(arr[2]))
 
-    latest_version = max(versions, key=lambda ver: version_array(ver))
+    latest_version = max(versions, key=version_array)
     LOGGER.info(f"Latest version: {latest_version}")
     return latest_version
 
