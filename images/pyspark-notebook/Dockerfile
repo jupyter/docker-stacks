@@ -76,15 +76,12 @@ RUN rm -rf "/home/${NB_USER}/.cache/"
 USER ${NB_UID}
 
 # Install pyarrow
-# NOTE: It's important to ensure compatibility between Pandas versions.
-# The pandas version in this Dockerfile should match the version
-# on which the Pandas API for Spark is built.
-# To find the right version, check the pandas version being installed here:
-# https://github.com/apache/spark/blob/<SPARK_VERSION>/dev/infra/Dockerfile
+# The pandas version must match the version on which the Pandas API for Spark is built,
+# setup_spark.py resolves it from https://github.com/apache/spark/blob/<SPARK_VERSION>/dev/infra/Dockerfile
 RUN mamba install --yes \
     'grpcio-status' \
     'grpcio' \
-    'pandas=2.2.3' \
+    "pandas=$(cat /opt/setup-scripts/pandas-version.txt)" \
     'pyarrow' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
