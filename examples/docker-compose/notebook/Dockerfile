@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 
 # Pick your favorite docker-stacks image
-FROM quay.io/jupyter/minimal-notebook:2025-12-31@sha256:5bb65b1758fca6915271353932d8fcd577a17cc73299a557197747555e6f142a
+FROM quay.io/jupyter/base-notebook:2026-07-28@sha256:a8b2611c4c380dde6159f9963ee4f294373a0b214958987b7b469d312287c4ef
 
 USER root
 
