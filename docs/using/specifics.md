@@ -130,6 +130,11 @@ rdd.sum()
 
 ##### Local Mode in R
 
+```{warning}
+SparkR is deprecated from Apache Spark 4.0.0 and will be removed in a future version.
+Prefer the [sparklyr][sparklyr] examples below.
+```
+
 In an R notebook with [SparkR][sparkr].
 
 ```R
