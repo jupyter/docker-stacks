@@ -40,12 +40,8 @@ RUN apt-get update --yes && \
 # Create alternative for nano -> nano-tiny
 RUN update-alternatives --install /usr/bin/nano nano /bin/nano-tiny 10
 
-# macOS Rosetta virtualization creates junk directory which gets owned by root further up.
-# It'll get re-created, but as USER runner after the next directive so hopefully should not cause permission issues.
-#
-# More info: https://github.com/jupyter/docker-stacks/issues/2296
 # hadolint ignore=DL3059
-RUN rm -rf "/home/${NB_USER}/.cache/"
+RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}

@@ -33,6 +33,8 @@ COPY --chown="${NB_UID}:${NB_GID}" 20tensorboard-proxy-env.sh /usr/local/bin/bef
 RUN mkdir -p "${CONDA_DIR}/etc/conda/activate.d/" && \
     fix-permissions "${CONDA_DIR}"
 
+RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
+
 COPY --chown="${NB_UID}:${NB_GID}" nvidia-lib-dirs.sh "${CONDA_DIR}/etc/conda/activate.d/"
 
 # https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#dockerfiles

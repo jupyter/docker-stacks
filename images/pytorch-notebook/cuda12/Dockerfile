@@ -20,6 +20,8 @@ RUN pip install -v --no-cache-dir --extra-index-url=https://pypi.nvidia.com --in
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
+RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
+
 # https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/docker-specialized.html#dockerfiles
 ENV NVIDIA_VISIBLE_DEVICES="all" \
     NVIDIA_DRIVER_CAPABILITIES="compute,utility"
