@@ -56,6 +56,24 @@ def get_latest_spark_version() -> str:
     return latest_version
 
 
+def get_pandas_version(spark_version: str) -> str:
+    """
+    Returns the pandas version Spark is built and tested against,
+    taken from the dev/infra/Dockerfile of the Spark release
+    """
+    url = (
+        "https://raw.githubusercontent.com/apache/spark/"
+        f"v{spark_version}/dev/infra/Dockerfile"
+    )
+    LOGGER.info(f"Downloading pandas version from: {url}")
+    resp = requests.get(url, timeout=60)
+    resp.raise_for_status()
+    if match := re.search(r"pandas==([\d.]+)", resp.text):
+        LOGGER.info(f"Pandas version: {match.group(1)}")
+        return match.group(1)
+    raise RuntimeError(f"No pandas version pin found at: {url}")
+
+
 def get_expected_checksum(spark_version: str, filename: str) -> str:
     """
     Fetches the expected SHA-512 checksum of the Spark tarball
@@ -172,6 +190,8 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
 
     args.spark_version = args.spark_version or get_latest_spark_version()
+    pandas_version = get_pandas_version(args.spark_version)
+    Path("/opt/setup-scripts/pandas-version.txt").write_text(pandas_version)
 
     spark_dir_name = download_spark(
         spark_version=args.spark_version,
