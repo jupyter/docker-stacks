@@ -191,7 +191,7 @@ You can find [an example of using DockerSpawner](https://github.com/jupyterhub/j
 ### Containers with a specific version of JupyterHub
 
 The version of `jupyterhub` in your image should match the
-version in JupyterHub itself.
+version of JupyterHub itself.
 To use a specific version of JupyterHub, do the following:
 
 ```{literalinclude} recipe_code/jupyterhub_version.dockerfile
@@ -386,7 +386,7 @@ Credit: [britishbadger](https://github.com/britishbadger) from [docker-stacks/is
 ## Run Server inside an already secured environment (i.e., with no token)
 
 The default security is very good.
-There are use cases, encouraged by containers, where the jupyter container and the system it runs within lie inside the security boundary.
+There are use cases, encouraged by containers, where the Jupyter container and the system it runs within lie inside the security boundary.
 It is convenient to launch the server without a password or token in these use cases.
 In this case, you should use the `start-notebook.py` script to launch the server with no token:
 
@@ -545,7 +545,7 @@ singularity run --bind "${PWD}:/home/${USER}/work" --containall docker://quay.io
   When running the image with Singularity, the container uses your host username inside the container.
   Therefore, the bind target is `/home/${USER}/work` instead of the usual `/home/jovyan/work`.
 
-- `--containall` starts the container in a fully isolated environment, ignoring most of the host’s filesystem and environment except for explicitly bound paths.
+- `--containall` starts the container in a fully isolated environment, ignoring most of the host's filesystem and environment except for explicitly bound paths.
   By default, Singularity would bind your home directory automatically.
   If you have Python packages installed there, this may cause conflicts with packages inside the container.
   Using `--containall` avoids such interference.

@@ -17,8 +17,8 @@ Our repository provides several customization points:
 
 - `ROOT_IMAGE` (docker argument) - the parent image for `docker-stacks-foundation` image
 - `PYTHON_VERSION` (docker argument) - the Python version to install in `docker-stacks-foundation` image
-- `REGISTRY`, `OWNER`, `BASE_IMAGE` (docker arguments) - they allow to specify parent image for all the other images
-- `REGISTRY`, `OWNER` (part of `env` in some GitHub workflows) - these allow to properly tag and refer to images during following steps:
+- `REGISTRY`, `OWNER`, `BASE_IMAGE` (docker arguments) - they allow you to specify the parent image for all the other images
+- `REGISTRY`, `OWNER` (part of `env` in some GitHub workflows) - these allow you to properly tag and refer to images during the following steps:
   - [`build-test-upload`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-build-test-upload.yml)
   - [`contributed-recipes`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/contributed-recipes.yml)
   - [`tag-push-merge`](https://github.com/jupyter/docker-stacks/blob/main/.github/workflows/docker-tag-push-merge.yml)
@@ -28,11 +28,11 @@ Read more about [Docker build arguments](https://docs.docker.com/build/building/
 
 ## Building stack images with custom arguments
 
-A selection of prebuilt images are available from [Quay.io](https://quay.io/organization/jupyter),
-however, it's impossible to cater to everybody's needs.
+A selection of prebuilt images is available from [Quay.io](https://quay.io/organization/jupyter).
+However, it's impossible to cater to everybody's needs.
 For extensive customization with an automated build pipeline,
-you may wish to create a [community-maintained stack](../contributing/stacks.md),
-however, for minor customizations, this may be overkill.
+you may wish to create a [community-maintained stack](../contributing/stacks.md).
+However, for minor customizations, this may be overkill.
 For example, you may wish to use the same Jupyter stacks but built on a different base image,
 or built with a different Python version.
 
@@ -44,8 +44,8 @@ Custom arguments may result in build errors due to incompatibility.
 If so your use-case may require a fully customized stack.
 ```
 
-As a basic example, if you want to build a custom image based on the `minimal-notebook` image using `Python 3.12`,
-then with a Dockerfile like:
+As a basic example, suppose you want to build a custom image based on the `minimal-notebook` image using `Python 3.12`,
+and you have a Dockerfile like:
 
 ```{code-block} Dockerfile
 :caption: Dockerfile
@@ -55,7 +55,7 @@ FROM $BASE_IMAGE
 ...
 ```
 
-Include the file below in your project:
+Then include the file below in your project:
 
 ```{literalinclude} recipe_code/docker-bake.custom-python.hcl
 :force:

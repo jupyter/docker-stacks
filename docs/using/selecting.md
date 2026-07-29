@@ -292,7 +292,7 @@ Whenever a docker image is pushed to the container registry, it is tagged with:
 - Single-platform images have either `aarch64-` or `x86_64-` tag prefixes, for example, `quay.io/jupyter/base-notebook:aarch64-python-3.13.14`
 ```
 
-For stability and reproducibility, you should either reference a date formatted
+For stability and reproducibility, you should either reference a date-formatted
 tag from a date before the current date (in UTC) or a git commit SHA older
 than the latest git commit SHA in the default branch of the
 [jupyter/docker-stacks GitHub repository](https://github.com/jupyter/docker-stacks/).

@@ -154,7 +154,7 @@ The example could be improved by investigating more in detail which UIDs and GID
 for example by setting the size option (`--userns keep-id:uid=${uid},gid=${gid},size=$size`).
 ```
 
-Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
+Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the container.
 New files and changes in `~/work` in the container will be preserved.
 Any other changes made in the container will be lost.
 

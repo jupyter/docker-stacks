@@ -19,7 +19,7 @@ To build new images and publish them to the Registry, do the following:
    (GitHub keeps the latest pending run, replacing any previously queued one).
    Still, it is tidier to let the pending builds finish before merging another PR:
    this way, you will know which commit might have broken the build
-   and also have the correct tags for moving tags (like the `Python` version).
+   and also have the correct values for the moving tags (like the `Python` version).
 
 ### `[FAST_BUILD]` pull requests
 
@@ -31,7 +31,7 @@ Keep in mind:
 
 - Skipped jobs still satisfy the required status checks.
   So, before merging such a PR, **make sure** the `[FAST_BUILD]` title is appropriate for the changes made
-  (i.e. the changes can not affect the skipped images).
+  (i.e. the changes cannot affect the skipped images).
 - Changing a PR title does **not** re-trigger the checks (the workflow does not run on the `edited` activity type).
   Push a new commit or re-run the workflow jobs to refresh the checks after retitling a PR.
 
@@ -41,7 +41,7 @@ When a new `Python` version is released, we wait for:
 
 - all the dependencies to be available (as wheels or in `conda-forge`).
 - the first `Python` patch release for this version.
-  This allows us to avoid many bugs, which can happen in a major release.
+  This allows us to avoid many bugs that can happen in a major release.
 
 ## Updating the Ubuntu Base Image
 

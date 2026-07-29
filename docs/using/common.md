@@ -63,27 +63,25 @@ You do so by passing arguments to the `docker run` command.
   (The `start.sh` script will run the container command as `${NB_USER}` via `sudo` after adjusting the user ID.)
   Instead, you might consider using the modern Docker-native options [`--user`](https://docs.docker.com/engine/containers/run/#user) and
   [`--group-add`](https://docs.docker.com/engine/containers/run/#additional-groups) - see the last bullet in this section for more details.
-  See bullet points regarding `--user` and `--group-add`.
 
 - `-e NB_GID=<numeric gid>` - Instructs the startup script to change the primary group of `${NB_USER}` to `${NB_GID}`
   (the new group is added with a name of `${NB_GROUP}` if it is defined. Otherwise, the group is named `${NB_USER}`).
   This feature is useful when mounting host volumes with specific group permissions.
   You **must** run the container with `--user root` for this option to take effect.
   (The `start.sh` script will run the container command as `${NB_USER}` via `sudo` after adjusting the group ID.)
-  Instead, you might consider using modern Docker options `--user` and `--group-add`.
-  See bullet points regarding `--user` and `--group-add`.
+  Instead, you might consider using modern Docker options `--user` and `--group-add` - see the last bullet in this section for more details.
   The user is added to the supplemental group `users` (gid 100) to grant write access to the home directory and `/opt/conda`.
   If you override the user/group logic, ensure the user stays in the group `users` if you want them to be able to modify files in the image.
 
 - `-e NB_GROUP=<name>` - The name used for `${NB_GID}`, which defaults to `${NB_USER}`.
-  This group name is only used if `${NB_GID}` is specified and completely optional: there is only a cosmetic effect.
+  This group name is only used if `${NB_GID}` is specified, and is completely optional: it only has a cosmetic effect.
 
 - `--user 5000 --group-add users` - Launches the container with a specific user ID and adds that user to the `users` group so that it can modify files in the default home directory and `/opt/conda`.
   You can use these arguments as alternatives to setting `${NB_UID}` and `${NB_GID}`.
 
 ### Permission-specific configurations
 
-- `-e NB_UMASK=<umask>` - Configures Jupyter to use a different `umask` value from default, i.e. `022`.
+- `-e NB_UMASK=<umask>` - Configures Jupyter to use a `umask` value different from the default `022`.
   For example, if setting `umask` to `002`, new files will be readable and writable by group members instead of the owner only.
   [Check this Wikipedia article](https://en.wikipedia.org/wiki/Umask) for an in-depth description of `umask` and suitable values for multiple needs.
   While the default `umask` value should be sufficient for most use cases, you can set the `NB_UMASK` value to fit your requirements.
@@ -125,7 +123,7 @@ You do so by passing arguments to the `docker run` command.
   **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
 - `-e JUPYTER_ENV_VARS_TO_UNSET=ADMIN_SECRET_1,ADMIN_SECRET_2` - Unsets specified environment variables in the default startup script.
   The variables are unset after the hooks have been executed but before the command provided to the startup script runs.
-- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to add to `jupyter` commands.
+- `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to the `jupyter` command.
   This way, the user could use any option supported by the `jupyter` subcommand.
 - `-e JUPYTER_PORT=8117` - Changes the port in the container that Jupyter is using to the value of the `${JUPYTER_PORT}` environment variable.
   This may be useful if you run multiple instances of Jupyter in swarm mode and want to use a different port for each instance.
@@ -188,7 +186,7 @@ JupyterLab, built on top of Jupyter Server, is now the default for all the image
 However, switching back to the classic notebook or using a different startup command is still possible.
 You can achieve this by setting the environment variable `DOCKER_STACKS_JUPYTER_CMD` at container startup.
 The table below shows some options.
-Since `Jupyter Notebook v7` `jupyter-server` is used as a backend.
+Since `Jupyter Notebook v7`, `jupyter-server` is used as a backend.
 
 | `DOCKER_STACKS_JUPYTER_CMD` | Frontend         |
 | --------------------------- | ---------------- |
@@ -251,7 +249,7 @@ The `jovyan` user has full read/write access to the `/opt/conda` directory.
 You can use either `mamba`, `pip`, or `conda` (`mamba` is recommended) to install new packages without any additional permissions.
 
 ```bash
-# install a package into the default (python 3.x) environment and cleanup it after
+# install a package into the default (python 3.x) environment and clean it up after
 # the installation
 mamba install --yes some-package && \
     mamba clean --all -f -y && \

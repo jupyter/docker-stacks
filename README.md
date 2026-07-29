@@ -39,7 +39,7 @@ It then starts a container running a Jupyter Server with the JupyterLab frontend
 docker run -p 10000:8888 quay.io/jupyter/scipy-notebook:2026-07-28
 ```
 
-You can modify the port on which the container's port is exposed by [changing the value of the `-p` option](https://docs.docker.com/engine/containers/run/#exposed-ports) to `-p 8888:8888`.
+You can modify the host port to which the container's port is mapped by [changing the value of the `-p` option](https://docs.docker.com/engine/containers/run/#exposed-ports) to `-p 8888:8888`.
 
 Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab,
 where:
