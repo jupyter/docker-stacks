@@ -22,7 +22,7 @@ The server logs appear in the terminal and include a URL to the server.
 ```bash
 docker run -it -p 8888:8888 quay.io/jupyter/scipy-notebook:2026-07-28
 
-# Entered start.sh with args: jupyter lab
+# Entered start.sh with args: start-notebook.py
 
 # ...
 
@@ -43,7 +43,7 @@ docker ps --all
 
 # start the stopped container
 docker start --attach -i eca4aa01751c
-# Entered start.sh with args: jupyter lab
+# Entered start.sh with args: start-notebook.py
 # ...
 
 # remove the stopped container
