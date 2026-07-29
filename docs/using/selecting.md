@@ -266,11 +266,20 @@ For example, you could use the image `quay.io/jupyter/pytorch-notebook:cuda12-py
 The following diagram depicts the build dependency tree of the core images. (i.e., the `FROM` statements in their Dockerfiles).
 Any given image inherits the complete content of all ancestor images pointing to it.
 
-![Image inheritance diagram](../images/inherit.svg)
-
-The diagram is generated from the [`docs/images/inherit.diag`](https://github.com/jupyter/docker-stacks/blob/main/docs/images/inherit.diag) source file
-using [blockdiag](https://pypi.org/project/blockdiag/).
-To regenerate it after changing the source, run `pip install blockdiag && blockdiag docs/images/inherit.diag -T svg -o docs/images/inherit.svg` from the repository root.
+```{mermaid}
+flowchart TD
+    ubuntu["ubuntu<br>(LTS with point release)"] --> docker-stacks-foundation
+    docker-stacks-foundation --> base-notebook
+    base-notebook --> minimal-notebook
+    minimal-notebook --> scipy-notebook
+    minimal-notebook --> r-notebook
+    minimal-notebook --> julia-notebook
+    scipy-notebook --> tensorflow-notebook["tensorflow-notebook<br>+cuda variant"]
+    scipy-notebook --> pytorch-notebook["pytorch-notebook<br>+cuda12/cuda13 variants"]
+    scipy-notebook --> datascience-notebook
+    scipy-notebook --> pyspark-notebook
+    pyspark-notebook --> all-spark-notebook
+```
 
 ### Builds
 
