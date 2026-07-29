@@ -161,7 +161,8 @@ If you have also **created a new user**, you might be experiencing any of the fo
    ```
 
    where:
-   - `-e NB_USER=callisto`: will rename the `jovyan` user to `callisto` and copy the content of the home directory to `/home/callisto`
+   - `-e NB_USER=callisto`: will rename the `jovyan` user to `callisto` and attempt to copy the content of the home directory to `/home/callisto`,
+     falling back to creating a symlink to `/home/jovyan` if the copy fails
    - `-e NB_UID=1234` and `-e NB_GID=1234`: will set the `UID` and `GID` of the new user (`callisto`) to `1234`
    - `-e CHOWN_HOME_OPTS="-R"` and `-e CHOWN_HOME=yes`: ensure that the new user is the owner of the `/home` directory and subdirectories
      (setting `CHOWN_HOME_OPTS="-R` will ensure this change is applied recursively)
