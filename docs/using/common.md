@@ -37,7 +37,8 @@ You do so by passing arguments to the `docker run` command.
   The default value is `jovyan`.
   Setting `NB_USER` redefines the `jovyan` default user and ensures that the desired user has the correct file permissions
   for the new home directory created at `/home/<username>`.
-  For this option to take effect, you **must** run the container with `--user root` and set the environment variable `-e CHOWN_HOME=yes`.
+  For this option to take effect, you **must** run the container with `--user root`.
+  Additionally, set `-e CHOWN_HOME=yes` if you also change `NB_UID`/`NB_GID` or mount the user's home directory from the host.
   If the working directory was under `/home/jovyan`, the startup script automatically updates it to the new `/home/<username>` location.
 
   _Example usage:_
