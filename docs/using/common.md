@@ -53,7 +53,8 @@ You do so by passing arguments to the `docker run` command.
   ```
 
   ```{note}
-  If you set `NB_USER` to `root`, the `root` home dir will be set to `/home/root`.
+  If you set `NB_USER` to `root`, you must also set `NB_UID=0` and `NB_GID=0`;
+  the `root` home dir will then be set to `/home/root`.
   See discussion [here](https://github.com/jupyter/docker-stacks/issues/2042).
   ```
 
