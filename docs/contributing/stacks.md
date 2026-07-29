@@ -93,7 +93,7 @@ git push -u origin main
 Jupyter Docker Stacks are hosted on Quay.io, but in this example, we show you how to host your image on Docker Hub.
 ```
 
-Now, configure Docker Hub to build your stack image and push it to the Docker Hub repository whenever
+Now, configure Docker Hub so that your stack image can be pushed to the Docker Hub repository whenever
 you merge a GitHub pull request to the main branch of your project.
 
 1. Visit [https://hub.docker.com/](https://hub.docker.com/) and log in.
