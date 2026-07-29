@@ -58,6 +58,6 @@ If there's agreement that the feature belongs in one or more of the core stacks:
 5. Discuss changes with the maintainers and address any build issues.
 
 ```{note}
-If your changes can not affect any image beyond `docker-stacks-foundation` and `base-notebook`,
+If your changes cannot affect any image beyond `docker-stacks-foundation` and `base-notebook`,
 you can add `[FAST_BUILD]` to the PR title to skip building the rest of the images and speed up CI.
 ```

@@ -18,7 +18,7 @@ Here is a non-exhaustive list of things we do care about:
    - Image sizes
    - All requirements should be installed as well
 3. Jupyter Docker Stacks _**image fit**_
-   - new package or stack is changing (or inherits from) the most suitable stack
+   - new package or stack changes (or inherits from) the most suitable stack
 4. **Software impact** for users of docker-stacks images
    - How this image can help existing users, or maybe reduce the need to build new images
 5. Why it shouldn't just be a documented **recipe**

@@ -1,7 +1,7 @@
 # Tags and manifests
 
 The main purpose of the source code in [the `tagging` folder](https://github.com/jupyter/docker-stacks/tree/main/tagging) is to
-properly write tags file, build history line and manifest for a single-platform image,
+properly write the tags file, the build history line, and the manifest for a single-platform image,
 apply these tags, and then merge single-platform images into one multi-arch image.
 
 ## What is a tag and a manifest
@@ -41,7 +41,7 @@ For example, we dump all `conda` packages with their versions into the manifest.
 :lines: 3-
 ```
 
-The prefix of commit hash (namely, 12 letters) is used as an image tag to make it easy to inherit from a fixed version of a docker image.
+The prefix of the commit hash (namely, 12 characters) is used as an image tag to make it easy to inherit from a fixed version of a docker image.
 
 ## Taggers and Manifests
 

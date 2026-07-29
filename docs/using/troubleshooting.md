@@ -83,7 +83,7 @@ The following sections cover a few of these scenarios and how to fix them.
 
    Docker handles mounting host directories differently from mounting volumes, even though the syntax is essentially the same (i.e. `-v`).
 
-   When you initialize a Docker container using the `-v`flag, the host directories are bind-mounted directly into the container.
+   When you initialize a Docker container using the `-v` flag, the host directories are bind-mounted directly into the container.
    Therefore, the permissions and ownership are copied over and will be **the same** as the ones in your local host
    (including user ids) which may result in permissions errors when trying to access directories or create/modify files inside.
 
@@ -161,7 +161,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
    ```
 
    where:
-   - `-e NB_USER=callisto`: will create a new user `callisto` and automatically add it to the `users` group (does not delete jovyan)
+   - `-e NB_USER=callisto`: will rename the `jovyan` user to `callisto` and copy the content of the home directory to `/home/callisto`
    - `-e NB_UID=1234` and `-e NB_GID=1234`: will set the `UID` and `GID` of the new user (`callisto`) to `1234`
    - `-e CHOWN_HOME_OPTS="-R"` and `-e CHOWN_HOME=yes`: ensure that the new user is the owner of the `/home` directory and subdirectories
      (setting `CHOWN_HOME_OPTS="-R` will ensure this change is applied recursively)
@@ -223,7 +223,7 @@ If you have also **created a new user**, you might be experiencing any of the fo
 
   This command will launch the container with a specific user UID and add that user to the `users` group
   to modify the files in the default `/home` and `/opt/conda` directories.
-  Further avoiding issues when trying to `conda install` additional packages.
+  This further avoids issues when trying to `conda install` additional packages.
 
 - Use `docker inspect <container_id>` and look for the [`Mounts` section](https://docs.docker.com/engine/storage/volumes/#start-a-container-with-a-volume)
   to verify that the volume was created and mounted accordingly:
