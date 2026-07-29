@@ -6,3 +6,4 @@ sphinx>=9.1.0
 sphinx-book-theme>=1.4.0
 sphinx-copybutton>=0.5.2
 sphinx-last-updated-by-git>=0.3.8
+sphinxcontrib-mermaid>=2.1.0

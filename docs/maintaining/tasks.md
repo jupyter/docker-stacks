@@ -68,8 +68,6 @@ When there's a new stack definition, check before merging the PR:
 
 1. PR includes an update to the stack overview diagram
    [in the documentation](../using/selecting.md#image-relationships).
-   The diagram is generated from its [blockdiag](https://pypi.org/project/blockdiag/) source file `docs/images/inherit.diag`
-   by running `pip install blockdiag && blockdiag docs/images/inherit.diag -T svg -o docs/images/inherit.svg`.
 2. PR updates the [Makefile](https://github.com/jupyter/docker-stacks/blob/main/Makefile).
 3. Necessary Tagger(s)/Manifest(s) are added for the new image
    in the [tagging](https://github.com/jupyter/docker-stacks/tree/main/tagging) folder.
