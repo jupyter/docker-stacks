@@ -310,6 +310,7 @@ than the latest git commit SHA in the default branch of the
 
 Pushed images (both multi-platform and single-platform ones) are signed with [cosign](https://docs.sigstore.dev/cosign/signing/overview/)
 using keyless signing with the GitHub Actions OIDC identity.
+Signatures are stored in the Sigstore bundle format, which requires cosign v3+ to verify.
 To verify that an image was built and pushed by this repository's CI:
 
 ```bash

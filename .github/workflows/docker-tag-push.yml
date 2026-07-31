@@ -92,9 +92,10 @@ jobs:
           echo "IMAGE_REF=${IMAGE_REF}" >> "${GITHUB_ENV}"
         shell: bash
 
+      # The bundle format stores the signature using OCI 1.1 referrers and requires cosign v3+ to verify
       - name: Sign single platform image with Cosign 🔏
         if: env.PUSH_TO_REGISTRY == 'true'
-        run: cosign sign --yes "${IMAGE_REF}"
+        run: cosign sign --yes --new-bundle-format=true "${IMAGE_REF}"
         shell: bash
 
       - name: Logout from Registry 🔐
