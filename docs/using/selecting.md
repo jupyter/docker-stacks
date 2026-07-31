@@ -306,6 +306,18 @@ tag from a date before the current date (in UTC) or a git commit SHA older
 than the latest git commit SHA in the default branch of the
 [jupyter/docker-stacks GitHub repository](https://github.com/jupyter/docker-stacks/).
 
+### Verifying image signatures
+
+Pushed images (both multi-platform and single-platform ones) are signed with [cosign](https://docs.sigstore.dev/cosign/signing/overview/)
+using keyless signing with the GitHub Actions OIDC identity.
+To verify that an image was built and pushed by this repository's CI:
+
+```bash
+cosign verify quay.io/jupyter/base-notebook:latest \
+    --certificate-identity-regexp='^https://github\.com/jupyter/docker-stacks/' \
+    --certificate-oidc-issuer=https://token.actions.githubusercontent.com
+```
+
 ## Community Stacks
 
 The core stacks are but a tiny sample of what's possible when combining Jupyter with other technologies.

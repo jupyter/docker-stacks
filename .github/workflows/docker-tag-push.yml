@@ -33,6 +33,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+      id-token: write
     timeout-minutes: ${{ inputs.timeout-minutes }}
     strategy:
       matrix:
@@ -76,6 +77,24 @@ jobs:
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }} || \
           (sleep 10 && \
           docker push --all-tags ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }})
+        shell: bash
+
+      - name: Install Cosign 🔏
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+
+      - name: Calculate image ref 🔑
+        run: |
+          IMAGE_REF=$(python3 -m tagging.apps.calculate_image_ref \
+            --image ${{ inputs.image }} \
+            --variant ${{ inputs.variant }} \
+            --platform ${{ matrix.platform }} \
+            --tags-dir /tmp/jupyter/tags/)
+          echo "IMAGE_REF=${IMAGE_REF}" >> "${GITHUB_ENV}"
+        shell: bash
+
+      - name: Sign single platform image with Cosign 🔏
+        if: env.PUSH_TO_REGISTRY == 'true'
+        run: cosign sign --yes "${IMAGE_REF}"
         shell: bash
 
       - name: Logout from Registry 🔐
