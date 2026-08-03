@@ -22,7 +22,7 @@ RUN mamba install --yes \
     fix-permissions "/home/${NB_USER}"
 
 # Install tensorflow with pip, on x86_64 tensorflow-cpu
-RUN if [[ "$(uname -m)" == "x86_64" ]]; then \
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
         TF_POSTFIX="-cpu"; \
     else \
         TF_POSTFIX=""; \

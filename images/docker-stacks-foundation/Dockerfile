@@ -72,7 +72,7 @@ RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashr
     echo 'eval "$(conda shell.bash hook)"' >> /etc/skel/.bashrc
 
 # Delete existing user with UID="${NB_UID}" if it exists
-RUN if id -un "${NB_UID}" &>/dev/null; then \
+RUN if id -un "${NB_UID}" >/dev/null 2>&1; then \
         userdel --remove "$(id -un "${NB_UID}")"; \
     fi
 
@@ -119,7 +119,7 @@ WORKDIR /tmp
 RUN --mount=type=bind,from=micromamba,source=/bin/micromamba,target=/usr/local/bin/micromamba \
     set -x && \
     PYTHON_SPECIFIER="python=${PYTHON_VERSION}" && \
-    if [[ "${PYTHON_VERSION}" == "default" ]]; then PYTHON_SPECIFIER="python"; fi && \
+    if [ "${PYTHON_VERSION}" = "default" ]; then PYTHON_SPECIFIER="python"; fi && \
     # Install the packages
     micromamba install \
         --root-prefix="${CONDA_DIR}" \

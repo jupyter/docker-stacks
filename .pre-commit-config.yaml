@@ -24,7 +24,7 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: dac090ce4d9ee313d086e2e89ab1acb8c2664fa1 # frozen: 9.0.0a3
+    rev: 7f321d375f31a2f03833bc9a548e8783f2b5c420 # frozen: 9.0.0b1
     hooks:
       - id: isort
         args: [--profile, black]
@@ -38,7 +38,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: d2823d321df3af8f878f7ee3414dc94d037145b9 # frozen: v2.1.0
+    rev: 41e691678310dfd3833f7ab4e180ddb014310356 # frozen: v2.3.0
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -67,7 +67,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: 39e2973981e6d2f9b6c543b0086a2d2393abdc89 # frozen: v3.9.4
+    rev: 0ee178619d696787ca73d210cc191d720868c631 # frozen: v3.9.6
     hooks:
       - id: prettier
 
@@ -84,21 +84,21 @@ repos:
 
   # Lint: Dockerfile
   - repo: https://github.com/hadolint/hadolint
-    rev: 4e697ba704fd23b2409b947a319c19c3ee54d24f # frozen: v2.14.0
+    rev: 2eece55955ced00200be9729e9728cb7dacca505 # frozen: v2.15.1
     hooks:
       - id: hadolint-docker
         # The image tag in `entry` must be bumped together with `rev` (autoupdate does not touch it)
-        entry: hadolint/hadolint:v2.14.0 hadolint
+        entry: hadolint/hadolint:v2.15.1 hadolint
 
   # Lint: Dockerfile
   # We're linting .dockerfile files as well
   - repo: https://github.com/hadolint/hadolint
-    rev: 4e697ba704fd23b2409b947a319c19c3ee54d24f # frozen: v2.14.0
+    rev: 2eece55955ced00200be9729e9728cb7dacca505 # frozen: v2.15.1
     hooks:
       - id: hadolint-docker
         name: Lint *.dockerfile Dockerfiles
         # The image tag in `entry` must be bumped together with `rev` (autoupdate does not touch it)
-        entry: hadolint/hadolint:v2.14.0 hadolint
+        entry: hadolint/hadolint:v2.15.1 hadolint
         types: [file]
         files: \.dockerfile$
 
@@ -125,27 +125,27 @@ repos:
 
   # Lint: Python
   - repo: https://github.com/PyCQA/flake8
-    rev: d93590f5be797aabb60e3b09f2f52dddb02f349f # frozen: 7.3.0
+    rev: c48217e1fc006c2dddd14df54e83b67da15de5cd # frozen: 7.3.0
     hooks:
       - id: flake8
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: 534166213006ec869b773b7ed8c6ebeaad1165d0 # frozen: v0.23.0
+    rev: b82a6c8896e491b9cb377a99ff3412131920681b # frozen: v0.23.2
     hooks:
       - id: markdownlint-cli2
         args: [--fix]
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
-    rev: f5da19ce3b7b40e97c12ee9cd8ce97f48f97ddf7 # frozen: 0.9.1
+    rev: 34071b78c181af3bf5af955c1426466e096fc3db # frozen: 0.9.1
     hooks:
       - id: nbstripout
 
   # nbQA provides tools from the Python ecosystem like
   # pyupgrade, isort, black, and flake8, adjusted for notebooks.
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: f96ec7f3b26a32619435686eb5813235f7e3327e # frozen: 1.9.1
+    rev: d31b7eae1767c43460afb3ba130e0a6602933abe # frozen: 1.9.1
     hooks:
       - id: nbqa-pyupgrade
         args: [--py312-plus]
@@ -156,7 +156,7 @@ repos:
 
   # Run black on python code blocks in documentation files.
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: dda8db18cfc68df532abf33b185ecd12d5b7b326 # frozen: 1.20.0
+    rev: fda77690955e9b63c6687d8806bafd56a526e45f # frozen: 1.20.0
     hooks:
       - id: blacken-docs
         # --skip-errors is added to allow us to have python syntax highlighting even if
