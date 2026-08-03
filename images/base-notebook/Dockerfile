@@ -74,7 +74,7 @@ RUN fix-permissions /etc/jupyter/
 # This healtcheck works well for `lab`, `notebook`, `nbclassic`, `server`, and `retro` jupyter commands
 # https://github.com/jupyter/docker-stacks/issues/915#issuecomment-1068528799
 HEALTHCHECK --interval=3s --timeout=1s --start-period=3s --retries=3 \
-    CMD /etc/jupyter/docker_healthcheck.py || exit 1
+    CMD ["/etc/jupyter/docker_healthcheck.py"]
 
 RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
 
