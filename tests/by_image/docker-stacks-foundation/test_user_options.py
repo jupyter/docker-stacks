@@ -186,6 +186,27 @@ def test_group_add(container: TrackedContainer) -> None:
     assert "uid=1010 gid=1010 groups=1010,100(users)" in logs
 
 
+def test_conda_dir_group_inheritance(container: TrackedContainer) -> None:
+    """Files and directories created under /opt/conda at runtime by an arbitrary
+    UID should inherit the users group (via the setgid bit set by fix-permissions),
+    so they stay manageable when the container is later run with a different UID."""
+    logs = container.run_and_wait(
+        timeout=10,
+        no_warnings=False,
+        user="1010:1010",
+        group_add=["users"],
+        command=[
+            "bash",
+            "-c",
+            "mkdir /opt/conda/test-dir && "
+            + "touch /opt/conda/test-dir/test-file && "
+            + "stat -c '%n %G %a' /opt/conda/test-dir /opt/conda/test-dir/test-file",
+        ],
+    )
+    assert "/opt/conda/test-dir users 2755" in logs
+    assert "/opt/conda/test-dir/test-file users 644" in logs
+
+
 def test_set_uid(container: TrackedContainer) -> None:
     """Container should run with the specified uid and NB_USER.
     The /home/jovyan directory will not be writable since it's owned by 1000:users.
