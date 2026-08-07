@@ -115,6 +115,14 @@ if [ "$(id -u)" == 0 ]; then
         fi
     fi
 
+    # The home directory could be mounted, e.g. from an empty volume.
+    # Restoring the missing files is only possible if the home directory is writable
+    if [[ -w "/home/${NB_USER}" ]]; then
+        populate-home-dir.sh "/home/${NB_USER}" "${NB_UID}:${NB_GID}"
+    else
+        _log_warn "No write access to /home/${NB_USER}, not restoring the missing home dir files"
+    fi
+
     # Optionally ensure the desired user gets filesystem ownership of its home
     # folder and/or additional folders
     if [[ "${CHOWN_HOME}" == "1" || "${CHOWN_HOME}" == "yes" ]]; then
@@ -238,6 +246,9 @@ else
     # Warn if the user isn't able to write files to ${HOME}
     if [[ ! -w /home/jovyan ]]; then
         _log_warn "no write access to /home/jovyan. Try starting the container with group 'users' (100), e.g. using \"--group-add=users\"."
+    else
+        # The home directory could be mounted, e.g. from an empty volume
+        populate-home-dir.sh "/home/jovyan"
     fi
 
     # NOTE: This hook is run as the user we started the container as!
