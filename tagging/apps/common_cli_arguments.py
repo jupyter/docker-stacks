@@ -14,6 +14,7 @@ def common_arguments_parser(
     image: bool = False,
     variant: bool = False,
     platform: bool = False,
+    platform_optional: bool = False,
     tags_dir: bool = False,
     hist_lines_dir: bool = False,
     manifests_dir: bool = False,
@@ -47,10 +48,11 @@ def common_arguments_parser(
             required=True,
             help="Variant tag prefix",
         )
-    if platform:
+    if platform or platform_optional:
         parser.add_argument(
             "--platform",
-            required=True,
+            required=platform,
+            default="",
             type=str,
             choices=["x86_64", "aarch64", "arm64"],
             help="Image platform",
@@ -83,7 +85,7 @@ def common_arguments_parser(
             help="Repository name on GitHub",
         )
     args = parser.parse_args()
-    if platform:
+    if platform or platform_optional:
         args.platform = unify_aarch64(args.platform)
 
     return Config(**vars(args))

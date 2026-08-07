@@ -5,16 +5,11 @@ import logging
 import os
 
 import plumbum
-from tenacity import (
-    RetryError,
-    retry,
-    retry_if_not_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
+from tenacity import RetryError
 
 from tagging.apps.common_cli_arguments import common_arguments_parser
 from tagging.apps.config import Config
+from tagging.utils.get_manifest_digest import ManifestNotFoundError, get_manifest_digest
 from tagging.utils.get_platform import ALL_PLATFORMS
 from tagging.utils.get_prefix import get_file_prefix_for_platform
 from tagging.utils.git_helper import GitHelper
@@ -22,12 +17,6 @@ from tagging.utils.git_helper import GitHelper
 docker = plumbum.local["docker"]
 
 LOGGER = logging.getLogger(__name__)
-
-MANIFEST_NOT_FOUND_ERRORS = ("manifest unknown", "name unknown", "not found")
-
-
-class ManifestNotFoundError(RuntimeError):
-    """Raised when the registry definitively reports that a manifest doesn't exist"""
 
 
 def read_local_tags_from_files(config: Config) -> dict[str, set[str]]:
@@ -55,29 +44,6 @@ def read_local_tags_from_files(config: Config) -> dict[str, set[str]]:
     return local_platforms_per_tag
 
 
-@retry(
-    stop=stop_after_attempt(3),
-    wait=wait_exponential(multiplier=1, min=4),
-    # A definitive answer from the registry that the manifest doesn't exist
-    # is not a transient error, so there is no reason to retry
-    retry=retry_if_not_exception_type(ManifestNotFoundError),
-)
-def inspect_manifest(tag: str) -> None:
-    LOGGER.info(f"Inspecting manifest for tag: {tag}")
-    retcode, stdout, stderr = docker["buildx", "imagetools", "inspect", tag].run(
-        retcode=None
-    )
-    if retcode == 0:
-        LOGGER.info(f"Manifest {tag} exists")
-        return
-    output = f"{stdout}\n{stderr}"
-    if any(error in output.lower() for error in MANIFEST_NOT_FOUND_ERRORS):
-        raise ManifestNotFoundError(
-            f"Manifest for tag: {tag} doesn't exist in the registry:\n{output}"
-        )
-    raise RuntimeError(f"Failed to inspect manifest for tag: {tag}\n{output}")
-
-
 def find_platform_tags(
     merged_tag: str, local_platforms: set[str], push_to_registry: bool
 ) -> list[str]:
@@ -88,7 +54,7 @@ def find_platform_tags(
         platform_tag = f"{image}:{platform}-{tag}"
         LOGGER.info(f"Trying to inspect: {platform_tag} in the registry")
         try:
-            inspect_manifest(platform_tag)
+            get_manifest_digest(platform_tag)
             platform_tags.append(platform_tag)
             LOGGER.info(f"Tag {platform_tag} found successfully")
         except ManifestNotFoundError as e:
