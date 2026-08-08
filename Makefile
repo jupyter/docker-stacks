@@ -9,7 +9,7 @@ OWNER?=jupyter
 IMG=$(REGISTRY)/$(OWNER)/$(notdir $@)
 
 # Use Docker if available, otherwise use Apple's container framework
-CONTAINER_CLI?=$(shell command -v docker > /dev/null 2>&1 && echo docker || echo container)
+CONTAINER_CLI?=$(if $(shell command -v docker),docker,container)
 ifeq ($(CONTAINER_CLI),docker)
 	CONTAINER_NS:=docker container
 	# Docker shows image sizes by default, Apple's container framework requires the flag
