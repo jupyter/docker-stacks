@@ -13,9 +13,9 @@ To achieve this, use the generic task to install all Python development dependen
 
 ```sh
 # Install all development dependencies for the project
-pip install --upgrade -r requirements-dev.txt
+pip install -r requirements-dev.txt
 # It can also be installed directly
-pip install pre-commit
+pip install "$(grep '^pre-commit==' requirements-dev.txt)"
 ```
 
 Then the git hooks scripts configured for the project in `.pre-commit-config.yaml` need to be installed in the local git repository.
