@@ -127,7 +127,9 @@ RUN --mount=type=bind,from=micromamba,source=/bin/micromamba,target=/usr/local/b
         --yes \
         'jupyter_core' \
         'conda' \
-        'mamba' \
+        # mamba 2.9.0 fails to parse the history file entries with comma-range specs
+        # (like protobuf in tensorflow-notebook), breaking `mamba env export --from-history`
+        'mamba==2.8.1' \
         "${PYTHON_SPECIFIER}" && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
