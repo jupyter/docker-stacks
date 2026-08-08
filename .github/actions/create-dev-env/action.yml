@@ -14,12 +14,3 @@ runs:
     - name: Install Dev Dependencies 📦
       run: pip install -r requirements-dev.txt
       shell: bash
-
-    # We need to have a recent docker version
-    # More info: https://github.com/jupyter/docker-stacks/pull/2255
-    # Can be removed after Docker Engine is updated
-    # https://github.com/actions/runner-images/issues/11766
-    - name: Set Up Docker 🐳
-      uses: docker/setup-docker-action@77e84dbf09b47d1e29270283c22f16145aa85ca1 # v5.4.0
-      with:
-        set-host: true
