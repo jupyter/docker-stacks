@@ -12,9 +12,7 @@ runs:
         cache-dependency-path: requirements-dev.txt
 
     - name: Install Dev Dependencies 📦
-      run: |
-        pip install --upgrade pip
-        pip install --upgrade -r requirements-dev.txt
+      run: pip install -r requirements-dev.txt
       shell: bash
 
     # We need to have a recent docker version
