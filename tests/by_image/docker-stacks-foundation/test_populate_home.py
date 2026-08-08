@@ -105,7 +105,7 @@ def test_populate_skipped_without_write_access(
     )
     warnings = TrackedContainer.get_warnings(logs)
     assert len(warnings) == 1
-    assert "no write access" in warnings[0]
+    assert "No write access" in warnings[0]
     assert "Populating" not in logs
     assert not list(host_home.iterdir())
 
