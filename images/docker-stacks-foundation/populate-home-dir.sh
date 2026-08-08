@@ -31,6 +31,14 @@ if [[ ! -d /opt/default-home ]]; then
     exit 0
 fi
 
+# --no-target-directory: merge into a target just created by a concurrent startup
+# instead of nesting into it (cp can still lose the race itself)
+cp_opts=(--archive --no-target-directory)
+if [[ -z "${owner}" ]]; then
+    # Running as a non-root user, so don't attempt to preserve the backup files ownership
+    cp_opts+=(--no-preserve=ownership)
+fi
+
 for backup_entry in /opt/default-home/* /opt/default-home/.*; do
     # The globs expand to the "." and ".." dirs and (if nothing matches) to the pattern itself,
     # neither of which is a real backup entry
@@ -43,15 +51,13 @@ for backup_entry in /opt/default-home/* /opt/default-home/.*; do
         continue
     fi
     _log_info "Populating missing ${target_entry} from ${backup_entry}"
-    # --no-target-directory: merge into a target just created by a concurrent startup
-    # instead of nesting into it (cp can still lose the race itself and warn)
-    if [[ -n "${owner}" ]]; then
-        if ! cp --archive --no-target-directory "${backup_entry}" "${target_entry}"; then
+    if ! cp "${cp_opts[@]}" "${backup_entry}" "${target_entry}"; then
+        if [[ -e "${target_entry}" || -L "${target_entry}" ]]; then
+            _log_info "Skipping ${target_entry}, it appeared concurrently"
+        else
             _log_warn "Failed to populate ${target_entry}"
-        elif ! chown --recursive "${owner}" "${target_entry}"; then
-            _log_warn "Failed to change the owner of ${target_entry}"
         fi
-    elif ! cp --archive --no-preserve=ownership --no-target-directory "${backup_entry}" "${target_entry}"; then
-        _log_warn "Failed to populate ${target_entry}"
+    elif [[ -n "${owner}" ]] && ! chown --recursive --no-dereference "${owner}" "${target_entry}"; then
+        _log_warn "Failed to change the owner of ${target_entry}"
     fi
 done

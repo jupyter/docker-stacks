@@ -299,17 +299,19 @@ def test_populate_script_restores_directories_and_symlinks(
 ) -> None:
     """The extension point for derived images: directories added to the backup
     should be restored recursively, keeping the setgid bit and the given owner,
-    and symlinks should be restored as symlinks."""
+    and symlinks should be restored and chowned as symlinks, without being followed."""
     command = (
         "mkdir /opt/default-home/custom && "
         "echo nested > /opt/default-home/custom/nested.txt && "
         "chmod 2750 /opt/default-home/custom && "
         "ln -s .bashrc /opt/default-home/.zshrc && "
+        "ln -s /etc/hostname /opt/default-home/.outside && "
         "mkdir /tmp/target && "
         "populate-home-dir.sh /tmp/target 1010:110 && "
         "stat -c '%n %u %g %a' /tmp/target/custom /tmp/target/custom/nested.txt && "
-        "stat -c '%n %F' /tmp/target/.zshrc && "
-        'echo "LINK_TARGET=$(readlink /tmp/target/.zshrc)"'
+        "stat -c '%n %u %g %F' /tmp/target/.zshrc && "
+        'echo "LINK_TARGET=$(readlink /tmp/target/.zshrc)" && '
+        "stat -c '%n %u' /etc/hostname"
     )
     logs = container.run_and_wait(
         timeout=10,
@@ -319,8 +321,10 @@ def test_populate_script_restores_directories_and_symlinks(
     )
     assert "/tmp/target/custom 1010 110 2750" in logs
     assert "/tmp/target/custom/nested.txt 1010 110 644" in logs
-    assert "/tmp/target/.zshrc symbolic link" in logs
+    assert "/tmp/target/.zshrc 1010 110 symbolic link" in logs
     assert "LINK_TARGET=.bashrc" in logs
+    # The file the restored symlink points to is not chowned
+    assert "/etc/hostname 0" in logs
 
 
 def test_populate_script_does_not_follow_symlinks(container: TrackedContainer) -> None:
@@ -343,6 +347,34 @@ def test_populate_script_does_not_follow_symlinks(container: TrackedContainer) -
     assert "Populating missing /tmp/target/.profile" in logs
     assert "/etc/hostname regular file 0" in logs
     assert "/tmp/target/.bashrc symbolic link" in logs
+
+
+def test_populate_script_created_target_reported_as_skip(
+    container: TrackedContainer,
+) -> None:
+    """When cp fails, but the target entry exists (created concurrently
+    or left by a partial copy), populate-home-dir.sh should report a skip
+    instead of warning, leaving the cp error visible."""
+    make_backup_dir_unreadable = (
+        "mkdir /opt/default-home/secret && "
+        "touch /opt/default-home/secret/hidden && "
+        "chmod 700 /opt/default-home/secret"
+    )
+    command = (
+        f"sudo bash -c '{make_backup_dir_unreadable}' && "
+        "mkdir /tmp/target && "
+        "populate-home-dir.sh /tmp/target && "
+        "stat -c '%n %F' /tmp/target/secret"
+    )
+    logs = container.run_and_wait(
+        timeout=10,
+        user="root",
+        environment=["GRANT_SUDO=yes"],
+        command=["bash", "-c", command],
+    )
+    assert "Skipping /tmp/target/secret, it appeared concurrently" in logs
+    assert "Permission denied" in logs
+    assert "/tmp/target/secret directory" in logs
 
 
 def test_populate_script_idempotent(container: TrackedContainer) -> None:
