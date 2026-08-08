@@ -42,7 +42,11 @@ updates:
       # Moving to a new Ubuntu version is a manual change
       - dependency-name: ubuntu
         update-types:
-          ["version-update:semver-major", "version-update:semver-minor"]
+          [
+            "version-update:semver-major",
+            "version-update:semver-minor",
+            "version-update:semver-patch",
+          ]
   # Dev dependencies are used to test all the images, so full build is required
   - package-ecosystem: pip
     directory: /
