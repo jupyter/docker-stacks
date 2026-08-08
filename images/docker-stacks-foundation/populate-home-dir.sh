@@ -43,8 +43,8 @@ for backup_entry in /opt/default-home/* /opt/default-home/.*; do
         continue
     fi
     _log_info "Populating missing ${target_entry} from ${backup_entry}"
-    # --no-target-directory: if a concurrent startup has just created the target,
-    # merge into it instead of nesting the copy inside it
+    # --no-target-directory: merge into a target just created by a concurrent startup
+    # instead of nesting into it (cp can still lose the race itself and warn)
     if [[ -n "${owner}" ]]; then
         if ! cp --archive --no-target-directory "${backup_entry}" "${target_entry}"; then
             _log_warn "Failed to populate ${target_entry}"
