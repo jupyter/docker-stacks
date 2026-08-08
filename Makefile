@@ -28,7 +28,7 @@ endif
 
 # List local image references (name:tag) matching the given pattern
 define image_refs
-$(IMAGE_REFS) | grep --extended-regexp "$(1)" | grep --invert-match "<none>"
+$(IMAGE_REFS) | grep -E "$(1)" | grep -v "<none>"
 endef
 
 # IDs of all the containers, evaluated when a recipe uses it
@@ -77,7 +77,7 @@ build/%: ## build the latest image for a stack using the system's architecture
 	  --build-arg OWNER="$(OWNER)" \
 	  --build-arg ROOT_IMAGE="$(ROOT_IMAGE)" \
 	  --build-arg PYTHON_VERSION="$(PYTHON_VERSION)"
-	@$(CONTAINER_CLI) image ls $(IMAGE_LS_FLAGS) | grep --extended-regexp "^(REPOSITORY|NAME|IMAGE)|^$(IMG)[: ]"
+	@$(CONTAINER_CLI) image ls $(IMAGE_LS_FLAGS) | grep -E "^(REPOSITORY|NAME|IMAGE)|^$(IMG)[: ]"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
 
@@ -139,7 +139,7 @@ hook-all: $(foreach I, $(ALL_IMAGES), hook/$(I)) ## run post-build hooks for all
 
 img-list: ## list jupyter images
 	@echo "Listing $(OWNER) images ..."
-	-$(CONTAINER_CLI) image ls $(IMAGE_LS_FLAGS) | grep --extended-regexp "^(REPOSITORY|NAME|IMAGE)|(^|/)$(OWNER)/"
+	-$(CONTAINER_CLI) image ls $(IMAGE_LS_FLAGS) | grep -E "^(REPOSITORY|NAME|IMAGE)|(^|/)$(OWNER)/"
 img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
 	-$(CONTAINER_CLI) image prune $(IMAGE_PRUNE_FLAGS)
