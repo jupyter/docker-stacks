@@ -131,7 +131,9 @@ RUN --mount=type=bind,from=micromamba,source=/bin/micromamba,target=/usr/local/b
         --yes \
         'jupyter_core' \
         'conda' \
-        'mamba' \
+        # Install mamba with the same version as the micromamba image pinned above
+        # (they are released together), so dependabot keeps the version up to date
+        "mamba==$(micromamba --version)" \
         "${PYTHON_SPECIFIER}" && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
