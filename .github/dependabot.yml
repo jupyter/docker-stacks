@@ -37,6 +37,12 @@ updates:
     directory: images/docker-stacks-foundation/
     schedule:
       interval: weekly
+    ignore:
+      # Stay on the current Ubuntu LTS, allowing only digest updates for the root image
+      # Moving to a new Ubuntu version is a manual change
+      - dependency-name: ubuntu
+        update-types:
+          ["version-update:semver-major", "version-update:semver-minor"]
   # Dev dependencies are used to test all the images, so full build is required
   - package-ecosystem: pip
     directory: /
