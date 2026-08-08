@@ -1,10 +1,38 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-.PHONY: docs help test
+.PHONY: docs help
 
 SHELL:=bash
 REGISTRY?=quay.io
 OWNER?=jupyter
+# The full image reference, only used in the per-image targets, as it depends on the target name
+IMG=$(REGISTRY)/$(OWNER)/$(notdir $@)
+
+# Use Docker if available, otherwise use Apple's container framework
+CONTAINER_CLI?=$(if $(shell command -v docker),docker,container)
+ifeq ($(CONTAINER_CLI),docker)
+	CONTAINER_NS:=docker container
+	# Docker shows image sizes by default, Apple's container framework requires the flag
+	IMAGE_LS_FLAGS:=
+	# Docker prompts for confirmation without the flag, Apple's container framework never prompts
+	IMAGE_PRUNE_FLAGS:=--force
+	# Docker lists the image references directly, regardless of the table layout
+	IMAGE_REFS:=docker image ls --format "{{.Repository}}:{{.Tag}}"
+else
+	CONTAINER_NS:=container
+	IMAGE_LS_FLAGS:=--verbose
+	IMAGE_PRUNE_FLAGS:=
+	# Apple's container framework lists the image name and the tag in the first two columns
+	IMAGE_REFS:=container image ls | awk 'NR > 1 { print $$1 ":" $$2 }'
+endif
+
+# List local image references (name:tag) matching the given pattern
+define image_refs
+$(IMAGE_REFS) | grep -E "$(1)" | grep -v "<none>"
+endef
+
+# IDs of all the containers, evaluated when a recipe uses it
+ALL_CONTAINERS=$(shell $(CONTAINER_NS) ls --all --quiet)
 
 # Enable BuildKit for Docker build
 export DOCKER_BUILDKIT:=1
@@ -30,6 +58,7 @@ help:
 	@echo "jupyter/docker-stacks"
 	@echo "====================="
 	@echo "Replace % with a stack directory name (e.g., make build/minimal-notebook)"
+	@echo "Container engine being used: $(CONTAINER_CLI) (override with CONTAINER_CLI=docker|container)"
 	@echo
 	@grep -E '^[a-zA-Z0-9_%/-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
@@ -41,15 +70,14 @@ build/%: DOCKER_BUILD_ARGS?=
 build/%: ROOT_IMAGE?=default_root_image
 build/%: PYTHON_VERSION?=3.13
 build/%: ## build the latest image for a stack using the system's architecture
-	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm \
-	  --tag "$(REGISTRY)/$(OWNER)/$(notdir $@)" \
+	$(CONTAINER_CLI) build $(DOCKER_BUILD_ARGS) \
+	  --tag "$(IMG)" \
 	  "./images/$(notdir $@)" \
 	  --build-arg REGISTRY="$(REGISTRY)" \
 	  --build-arg OWNER="$(OWNER)" \
 	  --build-arg ROOT_IMAGE="$(ROOT_IMAGE)" \
 	  --build-arg PYTHON_VERSION="$(PYTHON_VERSION)"
-	@echo -n "Built image size: "
-	@docker images "$(REGISTRY)/$(OWNER)/$(notdir $@):latest" --format "{{.Size}}"
+	@$(CONTAINER_CLI) image ls $(IMAGE_LS_FLAGS) | grep -E "^(REPOSITORY|NAME|IMAGE)|^$(IMG)[: ]"
 build-all: $(foreach I, $(ALL_IMAGES), build/$(I)) ## build all stacks
 
 
@@ -63,12 +91,13 @@ check-outdated-all: $(foreach I, $(ALL_IMAGES), check-outdated/$(I)) ## check al
 
 
 
+# `-t` means `--timeout` in Docker and `--time` in Apple's container framework
 cont-stop-all: ## stop all containers
 	@echo "Stopping all containers ..."
-	-docker stop --time 0 $(shell docker ps --all --quiet) 2> /dev/null
+	$(if $(ALL_CONTAINERS),-$(CONTAINER_NS) stop -t 0 $(ALL_CONTAINERS))
 cont-rm-all: ## remove all containers
 	@echo "Removing all containers ..."
-	-docker rm --force $(shell docker ps --all --quiet) 2> /dev/null
+	$(if $(ALL_CONTAINERS),-$(CONTAINER_NS) rm --force $(ALL_CONTAINERS))
 cont-clean-all: cont-stop-all cont-rm-all ## clean all containers (stop + rm)
 
 
@@ -110,32 +139,33 @@ hook-all: $(foreach I, $(ALL_IMAGES), hook/$(I)) ## run post-build hooks for all
 
 img-list: ## list jupyter images
 	@echo "Listing $(OWNER) images ..."
-	docker images "$(OWNER)/*"
-	docker images "*/$(OWNER)/*"
+	-$(CONTAINER_CLI) image ls $(IMAGE_LS_FLAGS) | grep -E "^(REPOSITORY|NAME|IMAGE)|(^|/)$(OWNER)/"
 img-rm-dang: ## remove dangling images (tagged None)
 	@echo "Removing dangling images ..."
-	-docker rmi --force $(shell docker images -f "dangling=true" --quiet) 2> /dev/null
+	-$(CONTAINER_CLI) image prune $(IMAGE_PRUNE_FLAGS)
+# The owner is matched as a path component, so that other owners like `jupyterhub` don't match
+img-rm-jupyter: JUPYTER_IMAGES=$(shell $(call image_refs,(^|/)$(OWNER)/))
 img-rm-jupyter: ## remove jupyter images
 	@echo "Removing $(OWNER) images ..."
-	-docker rmi --force $(shell docker images --quiet "$(OWNER)/*") 2> /dev/null
-	-docker rmi --force $(shell docker images --quiet "*/$(OWNER)/*") 2> /dev/null
+	$(if $(JUPYTER_IMAGES),-$(CONTAINER_CLI) image rm --force $(JUPYTER_IMAGES))
 img-rm: img-rm-dang img-rm-jupyter ## remove dangling and jupyter images
 
 
 
 pull/%: ## pull a jupyter image
-	docker pull "$(REGISTRY)/$(OWNER)/$(notdir $@)"
+	$(CONTAINER_CLI) image pull "$(IMG)"
 pull-all: $(foreach I, $(ALL_IMAGES), pull/$(I)) ## pull all images
+push/%: IMG_REFS=$(shell $(call image_refs,^$(IMG):))
 push/%: ## push all tags for a jupyter image
-	docker push --all-tags "$(REGISTRY)/$(OWNER)/$(notdir $@)"
+	for ref in $(IMG_REFS); do $(CONTAINER_CLI) image push "$$ref"; done
 push-all: $(foreach I, $(ALL_IMAGES), push/$(I)) ## push all tagged images
 
 
 
 run-shell/%: ## run a bash in interactive mode in a stack
-	docker run -it --rm "$(REGISTRY)/$(OWNER)/$(notdir $@)" $(SHELL)
+	$(CONTAINER_CLI) run -it --rm "$(IMG)" $(SHELL)
 run-sudo-shell/%: ## run bash in interactive mode as root in a stack
-	docker run -it --rm --user root "$(REGISTRY)/$(OWNER)/$(notdir $@)" $(SHELL)
+	$(CONTAINER_CLI) run -it --rm --user root "$(IMG)" $(SHELL)
 
 
 
