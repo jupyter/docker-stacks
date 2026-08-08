@@ -37,7 +37,8 @@ help:
 
 # Note that `ROOT_IMAGE` and `PYTHON_VERSION` arguments are only applicable to the `docker-stacks-foundation` image
 build/%: DOCKER_BUILD_ARGS?=
-build/%: ROOT_IMAGE?=ubuntu:24.04
+# By default, use the sha-pinned root image from the Dockerfile stage
+build/%: ROOT_IMAGE?=default_root_image
 build/%: PYTHON_VERSION?=3.13
 build/%: ## build the latest image for a stack using the system's architecture
 	docker build $(DOCKER_BUILD_ARGS) --rm --force-rm \

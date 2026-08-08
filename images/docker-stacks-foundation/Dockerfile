@@ -1,9 +1,13 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
 
+# This build arg allows building the image based on a different root image
+ARG ROOT_IMAGE=default_root_image
+
 # Ubuntu 24.04 (noble)
 # https://hub.docker.com/_/ubuntu/tags?page=1&name=noble
-ARG ROOT_IMAGE=ubuntu:24.04@sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebcc41c7b
+# Referenced as a build stage, so dependabot is able to keep the version and digest up to date
+FROM ubuntu:24.04@sha256:561618e2c15bf2397621dd04f96926663a3b5616c189cf7e38db7e82f5c538ea AS default_root_image
 
 # Micromamba is taken from the official image, pinned by digest for integrity
 # Dependabot keeps this version and digest up to date (`docker` ecosystem covers this directory)
@@ -127,7 +131,9 @@ RUN --mount=type=bind,from=micromamba,source=/bin/micromamba,target=/usr/local/b
         --yes \
         'jupyter_core' \
         'conda' \
-        'mamba' \
+        # Install mamba with the same version as the micromamba image pinned above
+        # (they are released together), so dependabot keeps the version up to date
+        "mamba==$(micromamba --version)" \
         "${PYTHON_SPECIFIER}" && \
     # Pin major.minor version of python
     # https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-pkgs.html#preventing-packages-from-updating-pinning
