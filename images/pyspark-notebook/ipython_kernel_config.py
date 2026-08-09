@@ -9,5 +9,6 @@
 
 # Attempt to capture and forward low-level output, e.g. produced by Extension libraries.
 # Default: True
-# type: ignore
+# mypy: disable-error-code="name-defined"
+# pyright: reportUndefinedVariable=false
 c.IPKernelApp.capture_fd_output = False  # noqa: F821

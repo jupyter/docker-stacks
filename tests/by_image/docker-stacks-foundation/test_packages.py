@@ -23,7 +23,7 @@ Use `package_helper.installed_packages` instead of `package_helper.requested_pac
 import logging
 from collections.abc import Callable
 
-import pytest  # type: ignore
+import pytest
 
 from tests.utils.conda_package_helper import CondaPackageHelper
 from tests.utils.tracked_container import TrackedContainer

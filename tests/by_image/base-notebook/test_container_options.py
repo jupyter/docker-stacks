@@ -2,7 +2,7 @@
 # Distributed under the terms of the Modified BSD License.
 import logging
 
-import pytest  # type: ignore
+import pytest
 import requests
 
 from tests.utils.tracked_container import TrackedContainer

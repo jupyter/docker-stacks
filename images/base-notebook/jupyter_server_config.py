@@ -1,7 +1,7 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-# mypy: ignore-errors
-# pyright: reportMissingImports=false, reportUndefinedVariable=false
+# mypy: disable-error-code="name-defined"
+# pyright: reportUndefinedVariable=false
 import os
 import stat
 import subprocess

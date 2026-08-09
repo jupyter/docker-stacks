@@ -3,7 +3,7 @@
 import logging
 import time
 
-import pytest  # type: ignore
+import pytest
 import requests
 
 from tests.utils.tracked_container import TrackedContainer

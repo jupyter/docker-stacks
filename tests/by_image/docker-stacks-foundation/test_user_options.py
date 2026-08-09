@@ -3,7 +3,7 @@
 import logging
 import pathlib
 
-import pytest  # type: ignore
+import pytest
 
 from tests.utils.tracked_container import TrackedContainer
 from tests.utils.wait import wait_until
@@ -272,9 +272,9 @@ def test_jupyter_env_vars_to_unset(
 ) -> None:
     """Environment variables names listed in JUPYTER_ENV_VARS_TO_UNSET
     should be unset in the final environment."""
-    root_args = {"user": "root"} if enable_root else {}
     logs = container.run_and_wait(
         timeout=10,
+        user="root" if enable_root else None,
         environment=[
             "JUPYTER_ENV_VARS_TO_UNSET=SECRET_ANIMAL,UNUSED_ENV,SECRET_FRUIT",
             "FRUIT=bananas",
@@ -286,7 +286,6 @@ def test_jupyter_env_vars_to_unset(
             "-c",
             "echo I like ${FRUIT} and ${SECRET_FRUIT:-stuff}, and love ${SECRET_ANIMAL:-to keep secrets}!",
         ],
-        **root_args,  # type: ignore
     )
     assert "I like bananas and stuff, and love to keep secrets!" in logs
 

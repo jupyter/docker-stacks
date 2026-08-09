@@ -9,4 +9,4 @@ print(f"OTHER_VAR={os.environ['OTHER_VAR']}")
 
 sys.exit(1)
 
-print("Finished: b.py")
+print("Finished: b.py")  # type: ignore[unreachable]
