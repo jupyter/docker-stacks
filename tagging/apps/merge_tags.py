@@ -116,7 +116,7 @@ def merge_tags(
         args.append("--dry-run")
 
     LOGGER.info(f"Running command: {' '.join(args)}")
-    docker[args] & plumbum.FG
+    docker[args].run_fg()
     if push_to_registry:
         LOGGER.info(f"Pushed merged tag: {merged_tag}")
     else:
