@@ -1,0 +1,31 @@
+{
+  "typeCheckingMode": "standard",
+  "pythonVersion": "3.12",
+  "executionEnvironments": [
+    {
+      "root": "tests/by_image/pyspark-notebook/units",
+      "reportMissingImports": false,
+      "reportMissingModuleSource": false
+    },
+    {
+      "root": "tests/by_image/pytorch-notebook/units",
+      "reportMissingImports": false,
+      "reportMissingModuleSource": false
+    },
+    {
+      "root": "tests/by_image/scipy-notebook/data",
+      "reportMissingImports": false,
+      "reportMissingModuleSource": false
+    },
+    {
+      "root": "tests/by_image/scipy-notebook/units",
+      "reportMissingImports": false,
+      "reportMissingModuleSource": false
+    },
+    {
+      "root": "tests/by_image/tensorflow-notebook/units",
+      "reportMissingImports": false,
+      "reportMissingModuleSource": false
+    }
+  ]
+}

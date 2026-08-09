@@ -1,9 +1,8 @@
 # Matplotlib: Test tex fonts
-import matplotlib
 import matplotlib.pyplot as plt
 
-matplotlib.rcParams["pgf.texsystem"] = "pdflatex"
-matplotlib.rcParams.update(
+plt.rcParams["pgf.texsystem"] = "pdflatex"
+plt.rcParams.update(
     {
         "font.family": "serif",
         "font.size": 18,
@@ -12,7 +11,7 @@ matplotlib.rcParams.update(
         "figure.titlesize": 28,
     }
 )
-matplotlib.rcParams["text.usetex"] = True
+plt.rcParams["text.usetex"] = True
 
 fig, ax = plt.subplots(1, 1)
 x = [1, 2]

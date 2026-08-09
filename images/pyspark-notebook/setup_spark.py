@@ -27,7 +27,7 @@ def get_all_refs(url: str) -> list[str]:
     resp = requests.get(url, timeout=60)
     resp.raise_for_status()
     soup = BeautifulSoup(resp.text, "html.parser")
-    return [a["href"] for a in soup.find_all("a", href=True)]
+    return [str(a["href"]) for a in soup.find_all("a", href=True)]
 
 
 def get_latest_spark_version() -> str:

@@ -23,9 +23,8 @@ class DockerRunner:
 
     def __enter__(self) -> Container:
         LOGGER.info(f"Creating a container for the image: {self.image_name} ...")
-        default_kwargs = {"detach": True, "tty": True}
         self.container = self.docker_client.containers.run(
-            image=self.image_name, command=self.command, **default_kwargs
+            image=self.image_name, command=self.command, detach=True, tty=True
         )
         LOGGER.info(f"Container {self.container.name} created")
         return self.container
@@ -45,8 +44,8 @@ class DockerRunner:
     def exec_cmd(container: Container, cmd: str) -> str:
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
         exec_result = container.exec_run(cmd)
-        # The annotation is needed because the docker package is not typed
-        output: str = exec_result.output.decode().rstrip()
+        assert isinstance(exec_result.output, bytes)
+        output = exec_result.output.decode().rstrip()
         if exec_result.exit_code != 0:
             LOGGER.error(f"Command output:\n{output}")
             raise AssertionError(f"Command: `{cmd}` failed")

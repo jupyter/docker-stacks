@@ -65,6 +65,28 @@ repos:
         # but it will still be run as part of `pre-commit` workflow and give expected results
         stages: [manual]
 
+  # Check python code static typing
+  - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
+    rev: d55eabd2531b4f4a4c49c30fba627ce3a636ab79 # frozen: 1.39.9
+    hooks:
+      - id: basedpyright
+        additional_dependencies:
+          [
+            "beautifulsoup4",
+            "docker",
+            "numpy",
+            "plumbum",
+            "pytest",
+            "python-dateutil",
+            "requests",
+            "tabulate",
+            "tenacity",
+            "urllib3",
+          ]
+        # Type checking requires the whole project to be consistent,
+        # so we run this hook only in manual mode, same as `mypy` above
+        stages: [manual]
+
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
     rev: 0ee178619d696787ca73d210cc191d720868c631 # frozen: v3.9.6
@@ -177,4 +199,6 @@ ci:
   autoupdate_schedule: monthly
   # Docker hooks do not work in pre-commit.ci
   # See: <https://github.com/pre-commit-ci/issues/issues/11>
-  skip: [hadolint-docker]
+  # basedpyright environment exceeds the 250MiB per-hook limit of pre-commit.ci
+  # This hook only runs in the manual stage (as part of the pre-commit GitHub workflow) anyway
+  skip: [basedpyright, hadolint-docker]

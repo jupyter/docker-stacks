@@ -7,6 +7,7 @@ from random import getrandbits
 
 import docker
 import pytest  # type: ignore
+from docker.types import IPAMConfig, IPAMPool
 
 from tests.utils.tracked_container import TrackedContainer
 
@@ -22,9 +23,13 @@ def ipv6_network(docker_client: docker.DockerClient) -> Generator[str, None, Non
     name = subnet64.replace(":", "-")
     docker_client.networks.create(
         name,
-        ipam=docker.types.IPAMPool(
-            subnet=subnet64 + "::/64",
-            gateway=subnet64 + "::1",
+        ipam=IPAMConfig(
+            pool_configs=[
+                IPAMPool(
+                    subnet=subnet64 + "::/64",
+                    gateway=subnet64 + "::1",
+                )
+            ]
         ),
         enable_ipv6=True,
         internal=True,

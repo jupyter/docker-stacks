@@ -25,7 +25,7 @@ def apply_tags(config: Config) -> None:
 
     for tag in tags:
         LOGGER.info(f"Applying tag: {tag}")
-        docker["tag", config.full_image(), tag] & plumbum.FG
+        docker["tag", config.full_image(), tag].run_fg()
 
     LOGGER.info(f"All tags applied to image: {config.image}")
 
