@@ -124,6 +124,13 @@ repos:
         args: ["-x"]
 
   # Lint: Python
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: 7c55798a78262d14b2074abf623d8a992ebb70d4 # frozen: v0.16.2
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+
+  # Lint: Python
   - repo: https://github.com/PyCQA/flake8
     rev: c48217e1fc006c2dddd14df54e83b67da15de5cd # frozen: 7.3.0
     hooks:
