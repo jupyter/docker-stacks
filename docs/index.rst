@@ -16,7 +16,6 @@ Table of Contents
    using/custom-images
    using/troubleshooting
    using/faq
-   using/changelog
 
 .. toctree::
    :maxdepth: 2
@@ -38,6 +37,12 @@ Table of Contents
    maintaining/new-images-and-packages-policy
    maintaining/tagging
    maintaining/tasks
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Changelog
+
+   changelog
 
 .. toctree::
    :maxdepth: 2
