@@ -1,6 +1,6 @@
 # Copyright (c) Jupyter Development Team.
 # Distributed under the terms of the Modified BSD License.
-from tests.shared_checks.R_mimetype_check import check_r_mimetypes
+from tests.shared_checks.r_mimetype_check import check_r_mimetypes
 from tests.utils.tracked_container import TrackedContainer
 
 
