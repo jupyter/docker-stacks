@@ -1,6 +1,5 @@
 name: "(maintainers only) Blank issue"
 description: For maintainers only
-labels: []
 
 body:
   - type: markdown
