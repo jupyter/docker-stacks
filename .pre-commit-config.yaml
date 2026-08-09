@@ -45,14 +45,18 @@ repos:
         additional_dependencies:
           [
             "beautifulsoup4",
+            "jupyter_core",
             "numpy",
+            "plumbum",
             "pytest",
             "requests",
             "tenacity",
             "urllib3",
             "types-beautifulsoup4",
+            "types-docker",
             "types-python-dateutil",
             "types-requests",
+            "types-setuptools",
             "types-tabulate",
             "types-urllib3",
           ]
@@ -74,6 +78,7 @@ repos:
           [
             "beautifulsoup4",
             "docker",
+            "jupyter_core",
             "numpy",
             "plumbum",
             "pytest",

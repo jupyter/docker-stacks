@@ -6,7 +6,7 @@ from pathlib import Path
 from random import getrandbits
 
 import docker
-import pytest  # type: ignore
+import pytest
 from docker.types import IPAMConfig, IPAMPool
 
 from tests.utils.tracked_container import TrackedContainer

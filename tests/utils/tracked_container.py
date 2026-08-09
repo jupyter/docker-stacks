@@ -64,7 +64,7 @@ class TrackedContainer:
     def get_health(self) -> str:
         assert self.container is not None
         self.container.reload()
-        return self.container.health  # type: ignore
+        return self.container.health
 
     def exec_cmd(self, cmd: str, *, timeout: int = 300, **kwargs: Any) -> str:
         assert self.container is not None

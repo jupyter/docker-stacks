@@ -6,7 +6,7 @@ from collections.abc import Generator
 from contextlib import closing
 
 import docker
-import pytest  # type: ignore
+import pytest
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
