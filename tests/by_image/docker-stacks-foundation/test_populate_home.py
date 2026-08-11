@@ -3,7 +3,7 @@
 import logging
 import pathlib
 
-import pytest  # type: ignore
+import pytest
 
 from tests.utils.tracked_container import TrackedContainer
 
