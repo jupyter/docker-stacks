@@ -30,14 +30,11 @@ jobs:
         with:
           python-version: 3.12
           cache: pip
-          # There is no requirements file for `pre-commit`,
-          # so use the hooks config as the cache key
-          cache-dependency-path: .pre-commit-config.yaml
+          cache-dependency-path: requirements-dev.txt
 
       - name: Install pre-commit 📦
-        run: |
-          pip install --upgrade pip
-          pip install --upgrade pre-commit
+        # Install the version pinned in requirements-dev.txt without the other dev dependencies
+        run: pip install "$(grep '^pre-commit==' requirements-dev.txt)"
 
       - name: Run pre-commit hooks ✅
         run: pre-commit run --all-files --hook-stage manual

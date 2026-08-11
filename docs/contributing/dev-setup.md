@@ -20,7 +20,7 @@ git clone https://github.com/jupyter/docker-stacks.git
 cd docker-stacks
 
 # Install Python development dependencies
-pip install --upgrade -r requirements-dev.txt
+pip install -r requirements-dev.txt
 
 # Install pre-commit hooks (runs linters automatically on git commit)
 pre-commit install --install-hooks

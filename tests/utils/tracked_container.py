@@ -48,10 +48,10 @@ class TrackedContainer:
         LOGGER.info(
             f"Creating a container for the image: {self.image_name} with args: {kwargs} ..."
         )
-        default_kwargs = {"detach": True, "tty": True}
+        default_kwargs: dict[str, Any] = {"tty": True}
         final_kwargs = default_kwargs | kwargs
         self.container = self.docker_client.containers.run(
-            self.image_name, **final_kwargs
+            self.image_name, detach=True, **final_kwargs
         )
         LOGGER.info(f"Container {self.container.name} created")
 
@@ -64,7 +64,7 @@ class TrackedContainer:
     def get_health(self) -> str:
         assert self.container is not None
         self.container.reload()
-        return self.container.health  # type: ignore
+        return self.container.health
 
     def exec_cmd(self, cmd: str, *, timeout: int = 300, **kwargs: Any) -> str:
         assert self.container is not None
@@ -73,11 +73,11 @@ class TrackedContainer:
         LOGGER.info(f"Running cmd: `{cmd}` on container: {container.name}")
         # docker-py reads the exec output without any read timeout,
         # so enforce the timeout inside the container using GNU `timeout`
-        default_kwargs = {"tty": True}
+        default_kwargs: dict[str, Any] = {"tty": True}
         final_kwargs = default_kwargs | kwargs
         exec_result = container.exec_run(f"timeout -- {timeout} {cmd}", **final_kwargs)
+        assert isinstance(exec_result.output, bytes)
         output = exec_result.output.decode().rstrip()
-        assert isinstance(output, str)
         if exec_result.exit_code == 124:
             LOGGER.error(f"Command output:\n{output}")
             raise TimeoutError(f"Command: `{cmd}` timed out after {timeout} seconds")
@@ -128,8 +128,8 @@ class TrackedContainer:
         self.run_detached(**kwargs)
         assert self.container is not None
         rv = self.container.wait(timeout=timeout)
-        stdout: str
-        stderr: str
+        stdout = ""
+        stderr = ""
         if split_stderr:
             stdout = self.get_logs(stdout=True, stderr=False)
             stderr = self.get_logs(stdout=False, stderr=True)

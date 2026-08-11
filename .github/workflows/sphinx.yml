@@ -67,9 +67,7 @@ jobs:
           cache-dependency-path: docs/requirements.txt
 
       - name: Install Doc Dependencies 📦
-        run: |
-          pip install --upgrade pip
-          pip install --upgrade -r docs/requirements.txt
+        run: pip install -r docs/requirements.txt
 
       - name: Build Documentation 📖
         run: make docs

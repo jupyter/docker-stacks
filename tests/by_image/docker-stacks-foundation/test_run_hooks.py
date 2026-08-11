@@ -133,7 +133,7 @@ def test_start_sh_runs_before_notebook_hooks(container: TrackedContainer) -> Non
 
 
 def test_run_hooks_change(container: TrackedContainer) -> None:
-    stdout, logs = run_source_in_dir(container, subdir="data/run-hooks/change")
+    stdout, _logs = run_source_in_dir(container, subdir="data/run-hooks/change")
 
     assert "Inside a.sh MY_VAR variable has 123 value" in stdout
     assert "Inside b.sh MY_VAR variable has 123 value" in stdout
