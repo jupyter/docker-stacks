@@ -36,6 +36,8 @@ jobs:
         uses: github/codeql-action/init@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6
         with:
           languages: ${{ matrix.language }}
+          # Code Quality has no queries for `actions` language
+          analysis-kinds: ${{ matrix.language == 'python' && 'code-scanning,code-quality' || 'code-scanning' }}
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@5595ccaf912efad79be6eef63a5619ff05969be3 # v4.37.6
