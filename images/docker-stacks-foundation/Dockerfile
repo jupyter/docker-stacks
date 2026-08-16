@@ -12,7 +12,7 @@ FROM ubuntu:24.04@sha256:561618e2c15bf2397621dd04f96926663a3b5616c189cf7e38db7e8
 # Micromamba is taken from the official image, pinned by digest for integrity
 # Dependabot keeps this version and digest up to date (`docker` ecosystem covers this directory)
 # The binary is bind-mounted into the install RUN below, so it is not added to any image layer
-FROM mambaorg/micromamba:2.8.1@sha256:fb18405d6004af757a38ec498a078240b4fd5549146990a484c28bb7e78aace4 AS micromamba
+FROM mambaorg/micromamba:2.9.0@sha256:b62ed0c54940e3c801642d72ba7d2462f06356c378eba92d603d39f2ce5e4a0d AS micromamba
 
 FROM $ROOT_IMAGE
 
