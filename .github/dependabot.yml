@@ -22,7 +22,7 @@ updates:
       github-actions:
         patterns:
           - "*"
-  # This action is only used for some images, so full build is required
+  # This action is only used for some images, so a full build is required
   - package-ecosystem: github-actions
     directory: .github/actions/free-disk-space/
     schedule:
@@ -47,7 +47,7 @@ updates:
             "version-update:semver-minor",
             "version-update:semver-patch",
           ]
-  # Dev dependencies are used to test all the images, so full build is required
+  # Dev dependencies are used to test all the images, so a full build is required
   - package-ecosystem: pip
     directory: /
     schedule:
@@ -56,3 +56,6 @@ updates:
       pip:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "docutils"
+        versions: ["0.23.0"]
