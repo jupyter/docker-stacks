@@ -2,7 +2,7 @@ docker==7.2.0
 plumbum==2.0.2
 pre-commit==4.6.2
 pytest==9.1.1
-pytest-rerunfailures==16.5
+pytest-rerunfailures==16.6
 # `pytest-xdist` is a plugin that provides the `--numprocesses` flag,
 # allowing us to run `pytest` tests in parallel
 pytest-xdist==3.8.0
