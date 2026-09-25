@@ -64,6 +64,8 @@ docker run -it --rm -p 10000:8888 -v "${PWD}":/home/jovyan/work quay.io/jupyter/
 Pressing `Ctrl-C` twice shuts down the Server and immediately destroys the Docker container.
 New files and changes in `~/work` in the container will be preserved.
 Any other changes made in the container will be lost.
+To also preserve the user's configuration files (such as `.bashrc`),
+mount the whole home directory instead - see the [Mounting volumes section](common.md#mounting-volumes).
 
 ```{note}
 By default, [jupyter's root_dir](https://jupyter-server.readthedocs.io/en/latest/other/full-config.html) is `/home/jovyan`.
