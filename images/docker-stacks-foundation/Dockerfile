@@ -7,7 +7,7 @@ ARG ROOT_IMAGE=default_root_image
 # Ubuntu 24.04 (noble)
 # https://hub.docker.com/_/ubuntu/tags?page=1&name=noble
 # Referenced as a build stage, so dependabot is able to keep the version and digest up to date
-FROM ubuntu:24.04@sha256:224a1869083a311ef3f13648a154ba79832fbef6364d31493642ca03082da254 AS default_root_image
+FROM ubuntu:24.04@sha256:008173c23f95b170204355c12626cb5a965d779a7e1283b09e9cffbb1bf33ca3 AS default_root_image
 
 # Micromamba is taken from the official image, pinned by digest for integrity
 # Dependabot keeps this version and digest up to date (`docker` ecosystem covers this directory)
