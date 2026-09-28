@@ -45,6 +45,8 @@ runs:
         image: ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
         artifact-name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-sbom.spdx.json
         upload-artifact-retention: 40
+      env:
+        TMPDIR: ${{ runner.temp }}
 
     # This step is needed to prevent pushing non-multi-arch "latest" tag
     - name: Remove the "latest" tag from the image 🗑️
