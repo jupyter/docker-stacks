@@ -3,6 +3,19 @@
 This changelog only contains breaking and/or significant changes manually introduced to this repository (using Pull Requests).
 All image manifests can be found in [the wiki](https://github.com/jupyter/docker-stacks/wiki).
 
+## 2026-09-29
+
+Affected: all images.
+
+- **Breaking:** `docker-stacks-foundation`: Switch to Ubuntu 26.04 ([#2580](https://github.com/jupyter/docker-stacks/pull/2580)).
+  Ubuntu 26.04 ships Rust-based [uutils coreutils](https://github.com/uutils/coreutils) instead of GNU coreutils, so the output of some commands may differ.
+
+## 2026-09-28
+
+Affected: all images.
+
+- **Non-breaking:** Switch to `ubuntu-26.04` and `ubuntu-26.04-arm` GitHub-hosted runners ([#2579](https://github.com/jupyter/docker-stacks/pull/2579)).
+
 ## 2026-08-08
 
 Affected: users building images locally.

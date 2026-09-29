@@ -297,7 +297,7 @@ Ref: <https://github.com/jupyter/docker-stacks/issues/154>
 This recipe is not tested and might be broken.
 ```
 
-If you'd like to use packages from [spark-packages.org](https://spark-packages.org/), see
+If you'd like to use packages from [spark-packages](https://repos.spark-packages.org/), see
 [https://gist.github.com/parente/c95fdaba5a9a066efaab](https://gist.github.com/parente/c95fdaba5a9a066efaab)
 for an example of how to specify the package identifier in the environment before creating a
 SparkContext.
