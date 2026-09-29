@@ -24,7 +24,7 @@ repos:
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: 7f321d375f31a2f03833bc9a548e8783f2b5c420 # frozen: 9.0.0b1
+    rev: 131f4adcd5582bfc53928ab0d740eceb8b506b6c # frozen: 9.0.1
     hooks:
       - id: isort
         args: [--profile, black]
@@ -38,7 +38,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 41e691678310dfd3833f7ab4e180ddb014310356 # frozen: v2.3.0
+    rev: 7ff8d35ae36a7d2b968f2f90b4c723e292e594ee # frozen: v2.3.1
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -71,7 +71,7 @@ repos:
 
   # Check python code static typing
   - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
-    rev: d55eabd2531b4f4a4c49c30fba627ce3a636ab79 # frozen: 1.39.9
+    rev: 3c94d276aa3005fa1f5a977946c9dc106135c083 # frozen: 1.39.10
     hooks:
       - id: basedpyright
         additional_dependencies:
@@ -145,21 +145,21 @@ repos:
 
   # Lint: Shell scripts
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: 745eface02aef23e168a8afb6b5737818efbea95 # frozen: v0.11.0.1
+    rev: a6564f5d57444e123433a5c9af733e3975c77229 # frozen: v0.11.0.1-1
     hooks:
       - id: shellcheck
         args: ["-x"]
 
   # Lint: Python
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 7c55798a78262d14b2074abf623d8a992ebb70d4 # frozen: v0.16.2
+    rev: 321478e58f4938179c6b86e4ddfa923d1547a49b # frozen: v0.16.6
     hooks:
       - id: ruff-check
         args: [--fix]
 
   # Lint: Python
   - repo: https://github.com/PyCQA/flake8
-    rev: c48217e1fc006c2dddd14df54e83b67da15de5cd # frozen: 7.3.0
+    rev: d93590f5be797aabb60e3b09f2f52dddb02f349f # frozen: 7.3.0
     hooks:
       - id: flake8
 
@@ -172,14 +172,14 @@ repos:
 
   # Strip output from Jupyter notebooks
   - repo: https://github.com/kynan/nbstripout
-    rev: 34071b78c181af3bf5af955c1426466e096fc3db # frozen: 0.9.1
+    rev: f5da19ce3b7b40e97c12ee9cd8ce97f48f97ddf7 # frozen: 0.9.1
     hooks:
       - id: nbstripout
 
   # nbQA provides tools from the Python ecosystem like
   # pyupgrade, isort, black, and flake8, adjusted for notebooks.
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: d31b7eae1767c43460afb3ba130e0a6602933abe # frozen: 1.9.1
+    rev: f96ec7f3b26a32619435686eb5813235f7e3327e # frozen: 1.9.1
     hooks:
       - id: nbqa-pyupgrade
         args: [--py312-plus]
@@ -190,7 +190,7 @@ repos:
 
   # Run black on python code blocks in documentation files.
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: fda77690955e9b63c6687d8806bafd56a526e45f # frozen: 1.20.0
+    rev: dda8db18cfc68df532abf33b185ecd12d5b7b326 # frozen: 1.20.0
     hooks:
       - id: blacken-docs
         # --skip-errors is added to allow us to have python syntax highlighting even if

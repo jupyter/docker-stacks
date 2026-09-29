@@ -40,11 +40,13 @@ runs:
       shell: bash
 
     - name: Upload SBOM for the image 🧾
-      uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+      uses: anchore/sbom-action@3ad7283483fc7af8ff2b4ea19663c2d5ca935e26 # v0.24.2
       with:
         image: ${{ env.REGISTRY }}/${{ env.OWNER }}/${{ inputs.image }}
         artifact-name: ${{ inputs.image }}-${{ inputs.platform }}-${{ inputs.variant }}-sbom.spdx.json
         upload-artifact-retention: 40
+      env:
+        TMPDIR: ${{ runner.temp }}
 
     # This step is needed to prevent pushing non-multi-arch "latest" tag
     - name: Remove the "latest" tag from the image 🗑️

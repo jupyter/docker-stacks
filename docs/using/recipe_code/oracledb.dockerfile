@@ -30,8 +30,8 @@ RUN wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-basiclit
     alien --install --scripts "oracle-instantclient-tools-${INSTANTCLIENT_BIN_SUFFIX}" && \
     wget --progress=dot:giga "${INSTANTCLIENT_URL}/oracle-instantclient-jdbc-${INSTANTCLIENT_BIN_SUFFIX}" && \
     alien --install --scripts "oracle-instantclient-jdbc-${INSTANTCLIENT_BIN_SUFFIX}" && \
-    chown -R "${NB_UID}":"${NB_GID}" "${HOME}/.rpmdb" && \
-    rm -f ./*.rpm
+    # `rpm` before 6.0 (Ubuntu 24.04 and older) leaves a root-owned database in the home directory
+    rm -rf ./*.rpm "${HOME}/.rpmdb"
 
 # And configure variables
 RUN cat <<EOF >> "${HOME}/.bashrc"

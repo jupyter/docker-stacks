@@ -4,10 +4,10 @@
 # This build arg allows building the image based on a different root image
 ARG ROOT_IMAGE=default_root_image
 
-# Ubuntu 24.04 (noble)
-# https://hub.docker.com/_/ubuntu/tags?page=1&name=noble
+# Ubuntu 26.04 (resolute)
+# https://hub.docker.com/_/ubuntu/tags?page=1&name=resolute
 # Referenced as a build stage, so dependabot is able to keep the version and digest up to date
-FROM ubuntu:24.04@sha256:561618e2c15bf2397621dd04f96926663a3b5616c189cf7e38db7e82f5c538ea AS default_root_image
+FROM ubuntu:26.04@sha256:da6fc2be547864451aa253836dd926da33623312df4a9a243e35dc877c378a78 AS default_root_image
 
 # Micromamba is taken from the official image, pinned by digest for integrity
 # Dependabot keeps this version and digest up to date (`docker` ecosystem covers this directory)

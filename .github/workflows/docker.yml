@@ -82,7 +82,7 @@ jobs:
       parent-image: ""
       image: docker-stacks-foundation
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 10
 
   x86_64-foundation:
@@ -93,7 +93,7 @@ jobs:
       parent-image: ""
       image: docker-stacks-foundation
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 10
 
   aarch64-base:
@@ -104,7 +104,7 @@ jobs:
       parent-image: docker-stacks-foundation
       image: base-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 15
     needs: aarch64-foundation
 
@@ -116,7 +116,7 @@ jobs:
       parent-image: docker-stacks-foundation
       image: base-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 15
     needs: x86_64-foundation
 
@@ -128,7 +128,7 @@ jobs:
       parent-image: base-notebook
       image: minimal-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 15
     needs: aarch64-base
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -141,7 +141,7 @@ jobs:
       parent-image: base-notebook
       image: minimal-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 15
     needs: x86_64-base
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -154,7 +154,7 @@ jobs:
       parent-image: minimal-notebook
       image: scipy-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 15
     needs: aarch64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -167,7 +167,7 @@ jobs:
       parent-image: minimal-notebook
       image: scipy-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 15
     needs: x86_64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -180,7 +180,7 @@ jobs:
       parent-image: minimal-notebook
       image: r-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 15
     needs: aarch64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -193,7 +193,7 @@ jobs:
       parent-image: minimal-notebook
       image: r-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 15
     needs: x86_64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -206,7 +206,7 @@ jobs:
       parent-image: minimal-notebook
       image: julia-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       # This workflow sometimes takes quite long to build
       timeout-minutes: 30
     needs: aarch64-minimal
@@ -220,7 +220,7 @@ jobs:
       parent-image: minimal-notebook
       image: julia-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 20
     needs: x86_64-minimal
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -233,7 +233,7 @@ jobs:
       parent-image: scipy-notebook
       image: tensorflow-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 15
     needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -246,7 +246,7 @@ jobs:
       parent-image: scipy-notebook
       image: tensorflow-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 25
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -260,7 +260,7 @@ jobs:
       image: tensorflow-notebook
       variant: cuda
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 25
     needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -274,7 +274,7 @@ jobs:
       image: tensorflow-notebook
       variant: cuda
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 25
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -287,7 +287,7 @@ jobs:
       parent-image: scipy-notebook
       image: pytorch-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 20
     needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -300,7 +300,7 @@ jobs:
       parent-image: scipy-notebook
       image: pytorch-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 20
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -314,7 +314,7 @@ jobs:
       image: pytorch-notebook
       variant: cuda12
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 25
     needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -328,7 +328,7 @@ jobs:
       image: pytorch-notebook
       variant: cuda12
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 25
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -342,7 +342,7 @@ jobs:
       image: pytorch-notebook
       variant: cuda13
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 25
     needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -356,7 +356,7 @@ jobs:
       image: pytorch-notebook
       variant: cuda13
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 25
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -369,7 +369,7 @@ jobs:
       parent-image: scipy-notebook
       image: datascience-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       # This workflow sometimes takes quite long to build
       timeout-minutes: 30
     needs: aarch64-scipy
@@ -383,7 +383,7 @@ jobs:
       parent-image: scipy-notebook
       image: datascience-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 25
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -396,7 +396,7 @@ jobs:
       parent-image: scipy-notebook
       image: pyspark-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 20
     needs: aarch64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -409,7 +409,7 @@ jobs:
       parent-image: scipy-notebook
       image: pyspark-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 15
     needs: x86_64-scipy
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -422,7 +422,7 @@ jobs:
       parent-image: pyspark-notebook
       image: all-spark-notebook
       platform: aarch64
-      runs-on: ubuntu-24.04-arm
+      runs-on: ubuntu-26.04-arm
       timeout-minutes: 20
     needs: aarch64-pyspark
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
@@ -435,7 +435,7 @@ jobs:
       parent-image: pyspark-notebook
       image: all-spark-notebook
       platform: x86_64
-      runs-on: ubuntu-24.04
+      runs-on: ubuntu-26.04
       timeout-minutes: 15
     needs: x86_64-pyspark
     if: ${{ !contains(github.event.pull_request.title, '[FAST_BUILD]') }}
