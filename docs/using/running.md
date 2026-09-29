@@ -175,6 +175,14 @@ see the [Use an existing Docker image](https://z2jh.jupyter.org/en/latest/jupyte
 If you have a custom JupyterHub deployment, see the [Picking or building a Docker image](https://jupyterhub-dockerspawner.readthedocs.io/en/latest/docker-image.html)
 instructions for the [dockerspawner](https://github.com/jupyterhub/dockerspawner) instead.
 
+## Hosting Platforms
+
+[Easypanel](https://easypanel.io) is a self-hosted Docker deployment platform, and it maintains a one-click deployment template for the Jupyter Docker Stacks images:
+
+[![Deploy on Easypanel](https://easypanel.io/img/deploy-on-easypanel-40.svg)](https://easypanel.io/templates/jupyternotebook)
+
+![Jupyter Notebook running in the Easypanel dashboard](../_static/using/running/easypanel-panel.jpg)
+
 ## Using Other Tools and Services
 
 You can use the Jupyter Docker Stacks with any Docker-compatible technology
