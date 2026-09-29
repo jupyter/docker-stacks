@@ -113,22 +113,35 @@ more information is available in the [documentation](https://jupyter-docker-stac
 [![Python versions badge](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/downloads/ "Python versions supported")
 
 This project only builds one set of images at a time.
+The weekly build (`latest` tag) is based on `Ubuntu 26.04` and `Python 3.13`.
 If you want to use the older `Ubuntu` and/or `Python` version, you can use the following images:
 
-| Build Date   | Ubuntu | Python | Tag            |
-| ------------ | ------ | ------ | -------------- |
-| 2022-10-09   | 20.04  | 3.7    | `1aac87eb7fa5` |
-| 2022-10-09   | 20.04  | 3.8    | `a374cab4fcb6` |
-| 2022-10-09   | 20.04  | 3.9    | `5ae537728c69` |
-| 2022-10-09   | 20.04  | 3.10   | `f3079808ca8c` |
-| 2022-10-09   | 22.04  | 3.7    | `b86753318aa1` |
-| 2022-10-09   | 22.04  | 3.8    | `7285848c0a11` |
-| 2022-10-09   | 22.04  | 3.9    | `ed2908bbb62e` |
-| 2023-05-30   | 22.04  | 3.10   | `4d70cf8da953` |
-| 2024-08-26   | 22.04  | 3.11   | `00987883e58d` |
-| 2024-10-22   | 24.04  | 3.11   | `b74418220768` |
-| 2025-08-11   | 24.04  | 3.12   | `82d322f00937` |
-| weekly build | 24.04  | 3.13   | `latest`       |
+### Ubuntu 24.04
+
+| Build Date | Python | Tag            |
+| ---------- | ------ | -------------- |
+| 2024-10-22 | 3.11   | `b74418220768` |
+| 2025-08-11 | 3.12   | `82d322f00937` |
+| 2026-09-28 | 3.13   | `ac62373f9f60` |
+
+### Ubuntu 22.04
+
+| Build Date | Python | Tag            |
+| ---------- | ------ | -------------- |
+| 2022-10-09 | 3.7    | `b86753318aa1` |
+| 2022-10-09 | 3.8    | `7285848c0a11` |
+| 2022-10-09 | 3.9    | `ed2908bbb62e` |
+| 2023-05-30 | 3.10   | `4d70cf8da953` |
+| 2024-08-26 | 3.11   | `00987883e58d` |
+
+### Ubuntu 20.04
+
+| Build Date | Python | Tag            |
+| ---------- | ------ | -------------- |
+| 2022-10-09 | 3.7    | `1aac87eb7fa5` |
+| 2022-10-09 | 3.8    | `a374cab4fcb6` |
+| 2022-10-09 | 3.9    | `5ae537728c69` |
+| 2022-10-09 | 3.10   | `f3079808ca8c` |
 
 ## Contributing
 
