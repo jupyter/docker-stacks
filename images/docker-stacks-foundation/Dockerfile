@@ -143,7 +143,7 @@ RUN --mount=type=bind,from=micromamba,source=/bin/micromamba,target=/usr/local/b
     fix-permissions "/home/${NB_USER}"
 
 # Copy local files as late as possible to avoid cache busting
-COPY _docker_stacks_log.sh run-hooks.sh start.sh /usr/local/bin/
+COPY _docker_stacks_log.sh populate-home-dir.sh run-hooks.sh start.sh /usr/local/bin/
 
 # Configure container entrypoint
 ENTRYPOINT ["tini", "-g", "--", "start.sh"]
@@ -155,6 +155,15 @@ RUN mkdir /usr/local/bin/start-notebook.d && \
     mkdir /usr/local/bin/before-notebook.d
 
 COPY 10activate-conda-env.sh /usr/local/bin/before-notebook.d/
+
+# Back up files created in the home directory during the build,
+# so start.sh can restore missing ones if the home directory is mounted
+RUN mkdir /opt/default-home && \
+    cp --archive \
+    "/home/${NB_USER}/.bash_logout" \
+    "/home/${NB_USER}/.bashrc" \
+    "/home/${NB_USER}/.profile" \
+    /opt/default-home
 
 RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
 
