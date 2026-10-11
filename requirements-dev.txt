@@ -9,4 +9,4 @@ pytest-xdist==3.8.0
 python-dateutil==2.9.0.post0
 requests==2.34.2
 tabulate==0.10.0
-tenacity==9.1.4
+tenacity==9.2.1
