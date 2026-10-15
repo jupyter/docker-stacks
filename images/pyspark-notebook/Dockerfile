@@ -67,8 +67,9 @@ RUN set -eux; \
 # Replace every bundled Netty jar of ${netty_bundled_version} with ${netty_version},
 # keeping each jar's classifier (native transports), checked against Maven Central's sha256.
 # Requiring the bundled version makes the build fail loudly once Spark bumps it.
-# jars/connect-repl is the Scala Spark Connect REPL client: a fat jar with the same Netty
-# shaded in, which cannot be patched in place and which PySpark never loads.
+# Two fat jars have the same Netty shaded in, cannot be patched in place, and are never
+# loaded by a notebook: jars/connect-repl (the Scala Spark Connect REPL client) and
+# yarn/ (the YARN external shuffle service, a plugin for Hadoop YARN NodeManagers).
 RUN set -eux; \
     ls "${SPARK_HOME}/jars/"netty-*-"${netty_bundled_version}"*.jar > /dev/null; \
     for path in "${SPARK_HOME}/jars/"netty-*-"${netty_bundled_version}"*.jar; do \
@@ -82,7 +83,7 @@ RUN set -eux; \
         rm "${path}"; \
         mv "/tmp/${new}" "${SPARK_HOME}/jars/"; \
     done; \
-    rm -rf "${SPARK_HOME}/jars/connect-repl"
+    rm -rf "${SPARK_HOME}/jars/connect-repl" "${SPARK_HOME}/yarn"
 
 # Configure IPython system-wide
 COPY ipython_kernel_config.py "/etc/ipython/"
