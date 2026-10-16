@@ -120,15 +120,38 @@ You do so by passing arguments to the `docker run` command.
   This setting is helpful in container orchestration environments where setting environment variables is more straightforward than changing command line parameters.
 - `-e RESTARTABLE=yes` - Runs Jupyter in a loop so that quitting Jupyter does not cause the container to exit.
   This may be useful when installing extensions that require restarting Jupyter.
-- `-v /some/host/folder/for/work:/home/jovyan/work` - Mounts a host machine directory as a folder in the container.
-  This configuration is useful for preserving notebooks and other work even after the container has been destroyed.
-  **You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`) write access to the host directory (e.g., `sudo chown 1000 /some/host/folder/for/work`).**
 - `-e JUPYTER_ENV_VARS_TO_UNSET=ADMIN_SECRET_1,ADMIN_SECRET_2` - Unsets specified environment variables in the default startup script.
   The variables are unset after the hooks have been executed but before the command provided to the startup script runs.
 - `-e NOTEBOOK_ARGS="--log-level='DEBUG' --dev-mode"` - Adds custom options to the `jupyter` command.
   This way, the user could use any option supported by the `jupyter` subcommand.
 - `-e JUPYTER_PORT=8117` - Changes the port in the container that Jupyter is using to the value of the `${JUPYTER_PORT}` environment variable.
   This may be useful if you run multiple instances of Jupyter in swarm mode and want to use a different port for each instance.
+
+### Mounting volumes
+
+You can mount a host machine directory as a folder in the container,
+e.g. `-v /some/host/folder:/home/jovyan/work`.
+This configuration is useful for preserving notebooks and other work even after the container has been destroyed.
+
+```{note}
+You must grant the within-container notebook user or group (`NB_UID` or `NB_GID`)
+write access to the host directory (e.g., `sudo chown 1000 /some/host/folder`).
+```
+
+You can also mount a directory or a volume as the whole home directory in the container,
+e.g. `-v /some/host/folder:/home/jovyan`.
+A mounted home directory shadows the files created in it during the image build,
+so the startup script restores the missing `.bashrc`, `.profile`, and `.bash_logout`
+from the backup located in `/opt/default-home`:
+
+- Files already existing in the home directory are never overwritten.
+- The startup script needs write access to the home directory.
+  When the container is started as root, the restored files are owned by `${NB_UID}:${NB_GID}`.
+- A failure to restore a file only produces a warning, it never prevents the container from starting.
+
+If your own image changes the contents of the home directory,
+apply the same changes to `/opt/default-home`.
+Remove this directory to disable restoring completely.
 
 ## Startup Hooks
 

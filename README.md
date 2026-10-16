@@ -66,6 +66,8 @@ Visiting `http://<hostname>:10000/?token=<token>` in a browser loads JupyterLab.
 Due to the usage of [the `--rm` flag](https://docs.docker.com/reference/cli/docker/container/run/#rm)
 Docker automatically cleans up the container and removes the file system when the container exits,
 but any changes made to the `~/work` directory and its files in the container will remain intact on the host.
+You can also mount the whole home directory instead, preserving the user's configuration files as well -
+more information is available in the [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/common.html#mounting-volumes).
 [The `-i` flag](https://docs.docker.com/reference/cli/docker/container/run/#interactive) keeps the container's `STDIN` open, and lets you send input to the container through standard input.
 [The `-t` flag](https://docs.docker.com/reference/cli/docker/container/run/#tty) attaches a pseudo-TTY to the container.
 
