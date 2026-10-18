@@ -102,7 +102,7 @@ RUN rm -rf "/home/${NB_USER}/.cache/rosetta"
 USER ${NB_UID}
 
 # Pin the Python version here, or set it to "default"
-ARG PYTHON_VERSION=3.13
+ARG PYTHON_VERSION=3.14
 
 # Setup work directory for backward-compatibility
 RUN mkdir "/home/${NB_USER}/work" && \
