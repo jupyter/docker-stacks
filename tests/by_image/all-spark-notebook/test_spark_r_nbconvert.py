@@ -34,6 +34,8 @@ def test_spark_r_nbconvert(
         output_format,
         execute=True,
         no_warnings=(not expected_warnings),
+        # Starting Spark and running an R UDF in a single cell takes ~30s on x86_64 CI runners
+        cell_timeout_seconds=90,
     )
 
     warnings = TrackedContainer.get_warnings(logs)
