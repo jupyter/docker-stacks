@@ -48,6 +48,10 @@ RUN apt-get update --yes && \
     tini \
     wget && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    # - The Ubuntu 26.04 image ships Canonical's Pebble service manager as a bare
+    #   /usr/bin/pebble, owned by no package, so `apt-get upgrade` cannot patch it.
+    #   The images start with tini and never run it, so remove it
+    rm -f /usr/bin/pebble && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     echo "C.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen
