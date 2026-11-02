@@ -71,7 +71,7 @@ USER ${NB_UID}
 
 # Install pyarrow
 # The pandas version must match the version on which the Pandas API for Spark is built,
-# setup_spark.py resolves it from https://github.com/apache/spark/blob/<SPARK_VERSION>/dev/infra/Dockerfile
+# setup_spark.py resolves it from the sources of the Spark release
 RUN mamba install --yes \
     'grpcio-status' \
     'grpcio' \
