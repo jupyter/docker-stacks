@@ -55,11 +55,11 @@ def get_latest_spark_version() -> str:
 def get_pandas_version(spark_version: str) -> str:
     """
     Returns the pandas version Spark is built and tested against,
-    taken from the dev/infra/Dockerfile of the Spark release
+    taken from the Dockerfile used to create the Spark release
     """
     url = (
         "https://raw.githubusercontent.com/apache/spark/"
-        f"v{spark_version}/dev/infra/Dockerfile"
+        f"v{spark_version}/dev/create-release/spark-rm/Dockerfile"
     )
     LOGGER.info(f"Downloading pandas version from: {url}")
     resp = requests.get(url, timeout=60)
