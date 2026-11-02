@@ -37,6 +37,10 @@ ARG derby_version="10.17.1.0"
 # The sha256 checksum of the derby jar from Maven Central
 # It must be updated together with derby_version
 ARG derby_sha256="764e4c133f860a8876e835ef2306efecad27a742d27f05bc4bce669432c6b397"
+# Spark bundles Netty 4.2.13.Final, affected by CVE-2026-75595 (GHSA-c4c3-7fpv-j4q5);
+# replace it with a fixed release. Drop this once Spark bundles a fixed Netty.
+ARG netty_bundled_version="4.2.13.Final"
+ARG netty_version="4.2.17.Final"
 
 ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
@@ -59,6 +63,27 @@ RUN set -eux; \
       "https://repo1.maven.org/maven2/org/apache/derby/derby/${derby_version}/derby-${derby_version}.jar"; \
     echo "${derby_sha256} */tmp/derby-${derby_version}.jar" | sha256sum -c -; \
     mv "/tmp/derby-${derby_version}.jar" "${SPARK_HOME}/jars/"
+
+# Replace every bundled Netty jar of ${netty_bundled_version} with ${netty_version},
+# keeping each jar's classifier (native transports), checked against Maven Central's sha256.
+# Requiring the bundled version makes the build fail loudly once Spark bumps it.
+# Two fat jars have the same Netty shaded in, cannot be patched in place, and are never
+# loaded by a notebook: jars/connect-repl (the Scala Spark Connect REPL client) and
+# yarn/ (the YARN external shuffle service, a plugin for Hadoop YARN NodeManagers).
+RUN set -eux; \
+    ls "${SPARK_HOME}/jars/"netty-*-"${netty_bundled_version}"*.jar > /dev/null; \
+    for path in "${SPARK_HOME}/jars/"netty-*-"${netty_bundled_version}"*.jar; do \
+        jar="$(basename "${path}")"; \
+        artifact="${jar%%-"${netty_bundled_version}"*}"; \
+        classifier="${jar#"${artifact}-${netty_bundled_version}"}"; \
+        new="${artifact}-${netty_version}${classifier}"; \
+        url="https://repo1.maven.org/maven2/io/netty/${artifact}/${netty_version}/${new}"; \
+        curl -fsSL -o "/tmp/${new}" "${url}"; \
+        echo "$(curl -fsSL "${url}.sha256" | cut -c1-64) */tmp/${new}" | sha256sum -c -; \
+        rm "${path}"; \
+        mv "/tmp/${new}" "${SPARK_HOME}/jars/"; \
+    done; \
+    rm -rf "${SPARK_HOME}/jars/connect-repl" "${SPARK_HOME}/yarn"
 
 # Configure IPython system-wide
 COPY ipython_kernel_config.py "/etc/ipython/"
