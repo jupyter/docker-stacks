@@ -17,28 +17,28 @@ exclude: ^LICENSE.md$
 repos:
   # Autoupdate: Python code
   - repo: https://github.com/asottile/pyupgrade
-    rev: 75992aaa40730136014f34227e0135f63fc951b4 # frozen: v3.21.2
+    rev: f22ea0651f4355c655cc581f67813c991c74a312  # frozen: v3.22.0
     hooks:
       - id: pyupgrade
         args: [--py312-plus]
 
   # Automatically sort python imports
   - repo: https://github.com/PyCQA/isort
-    rev: 9f905615631c545f5aea2516508109350d1d2f7d # frozen: 9.0.2
+    rev: 5d9c96196def28a1819b6a755a669ec0a3add6aa  # frozen: 10.0.0b2
     hooks:
       - id: isort
         args: [--profile, black]
 
   # Autoformat: Python code
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 96ae3e5802f3fe2d551e703e18f0a367d1a81ac2 # frozen: 26.10.0
+    rev: a5439e9af2ff9371297bb1a76a01b8ad17989b88  # frozen: 26.10.1
     hooks:
       - id: black
         args: [--target-version=py312]
 
   # Check python code static typing
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 2834ec6639549dd6796205c8f011dedcd587288b # frozen: v2.4.0
+    rev: ad26ebfa797fcb9b8f83275937c1c1d6e126719c  # frozen: v2.4.1
     hooks:
       - id: mypy
         args: [--config, ./mypy.ini]
@@ -94,7 +94,7 @@ repos:
 
   # Autoformat: YAML, JSON, Markdown, etc.
   - repo: https://github.com/rbubley/mirrors-prettier
-    rev: ef4a397f916211b4a39ccf9d3d9cbb6562157251 # frozen: v3.9.9
+    rev: 331f33fa4dfbcbca7c3da3620c137fde0faab273  # frozen: v3.9.10
     hooks:
       - id: prettier
 
@@ -152,20 +152,20 @@ repos:
 
   # Lint: Python
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: f12be1ebaa5351c1fc76472de98db2c3446c8253 # frozen: v0.16.10
+    rev: 25bcf95026b96e2dd3c0aec3090c3d6ef6ca2e6c  # frozen: v0.17.3
     hooks:
       - id: ruff-check
         args: [--fix]
 
   # Lint: Python
   - repo: https://github.com/PyCQA/flake8
-    rev: cfbbfdeb2391c14a37e101e92a77f54f329e1726 # frozen: 7.4.1
+    rev: 960c1d286190804104f7255b97da034446fdaac3  # frozen: 7.5.0
     hooks:
       - id: flake8
 
   # Lint: Markdown
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: 916ad0aaa108c64d294101002066f530ea170b10 # frozen: v0.23.3
+    rev: 341e2a331ba578029e66c2e01183e7a6b5ca9ab4  # frozen: v0.24.0
     hooks:
       - id: markdownlint-cli2
         args: [--fix]
