@@ -46,6 +46,20 @@ def test_nb_group_change(container: TrackedContainer) -> None:
     assert "custom-group" in logs
 
 
+def test_nb_group_name_taken(container: TrackedContainer) -> None:
+    """Container should fail with a clear message if `NB_GROUP` is the name
+    of an existing group with a different id."""
+    logs = container.run_and_wait(
+        timeout=120,  # group/user modification is slow so give it some time
+        no_failure=False,
+        user="root",
+        environment=["NB_GID=2000", "NB_GROUP=staff"],
+        command=["id"],
+    )
+    assert "Can't create the group 'staff' with GID 2000" in logs
+    assert "already exists with GID 50" in logs
+
+
 def test_nb_user_change(container: TrackedContainer) -> None:
     """Container should change the username (`NB_USER`) of the default user."""
     nb_user = "nayvoj"
