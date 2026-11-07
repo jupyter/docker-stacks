@@ -68,7 +68,7 @@ help:
 build/%: DOCKER_BUILD_ARGS?=
 # By default, use the sha-pinned root image from the Dockerfile stage
 build/%: ROOT_IMAGE?=default_root_image
-build/%: PYTHON_VERSION?=3.13
+build/%: PYTHON_VERSION?=3.14
 build/%: ## build the latest image for a stack using the system's architecture
 	$(CONTAINER_CLI) build $(DOCKER_BUILD_ARGS) \
 	  --tag "$(IMG)" \
