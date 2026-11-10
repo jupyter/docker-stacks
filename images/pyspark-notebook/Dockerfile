@@ -60,7 +60,7 @@ COPY setup_spark.py /opt/setup-scripts/
 # loaded by a notebook: jars/connect-repl (the Scala Spark Connect REPL client) and
 # yarn/ (the YARN external shuffle service, a plugin for Hadoop YARN NodeManagers).
 # This is done in the same layer as the installation, so removed files don't take space in the image.
-RUN set -eux; \
+RUN set -ex; \
     /opt/setup-scripts/setup_spark.py \
         --spark-version="${spark_version}" \
         --hadoop-version="${hadoop_version}" \
