@@ -34,7 +34,7 @@ jobs:
 
       - name: Install pre-commit 📦
         # Install the version pinned in requirements-dev.txt without the other dev dependencies
-        run: pip install "$(grep '^pre-commit==' requirements-dev.txt)"
+        run: pip install "$(grep -o '^pre-commit==[^ ]*' requirements-dev.txt)"
 
       - name: Run pre-commit hooks ✅
         run: pre-commit run --all-files --hook-stage manual
