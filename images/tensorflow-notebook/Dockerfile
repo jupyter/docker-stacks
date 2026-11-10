@@ -16,7 +16,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # https://github.com/tensorflow/tensorflow/issues/98980
 RUN mamba install --yes \
     'jupyter-server-proxy' \
-    'protobuf>=5.28.3,<6' && \
+    'protobuf>=6.33.5,<7' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -28,7 +28,7 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
         TF_POSTFIX=""; \
     fi && \
     pip install -v --no-cache-dir \
-    "tensorflow${TF_POSTFIX}" && \
+    "tensorflow${TF_POSTFIX}>=2.22.0rc0" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
