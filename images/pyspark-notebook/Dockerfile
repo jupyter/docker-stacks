@@ -41,6 +41,9 @@ ARG derby_sha256="764e4c133f860a8876e835ef2306efecad27a742d27f05bc4bce669432c6b3
 # replace it with a fixed release. Drop this once Spark bundles a fixed Netty.
 ARG netty_bundled_version="4.2.13.Final"
 ARG netty_version="4.2.20.Final"
+# netty-tcnative is updated to the release ${netty_version} is built against
+ARG netty_tcnative_bundled_version="2.0.76.Final"
+ARG netty_tcnative_version="2.0.85.Final"
 
 ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
@@ -49,7 +52,8 @@ ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M 
 COPY setup_spark.py /opt/setup-scripts/
 
 # Setup Spark
-# Replace every bundled Netty jar of ${netty_bundled_version} with ${netty_version},
+# Replace every bundled Netty jar of ${netty_bundled_version} with ${netty_version}
+# (and netty-tcnative jars of ${netty_tcnative_bundled_version} with ${netty_tcnative_version}),
 # keeping each jar's classifier (native transports), checked against Maven Central's sha256.
 # Requiring the bundled version makes the build fail loudly once Spark bumps it.
 # Two fat jars have the same Netty shaded in, cannot be patched in place, and are never
@@ -62,17 +66,21 @@ RUN set -eux; \
         --hadoop-version="${hadoop_version}" \
         --scala-version="${scala_version}" \
         --spark-download-url="${spark_download_url}"; \
-    ls "${SPARK_HOME}/jars/"netty-*-"${netty_bundled_version}"*.jar > /dev/null; \
-    for path in "${SPARK_HOME}/jars/"netty-*-"${netty_bundled_version}"*.jar; do \
-        jar="$(basename "${path}")"; \
-        artifact="${jar%%-"${netty_bundled_version}"*}"; \
-        classifier="${jar#"${artifact}-${netty_bundled_version}"}"; \
-        new="${artifact}-${netty_version}${classifier}"; \
-        url="https://repo1.maven.org/maven2/io/netty/${artifact}/${netty_version}/${new}"; \
-        curl -fsSL -o "/tmp/${new}" "${url}"; \
-        echo "$(curl -fsSL "${url}.sha256" | cut -c1-64) */tmp/${new}" | sha256sum -c -; \
-        rm "${path}"; \
-        mv "/tmp/${new}" "${SPARK_HOME}/jars/"; \
+    for versions in "${netty_bundled_version} ${netty_version}" \
+                    "${netty_tcnative_bundled_version} ${netty_tcnative_version}"; do \
+        bundled="${versions% *}"; version="${versions#* }"; \
+        ls "${SPARK_HOME}/jars/"netty-*-"${bundled}"*.jar > /dev/null; \
+        for path in "${SPARK_HOME}/jars/"netty-*-"${bundled}"*.jar; do \
+            jar="$(basename "${path}")"; \
+            artifact="${jar%%-"${bundled}"*}"; \
+            classifier="${jar#"${artifact}-${bundled}"}"; \
+            new="${artifact}-${version}${classifier}"; \
+            url="https://repo1.maven.org/maven2/io/netty/${artifact}/${version}/${new}"; \
+            curl -fsSL -o "/tmp/${new}" "${url}"; \
+            echo "$(curl -fsSL "${url}.sha256" | cut -c1-64) */tmp/${new}" | sha256sum -c -; \
+            rm "${path}"; \
+            mv "/tmp/${new}" "${SPARK_HOME}/jars/"; \
+        done; \
     done; \
     rm -rf "${SPARK_HOME}/jars/connect-repl" "${SPARK_HOME}/yarn"
 
