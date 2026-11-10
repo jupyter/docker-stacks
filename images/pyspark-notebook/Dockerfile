@@ -49,28 +49,19 @@ ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M 
 COPY setup_spark.py /opt/setup-scripts/
 
 # Setup Spark
-RUN /opt/setup-scripts/setup_spark.py \
-    --spark-version="${spark_version}" \
-    --hadoop-version="${hadoop_version}" \
-    --scala-version="${scala_version}" \
-    --spark-download-url="${spark_download_url}"
-
-# Spark bundles Derby 10.16.1.1 by default; replace it with a fixed release.
-# The exact filename makes the build fail loudly once Spark bumps the bundled version.
-RUN set -eux; \
-    rm "${SPARK_HOME}/jars/derby-10.16.1.1.jar"; \
-    curl -fsSL -o "/tmp/derby-${derby_version}.jar" \
-      "https://repo1.maven.org/maven2/org/apache/derby/derby/${derby_version}/derby-${derby_version}.jar"; \
-    echo "${derby_sha256} */tmp/derby-${derby_version}.jar" | sha256sum -c -; \
-    mv "/tmp/derby-${derby_version}.jar" "${SPARK_HOME}/jars/"
-
 # Replace every bundled Netty jar of ${netty_bundled_version} with ${netty_version},
 # keeping each jar's classifier (native transports), checked against Maven Central's sha256.
 # Requiring the bundled version makes the build fail loudly once Spark bumps it.
 # Two fat jars have the same Netty shaded in, cannot be patched in place, and are never
 # loaded by a notebook: jars/connect-repl (the Scala Spark Connect REPL client) and
 # yarn/ (the YARN external shuffle service, a plugin for Hadoop YARN NodeManagers).
+# This is done in the same layer as the installation, so removed files don't take space in the image.
 RUN set -eux; \
+    /opt/setup-scripts/setup_spark.py \
+        --spark-version="${spark_version}" \
+        --hadoop-version="${hadoop_version}" \
+        --scala-version="${scala_version}" \
+        --spark-download-url="${spark_download_url}"; \
     ls "${SPARK_HOME}/jars/"netty-*-"${netty_bundled_version}"*.jar > /dev/null; \
     for path in "${SPARK_HOME}/jars/"netty-*-"${netty_bundled_version}"*.jar; do \
         jar="$(basename "${path}")"; \
@@ -84,6 +75,15 @@ RUN set -eux; \
         mv "/tmp/${new}" "${SPARK_HOME}/jars/"; \
     done; \
     rm -rf "${SPARK_HOME}/jars/connect-repl" "${SPARK_HOME}/yarn"
+
+# Spark bundles Derby 10.16.1.1 by default; replace it with a fixed release.
+# The exact filename makes the build fail loudly once Spark bumps the bundled version.
+RUN set -eux; \
+    rm "${SPARK_HOME}/jars/derby-10.16.1.1.jar"; \
+    curl -fsSL -o "/tmp/derby-${derby_version}.jar" \
+      "https://repo1.maven.org/maven2/org/apache/derby/derby/${derby_version}/derby-${derby_version}.jar"; \
+    echo "${derby_sha256} */tmp/derby-${derby_version}.jar" | sha256sum -c -; \
+    mv "/tmp/derby-${derby_version}.jar" "${SPARK_HOME}/jars/"
 
 # Configure IPython system-wide
 COPY ipython_kernel_config.py "/etc/ipython/"
