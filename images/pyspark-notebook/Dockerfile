@@ -40,7 +40,7 @@ ARG derby_sha256="764e4c133f860a8876e835ef2306efecad27a742d27f05bc4bce669432c6b3
 # Spark bundles Netty 4.2.13.Final, affected by CVE-2026-75595 (GHSA-c4c3-7fpv-j4q5);
 # replace it with a fixed release. Drop this once Spark bundles a fixed Netty.
 ARG netty_bundled_version="4.2.13.Final"
-ARG netty_version="4.2.17.Final"
+ARG netty_version="4.2.20.Final"
 
 ENV SPARK_HOME=/usr/local/spark
 ENV PATH="${PATH}:${SPARK_HOME}/bin"
