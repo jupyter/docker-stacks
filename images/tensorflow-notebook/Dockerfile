@@ -28,7 +28,7 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
         TF_POSTFIX=""; \
     fi && \
     pip install -v --no-cache-dir \
-    "tensorflow${TF_POSTFIX}>=2.22.0rc0" && \
+    "tensorflow${TF_POSTFIX}>=2.22.0rc1" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
