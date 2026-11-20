@@ -74,6 +74,11 @@ if [ "$(id -u)" == 0 ]; then
         # Ensure the desired group's existence
         if [ "${NB_GID}" != "$(id -g "${NB_USER}")" ]; then
             groupadd --force --gid "${NB_GID}" --non-unique "${NB_GROUP:-${NB_USER}}"
+            # `groupadd --force` silently does nothing if a group with this name already exists,
+            # so make sure a group with the desired id exists before using it
+            if ! getent group "${NB_GID}" >/dev/null; then
+                _log_fatal "Can't create the group '${NB_GROUP:-${NB_USER}}' with GID ${NB_GID}: a group with this name already exists with GID $(getent group "${NB_GROUP:-${NB_USER}}" | cut -d: -f3). Set NB_GROUP to an unused group name."
+            fi
         fi
         # Recreate the desired user as we want it
         userdel "${NB_USER}"

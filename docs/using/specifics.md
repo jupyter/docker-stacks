@@ -57,7 +57,7 @@ You can build a `pyspark-notebook` image with a different `Spark` version by ove
 
 ```{note}
 Only Spark >= 4.0 can be built this way:
-the pandas version is resolved from the `dev/infra/Dockerfile` file of the Spark release,
+the pandas version is resolved from the sources of the Spark release,
 and the Derby jar replacement expects the version bundled by modern Spark.
 Building older versions requires modifying `images/pyspark-notebook/Dockerfile`.
 ```

@@ -15,6 +15,7 @@ def check_nbconvert(
     *,
     execute: bool,
     no_warnings: bool = True,
+    cell_timeout_seconds: int = 30,
 ) -> str:
     """Check if nbconvert is able to convert a notebook file"""
     cont_data_file = "/home/jovyan/" + host_file.name
@@ -33,13 +34,12 @@ def check_nbconvert(
         output_format,
     ]
     if execute:
-        cell_timeout_seconds = 30
         command += [
             "--execute",
             f"--ExecutePreprocessor.timeout={cell_timeout_seconds}",
         ]
     logs = container.run_and_wait(
-        timeout=60,
+        timeout=cell_timeout_seconds + 30,
         volumes={host_file: {"bind": cont_data_file, "mode": "ro"}},
         command=command,
         no_warnings=no_warnings,

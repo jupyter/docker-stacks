@@ -7,12 +7,12 @@ ARG ROOT_IMAGE=default_root_image
 # Ubuntu 26.04 (resolute)
 # https://hub.docker.com/_/ubuntu/tags?page=1&name=resolute
 # Referenced as a build stage, so dependabot is able to keep the version and digest up to date
-FROM ubuntu:26.04@sha256:f144425ff09be612d6d9ad965196e9cdc23dae1f42110a8a11a3e9a8198759f7 AS default_root_image
+FROM ubuntu:26.04@sha256:065aa8626841f16057b78b027b464cd59c4fac36c204c72dcbf48d66f5fa8a96 AS default_root_image
 
 # Micromamba is taken from the official image, pinned by digest for integrity
 # Dependabot keeps this version and digest up to date (`docker` ecosystem covers this directory)
 # The binary is bind-mounted into the install RUN below, so it is not added to any image layer
-FROM mambaorg/micromamba:2.8.1@sha256:fb18405d6004af757a38ec498a078240b4fd5549146990a484c28bb7e78aace4 AS micromamba
+FROM mambaorg/micromamba:2.10.0@sha256:e1476182cd40eb1f7c0cfae4adec9bfd78f3d7f05c61368306abfdc8939c1198 AS micromamba
 
 FROM $ROOT_IMAGE
 
@@ -48,6 +48,10 @@ RUN apt-get update --yes && \
     tini \
     wget && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    # - The Ubuntu 26.04 image ships Canonical's Pebble service manager as a bare
+    #   /usr/bin/pebble, owned by no package, so `apt-get upgrade` cannot patch it.
+    #   The images start with tini and never run it, so remove it
+    rm -rf /usr/bin/pebble /var/lib/pebble && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     echo "C.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen

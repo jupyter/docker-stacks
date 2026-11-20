@@ -5,7 +5,7 @@ Please review the following guidelines when reporting your problem.
 
 - Please use GitHub's "Report a Vulnerability" button under Security > Advisories on the appropriate repo,
   e.g. [report here for Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks/security/advisories).
-  You may also send an email to <mailto:security@ipython.org>, but the GitHub reporting system is preferred.
+  You may also send an email to <mailto:security@jupyter.org>, but the GitHub reporting system is preferred.
 - If you think your problem is unique to the Jupyter Docker Stacks images,
   please search the [jupyter/docker-stacks issue tracker](https://github.com/jupyter/docker-stacks/issues?q=is%3Aissue%20)
   to see if someone else has already reported the same problem.

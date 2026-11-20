@@ -5,7 +5,7 @@ runs:
   using: "composite"
   steps:
     - name: Install cargo-binstall 📦
-      uses: cargo-bins/cargo-binstall@3be4ad2b146f3302f92e5956c54fedbb6ae8cccc # v1.25.3
+      uses: cargo-bins/cargo-binstall@5885714d0a40a14b2535c6ffc051fd8e49aa9665 # v1.27.0
 
     - name: Installing rmz
       shell: bash
