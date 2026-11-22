@@ -7,7 +7,7 @@ ARG ROOT_IMAGE=default_root_image
 # Ubuntu 26.04 (resolute)
 # https://hub.docker.com/_/ubuntu/tags?page=1&name=resolute
 # Referenced as a build stage, so dependabot is able to keep the version and digest up to date
-FROM ubuntu:26.04@sha256:065aa8626841f16057b78b027b464cd59c4fac36c204c72dcbf48d66f5fa8a96 AS default_root_image
+FROM ubuntu:26.04@sha256:d66b366dac61b575bee2aef07e9c26e8070096fbe84a3d4d3eb0da069b5d76db AS default_root_image
 
 # Micromamba is taken from the official image, pinned by digest for integrity
 # Dependabot keeps this version and digest up to date (`docker` ecosystem covers this directory)
